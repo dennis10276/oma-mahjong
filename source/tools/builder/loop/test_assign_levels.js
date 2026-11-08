@@ -12,17 +12,17 @@ const flat = { T0: 6, L0: 200, g: 1, cap: 14 };
 const exact = (L, trend = flat, o = {}) => { const s = A.slotFor(L, { bigBoard: (o.tiles ?? 80) > 88 }, { trend, shape: A.DEFAULTS.shape }); return pair(s.target, { story: STORIES[L % STORIES.length], ...o }); };
 const rng = seed => { let x = seed >>> 0 || 1; return () => (x = (x * 1103515245 + 12345) >>> 0) / 4294967296; };
 
-test('trend, cap and slot shapes', () => {
+test('trend and slots have no position-dependent difficulty changes', () => {
   const t = { T0: 6, L0: 200, g: 1.01, cap: 14 };
   assert.equal(A.trendAt(200, t), 6);
   assert(Math.abs(A.trendAt(225, t) - 6 * 1.01 ** 25) < 1e-9);
   assert.equal(A.trendAt(400, t), 14, 'held at the cap');
   const o = { trend: flat, shape: A.DEFAULTS.shape };
-  assert.equal(A.slotFor(201, {}, o).shape, 'breather'); assert(Math.abs(A.slotFor(202, {}, o).target - 5.4) < 1e-12);
+  assert.equal(A.slotFor(201, {}, o).shape, 'trend'); assert.equal(A.slotFor(202, {}, o).target, 6);
   assert.equal(A.slotFor(205, {}, o).target, 6);
-  assert.equal(A.slotFor(210, { bigBoard: true }, o).shape, 'peak'); assert(Math.abs(A.slotFor(210, { bigBoard: true }, o).target - 6.9) < 1e-12);
-  assert.equal(A.slotFor(210, { bigBoard: false }, o).target, 6, 'no peak without a big board');
-  assert.equal(A.levelTol(6, A.DEFAULTS), 1); assert(Math.abs(A.levelTol(13, A.DEFAULTS) - 1.3) < 1e-12);
+  assert.equal(A.slotFor(210, { bigBoard: true }, o).shape, 'trend'); assert.equal(A.slotFor(210, { bigBoard: true }, o).target, 6);
+  assert.equal(A.slotFor(210, { bigBoard: false }, o).target, 6);
+  assert.equal(A.levelTol(6, A.DEFAULTS), 1); assert.equal(A.levelTol(13, A.DEFAULTS), 1);
 });
 
 test('per-level rules: tolerance, spike, big board, opening clock, skilled, B7', () => {
@@ -30,16 +30,16 @@ test('per-level rules: tolerance, spike, big board, opening clock, skilled, B7',
   const why = (L, p) => A.levelCheck(L, p, o).why;
   assert.equal(why(205, pair(6.9)), null);
   assert.equal(why(205, pair(7.1)), 'tooHard');
-  assert.equal(why(201, pair(4.3)), 'tooEasy');        // breather 5.4, tol 1
+  assert.equal(why(201, pair(4.9)), 'tooEasy');
   assert.equal(why(205, pair(6, { tiles: 92 })), 'bigBoardOffSlot');
   assert.equal(why(210, pair(6.9, { tiles: 92 })), null);
-  assert.equal(why(210, pair(7.8, { tiles: 92 })), null, 'a named peak may sit above the spike cap');
+  assert.equal(why(210, pair(7.8, { tiles: 92 })), 'tooHard', 'large boards get no difficulty exception');
   assert.equal(why(205, pair(6, { spare: 1, openingClock: true })), 'openingClock');
-  assert.equal(why(210, pair(6.9, { spare: 1, openingClock: true, tiles: 92 })), null, 'allowed on a named peak');
+  assert.equal(why(210, pair(6.9, { spare: 1, openingClock: true, tiles: 92 })), 'openingClock');
   assert.equal(why(205, pair(6, { S: 2.4 })), 'skilledLow');
   assert.equal(why(205, pair(6, { S: 6.5 })), 'skilledHigh');
   assert.equal(why(205, pair(6, { Strusted: false })), 'skilledUnknown');
-  assert.equal(A.levelCheck(205, pair(6, { S: 2.4 }), { ...o, skilled: { ...o.skilled, floor: 'average' } }).why, null);
+  assert.equal(A.levelCheck(205, pair(6, { S: 2.4 }), { ...o, skilled: { ...o.skilled, floor: 'average' } }).why, 'skilledLow');
   assert.equal(why(205, pair(6, { maxTarget: 5 })), 'b7Inflated');
   // spike cap binds above tolerance only when tolerance is wider: with a 30% tolerance a 7.5 on trend 6 is a spike
   assert.equal(A.levelCheck(205, pair(7.5), { ...o, tolerance: { abs: 1, rel: 0.3 } }).why, 'spike');
@@ -54,7 +54,7 @@ test('a perfect library fills a range exactly and keeps every rule', () => {
   assert.equal(r.unfillable.length, 0);
   assert.equal(r.proven, true);
   assert(r.totalCost < 1e-9, 'cost ' + r.totalCost);
-  assert.equal(r.levels.find(l => l.level === 210).shape, 'peak');
+  assert.equal(r.levels.find(l => l.level === 210).shape, 'trend');
   assert(r.windows.every(w => w.ok));
   assert.equal(new Set(r.levels.map(l => l.key)).size, r.levels.length);
   assert.match(r.text, /26 of 26 filled/);
@@ -95,7 +95,7 @@ test('window mean: levels each within tolerance but all biased high are refused 
   assert(Math.abs(r.levels.reduce((s, l) => s + l.dev, 0) / 5) <= 0.5 + 1e-9);
 });
 
-test('skilled floor: hard refuses S < 2.5, average allows it when the 5-level mean holds', () => {
+test('skilled 2.5-6 is the default; explicit fallback reaches 2 and averaging is refused', () => {
   const pairs = [];
   for (let L = 203; L <= 207; L++) pairs.push(pair(6, { S: L === 205 ? 1.8 : 3, story: STORIES[L % 8] }));
   let r = A.assign(pairs, { from: 203, to: 207, trend: flat });
@@ -103,11 +103,12 @@ test('skilled floor: hard refuses S < 2.5, average allows it when the 5-level me
   assert(!r.levels.some(l => l.S === 1.8));
   r = A.assign(pairs, { from: 205, to: 205, trend: flat, exclude: pairs.filter(p => p.S !== 1.8).map(p => p.key) });
   assert.deepEqual(r.unfillable.map(u => [u.level, u.reason, u.failures.skilledLow]), [[205, 'noCandidate', 1]]);
-  r = A.assign(pairs, { from: 203, to: 207, trend: flat, skilled: { floor: 'average' } });
-  assert.equal(r.unfillable.length, 0);   // mean S = (4 x 3 + 1.8) / 5 = 2.76
-  const low = pairs.map(p => ({ ...p, S: 2 }));
-  r = A.assign(low, { from: 203, to: 207, trend: flat, skilled: { floor: 'average' } });
-  assert(r.unfillable.length >= 1, 'a window mean of 2 is under the floor');
+  assert.throws(() => A.assign(pairs, { from: 203, to: 207, trend: flat, skilled: { floor: 'average' } }), /Every level requires/);
+  const fallback = A.assign(pairs.map(p => ({ ...p, S: p.S === 1.8 ? 2 : p.S })), { from: 203, to: 207, trend: flat, skilled: { lo: 2 } });
+  assert.equal(fallback.holes, 0); assert.equal(fallback.levels.filter(l => l.skilledFallback).length, 1);
+  assert.match(fallback.text, /Skilled fallback/);
+  assert.throws(() => A.assign(pairs, { from: 203, to: 207, trend: flat, skilled: { lo: 1.99 } }), /Every level requires/);
+  assert.throws(() => A.assign(pairs, { from: 203, to: 207, trend: flat, skilled: { hi: 7 } }), /Every level requires/);
 });
 
 test('unfillable slots are reported plainly with the reasons and nearest misses', () => {
@@ -144,7 +145,7 @@ function brute(pairs, from, to, trend) {
     }
     for (let a = 0; a + 5 <= pick.length; a++) {
       const w = pick.slice(a, a + 5), dev = w.reduce((s, x) => s + x.p.D - x.c.s.target, 0) / 5, T = w.reduce((s, x) => s + x.c.s.T, 0) / 5;
-      if (Math.abs(dev) > Math.max(0.5, 0.05 * T) + 1e-9) return false;
+      if (Math.abs(dev) > 0.5 + 1e-9) return false;
     }
     return new Set(pick.map(x => x.p.key)).size === pick.length;
   };
@@ -185,11 +186,24 @@ test('a big library over 50 levels finishes fast', () => {
 
 test('tolerance is on the trend T; CURVE pairs can be dropped and are counted', () => {
   const o = { trend: flat, shape: A.DEFAULTS.shape, tolerance: A.DEFAULTS.tolerance };
-  const s = A.slotFor(201, pair(5), { ...o });   // breather 0.9 T
+  const s = A.slotFor(201, pair(5), { ...o });
   assert.equal(A.levelTol(s.T, A.merge ? A.merge(A.DEFAULTS, o) : { ...A.DEFAULTS, ...o }), Math.max(1, 0.1 * 6));
   const ps = [201].map(L => { const p = exact(L); p.Dsource = 'CURVE'; return p; });
   const r1 = A.assign(ps, { from: 201, to: 201, trend: flat, dropCurve: true });
   assert.equal(r1.curveDropped, 1); assert.equal(r1.levels.filter(l => l.key).length, 0);
   const r2 = A.assign(ps, { from: 201, to: 201, trend: flat });
   assert.equal(r2.curveFilled, 1);
+});
+
+test('approved curve starts at 250 and continues at about three tries per 25 levels', () => {
+  const P = require('./policy.js');
+  assert.equal(P.familyTarget(250), 10); assert.equal(P.familyTarget(274), 12);
+  assert.equal(P.familyTarget(275), 13); assert.equal(P.familyTarget(300), 16);
+  assert.equal(P.familyTarget(325), 19);
+  assert.throws(() => P.familyTarget(249), /starts at 250/);
+  const r = A.assign([pair(10)], { from: 250, to: 250 });
+  assert.equal(r.levels[0].target, 10);
+  assert.throws(() => A.assign([], { from: 250, to: 275, shape: { peaks: true } }), /not supported/);
+  assert.throws(() => A.assign([], { from: 250, to: 275, tolerance: { rel: 0.1 } }), /Tolerance/);
+  assert.throws(() => A.assign([], { from: 250, to: 275, trend: { T0: 10, L0: 250, g: 0.99 }, }), /nondecreasing/);
 });

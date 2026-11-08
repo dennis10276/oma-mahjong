@@ -16,8 +16,8 @@
 //   shippable          s in {1, 2, 3}, clock.n <= 19, and the release test's spare
 //                      (t_clocks.js: clock.n - stored clock index - 1) also in 1..3
 //   diallable          D(1) / D(3) >= 1.2 (a puzzle property)
-//   opening clock      k <= 6 => only spare >= 2 may ship, unless the level is a named peak (a flag:
-//                      shippableOpeningRule lists the spares that also pass it; assignment decides peaks)
+//   opening clock      k <= 6 => only spare >= 2 may ship (a flag:
+//                      shippableOpeningRule lists the spares that also pass it)
 // A spare whose stored witness does not fit (clockSpare 'witnessWouldChange', the peek-pair shortcut
 // of gate A3) is still rated as a probe with clock.n = k + s so its neighbours can be judged; it can
 // never ship.
@@ -90,7 +90,7 @@ function applyRules(points, steps, rules = DEFAULT_RULES, { k = null } = {}) {
   return {
     verdicts,
     shippable,
-    openingClock: { k, restricted: openingRestricted, rule: `k <= ${R.openingClockK} => spare >= ${R.openingClockMinSpare} unless a named peak` },
+    openingClock: { k, restricted: openingRestricted, rule: `k <= ${R.openingClockK} => spare >= ${R.openingClockMinSpare}` },
     shippableOpeningRule: shippable.filter(s => verdicts[s].openingClockOk),
     ratio13: ratio,
     // Delta-method SE of D(1)/D(3), unpaired (conservative); unsettled = the 1.2 cut lies within 1 SE of the ratio.

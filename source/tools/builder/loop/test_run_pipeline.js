@@ -87,7 +87,33 @@ test('each gate rejects with its name; load-dependent static failures are not wr
   assert.match(s4.text, /static failures by gate: A4 1, A6 1/);
   const d6 = deps({ ys: fakeYs({ S: () => 2.1 }) });
   P.runPipeline({ n: 1, writeRunLog: false }, d6);
-  assert.match(d6.library.rejects()[0].reason, /S 2.1 < 2.2/);
+  assert.match(d6.library.rejects()[0].reason, /S 2.1 outside 2.5-6/);
+});
+
+test('pipeline has per-board skilled limits and an explicit minimum-2 fallback, without hidden margins', () => {
+  for (const S of [2.49, 6.01]) {
+    const d = deps({ ys: fakeYs({ S: () => S }) });
+    const r = P.runPipeline({ n: 1, writeRunLog: false }, d);
+    assert.equal(r.steps.planner.fail, 1); assert.equal(d.library.entries().length, 0);
+  }
+  for (const S of [2.5, 6]) {
+    const d = deps({ ys: fakeYs({ S: () => S }) });
+    assert.equal(P.runPipeline({ n: 1, writeRunLog: false }, d).steps.library.pass, 1);
+  }
+  const fallback = deps({ ys: fakeYs({ S: () => 2 }) });
+  assert.equal(P.runPipeline({ n: 1, skilledFloor: 2, writeRunLog: false }, fallback).steps.library.pass, 1);
+  assert.equal(fallback.library.entries()[0].S.fallback, true);
+  assert.throws(() => P.runPipeline({ skilledFloor: 1.99 }, deps()), /Every level requires/);
+  assert.throws(() => P.runPipeline({ plannerMargin: 0.3 }, deps()), /Every level requires/);
+});
+
+test('a normal skilled rejection does not hide the same candidate from a fallback run', () => {
+  const d = deps({ ys: fakeYs({ S: () => 2.2 }) });
+  assert.equal(P.runPipeline({ n: 1, writeRunLog: false }, d).steps.planner.fail, 1);
+  const r = P.runPipeline({ n: 1, skilledFloor: 2, writeRunLog: false }, d);
+  assert.equal(r.steps.library.pass, 1);
+  assert.equal(d.library.entries()[0].S.fallback, true);
+  assert.match(r.pipeline, /fallback-2$/);
 });
 
 test('ship spares: curve AND A4; traces and C1 drop spares; C2 only marks S untrusted; none left rejects', () => {

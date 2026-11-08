@@ -1,0 +1,17 @@
+# Builder continuation, 2026-11-08
+
+Codex resumed the local results after `68724b93` on `wip/cc-builder-loop`. No heavy experiment was running. E3, E4, E5, E7 and both E6 chunks had completed locally; their reports/scripts were uncommitted. The old workflow reference is not treated as proof of a currently running job.
+
+E6's missing report is now generated from both run summaries, the complete reject ledger and gate log, with accounting/coverage regression tests. Result: zero library candidates from 500 attempts in 14.4 CPU-minutes. This triggers the supply stop rule; cost per finished level is unmeasured. Five exact finalists were rebuilt and verified by content hash, and their supplemental curves now include spare 4. The 30-curve dial test remains inconclusive.
+
+Dennis's decisions are recorded in the root `LEVEL-DESIGN-FACTS.md` and its tracked copy at `source/analysis/builder/LEVEL-DESIGN-FACTS.md`. New work starts at 250: family 10 at 250, 12 at 274, 13 at 275, then approximately +3 per 25 levels. Default skilled band 2.5-6 per level; explicit minimum-2 fallback is allowed if really needed and must be shown separately. No skilled averaging, hidden screening margin, or automatic difficulty dips/peaks. Assignment and pipeline enforce those rules and flag fallback use. Fixed tolerances are ±1 per level and ±0.5 for each five-level window.
+
+The pipeline version changed so old-policy rejects do not suppress boards under the current default policy. Normal and fallback runs have separate rejection identities, and automatic resume checks the current policy and target band. Use isolated ledgers for comparable experiments. E5's gate calibration stays an experimental profile; its thresholds were based on only ten liked and seven disliked boards. Defaults for A7 and B1-B7 remain unchanged. Regression tests now exercise the threshold overrides as well as default behavior.
+
+The older reports are evidence, not shipping instructions. E4's suggested T(200)=6.7 does not override the approved T(250)=10. E7 covers eighteen available 200-225 boards, not all twenty-six slots; its keep/re-dial/replace labels used old targets and criteria and do not authorize replacement. Dennis's known lab wins must count where exact board identity is established. In particular, 225's skilled-bot mismatch is not authority to disregard Dennis's 4-try, 5-star result.
+
+Next work is the isolated Gemini G5 visible-choice builder task in `TASK-G5-visible-choice-builder.md`. It is prepared for handoff, not claimed as running. The current checkout named `gemini-g5` contains unrelated, uncommitted human-bot work and must not be reused. There are no review agents. All heavy CPU runs are serialized through `heavy.js`.
+
+No changes to main, game levels, production assets, Firebase or releases are part of this continuation. The ruler still caps campaigns at twenty tries, so higher future targets need validated measurement rather than a silently flattened curve.
+
+Validation: all 104 builder-loop/research checks passed in the complete suite. A subsequent pipeline-policy change passed all nine pipeline tests, including one added regression proving that a normal-floor reject cannot hide the same candidate from an explicit fallback run (105 distinct checks in total). All research scripts passed `node --check`; `git diff --check` passed.

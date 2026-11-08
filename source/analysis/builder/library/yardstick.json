@@ -147,15 +147,15 @@
   "tolerance": {
     "level": {
       "abs": 1,
-      "rel": 0.1,
-      "rule": "|D_accept - T| <= max(1, 0.10 T)"
+      "rel": 0,
+      "rule": "|D_accept - T| <= 1"
     },
     "window": {
       "abs": 0.5,
-      "rel": 0.05,
-      "rule": "5-level window mean within max(0.5, 0.05 T)"
+      "rel": 0,
+      "rule": "every 5-level window mean within 0.5"
     },
-    "note": "The relative part above D 10 is a decision for Dennis (synthesis section 2)."
+    "note": "Dennis's fixed tolerances, reaffirmed 2026-11-08. No relative widening."
   },
   "curveRules": {
     "monotoneSlack": 0.5,
@@ -176,6 +176,6 @@
       1,
       3
     ],
-    "note": "canShip follows synthesis section 3. openingClock (k at move 0 <= 6 means spare >= 2 unless a named peak) is a flag; shippableOpeningRule lists the spares that also pass it. releaseTestSpare is the spare t_clocks.js checks: clock.n - (index of the clock in the stored solution) - 1 must be 1-3."
+    "note": "canShip follows synthesis section 3. openingClock (k at move 0 <= 6 means spare >= 2) is a flag; shippableOpeningRule lists the spares that also pass it. No peak exception. releaseTestSpare is the spare t_clocks.js checks: clock.n - (index of the clock in the stored solution) - 1 must be 1-3."
   }
 }

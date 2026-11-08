@@ -1,5 +1,7 @@
 # Oma's Mahjong level process: frozen puzzles, one dial, honest yardstick
 
+Updated 2026-11-08 to Dennis's decisions in `LEVEL-DESIGN-FACTS.md`: new levels start at 250; family 10 at 250, 12 at 274, 13 at 275, then about +3 per 25 levels. Skilled target is 2.5-6 per level, with an explicit minimum of 2 if really needed. Record each fallback level; never average skilled ratings across levels. There are no difficulty dips or peak slots. E1-E7 results remain historical experiments, not authority to override these decisions.
+
 ## 1 Thesis
 
 The record shows three separate causes of difficulty jumps. Each needs its own fix.
@@ -13,7 +15,7 @@ The process:
 - **Build once and freeze.** The builder makes readable puzzles once. After a puzzle has been measured it is never changed, except for its clock budget through `knobs.clockSpare`.
 - **Measure the whole curve.** For each puzzle, measure family difficulty at every clock budget (spare 0-3) with one pinned family bot on paired seeds. Confirm the value we will ship on fresh seeds that were never used for any choice.
 - **Reject unintended difficulty.** A puzzle is refused unless its difficulty comes from a readable, early, learnable trap. Engine proofs, bot traces and counterfactual checks enforce this.
-- **Place pairs on a slow curve.** Each level gets a (puzzle, spare) pair on a slowly rising log curve. Rules guard against a cliff at the neighbouring spare, and the known human spike patterns are banned or rationed.
+- **Place pairs on the approved curve.** Each level gets a (puzzle, spare) pair on the steadily rising curve starting at 250. Rules guard against a cliff at the neighbouring spare, and the known human spike patterns are banned or rationed.
 - **Real play sets only the slope.** The loop is windowed, deadbanded and rate-limited, and it only touches levels nobody has opened.
 
 There are two axes:
@@ -125,14 +127,13 @@ D is used as an ordinal ruler. Its scale against real players comes from a map M
    - Removed: frozen keys (frozenGuards and chainReaction are dropped), hidden keys (both key glyphs visible at the start), hidden objectives (readable).
    - Flagged: reference vs key-memory disagreement, and the planner face-up artifact (gates C1-C3 in section 4).
 6. **The known human spike patterns are banned or rationed.**
-   - **Opening-clock rule:** if engine.clockShortest k at move 0 is 6 or less, the shipped spare must be at least 2, unless the level is a named peak.
+   - **Opening-clock rule:** if engine.clockShortest k at move 0 is 6 or less, the shipped spare must be at least 2.
    - **Spare-1 rationing:** spare 1 on at most 1 level in 5, never on two levels in a row. The family's walls (132, 149, 150, and PUK on 82) are 1-move margins. On live 90-199 by spare, the weighted real tries are 4.35 / 3.50 / 2.98 at spare 1/2/3. This compares different puzzles and is confounded (n is about 32/40/8 in the judge's recount), but the direction holds.
    - **Late squeeze and hidden-tile gates:** see section 4.
 7. **Assignment keeps neighbours close.**
-   - Per-level tolerance as in section 5.
-   - The 5-level window mean must be within ±0.5 (±5% above D 10).
-   - Spike cap: no non-peak level more than +10% (at least +1) above trend.
-   - One named peak per 10 levels at most, on the big-board slot, at +15%.
+   - Per-level tolerance is ±1 try.
+   - The 5-level window mean must be within ±0.5.
+   - No level more than +1 try above its curve target. Big-board slots have the same target rule.
    - Player-loop's mix of gentle levels next to hard ones is **not** used: it brings back the easy-hard alternation Dennis rejected.
 8. **The real-data loop cannot oscillate.** It acts only when the gap exceeds 2 SE and 0.15 logit and the leave-one-player-out check agrees. It moves by at most one slope step per window, never acts within 10 levels of any player's frontier, and never changes a level that has been started.
 
@@ -153,7 +154,7 @@ The gates run in order of cost. "Report-only" gates are logged but do not reject
 | A5 | Priced temptation | new `detour.js`. At one or more witness states in the first 15-60% of the way there is a visible tempting move (a free face-up pair or match not on toClock) whose cost, clockShortest after it minus the remaining clock moves, is 1-2. This gives the dial a meaning: each extra spare move buys one such mistake |
 | A6 | Fair lose-forks | new `publicfork.js`. Any tempting move that loses outright at every shippable spare must: be 'lose', with a goal-directed alternative 'win', under K=4 permutations of the face-down pictures (K=16 once the cost is known); have a losing branch whose loss shows within 6 removals; and sit while at least 60% of tiles are left. A losing tempting move that fails this rejects the board. 'unknown' is a warning until E6 measures the yield |
 | A7 | Luck bounded | room profile unrelieved = 0, `luck.tightBlind` ≤ 1; winnable from the start in all K permutations |
-| A8 | Opening clock | k at move 0 ≤ 6 → mark "spare ≥ 2 only" (or a named peak) |
+| A8 | Opening clock | k at move 0 ≤ 6 → mark "spare ≥ 2 only" |
 | A9 | Original and shaped | `originality.js` (D4 overlap under 75%, or Dennis's relaxed rule), no blob or block shapes, boards over 88 tiles only for lv%10==0 slots |
 
 **B. Trace gates** (40 family campaigns captured from the CURVE block at each spare that could ship; `loop/traces.js` wraps task11_capture.js and task11_scoring.js; about 20-40 s per puzzle)
@@ -175,7 +176,7 @@ The gates run in order of cost. "Report-only" gates are logged but do not reject
 
 **D. Curve gates** (`loop/dial_curve.js`): monotone, not censored, tighter-neighbour (section 3). D(1)/D(3) ≥ 1.2 marks a puzzle "diallable". A flat puzzle may still ship as "fixed" if it passes B and C, but it can never be re-dialled.
 
-**E. Skilled band:** S at spare 2 between 2.5 and 6 (whether hard or soft is a decision for Dennis), aiming for 3-6. Dennis rates 4-6-try wins 4.1 stars and first-try wins 2.3.
+**E. Skilled band:** target S between 2.5 and 6 on every level. Dennis permits a minimum of 2 if really needed. Report normal and fallback supply separately and record each level using S below 2.5; none below 2 or above 6. No hidden screening margin or averaging across levels. Dennis's actual lab results count where the exact puzzle identity is established.
 
 **Card.** Each accepted pair carries one sentence a person can read. Example: "Take the free pair before the clock and you lose a move; you can afford 2." Also its archetype label (A1 free-pair relief, A2 keys before the clock, A3 thaw order, A5 second act) and the measured share of errors at the trap. Labels come from the A5/A6 analysis of what the builder produced. Building archetypes on purpose is later work, because builder v3's greedy pairing cannot make them today.
 
@@ -183,31 +184,19 @@ The gates run in order of cost. "Report-only" gates are logged but do not reject
 
 **Anchor (E4).** Rate live 175-199 plus 91, 132 and 150 on the pinned ruler, and re-read the fresh plays export from 2026-11-07. The draft from that export puts live 152-191 at family-weighted Y ≈ 3.3-3.8, with Dennis winning about 64-70% first try.
 
-- Proposed start: T(200) = 1.15 × the upper quartile of D on 190-199, but no higher than the ruler's reading of 132 and 150.
-- "10 at 200" is shown to Dennis translated: on the old scale it was above every live level except 124, and it was largely about skilled feel. That feel is addressed by S 3-6 from puzzle selection, not by the family target.
+- E4's suggested lower start at 200 is historical evidence only. It does not set the new starting target.
+- Dennis's approved start is family 10 at 250, with skilled target 2.5-6 and an explicit minimum-2 fallback if needed.
 
-**Trend.** Log-linear in D, T(L) = T(200)·g^(L−200). Dennis picks g. Example with a start of 6:
-
-| g per level | 225 | 250 | 275 | 300 | 350 |
-|---|---|---|---|---|---|
-| +1.0% | 7.7 | 9.9 | 12.6 | plateau | plateau |
-| +0.6% | 7.0 | 8.1 | 9.4 | 10.9 | 14.7 |
-
-**Shape within each 10 levels:**
-
-- positions 1-2 at −10% (breathers);
-- positions 3-9 on trend;
-- lv%10==0 (big board) is a named peak at +15%;
-- no level outside a named peak above trend +10%.
+**Trend.** Family target 10 at 250, rising evenly to 12 at 274, then 13 at 275. After 275, increase about as much per 25 levels: +3 tries (about 16 at 300 and 19 at 325). `loop/policy.js` holds this curve. There are no per-position difficulty modifiers. Big boards remain on every tenth slot, without a difficulty boost.
 
 **Tolerance:**
 
-- per level: |D_accept − T| ≤ max(1, 0.10·T);
-- 5-level window mean: within max(0.5, 0.05·T).
+- per level: |D_accept − T| ≤ 1, including an independent seed check;
+- every 5 consecutive levels: mean within 0.5 of the curve.
 
-**Ceiling.** Above about D 14-16 the meter saturates: the 20-try cap, bimodal ratings, flat dials. The proposal is to hold the family trend at 14. After that, "harder" comes from skilled (S aims 4-6), from more variety, or from switching the ruler to p_hat. Dennis decides.
+**Measurement limit.** Above about D 14-16 the current meter loses resolution because of its 20-try cap. Do not flatten the approved curve to fit the meter. Targets beyond its reliable range must be reported as unresolved until a suitable measure is validated.
 
-**Skilled track.** S aims 3-4 at 200 and 4-6 by 250. The reality check is Dennis's own first-try rate per window, aiming from about 65% down to about 50% (his 2026-10-28 wish).
+**Skilled track.** Normal band 2.5-6, independently of neighbours; an explicitly recorded fallback may go down to 2 if needed. A level below 2 cannot be compensated by a harder one.
 
 **Real player data: the outer loop only**
 
@@ -217,7 +206,7 @@ The gates run in order of cost. "Report-only" gates are logged but do not reject
 4. **Retarget slowly.** Only if the gap clears the deadband and the leave-one-player-out check, change g for windows not yet built or opened, by at most one step (±0.25% per level). With Dennis's OK, re-dial levels that are shipped but unopened by exactly one spare. That is possible only because every shipped curve is already measured.
 5. **Guardrails:**
    - **Gerda:** no board predicted above 3× her window median, and no window above about 12 expected tries for her.
-   - **Defects:** any level where Gerda or Mrs Doubtfire needs more than 20 tries outside a named peak is a defect. Diagnose it with real_losses.js (loss phase, tiles left) and append it to a spike ledger whose features feed back into gates A8 and B.
+   - **Defects:** any level where Gerda or Mrs Doubtfire needs more than 20 tries triggers investigation. Diagnose it with real_losses.js (loss phase, tiles left) and append it to a spike ledger whose features feed back into gates A8 and B.
 6. **Refit M** per fingerprint and report spike AUC and window error, never MAE alone.
 
 **Grandma (OmaHanny)** gets her own monitor (care_monitor.js) with a first-try target of at least 70% per 10 levels. Her data never enters the family fit. Her actuator, the CARE_CATCHUP pace, is game code and needs Dennis's OK.
@@ -243,7 +232,7 @@ New code goes under `cc-builder-loop/source/tools/builder/loop/`; data under `cc
 
 **4. Family screen.** `screen.js`: 20-campaign SCREEN prefix at spare 1 and spare 3. Keep the board if D(1) ≥ the lowest open target − 1, D(3) ≤ the highest open target + 1, and D(1) < 18.5. About 2 × 1 s with the fast path.
 
-**5. Skilled screen.** Planner once at spare 2 (27-51 s with the fast path; it barely speeds up). Keep S ≥ floor − 0.3. This is the main CPU cost and the main yield filter, so it runs before curves are paid for.
+**5. Skilled screen.** Planner at spare 2; normal band 2.5 ≤ S ≤ 6. An explicit fallback pass may use 2 ≤ S ≤ 6 if needed, with separate counts and per-level flags. G4 speeds this up; see its measured timings. No hidden margin or skilled averaging.
 
 **6. Dial curve.** `dial_curve.js`: 80 paired CURVE campaigns at spares 0-3 (spare 4 is measurement-only), about 15 s with the fast path. Records D, p_hat, the paired step SEs and the loss-phase split. Applies the D rules and marks which spares could ship.
 
@@ -263,7 +252,7 @@ Unused puzzles stay for later, harder windows, so the cost per level falls as th
 **9. Assign.** `assign_levels.js` adapts `batch_assign.js` and `curve_policy.js`. Branch-and-bound over (puzzle, spare) pairs that minimises Σ|log D − log T|, subject to:
 
 - level and window tolerances;
-- the spike cap and peak slots;
+- the steadily rising curve and ±1 per-level tolerance;
 - big boards only on lv%10==0;
 - the opening-clock rule and spare-1 rationing;
 - no story twice within 3 levels;
@@ -356,7 +345,7 @@ Unused puzzles stay for later, harder windows, so the cost per level falls as th
 - **Method:** 500 readable v3 builds through steps 3-10 against a mock curve. Full curves (spare 0-4) for every puzzle that reaches step 6, aiming for at least 30. Record the pass rate per gate.
 - **Cost:** about 2-4 CPU-h as the single heavy job.
 - **Kill:**
-  - If there are fewer than 3 accepted pairs per 500 builds, or more than 60 CPU-min per accepted level, supply is the problem. The next work goes into the builder making real visible choices (A1-A3 archetype construction), or into the skilled floor becoming a window average with Dennis's OK. It does not go into more measurement.
+  - If there are fewer than 3 accepted pairs per 500 builds, or more than 60 CPU-min per accepted level, supply is the problem. The next work goes into the builder making real visible choices (A1-A3 archetype construction). Target skilled 2.5-6; quantify the permitted minimum-2 fallback separately, never averaging. It does not go into more measurement speed.
   - If fewer than 30% of curves in the 6-16 mid band can ship, or more than 15% are non-monotone beyond noise, demote the dial to a trim and fill slots by selection from a larger library.
 
 **E7: re-dial or replace the kept 200-225 boards**
@@ -380,9 +369,9 @@ The prior for the last one is poor: Task 10 traps had about 0 effect.
 2. Where should 200 start: a step above how hard 190-199 actually were, or your original "10 at 200"? On the bot's scale, 10 is harder than 132 and 150, where Gerda needed 73-82 tries.
 3. How fast should it rise after that: about +1% per level (10 around 250), or slower (+0.6%, 10 around 300)?
 4. When the family bot reaches about 14 tries (the limit of what it can measure), should the family difficulty hold there while it keeps getting harder for you, or should it keep rising on a different measure?
-5. Must every level need at least 2.5 tries from the skilled bot, or is a 5-level average of 2.5 enough? A hard floor is the main reason boards get rejected.
-6. A 1-move clock margin on at most 1 level in 5, never twice in a row, and never on a fast opening clock unless it is a named peak: OK?
-7. One named, readable peak per 10 levels (the big board), at about +15%: wanted?
+5. Settled 2026-11-08: target skilled 2.5-6 per level; minimum may go down to 2 if really needed, with explicit per-level flags. Averaging is removed.
+6. A 1-move clock margin on at most 1 level in 5, never twice in a row, and never on a fast opening clock: OK?
+7. Settled 2026-11-08: no alternating easier levels and peaks. Big boards get no difficulty exception.
 8. Boards whose fastest clock route needs a peek pair: reject them (simplest), or let the game's checker and hint learn peek pairs?
 9. May a new puzzle reuse an existing layout shape? If so, how many levels apart?
 10. The kept 200-225 boards: re-dial the ones a spare can fix, and replace 205, 213 and the ones with hidden routes (200, 202, 212)?
@@ -393,7 +382,7 @@ The prior for the last one is poor: Task 10 traps had about 0 effect.
 
 ## 9 Risks
 
-- **Supply, not measurement, is likely the limit.** Skilled 2.5-6 on readable boards is about 10% (8 of 74; 20 of 210 rows in a recount). Builder output is bimodal (18 of 105 ladder rows in 6-13). Stacked gates may give under 1% joint yield. E6 measures this before any promise is made. Fallbacks are to build real choices into the builder (days of work, and builder.js is shared) or to soften the skilled floor with Dennis's OK.
+- **Supply, not measurement, is the limit.** E6 produced zero library candidates per 500 builds, even under its historical relaxed screening margin. The next work builds real visible choices into the builder; keep the normal skilled band and report the permitted minimum-2 fallback separately.
 - **The dial is narrow.** Only spares 1-3 can ship (t_clocks, clock.n ≤ 19). A smooth step is about 1.3 tries, and about a third of mid-band steps are cliffs or flat. Many puzzles will offer one usable spare, so the library must be wide.
 - **The dial does nothing for skilled difficulty.** The family curve could rise while Dennis keeps winning first try (2.3 stars). His real first-try rate per window will show this, but only after he has played.
 - **The bot curve may not be the human curve.** People learn routes across tries and lose earlier. The family bot repeats known losing moves (543 repeats, 1 win in 711 late attempts), which inflates D on hard boards. Gate B7 and real-data guardrails reduce this but do not remove it. Spikes of the 132 kind can still appear through mechanisms nobody has found.

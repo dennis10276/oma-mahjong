@@ -19,7 +19,7 @@
 //   planner   yardstick planner at spare 2: keep if S >= skilled floor - 0.3 and the rating is valid.
 //   curve     dial_curve.js measureCurve, CURVE block at spares 0-3. The spares that may go on are those the curve
 //             can ship AND at which A4 holds (static gates detail.okSpares). Spare 1 on a fast opening clock (A8) is
-//             kept here: assign_levels.js allows it only on a named peak. None left -> reject.
+//             removed from the eligible spares. None left -> reject.
 //   traces    traces.js traceGates B1-B7 at each of those spares: a spare whose trace gates fail (pass === false) is
 //             dropped; undecided (null) spares stay and are noted. B7 gives the spare its maxTarget.
 //   C1        counterfactual.js c1 at each remaining spare: a spare that fails is dropped.
@@ -30,19 +30,21 @@
 // Without --dry-run it refuses to start unless heavy.js launched it (or --no-heavy-check).
 const fs = require('fs'), path = require('path'), os = require('os'), crypto = require('crypto');
 const Lb = require('./library.js');
+const Policy = require('./policy.js');
 
-const VERSION = 'pipeline-v1';
+const VERSION = 'pipeline-v2-strict250';
 const ROOT = path.resolve(__dirname, '../../../..');
 const BRIEFS = path.resolve(__dirname, '../briefs-v1.json');
 const EXCLUDED_STORIES = ['frozenGuards', 'chainReaction'];
 const STEPS = ['build', 'dedupe', 'static', 'screen', 'planner', 'curve', 'traces', 'C1', 'C2', 'library'];
 const DEFAULTS = Object.freeze({
   n: 50, start: 0, seedBase: 1, maxMinutes: 18,
-  targets: [5, 9],            // the lowest and highest open target the screen keeps boards for
-  skilledFloor: 2.5, plannerMargin: 0.3, plannerSpare: 2,
+  targets: [10, 13],          // approved opening curve, levels 250-275
+  skilledFloor: 2.5, plannerMargin: 0, plannerSpare: 2,
   curveSpares: [0, 1, 2, 3], traceCampaigns: 40,
   staticOptions: { stopEarly: true },
 });
+const pipelineVersion = opts => VERSION + (opts.skilledFloor < Policy.SKILLED.lo ? '-fallback-' + opts.skilledFloor : '');
 
 // ---------- candidates ----------
 const candidateBriefs = briefs => briefs.filter(b => !EXCLUDED_STORIES.includes(b.story));
@@ -62,7 +64,7 @@ const failedGates = sg => Object.entries(sg.gates || {}).filter(([, g]) => g && 
 
 // ---------- one candidate ----------
 function processCandidate(cand, ctx) {
-  const { deps, opts, stats, lib, run } = ctx, ys = deps.ys;
+  const { deps, opts, stats, lib, run, pipeline } = ctx, ys = deps.ys;
   const brief = cand.brief, tag = { briefId: brief.id, story: brief.story, layout: brief.layout ?? null, shape: brief.shape ?? null, seed: brief.seed, index: cand.index };
   const cpu = {};
   const step = (name, fn) => {
@@ -78,12 +80,12 @@ function processCandidate(cand, ctx) {
 
   // dedupe (resume)
   const key = step('dedupe', () => Lb.contentKey(design));
-  const seen = lib.has(key, { pipeline: VERSION });
+  const seen = lib.has(key, { pipeline });
   if (seen) { stats.dedupe.fail++; return { outcome: 'skip', key, seen }; }
   stats.dedupe.pass++;
   const reject = (gate, reason, extra = {}) => {
     stats[gate].fail++;
-    lib.reject({ key, ...tag, gate, reason: String(reason).slice(0, 500), run, pipeline: VERSION, tiles, ...extra });
+    lib.reject({ key, ...tag, gate, reason: String(reason).slice(0, 500), run, pipeline, tiles, ...extra });
     return { outcome: 'reject', key, gate, reason };
   };
 
@@ -112,14 +114,14 @@ function processCandidate(cand, ctx) {
   const plPin = ys.pins?.planner?.fingerprint;
   if (!pl || pl.valid !== true || !Number.isFinite(pl.S)) return reject('planner', 'no valid planner rating (valid=' + pl?.valid + ')' + (pl?.fail ? ': ' + pl.fail : ''), { S: pl?.S ?? null });
   if (plPin && pl.fingerprint && pl.fingerprint !== plPin) return reject('planner', `planner fingerprint ${String(pl.fingerprint).slice(0, 8)} != pin ${plPin.slice(0, 8)}`, { S: pl.S });
-  if (pl.S < opts.skilledFloor - opts.plannerMargin) return reject('planner', `S ${r3(pl.S)} < ${r3(opts.skilledFloor - opts.plannerMargin)}`, { S: r3(pl.S) });
+  if (pl.S < opts.skilledFloor || pl.S > Policy.SKILLED.hi) return reject('planner', `S ${r3(pl.S)} outside ${opts.skilledFloor}-6`, { S: r3(pl.S) });
   stats.planner.pass++;
 
   // dial curve
   const curve = step('curve', () => deps.measureCurve(design, ys, { spares: opts.curveSpares }));
   const spareNotes = {};
   for (const s of curve.shippable || []) if (!a4Spares.includes(s)) spareNotes[s] = 'A4 fails at this spare';
-  let ship = (curve.shippable || []).filter(s => a4Spares.includes(s));
+  let ship = (curve.shippable || []).filter(s => a4Spares.includes(s) && !(sg.gates?.A8?.flag && s < 2));
   if (!ship.length) {
     const why = Object.values(curve.verdicts || {}).filter(v => v.reasons?.length).map(v => `s${v.spare}: ${v.reasons.join('+')}`).join('; ');
     return reject('curve', `no spare could ship (curve ${JSON.stringify(curve.shippable || [])}, A4 ${JSON.stringify(a4Spares)})` + (why ? ': ' + why : ''), { D: (curve.points || []).map(p => r3(p.D)) });
@@ -166,7 +168,7 @@ function processCandidate(cand, ctx) {
   const res = step('library', () => {
     const e = Lb.makeEntry({ design, k, run, story: brief.story, layout: brief.layout ?? null, shape: built.card?.shape ?? brief.shape ?? null, briefId: brief.id, seed: brief.seed,
       secondAct: !!brief.secondAct, curve, shipSpares: ship,
-      S: { S: pl.S, valid: true, trusted, styles: pl.styles ?? null, spare: opts.plannerSpare, fingerprint: pl.fingerprint ?? null, faceUp: cf.C2?.faceUp ?? null },
+      S: { S: pl.S, fallback: pl.S < Policy.SKILLED.lo, valid: true, trusted, styles: pl.styles ?? null, spare: opts.plannerSpare, fingerprint: pl.fingerprint ?? null, faceUp: cf.C2?.faceUp ?? null },
       gates: { static: sg, screen: scrSummary, traces, counterfactuals: cf, spareNotes },
       card, fingerprints: ctx.fingerprints, cpu });
     if (e.key !== key) throw Error('content key changed while freezing the design');
@@ -188,6 +190,9 @@ function codeFingerprints() {
 
 function runPipeline(optsIn = {}, deps) {
   const opts = { ...DEFAULTS, ...optsIn };
+  Policy.assertSkilledOptions({ lo: opts.skilledFloor });
+  if (opts.plannerMargin !== 0) throw Error('Every level requires an explicit skilled minimum; hidden screening margins are not supported');
+  const pipeline = pipelineVersion(opts);
   const lib = deps.library;
   const log = deps.log || (s => process.stderr.write(s + '\n'));
   const now = deps.now || Date.now;
@@ -196,8 +201,8 @@ function runPipeline(optsIn = {}, deps) {
   const run = optsIn.run || new Date(now()).toISOString().replace(/[:.]/g, '-') + (opts.dryRun ? '-dry' : '');
   const stats = newStats(), outcomes = {}, t0 = now(), tAll = timer();
   const fingerprints = { family: deps.ys.fingerprint ?? null, reference: deps.ys.referenceFingerprint ?? null, planner: deps.ys.pins?.planner?.fingerprint ?? null,
-    familyBot: deps.ys.pins?.family?.botVersion ?? null, code: deps.code ?? null, pipeline: VERSION };
-  const ctx = { deps, opts, stats, lib, run, fingerprints };
+    familyBot: deps.ys.pins?.family?.botVersion ?? null, code: deps.code ?? null, pipeline };
+  const ctx = { deps, opts, stats, lib, run, fingerprints, pipeline };
   let done = 0, stopped = null;
   const errors = [];
   for (let i = opts.start; i < opts.start + opts.n; i++) {
@@ -216,7 +221,7 @@ function runPipeline(optsIn = {}, deps) {
   }
   const total = tAll();
   const summary = {
-    schema: 'pipeline-run-v1', run, pipeline: VERSION, dryRun: !!opts.dryRun, at: new Date(now()).toISOString(),
+    schema: 'pipeline-run-v1', run, pipeline, dryRun: !!opts.dryRun, at: new Date(now()).toISOString(),
     range: [opts.start, opts.start + done - 1], next: opts.start + done, requested: opts.n, done, stopped,
     options: { targets: opts.targets, skilledFloor: opts.skilledFloor, plannerMargin: opts.plannerMargin, seedBase: opts.seedBase, curveSpares: opts.curveSpares, traceCampaigns: opts.traceCampaigns },
     briefs: list.length, excludedStories: EXCLUDED_STORIES, outcomes,
@@ -303,7 +308,9 @@ function main() {
   const seedBase = +(a['seed-base'] ?? DEFAULTS.seedBase);
   let start = a.start === undefined ? 0 : a.start;
   if (start === 'auto') {
-    const runs = Lb.readJsonl(path.join(libDir, 'pipeline-runs.jsonl')).filter(r => !!r.dryRun === dry && (r.options?.seedBase ?? 1) === seedBase);
+    const floor = +(a['skilled-floor'] ?? DEFAULTS.skilledFloor), targets = a.targets ? String(a.targets).split(',').map(Number) : DEFAULTS.targets;
+    const runs = Lb.readJsonl(path.join(libDir, 'pipeline-runs.jsonl')).filter(r => !!r.dryRun === dry && (r.options?.seedBase ?? 1) === seedBase
+      && r.pipeline === pipelineVersion({ skilledFloor: floor }) && JSON.stringify(r.options?.targets) === JSON.stringify(targets));
     start = runs.length ? Math.max(...runs.map(r => r.next)) : 0;
   }
   const opts = {

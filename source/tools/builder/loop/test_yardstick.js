@@ -109,7 +109,7 @@ test('accept: sequential rule (160 -> accept / refuse / 320)', () => {
     return { expectedTries: D, firstTryRate: 0, valid: true, results };
   };
   const fresh = () => Y.createYardstick({ measure });
-  assert.equal(fresh().tolerance(5), 1); assert(Math.abs(fresh().tolerance(14) - 1.4) < 1e-12);
+  assert.equal(fresh().tolerance(5), 1); assert.equal(fresh().tolerance(14), 1);
   let a = fresh().accept(board(8), 8.4);
   assert.equal(a.decision, 'accept'); assert.equal(a.stage, 1); assert.equal(a.n, 160); assert.deepEqual(a.blocks, [0, 4]); assert.deepEqual(a.reserved, [0, 8]);
   a = fresh().accept(board(12), 8);
@@ -126,10 +126,11 @@ test('accept: sequential rule (160 -> accept / refuse / 320)', () => {
   dOf.clear();
   a = fresh().accept(board(9), 7.9, 1);
   assert.equal(a.stage, 2); assert.equal(a.decision, 'refuse');
-  // Relative tolerance above D 10: T 15.5 -> tol 1.55; D 16 is within 0.6 * 1.55 -> accept. T 15, D 16: gap 1 > 0.9 -> stage 2.
+  // Fixed tolerance even above D 10: gap 0.5 accepts early, gap 1 requires the second look.
   a = fresh().accept(board(16), 15.5);
-  assert(Math.abs(a.tol - 1.55) < 1e-12); assert.equal(a.decision, 'accept'); assert.equal(a.stage, 1);
+  assert.equal(a.tol, 1); assert.equal(a.decision, 'accept'); assert.equal(a.stage, 1);
   assert.equal(fresh().accept(board(16), 15).stage, 2);
+  assert.throws(() => fresh().accept(board(16), 15, 1.55), /at most 1/);
   // Stage 2 does not re-measure stage 1 (8 meter calls in all).
   let calls = 0; const counting = Y.createYardstick({ measure: (b, st) => { calls++; return measure(b, st); } });
   counting.accept(board(9), 8); assert.equal(calls, 8);

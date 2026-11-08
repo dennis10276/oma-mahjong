@@ -3,23 +3,20 @@
 // Assign (puzzle, spare) pairs to a level range (process-design-synthesis.md section 5 and section 6 step 9).
 //
 //   const A = require('./assign_levels.js');
-//   A.assign(pairs, { from: 200, to: 225, trend: { T0: 6, L0: 200, g: 1.006, cap: 14 }, ... })
+//   A.assign(pairs, { from: 250, to: 275 })
 //     -> { levels, unfillable, windows, totalCost, proven, nodes, holes, text }
 //
 // Minimises sum |log D - log target| by depth-first branch-and-bound in level order (candidates cheapest first,
 // lower bound = the cheapest per-level cost of every level still open). Constraints:
-//   trend       T(L) = min(cap, T0 * g^(L - L0))                            (the cap holds the family trend at 14)
-//   shape       lv%10 in {1, 2}: target 0.9 T (breathers); lv%10 == 0: a named peak at 1.15 T, only for a big
-//               board (> 88 tiles); a normal board on lv%10 == 0 is on trend; everything else on trend
-//   level       |D - target| <= max(1, 0.10 T)   (tolerance on the trend T, as in the brief, not on the slot target)
-//   spike cap   a level that is not a named peak: D <= T + max(1, 0.10 T)
+//   trend       approved 250-275 curve, then +3 tries per 25 levels; no per-position modifiers
+//   level       |D - target| <= 1
+//   spike cap   D <= T + 1
 //   big boards  > 88 tiles only on lv%10 == 0
-//   clock       opening clock (k <= 6): spare >= 2 unless a named peak
+//   clock       opening clock (k <= 6): spare >= 2
 //   spare 1     at most 1 in any 5 consecutive levels, never two in a row
 //   story       no story twice in any 3 consecutive levels
-//   window      every 5 consecutive levels: |mean(D - target)| <= max(0.5, 0.05 mean(T))
-//   skilled     S in [2.5, 6]: floor 'hard' (every level, S must be trusted) or 'average' (every 5-level window's
-//               mean S >= 2.5, an untrusted S counting 0); the upper bound 6 holds per level either way
+//   window      every 5 consecutive levels: |mean(D - target)| <= 0.5
+//   skilled     trusted S in [2.5, 6] per level; explicit fallback may lower the minimum to 2
 //   B7          a pair whose ratings are inflated by repeated losing moves (maxTarget) only on targets <= maxTarget
 //   unique      each puzzle at most once (and never one listed in `exclude`)
 // A level no pair can fill is reported plainly ('noCandidate' with the reasons the pairs failed). When pairs exist
@@ -28,18 +25,18 @@
 // Levels before `from` can be given as context ({ level, D, spare, story, S?, target? }) so the rules between levels
 // see the levels already shipped.
 
+const Policy = require('./policy.js');
 const DEFAULTS = Object.freeze({
-  trend: { T0: 6, L0: 200, g: 1.006, cap: 14 },
-  shape: { breather: 0.9, breatherPositions: [1, 2], peak: 1.15, peaks: true, peakRequiresBig: true },
-  tolerance: { abs: 1, rel: 0.10 },
-  spike: { abs: 1, rel: 0.10 },
-  window: { size: 5, abs: 0.5, rel: 0.05 },
+  trend: Policy.TREND,
+  tolerance: { abs: 1, rel: 0 },
+  spike: { abs: 1, rel: 0 },
+  window: { size: 5, abs: 0.5, rel: 0 },
   bigBoardTiles: 88,
   openingClockMinSpare: 2,
   spare1: { window: 5, max: 1 },
   storyWindow: 3,
   archetypeWindow: 0,   // 0 = off; k = no archetype label twice in any k consecutive levels
-  skilled: { lo: 2.5, hi: 6, floor: 'hard', window: 5 },
+  skilled: Policy.SKILLED,
   holePenalty: 10,
   maxNodes: 2e6,
 });
@@ -49,14 +46,12 @@ function merge(a, b) {
   for (const [k, v] of Object.entries(b || {})) out[k] = v && typeof v === 'object' && !Array.isArray(v) && a[k] && typeof a[k] === 'object' ? merge(a[k], v) : v;
   return out;
 }
-const trendAt = (L, t) => Math.min(t.cap ?? Infinity, t.T0 * Math.pow(t.g, L - t.L0));
+const trendAt = (L, t) => t.points ? Policy.familyTarget(L) : Math.min(t.cap ?? Infinity, t.T0 * Math.pow(t.g, L - t.L0));
 
 // The slot of level L for one pair: its target and shape.
 function slotFor(L, pair, o) {
-  const T = trendAt(L, o.trend), pos = ((L % 10) + 10) % 10;
-  if (pos === 0 && o.shape.peaks && (!o.shape.peakRequiresBig || pair.bigBoard)) return { T, target: o.shape.peak * T, shape: 'peak', peak: true };
-  if (o.shape.breatherPositions.includes(pos)) return { T, target: o.shape.breather * T, shape: 'breather', peak: false };
-  return { T, target: T, shape: pos === 0 ? 'trend (no big board)' : 'trend', peak: false };
+  const T = trendAt(L, o.trend);
+  return { T, target: T, shape: 'trend' };
 }
 const levelTol = (target, o) => Math.max(o.tolerance.abs, o.tolerance.rel * target);
 
@@ -66,17 +61,21 @@ function levelCheck(L, pair, o) {
   const big = pair.bigBoard ?? (pair.tiles > o.bigBoardTiles);
   if (big && pos !== 0) return { why: 'bigBoardOffSlot', s };
   if (pair.maxTarget != null && s.target > pair.maxTarget) return { why: 'b7Inflated', s };
-  if (pair.openingClock && pair.spare < o.openingClockMinSpare && !s.peak) return { why: 'openingClock', s };
-  if (o.skilled.floor === 'hard' && !(pair.Strusted && pair.S != null && pair.S >= o.skilled.lo)) return { why: pair.S == null || !pair.Strusted ? 'skilledUnknown' : 'skilledLow', s };
-  if (pair.S != null && pair.Strusted && pair.S > o.skilled.hi) return { why: 'skilledHigh', s };
+  if (pair.openingClock && pair.spare < o.openingClockMinSpare) return { why: 'openingClock', s };
+  if (!(pair.Strusted && pair.S != null && pair.S >= o.skilled.lo)) return { why: pair.S == null || !pair.Strusted ? 'skilledUnknown' : 'skilledLow', s };
+  if (pair.S != null && pair.Strusted && pair.S > Policy.SKILLED.hi) return { why: 'skilledHigh', s };
   if (!(pair.D > 0)) return { why: 'noD', s };
   if (Math.abs(pair.D - s.target) > levelTol(s.T, o)) return { why: pair.D > s.target ? 'tooHard' : 'tooEasy', s };
-  if (!s.peak && pair.D > s.T + Math.max(o.spike.abs, o.spike.rel * s.T)) return { why: 'spike', s };
+  if (pair.D > s.T + Math.max(o.spike.abs, o.spike.rel * s.T)) return { why: 'spike', s };
   return { why: null, s };
 }
 
 function assign(pairsIn, opts = {}) {
   const o = merge(DEFAULTS, opts);
+  if (opts.trend) o.trend = opts.trend;
+  Policy.assertSkilledOptions(o.skilled);
+  if (opts.shape != null) throw Error('Difficulty dips and peaks are not supported');
+  if (o.tolerance.abs > 1 || o.tolerance.rel !== 0 || o.window.abs > 0.5 || o.window.rel !== 0) throw Error('Tolerance is at most 1 per level and 0.5 per five levels');
   const from = opts.from, to = opts.to;
   if (!Number.isInteger(from) || !Number.isInteger(to) || to < from) throw Error('assign needs integer from <= to');
   const exclude = new Set(opts.exclude || []);
@@ -85,6 +84,10 @@ function assign(pairsIn, opts = {}) {
   const curveDropped = opts.dropCurve ? notExcluded.filter(p => p.Dsource === 'CURVE').length : 0;
   const pairs = opts.dropCurve ? notExcluded.filter(p => p.Dsource !== 'CURVE') : notExcluded;
   const levels = []; for (let L = from; L <= to; L++) levels.push(L);
+  for (let i = 0; i < levels.length; i++) {
+    const T = trendAt(levels[i], o.trend);
+    if (!Number.isFinite(T) || T <= 0 || (i && T < trendAt(levels[i - 1], o.trend))) throw Error('Family curve must be finite, positive and nondecreasing');
+  }
   const nL = levels.length;
 
   // ---- per-level candidates and why the others fail ----
@@ -109,7 +112,6 @@ function assign(pairsIn, opts = {}) {
   for (let i = nL - 1; i >= 0; i--) lbSuffix[i] = lbSuffix[i + 1] + Math.min(minCost[i], allowHoles ? o.holePenalty : Infinity);
   const devMin = cand.map(c => Math.min(...c.ok.map(x => x.dev), allowHoles || !c.ok.length ? 0 : Infinity));
   const devMax = cand.map(c => Math.max(...c.ok.map(x => x.dev), allowHoles || !c.ok.length ? 0 : -Infinity));
-  const sMax = cand.map(c => Math.max(...c.ok.map(x => x.Sw), allowHoles || !c.ok.length ? o.skilled.lo : -Infinity));
 
   // ---- the timeline: context levels before `from`, then the range ----
   const ctx = (opts.context || []).filter(c => c.level < from).sort((a, b) => a.level - b.level);
@@ -120,13 +122,13 @@ function assign(pairsIn, opts = {}) {
   for (let L = first; L < from; L++) {
     const c = ctxBy.get(L);
     if (!c) { seq.push(null); continue; }   // a gap in the context: rules that need this level are skipped
-    const T = trendAt(L, o.trend), target = c.target ?? (c.peak ? o.shape.peak * T : slotFor(L, { bigBoard: false }, o).target);
+    const T = c.target ?? (o.trend.points && L < 250 ? c.D : trendAt(L, o.trend)), target = c.target ?? T;
     seq.push({ fixed: true, dev: c.D - target, spare: c.spare, story: c.story ?? null, archetype: c.archetype ?? null, S: c.S ?? null, T });
   }
   const off = seq.length;   // index of `from` in seq
   for (let i = 0; i < nL; i++) seq.push(undefined);   // undefined = not yet assigned
-  const Tof = j => trendAt(first + j, o.trend);
-  const W = o.window.size, SW = o.skilled.window;
+  const Tof = j => seq[j]?.T ?? trendAt(first + j, o.trend);
+  const W = o.window.size;
 
   // rules between levels at position j (in seq): null = fine, else the rule that breaks. Positions not yet assigned
   // (undefined) are ignored, so the same checks serve the search and the final diagnosis of holes.
@@ -161,12 +163,6 @@ function assign(pairsIn, opts = {}) {
       if (skip) continue;
       const tol = Math.max(o.window.abs, o.window.rel * Tsum / W) * W;
       if (lo > tol + 1e-9 || hi < -tol - 1e-9) return 'window';
-    }
-    if (o.skilled.floor === 'average') for (let a = j - SW + 1; a <= j; a++) {
-      if (a < off || a + SW > seq.length) continue;   // only windows inside the range (context S is often unknown)
-      let hi = 0;
-      for (let b = a; b < a + SW; b++) { const y = seq[b]; hi += y === undefined ? sMax[b - off] : y.hole ? o.skilled.lo : y.Sw; }
-      if (hi < o.skilled.lo * SW - 1e-9) return 'skilledAverage';
     }
     return null;
   }
@@ -227,7 +223,7 @@ function assign(pairsIn, opts = {}) {
         return;
       }
       outLevels.push({ level: L, T: round(c.s.T), target: round(c.s.target), shape: c.s.shape, key: c.p.key, spare: c.p.spare, D: round(c.p.D), Dsource: c.p.Dsource ?? null,
-        dev: round(c.dev), cost: round(c.cost, 4), S: c.p.S ?? null, Strusted: !!c.p.Strusted, story: c.p.story ?? null, tiles: c.p.tiles ?? null, archetype: c.p.archetype ?? null, card: c.p.card ?? null });
+        dev: round(c.dev), cost: round(c.cost, 4), S: c.p.S ?? null, skilledFallback: c.p.S < Policy.SKILLED.lo, Strusted: !!c.p.Strusted, story: c.p.story ?? null, tiles: c.p.tiles ?? null, archetype: c.p.archetype ?? null, card: c.p.card ?? null });
     });
   } else {
     for (let i = 0; i < nL; i++) unfillable.push({ level: levels[i], reason: cand[i].ok.length ? 'conflict' : 'noCandidate', failures: cand[i].why });
@@ -245,7 +241,7 @@ function assign(pairsIn, opts = {}) {
   }
   const holes = unfillable.length;
   const res = {
-    range: [from, to], params: { trend: o.trend, shape: o.shape, tolerance: o.tolerance, spike: o.spike, window: o.window, spare1: o.spare1, storyWindow: o.storyWindow,
+    range: [from, to], params: { trend: o.trend, tolerance: o.tolerance, spike: o.spike, window: o.window, spare1: o.spare1, storyWindow: o.storyWindow,
       archetypeWindow: o.archetypeWindow, skilled: o.skilled, bigBoardTiles: o.bigBoardTiles, openingClockMinSpare: o.openingClockMinSpare, holePenalty: o.holePenalty },
     pairs: pairs.length, puzzles: new Set(pairs.map(p => p.key)).size, excluded: pairsIn.length - pairs.length,
     levels: outLevels, curveDropped, curveFilled: outLevels.filter(l => l.Dsource === "CURVE").length, unfillable, windows, holes,
@@ -261,7 +257,7 @@ const WHY_TEXT = { tooHard: 'too hard for the target', tooEasy: 'too easy for th
   openingClock: 'fast opening clock at spare 1', skilledUnknown: 'no trusted skilled rating', skilledLow: 'skilled rating under the floor', skilledHigh: 'skilled rating over 6',
   b7Inflated: 'rating inflated by repeated losing moves (B7), target too high', noD: 'no family rating' };
 const CONFLICT_TEXT = { puzzleUsed: 'use a puzzle already placed on another level', spare1: 'break the spare-1 rationing', story: 'repeat a story within 3 levels',
-  archetype: 'repeat an archetype too soon', window: 'push a 5-level window mean out of its band', skilledAverage: 'pull a 5-level skilled average under the floor',
+  archetype: 'repeat an archetype too soon', window: 'push a 5-level window mean out of its band',
   searchBudget: 'were not reached before the search budget ran out' };
 function describeWhy(why) {
   const parts = Object.entries(why).sort((a, b) => b[1] - a[1]).map(([k, n]) => `${n} ${WHY_TEXT[k] || k}`);
@@ -273,6 +269,8 @@ function reportText(r) {
   lines.push(`Levels ${r.range[0]}-${r.range[1]}: ${filled} of ${r.levels.length || (r.range[1] - r.range[0] + 1)} filled from ${r.puzzles} puzzles (${r.pairs} puzzle-spare pairs).`);
   if (r.curveDropped) lines.push(`${r.curveDropped} pairs with only a CURVE difficulty were left out (not values of record).`);
   if (r.curveFilled) lines.push(`${r.curveFilled} levels are filled from CURVE values (provisional).`);
+  const fallback = r.levels.filter(l => l.skilledFallback);
+  if (fallback.length) lines.push(`Skilled fallback below 2.5 used on ${fallback.map(l => l.level).join(', ')}; minimum allowed ${r.params.skilled.lo}.`);
   lines.push(r.proven ? 'The assignment is the cheapest the rules allow (search finished).' : r.budgetHit ? `The search stopped at its node budget (${r.nodes} nodes): the result is valid but may not be the cheapest.` : 'No assignment found.');
   for (const l of r.levels) {
     if (l.hole) continue;
@@ -301,7 +299,7 @@ function parseArgs(argv) {
 function main() {
   const a = parseArgs(process.argv.slice(2));
   if (!a.from || !a.to) {
-    console.error('usage: assign_levels.js --from 200 --to 225 [--T0 6 --L0 200 --g 1.006 --cap 14] [--skilled hard|average] [--lib dir]\n' +
+    console.error('usage: assign_levels.js --from 250 --to 275 [--lib dir] [--skilled-min 2 (fallback only)]\n' +
       '         [--context levels.json] [--measured accept.json] [--exclude keys.json] [--family <fingerprint>] [--allow-curve (use CURVE D values; default drops them)] [--nodes 2000000] [--out plan.json]');
     process.exit(64);
   }
@@ -311,8 +309,8 @@ function main() {
   const { pairs, skipped } = Lb.pairsOf(lib.entries(), { measured: a.measured ? read(a.measured) : undefined, family: a.family, withSkipped: true });
   const res = assign(pairs, {
     from: +a.from, to: +a.to,
-    trend: { T0: +(a.T0 ?? DEFAULTS.trend.T0), L0: +(a.L0 ?? a.from), g: +(a.g ?? DEFAULTS.trend.g), cap: +(a.cap ?? DEFAULTS.trend.cap) },
-    skilled: { floor: a.skilled || 'hard' },
+    trend: a.T0 != null ? { T0: +a.T0, L0: +(a.L0 ?? a.from), g: +(a.g ?? 1), cap: +(a.cap ?? Infinity) } : DEFAULTS.trend,
+    skilled: { floor: a.skilled || 'hard', lo: +(a['skilled-min'] ?? Policy.SKILLED.lo) },
     context: a.context ? read(a.context) : [], exclude: a.exclude ? read(a.exclude) : [],
     maxNodes: a.nodes ? +a.nodes : undefined, dropCurve: !a['allow-curve'],
   });

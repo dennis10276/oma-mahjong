@@ -29,7 +29,7 @@ const PHI = 0x9e3779b9; // the bots' per-run seed stride: campaign r of a call u
 
 const loadPins = (file = PINS_FILE) => JSON.parse(fs.readFileSync(file, 'utf8'));
 const tolerance = (T, pins) => {
-  const t = pins?.tolerance?.level || { abs: 1, rel: 0.10 };
+  const t = pins?.tolerance?.level || { abs: 1, rel: 0 };
   return Math.max(t.abs, t.rel * T);
 };
 
@@ -225,6 +225,7 @@ function createYardstick(opts = {}) {
   function accept(design, target, tol, { startBlock, runs, note } = {}) {
     const a = pins.acceptance, per = pins.blocks.ACCEPT.blockCampaigns;
     tol = tol ?? tolerance(target, pins);
+    if (!(tol > 0 && tol <= 1)) throw Error('Per-level acceptance tolerance must be positive and at most 1');
     const key = puzzleKey(design), first = a.startCampaigns / per, all = a.maxCampaigns / per;
     if (startBlock === undefined) startBlock = ledger.nextBlock(key);
     const ledgerId = ledger.reserve(key, startBlock, startBlock + all, { clockN: design.clock?.n ?? null, target, tol,
