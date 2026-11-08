@@ -4,6 +4,8 @@ Prepared by Codex, 2026-11-08. This is the next builder task for Gemini, not a c
 
 Integration update: the normal pipeline now supports `--gate-profile e5-v1` directly, and the library records the profile and thresholds. Use `assign_levels.js --allow-curve` for provisional selection and `accept_levels.js` for the final fixed-assignment checks. Read `PIPELINE-AND-ACCEPTANCE.md`; do not create a second acceptance implementation or duplicate the former E6 wrapper. This update supersedes the wrapper instructions below where applicable.
 
+Further integration update: `pipeline-v4-skilled-spares` qualifies and stores skilled ratings/C2 trust separately at each eligible spare. It fixes lending spare 2's S to the spare actually selected. Keep already-running v3 experiments as historical evidence and use isolated v4 output when requalifying; do not mix the versions or overwrite raw ledgers. The lead is checking a frozen copy of the first pilot candidate independently; this does not modify your checkout or mark the candidate as an accepted level.
+
 Read `source/analysis/builder/LEVEL-DESIGN-FACTS.md` first. Dennis's latest decisions override older process proposals. The durable goal is a robust builder for future levels, not a handpicked batch.
 
 ## Starting point and ownership

@@ -65,7 +65,7 @@ test('a clean run fills the library, logs yield and CPU per step, and a rerun re
   assert.equal(e[0].fingerprints.gateProfile, e[0].gateProfile.fingerprint);
   assert.equal(typeof e[0].puzzleKey, 'string');
   assert.deepEqual(d.ys.calls.filter(c => c[0] === 'screen')[0], ['screen', 6, 8]);
-  assert.deepEqual(d.ys.calls.filter(c => c[0] === 'planner').map(c => c[1]), [2, 2, 2, 2, 2, 2]);
+  assert.deepEqual(d.ys.calls.filter(c => c[0] === 'planner').map(c => c[1]), Array.from({length:6}, () => [1,2,3]).flat());
   const runs = Lb.readJsonl(path.join(dir, 'pipeline-runs.jsonl'));
   assert.equal(runs.length, 1); assert.equal(runs[0].next, 6);
   const d2 = deps({ dir }), s2 = P.runPipeline({ n: 6, writeRunLog: false }, d2);
@@ -207,4 +207,30 @@ test('missing C2 and unknown planner validity are not trusted / rejected', () =>
   P.runPipeline({ n: 1, writeRunLog: false }, d3);
   assert.equal(d3.library.entries().length, 0);
   assert.equal(d3.library.rejects()[0].gate, 'planner');
+});
+
+test('each clock setting uses its own skilled rating; a low spare-2 score cannot hide a viable tighter setting', () => {
+  const d = deps();
+  d.ys.planner = (design, {spare}) => ({ S: {1:3,2:1.8,3:1.5}[spare], valid: true, fingerprint: 'ref-fp' });
+  P.runPipeline({n:1, writeRunLog:false}, d);
+  const e = d.library.entries()[0];
+  assert.deepEqual(e.shipSpares, [1]);
+  const pairs = Lb.pairsOf([e]); assert.equal(pairs[0].S, 3); assert.equal(pairs[0].spare, 1);
+});
+
+test('a qualifying spare-2 score never lends skilled credit to an easier spare', () => {
+  const d = deps();
+  d.ys.planner = (design, {spare}) => ({ S: {1:6.2,2:2.6,3:1.9}[spare], valid: true, fingerprint: 'ref-fp' });
+  P.runPipeline({n:1, writeRunLog:false}, d);
+  const e = d.library.entries()[0]; assert.deepEqual(e.shipSpares, [2]);
+  assert.equal(e.S.bySpare[2].S, 2.6); assert.equal(e.S.bySpare[3], undefined);
+});
+
+test('face-up sanity and trust are measured per eligible clock setting', () => {
+  const d = deps({c2c3: (design, o) => ({C2:{pass:o.plannerSpare!==3, faceUp:o.plannerSpare===3?10:4}, C3:{report:true}})});
+  P.runPipeline({n:1, writeRunLog:false}, d);
+  const e = d.library.entries()[0], pairs = Lb.pairsOf([e]);
+  assert.equal(pairs.find(p=>p.spare===2).Strusted, true);
+  assert.equal(pairs.find(p=>p.spare===3).Strusted, false);
+  assert.equal(e.S.bySpare[3].faceUp, 10);
 });

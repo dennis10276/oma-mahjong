@@ -8,6 +8,8 @@ Implemented 2026-11-08 on `wip/cc-builder-loop`. The family curve, skilled band 
 
 Every new candidate and pipeline summary stores the complete profile plus its fingerprint. Trace thresholds are retained in library entries. Profile identity is part of reject/resume identity. Assignment's CLI filters out candidates with missing/different profiles or another family ruler. Use separate libraries for baseline, new construction, and fallback experiments to keep yield accounting comparable.
 
+The skilled screen now rates each statically eligible clock setting before paying for its curve, rather than borrowing spare 2's score. Only spares in the explicit skilled band reach traces. C2/C3 are checked at each surviving setting. A candidate stores `S.bySpare`; assignment and library queries take S and its trust flag from that same spare. The top-level S is a compatibility summary of one setting, not a rating to copy to every setting. Old libraries can still be inspected, but should be requalified in a separate library under the new pipeline version before being counted as current supply.
+
 Example from the checkout, for candidates produced by the current builder:
 
 ```powershell

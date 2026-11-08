@@ -102,6 +102,21 @@ test('query and pairsOf', () => {
   assert.equal(p2.Strusted, false); assert.equal(p2.story, 'lockBeside');
 });
 
+test('skilled queries and assignment pairs use the same clock setting and never borrow missing scores', () => {
+  const lib = Lb.createLibrary({dir:tmp()}), e = entry(1);
+  e.S = {S:4,trusted:true,spare:1,bySpare:{1:{S:4,trusted:false},3:{S:2,trusted:true}}};
+  lib.add(e);
+  assert.equal(lib.query({S:[3,5], trustedS:true}).length, 0);
+  assert.equal(lib.query({S:[1.9,2.1], trustedS:true, spare:3}).length, 1);
+  assert.equal(lib.query({S:[1.9,2.1], D:[8.5,9.5]}).length, 0, 'D at spare 1 cannot combine with S at spare 3');
+  const pairs = Lb.pairsOf([e]);
+  assert.equal(pairs.find(p=>p.spare===1).S, 4);
+  assert.equal(pairs.find(p=>p.spare===1).Strusted, false);
+  assert.equal(pairs.find(p=>p.spare===2).S, null);
+  assert.equal(pairs.find(p=>p.spare===2).Strusted, false);
+  assert.equal(pairs.find(p=>p.spare===3).S, 2);
+});
+
 test('smoke: a real build gives the same content key twice (deterministic builder)', () => {
   const B = require('../builder.js'), briefs = require('../briefs-v1.json');
   const b = { ...briefs[0], seed: 1 };

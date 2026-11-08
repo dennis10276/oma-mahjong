@@ -206,11 +206,14 @@ function createLibrary(opts = {}) {
       if (q.fingerprint != null && e.fingerprints?.family !== q.fingerprint) return false;
       if (q.gateProfile != null && e.gateProfile?.fingerprint !== q.gateProfile) return false;
       if (q.shippable && !e.shipSpares.length) return false;
-      if (q.trustedS && !(e.S && e.S.trusted !== false && Number.isFinite(e.S.S))) return false;
-      if (q.S && !(e.S && Number.isFinite(e.S.S) && e.S.S >= q.S[0] && e.S.S <= q.S[1])) return false;
-      if (q.D) {
-        const spares = q.spare != null ? [q.spare] : e.shipSpares;
-        if (!spares.some(s => { const D = curveD(e, s); return D != null && D >= q.D[0] && D <= q.D[1]; })) return false;
+      if (q.trustedS || q.S || q.D) {
+        const spares = q.spare != null ? [q.spare] : (e.shipSpares.length || q.D) ? e.shipSpares : [e.S?.spare ?? 2];
+        if (!spares.some(s => {
+          const S = e.S?.bySpare ? e.S.bySpare[s] : e.S, D = curveD(e, s);
+          return (!q.trustedS || (S?.trusted === true && Number.isFinite(S.S))) &&
+            (!q.S || (Number.isFinite(S?.S) && S.S >= q.S[0] && S.S <= q.S[1])) &&
+            (!q.D || (D != null && D >= q.D[0] && D <= q.D[1]));
+        })) return false;
       }
       return true;
     });
@@ -242,10 +245,11 @@ function pairsOf(entries, opts = {}) {
       const D = m ? m.D : p?.D;
       if (D == null || !Number.isFinite(D)) continue;
       const tr = e.gates?.traces?.[spare] || e.gates?.traces?.[String(spare)] || null;
-      const S = e.S && Number.isFinite(e.S.S) ? e.S.S : null;
+      const skilled = e.S?.bySpare ? e.S.bySpare[spare] : e.S;
+      const S = skilled && Number.isFinite(skilled.S) ? skilled.S : null;
       pairs.push({
         key: e.key, spare, D, se: m ? m.se ?? null : p?.se ?? null, Dsource: m ? (m.source || 'ACCEPT') : 'CURVE',
-        S, Strusted: !!(e.S && e.S.trusted !== false && S != null),
+        S, Strusted: !!(skilled && skilled.trusted === true && S != null),
         story: e.tags.story, layout: e.tags.layout, tiles: e.tiles, bigBoard: e.tags.bigBoard, openingClock: e.tags.openingClock,
         maxTarget: tr?.B7?.maxTarget ?? null, archetype: e.archetype?.label ?? null, card: e.card ?? null,
       });

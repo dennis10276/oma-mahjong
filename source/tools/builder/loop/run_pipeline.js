@@ -16,7 +16,7 @@
 //             the board is retried next run.
 //   screen    screen.js screenBoard: family ruler, SCREEN block at spare 1 then 3; keep if D(1) >= lo - 1,
 //             D(3) <= hi + 1 and D(1) < 18.5, [lo, hi] = the open targets (--targets lo,hi).
-//   planner   yardstick planner at spare 2: keep a valid S in the explicit skilled band (normally 2.5-6).
+//   planner   rate each statically eligible spare; keep only settings in the explicit skilled band (normally 2.5-6).
 //   curve     dial_curve.js measureCurve, CURVE block at spares 0-3. The spares that may go on are those the curve
 //             can ship AND at which A4 holds (static gates detail.okSpares). Spare 1 on a fast opening clock (A8) is
 //             removed from the eligible spares. None left -> reject.
@@ -33,7 +33,7 @@ const Lb = require('./library.js');
 const Policy = require('./policy.js');
 const GP = require('./gate_profile.js');
 
-const VERSION = 'pipeline-v3-profiled';
+const VERSION = 'pipeline-v4-skilled-spares';
 const ROOT = path.resolve(__dirname, '../../../..');
 const BRIEFS = path.resolve(__dirname, '../briefs-v1.json');
 const EXCLUDED_STORIES = ['frozenGuards', 'chainReaction'];
@@ -117,19 +117,28 @@ function processCandidate(cand, ctx) {
   if (!scr.keep) return reject('screen', (scr.reasons || []).join(', ') || 'not kept', { screen: scrSummary });
   stats.screen.pass++;
 
-  // skilled screen: the planner at spare 2
-  const pl = step('planner', () => ys.planner(design, { spare: opts.plannerSpare }));
+  // Skilled difficulty belongs to a clock setting, not to the puzzle independent of its clock.
+  const plBySpare = {}, plannerWhy = {};
   const plPin = ys.pins?.planner?.fingerprint;
-  if (!pl || pl.valid !== true || !Number.isFinite(pl.S)) return reject('planner', 'no valid planner rating (valid=' + pl?.valid + ')' + (pl?.fail ? ': ' + pl.fail : ''), { S: pl?.S ?? null });
-  if (plPin && pl.fingerprint && pl.fingerprint !== plPin) return reject('planner', `planner fingerprint ${String(pl.fingerprint).slice(0, 8)} != pin ${plPin.slice(0, 8)}`, { S: pl.S });
-  if (pl.S < opts.skilledFloor || pl.S > Policy.SKILLED.hi) return reject('planner', `S ${r3(pl.S)} outside ${opts.skilledFloor}-6`, { S: r3(pl.S) });
+  const staticSpares = a4Spares.filter(s => (sg.shipSpares || a4Spares).includes(s) && !(sg.gates?.A8?.flag && s < 2));
+  step('planner', () => {
+    for (const s of staticSpares) {
+      const p = ys.planner(design, { spare: s }); plBySpare[s] = p;
+      plannerWhy[s] = !p || p.valid !== true || !Number.isFinite(p.S) ? 'no valid planner rating'
+        : plPin && p.fingerprint !== plPin ? 'planner fingerprint mismatch'
+        : p.S < opts.skilledFloor || p.S > Policy.SKILLED.hi ? `S ${r3(p.S)} outside ${opts.skilledFloor}-6` : null;
+    }
+  });
+  const skilledSpares = staticSpares.filter(s => plannerWhy[s] === null);
+  if (!skilledSpares.length) return reject('planner', Object.entries(plannerWhy).map(([s, why]) => `s${s}: ${why}`).join('; ') || 'no statically eligible spare', { plannerBySpare: plBySpare });
   stats.planner.pass++;
 
   // dial curve
   const curve = step('curve', () => deps.measureCurve(design, ys, { spares: opts.curveSpares }));
   const spareNotes = {};
   for (const s of curve.shippable || []) if (!a4Spares.includes(s)) spareNotes[s] = 'A4 fails at this spare';
-  let ship = (curve.shippable || []).filter(s => a4Spares.includes(s) && !(sg.gates?.A8?.flag && s < 2));
+  for (const s of staticSpares) if (plannerWhy[s]) spareNotes[s] = plannerWhy[s];
+  let ship = (curve.shippable || []).filter(s => skilledSpares.includes(s));
   if (!ship.length) {
     const why = Object.values(curve.verdicts || {}).filter(v => v.reasons?.length).map(v => `s${v.spare}: ${v.reasons.join('+')}`).join('; ');
     return reject('curve', `no spare could ship (curve ${JSON.stringify(curve.shippable || [])}, A4 ${JSON.stringify(a4Spares)})` + (why ? ': ' + why : ''), { D: (curve.points || []).map(p => r3(p.D)) });
@@ -164,11 +173,16 @@ function processCandidate(cand, ctx) {
   if (!ship.length) return reject('C1', Object.entries(spareNotes).map(([s, v]) => `s${s} ${v}`).join('; '));
   stats.C1.pass++;
 
-  // C2/C3 once: untrusted S, never a reject
-  const c2 = step('C2', () => deps.c2c3(design, { ys, plannerSpare: opts.plannerSpare }));
-  cf.C2 = c2?.C2 ?? null; cf.C3 = c2?.C3 ?? null;
+  // Trust and face-up sanity also belong to the same clock setting.
+  cf.bySpare = {};
+  step('C2', () => { for (const s of ship) cf.bySpare[s] = deps.c2c3(design, { ys, plannerSpare: s }); });
   stats.C2.pass++;
+  const primarySpare = ship.includes(opts.plannerSpare) ? opts.plannerSpare : ship[0], pl = plBySpare[primarySpare];
+  cf.C2 = cf.bySpare[primarySpare]?.C2 ?? null; cf.C3 = cf.bySpare[primarySpare]?.C3 ?? null;
   const trusted = cf.C2?.pass === true;   // a missing or unknown C2 is NOT trusted
+  const skilledBySpare = Object.fromEntries(ship.map(s => [s, { S: plBySpare[s].S, valid: true, trusted: cf.bySpare[s]?.C2?.pass === true,
+    fallback: plBySpare[s].S < Policy.SKILLED.lo, spare: s, styles: plBySpare[s].styles ?? null, fingerprint: plBySpare[s].fingerprint ?? null,
+    faceUp: cf.bySpare[s]?.C2?.faceUp ?? null }]));
 
   // library entry
   const best = ship.map(s => traces[s]).filter(t => t && t.lossesAtTrapShare != null).sort((a, b) => b.lossesAtTrapShare - a.lossesAtTrapShare)[0];
@@ -176,7 +190,7 @@ function processCandidate(cand, ctx) {
   const res = step('library', () => {
     const e = Lb.makeEntry({ design, k, run, story: brief.story, layout: brief.layout ?? null, shape: built.card?.shape ?? brief.shape ?? null, briefId: brief.id, seed: brief.seed,
       secondAct: !!brief.secondAct, curve, shipSpares: ship,
-      S: { S: pl.S, fallback: pl.S < Policy.SKILLED.lo, valid: true, trusted, styles: pl.styles ?? null, spare: opts.plannerSpare, fingerprint: pl.fingerprint ?? null, faceUp: cf.C2?.faceUp ?? null },
+      S: { ...skilledBySpare[primarySpare], bySpare: skilledBySpare },
       gates: { static: sg, screen: scrSummary, traces, counterfactuals: cf, spareNotes },
       card, fingerprints: ctx.fingerprints, gateProfile: profile, cpu });
     if (e.key !== key) throw Error('content key changed while freezing the design');
@@ -190,7 +204,7 @@ function processCandidate(cand, ctx) {
 // ---------- the run ----------
 function codeFingerprints() {
   const files = ['../builder.js', '../engine.js', '../gate.js', '../knobs.js', './static_gates.js', './obvious.js', './detour.js', './publicfork.js', './screen.js', './dial_curve.js',
-    './traces.js', './counterfactual.js', './yardstick.js', './library.js', './run_pipeline.js', './gate_profile.js', './policy.js'];
+    './traces.js', './counterfactual.js', './yardstick.js', './library.js', './run_pipeline.js', './gate_profile.js', './policy.js', '../visible_choice.js'];
   const out = {};
   for (const f of files) { try { out[path.basename(f)] = crypto.createHash('sha256').update(fs.readFileSync(path.resolve(__dirname, f))).digest('hex').slice(0, 16); } catch (e) { out[path.basename(f)] = null; } }
   return out;
