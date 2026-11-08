@@ -89,7 +89,7 @@ function compactCurve(c) {
 }
 function compactTrace(t) {
   if (!t) return null;
-  const { thresholds, budget, wonOn, ...rest } = t;   // thresholds and budget are constants of traces.js; wonOn is bulky
+  const { budget, wonOn, ...rest } = t;   // thresholds vary by profile and must remain reviewable
   return rest;
 }
 
@@ -123,6 +123,7 @@ function makeEntry(o) {
     card: o.card ?? null,
     archetype: o.archetype ?? archetypeOf({ story: o.story, design, staticReport: o.gates?.static, secondAct: o.secondAct }),
     fingerprints: o.fingerprints ?? null,
+    gateProfile: o.gateProfile ?? null,
     cpu: o.cpu ?? null,
   };
 }
@@ -203,6 +204,7 @@ function createLibrary(opts = {}) {
       if (q.bigBoard != null && e.tags.bigBoard !== q.bigBoard) return false;
       if (q.archetype != null && e.archetype?.label !== q.archetype) return false;
       if (q.fingerprint != null && e.fingerprints?.family !== q.fingerprint) return false;
+      if (q.gateProfile != null && e.gateProfile?.fingerprint !== q.gateProfile) return false;
       if (q.shippable && !e.shipSpares.length) return false;
       if (q.trustedS && !(e.S && e.S.trusted !== false && Number.isFinite(e.S.S))) return false;
       if (q.S && !(e.S && Number.isFinite(e.S.S) && e.S.S >= q.S[0] && e.S.S <= q.S[1])) return false;
@@ -230,9 +232,10 @@ const curveD = (e, spare) => { const p = (e.curve?.points || []).find(x => x.spa
 //   family    optional family fingerprint: entries rated with another ruler are left out (and counted)
 function pairsOf(entries, opts = {}) {
   const measured = opts.measured instanceof Map ? opts.measured : new Map(Object.entries(opts.measured || {}));
-  const pairs = [], skipped = { otherRuler: 0, noShippableSpare: 0 };
+  const pairs = [], skipped = { otherRuler: 0, otherGateProfile: 0, noShippableSpare: 0 };
   for (const e of entries) {
     if (opts.family && e.fingerprints?.family && e.fingerprints.family !== opts.family) { skipped.otherRuler++; continue; }
+    if (opts.gateProfile && e.gateProfile?.fingerprint !== opts.gateProfile) { skipped.otherGateProfile++; continue; }
     if (!e.shipSpares || !e.shipSpares.length) { skipped.noShippableSpare++; continue; }
     for (const spare of e.shipSpares) {
       const m = measured.get(e.key + ':' + spare), p = (e.curve?.points || []).find(x => x.spare === spare);

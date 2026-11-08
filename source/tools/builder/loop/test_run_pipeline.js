@@ -23,7 +23,7 @@ const fakeYs = ({ S = () => 4 } = {}) => {
     planner: (d, o) => { calls.push(['planner', o.spare]); return { S: S(d), valid: true, fingerprint: 'ref-fp', styles: null }; } };
 };
 const staticOk = (o = {}) => () => ({ pass: true, k: 7, archetype: 'free-pair relief', card: 'Card.', warnings: [], shipSpares: [1, 2, 3],
-  gates: { A1: { pass: true }, A4: { pass: true, detail: { okSpares: o.okSpares || [1, 2, 3] } }, A8: { pass: true, flag: null } } });
+  gates: { ...Object.fromEntries(['A1', 'A2', 'A3', 'A5', 'A6', 'A7', 'A9'].map(g => [g, { pass: true }])), A4: { pass: true, detail: { okSpares: o.okSpares || [1, 2, 3] } }, A8: { pass: true, flag: null } } });
 function deps(over = {}) {
   const lib = Lb.createLibrary({ dir: over.dir || tmp() });
   const ys = over.ys || fakeYs();
@@ -60,7 +60,9 @@ test('a clean run fills the library, logs yield and CPU per step, and a rerun re
   assert.equal(e[0].S.trusted, true); assert.equal(e[0].fingerprints.family, 'fam-fp');
   assert.match(e[0].card, /^Card\. The family bot's first error was at the trap in 55%/);
   assert.deepEqual([e[0].archetype.label, e[0].archetype.name], ['A1', 'free-pair relief']);
-  assert.equal(e[0].gates.traces[1].thresholds, undefined, 'constants are not stored per entry');
+  assert.deepEqual(e[0].gates.traces[1].thresholds, {}, 'the thresholds actually returned by the trace are retained');
+  assert.equal(e[0].gateProfile.id, 'e5-v1');
+  assert.equal(e[0].fingerprints.gateProfile, e[0].gateProfile.fingerprint);
   assert.equal(typeof e[0].puzzleKey, 'string');
   assert.deepEqual(d.ys.calls.filter(c => c[0] === 'screen')[0], ['screen', 6, 8]);
   assert.deepEqual(d.ys.calls.filter(c => c[0] === 'planner').map(c => c[1]), [2, 2, 2, 2, 2, 2]);
@@ -114,6 +116,26 @@ test('a normal skilled rejection does not hide the same candidate from a fallbac
   assert.equal(r.steps.library.pass, 1);
   assert.equal(d.library.entries()[0].S.fallback, true);
   assert.match(r.pipeline, /fallback-2$/);
+});
+
+test('strict rejects do not suppress calibrated candidates; profile thresholds and raw failures are retained', () => {
+  const base = staticOk(), d = deps({ staticGates: () => {
+    const r = base(); r.pass = false; r.gates.A5.pass = false; r.gates.A7.pass = false; return r;
+  }, traceGates: (design, o) => ({ spare: o.spare, pass: true, thresholds: o.thresholds, B7: { maxTarget: null } }) });
+  assert.equal(P.runPipeline({ n: 1, gateProfile: 'strict-v1', writeRunLog: false }, d).steps.static.fail, 1);
+  assert.equal(P.runPipeline({ n: 1, gateProfile: 'e5-v1', writeRunLog: false }, d).steps.library.pass, 1);
+  const e = d.library.entries()[0];
+  assert.equal(e.gates.static.gates.A7.wouldPass, false);
+  assert.equal(e.gates.traces[2].thresholds.B2.min, 0.2);
+  assert.equal(e.gateProfile.fingerprint, e.fingerprints.gateProfile);
+});
+
+test('a changed target band gets a new rejection identity rather than reusing an old screen failure', () => {
+  const d = deps({ screenBoard: (design, ys, o) => ({ keep: o.lo < 10, reasons: ['outsideBand'] }) });
+  const first = P.runPipeline({ n: 1, writeRunLog: false }, d);
+  assert.equal(first.steps.screen.fail, 1);
+  const second = P.runPipeline({ n: 1, targets: [6,8], writeRunLog: false }, d);
+  assert.notEqual(second.pipeline, first.pipeline); assert.equal(second.steps.library.pass, 1);
 });
 
 test('ship spares: curve AND A4; traces and C1 drop spares; C2 only marks S untrusted; none left rejects', () => {

@@ -1,5 +1,5 @@
 {
-  "status": "PROPOSAL from experiment E5 (2026-11-07). Not applied anywhere. Evidence: source/analysis/builder/process-v1/e5-gate-calibration.md/.json. Only 10 liked (4-5 stars) and 7 disliked (1-2 stars) boards carry tiles, so every change is low-power; confidence is stated per gate.",
+  "status": "EXPERIMENTAL profile from E5 (2026-11-07), available as e5-v1 and selected by default in the offline pipeline from 2026-11-08. Primitive gate defaults remain strict. Evidence: source/analysis/builder/process-v1/e5-gate-calibration.md/.json. Only 10 liked (4-5 stars) and 7 disliked (1-2 stars) boards carry tiles, so every change is low-power; confidence is stated per gate.",
   "options": "static_gates.js reads o.thresholds.A7 = {unrelieved, tightBlind, lostDeals}; traces.js reads opts.thresholds (key-by-key override of THRESHOLDS). Defaults unchanged.",
   "static": {
     "A1": { "action": "keep", "note": "not judgeable on old boards (idle-special checks fail on 15 of 18 qualified boards built by an older process); judge on fresh builds only" },

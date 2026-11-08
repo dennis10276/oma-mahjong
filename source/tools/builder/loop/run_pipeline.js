@@ -16,7 +16,7 @@
 //             the board is retried next run.
 //   screen    screen.js screenBoard: family ruler, SCREEN block at spare 1 then 3; keep if D(1) >= lo - 1,
 //             D(3) <= hi + 1 and D(1) < 18.5, [lo, hi] = the open targets (--targets lo,hi).
-//   planner   yardstick planner at spare 2: keep if S >= skilled floor - 0.3 and the rating is valid.
+//   planner   yardstick planner at spare 2: keep a valid S in the explicit skilled band (normally 2.5-6).
 //   curve     dial_curve.js measureCurve, CURVE block at spares 0-3. The spares that may go on are those the curve
 //             can ship AND at which A4 holds (static gates detail.okSpares). Spare 1 on a fast opening clock (A8) is
 //             removed from the eligible spares. None left -> reject.
@@ -31,8 +31,9 @@
 const fs = require('fs'), path = require('path'), os = require('os'), crypto = require('crypto');
 const Lb = require('./library.js');
 const Policy = require('./policy.js');
+const GP = require('./gate_profile.js');
 
-const VERSION = 'pipeline-v2-strict250';
+const VERSION = 'pipeline-v3-profiled';
 const ROOT = path.resolve(__dirname, '../../../..');
 const BRIEFS = path.resolve(__dirname, '../briefs-v1.json');
 const EXCLUDED_STORIES = ['frozenGuards', 'chainReaction'];
@@ -43,8 +44,15 @@ const DEFAULTS = Object.freeze({
   skilledFloor: 2.5, plannerMargin: 0, plannerSpare: 2,
   curveSpares: [0, 1, 2, 3], traceCampaigns: 40,
   staticOptions: { stopEarly: true },
+  gateProfile: 'e5-v1',
 });
-const pipelineVersion = opts => VERSION + (opts.skilledFloor < Policy.SKILLED.lo ? '-fallback-' + opts.skilledFloor : '');
+function pipelineVersion(optsIn) {
+  const opts = { ...DEFAULTS, ...optsIn };
+  const identity = GP.digest({ profile: GP.loadProfile(opts.gateProfile).fingerprint, targets: opts.targets,
+    plannerSpare: opts.plannerSpare, curveSpares: opts.curveSpares, traceCampaigns: opts.traceCampaigns,
+    staticOptions: opts.staticOptions, pins: require('./yardstick.js').loadPins() });
+  return VERSION + '-' + identity.slice(0, 12) + (opts.skilledFloor < Policy.SKILLED.lo ? '-fallback-' + opts.skilledFloor : '');
+}
 
 // ---------- candidates ----------
 const candidateBriefs = briefs => briefs.filter(b => !EXCLUDED_STORIES.includes(b.story));
@@ -64,7 +72,7 @@ const failedGates = sg => Object.entries(sg.gates || {}).filter(([, g]) => g && 
 
 // ---------- one candidate ----------
 function processCandidate(cand, ctx) {
-  const { deps, opts, stats, lib, run, pipeline } = ctx, ys = deps.ys;
+  const { deps, opts, stats, lib, run, pipeline, profile } = ctx, ys = deps.ys;
   const brief = cand.brief, tag = { briefId: brief.id, story: brief.story, layout: brief.layout ?? null, shape: brief.shape ?? null, seed: brief.seed, index: cand.index };
   const cpu = {};
   const step = (name, fn) => {
@@ -90,7 +98,7 @@ function processCandidate(cand, ctx) {
   };
 
   // static gates A1-A9
-  const sg = step('static', () => deps.staticGates(design, { ...opts.staticOptions, story: brief.story }));
+  const sg = step('static', () => GP.applyStatic(deps.staticGates(design, { ...opts.staticOptions, story: brief.story }), profile));
   const failed = failedGates(sg);
   if (!sg.pass) {
     if ((sg.warnings || []).some(w => /^wallClock/.test(w))) { stats.static.unresolved++; return { outcome: 'unresolved', key, gate: 'static', why: 'wallClock: ' + failed.join(',') }; }
@@ -132,7 +140,7 @@ function processCandidate(cand, ctx) {
   const traces = {};
   step('traces', () => {
     for (const s of ship) {
-      const t = deps.traceGates(design, { spare: s, ys, campaigns: opts.traceCampaigns, secondAct: !!brief.secondAct });
+      const t = deps.traceGates(design, GP.traceOptions({ spare: s, ys, campaigns: opts.traceCampaigns, secondAct: !!brief.secondAct }, profile));
       traces[s] = t;
       if (t.fail) spareNotes[s] = 'traces: ' + t.fail;
       else if (t.pass === false) spareNotes[s] = 'traces fail: ' + ['B1', 'B2', 'B3', 'B4', 'B5', 'B6'].filter(b => t[b]?.pass === false).join(',');
@@ -170,7 +178,7 @@ function processCandidate(cand, ctx) {
       secondAct: !!brief.secondAct, curve, shipSpares: ship,
       S: { S: pl.S, fallback: pl.S < Policy.SKILLED.lo, valid: true, trusted, styles: pl.styles ?? null, spare: opts.plannerSpare, fingerprint: pl.fingerprint ?? null, faceUp: cf.C2?.faceUp ?? null },
       gates: { static: sg, screen: scrSummary, traces, counterfactuals: cf, spareNotes },
-      card, fingerprints: ctx.fingerprints, cpu });
+      card, fingerprints: ctx.fingerprints, gateProfile: profile, cpu });
     if (e.key !== key) throw Error('content key changed while freezing the design');
     return lib.add(e);
   });
@@ -182,7 +190,7 @@ function processCandidate(cand, ctx) {
 // ---------- the run ----------
 function codeFingerprints() {
   const files = ['../builder.js', '../engine.js', '../gate.js', '../knobs.js', './static_gates.js', './obvious.js', './detour.js', './publicfork.js', './screen.js', './dial_curve.js',
-    './traces.js', './counterfactual.js', './yardstick.js', './library.js', './run_pipeline.js'];
+    './traces.js', './counterfactual.js', './yardstick.js', './library.js', './run_pipeline.js', './gate_profile.js', './policy.js'];
   const out = {};
   for (const f of files) { try { out[path.basename(f)] = crypto.createHash('sha256').update(fs.readFileSync(path.resolve(__dirname, f))).digest('hex').slice(0, 16); } catch (e) { out[path.basename(f)] = null; } }
   return out;
@@ -193,6 +201,7 @@ function runPipeline(optsIn = {}, deps) {
   Policy.assertSkilledOptions({ lo: opts.skilledFloor });
   if (opts.plannerMargin !== 0) throw Error('Every level requires an explicit skilled minimum; hidden screening margins are not supported');
   const pipeline = pipelineVersion(opts);
+  const profile = GP.loadProfile(opts.gateProfile);
   const lib = deps.library;
   const log = deps.log || (s => process.stderr.write(s + '\n'));
   const now = deps.now || Date.now;
@@ -201,8 +210,8 @@ function runPipeline(optsIn = {}, deps) {
   const run = optsIn.run || new Date(now()).toISOString().replace(/[:.]/g, '-') + (opts.dryRun ? '-dry' : '');
   const stats = newStats(), outcomes = {}, t0 = now(), tAll = timer();
   const fingerprints = { family: deps.ys.fingerprint ?? null, reference: deps.ys.referenceFingerprint ?? null, planner: deps.ys.pins?.planner?.fingerprint ?? null,
-    familyBot: deps.ys.pins?.family?.botVersion ?? null, code: deps.code ?? null, pipeline };
-  const ctx = { deps, opts, stats, lib, run, fingerprints, pipeline };
+    familyBot: deps.ys.pins?.family?.botVersion ?? null, code: deps.code ?? null, pipeline, gateProfile: profile.fingerprint };
+  const ctx = { deps, opts, stats, lib, run, fingerprints, pipeline, profile };
   let done = 0, stopped = null;
   const errors = [];
   for (let i = opts.start; i < opts.start + opts.n; i++) {
@@ -223,7 +232,8 @@ function runPipeline(optsIn = {}, deps) {
   const summary = {
     schema: 'pipeline-run-v1', run, pipeline, dryRun: !!opts.dryRun, at: new Date(now()).toISOString(),
     range: [opts.start, opts.start + done - 1], next: opts.start + done, requested: opts.n, done, stopped,
-    options: { targets: opts.targets, skilledFloor: opts.skilledFloor, plannerMargin: opts.plannerMargin, seedBase: opts.seedBase, curveSpares: opts.curveSpares, traceCampaigns: opts.traceCampaigns },
+    options: { targets: opts.targets, skilledFloor: opts.skilledFloor, plannerMargin: opts.plannerMargin, seedBase: opts.seedBase, curveSpares: opts.curveSpares, traceCampaigns: opts.traceCampaigns, gateProfile: profile.id },
+    gateProfile: profile,
     briefs: list.length, excludedStories: EXCLUDED_STORIES, outcomes,
     steps: Object.fromEntries(Object.entries(stats).map(([k, v]) => [k, { ...v, cpuS: r3(v.cpuS), wallS: r3(v.wallS), cpuPerIn: v.in ? r3(v.cpuS / v.in) : null }])),
     cpuS: r3(total.cpuS), wallS: r3(total.wallS), errors, fingerprints, library: lib.dir,
@@ -274,7 +284,7 @@ function fakeDeps(over = {}) {
       const E = require('../engine.js'), cs = E.clockShortest(E.game(JSON.parse(JSON.stringify(d))), { nodes: 400000, ms: 5000 }), k = cs ? cs.k : null;
       const pass = k != null && hashUnit(Lb.contentKey(d), 'static') < 0.7, ok = k == null ? [] : [1, 2, 3].filter(s => k + s <= 19);
       return { pass, k, strictK: k, shipSpares: ok, archetype: 'free-pair relief', card: 'Fake card (dry run).', warnings: [],
-        gates: { A4: { pass: true, detail: { okSpares: ok } }, A5: pass ? { pass: true } : { pass: false, detail: { why: ['fake'] } }, A8: { pass: true, flag: k != null && k <= 6 ? 'spare>=2 only' : null } } };
+        gates: { ...Object.fromEntries(['A1', 'A2', 'A3', 'A5', 'A6', 'A7', 'A9'].map(g => [g, { pass }])), A4: { pass, detail: { okSpares: ok } }, A8: { pass: true, flag: k != null && k <= 6 ? 'spare>=2 only' : null } } };
     },
     screenBoard: require('./screen.js').screenBoard,
     measureCurve: require('./dial_curve.js').measureCurve,
@@ -301,7 +311,7 @@ function underHeavy() {
 function main() {
   const a = parseArgs(process.argv.slice(2));
   if (a.help) { console.log(fs.readFileSync(__filename, 'utf8').split('\n').slice(2, 31).join('\n') +
-    '\nOptions: --n 50 --start <i|auto> --seed-base 1 --targets lo,hi --skilled-floor 2.5 --max-minutes 18 --lib <dir> --briefs <file> --dry-run --no-heavy-check'); return; }
+    '\nOptions: --n 50 --start <i|auto> --seed-base 1 --targets lo,hi --skilled-floor 2.5 --gate-profile e5-v1|strict-v1 --max-minutes 18 --lib <dir> --briefs <file> --dry-run --no-heavy-check'); return; }
   const dry = !!a['dry-run'];
   const libDir = a.lib || (dry ? path.join(os.tmpdir(), 'oma-pipeline-dry-' + process.pid) : Lb.LIB_DIR);
   const lib = Lb.createLibrary({ dir: libDir });
@@ -310,13 +320,14 @@ function main() {
   if (start === 'auto') {
     const floor = +(a['skilled-floor'] ?? DEFAULTS.skilledFloor), targets = a.targets ? String(a.targets).split(',').map(Number) : DEFAULTS.targets;
     const runs = Lb.readJsonl(path.join(libDir, 'pipeline-runs.jsonl')).filter(r => !!r.dryRun === dry && (r.options?.seedBase ?? 1) === seedBase
-      && r.pipeline === pipelineVersion({ skilledFloor: floor }) && JSON.stringify(r.options?.targets) === JSON.stringify(targets));
+      && r.pipeline === pipelineVersion({ skilledFloor: floor, targets, gateProfile: a['gate-profile'] || DEFAULTS.gateProfile }) && JSON.stringify(r.options?.targets) === JSON.stringify(targets));
     start = runs.length ? Math.max(...runs.map(r => r.next)) : 0;
   }
   const opts = {
     n: +(a.n ?? DEFAULTS.n), start: +start, seedBase, maxMinutes: +(a['max-minutes'] ?? DEFAULTS.maxMinutes), dryRun: dry,
     targets: a.targets ? String(a.targets).split(',').map(Number) : DEFAULTS.targets,
     skilledFloor: +(a['skilled-floor'] ?? DEFAULTS.skilledFloor),
+    gateProfile: a['gate-profile'] || DEFAULTS.gateProfile,
   };
   const B = require('../builder.js');
   let deps;

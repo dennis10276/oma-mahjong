@@ -300,13 +300,16 @@ function main() {
   const a = parseArgs(process.argv.slice(2));
   if (!a.from || !a.to) {
     console.error('usage: assign_levels.js --from 250 --to 275 [--lib dir] [--skilled-min 2 (fallback only)]\n' +
-      '         [--context levels.json] [--measured accept.json] [--exclude keys.json] [--family <fingerprint>] [--allow-curve (use CURVE D values; default drops them)] [--nodes 2000000] [--out plan.json]');
+      '         [--context levels.json] [--measured accept.json] [--gate-profile e5-v1|strict-v1] [--exclude keys.json] [--family <fingerprint>] [--allow-curve (use CURVE D values; default drops them)] [--nodes 2000000] [--out plan.json]');
     process.exit(64);
   }
   const fs = require('fs'), Lb = require('./library.js');
   const lib = Lb.createLibrary({ dir: a.lib });
   const read = f => JSON.parse(fs.readFileSync(f, 'utf8'));
-  const { pairs, skipped } = Lb.pairsOf(lib.entries(), { measured: a.measured ? read(a.measured) : undefined, family: a.family, withSkipped: true });
+  const measurements = a.measured ? read(a.measured) : undefined;
+  const { pairs, skipped } = Lb.pairsOf(lib.entries(), { measured: measurements?.measured ?? measurements,
+    family: a.family || require('./yardstick.js').loadPins().family.fingerprint,
+    gateProfile: require('./gate_profile.js').loadProfile(a['gate-profile'] || 'e5-v1').fingerprint, withSkipped: true });
   const res = assign(pairs, {
     from: +a.from, to: +a.to,
     trend: a.T0 != null ? { T0: +a.T0, L0: +(a.L0 ?? a.from), g: +(a.g ?? 1), cap: +(a.cap ?? Infinity) } : DEFAULTS.trend,
@@ -315,9 +318,11 @@ function main() {
     maxNodes: a.nodes ? +a.nodes : undefined, dropCurve: !a['allow-curve'],
   });
   res.librarySkipped = skipped; res.libraryDamagedLines = lib.damaged.length;
+  res.context = a.context ? read(a.context) : [];
   if (a.out) fs.writeFileSync(a.out, JSON.stringify(res, null, 1));
   console.log(res.text);
   if (skipped.otherRuler) console.log(`(${skipped.otherRuler} library entries rated with another family ruler were left out.)`);
+  if (skipped.otherGateProfile) console.log(`(${skipped.otherGateProfile} library entries with missing or different gate profiles were left out.)`);
 }
 if (require.main === module) main();
 

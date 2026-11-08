@@ -26,6 +26,14 @@ test('contentKey ignores the clock budget and the witness, sees everything else'
   assert.equal(Lb.contentKey({ design: a }), Lb.contentKey(a), 'a wrapped design is unwrapped');
 });
 
+test('assignment profile filtering excludes legacy and differently qualified entries', () => {
+  const same = entry(1), other = entry(2), legacy = entry(3);
+  same.gateProfile = { fingerprint: 'selected' }; other.gateProfile = { fingerprint: 'other' };
+  const r = Lb.pairsOf([same, other, legacy], { gateProfile: 'selected', withSkipped: true });
+  assert.equal(r.skipped.otherGateProfile, 2);
+  assert(r.pairs.length > 0); assert(r.pairs.every(p => p.key === same.key));
+});
+
 test('makeEntry freezes the design at spare 0 and tags it', () => {
   const e = entry(2);
   assert.equal(e.schema, Lb.ENTRY_SCHEMA);
