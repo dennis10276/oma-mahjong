@@ -45,13 +45,14 @@ const DEFAULTS = Object.freeze({
   curveSpares: [0, 1, 2, 3], traceCampaigns: 40,
   staticOptions: { stopEarly: true },
   gateProfile: 'e5-v1',
+  mode: null,
 });
 function pipelineVersion(optsIn) {
   const opts = { ...DEFAULTS, ...optsIn };
   const identity = GP.digest({ profile: GP.loadProfile(opts.gateProfile).fingerprint, targets: opts.targets,
     plannerSpare: opts.plannerSpare, curveSpares: opts.curveSpares, traceCampaigns: opts.traceCampaigns,
-    staticOptions: opts.staticOptions, pins: require('./yardstick.js').loadPins() });
-  return VERSION + '-' + identity.slice(0, 12) + (opts.skilledFloor < Policy.SKILLED.lo ? '-fallback-' + opts.skilledFloor : '');
+    staticOptions: opts.staticOptions, pins: require('./yardstick.js').loadPins(), ...(opts.mode ? { mode: opts.mode } : {}) });
+  return VERSION + '-' + identity.slice(0, 12) + (opts.skilledFloor < Policy.SKILLED.lo ? '-fallback-' + opts.skilledFloor : '') + (opts.mode ? '-' + opts.mode : '');
 }
 
 // ---------- candidates ----------
@@ -334,7 +335,8 @@ function main() {
   if (start === 'auto') {
     const floor = +(a['skilled-floor'] ?? DEFAULTS.skilledFloor), targets = a.targets ? String(a.targets).split(',').map(Number) : DEFAULTS.targets;
     const runs = Lb.readJsonl(path.join(libDir, 'pipeline-runs.jsonl')).filter(r => !!r.dryRun === dry && (r.options?.seedBase ?? 1) === seedBase
-      && r.pipeline === pipelineVersion({ skilledFloor: floor, targets, gateProfile: a['gate-profile'] || DEFAULTS.gateProfile }) && JSON.stringify(r.options?.targets) === JSON.stringify(targets));
+      && r.pipeline === pipelineVersion({ skilledFloor: floor, targets, gateProfile: a['gate-profile'] || DEFAULTS.gateProfile,
+    mode: a.mode || (a['visible-choice'] ? 'visibleChoice' : DEFAULTS.mode) }) && JSON.stringify(r.options?.targets) === JSON.stringify(targets));
     start = runs.length ? Math.max(...runs.map(r => r.next)) : 0;
   }
   const opts = {
@@ -342,6 +344,7 @@ function main() {
     targets: a.targets ? String(a.targets).split(',').map(Number) : DEFAULTS.targets,
     skilledFloor: +(a['skilled-floor'] ?? DEFAULTS.skilledFloor),
     gateProfile: a['gate-profile'] || DEFAULTS.gateProfile,
+    mode: a.mode || (a['visible-choice'] ? 'visibleChoice' : DEFAULTS.mode),
   };
   const B = require('../builder.js');
   let deps;
@@ -363,7 +366,7 @@ function main() {
       c1: CF.c1, c2c3: CF.c2c3,
     };
   }
-  deps.build = brief => B.build(brief);
+  deps.build = brief => B.build(opts.mode ? { ...brief, mode: opts.mode } : brief, opts.mode ? { mode: opts.mode } : {});
   deps.briefs = JSON.parse(fs.readFileSync(a.briefs || BRIEFS, 'utf8'));
   deps.library = lib; deps.code = codeFingerprints();
   const s = runPipeline(opts, deps);
