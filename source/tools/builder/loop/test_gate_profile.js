@@ -23,3 +23,16 @@ test('profiles bind exact thresholds and remain independent between callers', ()
   const r = report(); r.gates.A6.warn = 'unknown';
   assert.deepEqual(GP.unresolvedStatic(r, p), ['A6']);
 });
+
+test('unresolved extra opening actions do not erase proven alternatives, but unresolved route states still block', () => {
+  const p = GP.loadProfile(), r = report();
+  r.gates.A4 = {pass:true,warn:'unknown',detail:{statesWithUnknown:0,perSpare:{3:{ok:true,openingWins:4,openingUnknown:2,notObvious:[]}}}};
+  assert.deepEqual(GP.unresolvedStatic(r,p,{spare:3}),[]);
+  assert.deepEqual(GP.unresolvedStatic(r,p,{spare:1}),['A4'], 'another spare cannot borrow this proof');
+  r.gates.A4.detail.statesWithUnknown=1;
+  assert.deepEqual(GP.unresolvedStatic(r,p,{spare:3}),['A4']);
+  r.gates.A4.detail.statesWithUnknown=0; r.gates.A4.warn='budget';
+  assert.deepEqual(GP.unresolvedStatic(r,p,{spare:3}),['A4']);
+  r.gates.A4.warn='unknown'; r.gates.A4.detail.perSpare[3].openingWins=1;
+  assert.deepEqual(GP.unresolvedStatic(r,p,{spare:3}),['A4']);
+});

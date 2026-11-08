@@ -235,7 +235,7 @@ function staticGates(designIn, o = {}) {
       if (wins.length === 1 && unk === 0) {
         const ob = O.isObvious(gE, s, wins[0].move);
         singles.push({ step: m, moves: s.moves, move: wins[0].move, obvious: ob.obvious, reasons: ob.reasons });
-      } else if (wins.length === 1) skipped.push(m);
+      } else if (wins.length <= 1 && unk > 0) skipped.push(m);
     }
     // per spare: the tightest fully, looser ones only where the tighter one failed
     const perSpare = {};

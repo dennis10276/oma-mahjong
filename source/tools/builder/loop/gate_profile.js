@@ -28,7 +28,19 @@ function applyStatic(result, profile) {
 function traceOptions(opts, profile) {
   return { ...opts, thresholds: structuredClone(profile.traces.thresholds) };
 }
-function unresolvedStatic(result, profile) {
-  return profile.static.required.filter(g => result.gates?.[g]?.pass == null || result.gates?.[g]?.warn);
+function unresolvedStatic(result, profile, { spare } = {}) {
+  return profile.static.required.filter(g => {
+    const gate = result.gates?.[g];
+    if (gate?.pass == null) return true;
+    if (!gate.warn) return false;
+    // Unresolved extra opening moves cannot invalidate two already proven alternatives.
+    // Every potentially forced witness state must still have been resolved, and budget
+    // exhaustion remains unresolved. This does not classify an unknown action as a win.
+    if (g === 'A4' && gate.pass === true && gate.warn === 'unknown' && spare != null) {
+      const d = gate.detail, p = d?.perSpare?.[spare];
+      if (d?.statesWithUnknown === 0 && p?.ok === true && p.openingWins >= 2 && Array.isArray(p.notObvious) && p.notObvious.length === 0) return false;
+    }
+    return true;
+  });
 }
 module.exports = { loadProfile, applyStatic, traceOptions, unresolvedStatic, digest };

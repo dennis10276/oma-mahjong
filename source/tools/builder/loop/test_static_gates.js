@@ -9,6 +9,23 @@ function tiny({ faces = [0, 0, 1, 1, 2, 2, 3, 3], n = 3, down = [] } = {}) {
   return { tiles: faces.map((_, i) => [i * 4, 0, 0]), faces: faces.slice(), down, obst: {}, clock: { i: 0, n }, solution: faces.map((_, i) => i) };
 }
 
+test('A4 records a witness state with no proved wins and unresolved actions as incomplete', t => {
+  const rows = fs.readFileSync(path.join(__dirname, '../../../analysis/builder/data/qualified-200-225.jsonl'), 'utf8').trim().split('\n').map(JSON.parse);
+  const original = D.work; let masked = 0;
+  t.mock.method(D, 'work', (...args) => {
+    const w = original(...args), classify = w.classify;
+    w.classify = (g, s, ...rest) => {
+      const actions = classify(g, s, ...rest);
+      if (s.moves === 1 && actions.length) { masked++; return actions.map(a => ({...a, result:'unknown'})); }
+      return actions;
+    };
+    return w;
+  });
+  const r = SG.staticGates(rows[1].design, {previous:[], perms:1});
+  assert(masked > 0); assert(r.gates.A4.detail.statesWithUnknown > 0);
+  assert(r.gates.A4.warn, 'a missing proof must remain visible');
+});
+
 test('work tracker: a spent budget gives unknown with budget, never lose', () => {
   const d = tiny(), g = E.game(d), w = D.work(0);
   const r = w.win(g, E.start(g), 1000);

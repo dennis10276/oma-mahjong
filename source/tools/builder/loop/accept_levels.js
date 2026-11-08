@@ -44,7 +44,7 @@ function checkLevel(slot, entry, opts, deps, profile) {
   out.checks.static = sg;
   if (sg.warnings?.some(w => /^wallClock/.test(w))) return stop('staticWallClock');
   if (!sg.pass) return stop('staticGates', profile.static.required.some(g => sg.gates?.[g]?.pass === false) ? 'refused' : 'unresolved');
-  if (GP.unresolvedStatic(sg, profile).length) return stop('staticProofIncomplete');
+  if (GP.unresolvedStatic(sg, profile, {spare:slot.spare}).length) return stop('staticProofIncomplete');
   const allowed = sg.gates?.A4?.detail?.okSpares || sg.shipSpares || [];
   if (!allowed.includes(slot.spare) || (sg.gates?.A8?.flag && slot.spare < 2)) return stop('staticSpareMismatch', 'refused');
   const traces = deps.traceGates(d, GP.traceOptions({ spare: null, ys, campaigns: 80, secondAct: !!entry.tags?.secondAct }, profile));
