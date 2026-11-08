@@ -45,13 +45,14 @@ const DEFAULTS = Object.freeze({
   curveSpares: [0, 1, 2, 3], traceCampaigns: 40,
   staticOptions: { stopEarly: true },
   gateProfile: 'e5-v1',
+  mode: null,
 });
 function pipelineVersion(optsIn) {
   const opts = { ...DEFAULTS, ...optsIn };
   const identity = GP.digest({ profile: GP.loadProfile(opts.gateProfile).fingerprint, targets: opts.targets,
     plannerSpare: opts.plannerSpare, curveSpares: opts.curveSpares, traceCampaigns: opts.traceCampaigns,
-    staticOptions: opts.staticOptions, pins: require('./yardstick.js').loadPins() });
-  return VERSION + '-' + identity.slice(0, 12) + (opts.skilledFloor < Policy.SKILLED.lo ? '-fallback-' + opts.skilledFloor : '');
+    staticOptions: opts.staticOptions, pins: require('./yardstick.js').loadPins(), ...(opts.mode ? { mode: opts.mode, construction: codeFingerprints()['visible_choice.js'] } : {}) });
+  return VERSION + '-' + identity.slice(0, 12) + (opts.skilledFloor < Policy.SKILLED.lo ? '-fallback-' + opts.skilledFloor : '') + (opts.mode ? '-' + opts.mode : '');
 }
 
 // ---------- candidates ----------
@@ -213,6 +214,7 @@ function codeFingerprints() {
 function runPipeline(optsIn = {}, deps) {
   const opts = { ...DEFAULTS, ...optsIn };
   Policy.assertSkilledOptions({ lo: opts.skilledFloor });
+  if (opts.mode != null && opts.mode !== 'visibleChoice') throw Error('Unknown builder mode: ' + opts.mode);
   if (opts.plannerMargin !== 0) throw Error('Every level requires an explicit skilled minimum; hidden screening margins are not supported');
   const pipeline = pipelineVersion(opts);
   const profile = GP.loadProfile(opts.gateProfile);
@@ -246,7 +248,7 @@ function runPipeline(optsIn = {}, deps) {
   const summary = {
     schema: 'pipeline-run-v1', run, pipeline, dryRun: !!opts.dryRun, at: new Date(now()).toISOString(),
     range: [opts.start, opts.start + done - 1], next: opts.start + done, requested: opts.n, done, stopped,
-    options: { targets: opts.targets, skilledFloor: opts.skilledFloor, plannerMargin: opts.plannerMargin, seedBase: opts.seedBase, curveSpares: opts.curveSpares, traceCampaigns: opts.traceCampaigns, gateProfile: profile.id },
+    options: { targets: opts.targets, skilledFloor: opts.skilledFloor, plannerMargin: opts.plannerMargin, seedBase: opts.seedBase, curveSpares: opts.curveSpares, traceCampaigns: opts.traceCampaigns, gateProfile: profile.id, mode: opts.mode },
     gateProfile: profile,
     briefs: list.length, excludedStories: EXCLUDED_STORIES, outcomes,
     steps: Object.fromEntries(Object.entries(stats).map(([k, v]) => [k, { ...v, cpuS: r3(v.cpuS), wallS: r3(v.wallS), cpuPerIn: v.in ? r3(v.cpuS / v.in) : null }])),
@@ -325,7 +327,7 @@ function underHeavy() {
 function main() {
   const a = parseArgs(process.argv.slice(2));
   if (a.help) { console.log(fs.readFileSync(__filename, 'utf8').split('\n').slice(2, 31).join('\n') +
-    '\nOptions: --n 50 --start <i|auto> --seed-base 1 --targets lo,hi --skilled-floor 2.5 --gate-profile e5-v1|strict-v1 --max-minutes 18 --lib <dir> --briefs <file> --dry-run --no-heavy-check'); return; }
+    '\nOptions: --n 50 --start <i|auto> --seed-base 1 --targets lo,hi --skilled-floor 2.5 --gate-profile e5-v1|strict-v1 --mode visibleChoice --max-minutes 18 --lib <dir> --briefs <file> --dry-run --no-heavy-check'); return; }
   const dry = !!a['dry-run'];
   const libDir = a.lib || (dry ? path.join(os.tmpdir(), 'oma-pipeline-dry-' + process.pid) : Lb.LIB_DIR);
   const lib = Lb.createLibrary({ dir: libDir });
@@ -334,7 +336,8 @@ function main() {
   if (start === 'auto') {
     const floor = +(a['skilled-floor'] ?? DEFAULTS.skilledFloor), targets = a.targets ? String(a.targets).split(',').map(Number) : DEFAULTS.targets;
     const runs = Lb.readJsonl(path.join(libDir, 'pipeline-runs.jsonl')).filter(r => !!r.dryRun === dry && (r.options?.seedBase ?? 1) === seedBase
-      && r.pipeline === pipelineVersion({ skilledFloor: floor, targets, gateProfile: a['gate-profile'] || DEFAULTS.gateProfile }) && JSON.stringify(r.options?.targets) === JSON.stringify(targets));
+      && r.pipeline === pipelineVersion({ skilledFloor: floor, targets, gateProfile: a['gate-profile'] || DEFAULTS.gateProfile,
+    mode: a.mode || (a['visible-choice'] ? 'visibleChoice' : DEFAULTS.mode) }) && JSON.stringify(r.options?.targets) === JSON.stringify(targets));
     start = runs.length ? Math.max(...runs.map(r => r.next)) : 0;
   }
   const opts = {
@@ -342,6 +345,7 @@ function main() {
     targets: a.targets ? String(a.targets).split(',').map(Number) : DEFAULTS.targets,
     skilledFloor: +(a['skilled-floor'] ?? DEFAULTS.skilledFloor),
     gateProfile: a['gate-profile'] || DEFAULTS.gateProfile,
+    mode: a.mode || (a['visible-choice'] ? 'visibleChoice' : DEFAULTS.mode),
   };
   const B = require('../builder.js');
   let deps;
@@ -363,7 +367,7 @@ function main() {
       c1: CF.c1, c2c3: CF.c2c3,
     };
   }
-  deps.build = brief => B.build(brief);
+  deps.build = brief => B.build(opts.mode ? { ...brief, mode: opts.mode } : brief, opts.mode ? { mode: opts.mode } : {});
   deps.briefs = JSON.parse(fs.readFileSync(a.briefs || BRIEFS, 'utf8'));
   deps.library = lib; deps.code = codeFingerprints();
   const s = runPipeline(opts, deps);

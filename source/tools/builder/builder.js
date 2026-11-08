@@ -655,6 +655,9 @@ function picturesFor(c, roles, P, hold, brief, rng, N, cap, spare, variants, not
 }
 
 function build(briefIn, opts = {}) {
+  if (opts.mode === 'visibleChoice' || (briefIn && briefIn.mode === 'visibleChoice') || opts.visibleChoice || (briefIn && briefIn.visibleChoice)) {
+    return require('./visible_choice.js').build(briefIn, opts);
+  }
   const brief = { targets: {}, ...briefIn };
   const story = STORIES[brief.story]; if (!story) return { fail: 'unknownStory', detail: brief.story, ms: 0 };
   if (brief.targets.trayRoom != null && ![0, 1, 2].includes(brief.targets.trayRoom)) return { fail: 'invalidBrief', detail: 'trayRoom must be 0, 1 or 2', ms: 0 };

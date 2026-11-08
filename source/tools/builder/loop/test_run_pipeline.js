@@ -218,6 +218,14 @@ test('each clock setting uses its own skilled rating; a low spare-2 score cannot
   const pairs = Lb.pairsOf([e]); assert.equal(pairs[0].S, 3); assert.equal(pairs[0].spare, 1);
 });
 
+test('construction mode is explicit, recorded and isolated from the baseline identity', () => {
+  const baseline=P.runPipeline({n:1,writeRunLog:false},deps());
+  const visible=P.runPipeline({n:1,mode:'visibleChoice',writeRunLog:false},deps());
+  assert.notEqual(visible.pipeline,baseline.pipeline);assert.equal(visible.options.mode,'visibleChoice');
+  assert(P.codeFingerprints()['visible_choice.js']);
+  assert.throws(()=>P.runPipeline({mode:'typo'},deps()),/Unknown builder mode/);
+});
+
 test('a qualifying spare-2 score never lends skilled credit to an easier spare', () => {
   const d = deps();
   d.ys.planner = (design, {spare}) => ({ S: {1:6.2,2:2.6,3:1.9}[spare], valid: true, fingerprint: 'ref-fp' });

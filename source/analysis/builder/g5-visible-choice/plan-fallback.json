@@ -1,0 +1,290 @@
+{
+ "range": [
+  250,
+  259
+ ],
+ "params": {
+  "trend": {
+   "points": [
+    [
+     250,
+     10
+    ],
+    [
+     274,
+     12
+    ],
+    [
+     275,
+     13
+    ]
+   ],
+   "afterStep": 0.12
+  },
+  "tolerance": {
+   "abs": 1,
+   "rel": 0
+  },
+  "spike": {
+   "abs": 1,
+   "rel": 0
+  },
+  "window": {
+   "size": 5,
+   "abs": 0.5,
+   "rel": 0
+  },
+  "spare1": {
+   "window": 5,
+   "max": 1
+  },
+  "storyWindow": 3,
+  "archetypeWindow": 0,
+  "skilled": {
+   "lo": 2,
+   "hi": 6,
+   "floor": "hard"
+  },
+  "bigBoardTiles": 88,
+  "openingClockMinSpare": 2,
+  "holePenalty": 10
+ },
+ "pairs": 5,
+ "puzzles": 3,
+ "excluded": 0,
+ "levels": [
+  {
+   "level": 250,
+   "T": 10,
+   "target": 10,
+   "shape": "trend",
+   "key": "7ce431c50dbeab4582b0ecab4401d7ec308d8294e8e234abc0570c5dd25cd93c",
+   "spare": 2,
+   "D": 9.88,
+   "Dsource": "CURVE",
+   "dev": -0.12,
+   "cost": 0.0126,
+   "S": 2.33,
+   "skilledFallback": true,
+   "Strusted": true,
+   "story": "lockBeside",
+   "tiles": 84,
+   "archetype": "A2",
+   "card": "The clock needs 17 moves; taking the free pair in sight at move 5 before the clock costs 2 spare moves, and the free pair at move 4 loses the board. The family bot's first error was at the trap in 81% of lost tries (spare 1)."
+  },
+  {
+   "level": 251,
+   "T": 10.08,
+   "hole": true,
+   "reason": "conflict"
+  },
+  {
+   "level": 252,
+   "T": 10.17,
+   "target": 10.17,
+   "shape": "trend",
+   "key": "1325d1da5ad4d0c57902962816fffdeecd652daaef474a5ba34ae6e71e42e9d6",
+   "spare": 3,
+   "D": 10.13,
+   "Dsource": "CURVE",
+   "dev": -0.04,
+   "cost": 0.0036,
+   "S": 3.02,
+   "skilledFallback": false,
+   "Strusted": true,
+   "story": "iceLockClock",
+   "tiles": 80,
+   "archetype": "A2",
+   "card": "The clock needs 12 moves; taking the free pair in sight at move 3 before the clock costs 2 spare moves, and the free pair at move 12 loses the board. The family bot's first error was at the trap in 40% of lost tries (spare 1)."
+  },
+  {
+   "level": 253,
+   "T": 10.25,
+   "hole": true,
+   "reason": "conflict"
+  },
+  {
+   "level": 254,
+   "T": 10.33,
+   "hole": true,
+   "reason": "conflict"
+  },
+  {
+   "level": 255,
+   "T": 10.42,
+   "hole": true,
+   "reason": "conflict"
+  },
+  {
+   "level": 256,
+   "T": 10.5,
+   "hole": true,
+   "reason": "conflict"
+  },
+  {
+   "level": 257,
+   "T": 10.58,
+   "hole": true,
+   "reason": "conflict"
+  },
+  {
+   "level": 258,
+   "T": 10.67,
+   "hole": true,
+   "reason": "conflict"
+  },
+  {
+   "level": 259,
+   "T": 10.75,
+   "hole": true,
+   "reason": "conflict"
+  }
+ ],
+ "curveDropped": 0,
+ "curveFilled": 2,
+ "unfillable": [
+  {
+   "level": 251,
+   "reason": "conflict",
+   "T": 10.08,
+   "candidates": 1,
+   "conflicts": {
+    "puzzleUsed": 1
+   },
+   "text": "Level 251 (trend 10.08): 1 pair(s) fit the level on their own, but none fits with the levels around it: 1 use a puzzle already placed on another level."
+  },
+  {
+   "level": 253,
+   "reason": "conflict",
+   "T": 10.25,
+   "candidates": 1,
+   "conflicts": {
+    "puzzleUsed": 1
+   },
+   "text": "Level 253 (trend 10.25): 1 pair(s) fit the level on their own, but none fits with the levels around it: 1 use a puzzle already placed on another level."
+  },
+  {
+   "level": 254,
+   "reason": "conflict",
+   "T": 10.33,
+   "candidates": 1,
+   "conflicts": {
+    "puzzleUsed": 1
+   },
+   "text": "Level 254 (trend 10.33): 1 pair(s) fit the level on their own, but none fits with the levels around it: 1 use a puzzle already placed on another level."
+  },
+  {
+   "level": 255,
+   "reason": "conflict",
+   "T": 10.42,
+   "candidates": 2,
+   "conflicts": {
+    "puzzleUsed": 2
+   },
+   "text": "Level 255 (trend 10.42): 2 pair(s) fit the level on their own, but none fits with the levels around it: 2 use a puzzle already placed on another level."
+  },
+  {
+   "level": 256,
+   "reason": "conflict",
+   "T": 10.5,
+   "candidates": 2,
+   "conflicts": {
+    "puzzleUsed": 2
+   },
+   "text": "Level 256 (trend 10.5): 2 pair(s) fit the level on their own, but none fits with the levels around it: 2 use a puzzle already placed on another level."
+  },
+  {
+   "level": 257,
+   "reason": "conflict",
+   "T": 10.58,
+   "candidates": 2,
+   "conflicts": {
+    "puzzleUsed": 2
+   },
+   "text": "Level 257 (trend 10.58): 2 pair(s) fit the level on their own, but none fits with the levels around it: 2 use a puzzle already placed on another level."
+  },
+  {
+   "level": 258,
+   "reason": "conflict",
+   "T": 10.67,
+   "candidates": 2,
+   "conflicts": {
+    "puzzleUsed": 2
+   },
+   "text": "Level 258 (trend 10.67): 2 pair(s) fit the level on their own, but none fits with the levels around it: 2 use a puzzle already placed on another level."
+  },
+  {
+   "level": 259,
+   "reason": "conflict",
+   "T": 10.75,
+   "candidates": 2,
+   "conflicts": {
+    "puzzleUsed": 2
+   },
+   "text": "Level 259 (trend 10.75): 2 pair(s) fit the level on their own, but none fits with the levels around it: 2 use a puzzle already placed on another level."
+  }
+ ],
+ "windows": [
+  {
+   "from": 250,
+   "to": 254,
+   "meanDev": -0.03,
+   "tol": 0.5,
+   "ok": true,
+   "holes": 3
+  },
+  {
+   "from": 251,
+   "to": 255,
+   "meanDev": -0.01,
+   "tol": 0.5,
+   "ok": true,
+   "holes": 4
+  },
+  {
+   "from": 252,
+   "to": 256,
+   "meanDev": -0.01,
+   "tol": 0.5,
+   "ok": true,
+   "holes": 4
+  },
+  {
+   "from": 253,
+   "to": 257,
+   "meanDev": 0,
+   "tol": 0.5,
+   "ok": true,
+   "holes": 5
+  },
+  {
+   "from": 254,
+   "to": 258,
+   "meanDev": 0,
+   "tol": 0.5,
+   "ok": true,
+   "holes": 5
+  },
+  {
+   "from": 255,
+   "to": 259,
+   "meanDev": 0,
+   "tol": 0.5,
+   "ok": true,
+   "holes": 5
+  }
+ ],
+ "holes": 8,
+ "totalCost": 0.0162,
+ "proven": true,
+ "nodes": 129,
+ "budgetHit": false,
+ "text": "Levels 250-259: 2 of 10 filled from 3 puzzles (5 puzzle-spare pairs).\n2 levels are filled from CURVE values (provisional).\nSkilled fallback below 2.5 used on 250; minimum allowed 2.\nThe assignment is the cheapest the rules allow (search finished).\n  250: trend, target 10 (trend 10); puzzle 7ce431c50d spare 2, D 9.88 (CURVE, not yet a value of record), S 2.33, story lockBeside\n  252: trend, target 10.17 (trend 10.17); puzzle 1325d1da5a spare 3, D 10.13 (CURVE, not yet a value of record), S 3.02, story iceLockClock\nUnfillable (8):\n  Level 251 (trend 10.08): 1 pair(s) fit the level on their own, but none fits with the levels around it: 1 use a puzzle already placed on another level.\n  Level 253 (trend 10.25): 1 pair(s) fit the level on their own, but none fits with the levels around it: 1 use a puzzle already placed on another level.\n  Level 254 (trend 10.33): 1 pair(s) fit the level on their own, but none fits with the levels around it: 1 use a puzzle already placed on another level.\n  Level 255 (trend 10.42): 2 pair(s) fit the level on their own, but none fits with the levels around it: 2 use a puzzle already placed on another level.\n  Level 256 (trend 10.5): 2 pair(s) fit the level on their own, but none fits with the levels around it: 2 use a puzzle already placed on another level.\n  Level 257 (trend 10.58): 2 pair(s) fit the level on their own, but none fits with the levels around it: 2 use a puzzle already placed on another level.\n  Level 258 (trend 10.67): 2 pair(s) fit the level on their own, but none fits with the levels around it: 2 use a puzzle already placed on another level.\n  Level 259 (trend 10.75): 2 pair(s) fit the level on their own, but none fits with the levels around it: 2 use a puzzle already placed on another level.",
+ "librarySkipped": {
+  "otherRuler": 0,
+  "otherGateProfile": 0,
+  "noShippableSpare": 0
+ },
+ "libraryDamagedLines": 0,
+ "context": []
+}
