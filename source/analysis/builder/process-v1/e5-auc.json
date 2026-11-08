@@ -1,0 +1,299 @@
+{
+ "n": {
+  "liked": 10,
+  "disliked": 7
+ },
+ "aucLikedHigher": {
+  "D": 0.64,
+  "B1v": 0.81,
+  "B2v": 0.69,
+  "B3v": 0.43,
+  "B4v": 0.66,
+  "B5v": 0.25,
+  "B6v": 0.32,
+  "B7v": 0.8,
+  "A7_unrelieved": 0.74,
+  "A7_tightBlind": 0.79,
+  "A7_dealsLost": 0.61
+ },
+ "B2sweep": {
+  "0.5": {
+   "liked": 3,
+   "disliked": 0,
+   "all46": 9
+  },
+  "0.3": {
+   "liked": 4,
+   "disliked": 0,
+   "all46": 14
+  },
+  "0.2": {
+   "liked": 6,
+   "disliked": 1,
+   "all46": 20
+  },
+  "0.15": {
+   "liked": 6,
+   "disliked": 2,
+   "all46": 23
+  },
+  "0.1": {
+   "liked": 6,
+   "disliked": 3,
+   "all46": 30
+  }
+ },
+ "B1sweep": {
+  "0.15": {
+   "liked": 9,
+   "disliked": 1
+  },
+  "0.3": {
+   "liked": 9,
+   "disliked": 1
+  },
+  "0.5": {
+   "liked": 9,
+   "disliked": 1
+  }
+ },
+ "B4sweep": {
+  "6": {
+   "liked": 8,
+   "disliked": 5,
+   "all": 36
+  },
+  "8": {
+   "liked": 8,
+   "disliked": 6,
+   "all": 38
+  },
+  "10": {
+   "liked": 10,
+   "disliked": 6,
+   "all": 42
+  },
+  "12": {
+   "liked": 10,
+   "disliked": 7,
+   "all": 45
+  }
+ },
+ "A4logicOnly": {
+  "liked": 9,
+  "disliked": 7,
+  "all": 44,
+  "A4asShipped": {
+   "liked": 4,
+   "disliked": 7,
+   "all": 33
+  }
+ },
+ "kLarge": [
+  "factory4-175",
+  "factory4-178",
+  "factory5-180",
+  "factory6-184",
+  "factory6-190",
+  "blind1-187",
+  "blind1-183",
+  "blind1-194",
+  "release163-175",
+  "release163-194",
+  "q207-00cda4",
+  "q211-c74406",
+  "q218-069a22",
+  "q224-51f3a1",
+  "q225-869ece",
+  "q217-1233c8",
+  "study9002"
+ ],
+ "lateSqueeze": [
+  {
+   "id": "factory1-184",
+   "B5v": 0.167,
+   "B5": false,
+   "B2": false,
+   "B4v": 1.5,
+   "B6v": 0.5,
+   "Bpass": false
+  },
+  {
+   "id": "factory6-184",
+   "B5v": 0,
+   "B5": true,
+   "B2": false,
+   "B4v": 8,
+   "B6v": 0.142,
+   "Bpass": false
+  },
+  {
+   "id": "release163-185",
+   "B5v": 0.494,
+   "B5": false,
+   "B2": false,
+   "B4v": 12,
+   "B6v": 0.921,
+   "Bpass": false
+  }
+ ],
+ "pass": {
+  "staticAll": 0,
+  "traceAll": 1,
+  "traceFalse": 44,
+  "traceNull": 1
+ },
+ "q225": {
+  "id": "q225-869ece",
+  "set": "dennis-round2",
+  "level": 225,
+  "stars": 5,
+  "tries": 4,
+  "group": "liked",
+  "kinds": [],
+  "A": {
+   "A1": false,
+   "A2": false,
+   "A3": false,
+   "A4": false,
+   "A5": true,
+   "A6": false,
+   "A7": false,
+   "A8": true,
+   "A9": true
+  },
+  "A7": {
+   "room": false,
+   "tb": false,
+   "deals": false,
+   "unrelieved": 1,
+   "tightBlind": 2,
+   "deals_lost": 3,
+   "deals_n": 4
+  },
+  "B": {
+   "D": 12.8,
+   "pass": false,
+   "B1": true,
+   "B1v": 1,
+   "B2": false,
+   "B2v": 0.227,
+   "B3": true,
+   "B3v": 0.264,
+   "B4": true,
+   "B4v": 3,
+   "B5": true,
+   "B5v": 0.006,
+   "B6": false,
+   "B6v": 0.619,
+   "B7v": 0.477,
+   "losses": 493,
+   "proved": 493,
+   "coverage": 1,
+   "tempting": 33,
+   "forkStates": 11
+  }
+ },
+ "likedTrace": [
+  {
+   "id": "factory2-175",
+   "pass": false,
+   "B1": true,
+   "B2": false,
+   "B3": true,
+   "B4": true,
+   "B5": true,
+   "B6": false
+  },
+  {
+   "id": "factory4-175",
+   "pass": false,
+   "B1": true,
+   "B2": false,
+   "B3": true,
+   "B4": true,
+   "B5": true,
+   "B6": true
+  },
+  {
+   "id": "factory4-176",
+   "pass": false,
+   "B1": true,
+   "B2": true,
+   "B3": false,
+   "B4": true,
+   "B5": true,
+   "B6": true
+  },
+  {
+   "id": "factory6-188",
+   "pass": false,
+   "B1": false,
+   "B2": false,
+   "B3": true,
+   "B4": true,
+   "B5": true,
+   "B6": false
+  },
+  {
+   "id": "blind1-187",
+   "pass": false,
+   "B1": true,
+   "B2": false,
+   "B3": false,
+   "B4": true,
+   "B5": true,
+   "B6": true
+  },
+  {
+   "id": "blind1-194",
+   "pass": false,
+   "B1": true,
+   "B2": true,
+   "B3": false,
+   "B4": false,
+   "B5": true,
+   "B6": true
+  },
+  {
+   "id": "blind1-185",
+   "pass": false,
+   "B1": true,
+   "B2": false,
+   "B3": false,
+   "B4": false,
+   "B5": true,
+   "B6": false
+  },
+  {
+   "id": "release163-175",
+   "pass": false,
+   "B1": true,
+   "B2": false,
+   "B3": true,
+   "B4": true,
+   "B5": true,
+   "B6": false
+  },
+  {
+   "id": "q225-869ece",
+   "pass": false,
+   "B1": true,
+   "B2": false,
+   "B3": true,
+   "B4": true,
+   "B5": true,
+   "B6": false
+  },
+  {
+   "id": "q217-1233c8",
+   "pass": true,
+   "B1": true,
+   "B2": true,
+   "B3": true,
+   "B4": true,
+   "B5": true,
+   "B6": true
+  }
+ ]
+}

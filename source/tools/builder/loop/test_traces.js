@@ -121,6 +121,19 @@ test('B1-B7 on a fake capture: one trap campaign, one off-trap campaign', () => 
   assert.equal(r.examples.find(e => e.campaign === 0 && e.attempt === 2).repeated, true);
 });
 
+test('calibration overrides change verdicts without changing captures or subsequent defaults', () => {
+  const caps = [[loseTry(1, late.step, trapMove), loseTry(2, late.step, trapMove), winTry(3)], [loseTry(1, early.step, offMove, [trapMove]), winTry(2)]];
+  const run = thresholds => T.traceGates(ROW, { spare: 1, forks, campaigns: 2, capture: fakeCapture(caps), thresholds });
+  const original = run();
+  const calibrated = run({ B1: { min: 0.75 }, B2: { min: 0.9 }, B3: { min: 0 } });
+  assert.equal(original.B1.pass, true); assert.equal(calibrated.B1.pass, false);
+  assert.equal(original.B2.pass, true); assert.equal(calibrated.B2.pass, false);
+  assert.equal(calibrated.B2.value, original.B2.value);
+  assert.deepEqual(calibrated.counts, original.counts);
+  assert.equal(calibrated.thresholds.B3.max, original.thresholds.B3.max, 'partial override preserves max');
+  assert.deepEqual(run().thresholds, original.thresholds, 'overrides do not mutate global defaults');
+});
+
 test('B7 counts repeated losing moves in tries 6-20; second act B6 rule', () => {
   const tries = Array.from({ length: 7 }, (_, k) => loseTry(k + 1, late.step, trapMove)).concat([winTry(8)]);
   const r = T.traceGates(ROW, { spare: 1, forks, campaigns: 1, capture: fakeCapture([tries]), secondAct: true });

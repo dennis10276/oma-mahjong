@@ -1,0 +1,1884 @@
+{
+ "generated": "2026-11-07",
+ "seeds": {
+  "seed0": 7000003,
+  "step": 15838,
+  "blocks": 8,
+  "blockCampaigns": 40
+ },
+ "coverage": {
+  "boards": 40,
+  "ratings": 640,
+  "cellsComplete": 80,
+  "cellsValidComplete": 80,
+  "failRows": 0,
+  "maxAbsDvsMean": 0.005,
+  "pairedBoards": 40
+ },
+ "sec1_betweenWithin": {
+  "pooledRatio": {
+   "value": 0.983,
+   "lo": 0.83,
+   "hi": 1.146
+  },
+  "pooledRatioVsCappedModel": {
+   "value": 0.85,
+   "lo": 0.712,
+   "hi": 1
+  },
+  "perCellRatioMedian": 1.052,
+  "perCellRatioMean": 1.094,
+  "cells": 80,
+  "byBand": {
+   "3-4": {
+    "cells": 10,
+    "value": 1.236,
+    "lo": 0.766,
+    "hi": 1.774
+   },
+   "4-6": {
+    "cells": 21,
+    "value": 1.181,
+    "lo": 0.991,
+    "hi": 1.418
+   },
+   "6-9": {
+    "cells": 28,
+    "value": 0.856,
+    "lo": 0.657,
+    "hi": 1.066
+   },
+   "9-13": {
+    "cells": 8,
+    "value": 0.962,
+    "lo": 0.637,
+    "hi": 1.424
+   },
+   "13+": {
+    "cells": 13,
+    "value": 1.076,
+    "lo": 0.747,
+    "hi": 1.527
+   }
+  },
+  "bySpare": {
+   "2": {
+    "cells": 40,
+    "value": 0.983,
+    "lo": 0.781,
+    "hi": 1.193
+   },
+   "3": {
+    "cells": 40,
+    "value": 0.984,
+    "lo": 0.804,
+    "hi": 1.174
+   }
+  },
+  "commonBlockEffectSpare2": {
+   "cells": 40,
+   "meanZPerBlock": [
+    -0.208,
+    -0.034,
+    0.02,
+    0.057,
+    -0.11,
+    -0.247,
+    0.288,
+    0.234
+   ],
+   "sdOfMeanZ": 0.192,
+   "expectedIfIndependent": 0.148,
+   "note": "z = (block mean - cell mean)/sqrt(within-predicted var), averaged over the spare-2 cells (one per board) for each block seed. A lucky seed shared by all boards would give a large sd."
+  },
+  "subBlockHalves": {
+   "n": 640,
+   "meanZ": 0,
+   "varZ": 1.028,
+   "note": "z of (first 20 - last 20 campaigns) per block (the two meter sub-block seeds); mean near 0 and var near 1 mean the halves behave as independent equal samples."
+  }
+ },
+ "sec2_seScaling": {
+  "byN": {
+   "1": {
+    "campaigns": 40,
+    "rmsSE": 0.777,
+    "rmsSElogD": 0.105,
+    "df": 560,
+    "byBand": {
+     "4-6": {
+      "se": 0.656,
+      "seLogD": 0.127
+     },
+     "3-4": {
+      "se": 0.331,
+      "seLogD": 0.088
+     },
+     "6-9": {
+      "se": 0.789,
+      "seLogD": 0.111
+     },
+     "9-13": {
+      "se": 1.045,
+      "seLogD": 0.094
+     },
+     "13+": {
+      "se": 0.96,
+      "seLogD": 0.066
+     }
+    },
+    "predictedFrom1BlockBy1overSqrtN": 0.777,
+    "ratioObservedToPredicted": 1,
+    "cappedModelSE": 0.843,
+    "withinBlockSE": 0.783
+   },
+   "2": {
+    "campaigns": 80,
+    "rmsSE": 0.567,
+    "rmsSElogD": 0.075,
+    "df": 240,
+    "byBand": {
+     "4-6": {
+      "se": 0.419,
+      "seLogD": 0.085
+     },
+     "3-4": {
+      "se": 0.258,
+      "seLogD": 0.068
+     },
+     "6-9": {
+      "se": 0.621,
+      "seLogD": 0.082
+     },
+     "9-13": {
+      "se": 0.661,
+      "seLogD": 0.057
+     },
+     "13+": {
+      "se": 0.74,
+      "seLogD": 0.051
+     }
+    },
+    "predictedFrom1BlockBy1overSqrtN": 0.549,
+    "ratioObservedToPredicted": 1.032,
+    "cappedModelSE": 0.596,
+    "withinBlockSE": 0.554
+   },
+   "4": {
+    "campaigns": 160,
+    "rmsSE": 0.442,
+    "rmsSElogD": 0.058,
+    "df": 80,
+    "byBand": {
+     "4-6": {
+      "se": 0.383,
+      "seLogD": 0.077
+     },
+     "3-4": {
+      "se": 0.166,
+      "seLogD": 0.047
+     },
+     "6-9": {
+      "se": 0.405,
+      "seLogD": 0.053
+     },
+     "9-13": {
+      "se": 0.728,
+      "seLogD": 0.061
+     },
+     "13+": {
+      "se": 0.512,
+      "seLogD": 0.035
+     }
+    },
+    "predictedFrom1BlockBy1overSqrtN": 0.389,
+    "ratioObservedToPredicted": 1.138,
+    "cappedModelSE": 0.421,
+    "withinBlockSE": 0.392
+   }
+  },
+  "logLogSlope": -0.407,
+  "expectedSlope": -0.5,
+  "seTable": {
+   "3-4": {
+    "cells": 10,
+    "meanD": 3.566,
+    "sdPerCampaign": 1.884,
+    "se40": 0.298,
+    "se80": 0.211,
+    "se160": 0.149,
+    "se320": 0.105
+   },
+   "4-6": {
+    "cells": 21,
+    "meanD": 4.933,
+    "sdPerCampaign": 3.819,
+    "se40": 0.604,
+    "se80": 0.427,
+    "se160": 0.302,
+    "se320": 0.213
+   },
+   "6-9": {
+    "cells": 28,
+    "meanD": 7.212,
+    "sdPerCampaign": 5.392,
+    "se40": 0.852,
+    "se80": 0.603,
+    "se160": 0.426,
+    "se320": 0.301
+   },
+   "9-13": {
+    "cells": 8,
+    "meanD": 11.11,
+    "sdPerCampaign": 6.739,
+    "se40": 1.066,
+    "se80": 0.753,
+    "se160": 0.533,
+    "se320": 0.377
+   },
+   "13+": {
+    "cells": 13,
+    "meanD": 15.244,
+    "sdPerCampaign": 5.85,
+    "se40": 0.925,
+    "se80": 0.654,
+    "se160": 0.463,
+    "se320": 0.327
+   }
+  }
+ },
+ "sec3_paired": {
+  "boards": 40,
+  "blockLevel40": {
+   "ratioPairedOverUnpaired": 0.631,
+   "reductionPct": 36.9,
+   "reductionCI95Pct": [
+    20.1,
+    50.3
+   ]
+  },
+  "blockLevel80_CURVEsize": {
+   "ratioPairedOverUnpaired": 0.775,
+   "reductionPct": 22.5,
+   "reductionCI95Pct": [
+    -19.6,
+    50
+   ]
+  },
+  "campaignLevel320": {
+   "ratioPairedOverUnpaired": 0.642,
+   "reductionPct": 35.8,
+   "reductionCI95Pct": [
+    22.8,
+    49
+   ]
+  },
+  "byBand": {
+   "3-4": {
+    "boards": 4,
+    "campaignLevel": {
+     "ratioPairedOverUnpaired": 0.758,
+     "reductionPct": 24.2,
+     "reductionCI95Pct": [
+      10.1,
+      32.9
+     ]
+    },
+    "block40": {
+     "ratioPairedOverUnpaired": 1.155,
+     "reductionPct": -15.5,
+     "reductionCI95Pct": [
+      -63.9,
+      20.3
+     ]
+    }
+   },
+   "4-6": {
+    "boards": 11,
+    "campaignLevel": {
+     "ratioPairedOverUnpaired": 0.489,
+     "reductionPct": 51.1,
+     "reductionCI95Pct": [
+      7.2,
+      73.1
+     ]
+    },
+    "block40": {
+     "ratioPairedOverUnpaired": 0.543,
+     "reductionPct": 45.7,
+     "reductionCI95Pct": [
+      18.8,
+      64.4
+     ]
+    }
+   },
+   "6-9": {
+    "boards": 15,
+    "campaignLevel": {
+     "ratioPairedOverUnpaired": 0.61,
+     "reductionPct": 39,
+     "reductionCI95Pct": [
+      20.5,
+      57.5
+     ]
+    },
+    "block40": {
+     "ratioPairedOverUnpaired": 0.868,
+     "reductionPct": 13.2,
+     "reductionCI95Pct": [
+      -14.9,
+      41.3
+     ]
+    }
+   },
+   "9-13": {
+    "boards": 4,
+    "campaignLevel": {
+     "ratioPairedOverUnpaired": 0.655,
+     "reductionPct": 34.5,
+     "reductionCI95Pct": [
+      6.1,
+      72.5
+     ]
+    },
+    "block40": {
+     "ratioPairedOverUnpaired": 0.428,
+     "reductionPct": 57.2,
+     "reductionCI95Pct": [
+      36.6,
+      74.1
+     ]
+    }
+   },
+   "13+": {
+    "boards": 6,
+    "campaignLevel": {
+     "ratioPairedOverUnpaired": 0.804,
+     "reductionPct": 19.6,
+     "reductionCI95Pct": [
+      8.1,
+      34.1
+     ]
+    },
+    "block40": {
+     "ratioPairedOverUnpaired": 0.518,
+     "reductionPct": 48.2,
+     "reductionCI95Pct": [
+      26.4,
+      61.7
+     ]
+    }
+   }
+  },
+  "midBand6to16": {
+   "boards": 23,
+   "campaignLevel": {
+    "ratioPairedOverUnpaired": 0.654,
+    "reductionPct": 34.6,
+    "reductionCI95Pct": [
+     20.7,
+     48.5
+    ]
+   },
+   "block40": {
+    "ratioPairedOverUnpaired": 0.654,
+    "reductionPct": 34.6,
+    "reductionCI95Pct": [
+     13.8,
+     51.8
+    ]
+   },
+   "block80": {
+    "ratioPairedOverUnpaired": 0.807,
+    "reductionPct": 19.3,
+    "reductionCI95Pct": [
+     -28.8,
+     48.3
+    ]
+   }
+  },
+  "meanCampaignCorrelation": 0.276,
+  "stepSE_tries": {
+   "paired_n40": 0.895,
+   "unpaired_n40": 1.127,
+   "paired_n80": 0.714,
+   "unpaired_n80": 0.811,
+   "paired_n320": 0.314,
+   "unpaired_n320": 0.392
+  },
+  "steps": {
+   "medianStep_2minus3": 0.094,
+   "meanStep": 0.38,
+   "spare3EasierShare": 0.625
+  },
+  "perBoard": [
+   {
+    "b": 0,
+    "D2": 4.106,
+    "D3": 3.638,
+    "step": 0.469,
+    "corr": 0.355
+   },
+   {
+    "b": 6,
+    "D2": 3.238,
+    "D3": 3.625,
+    "step": -0.388,
+    "corr": 0.092
+   },
+   {
+    "b": 12,
+    "D2": 5.247,
+    "D3": 5.263,
+    "step": -0.016,
+    "corr": 0.256
+   },
+   {
+    "b": 18,
+    "D2": 6.378,
+    "D3": 6.169,
+    "step": 0.209,
+    "corr": 0.799
+   },
+   {
+    "b": 24,
+    "D2": 6.584,
+    "D3": 6.584,
+    "step": 0,
+    "corr": 0.942
+   },
+   {
+    "b": 30,
+    "D2": 9.275,
+    "D3": 7.334,
+    "step": 1.941,
+    "corr": 0.469
+   },
+   {
+    "b": 36,
+    "D2": 16.234,
+    "D3": 16.913,
+    "step": -0.678,
+    "corr": -0.01
+   },
+   {
+    "b": 1,
+    "D2": 3.931,
+    "D3": 4.094,
+    "step": -0.163,
+    "corr": 0.09
+   },
+   {
+    "b": 7,
+    "D2": 4.378,
+    "D3": 4.503,
+    "step": -0.125,
+    "corr": 0.06
+   },
+   {
+    "b": 13,
+    "D2": 5.597,
+    "D3": 7.659,
+    "step": -2.062,
+    "corr": 0.24
+   },
+   {
+    "b": 19,
+    "D2": 7.938,
+    "D3": 8.481,
+    "step": -0.544,
+    "corr": 0.103
+   },
+   {
+    "b": 25,
+    "D2": 8.137,
+    "D3": 8.203,
+    "step": -0.066,
+    "corr": 0.158
+   },
+   {
+    "b": 31,
+    "D2": 14.022,
+    "D3": 11.831,
+    "step": 2.191,
+    "corr": 0.049
+   },
+   {
+    "b": 37,
+    "D2": 15.594,
+    "D3": 15.013,
+    "step": 0.581,
+    "corr": 0.077
+   },
+   {
+    "b": 2,
+    "D2": 3.719,
+    "D3": 3.709,
+    "step": 0.009,
+    "corr": 0.161
+   },
+   {
+    "b": 8,
+    "D2": 4.547,
+    "D3": 3.484,
+    "step": 1.063,
+    "corr": 0.157
+   },
+   {
+    "b": 14,
+    "D2": 5.269,
+    "D3": 5.191,
+    "step": 0.078,
+    "corr": 0.861
+   },
+   {
+    "b": 20,
+    "D2": 6.178,
+    "D3": 6.131,
+    "step": 0.047,
+    "corr": 0.016
+   },
+   {
+    "b": 26,
+    "D2": 6.031,
+    "D3": 5.966,
+    "step": 0.066,
+    "corr": 0.881
+   },
+   {
+    "b": 32,
+    "D2": 13.013,
+    "D3": 12.778,
+    "step": 0.234,
+    "corr": 0.087
+   },
+   {
+    "b": 38,
+    "D2": 13.959,
+    "D3": 13.928,
+    "step": 0.031,
+    "corr": 0.241
+   },
+   {
+    "b": 3,
+    "D2": 3.225,
+    "D3": 3.131,
+    "step": 0.094,
+    "corr": 0.266
+   },
+   {
+    "b": 9,
+    "D2": 4.356,
+    "D3": 4.041,
+    "step": 0.316,
+    "corr": 0.621
+   },
+   {
+    "b": 15,
+    "D2": 8.672,
+    "D3": 6.981,
+    "step": 1.691,
+    "corr": 0.267
+   },
+   {
+    "b": 21,
+    "D2": 9.009,
+    "D3": 8.872,
+    "step": 0.138,
+    "corr": 0.946
+   },
+   {
+    "b": 27,
+    "D2": 8.816,
+    "D3": 8.134,
+    "step": 0.681,
+    "corr": 0.158
+   },
+   {
+    "b": 33,
+    "D2": 11.853,
+    "D3": 6.966,
+    "step": 4.888,
+    "corr": 0.175
+   },
+   {
+    "b": 39,
+    "D2": 17.881,
+    "D3": 17.694,
+    "step": 0.188,
+    "corr": 0.437
+   },
+   {
+    "b": 4,
+    "D2": 3.963,
+    "D3": 4.059,
+    "step": -0.097,
+    "corr": -0.026
+   },
+   {
+    "b": 10,
+    "D2": 4.503,
+    "D3": 4.55,
+    "step": -0.047,
+    "corr": 0.014
+   },
+   {
+    "b": 16,
+    "D2": 5.947,
+    "D3": 6.113,
+    "step": -0.166,
+    "corr": 0.014
+   },
+   {
+    "b": 22,
+    "D2": 7.969,
+    "D3": 7.563,
+    "step": 0.406,
+    "corr": 0.05
+   },
+   {
+    "b": 28,
+    "D2": 7.988,
+    "D3": 6.203,
+    "step": 1.784,
+    "corr": 0.36
+   },
+   {
+    "b": 34,
+    "D2": 14.941,
+    "D3": 14.669,
+    "step": 0.272,
+    "corr": 0.152
+   },
+   {
+    "b": 5,
+    "D2": 5.016,
+    "D3": 5.6,
+    "step": -0.584,
+    "corr": -0.006
+   },
+   {
+    "b": 11,
+    "D2": 5.588,
+    "D3": 6.309,
+    "step": -0.722,
+    "corr": -0.099
+   },
+   {
+    "b": 17,
+    "D2": 6.894,
+    "D3": 6.369,
+    "step": 0.525,
+    "corr": 0.002
+   },
+   {
+    "b": 23,
+    "D2": 6.281,
+    "D3": 5.781,
+    "step": 0.5,
+    "corr": 0.406
+   },
+   {
+    "b": 29,
+    "D2": 11.138,
+    "D3": 11.141,
+    "step": -0.003,
+    "corr": 0.834
+   },
+   {
+    "b": 35,
+    "D2": 14.316,
+    "D3": 11.853,
+    "step": 2.463,
+    "corr": 0.403
+   }
+  ]
+ },
+ "sec4_spread": {
+  "cells": 80,
+  "overallRatioToSqrtDD1": 0.687,
+  "overallRatioToCapped": 0.864,
+  "cellsWithin30pctOfSqrtDD1": 0.463,
+  "cellsWithin30pctOfCapped": 0.75,
+  "ratioRangeSqrtDD1": [
+   0.255,
+   1.459
+  ],
+  "ratioRangeCapped": [
+   0.423,
+   1.598
+  ],
+  "byBand": {
+   "3-4": {
+    "cells": 10,
+    "meanD": 3.566,
+    "obsSD": 1.825,
+    "sqrtDD1": 3.025,
+    "cappedGeo": 2.995,
+    "ratioToSqrtDD1": 0.601,
+    "ratioToCapped": 0.607,
+    "shareAtCap": 0
+   },
+   "4-6": {
+    "cells": 21,
+    "meanD": 4.933,
+    "obsSD": 3.526,
+    "sqrtDD1": 4.404,
+    "cappedGeo": 4.18,
+    "ratioToSqrtDD1": 0.786,
+    "ratioToCapped": 0.829,
+    "shareAtCap": 0.028
+   },
+   "6-9": {
+    "cells": 28,
+    "meanD": 7.212,
+    "obsSD": 5.228,
+    "sqrtDD1": 6.693,
+    "cappedGeo": 5.668,
+    "ratioToSqrtDD1": 0.79,
+    "ratioToCapped": 0.925,
+    "shareAtCap": 0.093
+   },
+   "9-13": {
+    "cells": 8,
+    "meanD": 11.11,
+    "obsSD": 6.685,
+    "sqrtDD1": 10.598,
+    "cappedGeo": 6.878,
+    "ratioToSqrtDD1": 0.642,
+    "ratioToCapped": 0.973,
+    "shareAtCap": 0.279
+   },
+   "13+": {
+    "cells": 13,
+    "meanD": 15.244,
+    "obsSD": 5.795,
+    "sqrtDD1": 14.736,
+    "cappedGeo": 6.312,
+    "ratioToSqrtDD1": 0.397,
+    "ratioToCapped": 0.924,
+    "shareAtCap": 0.52
+   }
+  },
+  "worstCells": [
+   {
+    "b": 26,
+    "spare": 3,
+    "D": 5.966,
+    "obsSD": 7.94,
+    "cappedModel": 4.969
+   },
+   {
+    "b": 26,
+    "spare": 2,
+    "D": 6.031,
+    "obsSD": 8.005,
+    "cappedModel": 5.013
+   },
+   {
+    "b": 2,
+    "spare": 2,
+    "D": 3.719,
+    "obsSD": 1.33,
+    "cappedModel": 3.143
+   },
+   {
+    "b": 10,
+    "spare": 3,
+    "D": 4.55,
+    "obsSD": 1.717,
+    "cappedModel": 3.889
+   },
+   {
+    "b": 7,
+    "spare": 2,
+    "D": 4.378,
+    "obsSD": 1.679,
+    "cappedModel": 3.741
+   }
+  ]
+ },
+ "sec5_sequential": {
+  "method": "Bootstrap from each cell's 320 pooled campaigns (the cell mean is the truth); targets T = truth + delta x tol; 60 replicates per cell and delta; cells with D 3-16.5 (spare 2 and 3). Assumes iid campaigns, which sec1 tests.",
+  "rules": {
+   "current 0.6/2.5/1.0": {
+    "overall": {
+     "n": 67080,
+     "acceptRate": 0.419,
+     "meanCampaigns": 267.284,
+     "stoppedAt160": 0.329,
+     "badAcceptRate_trueGapGE1p25tol": 0.042,
+     "goodRefuseRate_trueGapLE0p75tol": 0.058
+    },
+    "byBand": {
+     "4-6": {
+      "n": 18300,
+      "acceptRate": 0.416,
+      "meanCampaigns": 269.674,
+      "stoppedAt160": 0.315,
+      "badAcceptRate_trueGapGE1p25tol": 0.034,
+      "goodRefuseRate_trueGapLE0p75tol": 0.042
+     },
+     "3-4": {
+      "n": 7380,
+      "acceptRate": 0.487,
+      "meanCampaigns": 269.919,
+      "stoppedAt160": 0.313,
+      "badAcceptRate_trueGapGE1p25tol": 0.004,
+      "goodRefuseRate_trueGapLE0p75tol": 0.004
+     },
+     "6-9": {
+      "n": 25200,
+      "acceptRate": 0.406,
+      "meanCampaigns": 264.933,
+      "stoppedAt160": 0.344,
+      "badAcceptRate_trueGapGE1p25tol": 0.062,
+      "goodRefuseRate_trueGapLE0p75tol": 0.087
+     },
+     "9-13": {
+      "n": 7200,
+      "acceptRate": 0.414,
+      "meanCampaigns": 265.511,
+      "stoppedAt160": 0.341,
+      "badAcceptRate_trueGapGE1p25tol": 0.058,
+      "goodRefuseRate_trueGapLE0p75tol": 0.095
+     },
+     "13+": {
+      "n": 9000,
+      "acceptRate": 0.407,
+      "meanCampaigns": 268.267,
+      "stoppedAt160": 0.323,
+      "badAcceptRate_trueGapGE1p25tol": 0.015,
+      "goodRefuseRate_trueGapLE0p75tol": 0.028
+     }
+    },
+    "byDelta": {
+     "0": {
+      "acceptRate": 0.997,
+      "meanCampaigns": 175.411,
+      "stoppedAt160": 0.904
+     },
+     "1": {
+      "acceptRate": 0.532,
+      "meanCampaigns": 300.745,
+      "stoppedAt160": 0.12
+     },
+     "2": {
+      "acceptRate": 0.003,
+      "meanCampaigns": 310.753,
+      "stoppedAt160": 0.058
+     },
+     "3": {
+      "acceptRate": 0,
+      "meanCampaigns": 199.931,
+      "stoppedAt160": 0.75
+     },
+     "-3": {
+      "acceptRate": 0,
+      "meanCampaigns": 172.538,
+      "stoppedAt160": 0.922
+     },
+     "-2": {
+      "acceptRate": 0.003,
+      "meanCampaigns": 291.861,
+      "stoppedAt160": 0.176
+     },
+     "-1.5": {
+      "acceptRate": 0.032,
+      "meanCampaigns": 315.178,
+      "stoppedAt160": 0.03
+     },
+     "-1.25": {
+      "acceptRate": 0.14,
+      "meanCampaigns": 313.369,
+      "stoppedAt160": 0.041
+     },
+     "-1": {
+      "acceptRate": 0.485,
+      "meanCampaigns": 302.684,
+      "stoppedAt160": 0.108
+     },
+     "-0.75": {
+      "acceptRate": 0.853,
+      "meanCampaigns": 273.212,
+      "stoppedAt160": 0.292
+     },
+     "-0.5": {
+      "acceptRate": 0.971,
+      "meanCampaigns": 217.42,
+      "stoppedAt160": 0.641
+     },
+     "0.5": {
+      "acceptRate": 0.973,
+      "meanCampaigns": 218.182,
+      "stoppedAt160": 0.636
+     },
+     "0.75": {
+      "acceptRate": 0.876,
+      "meanCampaigns": 271.1,
+      "stoppedAt160": 0.306
+     },
+     "1.25": {
+      "acceptRate": 0.17,
+      "meanCampaigns": 312.762,
+      "stoppedAt160": 0.045
+     },
+     "1.5": {
+      "acceptRate": 0.05,
+      "meanCampaigns": 316.987,
+      "stoppedAt160": 0.019
+     }
+    }
+   },
+   "z=0.5": {
+    "overall": {
+     "n": 67080,
+     "acceptRate": 0.415,
+     "meanCampaigns": 190.4,
+     "stoppedAt160": 0.81,
+     "badAcceptRate_trueGapGE1p25tol": 0.047,
+     "goodRefuseRate_trueGapLE0p75tol": 0.073
+    },
+    "byBand": {
+     "4-6": {
+      "n": 18300,
+      "acceptRate": 0.414,
+      "meanCampaigns": 187.899,
+      "stoppedAt160": 0.826,
+      "badAcceptRate_trueGapGE1p25tol": 0.038,
+      "goodRefuseRate_trueGapLE0p75tol": 0.057
+     },
+     "3-4": {
+      "n": 7380,
+      "acceptRate": 0.489,
+      "meanCampaigns": 183.913,
+      "stoppedAt160": 0.851,
+      "badAcceptRate_trueGapGE1p25tol": 0.006,
+      "goodRefuseRate_trueGapLE0p75tol": 0.009
+     },
+     "6-9": {
+      "n": 25200,
+      "acceptRate": 0.401,
+      "meanCampaigns": 193.416,
+      "stoppedAt160": 0.791,
+      "badAcceptRate_trueGapGE1p25tol": 0.068,
+      "goodRefuseRate_trueGapLE0p75tol": 0.11
+     },
+     "9-13": {
+      "n": 7200,
+      "acceptRate": 0.408,
+      "meanCampaigns": 195.178,
+      "stoppedAt160": 0.78,
+      "badAcceptRate_trueGapGE1p25tol": 0.052,
+      "goodRefuseRate_trueGapLE0p75tol": 0.097
+     },
+     "13+": {
+      "n": 9000,
+      "acceptRate": 0.401,
+      "meanCampaigns": 188.533,
+      "stoppedAt160": 0.822,
+      "badAcceptRate_trueGapGE1p25tol": 0.025,
+      "goodRefuseRate_trueGapLE0p75tol": 0.04
+     }
+    },
+    "byDelta": {
+     "0": {
+      "acceptRate": 0.992,
+      "meanCampaigns": 165.957,
+      "stoppedAt160": 0.963
+     },
+     "1": {
+      "acceptRate": 0.524,
+      "meanCampaigns": 234.909,
+      "stoppedAt160": 0.532
+     },
+     "2": {
+      "acceptRate": 0.004,
+      "meanCampaigns": 164.675,
+      "stoppedAt160": 0.971
+     },
+     "3": {
+      "acceptRate": 0,
+      "meanCampaigns": 160.035,
+      "stoppedAt160": 1
+     },
+     "-3": {
+      "acceptRate": 0,
+      "meanCampaigns": 160,
+      "stoppedAt160": 1
+     },
+     "-2": {
+      "acceptRate": 0.003,
+      "meanCampaigns": 163.104,
+      "stoppedAt160": 0.981
+     },
+     "-1.5": {
+      "acceptRate": 0.043,
+      "meanCampaigns": 179.653,
+      "stoppedAt160": 0.877
+     },
+     "-1.25": {
+      "acceptRate": 0.136,
+      "meanCampaigns": 207.279,
+      "stoppedAt160": 0.705
+     },
+     "-1": {
+      "acceptRate": 0.481,
+      "meanCampaigns": 233.074,
+      "stoppedAt160": 0.543
+     },
+     "-0.75": {
+      "acceptRate": 0.833,
+      "meanCampaigns": 209.662,
+      "stoppedAt160": 0.69
+     },
+     "-0.5": {
+      "acceptRate": 0.951,
+      "meanCampaigns": 183.1,
+      "stoppedAt160": 0.856
+     },
+     "0.5": {
+      "acceptRate": 0.962,
+      "meanCampaigns": 180.468,
+      "stoppedAt160": 0.872
+     },
+     "0.75": {
+      "acceptRate": 0.854,
+      "meanCampaigns": 206.199,
+      "stoppedAt160": 0.711
+     },
+     "1.25": {
+      "acceptRate": 0.189,
+      "meanCampaigns": 209.489,
+      "stoppedAt160": 0.691
+     },
+     "1.5": {
+      "acceptRate": 0.057,
+      "meanCampaigns": 187.048,
+      "stoppedAt160": 0.831
+     }
+    }
+   },
+   "z=1.0": {
+    "overall": {
+     "n": 67080,
+     "acceptRate": 0.416,
+     "meanCampaigns": 219.616,
+     "stoppedAt160": 0.627,
+     "badAcceptRate_trueGapGE1p25tol": 0.042,
+     "goodRefuseRate_trueGapLE0p75tol": 0.062
+    },
+    "byBand": {
+     "4-6": {
+      "n": 18300,
+      "acceptRate": 0.413,
+      "meanCampaigns": 214.837,
+      "stoppedAt160": 0.657,
+      "badAcceptRate_trueGapGE1p25tol": 0.032,
+      "goodRefuseRate_trueGapLE0p75tol": 0.049
+     },
+     "3-4": {
+      "n": 7380,
+      "acceptRate": 0.487,
+      "meanCampaigns": 206.981,
+      "stoppedAt160": 0.706,
+      "badAcceptRate_trueGapGE1p25tol": 0.004,
+      "goodRefuseRate_trueGapLE0p75tol": 0.003
+     },
+     "6-9": {
+      "n": 25200,
+      "acceptRate": 0.402,
+      "meanCampaigns": 225.365,
+      "stoppedAt160": 0.591,
+      "badAcceptRate_trueGapGE1p25tol": 0.06,
+      "goodRefuseRate_trueGapLE0p75tol": 0.094
+     },
+     "9-13": {
+      "n": 7200,
+      "acceptRate": 0.412,
+      "meanCampaigns": 227.578,
+      "stoppedAt160": 0.578,
+      "badAcceptRate_trueGapGE1p25tol": 0.065,
+      "goodRefuseRate_trueGapLE0p75tol": 0.098
+     },
+     "13+": {
+      "n": 9000,
+      "acceptRate": 0.403,
+      "meanCampaigns": 217.227,
+      "stoppedAt160": 0.642,
+      "badAcceptRate_trueGapGE1p25tol": 0.016,
+      "goodRefuseRate_trueGapLE0p75tol": 0.033
+     }
+    },
+    "byDelta": {
+     "0": {
+      "acceptRate": 0.997,
+      "meanCampaigns": 177.316,
+      "stoppedAt160": 0.892
+     },
+     "1": {
+      "acceptRate": 0.528,
+      "meanCampaigns": 281.835,
+      "stoppedAt160": 0.239
+     },
+     "2": {
+      "acceptRate": 0.003,
+      "meanCampaigns": 173.195,
+      "stoppedAt160": 0.918
+     },
+     "3": {
+      "acceptRate": 0,
+      "meanCampaigns": 160.416,
+      "stoppedAt160": 0.997
+     },
+     "-3": {
+      "acceptRate": 0,
+      "meanCampaigns": 160.047,
+      "stoppedAt160": 1
+     },
+     "-2": {
+      "acceptRate": 0.002,
+      "meanCampaigns": 168.159,
+      "stoppedAt160": 0.949
+     },
+     "-1.5": {
+      "acceptRate": 0.035,
+      "meanCampaigns": 209.425,
+      "stoppedAt160": 0.691
+     },
+     "-1.25": {
+      "acceptRate": 0.137,
+      "meanCampaigns": 253.658,
+      "stoppedAt160": 0.415
+     },
+     "-1": {
+      "acceptRate": 0.473,
+      "meanCampaigns": 281.074,
+      "stoppedAt160": 0.243
+     },
+     "-0.75": {
+      "acceptRate": 0.847,
+      "meanCampaigns": 255.1,
+      "stoppedAt160": 0.406
+     },
+     "-0.5": {
+      "acceptRate": 0.966,
+      "meanCampaigns": 213.714,
+      "stoppedAt160": 0.664
+     },
+     "0.5": {
+      "acceptRate": 0.968,
+      "meanCampaigns": 208.797,
+      "stoppedAt160": 0.695
+     },
+     "0.75": {
+      "acceptRate": 0.866,
+      "meanCampaigns": 255.619,
+      "stoppedAt160": 0.402
+     },
+     "1.25": {
+      "acceptRate": 0.17,
+      "meanCampaigns": 257.87,
+      "stoppedAt160": 0.388
+     },
+     "1.5": {
+      "acceptRate": 0.049,
+      "meanCampaigns": 216.658,
+      "stoppedAt160": 0.646
+     }
+    }
+   },
+   "z=1.5": {
+    "overall": {
+     "n": 67080,
+     "acceptRate": 0.416,
+     "meanCampaigns": 245.045,
+     "stoppedAt160": 0.468,
+     "badAcceptRate_trueGapGE1p25tol": 0.039,
+     "goodRefuseRate_trueGapLE0p75tol": 0.06
+    },
+    "byBand": {
+     "4-6": {
+      "n": 18300,
+      "acceptRate": 0.415,
+      "meanCampaigns": 238.916,
+      "stoppedAt160": 0.507,
+      "badAcceptRate_trueGapGE1p25tol": 0.032,
+      "goodRefuseRate_trueGapLE0p75tol": 0.049
+     },
+     "3-4": {
+      "n": 7380,
+      "acceptRate": 0.488,
+      "meanCampaigns": 229.008,
+      "stoppedAt160": 0.569,
+      "badAcceptRate_trueGapGE1p25tol": 0.005,
+      "goodRefuseRate_trueGapLE0p75tol": 0.003
+     },
+     "6-9": {
+      "n": 25200,
+      "acceptRate": 0.401,
+      "meanCampaigns": 252.813,
+      "stoppedAt160": 0.42,
+      "badAcceptRate_trueGapGE1p25tol": 0.058,
+      "goodRefuseRate_trueGapLE0p75tol": 0.094
+     },
+     "9-13": {
+      "n": 7200,
+      "acceptRate": 0.408,
+      "meanCampaigns": 255.6,
+      "stoppedAt160": 0.403,
+      "badAcceptRate_trueGapGE1p25tol": 0.042,
+      "goodRefuseRate_trueGapLE0p75tol": 0.08
+     },
+     "13+": {
+      "n": 9000,
+      "acceptRate": 0.411,
+      "meanCampaigns": 240.462,
+      "stoppedAt160": 0.497,
+      "badAcceptRate_trueGapGE1p25tol": 0.016,
+      "goodRefuseRate_trueGapLE0p75tol": 0.028
+     }
+    },
+    "byDelta": {
+     "0": {
+      "acceptRate": 0.997,
+      "meanCampaigns": 198.961,
+      "stoppedAt160": 0.756
+     },
+     "1": {
+      "acceptRate": 0.533,
+      "meanCampaigns": 305.247,
+      "stoppedAt160": 0.092
+     },
+     "2": {
+      "acceptRate": 0.004,
+      "meanCampaigns": 186.874,
+      "stoppedAt160": 0.832
+     },
+     "3": {
+      "acceptRate": 0,
+      "meanCampaigns": 161.004,
+      "stoppedAt160": 0.994
+     },
+     "-3": {
+      "acceptRate": 0,
+      "meanCampaigns": 160.234,
+      "stoppedAt160": 0.999
+     },
+     "-2": {
+      "acceptRate": 0.002,
+      "meanCampaigns": 178.189,
+      "stoppedAt160": 0.886
+     },
+     "-1.5": {
+      "acceptRate": 0.026,
+      "meanCampaigns": 243.653,
+      "stoppedAt160": 0.477
+     },
+     "-1.25": {
+      "acceptRate": 0.116,
+      "meanCampaigns": 289.441,
+      "stoppedAt160": 0.191
+     },
+     "-1": {
+      "acceptRate": 0.49,
+      "meanCampaigns": 304.831,
+      "stoppedAt160": 0.095
+     },
+     "-0.75": {
+      "acceptRate": 0.85,
+      "meanCampaigns": 290.632,
+      "stoppedAt160": 0.184
+     },
+     "-0.5": {
+      "acceptRate": 0.968,
+      "meanCampaigns": 248.173,
+      "stoppedAt160": 0.449
+     },
+     "0.5": {
+      "acceptRate": 0.97,
+      "meanCampaigns": 248.589,
+      "stoppedAt160": 0.446
+     },
+     "0.75": {
+      "acceptRate": 0.874,
+      "meanCampaigns": 289.905,
+      "stoppedAt160": 0.188
+     },
+     "1.25": {
+      "acceptRate": 0.176,
+      "meanCampaigns": 290.39,
+      "stoppedAt160": 0.185
+     },
+     "1.5": {
+      "acceptRate": 0.047,
+      "meanCampaigns": 250.494,
+      "stoppedAt160": 0.434
+     }
+    }
+   },
+   "z=2.0": {
+    "overall": {
+     "n": 67080,
+     "acceptRate": 0.416,
+     "meanCampaigns": 266.597,
+     "stoppedAt160": 0.334,
+     "badAcceptRate_trueGapGE1p25tol": 0.039,
+     "goodRefuseRate_trueGapLE0p75tol": 0.059
+    },
+    "byBand": {
+     "4-6": {
+      "n": 18300,
+      "acceptRate": 0.413,
+      "meanCampaigns": 259.139,
+      "stoppedAt160": 0.38,
+      "badAcceptRate_trueGapGE1p25tol": 0.029,
+      "goodRefuseRate_trueGapLE0p75tol": 0.047
+     },
+     "3-4": {
+      "n": 7380,
+      "acceptRate": 0.487,
+      "meanCampaigns": 250.927,
+      "stoppedAt160": 0.432,
+      "badAcceptRate_trueGapGE1p25tol": 0.005,
+      "goodRefuseRate_trueGapLE0p75tol": 0.006
+     },
+     "6-9": {
+      "n": 25200,
+      "acceptRate": 0.402,
+      "meanCampaigns": 275.308,
+      "stoppedAt160": 0.279,
+      "badAcceptRate_trueGapGE1p25tol": 0.058,
+      "goodRefuseRate_trueGapLE0p75tol": 0.09
+     },
+     "9-13": {
+      "n": 7200,
+      "acceptRate": 0.409,
+      "meanCampaigns": 280.267,
+      "stoppedAt160": 0.248,
+      "badAcceptRate_trueGapGE1p25tol": 0.05,
+      "goodRefuseRate_trueGapLE0p75tol": 0.083
+     },
+     "13+": {
+      "n": 9000,
+      "acceptRate": 0.404,
+      "meanCampaigns": 259.289,
+      "stoppedAt160": 0.379,
+      "badAcceptRate_trueGapGE1p25tol": 0.015,
+      "goodRefuseRate_trueGapLE0p75tol": 0.028
+     }
+    },
+    "byDelta": {
+     "0": {
+      "acceptRate": 0.996,
+      "meanCampaigns": 238.788,
+      "stoppedAt160": 0.508
+     },
+     "1": {
+      "acceptRate": 0.538,
+      "meanCampaigns": 314.805,
+      "stoppedAt160": 0.032
+     },
+     "2": {
+      "acceptRate": 0.002,
+      "meanCampaigns": 209.039,
+      "stoppedAt160": 0.694
+     },
+     "3": {
+      "acceptRate": 0,
+      "meanCampaigns": 162.632,
+      "stoppedAt160": 0.984
+     },
+     "-3": {
+      "acceptRate": 0,
+      "meanCampaigns": 160.561,
+      "stoppedAt160": 0.996
+     },
+     "-2": {
+      "acceptRate": 0.002,
+      "meanCampaigns": 199.204,
+      "stoppedAt160": 0.755
+     },
+     "-1.5": {
+      "acceptRate": 0.029,
+      "meanCampaigns": 279.014,
+      "stoppedAt160": 0.256
+     },
+     "-1.25": {
+      "acceptRate": 0.12,
+      "meanCampaigns": 308.901,
+      "stoppedAt160": 0.069
+     },
+     "-1": {
+      "acceptRate": 0.472,
+      "meanCampaigns": 314.147,
+      "stoppedAt160": 0.037
+     },
+     "-0.75": {
+      "acceptRate": 0.851,
+      "meanCampaigns": 308.848,
+      "stoppedAt160": 0.07
+     },
+     "-0.5": {
+      "acceptRate": 0.968,
+      "meanCampaigns": 282.009,
+      "stoppedAt160": 0.237
+     },
+     "0.5": {
+      "acceptRate": 0.971,
+      "meanCampaigns": 285.541,
+      "stoppedAt160": 0.215
+     },
+     "0.75": {
+      "acceptRate": 0.874,
+      "meanCampaigns": 312.277,
+      "stoppedAt160": 0.048
+     },
+     "1.25": {
+      "acceptRate": 0.169,
+      "meanCampaigns": 307.775,
+      "stoppedAt160": 0.076
+     },
+     "1.5": {
+      "acceptRate": 0.047,
+      "meanCampaigns": 281.42,
+      "stoppedAt160": 0.241
+     }
+    }
+   },
+   "z=1.0 up to 480": {
+    "overall": {
+     "n": 67080,
+     "acceptRate": 0.414,
+     "meanCampaigns": 256.832,
+     "stoppedAt160": 0.626,
+     "badAcceptRate_trueGapGE1p25tol": 0.028,
+     "goodRefuseRate_trueGapLE0p75tol": 0.041
+    },
+    "byBand": {
+     "4-6": {
+      "n": 18300,
+      "acceptRate": 0.411,
+      "meanCampaigns": 247.143,
+      "stoppedAt160": 0.662,
+      "badAcceptRate_trueGapGE1p25tol": 0.022,
+      "goodRefuseRate_trueGapLE0p75tol": 0.033
+     },
+     "3-4": {
+      "n": 7380,
+      "acceptRate": 0.485,
+      "meanCampaigns": 239.48,
+      "stoppedAt160": 0.696,
+      "badAcceptRate_trueGapGE1p25tol": 0.001,
+      "goodRefuseRate_trueGapLE0p75tol": 0
+     },
+     "6-9": {
+      "n": 25200,
+      "acceptRate": 0.401,
+      "meanCampaigns": 267.244,
+      "stoppedAt160": 0.587,
+      "badAcceptRate_trueGapGE1p25tol": 0.041,
+      "goodRefuseRate_trueGapLE0p75tol": 0.065
+     },
+     "9-13": {
+      "n": 7200,
+      "acceptRate": 0.408,
+      "meanCampaigns": 270.2,
+      "stoppedAt160": 0.577,
+      "badAcceptRate_trueGapGE1p25tol": 0.038,
+      "goodRefuseRate_trueGapLE0p75tol": 0.062
+     },
+     "13+": {
+      "n": 9000,
+      "acceptRate": 0.403,
+      "meanCampaigns": 250.916,
+      "stoppedAt160": 0.646,
+      "badAcceptRate_trueGapGE1p25tol": 0.008,
+      "goodRefuseRate_trueGapLE0p75tol": 0.015
+     }
+    },
+    "byDelta": {
+     "0": {
+      "acceptRate": 0.997,
+      "meanCampaigns": 178.874,
+      "stoppedAt160": 0.895
+     },
+     "1": {
+      "acceptRate": 0.528,
+      "meanCampaigns": 382.892,
+      "stoppedAt160": 0.244
+     },
+     "2": {
+      "acceptRate": 0.001,
+      "meanCampaigns": 175.1,
+      "stoppedAt160": 0.919
+     },
+     "3": {
+      "acceptRate": 0,
+      "meanCampaigns": 160.312,
+      "stoppedAt160": 0.998
+     },
+     "-3": {
+      "acceptRate": 0,
+      "meanCampaigns": 160,
+      "stoppedAt160": 1
+     },
+     "-2": {
+      "acceptRate": 0.001,
+      "meanCampaigns": 168.915,
+      "stoppedAt160": 0.95
+     },
+     "-1.5": {
+      "acceptRate": 0.018,
+      "meanCampaigns": 228.639,
+      "stoppedAt160": 0.691
+     },
+     "-1.25": {
+      "acceptRate": 0.095,
+      "meanCampaigns": 311.64,
+      "stoppedAt160": 0.412
+     },
+     "-1": {
+      "acceptRate": 0.46,
+      "meanCampaigns": 385.074,
+      "stoppedAt160": 0.238
+     },
+     "-0.75": {
+      "acceptRate": 0.881,
+      "meanCampaigns": 319.55,
+      "stoppedAt160": 0.398
+     },
+     "-0.5": {
+      "acceptRate": 0.979,
+      "meanCampaigns": 238.545,
+      "stoppedAt160": 0.654
+     },
+     "0.5": {
+      "acceptRate": 0.984,
+      "meanCampaigns": 229.126,
+      "stoppedAt160": 0.683
+     },
+     "0.75": {
+      "acceptRate": 0.913,
+      "meanCampaigns": 311.654,
+      "stoppedAt160": 0.41
+     },
+     "1.25": {
+      "acceptRate": 0.135,
+      "meanCampaigns": 322.494,
+      "stoppedAt160": 0.396
+     },
+     "1.5": {
+      "acceptRate": 0.026,
+      "meanCampaigns": 243.775,
+      "stoppedAt160": 0.643
+     }
+    }
+   },
+   "z=1.5 up to 480": {
+    "overall": {
+     "n": 67080,
+     "acceptRate": 0.415,
+     "meanCampaigns": 305.572,
+     "stoppedAt160": 0.469,
+     "badAcceptRate_trueGapGE1p25tol": 0.025,
+     "goodRefuseRate_trueGapLE0p75tol": 0.038
+    },
+    "byBand": {
+     "4-6": {
+      "n": 18300,
+      "acceptRate": 0.411,
+      "meanCampaigns": 293.368,
+      "stoppedAt160": 0.51,
+      "badAcceptRate_trueGapGE1p25tol": 0.018,
+      "goodRefuseRate_trueGapLE0p75tol": 0.03
+     },
+     "3-4": {
+      "n": 7380,
+      "acceptRate": 0.487,
+      "meanCampaigns": 277.659,
+      "stoppedAt160": 0.566,
+      "badAcceptRate_trueGapGE1p25tol": 0.001,
+      "goodRefuseRate_trueGapLE0p75tol": 0
+     },
+     "6-9": {
+      "n": 25200,
+      "acceptRate": 0.401,
+      "meanCampaigns": 319.371,
+      "stoppedAt160": 0.423,
+      "badAcceptRate_trueGapGE1p25tol": 0.039,
+      "goodRefuseRate_trueGapLE0p75tol": 0.06
+     },
+     "9-13": {
+      "n": 7200,
+      "acceptRate": 0.409,
+      "meanCampaigns": 326.289,
+      "stoppedAt160": 0.395,
+      "badAcceptRate_trueGapGE1p25tol": 0.035,
+      "goodRefuseRate_trueGapLE0p75tol": 0.052
+     },
+     "13+": {
+      "n": 9000,
+      "acceptRate": 0.407,
+      "meanCampaigns": 298.062,
+      "stoppedAt160": 0.493,
+      "badAcceptRate_trueGapGE1p25tol": 0.008,
+      "goodRefuseRate_trueGapLE0p75tol": 0.012
+     }
+    },
+    "byDelta": {
+     "0": {
+      "acceptRate": 0.999,
+      "meanCampaigns": 206.372,
+      "stoppedAt160": 0.754
+     },
+     "1": {
+      "acceptRate": 0.535,
+      "meanCampaigns": 438.719,
+      "stoppedAt160": 0.098
+     },
+     "2": {
+      "acceptRate": 0.001,
+      "meanCampaigns": 193.835,
+      "stoppedAt160": 0.827
+     },
+     "3": {
+      "acceptRate": 0,
+      "meanCampaigns": 160.623,
+      "stoppedAt160": 0.996
+     },
+     "-3": {
+      "acceptRate": 0,
+      "meanCampaigns": 160.14,
+      "stoppedAt160": 0.999
+     },
+     "-2": {
+      "acceptRate": 0.001,
+      "meanCampaigns": 181.532,
+      "stoppedAt160": 0.884
+     },
+     "-1.5": {
+      "acceptRate": 0.011,
+      "meanCampaigns": 286.904,
+      "stoppedAt160": 0.468
+     },
+     "-1.25": {
+      "acceptRate": 0.09,
+      "meanCampaigns": 392.144,
+      "stoppedAt160": 0.191
+     },
+     "-1": {
+      "acceptRate": 0.459,
+      "meanCampaigns": 440.277,
+      "stoppedAt160": 0.096
+     },
+     "-0.75": {
+      "acceptRate": 0.891,
+      "meanCampaigns": 396.087,
+      "stoppedAt160": 0.187
+     },
+     "-0.5": {
+      "acceptRate": 0.984,
+      "meanCampaigns": 296.97,
+      "stoppedAt160": 0.446
+     },
+     "0.5": {
+      "acceptRate": 0.989,
+      "meanCampaigns": 289.766,
+      "stoppedAt160": 0.46
+     },
+     "0.75": {
+      "acceptRate": 0.916,
+      "meanCampaigns": 392.9,
+      "stoppedAt160": 0.178
+     },
+     "1.25": {
+      "acceptRate": 0.128,
+      "meanCampaigns": 394.32,
+      "stoppedAt160": 0.192
+     },
+     "1.5": {
+      "acceptRate": 0.024,
+      "meanCampaigns": 301.506,
+      "stoppedAt160": 0.437
+     }
+    }
+   },
+   "z=2.0 final-0.5SE": {
+    "overall": {
+     "n": 67080,
+     "acceptRate": 0.342,
+     "meanCampaigns": 266.943,
+     "stoppedAt160": 0.332,
+     "badAcceptRate_trueGapGE1p25tol": 0.015,
+     "goodRefuseRate_trueGapLE0p75tol": 0.132
+    },
+    "byBand": {
+     "4-6": {
+      "n": 18300,
+      "acceptRate": 0.347,
+      "meanCampaigns": 259.672,
+      "stoppedAt160": 0.377,
+      "badAcceptRate_trueGapGE1p25tol": 0.012,
+      "goodRefuseRate_trueGapLE0p75tol": 0.112
+     },
+     "3-4": {
+      "n": 7380,
+      "acceptRate": 0.432,
+      "meanCampaigns": 250.949,
+      "stoppedAt160": 0.432,
+      "badAcceptRate_trueGapGE1p25tol": 0.001,
+      "goodRefuseRate_trueGapLE0p75tol": 0.019
+     },
+     "6-9": {
+      "n": 25200,
+      "acceptRate": 0.318,
+      "meanCampaigns": 275.289,
+      "stoppedAt160": 0.279,
+      "badAcceptRate_trueGapGE1p25tol": 0.023,
+      "goodRefuseRate_trueGapLE0p75tol": 0.193
+     },
+     "9-13": {
+      "n": 7200,
+      "acceptRate": 0.321,
+      "meanCampaigns": 280.689,
+      "stoppedAt160": 0.246,
+      "badAcceptRate_trueGapGE1p25tol": 0.02,
+      "goodRefuseRate_trueGapLE0p75tol": 0.172
+     },
+     "13+": {
+      "n": 9000,
+      "acceptRate": 0.341,
+      "meanCampaigns": 260.48,
+      "stoppedAt160": 0.372,
+      "badAcceptRate_trueGapGE1p25tol": 0.006,
+      "goodRefuseRate_trueGapLE0p75tol": 0.075
+     }
+    },
+    "byDelta": {
+     "0": {
+      "acceptRate": 0.994,
+      "meanCampaigns": 240.381,
+      "stoppedAt160": 0.498
+     },
+     "1": {
+      "acceptRate": 0.286,
+      "meanCampaigns": 315.844,
+      "stoppedAt160": 0.026
+     },
+     "2": {
+      "acceptRate": 0.001,
+      "meanCampaigns": 208.797,
+      "stoppedAt160": 0.695
+     },
+     "3": {
+      "acceptRate": 0,
+      "meanCampaigns": 162.424,
+      "stoppedAt160": 0.985
+     },
+     "-3": {
+      "acceptRate": 0,
+      "meanCampaigns": 160.655,
+      "stoppedAt160": 0.996
+     },
+     "-2": {
+      "acceptRate": 0,
+      "meanCampaigns": 199.721,
+      "stoppedAt160": 0.752
+     },
+     "-1.5": {
+      "acceptRate": 0.011,
+      "meanCampaigns": 280.95,
+      "stoppedAt160": 0.244
+     },
+     "-1.25": {
+      "acceptRate": 0.052,
+      "meanCampaigns": 307.279,
+      "stoppedAt160": 0.08
+     },
+     "-1": {
+      "acceptRate": 0.25,
+      "meanCampaigns": 314.078,
+      "stoppedAt160": 0.037
+     },
+     "-0.75": {
+      "acceptRate": 0.698,
+      "meanCampaigns": 309.403,
+      "stoppedAt160": 0.066
+     },
+     "-0.5": {
+      "acceptRate": 0.91,
+      "meanCampaigns": 283.117,
+      "stoppedAt160": 0.231
+     },
+     "0.5": {
+      "acceptRate": 0.929,
+      "meanCampaigns": 287.238,
+      "stoppedAt160": 0.205
+     },
+     "0.75": {
+      "acceptRate": 0.747,
+      "meanCampaigns": 311.03,
+      "stoppedAt160": 0.056
+     },
+     "1.25": {
+      "acceptRate": 0.071,
+      "meanCampaigns": 308.502,
+      "stoppedAt160": 0.072
+     },
+     "1.5": {
+      "acceptRate": 0.017,
+      "meanCampaigns": 280.693,
+      "stoppedAt160": 0.246
+     }
+    }
+   }
+  },
+  "deltas": [
+   -3,
+   -2,
+   -1.5,
+   -1.25,
+   -1,
+   -0.75,
+   -0.5,
+   0,
+   0.5,
+   0.75,
+   1,
+   1.25,
+   1.5,
+   2,
+   3
+  ],
+  "cellsUsed": 77
+ },
+ "sec5b_screenZ3": {
+  "sequences": 1280,
+  "falseStopRate": 0.007,
+  "criterion": 0.02,
+  "byBand": {
+   "4-6": {
+    "seqs": 336,
+    "rate": 0.015
+   },
+   "3-4": {
+    "seqs": 160,
+    "rate": 0
+   },
+   "6-9": {
+    "seqs": 448,
+    "rate": 0.007
+   },
+   "9-13": {
+    "seqs": 128,
+    "rate": 0.008
+   },
+   "13+": {
+    "seqs": 208,
+    "rate": 0
+   }
+  },
+  "note": "threshold = the cell's own mean (a board exactly at the threshold, both-sided), sd(t) from the capped geometric as in yardstick.json; truth is the 320-campaign mean (slightly biased toward fewer stops)."
+ }
+}

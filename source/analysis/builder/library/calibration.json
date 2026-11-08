@@ -1,0 +1,329 @@
+{
+ "schema": "calibration-v1",
+ "made": "2026-11-07T20:44:59.804Z",
+ "source": "process-v1/e4-anchor-validity.json (E4)",
+ "ruler": "63be677e",
+ "anchor": {
+  "D190_199": [
+   [
+    190,
+    11.36
+   ],
+   [
+    191,
+    6.08
+   ],
+   [
+    192,
+    11.78
+   ],
+   [
+    193,
+    3.69
+   ],
+   [
+    194,
+    1.13
+   ],
+   [
+    195,
+    2.59
+   ],
+   [
+    196,
+    13.38
+   ],
+   [
+    197,
+    4.12
+   ],
+   [
+    198,
+    4.32
+   ],
+   [
+    199,
+    3.38
+   ]
+  ],
+  "upperQuartile": 10.03875,
+  "median": 4.2175,
+  "ruler132": 6.6899999999999995,
+  "ruler150": 7.1850000000000005,
+  "ruler91": 4.405,
+  "proposalUncapped": 11.5445625,
+  "cap": 6.6899999999999995,
+  "T200": 6.6899999999999995,
+  "capBinds": true
+ },
+ "M": {
+  "ruler": {
+   "fitRange": [
+    1.075,
+    14.645
+   ],
+   "quantilesOfD": [
+    1.4575,
+    2.3449999999999998,
+    5.555
+   ],
+   "points": [
+    {
+     "D": 2,
+     "Y": 3.018011695906433,
+     "lo5": 2.611583780830961,
+     "hi95": 3.3206826475849733,
+     "extrapolated": false
+    },
+    {
+     "D": 3,
+     "Y": 3.476666666666667,
+     "lo5": 2.9493532682467585,
+     "hi95": 3.8753260771712896,
+     "extrapolated": false
+    },
+    {
+     "D": 4,
+     "Y": 4.006826056826057,
+     "lo5": 3.3748932752982044,
+     "hi95": 4.778341496078842,
+     "extrapolated": false
+    },
+    {
+     "D": 5,
+     "Y": 5.007933135004959,
+     "lo5": 3.881931875673122,
+     "hi95": 6.45041532976827,
+     "extrapolated": false
+    },
+    {
+     "D": 6,
+     "Y": 6.30963968579235,
+     "lo5": 4.551834536567337,
+     "hi95": 8.65136323658751,
+     "extrapolated": true
+    },
+    {
+     "D": 7,
+     "Y": 6.9824538934426235,
+     "lo5": 5.085911677400091,
+     "hi95": 13.399999999999999,
+     "extrapolated": true
+    },
+    {
+     "D": 8,
+     "Y": 7.655268101092896,
+     "lo5": 5.42652793349986,
+     "hi95": 13.399999999999999,
+     "extrapolated": true
+    },
+    {
+     "D": 9,
+     "Y": 8.32808230874317,
+     "lo5": 5.646834843645432,
+     "hi95": 13.399999999999999,
+     "extrapolated": true
+    },
+    {
+     "D": 10,
+     "Y": 9.000896516393443,
+     "lo5": 5.924006882989183,
+     "hi95": 13.399999999999999,
+     "extrapolated": true
+    },
+    {
+     "D": 12,
+     "Y": 9.45,
+     "lo5": 5.997777777777777,
+     "hi95": 13.399999999999999,
+     "extrapolated": true
+    },
+    {
+     "D": 14,
+     "Y": 9.45,
+     "lo5": 5.997777777777777,
+     "hi95": 13.399999999999999,
+     "extrapolated": true
+    }
+   ],
+   "note": "Y capped at 20; censored levels count at their lower bound. Points flagged extrapolated lie outside the 10-90% range of live D; the map is flat beyond the largest fitted D."
+  },
+  "reference": {
+   "fitRange": [
+    1.075,
+    14.645
+   ],
+   "quantilesOfD": [
+    1.4575,
+    2.3449999999999998,
+    5.555
+   ],
+   "points": [
+    {
+     "D": 2,
+     "Y": 3.0082289935364726,
+     "lo5": 2.6441397575481425,
+     "hi95": 3.3256006404791574,
+     "extrapolated": false
+    },
+    {
+     "D": 3,
+     "Y": 3.3633444407802453,
+     "lo5": 3.0009323969412565,
+     "hi95": 3.9335130718954243,
+     "extrapolated": false
+    },
+    {
+     "D": 4,
+     "Y": 3.9906116642958747,
+     "lo5": 3.307439837690959,
+     "hi95": 4.7340199290199285,
+     "extrapolated": false
+    },
+    {
+     "D": 5,
+     "Y": 5.172292109614931,
+     "lo5": 3.856844870678958,
+     "hi95": 6.377452651083209,
+     "extrapolated": false
+    },
+    {
+     "D": 6,
+     "Y": 6.30963968579235,
+     "lo5": 4.542632288416043,
+     "hi95": 8.671428571428569,
+     "extrapolated": true
+    },
+    {
+     "D": 7,
+     "Y": 6.9824538934426235,
+     "lo5": 5.13070909435883,
+     "hi95": 13.402,
+     "extrapolated": true
+    },
+    {
+     "D": 8,
+     "Y": 7.655268101092896,
+     "lo5": 5.492830391734826,
+     "hi95": 13.402,
+     "extrapolated": true
+    },
+    {
+     "D": 9,
+     "Y": 8.32808230874317,
+     "lo5": 5.743640856481608,
+     "hi95": 13.402,
+     "extrapolated": true
+    },
+    {
+     "D": 10,
+     "Y": 9.000896516393443,
+     "lo5": 6.036675939052351,
+     "hi95": 13.402,
+     "extrapolated": true
+    },
+    {
+     "D": 12,
+     "Y": 9.45,
+     "lo5": 6.046388888888889,
+     "hi95": 13.402,
+     "extrapolated": true
+    },
+    {
+     "D": 14,
+     "Y": 9.45,
+     "lo5": 6.046388888888889,
+     "hi95": 13.402,
+     "extrapolated": true
+    }
+   ],
+   "note": "Y capped at 20; censored levels count at their lower bound. Points flagged extrapolated lie outside the 10-90% range of live D; the map is flat beyond the largest fitted D."
+  }
+ },
+ "spikeAUC": {
+  "ruler": {
+   "auc": 0.7838541666666666,
+   "ci90": [
+    0.6314825148809523,
+    0.9045562770562771
+   ],
+   "n": 76,
+   "spikes": 12
+  },
+  "reference": {
+   "auc": 0.783203125,
+   "ci90": [
+    0.6296744314713064,
+    0.9145299145299145
+   ],
+   "n": 76,
+   "spikes": 12
+  },
+  "plannerOnYlevels": {
+   "n": 4,
+   "note": "planner rated only on 175-199 + 91/132/150",
+   "auc": 0.6666666666666666
+  }
+ },
+ "windows": {
+  "5": {
+   "n": 15,
+   "ruler": {
+    "spearman": 0.65,
+    "maeModel": 0.8168241386787713,
+    "maeMedianBaseline": 1.068,
+    "gain": 0.2511758613212287,
+    "gainCi90": [
+     0.0081872248946342,
+     0.48908452785610085
+    ],
+    "modelBeatsBaseline": true
+   },
+   "reference": {
+    "spearman": 0.65,
+    "maeModel": 0.8273392304665281,
+    "maeMedianBaseline": 1.068,
+    "gain": 0.24066076953347193,
+    "gainCi90": [
+     -0.002681478074209224,
+     0.4937331599303283
+    ],
+    "modelBeatsBaseline": true
+   }
+  },
+  "10": {
+   "n": 8,
+   "ruler": {
+    "spearman": 0.7619047619047619,
+    "maeModel": 0.6720289463126639,
+    "maeMedianBaseline": 0.9472222222222224,
+    "gain": 0.27519327590955855,
+    "gainCi90": [
+     0.08461509938527335,
+     0.4331909399798131
+    ],
+    "modelBeatsBaseline": true
+   },
+   "reference": {
+    "spearman": 0.7619047619047619,
+    "maeModel": 0.6803946698360301,
+    "maeMedianBaseline": 0.9472222222222224,
+    "gain": 0.26682755238619227,
+    "gainCi90": [
+     0.08325661708057545,
+     0.4268285271505112
+    ],
+    "modelBeatsBaseline": true
+   }
+  }
+ },
+ "kill": {
+  "rule": "spike AUC < 0.65 AND window error no better than the constant baseline -> ruler cannot anchor a curve",
+  "rulerAuc": 0.7838541666666666,
+  "aucBelow065": false,
+  "window5BeatsConstant": true,
+  "window10BeatsConstant": true,
+  "killed": false
+ },
+ "status": "proposal for Dennis; M refitted after every played window"
+}

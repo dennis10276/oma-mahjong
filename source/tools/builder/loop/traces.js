@@ -149,7 +149,15 @@ function sameish(move, t) {
 const recordKey = r => r.alive.join('') + '/' + r.trayFaces.slice().sort((a, b) => a - b).join(',') + '/' + (r.preClock ? r.moves : '-');
 
 // ---------- B1-B7 ----------
+// opts.thresholds overrides THRESHOLDS key by key (e.g. { B2: { min: 0.3 } }); defaults unchanged. E5 calibration hook.
+function mergeThresholds(over) {
+  const out = {};
+  for (const [k, v] of Object.entries(THRESHOLDS)) out[k] = v && typeof v === 'object' && !Array.isArray(v) ? { ...v, ...(over?.[k] || {}) } : (over?.[k] ?? v);
+  return out;
+}
+
 function traceGates(input, opts = {}) {
+  const TH = mergeThresholds(opts.thresholds);
   const { spare = null, ys = null, campaigns = 40, secondAct = false, budget = BUDGET, maxExamples = 6 } = opts;
   const at = atSpare(input, spare); if (at.fail) return { spare, fail: at.fail };
   const design = at.design, n = design.tiles.length;
@@ -196,7 +204,7 @@ function traceGates(input, opts = {}) {
 
   const losses = tries.filter(x => !x.win && !x.censored);
   const proved = losses.filter(x => x.firstError && !x.recovery), coverage = losses.length ? proved.length / losses.length : null;
-  const covered = coverage != null && coverage >= THRESHOLDS.coverage;
+  const covered = coverage != null && coverage >= TH.coverage;
 
   // B1: in a first try, before the clock, the bot commits a listed tempting move (its tiles), or a losing move at a fork state.
   const firstTries = tries.filter(x => x.attempt === 1 && !x.censored), bites = [];
@@ -217,30 +225,30 @@ function traceGates(input, opts = {}) {
   const delayMedian = A.median(proved.map(x => x.firstError.actualDelayToTerminal));
   // B5: tray losses with under 25% of the tiles left (the bot's own `left` at the end of the try).
   const leftOf = x => left.get(x.campaign + ':' + x.attempt) ?? (n - x.moves);
-  const late = losses.filter(x => x.why === 'tray' && leftOf(x) < THRESHOLDS.B5.leftShare * n).length;
+  const late = losses.filter(x => x.why === 'tray' && leftOf(x) < TH.B5.leftShare * n).length;
   const lateSqueezeShare = losses.length ? late / losses.length : null;
   // B6: losses after the clock was taken (the bot's loss phase 'mid' or 'late'; 'clock' = the clock was still on the board).
   const post = losses.filter(x => x.phase && x.phase !== 'clock'), postClockShare = losses.length ? post.length / losses.length : null;
   const postForkShare = A.median(post.filter(x => x.firstError && !x.recovery && !x.firstError.preClock).map(x => x.firstError.removalMove / n));
   // B7: losses in tries 6-20 whose first error repeats the same losing move from the same state earlier in that campaign.
-  const lateTries = losses.filter(x => x.attempt >= THRESHOLDS.B7.fromTry);
+  const lateTries = losses.filter(x => x.attempt >= TH.B7.fromTry);
   const repeats = lateTries.filter(x => x.firstError?.repeatedSameLosingMove).length, repeatShare = lateTries.length ? repeats / lateTries.length : null;
   const knownRepeats = lateTries.filter(x => x.firstError?.repeatedSameLosingMove && x.firstError.knownChoice).length;
 
   const B6pass = postClockShare == null ? null : secondAct
-    ? postClockShare >= THRESHOLDS.B6.secondActMin && between(postForkShare, ...THRESHOLDS.B6.secondActFork) === true
-    : postClockShare <= THRESHOLDS.B6.max;
-  const inflated = repeatShare != null && repeatShare > THRESHOLDS.B7.inflated;
+    ? postClockShare >= TH.B6.secondActMin && between(postForkShare, ...TH.B6.secondActFork) === true
+    : postClockShare <= TH.B6.max;
+  const inflated = repeatShare != null && repeatShare > TH.B7.inflated;
   const gates = {
-    B1: { pass: biteShare == null ? null : biteShare >= THRESHOLDS.B1.min, value: round(biteShare), bites: bites.length, firstTries: firstTries.length },
-    B2: { pass: covered ? lossesAtTrapShare >= THRESHOLDS.B2.min : null, value: round(lossesAtTrapShare), atTrap, atForkState: labelled.filter(l => l.fork).length,
+    B1: { pass: biteShare == null ? null : biteShare >= TH.B1.min, value: round(biteShare), bites: bites.length, firstTries: firstTries.length },
+    B2: { pass: covered ? lossesAtTrapShare >= TH.B2.min : null, value: round(lossesAtTrapShare), atTrap, atForkState: labelled.filter(l => l.fork).length,
       onTemptingMove: labelled.filter(l => l.hit).length, provedFirstErrors: proved.length, lostTries: losses.length, coverage: round(coverage) },
-    B3: { pass: covered ? between(firstErrorMedianShare, THRESHOLDS.B3.min, THRESHOLDS.B3.max) : null, value: round(firstErrorMedianShare) },
-    B4: { pass: covered && delayMedian != null ? delayMedian <= THRESHOLDS.B4.max : null, value: delayMedian },
-    B5: { pass: lateSqueezeShare == null ? null : lateSqueezeShare <= THRESHOLDS.B5.max, value: round(lateSqueezeShare), lateTrayLosses: late },
+    B3: { pass: covered ? between(firstErrorMedianShare, TH.B3.min, TH.B3.max) : null, value: round(firstErrorMedianShare) },
+    B4: { pass: covered && delayMedian != null ? delayMedian <= TH.B4.max : null, value: delayMedian },
+    B5: { pass: lateSqueezeShare == null ? null : lateSqueezeShare <= TH.B5.max, value: round(lateSqueezeShare), lateTrayLosses: late },
     B6: { pass: B6pass, value: round(postClockShare), postClockLosses: post.length, secondAct, postClockErrorMedianShare: round(postForkShare) },
     // B7 is report-only: pass is always null; `inflated` limits the board to slots with T <= 10.
-    B7: { pass: null, report: true, value: round(repeatShare), repeats, knownRepeats, lossesTries6to20: lateTries.length, inflated, maxTarget: inflated ? THRESHOLDS.B7.maxTarget : null },
+    B7: { pass: null, report: true, value: round(repeatShare), repeats, knownRepeats, lossesTries6to20: lateTries.length, inflated, maxTarget: inflated ? TH.B7.maxTarget : null },
   };
   const decided = ['B1', 'B2', 'B3', 'B4', 'B5', 'B6'].map(k => gates[k].pass);
   const pass = decided.includes(false) ? false : decided.includes(null) ? null : true;
@@ -261,7 +269,7 @@ function traceGates(input, opts = {}) {
     lateSqueezeShare: round(lateSqueezeShare), postClockShare: round(postClockShare), repeatShare: round(repeatShare),
     counts: { attempts: tries.length, losses: losses.length, provedFirstErrors: proved.length, ...counts0,
       engineStates: a.records.length, forkStates: forks.keys.size, temptingMoves: forks.tempting.length, forkStatesUnmapped: forks.unmapped, forksSource: opts.forks ? 'given' : 'engine.classify on the witness' },
-    errorKinds, lossKinds, examples, ms: { capture: captureMs, analyze: analyzeMs }, thresholds: THRESHOLDS, budget };
+    errorKinds, lossKinds, examples, ms: { capture: captureMs, analyze: analyzeMs }, thresholds: TH, budget };
 }
 
 module.exports = { traceGates, captureFamily, curveSubBlocks, ruler, defaultForks, normalizeForks, forkIndex, witnessStates, sameish, atSpare,

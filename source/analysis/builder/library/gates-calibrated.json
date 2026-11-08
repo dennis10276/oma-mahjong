@@ -1,0 +1,31 @@
+{
+  "status": "PROPOSAL from experiment E5 (2026-11-07). Not applied anywhere. Evidence: source/analysis/builder/process-v1/e5-gate-calibration.md/.json. Only 10 liked (4-5 stars) and 7 disliked (1-2 stars) boards carry tiles, so every change is low-power; confidence is stated per gate.",
+  "options": "static_gates.js reads o.thresholds.A7 = {unrelieved, tightBlind, lostDeals}; traces.js reads opts.thresholds (key-by-key override of THRESHOLDS). Defaults unchanged.",
+  "static": {
+    "A1": { "action": "keep", "note": "not judgeable on old boards (idle-special checks fail on 15 of 18 qualified boards built by an older process); judge on fresh builds only" },
+    "A2": { "action": "keep", "note": "excluded from E5 by design (old boards are not readable)" },
+    "A3": { "action": "keep", "thresholds": { "spare": [1, 2, 3], "clockNMax": 19 }, "note": "structural legality; failures on old boards are clock.n / peek-pair facts, not taste" },
+    "A4": { "action": "keep", "note": "the test itself passes 9/10 liked and 7/7 disliked boards; the 'no shippable spare' failures on liked boards come from k+s > 19 (17 of 46 boards have k > 16), a clock-length cap, not from a hidden single order" },
+    "A5": { "action": "report-only", "confidence": "low", "note": "passes 4/10 liked, 6/7 disliked; the old boards were not built with priced detours, so E5 cannot calibrate it. Re-decide with E6 yield data" },
+    "A6": { "action": "keep", "note": "passes 9/10 liked and 7/7 disliked; the one liked failure (225, one fork whose only win is not goal-directed under some deal) is a real finding to look at" },
+    "A7": { "action": "report-only", "confidence": "medium", "sub": {
+        "unrelieved_eq_0": { "action": "report-only", "liked_pass": "1/10", "disliked_pass": "4/7", "aucLikedHigher": 0.74 },
+        "tightBlind_le_1": { "action": "report-only", "liked_pass": "1/10", "disliked_pass": "4/7", "aucLikedHigher": 0.79 },
+        "winnable_in_all_K_deals": { "action": "report-only", "liked_pass": "1/10", "disliked_pass": "2/7", "aucLikedHigher": 0.61 } },
+      "note": "all three sub-checks reject the boards Dennis liked more than the ones he disliked (liked boards have MORE unrelieved luck moments). Log the three numbers on every board; do not reject on them. Optional soft cap for later: none supported by this data" },
+    "A8": { "action": "keep" }, "A9": { "action": "keep", "note": "originality, not taste; unaffected" }
+  },
+  "traces": {
+    "B1": { "action": "keep", "thresholds": { "min": 0.15 }, "confidence": "medium", "evidence": "liked 9/10 pass, disliked 1/7; AUC 0.81" },
+    "B2": { "action": "change", "thresholds": { "min": 0.20 }, "confidence": "low", "evidence": "0.50 passes 3/10 liked and 0/7 disliked; 0.20 passes 6/10 liked and 1/7 disliked. B2 is higher on liked than on disliked boards (medians 0.25 vs 0.08, AUC 0.69), so the E5 'report-only' trigger does not fire. Caveat: the forks here are engine-derived, not authored, so B2 is really tested only on fresh builds" },
+    "B3": { "action": "change", "thresholds": { "min": 0.08, "max": 0.60 }, "confidence": "low", "evidence": "liked first-error medians run 0.09-0.32; 4 of 10 fall under 0.15. Does not separate liked from disliked (AUC 0.43); keep as a sanity window" },
+    "B4": { "action": "change", "thresholds": { "max": 10 }, "confidence": "low", "evidence": "liked boards have delays up to 10 (blind1-185, blind1-194 'very hard but fun hard'); max 10 passes 10/10 liked, 6/7 disliked" },
+    "B5": { "action": "keep", "thresholds": { "max": 0.10, "leftShare": 0.25 }, "confidence": "medium", "evidence": "0/10 liked boards fail; catches 2 of the 3 lateSqueeze boards; misses factory6-184 (0 late tray losses for the bot)" },
+    "B6": { "action": "change", "thresholds": { "max": 0.65 }, "confidence": "low", "evidence": "0.40 fails 225 (post-clock share 0.62, 5 stars, so the kill rule fires). 0.65 is fitted to that one board. Fall back to report-only if E6 shows it rejecting good boards" },
+    "B7": { "action": "report-only", "note": "unchanged; liked boards have the higher repeat share (AUC 0.80), so never gate on it" }
+  },
+  "asThresholdsOption": {
+    "static_gates.thresholds": { "A7": { "unrelieved": 99, "tightBlind": 99, "lostDeals": 99 } },
+    "traces.thresholds": { "B2": { "min": 0.2 }, "B3": { "min": 0.08 }, "B4": { "max": 10 }, "B6": { "max": 0.65 } }
+  }
+}

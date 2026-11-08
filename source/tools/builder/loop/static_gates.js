@@ -310,14 +310,15 @@ function staticGates(designIn, o = {}) {
   // ---------- A7: luck bounded ----------
   {
     const room = roomOf(design), res = P.luckFromStart(design, nShipMax, { perms, seed: seed + 100, w: W.A7, nodes: PER_DEAL });
-    const roomOk = !!room.ok && room.unrelieved === 0 && (room.tightBlind ?? 0) <= 1, lost = res.filter(r => r === 'lose').length, unk = res.filter(r => r === 'unknown').length;
+    const T7 = { unrelieved: 0, tightBlind: 1, lostDeals: 0, ...(o.thresholds?.A7 || {}) };   // E5 hook; defaults = the process design
+    const roomOk = !!room.ok && room.unrelieved <= T7.unrelieved && (room.tightBlind ?? 0) <= T7.tightBlind, lost = res.filter(r => r === 'lose').length, unk = res.filter(r => r === 'unknown').length;
     if (unk) warnings.push(`A7: ${unk} re-deal${unk > 1 ? 's' : ''} could not be proven winnable (unknown)`);
     const why = [];
     if (!room.ok) why.push('roomProfile: no path found' + (room.error ? ' (' + room.error + ')' : ''));
-    if (room.unrelieved > 0) why.push(`${room.unrelieved} unrelieved luck moment${room.unrelieved > 1 ? 's' : ''}`);
-    if ((room.tightBlind ?? 0) > 1) why.push(`tightBlind ${room.tightBlind} (> 1)`);
+    if (room.unrelieved > T7.unrelieved) why.push(`${room.unrelieved} unrelieved luck moment${room.unrelieved > 1 ? 's' : ''}`);
+    if ((room.tightBlind ?? 0) > T7.tightBlind) why.push(`tightBlind ${room.tightBlind} (> ${T7.tightBlind})`);
     if (lost) why.push(`${lost} of ${res.length} re-deals of the face-down pictures are lost from the start at clock.n ${nShipMax}`);
-    gates.A7 = { pass: roomOk && !lost, detail: { roomPass: roomOk, dealsPass: !lost, roomOk: !!room.ok, unrelieved: room.unrelieved ?? null, tightBlind: room.tightBlind ?? null, faceDown: (design.down || []).length, perms: res.length, results: res, why },
+    gates.A7 = { pass: roomOk && lost <= T7.lostDeals, detail: { roomPass: roomOk, dealsPass: lost <= T7.lostDeals, roomOk: !!room.ok, unrelieved: room.unrelieved ?? null, tightBlind: room.tightBlind ?? null, faceDown: (design.down || []).length, perms: res.length, results: res, why },
       ...(unk ? { warn: 'unknown' } : {}) };
   }
 
