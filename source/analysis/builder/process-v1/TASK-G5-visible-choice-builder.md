@@ -2,6 +2,8 @@
 
 Prepared by Codex, 2026-11-08. This is the next builder task for Gemini, not a continuation of the unrelated human-bot work in the existing `gemini-g5` checkout.
 
+Integration update: the normal pipeline now supports `--gate-profile e5-v1` directly, and the library records the profile and thresholds. Use `assign_levels.js --allow-curve` for provisional selection and `accept_levels.js` for the final fixed-assignment checks. Read `PIPELINE-AND-ACCEPTANCE.md`; do not create a second acceptance implementation or duplicate the former E6 wrapper. This update supersedes the wrapper instructions below where applicable.
+
 Read `source/analysis/builder/LEVEL-DESIGN-FACTS.md` first. Dennis's latest decisions override older process proposals. The durable goal is a robust builder for future levels, not a handpicked batch.
 
 ## Starting point and ownership
