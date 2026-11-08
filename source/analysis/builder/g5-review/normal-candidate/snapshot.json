@@ -1,0 +1,11 @@
+{
+  "at": "2026-11-08T22:52:37.775Z",
+  "sourceLibrary": "C:\\Users\\den_k\\Idea\\OmasMahjong\\gemini-visible-choice-builder\\source\\analysis\\builder\\g5-visible-choice\\library-vc\\library.jsonl",
+  "entryDigest": "80a182181c94b549cca0db4591cdbbb00e9d59db727286c41f2c7f8119df8634",
+  "sourcePlanDigest": "5c2d4ff5c46fa81fa2e0fd25593d87ecedfa0443d3da1ee31cfa98e62cf95dbe",
+  "puzzleKey": "00151e07bf3cc81ee2d3383db76262438adb7652d36980900f451a26b4a265a6",
+  "checkedForeignLedger": "C:\\Users\\den_k\\Idea\\OmasMahjong\\gemini-visible-choice-builder\\source\\analysis\\builder\\library\\accept-ledger.json",
+  "foreignReservations": [],
+  "localReservations": [],
+  "note": "Slot copied before fresh acceptance, with no preceding ACCEPT reservations for this puzzle in either worktree. The prior incomplete-proof verdict was based on redundant unknown opening actions."
+}

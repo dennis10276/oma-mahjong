@@ -1,0 +1,17 @@
+{
+  "purpose": "Independent diagnostic of one frozen pilot candidate, not a complete batch",
+  "range": [
+    260,
+    260
+  ],
+  "levels": [
+    {
+      "level": 260,
+      "key": "7640c6e7d45baa94e342a30c76448a306b4d6a97a2a5a502154ea91a57daa5f8",
+      "spare": 3,
+      "target": 10.833333333333334,
+      "skilledFallback": true
+    }
+  ],
+  "context": []
+}

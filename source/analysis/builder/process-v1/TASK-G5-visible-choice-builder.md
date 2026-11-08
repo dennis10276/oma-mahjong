@@ -6,6 +6,8 @@ Integration update: the normal pipeline now supports `--gate-profile e5-v1` dire
 
 Further integration update: `pipeline-v4-skilled-spares` qualifies and stores skilled ratings/C2 trust separately at each eligible spare. It fixes lending spare 2's S to the spare actually selected. Keep already-running v3 experiments as historical evidence and use isolated v4 output when requalifying; do not mix the versions or overwrite raw ledgers. The lead is checking a frozen copy of the first pilot candidate independently; this does not modify your checkout or mark the candidate as an accepted level.
 
+Lead evidence update: see `source/analysis/builder/g5-review/REVIEW.md` in `wip/cc-builder-loop`. Frozen pilot `7640c6...` fails B6 at 80 trace campaigns; normal candidate `1325d1...` fails B2 at 80. Do not retry these fixed candidates on alternate seeds to obtain a pass. The lead has verified the accepted fallback receipt for `7ce431...` at level 250/spare 2, retaining its A6 luck warning, and imported its used ACCEPT reservations into the lead ledger. Preserve those reservations when handing off/merging data. The A4 final-proof warning check has also been corrected: extra unresolved opening actions do not invalidate two already proven winners when every potentially forced witness state is resolved. No unknown action is promoted to win; zero-proven-win unresolved witness states are now explicitly counted.
+
 Read `source/analysis/builder/LEVEL-DESIGN-FACTS.md` first. Dennis's latest decisions override older process proposals. The durable goal is a robust builder for future levels, not a handpicked batch.
 
 ## Starting point and ownership

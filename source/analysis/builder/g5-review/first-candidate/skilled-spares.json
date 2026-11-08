@@ -1,0 +1,53 @@
+{
+  "at": "2026-11-08T22:50:04.304Z",
+  "key": "7640c6e7d45baa94e342a30c76448a306b4d6a97a2a5a502154ea91a57daa5f8",
+  "entryDigest": "3cf43dea40ead814e19dd64fbb58c39fc4a82a124b96991ca3716a4f6c46ffdb",
+  "oldRating": {
+    "S": 2,
+    "fallback": true,
+    "valid": true,
+    "trusted": true,
+    "styles": {
+      "route": 2,
+      "plain": 3.02
+    },
+    "spare": 2,
+    "fingerprint": "e686e095300cec3926719ef63715fe3902bb1b4cf31825c3f36ee1872033ced9",
+    "faceUp": 1.18
+  },
+  "shippableSpares": [
+    3
+  ],
+  "ratings": [
+    {
+      "spare": 2,
+      "clockN": 8,
+      "S": 2,
+      "valid": true,
+      "fingerprint": "e686e095300cec3926719ef63715fe3902bb1b4cf31825c3f36ee1872033ced9",
+      "styles": {
+        "route": 2,
+        "plain": 3.02
+      },
+      "normalBand": false,
+      "fallbackBand": true
+    },
+    {
+      "spare": 3,
+      "clockN": 9,
+      "S": 2.08,
+      "valid": true,
+      "fingerprint": "e686e095300cec3926719ef63715fe3902bb1b4cf31825c3f36ee1872033ced9",
+      "styles": {
+        "route": 2.08,
+        "plain": 3.1
+      },
+      "normalBand": false,
+      "fallbackBand": true
+    }
+  ],
+  "fingerprint": "e686e095300cec3926719ef63715fe3902bb1b4cf31825c3f36ee1872033ced9",
+  "cpuS": 7.344,
+  "wallS": 5.517,
+  "note": "Clock-specific skilled diagnostic only. No fresh ACCEPT campaigns, special proof or batch qualification is implied."
+}

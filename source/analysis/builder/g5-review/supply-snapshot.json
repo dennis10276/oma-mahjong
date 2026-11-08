@@ -1,0 +1,360 @@
+{
+  "at": "2026-11-08T22:50:32.269Z",
+  "note": "Read-only snapshot of completed Gemini v3 sweep summaries; these are library candidates, not accepted levels. No rebuild or modification of Geminis checkout.",
+  "modes": {
+    "library-baseline": {
+      "source": "C:\\Users\\den_k\\Idea\\OmasMahjong\\gemini-visible-choice-builder\\source\\analysis\\builder\\g5-visible-choice\\library-baseline\\pipeline-runs.jsonl",
+      "sourceDigest": "7d9fb106eb29bf8e6a8cc7609cd30c949c3e8dfe37c3a370a32ad4378b0473b4",
+      "runs": [
+        {
+          "run": "2026-11-08T22-17-17-529Z",
+          "range": [
+            0,
+            99
+          ],
+          "pipeline": "pipeline-v3-profiled-50a7e4130840",
+          "options": {
+            "targets": [
+              10,
+              13
+            ],
+            "skilledFloor": 2.5,
+            "plannerMargin": 0,
+            "seedBase": 1,
+            "curveSpares": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "traceCampaigns": 40,
+            "gateProfile": "e5-v1"
+          },
+          "fingerprints": {
+            "family": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+            "reference": "4cf0b4c7057c2242f27fe529bb1885e4ad06cdf94588b79411cc06c522509e39",
+            "planner": "e686e095300cec3926719ef63715fe3902bb1b4cf31825c3f36ee1872033ced9",
+            "familyBot": "family-key-memory-v1-fast",
+            "code": {
+              "builder.js": "140fea355f061321",
+              "engine.js": "96b96ba654be304c",
+              "gate.js": "ea6296ed31c45e65",
+              "knobs.js": "d8481c53ce58273c",
+              "static_gates.js": "d0f6f5635ed53e27",
+              "obvious.js": "7a1d78494d0528e1",
+              "detour.js": "dca3c016ee0a7c0f",
+              "publicfork.js": "bcac18c2c7418b40",
+              "screen.js": "204db8dab7b46d0f",
+              "dial_curve.js": "50f383e41f316526",
+              "traces.js": "8553dfb8b874cfa7",
+              "counterfactual.js": "1b2a6b16b301dae1",
+              "yardstick.js": "6d47e7a928ac3704",
+              "library.js": "16a41d4be7ac6b84",
+              "run_pipeline.js": "4d1236cb247524fb",
+              "gate_profile.js": "7780e516e86ba350",
+              "policy.js": "d7a448dd425510bf"
+            },
+            "pipeline": "pipeline-v3-profiled-50a7e4130840",
+            "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2"
+          }
+        },
+        {
+          "run": "2026-11-08T22-28-24-419Z",
+          "range": [
+            100,
+            499
+          ],
+          "pipeline": "pipeline-v3-profiled-50a7e4130840",
+          "options": {
+            "targets": [
+              10,
+              13
+            ],
+            "skilledFloor": 2.5,
+            "plannerMargin": 0,
+            "seedBase": 1,
+            "curveSpares": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "traceCampaigns": 40,
+            "gateProfile": "e5-v1"
+          },
+          "fingerprints": {
+            "family": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+            "reference": "4cf0b4c7057c2242f27fe529bb1885e4ad06cdf94588b79411cc06c522509e39",
+            "planner": "e686e095300cec3926719ef63715fe3902bb1b4cf31825c3f36ee1872033ced9",
+            "familyBot": "family-key-memory-v1-fast",
+            "code": {
+              "builder.js": "140fea355f061321",
+              "engine.js": "96b96ba654be304c",
+              "gate.js": "ea6296ed31c45e65",
+              "knobs.js": "d8481c53ce58273c",
+              "static_gates.js": "d0f6f5635ed53e27",
+              "obvious.js": "7a1d78494d0528e1",
+              "detour.js": "dca3c016ee0a7c0f",
+              "publicfork.js": "bcac18c2c7418b40",
+              "screen.js": "204db8dab7b46d0f",
+              "dial_curve.js": "50f383e41f316526",
+              "traces.js": "8553dfb8b874cfa7",
+              "counterfactual.js": "1b2a6b16b301dae1",
+              "yardstick.js": "6d47e7a928ac3704",
+              "library.js": "16a41d4be7ac6b84",
+              "run_pipeline.js": "4d1236cb247524fb",
+              "gate_profile.js": "7780e516e86ba350",
+              "policy.js": "d7a448dd425510bf"
+            },
+            "pipeline": "pipeline-v3-profiled-50a7e4130840",
+            "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2"
+          }
+        }
+      ],
+      "done": 500,
+      "built": 455,
+      "static": 168,
+      "screen": 19,
+      "planner": 3,
+      "traces": 0,
+      "library": 0,
+      "cpuS": 465.36
+    },
+    "library-vc": {
+      "source": "C:\\Users\\den_k\\Idea\\OmasMahjong\\gemini-visible-choice-builder\\source\\analysis\\builder\\g5-visible-choice\\library-vc\\pipeline-runs.jsonl",
+      "sourceDigest": "25d53d961761b16644b4e8aacc07e6c22fe7535ec6660f904e8f4f8478bd550e",
+      "runs": [
+        {
+          "run": "2026-11-08T22-22-15-698Z",
+          "range": [
+            0,
+            99
+          ],
+          "pipeline": "pipeline-v3-profiled-7cb9d606eb7c-visibleChoice",
+          "options": {
+            "targets": [
+              10,
+              13
+            ],
+            "skilledFloor": 2.5,
+            "plannerMargin": 0,
+            "seedBase": 1,
+            "curveSpares": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "traceCampaigns": 40,
+            "gateProfile": "e5-v1"
+          },
+          "fingerprints": {
+            "family": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+            "reference": "4cf0b4c7057c2242f27fe529bb1885e4ad06cdf94588b79411cc06c522509e39",
+            "planner": "e686e095300cec3926719ef63715fe3902bb1b4cf31825c3f36ee1872033ced9",
+            "familyBot": "family-key-memory-v1-fast",
+            "code": {
+              "builder.js": "140fea355f061321",
+              "engine.js": "96b96ba654be304c",
+              "gate.js": "ea6296ed31c45e65",
+              "knobs.js": "d8481c53ce58273c",
+              "static_gates.js": "d0f6f5635ed53e27",
+              "obvious.js": "7a1d78494d0528e1",
+              "detour.js": "dca3c016ee0a7c0f",
+              "publicfork.js": "bcac18c2c7418b40",
+              "screen.js": "204db8dab7b46d0f",
+              "dial_curve.js": "50f383e41f316526",
+              "traces.js": "8553dfb8b874cfa7",
+              "counterfactual.js": "1b2a6b16b301dae1",
+              "yardstick.js": "6d47e7a928ac3704",
+              "library.js": "16a41d4be7ac6b84",
+              "run_pipeline.js": "4d1236cb247524fb",
+              "gate_profile.js": "7780e516e86ba350",
+              "policy.js": "d7a448dd425510bf"
+            },
+            "pipeline": "pipeline-v3-profiled-7cb9d606eb7c-visibleChoice",
+            "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2"
+          }
+        },
+        {
+          "run": "2026-11-08T22-45-52-651Z",
+          "range": [
+            100,
+            499
+          ],
+          "pipeline": "pipeline-v3-profiled-7cb9d606eb7c-visibleChoice",
+          "options": {
+            "targets": [
+              10,
+              13
+            ],
+            "skilledFloor": 2.5,
+            "plannerMargin": 0,
+            "seedBase": 1,
+            "curveSpares": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "traceCampaigns": 40,
+            "gateProfile": "e5-v1"
+          },
+          "fingerprints": {
+            "family": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+            "reference": "4cf0b4c7057c2242f27fe529bb1885e4ad06cdf94588b79411cc06c522509e39",
+            "planner": "e686e095300cec3926719ef63715fe3902bb1b4cf31825c3f36ee1872033ced9",
+            "familyBot": "family-key-memory-v1-fast",
+            "code": {
+              "builder.js": "140fea355f061321",
+              "engine.js": "96b96ba654be304c",
+              "gate.js": "ea6296ed31c45e65",
+              "knobs.js": "d8481c53ce58273c",
+              "static_gates.js": "d0f6f5635ed53e27",
+              "obvious.js": "7a1d78494d0528e1",
+              "detour.js": "dca3c016ee0a7c0f",
+              "publicfork.js": "bcac18c2c7418b40",
+              "screen.js": "204db8dab7b46d0f",
+              "dial_curve.js": "50f383e41f316526",
+              "traces.js": "8553dfb8b874cfa7",
+              "counterfactual.js": "1b2a6b16b301dae1",
+              "yardstick.js": "6d47e7a928ac3704",
+              "library.js": "16a41d4be7ac6b84",
+              "run_pipeline.js": "4d1236cb247524fb",
+              "gate_profile.js": "7780e516e86ba350",
+              "policy.js": "d7a448dd425510bf"
+            },
+            "pipeline": "pipeline-v3-profiled-7cb9d606eb7c-visibleChoice",
+            "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2"
+          }
+        }
+      ],
+      "done": 500,
+      "built": 449,
+      "static": 428,
+      "screen": 33,
+      "planner": 2,
+      "traces": 1,
+      "library": 1,
+      "cpuS": 334.06399999999996
+    },
+    "library-vc-fallback": {
+      "source": "C:\\Users\\den_k\\Idea\\OmasMahjong\\gemini-visible-choice-builder\\source\\analysis\\builder\\g5-visible-choice\\library-vc-fallback\\pipeline-runs.jsonl",
+      "sourceDigest": "e8783fb7c23a147c579eabbddcc0a65b58cf1c425f6bb841ff9432952d3f76a8",
+      "runs": [
+        {
+          "run": "2026-11-08T22-24-08-073Z",
+          "range": [
+            0,
+            99
+          ],
+          "pipeline": "pipeline-v3-profiled-7cb9d606eb7c-fallback-2-visibleChoice",
+          "options": {
+            "targets": [
+              10,
+              13
+            ],
+            "skilledFloor": 2,
+            "plannerMargin": 0,
+            "seedBase": 1,
+            "curveSpares": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "traceCampaigns": 40,
+            "gateProfile": "e5-v1"
+          },
+          "fingerprints": {
+            "family": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+            "reference": "4cf0b4c7057c2242f27fe529bb1885e4ad06cdf94588b79411cc06c522509e39",
+            "planner": "e686e095300cec3926719ef63715fe3902bb1b4cf31825c3f36ee1872033ced9",
+            "familyBot": "family-key-memory-v1-fast",
+            "code": {
+              "builder.js": "140fea355f061321",
+              "engine.js": "96b96ba654be304c",
+              "gate.js": "ea6296ed31c45e65",
+              "knobs.js": "d8481c53ce58273c",
+              "static_gates.js": "d0f6f5635ed53e27",
+              "obvious.js": "7a1d78494d0528e1",
+              "detour.js": "dca3c016ee0a7c0f",
+              "publicfork.js": "bcac18c2c7418b40",
+              "screen.js": "204db8dab7b46d0f",
+              "dial_curve.js": "50f383e41f316526",
+              "traces.js": "8553dfb8b874cfa7",
+              "counterfactual.js": "1b2a6b16b301dae1",
+              "yardstick.js": "6d47e7a928ac3704",
+              "library.js": "16a41d4be7ac6b84",
+              "run_pipeline.js": "4d1236cb247524fb",
+              "gate_profile.js": "7780e516e86ba350",
+              "policy.js": "d7a448dd425510bf"
+            },
+            "pipeline": "pipeline-v3-profiled-7cb9d606eb7c-fallback-2-visibleChoice",
+            "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2"
+          }
+        },
+        {
+          "run": "2026-11-08T22-35-01-660Z",
+          "range": [
+            100,
+            499
+          ],
+          "pipeline": "pipeline-v3-profiled-7cb9d606eb7c-fallback-2-visibleChoice",
+          "options": {
+            "targets": [
+              10,
+              13
+            ],
+            "skilledFloor": 2,
+            "plannerMargin": 0,
+            "seedBase": 1,
+            "curveSpares": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "traceCampaigns": 40,
+            "gateProfile": "e5-v1"
+          },
+          "fingerprints": {
+            "family": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+            "reference": "4cf0b4c7057c2242f27fe529bb1885e4ad06cdf94588b79411cc06c522509e39",
+            "planner": "e686e095300cec3926719ef63715fe3902bb1b4cf31825c3f36ee1872033ced9",
+            "familyBot": "family-key-memory-v1-fast",
+            "code": {
+              "builder.js": "140fea355f061321",
+              "engine.js": "96b96ba654be304c",
+              "gate.js": "ea6296ed31c45e65",
+              "knobs.js": "d8481c53ce58273c",
+              "static_gates.js": "d0f6f5635ed53e27",
+              "obvious.js": "7a1d78494d0528e1",
+              "detour.js": "dca3c016ee0a7c0f",
+              "publicfork.js": "bcac18c2c7418b40",
+              "screen.js": "204db8dab7b46d0f",
+              "dial_curve.js": "50f383e41f316526",
+              "traces.js": "8553dfb8b874cfa7",
+              "counterfactual.js": "1b2a6b16b301dae1",
+              "yardstick.js": "6d47e7a928ac3704",
+              "library.js": "16a41d4be7ac6b84",
+              "run_pipeline.js": "4d1236cb247524fb",
+              "gate_profile.js": "7780e516e86ba350",
+              "policy.js": "d7a448dd425510bf"
+            },
+            "pipeline": "pipeline-v3-profiled-7cb9d606eb7c-fallback-2-visibleChoice",
+            "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2"
+          }
+        }
+      ],
+      "done": 500,
+      "built": 449,
+      "static": 428,
+      "screen": 33,
+      "planner": 10,
+      "traces": 3,
+      "library": 3,
+      "cpuS": 762.4069999999999
+    }
+  }
+}

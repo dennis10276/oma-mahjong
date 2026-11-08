@@ -1,0 +1,18 @@
+{
+  "at": "2026-11-08T22:55:05.556Z",
+  "verifiedFrozenContent": true,
+  "verifiedProfileAndRulers": true,
+  "verifiedPrimaryAndIndependentSeeds": true,
+  "level": 250,
+  "key": "7ce431c50dbeab4582b0ecab4401d7ec308d8294e8e234abc0570c5dd25cd93c",
+  "spare": 2,
+  "S": 2.33,
+  "D": 10.105,
+  "independentD": 9.485000000000001,
+  "warnings": [
+    "A6: at 3 lose-forks some re-deal of the unseen pictures loses the board whatever the player does (luck)"
+  ],
+  "importedReservations": 2,
+  "foreignLedgerDigest": "909d26b9476966e6fc102743537ed0e4a265615cf7b689d793a18e95f49a5889",
+  "note": "One experimentally accepted fallback board. The luck warning is retained. The 250-259 batch is incomplete and no game publication is authorized."
+}

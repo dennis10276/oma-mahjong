@@ -1,0 +1,39 @@
+{
+  "at": "2026-11-08T22:40:12.272Z",
+  "sourceLibrary": "C:\\Users\\den_k\\Idea\\OmasMahjong\\gemini-visible-choice-builder\\source\\analysis\\builder\\g5-visible-choice\\library-vc-fallback\\library.jsonl",
+  "sourceLibrarySha256": "060fb10f20ef425bed3ec088583f28739636c07a2b725eba9f52696ed2591383",
+  "entryDigest": "3cf43dea40ead814e19dd64fbb58c39fc4a82a124b96991ca3716a4f6c46ffdb",
+  "runtimeFingerprints": {
+    "family": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+    "reference": "4cf0b4c7057c2242f27fe529bb1885e4ad06cdf94588b79411cc06c522509e39",
+    "planner": "e686e095300cec3926719ef63715fe3902bb1b4cf31825c3f36ee1872033ced9",
+    "familyBot": "family-key-memory-v1-fast",
+    "code": {
+      "builder.js": "140fea355f061321",
+      "engine.js": "96b96ba654be304c",
+      "gate.js": "ea6296ed31c45e65",
+      "knobs.js": "d8481c53ce58273c",
+      "static_gates.js": "d0f6f5635ed53e27",
+      "obvious.js": "7a1d78494d0528e1",
+      "detour.js": "dca3c016ee0a7c0f",
+      "publicfork.js": "bcac18c2c7418b40",
+      "screen.js": "204db8dab7b46d0f",
+      "dial_curve.js": "50f383e41f316526",
+      "traces.js": "8553dfb8b874cfa7",
+      "counterfactual.js": "1b2a6b16b301dae1",
+      "yardstick.js": "6d47e7a928ac3704",
+      "library.js": "16a41d4be7ac6b84",
+      "run_pipeline.js": "4d1236cb247524fb",
+      "gate_profile.js": "7780e516e86ba350",
+      "policy.js": "d7a448dd425510bf"
+    },
+    "pipeline": "pipeline-v3-profiled-7cb9d606eb7c-fallback-2-visibleChoice",
+    "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2"
+  },
+  "currentSourceHashes": {
+    "source/tools/builder/visible_choice.js": "db630145432e8e593124a9e114e445df7dc6ab9aae222fe160a22551cd05ed74",
+    "source/tools/builder/builder.js": "140fea355f0613210125df0e73714d1315abed5faabfe72f3c65696d827cce57",
+    "source/tools/builder/loop/run_pipeline.js": "4d1236cb247524fbb3d6576515b0b5c7dd5ca169711e4486c5fa126a46d28926"
+  },
+  "note": "Frozen board copied read-only while Gemini works. Current source hashes are snapshot hashes, not proof of source used during the earlier pilot. Construction module hash is absent from the pilot runtime manifest."
+}

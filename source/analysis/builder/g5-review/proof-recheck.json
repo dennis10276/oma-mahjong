@@ -1,0 +1,2273 @@
+{
+  "at": "2026-11-08T22:56:38.801Z",
+  "note": "Engine-only recheck after completing zero-proven-win unknown-state accounting. No new bot campaigns or ACCEPT seeds.",
+  "rows": [
+    {
+      "name": "fallback-evidence",
+      "key": "7ce431c50dbeab4582b0ecab4401d7ec308d8294e8e234abc0570c5dd25cd93c",
+      "spare": 2,
+      "pass": true,
+      "unresolved": [],
+      "static": {
+        "pass": true,
+        "gates": {
+          "A1": {
+            "pass": true,
+            "detail": {
+              "story": "lockBeside",
+              "tiles": 84,
+              "clock": {
+                "n": 19,
+                "k": 17,
+                "unsure": false,
+                "spare": 2,
+                "winAtK": "win",
+                "winAtKProof": "clockShortest witness replay",
+                "atKminus1": "lose",
+                "kGame": 17,
+                "kPerTile": 17
+              },
+              "idle": 0,
+              "strictWitness": true,
+              "why": []
+            }
+          },
+          "A2": {
+            "pass": true,
+            "detail": {
+              "readable": true,
+              "keys": [
+                20,
+                26
+              ],
+              "keysShownAtStart": 2,
+              "bothKeysSeenAtMove": 0
+            }
+          },
+          "A3": {
+            "pass": true,
+            "detail": {
+              "k": 17,
+              "strictK": 17,
+              "witnessClockMove": 17,
+              "strictWitness": true,
+              "designSpare": 2,
+              "shippable": [
+                1,
+                2
+              ],
+              "why": []
+            }
+          },
+          "A4": {
+            "pass": true,
+            "detail": {
+              "opening": {
+                "wins": 6,
+                "unknown": 0,
+                "legal": 9
+              },
+              "singleWinStates": 7,
+              "obviousSingles": 7,
+              "statesWithUnknown": 0,
+              "okSpares": [
+                1,
+                2
+              ],
+              "perSpare": {
+                "1": {
+                  "ok": true,
+                  "openingWins": 6,
+                  "openingUnknown": 0,
+                  "notObvious": []
+                },
+                "2": {
+                  "ok": true,
+                  "openingWins": 9,
+                  "openingUnknown": 0,
+                  "notObvious": []
+                }
+              },
+              "why": []
+            }
+          },
+          "A5": {
+            "pass": null,
+            "detail": {
+              "window": [
+                3,
+                10
+              ],
+              "wayMoves": 17,
+              "priced": 4,
+              "best": {
+                "move": [
+                  74,
+                  79
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win",
+                "step": 4,
+                "moves": 4
+              },
+              "temptingSeen": 57
+            },
+            "wouldPass": true,
+            "reportOnly": true
+          },
+          "A6": {
+            "pass": true,
+            "detail": {
+              "loseForks": 20,
+              "fair": 20,
+              "unfair": [],
+              "unknown": 0
+            }
+          },
+          "A7": {
+            "pass": null,
+            "detail": {
+              "roomPass": false,
+              "dealsPass": false,
+              "roomOk": true,
+              "unrelieved": 1,
+              "tightBlind": 2,
+              "faceDown": 29,
+              "perms": 4,
+              "results": [
+                "win",
+                "lose",
+                "lose",
+                "lose"
+              ],
+              "why": [
+                "1 unrelieved luck moment",
+                "tightBlind 2 (> 1)",
+                "3 of 4 re-deals of the face-down pictures are lost from the start at clock.n 19"
+              ]
+            },
+            "wouldPass": false,
+            "reportOnly": true
+          },
+          "A8": {
+            "pass": true,
+            "flag": null,
+            "detail": {
+              "k": 17
+            }
+          },
+          "A9": {
+            "pass": true,
+            "flag": null,
+            "detail": {
+              "shape": "pyramid · tall",
+              "tiles": 84,
+              "compared": 130,
+              "clashes": [],
+              "why": []
+            }
+          }
+        },
+        "forks": [
+          {
+            "step": 0,
+            "moves": 0,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  53,
+                  58
+                ],
+                "kind": "pair",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  66,
+                  72
+                ],
+                "kind": "pair",
+                "cost": 0,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              53,
+              58,
+              66,
+              72,
+              81,
+              82
+            ]
+          },
+          {
+            "step": 1,
+            "moves": 1,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  53,
+                  58
+                ],
+                "kind": "pair",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  66,
+                  72
+                ],
+                "kind": "pair",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  74,
+                  79
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              53,
+              58,
+              66,
+              72,
+              73,
+              82
+            ]
+          },
+          {
+            "step": 2,
+            "moves": 2,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  53,
+                  58
+                ],
+                "kind": "pair",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  66,
+                  72
+                ],
+                "kind": "pair",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  73,
+                  77
+                ],
+                "kind": "pair",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  74,
+                  79
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              53,
+              58,
+              66,
+              72,
+              73,
+              77
+            ]
+          },
+          {
+            "step": 3,
+            "moves": 3,
+            "inWindow": true,
+            "tempting": [
+              {
+                "move": [
+                  73
+                ],
+                "kind": "match",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  53,
+                  58
+                ],
+                "kind": "pair",
+                "cost": null,
+                "result": "lose",
+                "instant": true,
+                "fair": true,
+                "forkChecks": {
+                  "tilesLeft": 0.964,
+                  "forcedDepth": 0,
+                  "perms": 4,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 73
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": null,
+                      "board": "lose"
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": null,
+                      "board": "lose"
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": null,
+                      "board": "lose"
+                    }
+                  ],
+                  "dealsLostAnyway": 3
+                }
+              },
+              {
+                "move": [
+                  66,
+                  72
+                ],
+                "kind": "pair",
+                "cost": null,
+                "result": "lose",
+                "instant": true,
+                "fair": true,
+                "forkChecks": {
+                  "tilesLeft": 0.964,
+                  "forcedDepth": 0,
+                  "perms": 4,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 73
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": null,
+                      "board": "lose"
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": null,
+                      "board": "lose"
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": null,
+                      "board": "lose"
+                    }
+                  ],
+                  "dealsLostAnyway": 3
+                }
+              },
+              {
+                "move": [
+                  74,
+                  79
+                ],
+                "kind": "pair",
+                "cost": null,
+                "result": "lose",
+                "instant": true,
+                "fair": true,
+                "forkChecks": {
+                  "tilesLeft": 0.964,
+                  "forcedDepth": 0,
+                  "perms": 4,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 73
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": null,
+                      "board": "lose"
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": null,
+                      "board": "lose"
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": null,
+                      "board": "lose"
+                    }
+                  ],
+                  "dealsLostAnyway": 3
+                }
+              }
+            ],
+            "winning": [
+              73
+            ]
+          },
+          {
+            "step": 4,
+            "moves": 4,
+            "inWindow": true,
+            "tempting": [
+              {
+                "move": [
+                  53,
+                  58
+                ],
+                "kind": "pair",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  66,
+                  72
+                ],
+                "kind": "pair",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  74,
+                  79
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  67,
+                  62
+                ],
+                "kind": "pair",
+                "peek": true,
+                "cost": 0,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              53,
+              58,
+              62,
+              66,
+              67,
+              72,
+              {
+                "pair": [
+                  67,
+                  62
+                ]
+              }
+            ]
+          },
+          {
+            "step": 5,
+            "moves": 5,
+            "inWindow": true,
+            "tempting": [
+              {
+                "move": [
+                  67
+                ],
+                "kind": "match",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  53,
+                  58
+                ],
+                "kind": "pair",
+                "cost": null,
+                "result": "lose",
+                "instant": true,
+                "fair": true,
+                "forkChecks": {
+                  "tilesLeft": 0.94,
+                  "forcedDepth": 0,
+                  "perms": 4,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 67
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 67
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 67
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 67
+                    }
+                  ]
+                }
+              },
+              {
+                "move": [
+                  66,
+                  72
+                ],
+                "kind": "pair",
+                "cost": null,
+                "result": "lose",
+                "instant": true,
+                "fair": true,
+                "forkChecks": {
+                  "tilesLeft": 0.94,
+                  "forcedDepth": 0,
+                  "perms": 4,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 67
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 67
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 67
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 67
+                    }
+                  ]
+                }
+              },
+              {
+                "move": [
+                  74,
+                  79
+                ],
+                "kind": "pair",
+                "cost": null,
+                "result": "lose",
+                "instant": true,
+                "fair": true,
+                "forkChecks": {
+                  "tilesLeft": 0.94,
+                  "forcedDepth": 0,
+                  "perms": 4,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 67
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 67
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 67
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 67
+                    }
+                  ]
+                }
+              }
+            ],
+            "winning": [
+              67
+            ]
+          },
+          {
+            "step": 6,
+            "moves": 6,
+            "inWindow": true,
+            "tempting": [
+              {
+                "move": [
+                  43,
+                  50
+                ],
+                "kind": "pair",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  53,
+                  58
+                ],
+                "kind": "pair",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  66,
+                  72
+                ],
+                "kind": "pair",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  74,
+                  79
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              43,
+              50,
+              53,
+              58,
+              66,
+              72
+            ]
+          },
+          {
+            "step": 7,
+            "moves": 7,
+            "inWindow": true,
+            "tempting": [
+              {
+                "move": [
+                  50
+                ],
+                "kind": "match",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  53,
+                  58
+                ],
+                "kind": "pair",
+                "cost": null,
+                "result": "lose",
+                "instant": true,
+                "fair": true,
+                "forkChecks": {
+                  "tilesLeft": 0.917,
+                  "forcedDepth": 0,
+                  "perms": 4,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 50
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 50
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 50
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 50
+                    }
+                  ]
+                }
+              },
+              {
+                "move": [
+                  66,
+                  72
+                ],
+                "kind": "pair",
+                "cost": null,
+                "result": "lose",
+                "instant": true,
+                "fair": true,
+                "forkChecks": {
+                  "tilesLeft": 0.917,
+                  "forcedDepth": 0,
+                  "perms": 4,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 50
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 50
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 50
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 50
+                    }
+                  ]
+                }
+              },
+              {
+                "move": [
+                  74,
+                  79
+                ],
+                "kind": "pair",
+                "cost": null,
+                "result": "lose",
+                "instant": true,
+                "fair": true,
+                "forkChecks": {
+                  "tilesLeft": 0.917,
+                  "forcedDepth": 0,
+                  "perms": 4,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 50
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 50
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 50
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 50
+                    }
+                  ]
+                }
+              }
+            ],
+            "winning": [
+              50
+            ]
+          },
+          {
+            "step": 8,
+            "moves": 8,
+            "inWindow": true,
+            "tempting": [
+              {
+                "move": [
+                  53,
+                  58
+                ],
+                "kind": "pair",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  66,
+                  72
+                ],
+                "kind": "pair",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  74,
+                  79
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              20,
+              26,
+              53,
+              58,
+              66,
+              72
+            ]
+          },
+          {
+            "step": 9,
+            "moves": 9,
+            "inWindow": true,
+            "tempting": [
+              {
+                "move": [
+                  53,
+                  58
+                ],
+                "kind": "pair",
+                "cost": null,
+                "result": "lose",
+                "instant": true,
+                "fair": true,
+                "forkChecks": {
+                  "tilesLeft": 0.893,
+                  "forcedDepth": 0,
+                  "perms": 4,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 26
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 26
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 26
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 26
+                    }
+                  ]
+                }
+              },
+              {
+                "move": [
+                  66,
+                  72
+                ],
+                "kind": "pair",
+                "cost": null,
+                "result": "lose",
+                "instant": true,
+                "fair": true,
+                "forkChecks": {
+                  "tilesLeft": 0.893,
+                  "forcedDepth": 0,
+                  "perms": 4,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 26
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 26
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 26
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 26
+                    }
+                  ]
+                }
+              },
+              {
+                "move": [
+                  74,
+                  79
+                ],
+                "kind": "pair",
+                "cost": null,
+                "result": "lose",
+                "instant": true,
+                "fair": true,
+                "forkChecks": {
+                  "tilesLeft": 0.893,
+                  "forcedDepth": 0,
+                  "perms": 4,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 26
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 26
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 26
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 26
+                    }
+                  ]
+                }
+              }
+            ],
+            "winning": [
+              26
+            ]
+          },
+          {
+            "step": 10,
+            "moves": 10,
+            "inWindow": true,
+            "tempting": [
+              {
+                "move": [
+                  53,
+                  58
+                ],
+                "kind": "pair",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  66,
+                  72
+                ],
+                "kind": "pair",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  74,
+                  79
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              53,
+              58,
+              66,
+              72,
+              83
+            ]
+          },
+          {
+            "step": 11,
+            "moves": 11,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  53,
+                  58
+                ],
+                "kind": "pair",
+                "cost": null,
+                "result": "lose",
+                "instant": true,
+                "fair": true,
+                "forkChecks": {
+                  "tilesLeft": 0.869,
+                  "forcedDepth": 0,
+                  "perms": 4,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 78
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 78
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 78
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 78
+                    }
+                  ]
+                }
+              },
+              {
+                "move": [
+                  66,
+                  72
+                ],
+                "kind": "pair",
+                "cost": null,
+                "result": "lose",
+                "instant": true,
+                "fair": true,
+                "forkChecks": {
+                  "tilesLeft": 0.869,
+                  "forcedDepth": 0,
+                  "perms": 4,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 78
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 78
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 78
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 78
+                    }
+                  ]
+                }
+              },
+              {
+                "move": [
+                  74,
+                  79
+                ],
+                "kind": "pair",
+                "cost": null,
+                "result": "lose",
+                "instant": true,
+                "fair": true,
+                "forkChecks": {
+                  "tilesLeft": 0.869,
+                  "forcedDepth": 0,
+                  "perms": 4,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 78
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 78
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 78
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 78
+                    }
+                  ]
+                }
+              }
+            ],
+            "winning": [
+              78
+            ]
+          },
+          {
+            "step": 12,
+            "moves": 12,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  53,
+                  58
+                ],
+                "kind": "pair",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  66,
+                  72
+                ],
+                "kind": "pair",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  74,
+                  79
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              53,
+              58,
+              66,
+              68,
+              72,
+              76
+            ]
+          },
+          {
+            "step": 13,
+            "moves": 13,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  53,
+                  58
+                ],
+                "kind": "pair",
+                "cost": null,
+                "result": "lose",
+                "instant": true,
+                "fair": true,
+                "forkChecks": {
+                  "tilesLeft": 0.845,
+                  "forcedDepth": 0,
+                  "perms": 4,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 76
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 76
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 76
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 76
+                    }
+                  ]
+                }
+              },
+              {
+                "move": [
+                  66,
+                  72
+                ],
+                "kind": "pair",
+                "cost": null,
+                "result": "lose",
+                "instant": true,
+                "fair": true,
+                "forkChecks": {
+                  "tilesLeft": 0.845,
+                  "forcedDepth": 0,
+                  "perms": 4,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 76
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 76
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 76
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 76
+                    }
+                  ]
+                }
+              },
+              {
+                "move": [
+                  74,
+                  79
+                ],
+                "kind": "pair",
+                "cost": null,
+                "result": "lose",
+                "instant": true,
+                "fair": true,
+                "forkChecks": {
+                  "tilesLeft": 0.845,
+                  "forcedDepth": 0,
+                  "perms": 4,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 76
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 76
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 76
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 76
+                    }
+                  ]
+                }
+              }
+            ],
+            "winning": [
+              76
+            ]
+          },
+          {
+            "step": 14,
+            "moves": 14,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  53,
+                  58
+                ],
+                "kind": "pair",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  66,
+                  72
+                ],
+                "kind": "pair",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  74,
+                  79
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              53,
+              58,
+              66,
+              72
+            ]
+          },
+          {
+            "step": 15,
+            "moves": 15,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  58
+                ],
+                "kind": "match",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  66,
+                  72
+                ],
+                "kind": "pair",
+                "cost": null,
+                "result": "lose",
+                "instant": true,
+                "fair": true,
+                "forkChecks": {
+                  "tilesLeft": 0.821,
+                  "forcedDepth": 0,
+                  "perms": 4,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 58
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 58
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 58
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 58
+                    }
+                  ]
+                }
+              },
+              {
+                "move": [
+                  74,
+                  79
+                ],
+                "kind": "pair",
+                "cost": null,
+                "result": "lose",
+                "instant": true,
+                "fair": true,
+                "forkChecks": {
+                  "tilesLeft": 0.821,
+                  "forcedDepth": 0,
+                  "perms": 4,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 58
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 58
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 58
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 58
+                    }
+                  ]
+                }
+              },
+              {
+                "move": [
+                  0,
+                  1
+                ],
+                "kind": "pair",
+                "peek": true,
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              58
+            ]
+          },
+          {
+            "step": 16,
+            "moves": 16,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  66,
+                  72
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  74,
+                  79
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  0,
+                  1
+                ],
+                "kind": "pair",
+                "peek": true,
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              33,
+              65
+            ]
+          }
+        ],
+        "card": "The clock needs 17 moves; taking the free pair in sight at move 5 before the clock costs 2 spare moves, and the free pair at move 4 loses the board.",
+        "archetype": "keys before the clock",
+        "k": 17,
+        "strictK": 17,
+        "shipSpares": [
+          1,
+          2
+        ],
+        "ms": 295,
+        "nodes": 26394,
+        "warnings": [
+          "A6: at 3 lose-forks some re-deal of the unseen pictures loses the board whatever the player does (luck)"
+        ],
+        "profile": {
+          "id": "e5-v1",
+          "fingerprint": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2"
+        }
+      }
+    },
+    {
+      "name": "normal-candidate",
+      "key": "1325d1da5ad4d0c57902962816fffdeecd652daaef474a5ba34ae6e71e42e9d6",
+      "spare": 3,
+      "pass": true,
+      "unresolved": [],
+      "static": {
+        "pass": true,
+        "gates": {
+          "A1": {
+            "pass": true,
+            "detail": {
+              "story": "iceLockClock",
+              "tiles": 80,
+              "clock": {
+                "n": 15,
+                "k": 12,
+                "unsure": false,
+                "spare": 3,
+                "winAtK": "win",
+                "winAtKProof": "clockShortest witness replay",
+                "atKminus1": "lose",
+                "kGame": 12,
+                "kPerTile": 12
+              },
+              "idle": 0,
+              "strictWitness": true,
+              "why": []
+            }
+          },
+          "A2": {
+            "pass": true,
+            "detail": {
+              "readable": true,
+              "keys": [
+                33,
+                31
+              ],
+              "keysShownAtStart": 2,
+              "bothKeysSeenAtMove": 0
+            }
+          },
+          "A3": {
+            "pass": true,
+            "detail": {
+              "k": 12,
+              "strictK": 12,
+              "witnessClockMove": 12,
+              "strictWitness": true,
+              "designSpare": 3,
+              "shippable": [
+                1,
+                2,
+                3
+              ],
+              "why": []
+            }
+          },
+          "A4": {
+            "pass": true,
+            "detail": {
+              "opening": {
+                "wins": 4,
+                "unknown": 2,
+                "legal": 14
+              },
+              "singleWinStates": 3,
+              "obviousSingles": 3,
+              "statesWithUnknown": 0,
+              "okSpares": [
+                1,
+                2,
+                3
+              ],
+              "perSpare": {
+                "1": {
+                  "ok": true,
+                  "openingWins": 4,
+                  "openingUnknown": 2,
+                  "notObvious": []
+                },
+                "2": {
+                  "ok": true,
+                  "openingWins": 7,
+                  "openingUnknown": 3,
+                  "notObvious": []
+                },
+                "3": {
+                  "ok": true,
+                  "openingWins": 6,
+                  "openingUnknown": 4,
+                  "notObvious": []
+                }
+              },
+              "why": []
+            },
+            "warn": "unknown"
+          },
+          "A5": {
+            "pass": null,
+            "detail": {
+              "window": [
+                2,
+                7
+              ],
+              "wayMoves": 12,
+              "priced": 18,
+              "best": {
+                "move": [
+                  0,
+                  34
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win",
+                "step": 2,
+                "moves": 2
+              },
+              "temptingSeen": 45
+            },
+            "wouldPass": true,
+            "reportOnly": true
+          },
+          "A6": {
+            "pass": true,
+            "detail": {
+              "loseForks": 4,
+              "fair": 4,
+              "unfair": [],
+              "unknown": 0
+            }
+          },
+          "A7": {
+            "pass": null,
+            "detail": {
+              "roomPass": false,
+              "dealsPass": true,
+              "roomOk": true,
+              "unrelieved": 1,
+              "tightBlind": 2,
+              "faceDown": 20,
+              "perms": 4,
+              "results": [
+                "win",
+                "win",
+                "win",
+                "win"
+              ],
+              "why": [
+                "1 unrelieved luck moment",
+                "tightBlind 2 (> 1)"
+              ]
+            },
+            "wouldPass": false,
+            "reportOnly": true
+          },
+          "A8": {
+            "pass": true,
+            "flag": null,
+            "detail": {
+              "k": 12
+            }
+          },
+          "A9": {
+            "pass": true,
+            "flag": null,
+            "detail": {
+              "shape": "diamond",
+              "tiles": 80,
+              "compared": 130,
+              "clashes": [],
+              "why": []
+            }
+          }
+        },
+        "forks": [
+          {
+            "step": 0,
+            "moves": 0,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  0,
+                  34
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  50,
+                  54
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  68,
+                  78
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              33,
+              51,
+              76,
+              77
+            ]
+          },
+          {
+            "step": 1,
+            "moves": 1,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  0,
+                  34
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  50,
+                  54
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  68,
+                  78
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              33,
+              51,
+              76
+            ]
+          },
+          {
+            "step": 2,
+            "moves": 2,
+            "inWindow": true,
+            "tempting": [
+              {
+                "move": [
+                  72
+                ],
+                "kind": "match",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  0,
+                  34
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  50,
+                  54
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  68,
+                  78
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              33,
+              51,
+              72
+            ]
+          },
+          {
+            "step": 3,
+            "moves": 3,
+            "inWindow": true,
+            "tempting": [
+              {
+                "move": [
+                  0,
+                  34
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  50,
+                  54
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  63,
+                  75
+                ],
+                "kind": "pair",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  68,
+                  78
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              33,
+              51,
+              63,
+              75
+            ]
+          },
+          {
+            "step": 4,
+            "moves": 4,
+            "inWindow": true,
+            "tempting": [
+              {
+                "move": [
+                  63
+                ],
+                "kind": "match",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  0,
+                  34
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  50,
+                  54
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  68,
+                  78
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              33,
+              51,
+              63
+            ]
+          },
+          {
+            "step": 5,
+            "moves": 5,
+            "inWindow": true,
+            "tempting": [
+              {
+                "move": [
+                  0,
+                  34
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  50,
+                  54
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  51,
+                  66
+                ],
+                "kind": "pair",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  68,
+                  78
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              33,
+              41,
+              51,
+              66
+            ]
+          },
+          {
+            "step": 6,
+            "moves": 6,
+            "inWindow": true,
+            "tempting": [
+              {
+                "move": [
+                  51
+                ],
+                "kind": "match",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  0,
+                  34
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  50,
+                  54
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  68,
+                  78
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              33,
+              41,
+              51
+            ]
+          },
+          {
+            "step": 7,
+            "moves": 7,
+            "inWindow": true,
+            "tempting": [
+              {
+                "move": [
+                  0,
+                  34
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  31,
+                  33
+                ],
+                "kind": "pair",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  50,
+                  54
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  68,
+                  78
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              31,
+              33,
+              41
+            ]
+          },
+          {
+            "step": 8,
+            "moves": 8,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  33
+                ],
+                "kind": "match",
+                "cost": 0,
+                "result": "win"
+              },
+              {
+                "move": [
+                  0,
+                  34
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  50,
+                  54
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  68,
+                  78
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              33,
+              41
+            ]
+          },
+          {
+            "step": 9,
+            "moves": 9,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  0,
+                  34
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  50,
+                  54
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  68,
+                  78
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              41
+            ]
+          },
+          {
+            "step": 10,
+            "moves": 10,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  0,
+                  34
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  8,
+                  30
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  50,
+                  54
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  68,
+                  78
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              37
+            ]
+          },
+          {
+            "step": 11,
+            "moves": 11,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  0,
+                  34
+                ],
+                "kind": "pair",
+                "cost": null,
+                "result": "lose",
+                "instant": true,
+                "fair": true,
+                "forkChecks": {
+                  "tilesLeft": 0.863,
+                  "forcedDepth": 0,
+                  "perms": 4,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 53
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 53
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 53
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 53
+                    }
+                  ]
+                }
+              },
+              {
+                "move": [
+                  8,
+                  30
+                ],
+                "kind": "pair",
+                "cost": null,
+                "result": "lose",
+                "instant": true,
+                "fair": true,
+                "forkChecks": {
+                  "tilesLeft": 0.863,
+                  "forcedDepth": 0,
+                  "perms": 4,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 53
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 53
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 53
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 53
+                    }
+                  ]
+                }
+              },
+              {
+                "move": [
+                  50,
+                  54
+                ],
+                "kind": "pair",
+                "cost": null,
+                "result": "lose",
+                "instant": true,
+                "fair": true,
+                "forkChecks": {
+                  "tilesLeft": 0.863,
+                  "forcedDepth": 0,
+                  "perms": 4,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 53
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 53
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 53
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 53
+                    }
+                  ]
+                }
+              },
+              {
+                "move": [
+                  68,
+                  78
+                ],
+                "kind": "pair",
+                "cost": null,
+                "result": "lose",
+                "instant": true,
+                "fair": true,
+                "forkChecks": {
+                  "tilesLeft": 0.863,
+                  "forcedDepth": 0,
+                  "perms": 4,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 53
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 53
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 53
+                    },
+                    {
+                      "tempting": "lose",
+                      "alternative": 53
+                    }
+                  ]
+                }
+              }
+            ],
+            "winning": [
+              53
+            ]
+          }
+        ],
+        "card": "The clock needs 12 moves; taking the free pair in sight at move 3 before the clock costs 2 spare moves, and the free pair at move 12 loses the board.",
+        "archetype": "keys before the clock",
+        "k": 12,
+        "strictK": 12,
+        "shipSpares": [
+          1,
+          2,
+          3
+        ],
+        "ms": 1716,
+        "nodes": 1128452,
+        "warnings": [],
+        "profile": {
+          "id": "e5-v1",
+          "fingerprint": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2"
+        }
+      }
+    }
+  ]
+}
