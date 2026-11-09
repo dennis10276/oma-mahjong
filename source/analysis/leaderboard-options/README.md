@@ -1,5 +1,7 @@
 # Leaderboard UI options and tablet portrait — 2026-11-09
 
+Released in **1.67** after Dennis approved publication. The notes below describe the preview stage. The final release corrected orientation opt-outs to application scope; deployment and APK verification are recorded in `../tablet-tapping-2026-11-09.md`.
+
 Three standalone visual previews, with identical illustrative scores and names (not a live database export):
 
 - A: warm family list, one cream panel, clear points and hearts.
@@ -18,4 +20,4 @@ https://developer.android.com/develop/adaptive-apps/guides/app-orientation-aspec
 
 Dennis selected A combined with Claude's existing pink family UI. Implemented in the actual leaderboard: one list, avatar profile button in the header, weekly and All-time tabs, and the original family palette (#ffe9f1 to #ffd6e6, #ff7aa8 border, #e85d8f shadow). The win screen retains its existing pink family panel. Small 320px phones place the ranking value under the player name so names stay readable.
 
-New screenshots pink-a-week.png and pink-a-all-time.png are captures of the actual local app with illustrative scores, using the fake database; pink-a-small.png checks 320px width. No production player data was written. Ranking tests 6/6, screen tests 5/5, hearts 2/2 and language tests 4/4 passed. Portrait changes remain on this branch, unreleased.
+New screenshots pink-a-week.png and pink-a-all-time.png are captures of the actual local app with illustrative scores, using the fake database; pink-a-small.png checks 320px width. No production player data was written. Ranking tests 6/6, screen tests 5/5, hearts 2/2 and language tests 4/4 passed. Leaderboard and portrait changes subsequently shipped in 1.67; the full release suite passed 162/162.

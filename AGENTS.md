@@ -139,6 +139,8 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 
 ## Drawing the board and the lessons (from 1.58)
 
+- Release 1.67 (2026-11-09): direct taps keep the tile under the finger even when blocked; only empty-space taps snap to the nearest free tile within 6–10 CSS pixels. Android portrait opt-outs are application-level manifest properties and require the 1.67 APK (code 83). The selected pink family leaderboard ships too. Physical iPad/Android-tablet testing remains outstanding. Verification: `source/analysis/tablet-tapping-2026-11-09.md`.
+
 - Board tiles live in one group per layer (`#board > .lyr > .tile`); `G.tiles[i].el` is the tile. A
   tile only rises above tiles of its own group: use `glow(i, 'lucky'|'nudge', on)` to show one above
   the pile. Classic faces on the board are shared pictures (`Tiles.boardFace`), not live SVG.
