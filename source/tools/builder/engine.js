@@ -28,6 +28,7 @@ const L = global.Layouts;
 const Hard = require('../../www/hard.js');
 const { exactRoute, makeLowerBound } = require('../lab/exact.js');
 const Reserve = require('./reserve_cuts.js');
+const RowCut = require('./row_cut.js');
 const SLOTS = L.SLOTS;                                               // 4: a 4th waiting tile loses
 const DEF = { win: { nodes: 2e6, ms: 10000 }, move: { nodes: 1e5, ms: 300 }, cap: 12, depthNodes: 20000, cacheMax: 1.5e6 };
 const BUDGET = { budget: true };
@@ -36,7 +37,7 @@ const BUDGET = { budget: true };
 const CACHE = new Map();
 function game(d, o = {}) {
   const after = !o.strict && o.clockAfterAction !== false;
-  const mode = (o.strict ? 'strict' : after ? 'after' : 'perTile') + (o.reserveCuts===false?'/no-reserve':'');
+  const mode = (o.strict ? 'strict' : after ? 'after' : 'perTile') + (o.reserveCuts===false?'/no-reserve':'') + (o.rowCuts===false?'/no-row':'');
   if (!CACHE.has(mode)) CACHE.set(mode, new WeakMap());
   const store = CACHE.get(mode);
   // Counterfactual tools edit clocks, faces and obstacles in place. Object identity alone would reuse
@@ -59,6 +60,8 @@ function game(d, o = {}) {
     below, iceRev, iceH, lockT, isKey, keys: locks ? keys : [], words: (n + 15) >> 4, dead: new Set(), win: new Map() };
   g.lb = clock ? makeLowerBound(g, clock.i) : null;
   g.reserveCuts = o.reserveCuts===false?[]:Reserve.compile(g);
+  // The existing unpruned reference switch disables both certificate families.
+  g.rowCuts = o.reserveCuts===false||o.rowCuts===false?[]:RowCut.compile(g);
   g.reserveClock=Reserve.clockContext(g,g.reserveCuts);
   if(g.clock&&g.reserveClock.relevant.length){const base=g.lb;g.lb=alive=>Math.max(base(alive),Reserve.clockBound(g.reserveClock,alive));}
   // tiles worth trying first while the clock is on the board: what lies on it, keys of a lock on the way, its ice
@@ -212,7 +215,7 @@ function solveCtx(g, ctx, o = {}) {
     if (++nodes > maxN || ((nodes & 127) === 0 && Date.now() > until)) throw BUDGET;
     const key = ctx.key();
     if (g.dead.has(key)) return false;
-    if (Reserve.dead(g.reserveCuts,ctx.alive,ctx.tray)) { g.dead.add(key); return false; }
+    if (Reserve.dead(g.reserveCuts,ctx.alive,ctx.tray)||RowCut.dead(g.rowCuts,ctx.alive,ctx.tray)) { g.dead.add(key); return false; }
     const known = g.win.get(key);
     if (known !== undefined) {
       const u = ctx.apply(known), ok = rec(); ctx.undo(known, u);
@@ -329,7 +332,7 @@ function clockSearch(g, o = {}) {
     const ctx = new Ctx(g, x.alive, x.tray, x.m);
     for (const a of ctx.gen(false, true)) {
       const u = ctx.apply(a), key = ctx.key();
-      if (!seen.has(key) && !Reserve.dead(g.reserveCuts,ctx.alive,ctx.tray)) {
+      if (!seen.has(key) && !Reserve.dead(g.reserveCuts,ctx.alive,ctx.tray) && !RowCut.dead(g.rowCuts,ctx.alive,ctx.tray)) {
         seen.add(key);
         const node = { alive: ctx.alive.slice(), tray: ctx.tray.slice(), m: ctx.moves, path: x.path.concat(a) };
         if (!ctx.clockAlive) push({ ...node, goal: true, f: x.m + (isPair(a) && (a & 255) === ck.i && !g.after ? 2 : 1) });
@@ -350,7 +353,7 @@ function clockShortest(g, o = {}) {
   let r;
   // An explicit total budget must include finishing proofs in strict games
   // too; legacy exactRoute has a separate, unreported solver per goal.
-  if (g.peek || g.reserveCuts.length || o.totalNodes!=null) r = clockSearch(g, o);
+  if (g.peek || g.reserveCuts.length || g.rowCuts.length || o.totalNodes!=null) r = clockSearch(g, o);
   else { const x = exactRoute(g, g.clock.i, Math.min(o.nodes ?? 400000,o.totalNodes??Infinity), o.ms ?? Infinity); r = x ? { k: x.k, path: x.path } : null; }
   if (r) r = { k: r.k, path: r.path, ...(r.workNodes!=null?{workNodes:r.workNodes}:{}), ...(r.unsure ? { unsure: true } : {}) };
   return (g[memoKey] = r);

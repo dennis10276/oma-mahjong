@@ -1,0 +1,58 @@
+'use strict';
+// A closed set of face-up matching pictures is an easier game when every
+// outside tile, obstacle, clock and waiting outside picture is removed.
+// A loss in that relaxation certifies a loss on the whole board.
+// Four-copy pictures are eligible only after every copy outside the local
+// ten tiles has gone. Until then those live matching escapes disable the cut.
+const L=require('../../www/layouts.js');
+const PATTERN=Object.freeze([[8,0,0],[3,1,1],[5,1,1],[7,1,1],[3,3,1],[1,3,1],[5,3,1],[7,3,1],[6,2,2]].map(Object.freeze));
+const GEOMETRY=new Map();
+function placements(tiles){
+ if(tiles.length<9)return [];
+ const xyz=tiles.map(t=>Array.isArray(t)?t:[t.x,t.y,t.z]),geometry=JSON.stringify(xyz);
+ if(GEOMETRY.has(geometry))return GEOMETRY.get(geometry);
+ const idx=new Map(xyz.map((t,i)=>[t.join(','),i])),out=[],seen=new Set();
+ for(const sx of [1,-1])for(const sy of [1,-1])for(const anchor of xyz){
+  const dx=anchor[0]-sx*8,dy=anchor[1],dz=anchor[2];
+  const ids=PATTERN.map(([x,y,z])=>idx.get([dx+sx*x,dy+sy*y,dz+z].join(','))),key=ids.join(',');
+  if(ids.every(Number.isInteger)&&!seen.has(key)){seen.add(key);out.push({ids,sx,sy,offset:[dx,dy,dz]});}
+ }
+ const frozen=Object.freeze(out.map(p=>Object.freeze({...p,ids:Object.freeze(p.ids),offset:Object.freeze(p.offset)})));
+ GEOMETRY.set(geometry,frozen);if(GEOMETRY.size>256)GEOMETRY.delete(GEOMETRY.keys().next().value);
+ return frozen;
+}
+function compile(g){
+ const copies=new Map();g.faces.forEach((f,i)=>copies.set(f,(copies.get(f)||[]).concat(i)));
+ const out=[],seen=new Set();
+ for(const p of placements(g.tiles)){
+  const faces=[...new Set(p.ids.map(i=>g.faces[i]))];
+  const counts=faces.map(f=>p.ids.filter(i=>g.faces[i]===f).length);
+  if(faces.length!==5||counts.filter(n=>n===1).length!==1||counts.some(n=>n!==1&&n!==2)||faces.some(f=>![2,4].includes(copies.get(f).length)))continue;
+  const odd=faces[counts.indexOf(1)];
+  for(const mate of copies.get(odd).filter(i=>!p.ids.includes(i))){
+   const ids=p.ids.concat(mate),key=ids.slice().sort((a,b)=>a-b).join(',');if(seen.has(key)||ids.some(i=>g.down[i]))continue;seen.add(key);
+   const extras=faces.flatMap(f=>copies.get(f)).filter(i=>!ids.includes(i));
+   const tiles=ids.map(i=>g.tiles[i]),nb=L.neighbors(tiles),localFaces=ids.map(i=>faces.indexOf(g.faces[i]));
+   out.push({ids,faces,extras,nb,localFaces,memo:new Map()});
+  }
+ }
+ return out;
+}
+function winnable(c,mask,waiting){
+ if(!mask)return waiting===0;
+ const key=mask*32+waiting;if(c.memo.has(key))return c.memo.get(key);
+ const alive=Uint8Array.from(c.ids,(_,i)=>(mask>>i)&1),full=waiting.toString(2).replace(/0/g,'').length>=3;
+ for(let i=0;i<c.ids.length;i++)if(alive[i]&&L.isFree(i,alive,c.nb)){
+  const face=1<<c.localFaces[i];if(!(waiting&face)&&full)continue;
+  if(winnable(c,mask^(1<<i),waiting^face)){c.memo.set(key,true);return true;}
+ }
+ c.memo.set(key,false);return false;
+}
+function dead(cuts,alive,trayFaces){
+ for(const c of cuts){if(c.extras.some(i=>alive[i]))continue;let mask=0,waiting=0;for(let i=0;i<c.ids.length;i++)if(alive[c.ids[i]])mask|=1<<i;
+  for(const f of trayFaces){const at=c.faces.indexOf(f);if(at>=0)waiting|=1<<at;}
+  if(!winnable(c,mask,waiting))return true;
+ }
+ return false;
+}
+module.exports={PATTERN,placements,compile,dead,winnable};
