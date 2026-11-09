@@ -231,6 +231,9 @@ test('construction mode is explicit, recorded and isolated from the baseline ide
   assert.notEqual(coupled.pipeline,row.pipeline);assert.equal(coupled.options.mode,'coupledRowChoice');
   const note=P.runPipeline({n:1,mode:'reserveNote',writeRunLog:false},deps());
   assert.notEqual(note.pipeline,coupled.pipeline);assert.equal(note.options.mode,'reserveNote');
+  const keyed=P.runPipeline({n:1,mode:'keyedChoice',writeRunLog:false},deps());
+  assert.notEqual(keyed.pipeline,note.pipeline);assert.equal(keyed.options.mode,'keyedChoice');
+  assert(P.codeFingerprints()['keyed_choice.js']);
   assert(P.codeFingerprints()['reserve_note.js']);
   assert(P.codeFingerprints()['visible_choice.js']);
   assert(P.codeFingerprints()['dependency_choice.js']);assert(P.codeFingerprints()['reserve_cuts.js']);
@@ -246,6 +249,18 @@ test('a changed finishing-proof implementation invalidates baseline rejection id
  });
  const after=P.runPipeline({n:1,writeRunLog:false},deps());assert.notEqual(before.pipeline,after.pipeline);
  assert.match(after.pipeline,/^pipeline-v5-four-copy-matches-/);
+});
+
+test('keyedChoice identity follows its framing helper without invalidating baseline rejects',t=>{
+ const plain=P.runPipeline({n:1,writeRunLog:false},deps());
+ const keyed=P.runPipeline({n:1,mode:'keyedChoice',writeRunLog:false},deps()),read=fs.readFileSync;
+ t.mock.method(fs,'readFileSync',(file,...args)=>{
+  const value=read(file,...args);
+  if(typeof file==='string'&&path.basename(file)==='knobs.js')return Buffer.isBuffer(value)?Buffer.concat([value,Buffer.from('\n// changed frame helper\n')]):value+'\n// changed frame helper\n';
+  return value;
+ });
+ assert.equal(P.runPipeline({n:1,writeRunLog:false},deps()).pipeline,plain.pipeline);
+ assert.notEqual(P.runPipeline({n:1,mode:'keyedChoice',writeRunLog:false},deps()).pipeline,keyed.pipeline);
 });
 
 test('static shape checks receive the constructed shape before the input brief shape',()=>{

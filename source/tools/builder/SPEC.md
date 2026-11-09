@@ -92,6 +92,21 @@ too easy or too hard: these remain experimental components, not difficulty
 presets. `bridge_cuts.js` supplies conservative geometry-derived loss proofs;
 `reserveCuts:false` disables all certificate families. Defaults stay unchanged.
 
+2026-11-09 G7 integration: `mode:'keyedChoice'` builds an explicit
+`deepClock`/interleaving body and declared visible prerequisite frame. Example:
+`{layout:22,stage:'edge',seed:1,frame:{spare:2,keys:[0,40],
+keyIce:{tile:61,h:1}},targets:{tailPairWidth:2}}`. Optional `frame.lockTile`
+selects a visible cover lock; the default locks the clock. The base deadline
+is fixed at spare 2 before applying the authored frame, so final spare changes
+preserve its body. Unsupported controls or budgets fail; no alternate key
+pair, planner search, implicit target selection or skilled fallback is used.
+The existing pipeline qualifies the actual clock setting. Source-bound identity
+includes construction and frame helpers. See
+`source/analysis/builder/g7-builder-completion/LEAD-REVIEW.md`: four useful
+skilled bodies are verified, while family target control, pacing and final
+qualification remain unresolved. The original G7 completion/choke API is
+preserved as research, not installed.
+
 Dennis (2026-11-06): "We are spending a lot of time making levels in a unique and difficult way when we dont have the
 ground work done of designing levels and what makes them unique and difficult. Focus on making the builder better
 before letting it learn." Plan: the doc "Level builder plan" (phases 1-4). This folder is phases 1 and 2.
