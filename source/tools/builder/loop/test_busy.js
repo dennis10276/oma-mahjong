@@ -5,8 +5,12 @@ test('one active builder job blocks another run regardless of its sampled core u
   const jobs = [{pid:1,cores:0.5,cmd:'node source/tools/builder/loop/run_pipeline.js --n 400'},
     {pid:2,cores:0,cmd:'node "D:\\other\\source\\tools\\builder\\loop\\accept_levels.js" --plan x'},
     {pid:3,cores:0,cmd:'node source/tools/builder/loop/research/compare_tail_plans.js --out x'},
-    {pid:4,cores:0,cmd:'node source/tools/builder/loop/research/reframe_clock_plan.js --out x'}];
-  assert.deepEqual(activeBuilderJobs(jobs,'C:\\own').map(p=>p.pid),[1,2,3,4]);
+    {pid:4,cores:0,cmd:'node source/tools/builder/loop/research/reframe_clock_plan.js --out x'},
+    {pid:5,cores:0,cmd:'node source/tools/builder/loop/research/probe_clock_prelude.js --out x'},
+    {pid:6,cores:0,cmd:'node source/tools/builder/loop/research/probe_dependency_choices.js --out x'},
+    {pid:7,cores:0,cmd:'node source/tools/builder/loop/research/check_protected_prelude.js --out x'},
+    {pid:8,cores:0,cmd:'node source/tools/builder/loop/research/diagnose_prelude_repeats.js --out x'}];
+  assert.deepEqual(activeBuilderJobs(jobs,'C:\\own').map(p=>p.pid),[1,2,3,4,5,6,7,8]);
 });
 test('queued wrappers and short tests do not deadlock the queue; active jobs in our checkout still block', () => {
   const jobs = [{pid:1,cmd:'node source/tools/builder/loop/heavy.js -- node source/tools/builder/loop/run_pipeline.js'},

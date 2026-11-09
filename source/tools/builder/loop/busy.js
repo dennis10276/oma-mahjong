@@ -57,7 +57,7 @@ function recentLogs() {
 // wrapper as running work would deadlock the two queues.
 function activeBuilderJobs(procs) {
   return procs.filter(p => !/heavy\.js(?:"|\s|$)/i.test(p.cmd) &&
-    /[\\/](?:run_pipeline|accept_levels|inspect_skilled_spares|compare_tail_plans|reframe_clock_plan|e[1-7]_[a-z_]+)\.js(?:"|\s|$)/i.test(p.cmd));
+    /[\\/](?:run_pipeline|accept_levels|inspect_skilled_spares|compare_tail_plans|reframe_clock_plan|probe_dependency_choices|probe_clock_prelude|check_protected_prelude|diagnose_prelude_repeats|e[1-7]_[a-z_]+)\.js(?:"|\s|$)/i.test(p.cmd));
 }
 
 function main() {

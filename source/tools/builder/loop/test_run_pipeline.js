@@ -221,9 +221,20 @@ test('each clock setting uses its own skilled rating; a low spare-2 score cannot
 test('construction mode is explicit, recorded and isolated from the baseline identity', () => {
   const baseline=P.runPipeline({n:1,writeRunLog:false},deps());
   const visible=P.runPipeline({n:1,mode:'visibleChoice',writeRunLog:false},deps());
+  const dependency=P.runPipeline({n:1,mode:'dependencyChoice',writeRunLog:false},deps());
   assert.notEqual(visible.pipeline,baseline.pipeline);assert.equal(visible.options.mode,'visibleChoice');
+  assert.notEqual(dependency.pipeline,baseline.pipeline);assert.notEqual(dependency.pipeline,visible.pipeline);
+  assert.equal(dependency.options.mode,'dependencyChoice');
   assert(P.codeFingerprints()['visible_choice.js']);
+  assert(P.codeFingerprints()['dependency_choice.js']);assert(P.codeFingerprints()['reserve_cuts.js']);
   assert.throws(()=>P.runPipeline({mode:'typo'},deps()),/Unknown builder mode/);
+});
+
+test('static shape checks receive the constructed shape before the input brief shape',()=>{
+ let shape;
+ const fresh=()=>{const d=deps({staticGates:(board,o)=>{shape=o.shape;return staticOk()(board,o);}});d.briefs=briefs.map(b=>({...b,shape:'block'}));return d;};
+ P.runPipeline({n:1,writeRunLog:false},fresh());assert.equal(shape,'arch');
+ P.runPipeline({n:1,writeRunLog:false,staticOptions:{shape:'clover'}},fresh());assert.equal(shape,'clover');
 });
 
 test('a qualifying spare-2 score never lends skilled credit to an easier spare', () => {

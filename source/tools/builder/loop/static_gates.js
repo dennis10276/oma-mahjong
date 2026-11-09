@@ -167,7 +167,15 @@ function staticGates(designIn, o = {}) {
   // ---------- A1, A2 (readable half), A9: the cheap ones first ----------
   gates.A1 = gateA1(design, k, o); if (stop('A1')) return done({ k });
   const readable = readableOf(design);
-  if (o.stopEarly && !readable) { gates.A2 = { pass: false, detail: { readable } }; return done({ k }); }
+  // The real game/public observer displays one obstacle overlay per tile.
+  // Ice hides a lock/key, and a lock hides a key; exposed geometry alone is
+  // insufficient to claim that all intended special roles are readable.
+  const ob=design.obst||{}, roleConflicts=[];
+  for(let i=0;i<design.tiles.length;i++) {
+    const roles=[...(ob.ice?.[i]>0?['ice']:[]),...((ob.locks||[]).includes(i)?['lock']:[]),...((ob.keys||[]).includes(i)?['key']:[])];
+    if(roles.length>1)roleConflicts.push({tile:i,roles});
+  }
+  if (o.stopEarly && (!readable || roleConflicts.length)) { gates.A2 = { pass: false, detail: { readable, roleConflicts } }; return done({ k }); }
   gates.A9 = gateA9(design, o); if (stop('A9')) return done({ k });
 
   // ---------- A3: release-legal clock ----------
@@ -216,7 +224,7 @@ function staticGates(designIn, o = {}) {
     let keysAt = null;
     if (!keys.keys.length) keysAt = 0;
     else for (let m = 0; m < Wt.states.length && Wt.states[m].moves <= 3; m++) if (O.keysInSight(gP, Wt.states[m]).shown === keys.keys.length) { keysAt = Wt.states[m].moves; break; }
-    gates.A2 = { pass: readable && keysAt != null, detail: { readable, keys: keys.keys, keysShownAtStart: keys.shown, bothKeysSeenAtMove: keysAt } };
+    gates.A2 = { pass: readable && keysAt != null && !roleConflicts.length, detail: { readable, roleConflicts, keys: keys.keys, keysShownAtStart: keys.shown, bothKeysSeenAtMove: keysAt } };
   }
   if (stop('A2')) return done({ k, strictK });
 
