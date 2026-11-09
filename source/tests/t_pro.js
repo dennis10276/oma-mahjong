@@ -37,11 +37,12 @@ module.exports = [
     await p.evaluate(() => restart()); await lib.sleep(2000);
     t.ok(!(await shown(p)), 'only once per level');
   }},
-  { name: 'pro replay: in the player\'s own tiles, background and language; another player\'s win carries her name', async run(t, lib) {
+  { name: 'pro replay: in the player\'s own tiles, background and language; a win carries the recorded player\'s name', async run(t, lib) {
+    const film = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'www', 'pro', 'L58.json'), 'utf8'));
     const p = await player(t, lib, { level: 58, theme: 'fruit', bg: 'lavender', lang: 'en', stars: Object.fromEntries([...Array(20)].map((_, i) => ['L' + (i + 1), 3])) });
     await p.evaluate(() => restart());
     await p.waitForSelector('#proView', { timeout: 8000 });
-    t.ok(await p.evaluate(() => /Replay from Gerda/.test($('#proView h2').textContent) && /Level 58 · 2× speed/.test($('#proView .pro-sub').textContent)), 'English, and the name of the player who won it');
+    t.ok(await p.evaluate(who => $('#proView h2').textContent === 'Replay from ' + who && /Level 58 · 2× speed/.test($('#proView .pro-sub').textContent), film.who), 'English, and the name of the player who won it');
     t.ok(await p.evaluate(() => !!$('#proView .cz-board .tile .emo') && !$('#proView .cz-board .tile .fi')), 'the player\'s own tiles');
     t.ok(await p.evaluate(() => { const d = document.createElement('div'); d.style.background = (BGS.find(b => b.id === S.bg && !bgLocked(b)) || BGS[0]).css; return S.bg === 'lavender' && !bgLocked(BGS.find(b => b.id === 'lavender')) && $('#proView .cz-stage').style.background === d.style.background; }), 'the player\'s own background');
   }},
