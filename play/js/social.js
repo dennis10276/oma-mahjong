@@ -196,18 +196,20 @@ function renderRanking() {
   ensureId(); ensureWeek();
   const list = ranking(undefined, rankMode);
   const me = list.findIndex(e => e.me);
-  $('#rkMine').textContent = tx('rankPosition', me + 1, list.length);
+  $('#rkMine').textContent = tx('rankYourPlace', me + 1, list.length);
   $('#rkWeek').classList.toggle('on', rankMode === 'week');
   $('#rkAll').classList.toggle('on', rankMode === 'all');
   $('#wkInfo').innerHTML = rankMode === 'week'
-    ? tx('weekInfo', weekLeftText())
+    ? tx('weekEnds', weekLeftText())
     : tx('allInfo');
 
   $('#rankList').innerHTML = list.map((e, i) => `<div class="rrow${e.me ? ' me' : ''}${isFam(e) ? ' fam' : ''}">${rowHTML(e, i + 1, true, rankMode)}</div>`).join('');
   document.querySelectorAll('.heart-btn').forEach(b => b.onclick = ev => { ev.stopPropagation(); if (!b.classList.contains('sent')) sendHeart(b.dataset.pid, b.dataset.name, b); else toast(tx('heartAlreadyShort')); });
   const online = !!DB_URL;
   $('#rankNote').innerHTML = tx(S.lbOnlineAt && Date.now() - S.lbOnlineAt < 60000 ? 'rankNoteOnline' : 'rankNoteCached');
-  $('#rankName').innerHTML = `${avatarHTML(myEntry(0), 'ra small')} ${S.name ? esc(S.name) : tx('pickName')} ✏️`;
+  $('#rankName').innerHTML = avatarHTML(myEntry(0), 'ra small');
+  $('#rankName').setAttribute('aria-label', tx('rankProfile'));
+  $('#rankName').title = S.name || tx('pickName');
 
   if (online && (!S.lbOnlineAt || Date.now() - S.lbOnlineAt > 20000)) fetchOnline().then(ok => { if (ok && curScreen === 'ranking') renderRanking(); });
   if (online && Date.now() - (sentCheckAt || 0) > 8000) { sentCheckAt = Date.now(); checkSentHearts().then(ch => { if (ch && curScreen === 'ranking') renderRanking(); }); }

@@ -1,20 +1,9 @@
-/* Oma's Mahjong — the leaderboard: family online, computer players, the weekly challenge,
+/* Oma's Mahjong — the leaderboard: real family players, the weekly challenge,
    the profile with avatar frames, and climbing past others (hearts are in hearts.js). */
 'use strict';
 
-// ---------- ranking (family online + friendly computer players) ----------
+// ---------- ranking (real family players) ----------
 const LB_CACHE = 'omamj.lb';
-// the friendly computer players (name, avatar), from the slowest to the strongest
-const BOTS = [
-  ['Ria', '🧁'], ['Joke', '🚲'], ['Henk', '🧀'], ['Tante Riet', '🌷'], ['Opa Kees', '🎣'], ['Buurvrouw Ans', '🐈'],
-  ['Mien', '🧶'], ['Gerrit', '🌳'], ['Truus', '☕'], ['Wim', '🎺'], ['Corrie', '🌸'],
-  ['Bep', '🍰'], ['Jan', '⛵'], ['Greet', '🐦'], ['Klaas', '🚜'], ['Lies', '💐'], ['Juffrouw Bos', '📚'], ['Meester Dekker', '🎩'],
-];
-const BOT_FRAMES = ['none', 'none', 'bronze', 'none', 'bronze', 'none', 'silver', 'none', 'bronze', 'silver', 'none', 'gold', 'silver', 'none', 'gold', 'sun', 'gold', 'crown'];
-// rough points for playing level l (pairs × average combo points + star bonus)
-const levelPts = l => Math.round(Layouts.targetFor(Math.max(1, Math.round(Layouts.effLevel(l)))) / 2 * 24 + 120);
-const cumPts = L => { let p = 0; for (let l = 1; l <= Math.floor(L); l++) p += levelPts(l); return Math.round(p + (L % 1) * levelPts(Math.floor(L) + 1)); };
-
 // ---- the week (Monday 00:00 to Sunday 23:59) ----
 function weekInfo(d = new Date()) {
   const mon = new Date(d.getFullYear(), d.getMonth(), d.getDate() - ((d.getDay() + 6) % 7));
@@ -35,49 +24,6 @@ function weekLeftText() {
   return tx('weekLeft', d, h);
 }
 
-/* Believable computer players: they always play around YOUR level.
-   Every morning they line up around the level you start the day with (some a bit behind,
-   some a bit ahead) and during the day they play on at their own pace, which follows how
-   fast you usually go. Play more than usual and you pass them; take a break and they pull
-   ahead. Their points match their level, using what real players score per level. */
-const BOT_OFF  = [-14, -11, -9, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 5, 7, 10, 14];
-const BOT_PACE = [0.6, 1.3, 0.8, 1.1, 0.7, 1.25, 0.9, 1.0, 1.15, 0.75, 1.05, 0.95, 1.2, 0.85, 1.1, 0.8, 1.0, 0.9];
-const BOT_SKILL = [0.92, 1.06, 0.97, 1.1, 0.9, 1.03, 0.95, 1.08, 0.99, 0.93, 1.04, 0.96, 1.07, 0.94, 1.02, 0.98, 1.09, 1.0];
-function dayAnchor() {
-  const tk = todayKey();
-  if (!S.lvlHist[tk]) {
-    S.lvlHist[tk] = S.level;
-    Object.keys(S.lvlHist).filter(k => k < dkey(new Date(Date.now() - 14 * 864e5))).forEach(k => delete S.lvlHist[k]);
-    save();
-  }
-  // how many levels a day you usually play (last week), 5 to start with
-  const past = Object.keys(S.lvlHist).filter(k => k < tk).sort();
-  let avg = 5;
-  if (past.length) { const k0 = past[Math.max(0, past.length - 7)]; const days = Math.max(1, Math.round((parseKey(tk) - parseKey(k0)) / 864e5)); avg = (S.lvlHist[tk] - S.lvlHist[k0]) / days; }
-  return { start: S.lvlHist[tk], avg: Math.max(2, Math.min(30, avg)) };
-}
-// part of today's playing time that has passed (8:00 to 22:00)
-const dayFrac = () => { const d = new Date(); return Math.min(1, Math.max(0, (d.getHours() + d.getMinutes() / 60 - 8) / 14)); };
-// what you score per level compared with the rough model (real players: combos, stars, chests)
-const ptsCalib = () => S.level > 3 ? Math.max(0.6, Math.min(2.2, myPoints() / Math.max(1, cumPts(S.level - 1)))) : 1;
-function botEntries(mode = 'all', weekId, frac) {
-  const { start, avg } = dayAnchor(), df = dayFrac(), cal = ptsCalib();
-  let changed = false;
-  const list = BOTS.map(([name, avatar], k) => {
-    let lv = Math.max(1, start + BOT_OFF[k] + Math.floor(avg * BOT_PACE[k] * df));
-    if ((S.botLv[k] || 0) > lv) lv = S.botLv[k]; else if (S.botLv[k] !== lv) { S.botLv[k] = lv; changed = true; }   // never go back down
-    let points;
-    if (mode === 'week') {
-      const w = weekInfo();
-      const f = weekId && weekId !== w.id ? 1 : (frac ?? w.frac);
-      const levelsThisWeek = Math.min(lv - 1, avg * BOT_PACE[k] * 7 * f);   // can't have played more levels than it has
-      points = Math.round(levelsThisWeek * levelPts(lv) * cal * BOT_SKILL[k]);
-    } else points = Math.round(cumPts(lv - 1) * cal * BOT_SKILL[k]);
-    return { id: 'bot' + k, name, avatar, frame: BOT_FRAMES[k], points, level: lv, bot: true };
-  });
-  if (changed) save();
-  return list;
-}
 const myPoints = () => sum(S.lvlPts) + sum(S.dayPts) + S.bonusPts;
 const myWeekPts = () => ensureWeek().pts;
 // v = my weekly points (week) or my level (all-time); undefined = my current value
@@ -91,9 +37,9 @@ function onlineEntries(mode = 'all', weekId) {
   if (mode === 'week') { const id = weekId || weekInfo().id; list = list.map(e => ({ ...e, points: e.wk === id ? (e.wkPts || 0) : 0 })); }
   return list;
 }
-/* week = points this week; all-time ("Altijd") = highest level, points only break a tie */
+/* week = points this week; all-time ("All-time") = highest level, points only break a tie */
 function ranking(v, mode = 'all') {
-  const list = [...botEntries(mode), ...onlineEntries(mode), myEntry(v, mode)];
+  const list = [...onlineEntries(mode), myEntry(v, mode)];
   // on a tie you are placed above the other player
   if (mode === 'week') list.sort((a, b) => b.points - a.points || (b.me ? 1 : 0) - (a.me ? 1 : 0));
   else list.sort((a, b) => b.level - a.level || b.points - a.points || (b.me ? 1 : 0) - (a.me ? 1 : 0));
@@ -109,7 +55,10 @@ function famHTML(mode, list, title = tx('family'), withHearts = false, activity 
   list = list || ranking(undefined, mode);
   const fam = list.map((e, i) => ({ e, r: i + 1 })).filter(x => !x.e.bot);
   if (fam.length < 2) return '';
-  return `<div class="fam-box${activity ? ' win-family' : ''}"><div class="fam-title">${title}</div>${fam.map(({ e, r }) => {
+  const mine = fam.findIndex(x => x.e.me);
+  const limit = innerHeight < 740 ? 3 : 6;
+  const visible = activity && fam.length > limit ? fam.slice(Math.max(0, Math.min(mine - 1, fam.length - limit)), Math.max(0, Math.min(mine - 1, fam.length - limit)) + limit) : fam;
+  return `<div class="fam-box${activity ? ' win-family' : ''}"><div class="fam-title">${title}</div>${visible.map(({ e, r }) => {
     const online = activity && playerIsOnline(e), heart = withHearts && !e.me ? heartBtn(e) : '';
     const avatar = avatarHTML(e).replace('</span>', `${online ? '<span class="presence-dot" aria-hidden="true"></span>' : ''}</span>`);
     return `<div class="fam-row${e.me ? ' me' : ''}"><span class="fr-rank">${medal(r)}</span>${avatar}<span class="fr-name">${esc(e.name)}${e.me ? ` <i>${tx('youTag')}</i>` : ''}<small class="fr-sub">${mode === 'week' ? `🧩 ${tx('levelWord', e.level)}` : tx('points', fmtN(e.points))}${online ? ` · <span class="presence-text">${tx('playerOnline')}</span>` : ''}</small>${!e.me && !activity ? heartState(e.id) : ''}</span><span class="fr-val">${activity ? `${heart}<span class="points">${rowVal(e, mode)}</span>` : `${rowVal(e, mode)}${heart}`}</span></div>`;
@@ -240,27 +189,28 @@ function askName(then) {
 function rowHTML(e, rank, withHeart = false, mode = 'week') {
   const heart = withHeart && !e.me && !e.bot ? heartBtn(e) : '';
   const sub = mode === 'week' ? tx('levelWord', e.level) : tx('points', fmtN(e.points));
-  return `<span class="rk">${medal(rank)}</span>${avatarHTML(e)}<span class="rn">${esc(e.name)}${e.me ? ` <i>${tx('youTag')}</i>` : ''}${e.bot ? ` <i class="bot" title="${tx('botTitle')}">🤖</i>` : e.me ? '' : ' <i class="fam-tag">👪</i>'}<small>${sub}</small></span><span class="rp">${rowVal(e, mode)}${heart}${chatBtn(e)}</span>`;
+  return `<span class="rk">${medal(rank)}</span>${avatarHTML(e).replace('</span>', `${playerIsOnline(e) ? '<span class="presence-dot" aria-hidden="true"></span>' : ''}</span>`)}<span class="rn">${esc(e.name)}${e.me ? ` <i>${tx('youTag')}</i>` : ''}${e.me ? '' : ' <i class="fam-tag">👪</i>'}<small>${sub}</small>${withHeart && !e.me ? heartState(e.id) : ''}</span><span class="rp">${rowVal(e, mode)}${heart}</span>`;
 }
 let rankMode = 'week';
 function renderRanking() {
   ensureId(); ensureWeek();
   const list = ranking(undefined, rankMode);
   const me = list.findIndex(e => e.me);
-  $('#rkMine').textContent = (rankMode === 'week' ? '📅 #' : '🏆 #') + (me + 1);
+  $('#rkMine').textContent = tx('rankYourPlace', me + 1, list.length);
   $('#rkWeek').classList.toggle('on', rankMode === 'week');
   $('#rkAll').classList.toggle('on', rankMode === 'all');
   $('#wkInfo').innerHTML = rankMode === 'week'
-    ? tx('weekInfo', weekLeftText())
+    ? tx('weekEnds', weekLeftText())
     : tx('allInfo');
-  $('#famBox').innerHTML = famHTML(rankMode, list, tx('family'), true);
+
   $('#rankList').innerHTML = list.map((e, i) => `<div class="rrow${e.me ? ' me' : ''}${isFam(e) ? ' fam' : ''}">${rowHTML(e, i + 1, true, rankMode)}</div>`).join('');
-  document.querySelectorAll('.vg-chat').forEach(b => b.onclick = ev => { ev.stopPropagation(); openWho(b.dataset.who); });
   document.querySelectorAll('.heart-btn').forEach(b => b.onclick = ev => { ev.stopPropagation(); if (!b.classList.contains('sent')) sendHeart(b.dataset.pid, b.dataset.name, b); else toast(tx('heartAlreadyShort')); });
   const online = !!DB_URL;
-  $('#rankNote').innerHTML = tx(online ? 'rankNoteOnline' : 'rankNoteBots');
-  $('#rankName').innerHTML = `${avatarHTML(myEntry(0), 'ra small')} ${S.name ? esc(S.name) : tx('pickName')} ✏️`;
-  setTimeout(() => { const m = document.querySelector('.rrow.me'); if (m) m.scrollIntoView({ block: 'center' }); }, 30);
+  $('#rankNote').innerHTML = tx(S.lbOnlineAt && Date.now() - S.lbOnlineAt < 60000 ? 'rankNoteOnline' : 'rankNoteCached');
+  $('#rankName').innerHTML = avatarHTML(myEntry(0), 'ra small');
+  $('#rankName').setAttribute('aria-label', tx('rankProfile'));
+  $('#rankName').title = S.name || tx('pickName');
+
   if (online && (!S.lbOnlineAt || Date.now() - S.lbOnlineAt > 20000)) fetchOnline().then(ok => { if (ok && curScreen === 'ranking') renderRanking(); });
   if (online && Date.now() - (sentCheckAt || 0) > 8000) { sentCheckAt = Date.now(); checkSentHearts().then(ch => { if (ch && curScreen === 'ranking') renderRanking(); }); }
 }
@@ -269,15 +219,13 @@ function renderRanking() {
 function checkLastWeek() {
   if (!S.lastWeek || !modalFree()) return;
   const lw = S.lastWeek; S.lastWeek = null;
-  const list = [...botEntries('week', lw.id, 1), ...onlineEntries('week', lw.id), { ...myEntry(lw.pts, 'week'), points: lw.pts }]
-    .sort((a, b) => b.points - a.points || (b.me ? 1 : 0) - (a.me ? 1 : 0));
-  const rank = list.findIndex(e => e.me) + 1;
+  // Scores are overwritten each week; without a complete historical table, only
+  // the player's recorded points are known. Never infer a winner from missing scores.
   bumpStat('weeks');
-  if (rank === 1) S.weekWins++;
   save();
-  if (rank <= 3) { Sound.trophy(); FX.confetti(); } else Sound.unlock();
-  openModal(`<div class="sun-big">${rank <= 3 ? medal(rank) : '🏅'}</div><h2>${tx('lastWeekTitle', rank)}</h2>
-    <p>${tx('lastWeekText', fmtN(lw.pts), rank)}</p>
+  Sound.unlock();
+  openModal(`<div class="sun-big">📅</div><h2>${tx('lastWeekSummary')}</h2>
+    <p>${tx('lastWeekPoints', fmtN(lw.pts))}</p>
     <p class="note">${tx('newWeekNote')}</p>
     <button class="big-btn play" id="lwOk"><span class="bb-text"><b>${tx('newWeek')}</b></span></button>`, false);
   $('#lwOk').onclick = () => { closeModal(); renderHome(); };
