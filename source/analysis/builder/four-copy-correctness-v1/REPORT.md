@@ -71,6 +71,13 @@ The first two-passage prototype failed tile size and is retained in
 Family ratings were skipped when skilled scores missed the unchanged 2.5–6
 band. No new board reached qualification or acceptance.
 
+`final-controls.json` also checks the final-source one-passage, two-passage and
+two-pair-relief controls against calibrated static gates. All fail required A6:
+a wrong matching copy reveals the loss only after more than six further
+removals. The initial pair fork also lacks an obvious goal-directed alternative
+under the current check. Other required static gates pass without unresolved
+proofs. This is an additional construction failure, not a reason to relax A6.
+
 The reserve proof uses actual geometry and globally counted pictures. Two
 unique pictures must wait across a four-copy passage. If both outside copies
 are spent, a forced spacer introduces a fourth unmatched picture. All critical
