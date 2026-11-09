@@ -655,6 +655,9 @@ function picturesFor(c, roles, P, hold, brief, rng, N, cap, spare, variants, not
 }
 
 function build(briefIn, opts = {}) {
+  if (opts.mode === 'puzzleBalance' || briefIn?.mode === 'puzzleBalance') {
+    return require('./puzzle_balance.js').build(briefIn, opts);
+  }
   if (opts.mode === 'reserveNote' || briefIn?.mode === 'reserveNote') {
     return require('./reserve_note.js').build(briefIn, opts);
   }
