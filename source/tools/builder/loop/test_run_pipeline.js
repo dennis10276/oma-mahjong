@@ -223,13 +223,29 @@ test('construction mode is explicit, recorded and isolated from the baseline ide
   const visible=P.runPipeline({n:1,mode:'visibleChoice',writeRunLog:false},deps());
   const dependency=P.runPipeline({n:1,mode:'dependencyChoice',writeRunLog:false},deps());
   const row=P.runPipeline({n:1,mode:'rowChoice',writeRunLog:false},deps());
+  const coupled=P.runPipeline({n:1,mode:'coupledRowChoice',writeRunLog:false},deps());
   assert.notEqual(visible.pipeline,baseline.pipeline);assert.equal(visible.options.mode,'visibleChoice');
   assert.notEqual(dependency.pipeline,baseline.pipeline);assert.notEqual(dependency.pipeline,visible.pipeline);
   assert.equal(dependency.options.mode,'dependencyChoice');
   assert.notEqual(row.pipeline,dependency.pipeline);assert.notEqual(row.pipeline,visible.pipeline);assert.equal(row.options.mode,'rowChoice');
+  assert.notEqual(coupled.pipeline,row.pipeline);assert.equal(coupled.options.mode,'coupledRowChoice');
+  const note=P.runPipeline({n:1,mode:'reserveNote',writeRunLog:false},deps());
+  assert.notEqual(note.pipeline,coupled.pipeline);assert.equal(note.options.mode,'reserveNote');
+  assert(P.codeFingerprints()['reserve_note.js']);
   assert(P.codeFingerprints()['visible_choice.js']);
   assert(P.codeFingerprints()['dependency_choice.js']);assert(P.codeFingerprints()['reserve_cuts.js']);
   assert.throws(()=>P.runPipeline({mode:'typo'},deps()),/Unknown builder mode/);
+});
+
+test('a changed finishing-proof implementation invalidates baseline rejection identity',t=>{
+ const before=P.runPipeline({n:1,writeRunLog:false},deps()),read=fs.readFileSync;
+ t.mock.method(fs,'readFileSync',(file,...args)=>{
+  const value=read(file,...args);
+  if(typeof file==='string'&&path.basename(file)==='finish.js')return Buffer.isBuffer(value)?Buffer.concat([value,Buffer.from('\n// different proof source\n')]):value+'\n// different proof source\n';
+  return value;
+ });
+ const after=P.runPipeline({n:1,writeRunLog:false},deps());assert.notEqual(before.pipeline,after.pipeline);
+ assert.match(after.pipeline,/^pipeline-v5-four-copy-matches-/);
 });
 
 test('static shape checks receive the constructed shape before the input brief shape',()=>{

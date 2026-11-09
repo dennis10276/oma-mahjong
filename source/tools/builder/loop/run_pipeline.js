@@ -33,7 +33,7 @@ const Lb = require('./library.js');
 const Policy = require('./policy.js');
 const GP = require('./gate_profile.js');
 
-const VERSION = 'pipeline-v4-skilled-spares';
+const VERSION = 'pipeline-v5-four-copy-matches';
 const ROOT = path.resolve(__dirname, '../../../..');
 const BRIEFS = path.resolve(__dirname, '../briefs-v1.json');
 const EXCLUDED_STORIES = ['frozenGuards', 'chainReaction'];
@@ -49,10 +49,12 @@ const DEFAULTS = Object.freeze({
 });
 function pipelineVersion(optsIn) {
   const opts = { ...DEFAULTS, ...optsIn };
+  const construction={visibleChoice:['visible_choice.js'],dependencyChoice:['dependency_choice.js'],rowChoice:['row_choice.js'],coupledRowChoice:['coupled_row.js','row_choice.js'],reserveNote:['reserve_note.js']}[opts.mode];
   const identity = GP.digest({ profile: GP.loadProfile(opts.gateProfile).fingerprint, targets: opts.targets,
     plannerSpare: opts.plannerSpare, curveSpares: opts.curveSpares, traceCampaigns: opts.traceCampaigns,
-    staticOptions: opts.staticOptions, pins: require('./yardstick.js').loadPins(), ...(opts.mode ? { mode: opts.mode, construction: ['dependencyChoice','rowChoice'].includes(opts.mode)?
-      Object.fromEntries([opts.mode==='rowChoice'?'row_choice.js':'dependency_choice.js','engine.js','reserve_cuts.js','row_cut.js'].map(f=>[f,codeFingerprints()[f]])):codeFingerprints()['visible_choice.js'] } : {}) });
+    staticOptions: opts.staticOptions, pins: require('./yardstick.js').loadPins(),
+    proofEngine:Object.fromEntries(['engine.js','exact.js','finish.js','reserve_cuts.js','row_cut.js','bridge_cuts.js'].map(f=>[f,codeFingerprints()[f]])),
+    ...(opts.mode ? { mode: opts.mode, construction:Object.fromEntries((construction||[]).map(f=>[f,codeFingerprints()[f]])) } : {}) });
   return VERSION + '-' + identity.slice(0, 12) + (opts.skilledFloor < Policy.SKILLED.lo ? '-fallback-' + opts.skilledFloor : '') + (opts.mode ? '-' + opts.mode : '');
 }
 
@@ -206,7 +208,7 @@ function processCandidate(cand, ctx) {
 // ---------- the run ----------
 function codeFingerprints() {
   const files = ['../builder.js', '../engine.js', '../gate.js', '../knobs.js', './static_gates.js', './obvious.js', './detour.js', './publicfork.js', './screen.js', './dial_curve.js',
-    './traces.js', './counterfactual.js', './yardstick.js', './library.js', './run_pipeline.js', './gate_profile.js', './policy.js', '../visible_choice.js','../dependency_choice.js','../reserve_cuts.js','../frame_detours.js','../row_choice.js','../row_cut.js'];
+    './traces.js', './counterfactual.js', './yardstick.js', './library.js', './run_pipeline.js', './gate_profile.js', './policy.js', '../visible_choice.js','../dependency_choice.js','../reserve_cuts.js','../frame_detours.js','../row_choice.js','../row_cut.js','../coupled_row.js','../bridge_cuts.js','../reserve_note.js','../../lab/exact.js','../../lab/finish.js'];
   const out = {};
   for (const f of files) { try { out[path.basename(f)] = crypto.createHash('sha256').update(fs.readFileSync(path.resolve(__dirname, f))).digest('hex').slice(0, 16); } catch (e) { out[path.basename(f)] = null; } }
   return out;
@@ -215,7 +217,7 @@ function codeFingerprints() {
 function runPipeline(optsIn = {}, deps) {
   const opts = { ...DEFAULTS, ...optsIn };
   Policy.assertSkilledOptions({ lo: opts.skilledFloor });
-  if (opts.mode != null && !['visibleChoice','dependencyChoice','rowChoice'].includes(opts.mode)) throw Error('Unknown builder mode: ' + opts.mode);
+  if (opts.mode != null && !['visibleChoice','dependencyChoice','rowChoice','coupledRowChoice','reserveNote'].includes(opts.mode)) throw Error('Unknown builder mode: ' + opts.mode);
   if (opts.plannerMargin !== 0) throw Error('Every level requires an explicit skilled minimum; hidden screening margins are not supported');
   const pipeline = pipelineVersion(opts);
   const profile = GP.loadProfile(opts.gateProfile);
@@ -328,7 +330,7 @@ function underHeavy() {
 function main() {
   const a = parseArgs(process.argv.slice(2));
   if (a.help) { console.log(fs.readFileSync(__filename, 'utf8').split('\n').slice(2, 31).join('\n') +
-    '\nOptions: --n 50 --start <i|auto> --seed-base 1 --targets lo,hi --skilled-floor 2.5 --gate-profile e5-v1|strict-v1 --mode visibleChoice|dependencyChoice|rowChoice --max-minutes 18 --lib <dir> --briefs <file> --dry-run --no-heavy-check'); return; }
+    '\nOptions: --n 50 --start <i|auto> --seed-base 1 --targets lo,hi --skilled-floor 2.5 --gate-profile e5-v1|strict-v1 --mode visibleChoice|dependencyChoice|rowChoice|coupledRowChoice|reserveNote --max-minutes 18 --lib <dir> --briefs <file> --dry-run --no-heavy-check'); return; }
   const dry = !!a['dry-run'];
   const libDir = a.lib || (dry ? path.join(os.tmpdir(), 'oma-pipeline-dry-' + process.pid) : Lb.LIB_DIR);
   const lib = Lb.createLibrary({ dir: libDir });

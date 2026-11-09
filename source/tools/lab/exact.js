@@ -10,6 +10,7 @@
 'use strict';
 const path = require('path');
 const L = require(path.join(__dirname, '..', '..', 'www', 'layouts.js'));
+const { finish } = require('./finish.js');
 function makeLowerBound(g, ci) {
   const ancestors = g.tiles.map((_, i) => {
     const out = new Set(), todo = [i];
@@ -76,8 +77,11 @@ function exactRoute(g, ci, limit = +(process.env.EXACT_LIMIT || 400000), millise
       const alive = s.alive.slice(); alive[i] = 0;
       const tray = q < 0 ? s.tray.concat(i) : s.tray.filter((_, k) => k !== q), p = s.path.concat(i);
       if (i === ci) {
-        const rest = L.solve(g.tiles, g.nb, F, alive, tray, 30000, rulesNow(alive));
-        if (rest) return { k: p.length, path: p.concat(rest), nodes };
+        const rest = finish(g.tiles, g.nb, F, alive, tray, 30000, rulesNow(alive));
+        // A missing finishing proof for an earlier prefix prevents a claim
+        // that any later clock route is the exact minimum.
+        if (rest.result === 'unknown') return null;
+        if (rest.result === 'win') return { k: p.length, path: p.concat(rest.path), nodes };
         continue;
       }
       const key = alive.join('') + '|' + tray.map(j => F[j]).sort((a, b) => a - b).join(',');

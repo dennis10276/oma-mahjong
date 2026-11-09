@@ -82,6 +82,17 @@ test('checkpoint resumes completed work without a seed retry and rejects altered
   const resumed = A.acceptLevels(f.plan, f.entries, { checkpoint }, f.deps);
   assert.equal(resumed.summary.readyForReview, false); assert.equal(f.calls.length, n);
 });
+
+test('a finishing-proof source change refuses old acceptance checkpoints before any seed retry',t=>{
+ const f=fixture(),checkpoint=path.join(fs.mkdtempSync(path.join(os.tmpdir(),'oma-proof-binding-')),'accept.json');
+ A.acceptLevels(f.plan,f.entries,{checkpoint},f.deps);const calls=f.calls.length,read=fs.readFileSync;
+ t.mock.method(fs,'readFileSync',(file,...args)=>{
+  const value=read(file,...args);
+  if(typeof file==='string'&&path.basename(file)==='finish.js')return Buffer.isBuffer(value)?Buffer.concat([value,Buffer.from('\n// changed finishing proof\n')]):value+'\n// changed finishing proof\n';
+  return value;
+ });
+ assert.throws(()=>A.acceptLevels(f.plan,f.entries,{checkpoint},f.deps),/different plan, library, code/);assert.equal(f.calls.length,calls);
+});
 test('preflight rejects altered puzzles and targets before any bot work', () => {
   const f = fixture(); f.plan.levels[0].target = 9;
   assert.throws(() => A.acceptLevels(f.plan, f.entries, {}, f.deps), /approved curve/);

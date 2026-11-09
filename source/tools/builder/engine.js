@@ -18,7 +18,8 @@
 
    Search: depth-first, memo of proven dead states and of proven winning moves per game (keys: alive bitset +
    waiting faces + moves while the clock is on the board), incremental free/ice/lock counters, a tray match is
-   taken first (single branch) when it is face-up and the clock is gone (or is that match itself), and states
+   taken first (single branch) only when face-up and the sole remaining copy of its picture, with the clock
+   gone (or that match itself being the clock). Ambiguous four-copy matches branch. States
    that can no longer reach the clock in time are cut with lab/exact.js makeLowerBound. Budgets give 'unknown',
    never a loss without proof. `node engine.js` runs the benchmark on the 18 qualified boards. */
 'use strict';
@@ -29,6 +30,7 @@ const Hard = require('../../www/hard.js');
 const { exactRoute, makeLowerBound } = require('../lab/exact.js');
 const Reserve = require('./reserve_cuts.js');
 const RowCut = require('./row_cut.js');
+const Bridge = require('./bridge_cuts.js');
 const SLOTS = L.SLOTS;                                               // 4: a 4th waiting tile loses
 const DEF = { win: { nodes: 2e6, ms: 10000 }, move: { nodes: 1e5, ms: 300 }, cap: 12, depthNodes: 20000, cacheMax: 1.5e6 };
 const BUDGET = { budget: true };
@@ -58,10 +60,12 @@ function game(d, o = {}) {
   if (locks) { for (const i of locks) lockT[i] = 1; for (const k of keys) isKey[k] = 1; }
   const g = { design: d, signature, n, tiles, nb, iceNb, rules, faces: d.faces.slice(), clock, down, peek: !o.strict, after, mode, solution: d.solution,
     below, iceRev, iceH, lockT, isKey, keys: locks ? keys : [], words: (n + 15) >> 4, dead: new Set(), win: new Map() };
+  g.faceTiles=new Map();g.faces.forEach((f,i)=>g.faceTiles.set(f,(g.faceTiles.get(f)||[]).concat(i)));
   g.lb = clock ? makeLowerBound(g, clock.i) : null;
   g.reserveCuts = o.reserveCuts===false?[]:Reserve.compile(g);
-  // The existing unpruned reference switch disables both certificate families.
+  // The existing unpruned reference switch disables every certificate family.
   g.rowCuts = o.reserveCuts===false||o.rowCuts===false?[]:RowCut.compile(g);
+  g.bridgeCuts=o.reserveCuts===false?[]:Bridge.compile(g);
   g.reserveClock=Reserve.clockContext(g,g.reserveCuts);
   if(g.clock&&g.reserveClock.relevant.length){const base=g.lb;g.lb=alive=>Math.max(base(alive),Reserve.clockBound(g.reserveClock,alive));}
   // tiles worth trying first while the clock is on the board: what lies on it, keys of a lock on the way, its ice
@@ -176,9 +180,12 @@ class Ctx {
     const ck = this.clockAlive ? g.clock.i : -1, match = [], other = [];
     for (const i of fr) (tray.includes(F[i]) ? match : other).push(i);
     if (shortcuts) {
-      // exchange argument: some winning line takes a face-up tray match first (no clock to shift), or the clock
-      if (ck >= 0) { if (match.includes(ck) && !g.down[ck]) return [ck]; }
-      else for (const m of match) if (!g.down[m]) return [m];
+      // Only the sole remaining copy is interchangeable with a later match.
+      // With four copies, choosing which free matching tile to remove can
+      // decide the puzzle, including when that tile is the clock itself.
+      const unique=m=>!g.down[m]&&g.faceTiles.get(F[m]).every(i=>i===m||!this.alive[i]);
+      if (ck >= 0) { if (match.includes(ck) && unique(ck)) return [ck]; }
+      else for (const m of match) if (unique(m)) return [m];
     }
     const pairs = [];
     if (g.peek) for (let a = 0; a < other.length; a++) for (let b = a + 1; b < other.length; b++) {
@@ -215,7 +222,7 @@ function solveCtx(g, ctx, o = {}) {
     if (++nodes > maxN || ((nodes & 127) === 0 && Date.now() > until)) throw BUDGET;
     const key = ctx.key();
     if (g.dead.has(key)) return false;
-    if (Reserve.dead(g.reserveCuts,ctx.alive,ctx.tray)||RowCut.dead(g.rowCuts,ctx.alive,ctx.tray)) { g.dead.add(key); return false; }
+    if (Reserve.dead(g.reserveCuts,ctx.alive,ctx.tray)||RowCut.dead(g.rowCuts,ctx.alive,ctx.tray)||Bridge.dead(g.bridgeCuts,ctx.alive)) { g.dead.add(key); return false; }
     const known = g.win.get(key);
     if (known !== undefined) {
       const u = ctx.apply(known), ok = rec(); ctx.undo(known, u);
@@ -332,7 +339,7 @@ function clockSearch(g, o = {}) {
     const ctx = new Ctx(g, x.alive, x.tray, x.m);
     for (const a of ctx.gen(false, true)) {
       const u = ctx.apply(a), key = ctx.key();
-      if (!seen.has(key) && !Reserve.dead(g.reserveCuts,ctx.alive,ctx.tray) && !RowCut.dead(g.rowCuts,ctx.alive,ctx.tray)) {
+      if (!seen.has(key) && !Reserve.dead(g.reserveCuts,ctx.alive,ctx.tray) && !RowCut.dead(g.rowCuts,ctx.alive,ctx.tray) && !Bridge.dead(g.bridgeCuts,ctx.alive)) {
         seen.add(key);
         const node = { alive: ctx.alive.slice(), tray: ctx.tray.slice(), m: ctx.moves, path: x.path.concat(a) };
         if (!ctx.clockAlive) push({ ...node, goal: true, f: x.m + (isPair(a) && (a & 255) === ck.i && !g.after ? 2 : 1) });
@@ -353,7 +360,7 @@ function clockShortest(g, o = {}) {
   let r;
   // An explicit total budget must include finishing proofs in strict games
   // too; legacy exactRoute has a separate, unreported solver per goal.
-  if (g.peek || g.reserveCuts.length || g.rowCuts.length || o.totalNodes!=null) r = clockSearch(g, o);
+  if (g.peek || g.reserveCuts.length || g.rowCuts.length || [...g.faceTiles.values()].some(ids=>ids.length>2) || o.totalNodes!=null) r = clockSearch(g, o);
   else { const x = exactRoute(g, g.clock.i, Math.min(o.nodes ?? 400000,o.totalNodes??Infinity), o.ms ?? Infinity); r = x ? { k: x.k, path: x.path } : null; }
   if (r) r = { k: r.k, path: r.path, ...(r.workNodes!=null?{workNodes:r.workNodes}:{}), ...(r.unsure ? { unsure: true } : {}) };
   return (g[memoKey] = r);

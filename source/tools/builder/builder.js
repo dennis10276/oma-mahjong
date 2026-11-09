@@ -655,6 +655,12 @@ function picturesFor(c, roles, P, hold, brief, rng, N, cap, spare, variants, not
 }
 
 function build(briefIn, opts = {}) {
+  if (opts.mode === 'reserveNote' || briefIn?.mode === 'reserveNote') {
+    return require('./reserve_note.js').build(briefIn, opts);
+  }
+  if (opts.mode === 'coupledRowChoice' || briefIn?.mode === 'coupledRowChoice') {
+    return require('./coupled_row.js').build(briefIn, opts);
+  }
   if (opts.mode === 'rowChoice' || briefIn?.mode === 'rowChoice') {
     return require('./row_choice.js').build(briefIn, opts);
   }
