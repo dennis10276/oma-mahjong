@@ -1,0 +1,1596 @@
+[
+  {
+    "suite": "focal",
+    "name": "G9 Board (e038d9ff...)",
+    "category": "G9 starting case (76-tile U geometry, ice, clock deadline 16)",
+    "dennis": {
+      "tries": 1,
+      "won": true,
+      "verdict": "easy (3 stars)",
+      "note": "The puzzle itself was quite good. Just weird it didnt have face down and was so easy."
+    },
+    "baseline": {
+      "expectedTries": 9.22,
+      "plannerStyles": {
+        "route": 9.22,
+        "plain": 10.9
+      },
+      "firstTryRate": 0,
+      "uncleared": 5,
+      "cleared": 15,
+      "label": "hard",
+      "lossPhase": {
+        "beforeClock": 0.031055900621118012,
+        "mid": 0.968944099378882,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 15.455700000000007,
+      "minutes": 0.05892038
+    },
+    "candidate": {
+      "expectedTries": 1.07,
+      "plannerStyles": {
+        "route": 1.07,
+        "plain": 1.1
+      },
+      "firstTryRate": 0.9,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "easy",
+      "lossPhase": {
+        "beforeClock": 0.5,
+        "mid": 0.5,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 15.474200000000565,
+      "minutes": 0.022741726666666653
+    },
+    "deltaS": -8.15,
+    "elapsedSeconds": 9.96
+  },
+  {
+    "suite": "focal",
+    "name": "Balanced Control Board",
+    "category": "Balanced key control board (76-tile U geometry)",
+    "dennis": {
+      "tries": null,
+      "won": null,
+      "verdict": null,
+      "note": "Synthetic control case"
+    },
+    "baseline": {
+      "expectedTries": 2.95,
+      "plannerStyles": {
+        "route": 2.95,
+        "plain": 3.52
+      },
+      "firstTryRate": 0,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 0.1282051282051282,
+        "mid": 0.8717948717948718,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 7.184699999999793,
+      "minutes": 0.03081312333333332
+    },
+    "candidate": {
+      "expectedTries": 1.1,
+      "plannerStyles": {
+        "route": 1.15,
+        "plain": 1.1
+      },
+      "firstTryRate": 0.9,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "easy",
+      "lossPhase": {
+        "beforeClock": 0.3333333333333333,
+        "mid": 0.6666666666666666,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 13.22609999999986,
+      "minutes": 0.03889313833333333
+    },
+    "deltaS": -1.85,
+    "elapsedSeconds": 10.72
+  },
+  {
+    "suite": "lab-dennis",
+    "name": "factory5-177",
+    "category": "Dennis playtest board (Level 177)",
+    "dennis": {
+      "tries": 1,
+      "won": true,
+      "verdict": null,
+      "stars": 3,
+      "note": "Seems easy. Idk why the strong bot struggled. Original tho so good level! Just place it better on diffuculty."
+    },
+    "baseline": {
+      "expectedTries": 1.23,
+      "plannerStyles": {
+        "route": 1.23,
+        "plain": 1.23
+      },
+      "firstTryRate": 0.9,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "easy",
+      "lossPhase": {
+        "beforeClock": 0,
+        "mid": 1,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 3.1467999999986205,
+      "minutes": 0.012802446666666644
+    },
+    "candidate": {
+      "expectedTries": 1.25,
+      "plannerStyles": {
+        "route": 1.25,
+        "plain": 1.25
+      },
+      "firstTryRate": 0.85,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "easy",
+      "lossPhase": {
+        "beforeClock": 0,
+        "mid": 1,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 3.314699999998993,
+      "minutes": 0.019811649999999948
+    },
+    "deltaS": 0.02,
+    "elapsedSeconds": 3.79
+  },
+  {
+    "suite": "lab-dennis",
+    "name": "factory2-192",
+    "category": "Dennis playtest board (Level 192)",
+    "dennis": {
+      "tries": 1,
+      "won": true,
+      "verdict": "easy",
+      "stars": 2,
+      "note": "Way too easy"
+    },
+    "baseline": {
+      "expectedTries": 1,
+      "plannerStyles": {
+        "route": 1,
+        "plain": 1
+      },
+      "firstTryRate": 1,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "easy",
+      "lossPhase": {
+        "beforeClock": null,
+        "mid": null,
+        "late": null
+      },
+      "valid": true,
+      "slowestMoveMs": 6.727699999999459,
+      "minutes": 0.021513681666666708
+    },
+    "candidate": {
+      "expectedTries": 1,
+      "plannerStyles": {
+        "route": 1,
+        "plain": 1
+      },
+      "firstTryRate": 1,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "easy",
+      "lossPhase": {
+        "beforeClock": null,
+        "mid": null,
+        "late": null
+      },
+      "valid": true,
+      "slowestMoveMs": 7.0253000000011525,
+      "minutes": 0.027842961666666634
+    },
+    "deltaS": 0,
+    "elapsedSeconds": 5.98
+  },
+  {
+    "suite": "lab-dennis",
+    "name": "factory1-175",
+    "category": "Dennis playtest board (Level 175)",
+    "dennis": {
+      "tries": 1,
+      "won": true,
+      "verdict": "easy",
+      "stars": 2,
+      "note": ""
+    },
+    "baseline": {
+      "expectedTries": 1.07,
+      "plannerStyles": {
+        "route": 1.07,
+        "plain": 1.07
+      },
+      "firstTryRate": 0.95,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "easy",
+      "lossPhase": {
+        "beforeClock": 0,
+        "mid": 1,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 0.6650000000008731,
+      "minutes": 0.01493445833333329
+    },
+    "candidate": {
+      "expectedTries": 1.1,
+      "plannerStyles": {
+        "route": 1.1,
+        "plain": 1.1
+      },
+      "firstTryRate": 0.95,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "easy",
+      "lossPhase": {
+        "beforeClock": 0,
+        "mid": 1,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 1.3365000000012515,
+      "minutes": 0.02338971500000001
+    },
+    "deltaS": 0.03,
+    "elapsedSeconds": 4.55
+  },
+  {
+    "suite": "lab-dennis",
+    "name": "factory1-184",
+    "category": "Dennis playtest board (Level 184)",
+    "dennis": {
+      "tries": 2,
+      "won": true,
+      "verdict": "easy",
+      "stars": 2,
+      "note": "tiny part is the end"
+    },
+    "baseline": {
+      "expectedTries": 1,
+      "plannerStyles": {
+        "route": 1,
+        "plain": 1
+      },
+      "firstTryRate": 1,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "easy",
+      "lossPhase": {
+        "beforeClock": null,
+        "mid": null,
+        "late": null
+      },
+      "valid": true,
+      "slowestMoveMs": 1.40849999999773,
+      "minutes": 0.01735500166666667
+    },
+    "candidate": {
+      "expectedTries": 1,
+      "plannerStyles": {
+        "route": 1,
+        "plain": 1
+      },
+      "firstTryRate": 1,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "easy",
+      "lossPhase": {
+        "beforeClock": null,
+        "mid": null,
+        "late": null
+      },
+      "valid": true,
+      "slowestMoveMs": 2.0138000000006286,
+      "minutes": 0.03382137166666665
+    },
+    "deltaS": 0,
+    "elapsedSeconds": 6.12
+  },
+  {
+    "suite": "lab-dennis",
+    "name": "factory1-189",
+    "category": "Dennis playtest board (Level 189)",
+    "dennis": {
+      "tries": 1,
+      "won": true,
+      "verdict": "easy",
+      "stars": 2,
+      "note": "All way too easy. "
+    },
+    "baseline": {
+      "expectedTries": 1.45,
+      "plannerStyles": {
+        "route": 1.45,
+        "plain": 1.52
+      },
+      "firstTryRate": 0.55,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "easy",
+      "lossPhase": {
+        "beforeClock": 0,
+        "mid": 1,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 7.052199999998265,
+      "minutes": 0.029160909999999908
+    },
+    "candidate": {
+      "expectedTries": 2.05,
+      "plannerStyles": {
+        "route": 2.27,
+        "plain": 2.05
+      },
+      "firstTryRate": 0.4,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "easy",
+      "lossPhase": {
+        "beforeClock": 0,
+        "mid": 1,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 2.4417000000030384,
+      "minutes": 0.09178464333333335
+    },
+    "deltaS": 0.6,
+    "elapsedSeconds": 14.64
+  },
+  {
+    "suite": "lab-dennis",
+    "name": "factory2-175",
+    "category": "Dennis playtest board (Level 175)",
+    "dennis": {
+      "tries": 4,
+      "won": true,
+      "verdict": "right",
+      "stars": 4,
+      "note": "maybe a bit too easy and based on I have to kinda take this in order to win"
+    },
+    "baseline": {
+      "expectedTries": 1.45,
+      "plannerStyles": {
+        "route": 1.45,
+        "plain": 3.25
+      },
+      "firstTryRate": 0.7,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "easy",
+      "lossPhase": {
+        "beforeClock": 0.07692307692307693,
+        "mid": 0.9230769230769231,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 1.760099999999511,
+      "minutes": 0.016911280000000018
+    },
+    "candidate": {
+      "expectedTries": 1.48,
+      "plannerStyles": {
+        "route": 1.48,
+        "plain": 3.25
+      },
+      "firstTryRate": 0.7,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "easy",
+      "lossPhase": {
+        "beforeClock": 0.07692307692307693,
+        "mid": 0.9230769230769231,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 1.9271000000007916,
+      "minutes": 0.021789813333333345
+    },
+    "deltaS": 0.03,
+    "elapsedSeconds": 4.95
+  },
+  {
+    "suite": "lab-dennis",
+    "name": "factory2-184",
+    "category": "Dennis playtest board (Level 184)",
+    "dennis": {
+      "tries": 1,
+      "won": true,
+      "verdict": "easy",
+      "stars": 3,
+      "note": "easier then the last level"
+    },
+    "baseline": {
+      "expectedTries": 3.9,
+      "plannerStyles": {
+        "route": 3.9,
+        "plain": 4.08
+      },
+      "firstTryRate": 0.1,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 0.031746031746031744,
+        "mid": 0.9682539682539683,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 1.6394000000000233,
+      "minutes": 0.10948263666666669
+    },
+    "candidate": {
+      "expectedTries": 4.63,
+      "plannerStyles": {
+        "route": 4.63,
+        "plain": 4.65
+      },
+      "firstTryRate": 0.2,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 0.030303030303030304,
+        "mid": 0.9696969696969697,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 14.364900000000489,
+      "minutes": 0.3722133666666668
+    },
+    "deltaS": 0.73,
+    "elapsedSeconds": 58.35
+  },
+  {
+    "suite": "lab-dennis",
+    "name": "factory3-176",
+    "category": "Dennis playtest board (Level 176)",
+    "dennis": {
+      "tries": 1,
+      "won": true,
+      "verdict": "easy",
+      "stars": 1,
+      "note": "Way too easy."
+    },
+    "baseline": {
+      "expectedTries": 1.6,
+      "plannerStyles": {
+        "route": 1.6,
+        "plain": 1.6
+      },
+      "firstTryRate": 0.55,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "easy",
+      "lossPhase": {
+        "beforeClock": 0.3,
+        "mid": 0.7,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 5.147099999987404,
+      "minutes": 0.026887925000000056
+    },
+    "candidate": {
+      "expectedTries": 1.48,
+      "plannerStyles": {
+        "route": 1.57,
+        "plain": 1.48
+      },
+      "firstTryRate": 0.55,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "easy",
+      "lossPhase": {
+        "beforeClock": 0.3,
+        "mid": 0.7,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 3.671200000011595,
+      "minutes": 0.03857505666666645
+    },
+    "deltaS": -0.12,
+    "elapsedSeconds": 7.88
+  },
+  {
+    "suite": "lab-dennis",
+    "name": "factory4-176",
+    "category": "Dennis playtest board (Level 176)",
+    "dennis": {
+      "tries": 2,
+      "won": true,
+      "verdict": "right",
+      "stars": 4,
+      "note": "fun"
+    },
+    "baseline": {
+      "expectedTries": 4.08,
+      "plannerStyles": {
+        "route": 4.3,
+        "plain": 4.08
+      },
+      "firstTryRate": 0,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 0.6774193548387096,
+        "mid": 0.3225806451612903,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 4.456500000000233,
+      "minutes": 0.06338765833333358
+    },
+    "candidate": {
+      "expectedTries": 3.08,
+      "plannerStyles": {
+        "route": 3.33,
+        "plain": 3.08
+      },
+      "firstTryRate": 0,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 0.9767441860465116,
+        "mid": 0.023255813953488372,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 12.42379999998957,
+      "minutes": 0.05114120666666665
+    },
+    "deltaS": -1,
+    "elapsedSeconds": 13.99
+  },
+  {
+    "suite": "lab-dennis",
+    "name": "factory4-178",
+    "category": "Dennis playtest board (Level 178)",
+    "dennis": {
+      "tries": 1,
+      "won": true,
+      "verdict": null,
+      "stars": 3,
+      "note": "A bit too easy feels like the clock has more then 2 spare moves."
+    },
+    "baseline": {
+      "expectedTries": 1.2,
+      "plannerStyles": {
+        "route": 1.2,
+        "plain": 1.2
+      },
+      "firstTryRate": 0.9,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "easy",
+      "lossPhase": {
+        "beforeClock": 0,
+        "mid": 0,
+        "late": 1
+      },
+      "valid": true,
+      "slowestMoveMs": 2.968699999997625,
+      "minutes": 0.01823723166666702
+    },
+    "candidate": {
+      "expectedTries": 1.1,
+      "plannerStyles": {
+        "route": 1.1,
+        "plain": 1.1
+      },
+      "firstTryRate": 0.95,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "easy",
+      "lossPhase": {
+        "beforeClock": 0,
+        "mid": 0,
+        "late": 1
+      },
+      "valid": true,
+      "slowestMoveMs": 4.700399999972433,
+      "minutes": 0.023228546666666808
+    },
+    "deltaS": -0.1,
+    "elapsedSeconds": 5.04
+  },
+  {
+    "suite": "qualified-200-225",
+    "name": "Level 200 (58a099f8)",
+    "category": "Qualified Builder board (castle · two islands, target 10)",
+    "level": 200,
+    "boardHash": "58a099f8cfe6eb4da0774999dcaf73cbe8862285f0b017758bd9cfb4a70d1e19",
+    "dennis": {
+      "tries": 5,
+      "won": true,
+      "verdict": "right",
+      "stars": 3,
+      "note": null
+    },
+    "baseline": {
+      "expectedTries": 5.15,
+      "plannerStyles": {
+        "route": 5.15,
+        "plain": 5.15
+      },
+      "firstTryRate": 0,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "hard",
+      "lossPhase": {
+        "beforeClock": 0.027777777777777776,
+        "mid": 0.9583333333333334,
+        "late": 0.013888888888888888
+      },
+      "valid": true,
+      "slowestMoveMs": 1.1163999999989755,
+      "minutes": 0.05992674666666668
+    },
+    "candidate": {
+      "expectedTries": 3.67,
+      "plannerStyles": {
+        "route": 3.67,
+        "plain": 3.67
+      },
+      "firstTryRate": 0,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 0.03636363636363636,
+        "mid": 0.9454545454545454,
+        "late": 0.01818181818181818
+      },
+      "valid": true,
+      "slowestMoveMs": 2.8695000000006985,
+      "minutes": 0.07313394166666694
+    },
+    "deltaS": -1.48,
+    "elapsedSeconds": 16.39
+  },
+  {
+    "suite": "qualified-200-225",
+    "name": "Level 201 (70bde28d)",
+    "category": "Qualified Builder board (vase, target 10.08)",
+    "level": 201,
+    "boardHash": "70bde28d4c0922c5688046ff3f0566f3113b4b37f56f2dd90c2e9127f9eb5870",
+    "dennis": {
+      "tries": null,
+      "won": null,
+      "verdict": null,
+      "stars": null,
+      "note": null
+    },
+    "baseline": {
+      "expectedTries": 5.42,
+      "plannerStyles": {
+        "route": 5.42,
+        "plain": 5.42
+      },
+      "firstTryRate": 0,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "hard",
+      "lossPhase": {
+        "beforeClock": 0.23595505617977527,
+        "mid": 0.7640449438202247,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 2.51589999999851,
+      "minutes": 0.059231494999999995
+    },
+    "candidate": {
+      "expectedTries": 6.55,
+      "plannerStyles": {
+        "route": 7.1,
+        "plain": 6.55
+      },
+      "firstTryRate": 0,
+      "uncleared": 2,
+      "cleared": 18,
+      "label": "hard",
+      "lossPhase": {
+        "beforeClock": 0.16,
+        "mid": 0.84,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 2.9162000000069384,
+      "minutes": 0.11817958666666672
+    },
+    "deltaS": 1.13,
+    "elapsedSeconds": 21.89
+  },
+  {
+    "suite": "qualified-200-225",
+    "name": "Level 202 (ebe4a486)",
+    "category": "Qualified Builder board (steps, target 10.17)",
+    "level": 202,
+    "boardHash": "ebe4a48640ad0101e8c14cfe7c6cad2cbadf4a5afcf22ff81079262d981d79b3",
+    "dennis": {
+      "tries": null,
+      "won": null,
+      "verdict": null,
+      "stars": null,
+      "note": null
+    },
+    "baseline": {
+      "expectedTries": 4.55,
+      "plannerStyles": {
+        "route": 4.55,
+        "plain": 4.63
+      },
+      "firstTryRate": 0.05,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 0.014705882352941176,
+        "mid": 0.9852941176470589,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 8.9146999999939,
+      "minutes": 0.05835049833333324
+    },
+    "candidate": {
+      "expectedTries": 3.08,
+      "plannerStyles": {
+        "route": 3.08,
+        "plain": 3.2
+      },
+      "firstTryRate": 0.05,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 0.04878048780487805,
+        "mid": 0.9512195121951219,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 4.625800000008894,
+      "minutes": 0.05230483333333347
+    },
+    "deltaS": -1.47,
+    "elapsedSeconds": 14.56
+  },
+  {
+    "suite": "qualified-200-225",
+    "name": "Level 203 (cce8f5c9)",
+    "category": "Qualified Builder board (hourglass, target 10.25)",
+    "level": 203,
+    "boardHash": "cce8f5c9ee0524d420b2780520269609783e43f3f227447ea42392d36c1d0c6a",
+    "dennis": {
+      "tries": null,
+      "won": null,
+      "verdict": null,
+      "stars": null,
+      "note": null
+    },
+    "baseline": {
+      "expectedTries": 2.63,
+      "plannerStyles": {
+        "route": 2.63,
+        "plain": 3.65
+      },
+      "firstTryRate": 0.85,
+      "uncleared": 1,
+      "cleared": 19,
+      "label": "easy",
+      "lossPhase": {
+        "beforeClock": 0.9459459459459459,
+        "mid": 0.05405405405405406,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 13.481899999984307,
+      "minutes": 0.026465216666666673
+    },
+    "candidate": {
+      "expectedTries": 1.95,
+      "plannerStyles": {
+        "route": 1.95,
+        "plain": 2.9
+      },
+      "firstTryRate": 0.9,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "easy",
+      "lossPhase": {
+        "beforeClock": 0.9411764705882353,
+        "mid": 0.058823529411764705,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 5.10309999997844,
+      "minutes": 0.031887350000000154
+    },
+    "deltaS": -0.68,
+    "elapsedSeconds": 9.21
+  },
+  {
+    "suite": "qualified-200-225",
+    "name": "Level 204 (ec63a46d)",
+    "category": "Qualified Builder board (cross, target 10.33)",
+    "level": 204,
+    "boardHash": "ec63a46d1a4e6eefe31953c9fedf30e3d405ec8a696e5ab5cfe560fb7cbafa1e",
+    "dennis": {
+      "tries": null,
+      "won": null,
+      "verdict": null,
+      "stars": null,
+      "note": null
+    },
+    "baseline": {
+      "expectedTries": 2.98,
+      "plannerStyles": {
+        "route": 3.17,
+        "plain": 2.98
+      },
+      "firstTryRate": 0,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 0,
+        "mid": 1,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 0.9211999999824911,
+      "minutes": 0.06275342166666668
+    },
+    "candidate": {
+      "expectedTries": 1.15,
+      "plannerStyles": {
+        "route": 1.2,
+        "plain": 1.15
+      },
+      "firstTryRate": 0.75,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "easy",
+      "lossPhase": {
+        "beforeClock": 0,
+        "mid": 1,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 1.3097999999881722,
+      "minutes": 0.028439115000000067
+    },
+    "deltaS": -1.83,
+    "elapsedSeconds": 11
+  },
+  {
+    "suite": "qualified-200-225",
+    "name": "Level 205 (d0c0c19d)",
+    "category": "Qualified Builder board (twins, target 10.42)",
+    "level": 205,
+    "boardHash": "d0c0c19d4f9837f47ff12ffd18d38efde5872f245b5d3db75d333d2d16f3547d",
+    "dennis": {
+      "tries": null,
+      "won": null,
+      "verdict": null,
+      "stars": null,
+      "note": null
+    },
+    "baseline": {
+      "expectedTries": 3.42,
+      "plannerStyles": {
+        "route": 5.25,
+        "plain": 3.42
+      },
+      "firstTryRate": 0.15,
+      "uncleared": 1,
+      "cleared": 19,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 1,
+        "mid": 0,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 4.764699999999721,
+      "minutes": 0.043641004999999615
+    },
+    "candidate": {
+      "expectedTries": 3.42,
+      "plannerStyles": {
+        "route": 5.25,
+        "plain": 3.42
+      },
+      "firstTryRate": 0.15,
+      "uncleared": 1,
+      "cleared": 19,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 1,
+        "mid": 0,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 9.489199999981793,
+      "minutes": 0.07133566666666641
+    },
+    "deltaS": 0,
+    "elapsedSeconds": 12.77
+  },
+  {
+    "suite": "qualified-200-225",
+    "name": "Level 206 (fb46c788)",
+    "category": "Qualified Builder board (diamond, target 10.5)",
+    "level": 206,
+    "boardHash": "fb46c7888c54e687094ede5681e7a8544c844792c7e2df4d0a4159b21b7fc266",
+    "dennis": {
+      "tries": null,
+      "won": null,
+      "verdict": null,
+      "stars": null,
+      "note": null
+    },
+    "baseline": {
+      "expectedTries": 3.58,
+      "plannerStyles": {
+        "route": 18.82,
+        "plain": 3.58
+      },
+      "firstTryRate": 0,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 0.509090909090909,
+        "mid": 0.4909090909090909,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 2.7682999999960884,
+      "minutes": 0.02513324333333294
+    },
+    "candidate": {
+      "expectedTries": 4.08,
+      "plannerStyles": {
+        "route": 19.32,
+        "plain": 4.08
+      },
+      "firstTryRate": 0,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 0.47540983606557374,
+        "mid": 0.5245901639344263,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 2.749199999991106,
+      "minutes": 0.04553229999999991
+    },
+    "deltaS": 0.5,
+    "elapsedSeconds": 10.9
+  },
+  {
+    "suite": "qualified-200-225",
+    "name": "Level 207 (00cda474)",
+    "category": "Qualified Builder board (frame, target 10.58)",
+    "level": 207,
+    "boardHash": "00cda47469d76ba6cadfac27607f06b11a7e7b2085f699f7f950a9f7fc2ffad4",
+    "dennis": {
+      "tries": null,
+      "won": null,
+      "verdict": null,
+      "stars": null,
+      "note": null
+    },
+    "baseline": {
+      "expectedTries": 2.65,
+      "plannerStyles": {
+        "route": 2.65,
+        "plain": 11.25
+      },
+      "firstTryRate": 0,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 0.96875,
+        "mid": 0.03125,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 7.072199999995064,
+      "minutes": 0.036564054999999644
+    },
+    "candidate": {
+      "expectedTries": 2.65,
+      "plannerStyles": {
+        "route": 2.65,
+        "plain": 11.03
+      },
+      "firstTryRate": 0,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 0.96875,
+        "mid": 0.03125,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 6.638800000015181,
+      "minutes": 0.03943557499999976
+    },
+    "deltaS": 0,
+    "elapsedSeconds": 42.85
+  },
+  {
+    "suite": "qualified-200-225",
+    "name": "Level 209 (ed2b3ed4)",
+    "category": "Qualified Builder board (ushape, target 10.75)",
+    "level": 209,
+    "boardHash": "ed2b3ed435e697301faefa71c06d3e69c87725cd82780cb0fe77e123fd457a2a",
+    "dennis": {
+      "tries": null,
+      "won": null,
+      "verdict": null,
+      "stars": null,
+      "note": null
+    },
+    "baseline": {
+      "expectedTries": 2.55,
+      "plannerStyles": {
+        "route": 2.7,
+        "plain": 2.55
+      },
+      "firstTryRate": 0,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 0.8918918918918919,
+        "mid": 0.10810810810810811,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 4.73699999996461,
+      "minutes": 0.03208723333333328
+    },
+    "candidate": {
+      "expectedTries": 2.55,
+      "plannerStyles": {
+        "route": 2.7,
+        "plain": 2.55
+      },
+      "firstTryRate": 0,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 0.8918918918918919,
+        "mid": 0.10810810810810811,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 4.390200000023469,
+      "minutes": 0.04225583666666741
+    },
+    "deltaS": 0,
+    "elapsedSeconds": 7.68
+  },
+  {
+    "suite": "qualified-200-225",
+    "name": "Level 211 (c7440676)",
+    "category": "Qualified Builder board (moon, target 10.92)",
+    "level": 211,
+    "boardHash": "c7440676d0ca7f59fb4289693bc44c0e0f2dbb13daa41f66503ec7c53564e519",
+    "dennis": {
+      "tries": null,
+      "won": null,
+      "verdict": null,
+      "stars": null,
+      "note": null
+    },
+    "baseline": {
+      "expectedTries": 3.33,
+      "plannerStyles": {
+        "route": 3.4,
+        "plain": 3.33
+      },
+      "firstTryRate": 0.05,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 0.022222222222222223,
+        "mid": 0.9777777777777777,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 9.895399999979418,
+      "minutes": 0.0469178766666669
+    },
+    "candidate": {
+      "expectedTries": 1,
+      "plannerStyles": {
+        "route": 1.13,
+        "plain": 1
+      },
+      "firstTryRate": 1,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "easy",
+      "lossPhase": {
+        "beforeClock": null,
+        "mid": null,
+        "late": null
+      },
+      "valid": true,
+      "slowestMoveMs": 4.822500000009313,
+      "minutes": 0.011144405000000067
+    },
+    "deltaS": -2.33,
+    "elapsedSeconds": 7.17
+  },
+  {
+    "suite": "qualified-200-225",
+    "name": "Level 212 (01fcfe29)",
+    "category": "Qualified Builder board (heart, target 11)",
+    "level": 212,
+    "boardHash": "01fcfe297afb0d90e26d8e2718755837584d5caa861b6eb3b6761fefeda2c94d",
+    "dennis": {
+      "tries": null,
+      "won": null,
+      "verdict": null,
+      "stars": null,
+      "note": null
+    },
+    "baseline": {
+      "expectedTries": 3.4,
+      "plannerStyles": {
+        "route": 3.48,
+        "plain": 3.4
+      },
+      "firstTryRate": 0,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 0.09259259259259259,
+        "mid": 0.9074074074074074,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 1.9837999999872409,
+      "minutes": 0.022256448333333054
+    },
+    "candidate": {
+      "expectedTries": 2.77,
+      "plannerStyles": {
+        "route": 2.9,
+        "plain": 2.77
+      },
+      "firstTryRate": 0,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 0.05405405405405406,
+        "mid": 0.9459459459459459,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 1.9061999999685213,
+      "minutes": 0.027562489999999527
+    },
+    "deltaS": -0.63,
+    "elapsedSeconds": 5.86
+  },
+  {
+    "suite": "qualified-200-225",
+    "name": "Level 213 (0fcd2cc7)",
+    "category": "Qualified Builder board (arch, target 11.08)",
+    "level": 213,
+    "boardHash": "0fcd2cc72af5f1a60993aa4e3b216dcbe201909a4b4eadf0b558af3fe4cf6bcf",
+    "dennis": {
+      "tries": null,
+      "won": null,
+      "verdict": null,
+      "stars": null,
+      "note": null
+    },
+    "baseline": {
+      "expectedTries": 3.23,
+      "plannerStyles": {
+        "route": 8.85,
+        "plain": 3.23
+      },
+      "firstTryRate": 0,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 0.9761904761904762,
+        "mid": 0.023809523809523808,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 11.657999999995809,
+      "minutes": 0.05777600999999947
+    },
+    "candidate": {
+      "expectedTries": 3.13,
+      "plannerStyles": {
+        "route": 8.93,
+        "plain": 3.13
+      },
+      "firstTryRate": 0,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 1,
+        "mid": 0,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 5.854800000030082,
+      "minutes": 0.11093060999999968
+    },
+    "deltaS": -0.1,
+    "elapsedSeconds": 21.45
+  },
+  {
+    "suite": "qualified-200-225",
+    "name": "Level 218 (069a224c)",
+    "category": "Qualified Builder board (frame, target 11.5)",
+    "level": 218,
+    "boardHash": "069a224c540f46f3aceac9fb5992c46289fd99c68e3cbd02a5c5464244baabab",
+    "dennis": {
+      "tries": null,
+      "won": null,
+      "verdict": null,
+      "stars": null,
+      "note": null
+    },
+    "baseline": {
+      "expectedTries": 3.63,
+      "plannerStyles": {
+        "route": 3.63,
+        "plain": 3.63
+      },
+      "firstTryRate": 0,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 0.8703703703703703,
+        "mid": 0.12962962962962962,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 6.027500000025611,
+      "minutes": 0.06542367833333361
+    },
+    "candidate": {
+      "expectedTries": 3.33,
+      "plannerStyles": {
+        "route": 3.58,
+        "plain": 3.33
+      },
+      "firstTryRate": 0,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 0.9782608695652174,
+        "mid": 0.021739130434782608,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 6.545500000007451,
+      "minutes": 0.08798514333333393
+    },
+    "deltaS": -0.3,
+    "elapsedSeconds": 18.92
+  },
+  {
+    "suite": "qualified-200-225",
+    "name": "Level 220 (97f6bf02)",
+    "category": "Qualified Builder board (star, target 11.67)",
+    "level": 220,
+    "boardHash": "97f6bf020e56366b69fad3864d5d0285f57cdc05747d61622a3efa2affa1f028",
+    "dennis": {
+      "tries": null,
+      "won": null,
+      "verdict": null,
+      "stars": null,
+      "note": null
+    },
+    "baseline": {
+      "expectedTries": 4.47,
+      "plannerStyles": {
+        "route": 4.67,
+        "plain": 4.47
+      },
+      "firstTryRate": 0,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 1,
+        "mid": 0,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 4.921699999948032,
+      "minutes": 0.06923572166666757
+    },
+    "candidate": {
+      "expectedTries": 4.47,
+      "plannerStyles": {
+        "route": 4.67,
+        "plain": 4.47
+      },
+      "firstTryRate": 0,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 1,
+        "mid": 0,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 4.928599999984726,
+      "minutes": 0.0873157666666666
+    },
+    "deltaS": 0,
+    "elapsedSeconds": 16.47
+  },
+  {
+    "suite": "qualified-200-225",
+    "name": "Level 222 (f3a892e9)",
+    "category": "Qualified Builder board (moon, target 11.83)",
+    "level": 222,
+    "boardHash": "f3a892e9520df8bb7a403f7d801a19f8a2b64236a599dc9b5f7b40ef1b7e0678",
+    "dennis": {
+      "tries": null,
+      "won": null,
+      "verdict": null,
+      "stars": null,
+      "note": null
+    },
+    "baseline": {
+      "expectedTries": 2.7,
+      "plannerStyles": {
+        "route": 2.7,
+        "plain": 2.7
+      },
+      "firstTryRate": 0,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 0,
+        "mid": 1,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 4.26759999996284,
+      "minutes": 0.058012638333333116
+    },
+    "candidate": {
+      "expectedTries": 2.55,
+      "plannerStyles": {
+        "route": 2.55,
+        "plain": 2.55
+      },
+      "firstTryRate": 0,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 0.030303030303030304,
+        "mid": 0.9696969696969697,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 11.602600000042003,
+      "minutes": 0.11310196833333369
+    },
+    "deltaS": -0.15,
+    "elapsedSeconds": 20.14
+  },
+  {
+    "suite": "qualified-200-225",
+    "name": "Level 223 (ae124c83)",
+    "category": "Qualified Builder board (hourglass, target 11.92)",
+    "level": 223,
+    "boardHash": "ae124c834da62a09647f3a9fb8e0ca9f0b99617f29147636a301ebfcb5cdf156",
+    "dennis": {
+      "tries": null,
+      "won": null,
+      "verdict": null,
+      "stars": null,
+      "note": null
+    },
+    "baseline": {
+      "expectedTries": 4.45,
+      "plannerStyles": {
+        "route": 16.5,
+        "plain": 4.45
+      },
+      "firstTryRate": 0,
+      "uncleared": 2,
+      "cleared": 18,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 0.7804878048780488,
+        "mid": 0.21951219512195122,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 6.165800000017043,
+      "minutes": 0.07199896333333357
+    },
+    "candidate": {
+      "expectedTries": 6.15,
+      "plannerStyles": {
+        "route": 17.05,
+        "plain": 6.15
+      },
+      "firstTryRate": 0,
+      "uncleared": 5,
+      "cleared": 15,
+      "label": "hard",
+      "lossPhase": {
+        "beforeClock": 0.9090909090909091,
+        "mid": 0.09090909090909091,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 6.4161999999778345,
+      "minutes": 0.1650437200000005
+    },
+    "deltaS": 1.7,
+    "elapsedSeconds": 37.1
+  },
+  {
+    "suite": "qualified-200-225",
+    "name": "Level 224 (51f3a193)",
+    "category": "Qualified Builder board (ushape, target 12)",
+    "level": 224,
+    "boardHash": "51f3a19345ad9213c1073848599b404459ac75356488346cda8d9414c7eadc8b",
+    "dennis": {
+      "tries": null,
+      "won": null,
+      "verdict": null,
+      "stars": null,
+      "note": null
+    },
+    "baseline": {
+      "expectedTries": 5.75,
+      "plannerStyles": {
+        "route": 19.88,
+        "plain": 5.75
+      },
+      "firstTryRate": 0,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "hard",
+      "lossPhase": {
+        "beforeClock": 1,
+        "mid": 0,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 6.097299999964889,
+      "minutes": 0.08566295000000003
+    },
+    "candidate": {
+      "expectedTries": 5.58,
+      "plannerStyles": {
+        "route": 19.88,
+        "plain": 5.58
+      },
+      "firstTryRate": 0,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "hard",
+      "lossPhase": {
+        "beforeClock": 1,
+        "mid": 0,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 7.5825999999651685,
+      "minutes": 0.0832438533333334
+    },
+    "deltaS": -0.17,
+    "elapsedSeconds": 15.83
+  },
+  {
+    "suite": "qualified-200-225",
+    "name": "Level 225 (869ece46)",
+    "category": "Qualified Builder board (vase, target 13)",
+    "level": 225,
+    "boardHash": "869ece46999c0ecba6a9f38e0740dc45e90faa6e1855e4aaa40c9ebaa7e9b806",
+    "dennis": {
+      "tries": 4,
+      "won": true,
+      "verdict": "right",
+      "stars": 5,
+      "note": null
+    },
+    "baseline": {
+      "expectedTries": 2.08,
+      "plannerStyles": {
+        "route": 3.45,
+        "plain": 2.08
+      },
+      "firstTryRate": 0.15,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 0.55,
+        "mid": 0.45,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 3.768000000040047,
+      "minutes": 0.02307594000000002
+    },
+    "candidate": {
+      "expectedTries": 2.1,
+      "plannerStyles": {
+        "route": 3.45,
+        "plain": 2.1
+      },
+      "firstTryRate": 0.15,
+      "uncleared": 0,
+      "cleared": 20,
+      "label": "right",
+      "lossPhase": {
+        "beforeClock": 0.5454545454545454,
+        "mid": 0.45454545454545453,
+        "late": 0
+      },
+      "valid": true,
+      "slowestMoveMs": 3.6506999999983236,
+      "minutes": 0.027322810000000756
+    },
+    "deltaS": 0.02,
+    "elapsedSeconds": 5.68
+  }
+]
