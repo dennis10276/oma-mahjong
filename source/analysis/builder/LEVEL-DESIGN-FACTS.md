@@ -24,10 +24,10 @@ add new decisions with a date.
   - Its rating pools two full runs (seeds 4711 and 18427), with a fresh seed as a check.
   - It is fitted to the family's yardstick: weighted tries until first win, Dennis ×2, Gerda ×1, Mrs. Doubtfire ×2
     (2026-11-02). Levels are tuned mainly to how the normal players struggle, but not fully, or they get too hard.
-- **The skilled bot stands for Dennis.** It must clear every level, preferably better than him; needing 2 tries
-  where he needed 1 is fine (2026-10-25). On new levels it must need **2.5–6 tries** (2026-11-04).
+- **The skilled bot stands for Dennis and is the builder's competence benchmark.** It should not be worse than his demonstrated play (2026-11-09, B1 clarification, superseding the older allowance for 2 tries where Dennis needed 1). Improve its general ability to solve boards he finds easy, rather than discarding boards because of bot weaknesses. The existing new-level selection band remains **2.5–6 tries** (2026-11-04); changing bot capability requires explicitly versioned ratings, not artificially retaining mistakes to preserve that band.
 - **His real results are evidence:** Dennis's own wins in the lab (for example 200 in 5 tries, 225 in 4, rated
   "right") count as the skilled rating where they exist.
+- **New human comparison** (2026-11-09): Dennis won the exact G9 board with keys [12,16], ice 44 strength 2 and clock 16 in one recorded completed try, marked easy/one star, while the skilled bot scored 9.22. The logger also records two starts and no completed losses. Frozen board, raw taps and legal-prefix/completion checks are in `source/analysis/skilled-bot-b1/evidence/`. B1 is a broader skilled-bot improvement task, including other human-played boards and face-down puzzles. G9's zero face-down setting was an experimental control, not a new level-design rule.
 - **No routine playtesting:** Dennis does not want to playtest new levels as a rule (2026-11-05). He wants the
   builder to know how hard a level will be.
 - **The bots are tools, not truth.** A change to how they play must be a new bot version that matches real players

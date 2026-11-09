@@ -1,0 +1,40 @@
+{
+  "created": "2026-11-09",
+  "leadRevision": "96f6ba4f5fb46a827d61bd65895d8d08f018f2a6",
+  "boardHash": "e038d9ff3e4a48228ead2c9d0e732a8f0677fffa476543976a3294e7efa4a176",
+  "plannerFingerprint": "eb093ae83f3c0a8a5ba7bd66cbe6f0d49bd26ae6498816ac6e685963afba3dde",
+  "files": [
+    {
+      "file": "balanced-control-board.json",
+      "sha256": "991a46ed7529d93b6f15b018d284ca8ec322852f9cc08640f57ed3bfb453697b"
+    },
+    {
+      "file": "dennis-lab-events.jsonl",
+      "sha256": "e442e40fa7a26f82e84b24dadc04ab54643cddd66071757ca32e6bb81c5dac05"
+    },
+    {
+      "file": "dennis-reference-diagnostic.json",
+      "sha256": "ccc52c0391b06f31911f597c95cb6496d25480c3777cd46ae1c33f5ec7ab2410"
+    },
+    {
+      "file": "g9-board.json",
+      "sha256": "469f3f6a82895fec1b87118dbd4c604702fe5728ec7b0da20179b475eb45770d"
+    },
+    {
+      "file": "g9-experiments-snapshot.jsonl",
+      "sha256": "32553cd00e83d47db632d467ce756049d07fec8b37f47364e67af93603e5632f"
+    },
+    {
+      "file": "human-result.json",
+      "sha256": "e09c0918f16284f91e69526484183eb0c3003cd31b4c1027638519ce3b05270a"
+    },
+    {
+      "file": "lookahead-runner.js.txt",
+      "sha256": "181a58e7d3e495da4221413de94a83bc0efb43c42b3adf3d6d52d2a75f0851fc"
+    },
+    {
+      "file": "skilled-lookahead-diagnostic.jsonl",
+      "sha256": "418e7ef1b82263f7bc180c8c25c48d5221cb95dc37b201600ff7948f9bef7962"
+    }
+  ]
+}

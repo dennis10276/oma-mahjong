@@ -1,0 +1,143 @@
+{
+  "boardHash": "e038d9ff3e4a48228ead2c9d0e732a8f0677fffa476543976a3294e7efa4a176",
+  "labId": 990901,
+  "clock": {
+    "i": 26,
+    "n": 16
+  },
+  "obstacles": {
+    "ice": {
+      "44": 2
+    },
+    "locks": [
+      26
+    ],
+    "keys": [
+      12,
+      16
+    ]
+  },
+  "faceDown": [],
+  "recorded": {
+    "starts": 2,
+    "completedTries": 1,
+    "wins": 1,
+    "verdict": "easy",
+    "stars": 3,
+    "results": [
+      {
+        "r": "win",
+        "left": 0,
+        "s": 152,
+        "t": 1794255656085
+      }
+    ]
+  },
+  "userStatement": "Dennis reports this board exposes a major skilled-bot flaw and wants a skilled benchmark at least as capable as his demonstrated play.",
+  "manualTaps": 70,
+  "manualRemovalOrder": [
+    75,
+    73,
+    43,
+    41,
+    62,
+    60,
+    2,
+    51,
+    12,
+    16,
+    68,
+    65,
+    50,
+    42,
+    26,
+    72,
+    52,
+    3,
+    44,
+    11,
+    15,
+    17,
+    13,
+    56,
+    18,
+    59,
+    33,
+    74,
+    69,
+    71,
+    70,
+    64,
+    67,
+    46,
+    48,
+    63,
+    47,
+    66,
+    45,
+    61,
+    49,
+    9,
+    5,
+    20,
+    21,
+    40,
+    0,
+    25,
+    55,
+    24,
+    54,
+    58,
+    57,
+    53,
+    32,
+    8,
+    10,
+    31,
+    23,
+    6,
+    30,
+    29,
+    34,
+    28,
+    27,
+    1,
+    22,
+    7,
+    39,
+    4
+  ],
+  "manualPrefixStrictlyLegal": true,
+  "clockTakenAtRemoval": 15,
+  "remainingAfterCapturedManualTaps": [
+    14,
+    19,
+    35,
+    36,
+    37,
+    38
+  ],
+  "completionWitness": [
+    35,
+    38,
+    14,
+    36,
+    19,
+    37
+  ],
+  "completionScope": "The lab records 70 manual taps and a win with zero tiles left. The six remaining tiles admit the verified completion below; this witness is not claimed to be the exact unrecorded automatic-finish order.",
+  "interpretation": "One completed winning try, with two recorded starts and no recorded completed losses. Do not silently equate starts with finished attempts or conceal the restart count.",
+  "baseline": {
+    "skilled": 9.22,
+    "styles": {
+      "route": 9.22,
+      "plain": 10.9
+    },
+    "familyG9": 13.515,
+    "dennisReference": 13.7,
+    "depth3": 9.22,
+    "depth4": 9.22,
+    "campaignsPerSetting": 40
+  },
+  "noFaceDownReason": "G9 base brief explicitly set hiddenOnWay:0 and maxDown:0; quick lab preserved down:[]. This is an experimental control, not a rule for future levels."
+}

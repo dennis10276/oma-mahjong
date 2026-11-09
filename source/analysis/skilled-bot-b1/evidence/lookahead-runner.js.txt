@@ -1,0 +1,30 @@
+'use strict';
+
+const fs=require('fs'),path=require('path'),crypto=require('crypto');
+const root=process.cwd(),E=require(path.join(root,'source/tools/builder/engine.js'));
+const VC=require(path.join(root,'source/tools/builder/visible_choice.js')),K=require(path.join(root,'source/tools/builder/knobs.js'));
+const Bot=require(path.join(root,'source/tools/sim/refit/human_bot_planner_fast.js')),M=require(path.join(root,'source/tools/factory/meter.js'));
+const owner=JSON.parse(fs.readFileSync('source/build/heavy.lock/owner.json'));if(owner.pid!==process.ppid)throw Error('Use heavy.js');
+if(Object.keys(process.env).some(k=>k.startsWith('G51_')))throw Error('Existing calibration environment; refuse contaminated comparison');
+const out='source/build/skilled-bot-quick-check-fixed';if(fs.existsSync(out))throw Error('Preserve prior output');fs.mkdirSync(out,{recursive:true});
+const base=VC.build({layout:22,shape:'ushape',story:'deepClock',stage:'edge',frame:{spare:2},targets:{trayRoom:2,hiddenOnWay:0,maxDown:0,tailPairWidth:2},seed:1});if(!base.design)throw Error(base.fail);
+const cases=[{id:'hard-asymmetric',keys:[12,16],depths:[3,4]},{id:'balanced-control',keys:[5,9],depths:[2,4]}];
+const settings={setting:'planner',runs:20,seeds:2,seed:4711,maxAttempts:20,capture:'tail',allResults:true};
+const baseline=JSON.parse(fs.readFileSync('source/build/skilled-bot-quick-check/rows.jsonl','utf8').trim());
+const records=[baseline];fs.appendFileSync(path.join(out,'rows.jsonl'),JSON.stringify(baseline)+'\n');fs.copyFileSync(__filename,path.join(out,'runner.js.txt'));
+for(const c of cases){
+ const built=K.clockKeyIce(base.design,c.keys,{tile:44,h:2},1);if(built.fail)throw Error(built.fail);
+ if(!E.replay(built.design,built.design.solution,{strict:true}).ok)throw Error('Invalid strict witness');
+ fs.writeFileSync(path.join(out,c.id+'-design.json'),JSON.stringify(built.design,null,2));
+ for(const depth of c.depths){
+  if(depth===2)delete process.env.G51_LOOK;else process.env.G51_LOOK=depth+',150,1';
+  const cpu=process.cpuUsage(),t=Date.now(),m=Bot.measureHuman(M.boardOf(built.design),settings),used=process.cpuUsage(cpu);
+  const r={id:c.id,depth,settings,S:m.expectedTries,styles:m.plannerStyles,valid:m.valid,firstTryRate:m.firstTryRate,
+   uncleared:m.results.filter(x=>x.wonOn==null).length,campaigns:m.results.length,wonOn:m.results.map(x=>x.wonOn),cpuS:(used.user+used.system)/1e6,wallMs:Date.now()-t,
+   firstCampaign:m.results[0],scope:'Diagnostic lookahead variation only, same visible observations and paired seeds; direct bot calls, no cache or pin changes'};
+  records.push(r);fs.appendFileSync(path.join(out,'rows.jsonl'),JSON.stringify(r)+'\n');
+  console.log(JSON.stringify({id:r.id,depth:r.depth,S:r.S,styles:r.styles,valid:r.valid,uncleared:r.uncleared,campaigns:r.campaigns,cpuS:r.cpuS}));
+ }
+}
+delete process.env.G51_LOOK;
+fs.writeFileSync(path.join(out,'summary.json'),JSON.stringify(records.map(({firstCampaign,...r})=>r),null,2)+'\n');
