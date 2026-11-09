@@ -279,6 +279,15 @@ test('clockShortest: strict = exact.js, game rules never longer, its flat path r
   }
 });
 
+test('an explicit strict clock work budget includes finishing proofs, even without reserve cuts',()=>{
+ const d=board([[0,0,0],[4,0,0],[8,0,0],[12,0,0]],[0,0,1,1],{clock:{i:0,n:99}}),g=E.game(d,{strict:true});
+ assert.equal(g.reserveCuts.length,0);
+ assert.equal(E.clockShortest(g,{nodes:1000,ms:Infinity,totalNodes:1}),null);
+ const r=E.clockShortest(g,{nodes:1000,ms:Infinity,totalNodes:100});
+ assert.ok(r&&!r.unsure);assert.equal(r.k,1);assert.ok(r.workNodes>1&&r.workNodes<=100);
+ assert.equal(E.replay(d,E.flatten(r.path),{strict:true}).ok,true);
+});
+
 test('traps along the clock prefix: the stored solution never loses, losing moves carry kinds and depth', () => {
   let points = 0;
   for (const d of QUAL) {

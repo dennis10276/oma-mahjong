@@ -27,6 +27,7 @@ global.Layouts = global.Layouts || require('../../www/layouts.js');
 const L = global.Layouts;
 const Hard = require('../../www/hard.js');
 const { exactRoute, makeLowerBound } = require('../lab/exact.js');
+const Reserve = require('./reserve_cuts.js');
 const SLOTS = L.SLOTS;                                               // 4: a 4th waiting tile loses
 const DEF = { win: { nodes: 2e6, ms: 10000 }, move: { nodes: 1e5, ms: 300 }, cap: 12, depthNodes: 20000, cacheMax: 1.5e6 };
 const BUDGET = { budget: true };
@@ -35,7 +36,7 @@ const BUDGET = { budget: true };
 const CACHE = new Map();
 function game(d, o = {}) {
   const after = !o.strict && o.clockAfterAction !== false;
-  const mode = o.strict ? 'strict' : after ? 'after' : 'perTile';
+  const mode = (o.strict ? 'strict' : after ? 'after' : 'perTile') + (o.reserveCuts===false?'/no-reserve':'');
   if (!CACHE.has(mode)) CACHE.set(mode, new WeakMap());
   const store = CACHE.get(mode);
   // Counterfactual tools edit clocks, faces and obstacles in place. Object identity alone would reuse
@@ -57,6 +58,9 @@ function game(d, o = {}) {
   const g = { design: d, signature, n, tiles, nb, iceNb, rules, faces: d.faces.slice(), clock, down, peek: !o.strict, after, mode, solution: d.solution,
     below, iceRev, iceH, lockT, isKey, keys: locks ? keys : [], words: (n + 15) >> 4, dead: new Set(), win: new Map() };
   g.lb = clock ? makeLowerBound(g, clock.i) : null;
+  g.reserveCuts = o.reserveCuts===false?[]:Reserve.compile(g);
+  g.reserveClock=Reserve.clockContext(g,g.reserveCuts);
+  if(g.clock&&g.reserveClock.relevant.length){const base=g.lb;g.lb=alive=>Math.max(base(alive),Reserve.clockBound(g.reserveClock,alive));}
   // tiles worth trying first while the clock is on the board: what lies on it, keys of a lock on the way, its ice
   g.toClock = new Uint8Array(n);
   if (clock) {
@@ -190,7 +194,7 @@ class Ctx {
     if (tray.length >= SLOTS - 1) return out;                                 // a single now would be the 4th
     const cnt = new Map(); for (const i of other) cnt.set(F[i], (cnt.get(F[i]) || 0) + 1);
     const rest = other.filter(i => i !== ck);
-    const pri = i => (ck >= 0 && g.toClock[i] ? 0 : 2) + (cnt.get(F[i]) >= 2 ? 0 : 1);
+    const pri = i => (ck >= 0 && (g.toClock[i] || g.reserveClock.goals[i]) ? 0 : 2) + (cnt.get(F[i]) >= 2 ? 0 : 1);
     rest.sort((a, b) => pri(a) - pri(b));
     for (const i of rest) out.push(i);
     return out;
@@ -208,6 +212,7 @@ function solveCtx(g, ctx, o = {}) {
     if (++nodes > maxN || ((nodes & 127) === 0 && Date.now() > until)) throw BUDGET;
     const key = ctx.key();
     if (g.dead.has(key)) return false;
+    if (Reserve.dead(g.reserveCuts,ctx.alive,ctx.tray)) { g.dead.add(key); return false; }
     const known = g.win.get(key);
     if (known !== undefined) {
       const u = ctx.apply(known), ok = rec(); ctx.undo(known, u);
@@ -309,20 +314,22 @@ function clockSearch(g, o = {}) {
   const pop = () => { const top = heap[0], last = heap.pop(); if (heap.length) { heap[0] = last; let i = 0; for (;;) { const a = 2 * i + 1, b = a + 1; let m = i; if (a < heap.length && better(heap[a], heap[m])) m = a; if (b < heap.length && better(heap[b], heap[m])) m = b; if (m === i) break; [heap[m], heap[i]] = [heap[i], heap[m]]; i = m; } } return top; };
   const s0 = start(g), seen = new Set();
   push({ alive: s0.alive, tray: [], m: 0, path: [], f: g.lb(s0.alive) });
-  let nodes = 0, unsure = false;
+  let nodes = 0, workNodes = 0, unsure = false;
+  const maxWork=o.totalNodes??Infinity;
   while (heap.length) {
-    if (++nodes > maxN || ((nodes & 63) === 0 && Date.now() > until)) return null;
+    if (++nodes > maxN || ++workNodes > maxWork || ((nodes & 63) === 0 && Date.now() > until)) return null;
     const x = pop();
     if (x.goal) {                       // the clock is off: the first goal popped whose rest can be won is the fewest
-      const r = solveCtx(g, new Ctx(g, x.alive, x.tray, x.m), fin);
-      if (r.result === 'win') return { k: x.f, path: x.path.map(decode).concat(r.path), nodes, ...(unsure ? { unsure: true } : {}) };
+      const r = solveCtx(g, new Ctx(g, x.alive, x.tray, x.m), {...fin,nodes:Math.min(fin.nodes,maxWork-workNodes)});
+      workNodes+=r.nodes;
+      if (r.result === 'win') return { k: x.f, path: x.path.map(decode).concat(r.path), nodes, workNodes, ...(unsure ? { unsure: true } : {}) };
       if (r.result === 'unknown') unsure = true;
       continue;
     }
     const ctx = new Ctx(g, x.alive, x.tray, x.m);
     for (const a of ctx.gen(false, true)) {
       const u = ctx.apply(a), key = ctx.key();
-      if (!seen.has(key)) {
+      if (!seen.has(key) && !Reserve.dead(g.reserveCuts,ctx.alive,ctx.tray)) {
         seen.add(key);
         const node = { alive: ctx.alive.slice(), tray: ctx.tray.slice(), m: ctx.moves, path: x.path.concat(a) };
         if (!ctx.clockAlive) push({ ...node, goal: true, f: x.m + (isPair(a) && (a & 255) === ck.i && !g.after ? 2 : 1) });
@@ -337,12 +344,15 @@ function clockSearch(g, o = {}) {
    (default) need the peek pair, which exact.js does not know, so they use clockSearch above. */
 function clockShortest(g, o = {}) {
   if (!g.clock) return null;
-  const memoKey = 'cs' + (o.nodes ?? '') + '/' + (o.ms ?? '');
+  if((o.totalNodes??Infinity)<=0)return null;
+  const memoKey = 'cs' + (o.nodes ?? '') + '/' + (o.ms ?? '') + '/' + (o.totalNodes??'') + '/' + (o.finishNodes??'') + '/' + (o.finishMs??'');
   if (g[memoKey] !== undefined) return g[memoKey];
   let r;
-  if (g.peek) r = clockSearch(g, o);
-  else { const x = exactRoute(g, g.clock.i, o.nodes ?? 400000, o.ms ?? Infinity); r = x ? { k: x.k, path: x.path } : null; }
-  if (r) r = { k: r.k, path: r.path, ...(r.unsure ? { unsure: true } : {}) };
+  // An explicit total budget must include finishing proofs in strict games
+  // too; legacy exactRoute has a separate, unreported solver per goal.
+  if (g.peek || g.reserveCuts.length || o.totalNodes!=null) r = clockSearch(g, o);
+  else { const x = exactRoute(g, g.clock.i, Math.min(o.nodes ?? 400000,o.totalNodes??Infinity), o.ms ?? Infinity); r = x ? { k: x.k, path: x.path } : null; }
+  if (r) r = { k: r.k, path: r.path, ...(r.workNodes!=null?{workNodes:r.workNodes}:{}), ...(r.unsure ? { unsure: true } : {}) };
   return (g[memoKey] = r);
 }
 
