@@ -1,0 +1,67 @@
+[
+  {
+    "id": "repair-0",
+    "keys": [
+      5,
+      9
+    ],
+    "lockTile": 42,
+    "swaps": []
+  },
+  {
+    "id": "repair-1",
+    "keys": [
+      5,
+      9
+    ],
+    "lockTile": 42,
+    "swaps": [
+      [
+        50,
+        26
+      ]
+    ]
+  },
+  {
+    "id": "repair-2",
+    "keys": [
+      5,
+      9
+    ],
+    "lockTile": 42,
+    "swaps": [
+      [
+        50,
+        75
+      ]
+    ]
+  },
+  {
+    "id": "repair-3",
+    "keys": [
+      5,
+      9
+    ],
+    "lockTile": 42,
+    "swaps": [
+      [
+        50,
+        73
+      ]
+    ]
+  },
+  {
+    "id": "repair-4",
+    "keys": [
+      5,
+      9
+    ],
+    "lockTile": 42,
+    "swaps": [
+      [
+        50,
+        65
+      ]
+    ]
+  }
+]

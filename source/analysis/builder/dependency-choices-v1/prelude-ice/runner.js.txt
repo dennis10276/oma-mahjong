@@ -1,0 +1,68 @@
+#!/usr/bin/env node
+'use strict';
+const fs=require('fs'),path=require('path');
+const E=require('../../engine.js'),K=require('../../knobs.js'),B=require('../../builder.js'),F=require('../../task11_physics.js');
+const GP=require('../gate_profile.js'),SG=require('../static_gates.js'),T=require('../traces.js'),CF=require('../counterfactual.js'),P=require('../run_pipeline.js');
+function reachContinuation(d,physical,nodes=200000){
+ const g=E.game(d),target=F.state(g,physical),allowed=new Set(target.alive.flatMap?[]:[]);
+ for(let i=0;i<g.n;i++)if(!target.alive[i])allowed.add(i);
+ const clockAt=d.solution.indexOf(d.clock.i)+1,prefix=d.solution.slice(0,clockAt);let s=E.start(g);
+ for(const i of prefix){if(!allowed.has(i))return {status:'prefixLeavesProtectedRegion'};s=E.step(g,s,i);if(!s)return {status:'invalidPrefix'};}
+ const seen=new Set(),actions=[],budget=Symbol('budget');let used=0;
+ const wanted=physical.tray.slice().sort((a,b)=>a-b).join(',');
+ function rec(s){
+  if(s.moves===physical.moves)return s.alive.every((v,i)=>v===target.alive[i])&&s.tray.map(i=>g.faces[i]).sort((a,b)=>a-b).join(',')===wanted;
+  if(++used>nodes)throw budget;
+  const key=Array.from(s.alive).join('')+'/'+s.tray.map(i=>g.faces[i]).sort((a,b)=>a-b).join(',');if(seen.has(key))return false;seen.add(key);
+  const waiting=new Set(s.tray.map(i=>g.faces[i])),moves=E.legal(g,s).filter(i=>typeof i==='number'&&allowed.has(i));
+  moves.sort((a,b)=>Number(waiting.has(g.faces[b]))-Number(waiting.has(g.faces[a]))||a-b);
+  for(const i of moves){const next=E.step(g,s,i);if(next&&rec(next)){actions.push(i);return true;}}
+  return false;
+ }
+ try{if(!rec(s))return {status:'noReach',nodes:used};}catch(e){if(e===budget)return {status:'unknown',nodes:used};throw e;}
+ return {status:'win',nodes:used,path:prefix.concat(actions.reverse()),target:physical};
+}
+function main(){
+ const a={};for(let i=2;i<process.argv.length;i+=2)a[process.argv[i].slice(2)]=process.argv[i+1];if(!a.out)throw Error('Use heavy.js -- node probe_clock_prelude.js --out directory');
+ const root=path.resolve(__dirname,'../../../../..'),owner=JSON.parse(fs.readFileSync(path.join(root,'source/build/heavy.lock/owner.json'),'utf8'));if(owner.pid!==process.ppid)throw Error('Run through heavy.js');
+ const diagnosis=JSON.parse(fs.readFileSync(path.join(root,'source/analysis/builder/dependency-choices-v1/diagnostic.json'),'utf8'));
+ const source=diagnosis.inputs.find(r=>r.id==='45-w2'),error=diagnosis.rows.find(r=>r.id==='45-w2').profile.attemptProfiles.find(r=>r.firstError).firstError;
+ const c=B.context(source.design.tiles),seen=new Map();let schedule=[];
+ const maxKeyMove=Number(a['max-key-move']||20),minKeyMove=Number(a['min-key-move']||8);
+ error.prefixTaps.slice(0,maxKeyMove).forEach((tile,step)=>{const face=source.design.faces[tile];if(seen.has(face)){
+   const other=seen.get(face);if(step+1>=minKeyMove&&![tile,other].includes(source.design.clock.i)&&c.roleShown0[tile]&&c.roleShown0[other])schedule.push({id:`keys-${other}-${tile}`,keys:[other,tile],lastOriginalMove:step+1});
+  }else seen.set(face,tile);});
+ if(a.recipes)schedule=JSON.parse(fs.readFileSync(a.recipes,'utf8'));
+ const ys=CF.rulerYardstick(),profile=GP.loadProfile('e5-v1'),out=path.resolve(a.out),file=path.join(out,'rows.jsonl'),mf=path.join(out,'manifest.json');
+ const manifest={schema:'clock-prelude-v1',source,error,schedule,maxKeyMove,minKeyMove,profile,pins:ys.pins,code:P.codeFingerprints(),runner:GP.digest(fs.readFileSync(__filename,'utf8')),
+ note:'Visible pairs from a fixed prefix window; preserve and reach the exact original late decision state. Skilled first, full CURVE only for normal-band settings. No ACCEPT seeds or releases.'};
+ fs.mkdirSync(out,{recursive:true});if(fs.existsSync(mf)){if(GP.digest(JSON.parse(fs.readFileSync(mf,'utf8')))!==GP.digest(manifest))throw Error('Changed resume identity');}
+ else{fs.writeFileSync(mf,JSON.stringify(manifest,null,2)+'\n');fs.copyFileSync(__filename,path.join(out,'runner.js.txt'));fs.copyFileSync(path.resolve(__dirname,'../../knobs.js'),path.join(out,'knobs.js.txt'));}
+ const rows=fs.existsSync(file)?fs.readFileSync(file,'utf8').trim().split(/\r?\n/).filter(Boolean).map(JSON.parse):[];
+ for(const cand of schedule){if(rows.some(r=>r.id===cand.id))continue;
+  const t0=Date.now(),cpu0=process.cpuUsage(),b=cand.ice?K.clockKeyIce(source.design,cand.keys,cand.ice,1):K.clockKeys(source.design,cand.keys,1),r={...cand,fail:b.fail??null,design:b.design,proof:b.proof,ratings:[]};
+  if(b.design&&cand.targetWay!=null&&b.proof.minimum!==cand.targetWay)r.fail='frameWayMiss';
+  if(b.design&&!r.fail){
+   r.reach=reachContinuation(b.design,error.before);
+   if(r.reach.status==='win'){
+    const g=E.game(b.design),s=F.state(g,error.before),after=E.step(g,s,error.move);
+    r.fork={before:E.winnable(g,s,{nodes:100000,ms:Infinity}).result,after:after?E.winnable(g,after,{nodes:100000,ms:Infinity}).result:'lose',move:error.move};
+    if(r.fork.before!=='win'||r.fork.after!=='lose')throw Error('Protected decision changed');
+    r.static=GP.applyStatic(SG.staticGates(b.design,{story:'visibleKeyPrelude',shape:'ushape'}),profile);
+    for(const spare of [1,2,3]){
+     const at=T.atSpare(b.design,spare);if(at.fail||at.design.clock.n>19){r.ratings.push({spare,fail:at.fail||'clockTooDeep'});continue;}
+     const skilled=ys.planner(at.design),family=skilled.valid&&skilled.S>=2.5&&skilled.S<=6?ys.rate(at.design,{block:'CURVE',allResults:true}):null;
+     r.ratings.push({spare,S:skilled.S,D:family?.D??null,valid:family?skilled.valid&&family.valid:null,skilled,family,
+      eligible:r.static.shipSpares.includes(spare),unresolved:GP.unresolvedStatic(r.static,profile,{spare})});
+    }
+   }
+  }
+  const cpu=process.cpuUsage(cpu0);r.cpuS=(cpu.user+cpu.system)/1e6;r.wallS=(Date.now()-t0)/1000;fs.appendFileSync(file,JSON.stringify(r)+'\n');rows.push(r);
+  console.log(JSON.stringify({id:r.id,fail:r.fail,k:r.proof?.minimum,reach:r.reach?.status,static:r.static?.pass,fork:r.fork,ratings:r.ratings.map(x=>({spare:x.spare,D:x.D,S:x.S})),cpuS:r.cpuS}));
+ }
+ const hits=rows.flatMap(r=>r.ratings.filter(x=>x.valid&&x.eligible&&!x.unresolved.length&&r.static?.pass&&x.D>=9&&x.D<=14).map(x=>({id:r.id,spare:x.spare,D:x.D,S:x.S})));
+ const summary={complete:rows.length===schedule.length,attempted:rows.length,built:rows.filter(r=>r.design).length,protectedContinuation:rows.filter(r=>r.reach?.status==='win').length,jointBandSettings:hits,cpuS:rows.reduce((s,r)=>s+r.cpuS,0),note:manifest.note};
+ fs.writeFileSync(path.join(out,'summary.json'),JSON.stringify(summary,null,2)+'\n');console.log(JSON.stringify(summary));
+}
+if(require.main===module)main();
+module.exports={reachContinuation};

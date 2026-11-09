@@ -1,0 +1,24 @@
+'use strict';
+const fs=require('fs'),L=require('../www/layouts.js');
+const dir='source/analysis/builder/dependency-choices-v1/';
+const source=fs.readFileSync(dir+'prelude-repaired/rows.jsonl','utf8').trim().split(/\r?\n/).map(JSON.parse).find(r=>r.id==='repair-1').design;
+const diagnostic=JSON.parse(fs.readFileSync(dir+'diagnostic.json','utf8')),error=diagnostic.rows.find(r=>r.id==='45-w2').profile.attemptProfiles.find(r=>r.firstError).firstError;
+const obj=tiles=>tiles.map(([x,y,z])=>({x,y,z})),oldNb=L.neighbors(obj(source.tiles)),n=source.tiles.length,chosen=[];
+function valid(extra){const nb=L.neighbors(obj(source.tiles.concat(extra))),all=new Uint8Array(n+extra.length).fill(1);
+ for(let i=0;i<n;i++)for(const side of ['above','left','right'])if(oldNb[side][i].join(',')!==nb[side][i].join(','))return false;
+ return extra.every((_,j)=>L.isFree(n+j,all,nb));
+}
+for(let y=0;y<=10&&chosen.length<2;y+=2)for(let x=0;x<=12&&chosen.length<2;x+=2){
+ const pair=[[x,y,0],[x,y+2,0]],extra=chosen.flat().concat(pair);
+ if(new Set(extra.map(t=>t.join(','))).size!==extra.length)continue;
+ if(valid(extra))chosen.push(pair);
+}
+if(chosen.length!==2)throw Error('No two isolated interior pairs');
+const byFace=new Map();source.faces.forEach((f,i)=>byFace.set(f,(byFace.get(f)||[]).concat(i)));
+const prefix=new Set(source.solution.slice(0,source.solution.indexOf(source.clock.i)+1));
+const eligible=[...byFace].filter(([f,ids])=>ids.length===2&&ids.every(i=>!error.before.alive[i]&&!prefix.has(i))&&!(source.obst.keys||[]).some(i=>source.faces[i]===f));
+eligible.sort((a,b)=>Math.max(...a[1].map(i=>error.prefixTaps.indexOf(i)))-Math.max(...b[1].map(i=>error.prefixTaps.indexOf(i))));
+const plans=chosen.map((tiles,i)=>({tiles,face:eligible[i][0]}));
+const recipes=[0,1,2].map(count=>({id:'detours-'+count,keys:[5,9],lockTile:42,swaps:[[50,26]],detours:plans.slice(0,count)}));
+fs.mkdirSync(dir+'prelude-detours',{recursive:true});fs.writeFileSync(dir+'prelude-detours/recipes.json',JSON.stringify(recipes,null,2)+'\n');
+fs.copyFileSync(__filename,dir+'prelude-detours/prepare.js.txt');console.log(JSON.stringify(plans));

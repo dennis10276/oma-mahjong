@@ -1,0 +1,9 @@
+{
+  "complete": true,
+  "attempted": 2,
+  "built": 2,
+  "staticPass": 2,
+  "jointBandSettings": [],
+  "cpuS": 9.593,
+  "note": "Fixed geometry/roles, no face-down tiles; module count and clock thaw varied before rating. CURVE only. No ACCEPT, production changes or accepted levels."
+}

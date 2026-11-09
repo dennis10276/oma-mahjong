@@ -1,0 +1,14 @@
+'use strict';
+const fs=require('fs'),path=require('path'),R=process.cwd();
+const req=p=>require(path.join(R,'source/tools',p));
+const M=req('factory/meter.js'),A=req('builder/task11_analyze.js'),GP=req('builder/loop/gate_profile.js');
+const bot=req('sim/refit/human_bot_planner_fast.js');
+const rows=f=>fs.readFileSync(f,'utf8').trim().split(/\r?\n/).map(JSON.parse);
+const base=rows('source/analysis/builder/tail-plans-v1/rows.jsonl').filter(r=>r.index===45&&r.width<=2);
+const reframe=rows('source/analysis/builder/clock-plan-v1/rows.jsonl').find(r=>r.tile===45);
+const inputs=base.map(r=>({id:r.id,design:r.design})).concat({id:'clock45',design:reframe.design});
+const out={schema:'choice-diagnostic-v1',note:'Two fixed diagnostic campaigns; not difficulty ratings or acceptance.',inputs,rows:[]};
+for(const b of inputs){const result=bot.measureHuman(M.boardOf(b.design),{runs:2,seeds:1,seed:4711,maxAttempts:20,capture:true,setting:'planner',plannerStyle:'route'});
+const a=A.analyzer(b,{nodes:10000,ms:Infinity,depthNodes:3000,cap:6}),analysis=a.trace({profile:'planner-route',result});
+out.rows.push({id:b.id,profile:analysis.profile,states:a.records});console.log(JSON.stringify({id:b.id,story:analysis.profile.story,errors:analysis.profile.attemptProfiles.map(x=>({attempt:x.attempt,win:x.win,firstError:x.firstError&&{move:x.firstError.move,at:x.firstError.removalMove,kind:x.firstError.kind,known:x.firstError.knownChoice,knownWins:x.firstError.knownWinningOptions,before:x.firstError.before}}))}));}
+fs.mkdirSync('source/analysis/builder/dependency-choices-v1',{recursive:true});fs.writeFileSync('source/analysis/builder/dependency-choices-v1/diagnostic.json',JSON.stringify(out,null,2)+'\n');

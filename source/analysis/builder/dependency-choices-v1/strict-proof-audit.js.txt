@@ -1,0 +1,16 @@
+'use strict';
+const fs=require('fs'),path=require('path'),E=require(path.resolve('source/tools/builder/engine.js')),P=require(path.resolve('source/tools/builder/loop/run_pipeline.js'));
+const base='source/analysis/builder/dependency-choices-v1',out=path.join(base,'strict-proof-audit.json');
+const owner=JSON.parse(fs.readFileSync('source/build/heavy.lock/owner.json','utf8'));if(owner.pid!==process.ppid)throw Error('Use heavy.js');if(fs.existsSync(out))throw Error('Preserve prior audit');
+const limits={nodes:400000,totalNodes:700000,ms:Infinity,finishNodes:200000,finishMs:Infinity},rows=[];
+for(const name of fs.readdirSync(base)){const file=path.join(base,name,'rows.jsonl');if(name==='pilot'||!fs.existsSync(file))continue;
+ for(const r of fs.readFileSync(file,'utf8').trim().split(/\r?\n/).filter(Boolean).map(JSON.parse))if(r.design&&!r.fail){
+  const d=r.design,game=E.clockShortest(E.game(d),limits),strict=E.clockShortest(E.game(d,{strict:true}),limits),witness=E.replay(d,d.solution,{strict:true}),clockAt=d.solution.indexOf(d.clock.i)+1;
+  const a={probe:name,id:r.id,gameK:game?.k??null,gameUnsure:game?.unsure??null,strictK:strict?.k??null,strictUnsure:strict?.unsure??null,gameWork:game?.workNodes??null,strictWork:strict?.workNodes??null,witness:witness.ok,clockAt};
+  a.proven=!!(game&&!game.unsure&&witness.ok&&clockAt===game.k); // strict subset of game plus an equal-length strict witness
+  if(strict&&!strict.unsure&&game&&strict.k!==game.k)throw Error('Conflicting minima');
+  rows.push(a);console.log(JSON.stringify(a));
+ }
+}
+const result={schema:'protected-clock-proof-audit-v1',limits,code:P.codeFingerprints(),rows,note:'Recheck frozen designs under the final aggregate strict/game proof budget. An exact game minimum plus an equally short strict witness also proves the strict minimum. No bot ratings, new seeds, repairs or acceptance.'};
+fs.writeFileSync(out,JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({complete:true,n:rows.length,proven:rows.filter(r=>r.proven).length,unknown:rows.filter(r=>!r.proven).map(r=>[r.probe,r.id])}));

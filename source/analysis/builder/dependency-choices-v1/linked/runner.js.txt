@@ -1,0 +1,42 @@
+#!/usr/bin/env node
+'use strict';
+// Fixed construction ladder. Measures misses as well as promising outputs.
+const fs=require('fs'),path=require('path');
+const B=require('../../dependency_choice.js'),SG=require('../static_gates.js'),GP=require('../gate_profile.js');
+const CF=require('../counterfactual.js'),T=require('../traces.js'),P=require('../run_pipeline.js');
+function main(){
+ const a={};for(let i=2;i<process.argv.length;i+=2)a[process.argv[i].slice(2)]=process.argv[i+1];
+ if(!a.out)throw Error('Use heavy.js -- node probe_dependency_choices.js --out directory');
+ const root=path.resolve(__dirname,'../../../../..'),owner=JSON.parse(fs.readFileSync(path.join(root,'source/build/heavy.lock/owner.json'),'utf8'));
+ if(owner.pid!==process.ppid)throw Error('Run through heavy.js');
+ const placement=a.placement||'thaw',seeds=(a.seeds||'1').split(',').map(Number),counts=(a.modules||'1,2,3,4').split(',').map(Number),links=(a.links||'0').split(',').map(Number),thaws=(a.thaws||(placement==='stem'?'2':'1,2')).split(',').map(Number);
+ const schedule=seeds.flatMap(seed=>thaws.flatMap(thaw=>counts.flatMap(choiceModules=>links.map(link=>({id:`s${seed}-t${thaw}-m${choiceModules}-l${link}`,brief:{mode:'dependencyChoice',shape:'clover',story:'reserveTray',seed,frame:{spare:2,thaw,clockPlacement:placement},targets:{choiceModules,links:link}}})))));
+ const ys=CF.rulerYardstick(),profile=GP.loadProfile('e5-v1'),out=path.resolve(a.out),file=path.join(out,'rows.jsonl'),mf=path.join(out,'manifest.json');
+ const manifest={schema:'dependency-ladder-v1',schedule,profile,pins:ys.pins,code:{...P.codeFingerprints(),dependency_choice:GP.digest(fs.readFileSync(path.resolve(__dirname,'../../dependency_choice.js'),'utf8')),runner:GP.digest(fs.readFileSync(__filename,'utf8'))},
+ note:'Fixed geometry/roles, no face-down tiles; module count and clock thaw varied before rating. CURVE only. No ACCEPT, production changes or accepted levels.'};
+ fs.mkdirSync(out,{recursive:true});
+ if(fs.existsSync(mf)){if(GP.digest(JSON.parse(fs.readFileSync(mf,'utf8')))!==GP.digest(manifest))throw Error('Changed resume identity');}
+ else {fs.writeFileSync(mf,JSON.stringify(manifest,null,2)+'\n');fs.copyFileSync(path.resolve(__dirname,'../../dependency_choice.js'),path.join(out,'constructor.js.txt'));fs.copyFileSync(__filename,path.join(out,'runner.js.txt'));}
+ const rows=fs.existsSync(file)?fs.readFileSync(file,'utf8').trim().split(/\r?\n/).filter(Boolean).map(JSON.parse):[];
+ const start=Date.now();
+ for(const c of schedule){
+  if(rows.some(r=>r.id===c.id))continue;if(Date.now()-start>18*60000)break;
+  const cpu0=process.cpuUsage(),t0=Date.now(),b=B.build(c.brief),r={...c,fail:b.fail??null,design:b.design,card:b.card,ratings:[]};
+  if(b.design){
+   r.static=GP.applyStatic(SG.staticGates(b.design,{story:c.brief.story,shape:'clover'}),profile);
+   for(const spare of [1,2,3]){
+    const at=T.atSpare(b.design,spare);if(at.fail){r.ratings.push({spare,fail:at.fail});continue;}
+    const family=ys.rate(at.design,{block:'CURVE',allResults:true}),skilled=ys.planner(at.design);
+    r.ratings.push({spare,D:family.D,S:skilled.S,valid:family.valid&&skilled.valid,staticEligible:r.static.shipSpares.includes(spare),
+     unresolved:GP.unresolvedStatic(r.static,profile,{spare}),family,skilled});
+   }
+  }
+  const cpu=process.cpuUsage(cpu0);r.cpuS=(cpu.user+cpu.system)/1e6;r.wallS=(Date.now()-t0)/1000;
+  fs.appendFileSync(file,JSON.stringify(r)+'\n');rows.push(r);
+  console.log(JSON.stringify({id:r.id,fail:r.fail,k:r.card?.clock.fewestMoves,static:r.static?.pass,failed:r.static&&Object.entries(r.static.gates).filter(([,g])=>g.pass===false).map(([k])=>k),ratings:r.ratings.map(x=>({spare:x.spare,D:x.D,S:x.S})),cpuS:r.cpuS}));
+ }
+ const hits=rows.flatMap(r=>r.ratings.filter(x=>r.static?.pass&&x.valid&&x.staticEligible&&!x.unresolved.length&&x.D>=9&&x.D<=14&&x.S>=2.5&&x.S<=6).map(x=>({id:r.id,spare:x.spare,D:x.D,S:x.S})));
+ const summary={complete:rows.length===schedule.length,attempted:rows.length,built:rows.filter(r=>r.design).length,staticPass:rows.filter(r=>r.static?.pass).length,jointBandSettings:hits,cpuS:rows.reduce((s,r)=>s+r.cpuS,0),note:manifest.note};
+ fs.writeFileSync(path.join(out,'summary.json'),JSON.stringify(summary,null,2)+'\n');console.log(JSON.stringify(summary));
+}
+if(require.main===module)main();

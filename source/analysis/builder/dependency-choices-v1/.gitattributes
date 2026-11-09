@@ -1,0 +1,2 @@
+# Preserve historical source verbatim, including CRLF and whitespace.
+*.js.txt -text -whitespace

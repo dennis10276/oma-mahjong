@@ -1,0 +1,136 @@
+{
+  "plan": {
+    "familyTarget": 13,
+    "skilled": [
+      2.5,
+      6
+    ],
+    "spare": 2,
+    "secondAct": true
+  },
+  "staticPass": true,
+  "unresolved": [],
+  "curve": {
+    "spare": 2,
+    "D": 13.69,
+    "clockN": 15,
+    "reasons": [],
+    "monotoneLimit": 15.553702249810673,
+    "monotone": true,
+    "neighbourLimit": 16.689999999999998,
+    "tighterNeighbour": true,
+    "notCensored": true,
+    "shippableSpare": true,
+    "releaseSpare": 2,
+    "openingClockOk": true,
+    "canShip": true
+  },
+  "tracePass": false,
+  "traceGates": {
+    "B1": {
+      "pass": true,
+      "value": 1,
+      "bites": 80,
+      "firstTries": 80
+    },
+    "B2": {
+      "pass": false,
+      "value": 0.012,
+      "atTrap": 13,
+      "atForkState": 1,
+      "onTemptingMove": 12,
+      "provedFirstErrors": 1051,
+      "lostTries": 1051,
+      "coverage": 1
+    },
+    "B3": {
+      "pass": true,
+      "value": 0.105
+    },
+    "B4": {
+      "pass": true,
+      "value": 7
+    },
+    "B5": {
+      "pass": true,
+      "value": 0,
+      "lateTrayLosses": 0
+    },
+    "B6": {
+      "pass": false,
+      "value": 0.051,
+      "postClockLosses": 54,
+      "secondAct": true,
+      "postClockErrorMedianShare": 0.368
+    },
+    "B7": {
+      "pass": null,
+      "report": true,
+      "value": 0.73,
+      "repeats": 517,
+      "knownRepeats": 517,
+      "lossesTries6to20": 708,
+      "inflated": true,
+      "maxTarget": 10
+    }
+  },
+  "C1": {
+    "pass": true,
+    "keyMemory": 13.69,
+    "reference": 13.69,
+    "diff": 0,
+    "tolerance": 3.42,
+    "seKeyMemory": 1.13,
+    "seReference": 1.13,
+    "n": 80,
+    "calls": {
+      "keyMemory": [
+        13.18,
+        14.2
+      ],
+      "reference": [
+        13.18,
+        14.2
+      ]
+    },
+    "valid": true,
+    "spare": 2,
+    "clockN": 15,
+    "fingerprints": {
+      "keyMemory": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+      "reference": "4cf0b4c7057c2242f27fe529bb1885e4ad06cdf94588b79411cc06c522509e39"
+    },
+    "ms": 4392
+  },
+  "C2": {
+    "pass": true,
+    "asIs": 3.48,
+    "faceUp": 3.48,
+    "diff": 0,
+    "skilledCredit": true,
+    "plannerSpare": 2,
+    "clockN": 15,
+    "faceDownTiles": 0,
+    "styles": {
+      "asIs": {
+        "route": 3.48,
+        "plain": 3.48
+      },
+      "faceUp": {
+        "route": 3.48,
+        "plain": 3.48
+      }
+    },
+    "clockK": {
+      "asIs": 13,
+      "faceUp": 13
+    },
+    "valid": true,
+    "fingerprint": "e686e095300cec3926719ef63715fe3902bb1b4cf31825c3f36ee1872033ced9",
+    "ms": 3
+  },
+  "cpuS": 16.203,
+  "wallS": 14.51,
+  "accepted": false,
+  "note": "Fixed target-13 candidate with early clock prelude and preserved late choice. Two-act pacing is declared before capture. No ACCEPT or independent acceptance seeds, assignment or publication."
+}

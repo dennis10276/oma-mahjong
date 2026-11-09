@@ -1,0 +1,2567 @@
+{
+  "schema": "protected-prelude-check-v1",
+  "plan": {
+    "familyTarget": 13,
+    "skilled": [
+      2.5,
+      6
+    ],
+    "spare": 2,
+    "secondAct": true
+  },
+  "source": {
+    "id": "k5-9-lock42",
+    "keys": [
+      5,
+      9
+    ],
+    "lockTile": 42,
+    "fail": null,
+    "design": {
+      "tiles": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          2,
+          0,
+          0
+        ],
+        [
+          10,
+          0,
+          0
+        ],
+        [
+          12,
+          0,
+          0
+        ],
+        [
+          0,
+          2,
+          0
+        ],
+        [
+          2,
+          2,
+          0
+        ],
+        [
+          10,
+          2,
+          0
+        ],
+        [
+          12,
+          2,
+          0
+        ],
+        [
+          0,
+          4,
+          0
+        ],
+        [
+          2,
+          4,
+          0
+        ],
+        [
+          10,
+          4,
+          0
+        ],
+        [
+          12,
+          4,
+          0
+        ],
+        [
+          0,
+          6,
+          0
+        ],
+        [
+          2,
+          6,
+          0
+        ],
+        [
+          10,
+          6,
+          0
+        ],
+        [
+          12,
+          6,
+          0
+        ],
+        [
+          0,
+          8,
+          0
+        ],
+        [
+          2,
+          8,
+          0
+        ],
+        [
+          10,
+          8,
+          0
+        ],
+        [
+          12,
+          8,
+          0
+        ],
+        [
+          0,
+          10,
+          0
+        ],
+        [
+          2,
+          10,
+          0
+        ],
+        [
+          4,
+          10,
+          0
+        ],
+        [
+          6,
+          10,
+          0
+        ],
+        [
+          8,
+          10,
+          0
+        ],
+        [
+          10,
+          10,
+          0
+        ],
+        [
+          12,
+          10,
+          0
+        ],
+        [
+          0,
+          12,
+          0
+        ],
+        [
+          2,
+          12,
+          0
+        ],
+        [
+          4,
+          12,
+          0
+        ],
+        [
+          6,
+          12,
+          0
+        ],
+        [
+          8,
+          12,
+          0
+        ],
+        [
+          10,
+          12,
+          0
+        ],
+        [
+          12,
+          12,
+          0
+        ],
+        [
+          0,
+          14,
+          0
+        ],
+        [
+          2,
+          14,
+          0
+        ],
+        [
+          4,
+          14,
+          0
+        ],
+        [
+          6,
+          14,
+          0
+        ],
+        [
+          8,
+          14,
+          0
+        ],
+        [
+          10,
+          14,
+          0
+        ],
+        [
+          12,
+          14,
+          0
+        ],
+        [
+          1,
+          9,
+          1
+        ],
+        [
+          11,
+          9,
+          1
+        ],
+        [
+          1,
+          7,
+          1
+        ],
+        [
+          11,
+          7,
+          1
+        ],
+        [
+          3,
+          11,
+          1
+        ],
+        [
+          9,
+          11,
+          1
+        ],
+        [
+          5,
+          11,
+          1
+        ],
+        [
+          7,
+          11,
+          1
+        ],
+        [
+          1,
+          11,
+          1
+        ],
+        [
+          11,
+          11,
+          1
+        ],
+        [
+          1,
+          5,
+          1
+        ],
+        [
+          11,
+          5,
+          1
+        ],
+        [
+          3,
+          13,
+          1
+        ],
+        [
+          9,
+          13,
+          1
+        ],
+        [
+          1,
+          13,
+          1
+        ],
+        [
+          11,
+          13,
+          1
+        ],
+        [
+          5,
+          13,
+          1
+        ],
+        [
+          7,
+          13,
+          1
+        ],
+        [
+          1,
+          3,
+          1
+        ],
+        [
+          11,
+          3,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          11,
+          1,
+          1
+        ],
+        [
+          4,
+          12,
+          2
+        ],
+        [
+          8,
+          12,
+          2
+        ],
+        [
+          10,
+          12,
+          2
+        ],
+        [
+          2,
+          12,
+          2
+        ],
+        [
+          6,
+          12,
+          2
+        ],
+        [
+          9,
+          12,
+          3
+        ],
+        [
+          3,
+          12,
+          3
+        ],
+        [
+          5,
+          12,
+          3
+        ],
+        [
+          7,
+          12,
+          3
+        ],
+        [
+          4,
+          12,
+          4
+        ],
+        [
+          8,
+          12,
+          4
+        ],
+        [
+          6,
+          12,
+          4
+        ],
+        [
+          7,
+          12,
+          5
+        ]
+      ],
+      "faces": [
+        17,
+        7,
+        5,
+        14,
+        12,
+        28,
+        34,
+        33,
+        22,
+        28,
+        10,
+        2,
+        29,
+        16,
+        24,
+        2,
+        29,
+        16,
+        25,
+        15,
+        6,
+        6,
+        33,
+        34,
+        0,
+        27,
+        11,
+        7,
+        31,
+        32,
+        31,
+        10,
+        22,
+        1,
+        32,
+        8,
+        24,
+        15,
+        8,
+        12,
+        17,
+        5,
+        23,
+        27,
+        3,
+        35,
+        35,
+        13,
+        35,
+        21,
+        23,
+        3,
+        14,
+        9,
+        20,
+        0,
+        25,
+        20,
+        9,
+        1,
+        26,
+        21,
+        26,
+        13,
+        13,
+        19,
+        35,
+        13,
+        19,
+        4,
+        18,
+        4,
+        11,
+        30,
+        18,
+        30
+      ],
+      "down": [],
+      "gold": [],
+      "obst": {
+        "ice": {},
+        "locks": [
+          42
+        ],
+        "keys": [
+          5,
+          9
+        ]
+      },
+      "clock": {
+        "i": 26,
+        "n": 14
+      },
+      "solution": [
+        51,
+        61,
+        59,
+        44,
+        5,
+        9,
+        75,
+        73,
+        68,
+        65,
+        42,
+        50,
+        26,
+        72,
+        18,
+        56,
+        33,
+        0,
+        40,
+        60,
+        62,
+        2,
+        41,
+        3,
+        52,
+        11,
+        15,
+        69,
+        66,
+        49,
+        74,
+        70,
+        71,
+        63,
+        45,
+        64,
+        1,
+        4,
+        20,
+        21,
+        54,
+        39,
+        55,
+        27,
+        67,
+        47,
+        7,
+        22,
+        46,
+        48,
+        6,
+        23,
+        24,
+        8,
+        32,
+        25,
+        43,
+        12,
+        16,
+        13,
+        17,
+        53,
+        57,
+        58,
+        10,
+        31,
+        28,
+        30,
+        29,
+        34,
+        35,
+        38,
+        14,
+        36,
+        19,
+        37
+      ]
+    },
+    "proof": {
+      "keys": [
+        5,
+        9
+      ],
+      "lockTile": 42,
+      "minimum": 13,
+      "originalMinimum": 7,
+      "spare": 1,
+      "preserved": [
+        "tiles",
+        "faces",
+        "down",
+        "gold",
+        "obst.ice",
+        "clock.i"
+      ],
+      "changed": [
+        "obst.keys",
+        "obst.locks",
+        "clock.n",
+        "solution"
+      ],
+      "scope": "meaningful, visible key prelude; remaining puzzle/quality/difficulty require verification"
+    },
+    "ratings": [
+      {
+        "spare": 1,
+        "S": 3.52,
+        "D": 16.65,
+        "valid": true,
+        "skilled": {
+          "S": 3.52,
+          "styles": {
+            "route": 3.58,
+            "plain": 3.52
+          },
+          "valid": true,
+          "firstTryRate": 0.05,
+          "spare": null,
+          "clockN": 14,
+          "settings": {
+            "setting": "planner",
+            "runs": 20,
+            "seeds": 2,
+            "seed": 4711
+          },
+          "fingerprint": "e686e095300cec3926719ef63715fe3902bb1b4cf31825c3f36ee1872033ced9"
+        },
+        "family": {
+          "block": "CURVE",
+          "bot": "family",
+          "D": 16.65,
+          "pHat": 0.01951951951951952,
+          "se": 0.6312284587125386,
+          "seGeometric": 1.80475933298598,
+          "n": 80,
+          "nVisible": 80,
+          "perCampaign": [
+            20,
+            20,
+            11,
+            15,
+            20,
+            20,
+            20,
+            20,
+            3,
+            12,
+            3,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            8,
+            20,
+            20,
+            20,
+            20,
+            12,
+            20,
+            17,
+            12,
+            6,
+            20,
+            20,
+            19,
+            18,
+            20,
+            15,
+            20,
+            20,
+            20,
+            20,
+            1,
+            20,
+            20,
+            20,
+            7,
+            1,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            6,
+            20,
+            20,
+            20,
+            9,
+            2,
+            20,
+            20,
+            20,
+            12,
+            12,
+            20,
+            10,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            14,
+            20,
+            20,
+            10,
+            8,
+            20,
+            9,
+            20,
+            20
+          ],
+          "uncleared": 54,
+          "valid": true,
+          "lossPhase": {
+            "beforeClock": 0.9370228631171957,
+            "mid": 0.06297713688280433,
+            "late": 0
+          },
+          "calls": [
+            {
+              "runs": 20,
+              "seeds": 2,
+              "seed": 4711,
+              "exp": 16.8,
+              "first": 0,
+              "valid": true
+            },
+            {
+              "runs": 20,
+              "seeds": 2,
+              "seed": 18427,
+              "exp": 16.5,
+              "first": 0.05,
+              "valid": true
+            }
+          ],
+          "fingerprint": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a"
+        },
+        "eligible": false,
+        "unresolved": []
+      },
+      {
+        "spare": 2,
+        "S": 3.48,
+        "D": 13.69,
+        "valid": true,
+        "skilled": {
+          "S": 3.48,
+          "styles": {
+            "route": 3.48,
+            "plain": 3.48
+          },
+          "valid": true,
+          "firstTryRate": 0.05,
+          "spare": null,
+          "clockN": 15,
+          "settings": {
+            "setting": "planner",
+            "runs": 20,
+            "seeds": 2,
+            "seed": 4711
+          },
+          "fingerprint": "e686e095300cec3926719ef63715fe3902bb1b4cf31825c3f36ee1872033ced9"
+        },
+        "family": {
+          "block": "CURVE",
+          "bot": "family",
+          "D": 13.69,
+          "pHat": 0.04018264840182648,
+          "se": 0.7834510134694632,
+          "seGeometric": 1.4736269032560445,
+          "n": 80,
+          "nVisible": 80,
+          "perCampaign": [
+            20,
+            18,
+            20,
+            9,
+            8,
+            20,
+            6,
+            20,
+            3,
+            20,
+            3,
+            4,
+            20,
+            16,
+            20,
+            20,
+            20,
+            4,
+            20,
+            3,
+            13,
+            20,
+            12,
+            20,
+            12,
+            4,
+            20,
+            2,
+            20,
+            20,
+            5,
+            3,
+            13,
+            20,
+            20,
+            12,
+            15,
+            20,
+            1,
+            1,
+            20,
+            11,
+            12,
+            1,
+            20,
+            11,
+            7,
+            20,
+            1,
+            20,
+            20,
+            1,
+            20,
+            18,
+            20,
+            11,
+            12,
+            20,
+            16,
+            8,
+            11,
+            2,
+            9,
+            6,
+            14,
+            17,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            14,
+            1,
+            15,
+            10,
+            20,
+            20,
+            20,
+            20
+          ],
+          "uncleared": 36,
+          "valid": true,
+          "lossPhase": {
+            "beforeClock": 0.9482446055889636,
+            "mid": 0.05175539441103644,
+            "late": 0
+          },
+          "calls": [
+            {
+              "runs": 20,
+              "seeds": 2,
+              "seed": 4711,
+              "exp": 13.18,
+              "first": 0,
+              "valid": true
+            },
+            {
+              "runs": 20,
+              "seeds": 2,
+              "seed": 18427,
+              "exp": 14.2,
+              "first": 0.15,
+              "valid": true
+            }
+          ],
+          "fingerprint": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a"
+        },
+        "eligible": true,
+        "unresolved": []
+      },
+      {
+        "spare": 3,
+        "S": 3.42,
+        "D": 14.715,
+        "valid": true,
+        "skilled": {
+          "S": 3.42,
+          "styles": {
+            "route": 3.42,
+            "plain": 3.48
+          },
+          "valid": true,
+          "firstTryRate": 0.05,
+          "spare": null,
+          "clockN": 16,
+          "settings": {
+            "setting": "planner",
+            "runs": 20,
+            "seeds": 2,
+            "seed": 4711
+          },
+          "fingerprint": "e686e095300cec3926719ef63715fe3902bb1b4cf31825c3f36ee1872033ced9"
+        },
+        "family": {
+          "block": "CURVE",
+          "bot": "family",
+          "D": 14.715,
+          "pHat": 0.03228547153780799,
+          "se": 0.7837740871068992,
+          "seGeometric": 1.5883018644136888,
+          "n": 80,
+          "nVisible": 80,
+          "perCampaign": [
+            20,
+            20,
+            20,
+            20,
+            20,
+            6,
+            5,
+            20,
+            13,
+            17,
+            20,
+            19,
+            5,
+            20,
+            20,
+            20,
+            13,
+            20,
+            20,
+            3,
+            20,
+            3,
+            5,
+            20,
+            20,
+            13,
+            10,
+            17,
+            4,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            10,
+            20,
+            10,
+            1,
+            1,
+            20,
+            20,
+            20,
+            1,
+            20,
+            19,
+            20,
+            20,
+            1,
+            20,
+            11,
+            1,
+            7,
+            20,
+            4,
+            11,
+            20,
+            20,
+            20,
+            20,
+            5,
+            20,
+            7,
+            19,
+            20,
+            16,
+            18,
+            20,
+            20,
+            20,
+            20,
+            4,
+            8,
+            1,
+            19,
+            3,
+            20,
+            20,
+            15,
+            12
+          ],
+          "uncleared": 42,
+          "valid": true,
+          "lossPhase": {
+            "beforeClock": 0.9198494951631397,
+            "mid": 0.08015050483686033,
+            "late": 0
+          },
+          "calls": [
+            {
+              "runs": 20,
+              "seeds": 2,
+              "seed": 4711,
+              "exp": 14.88,
+              "first": 0,
+              "valid": true
+            },
+            {
+              "runs": 20,
+              "seeds": 2,
+              "seed": 18427,
+              "exp": 14.55,
+              "first": 0.15,
+              "valid": true
+            }
+          ],
+          "fingerprint": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a"
+        },
+        "eligible": true,
+        "unresolved": []
+      }
+    ],
+    "reach": {
+      "status": "win",
+      "nodes": 212,
+      "path": [
+        51,
+        61,
+        59,
+        44,
+        5,
+        9,
+        75,
+        73,
+        68,
+        65,
+        42,
+        50,
+        26,
+        72,
+        18,
+        56,
+        33,
+        0,
+        40,
+        41,
+        60,
+        62,
+        2,
+        3,
+        52,
+        11,
+        15,
+        69,
+        66,
+        49,
+        74,
+        70,
+        71,
+        4,
+        63,
+        64,
+        46,
+        8,
+        25,
+        43,
+        12,
+        16,
+        13,
+        17,
+        54,
+        32,
+        39
+      ],
+      "target": {
+        "alive": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "tray": [
+          20
+        ],
+        "moves": 47,
+        "openPeek": -1,
+        "physicalTaps": 47
+      }
+    },
+    "fork": {
+      "before": "win",
+      "after": "lose",
+      "move": 55
+    },
+    "static": {
+      "pass": true,
+      "gates": {
+        "A1": {
+          "pass": true,
+          "detail": {
+            "story": "visibleKeyPrelude",
+            "tiles": 76,
+            "clock": {
+              "n": 14,
+              "k": 13,
+              "unsure": false,
+              "spare": 1,
+              "winAtK": "win",
+              "winAtKProof": "clockShortest witness replay",
+              "atKminus1": "lose",
+              "kGame": 13,
+              "kPerTile": 13
+            },
+            "idle": 0,
+            "strictWitness": true,
+            "why": []
+          }
+        },
+        "A2": {
+          "pass": true,
+          "detail": {
+            "readable": true,
+            "roleConflicts": [],
+            "keys": [
+              5,
+              9
+            ],
+            "keysShownAtStart": 2,
+            "bothKeysSeenAtMove": 0
+          }
+        },
+        "A3": {
+          "pass": true,
+          "detail": {
+            "k": 13,
+            "strictK": 13,
+            "witnessClockMove": 13,
+            "strictWitness": true,
+            "designSpare": 1,
+            "shippable": [
+              1,
+              2,
+              3
+            ],
+            "why": []
+          }
+        },
+        "A4": {
+          "pass": true,
+          "detail": {
+            "opening": {
+              "wins": 5,
+              "unknown": 0,
+              "legal": 11
+            },
+            "singleWinStates": 7,
+            "obviousSingles": 6,
+            "statesWithUnknown": 0,
+            "okSpares": [
+              2,
+              3
+            ],
+            "perSpare": {
+              "1": {
+                "ok": false,
+                "openingWins": 5,
+                "openingUnknown": 0,
+                "notObvious": [
+                  {
+                    "atMove": 7,
+                    "move": 75
+                  }
+                ]
+              },
+              "2": {
+                "ok": true,
+                "openingWins": 7,
+                "openingUnknown": 0,
+                "notObvious": []
+              },
+              "3": {
+                "ok": true,
+                "openingWins": 7,
+                "openingUnknown": 0,
+                "notObvious": []
+              }
+            },
+            "why": []
+          }
+        },
+        "A5": {
+          "pass": null,
+          "detail": {
+            "window": [
+              2,
+              7
+            ],
+            "wayMoves": 13,
+            "priced": 3,
+            "best": {
+              "move": [
+                60,
+                62
+              ],
+              "kind": "pair",
+              "cost": 2,
+              "result": "win",
+              "step": 2,
+              "moves": 2
+            },
+            "temptingSeen": 19
+          },
+          "wouldPass": true,
+          "reportOnly": true
+        },
+        "A6": {
+          "pass": true,
+          "detail": {
+            "loseForks": 6,
+            "fair": 6,
+            "unfair": [],
+            "unknown": 0
+          }
+        },
+        "A7": {
+          "pass": null,
+          "detail": {
+            "roomPass": false,
+            "dealsPass": true,
+            "roomOk": false,
+            "unrelieved": null,
+            "tightBlind": null,
+            "faceDown": 0,
+            "perms": 1,
+            "results": [
+              "win"
+            ],
+            "why": [
+              "roomProfile: no path found"
+            ]
+          },
+          "wouldPass": false,
+          "reportOnly": true
+        },
+        "A8": {
+          "pass": true,
+          "flag": null,
+          "detail": {
+            "k": 13
+          }
+        },
+        "A9": {
+          "pass": true,
+          "flag": null,
+          "detail": {
+            "shape": "ushape",
+            "tiles": 76,
+            "compared": 130,
+            "clashes": [],
+            "why": []
+          }
+        }
+      },
+      "forks": [
+        {
+          "step": 0,
+          "moves": 0,
+          "inWindow": false,
+          "tempting": [
+            {
+              "move": [
+                44,
+                51
+              ],
+              "kind": "pair",
+              "cost": 0,
+              "result": "win"
+            },
+            {
+              "move": [
+                60,
+                62
+              ],
+              "kind": "pair",
+              "cost": 2,
+              "result": "win"
+            }
+          ],
+          "winning": [
+            44,
+            51,
+            59,
+            61,
+            75
+          ]
+        },
+        {
+          "step": 1,
+          "moves": 1,
+          "inWindow": false,
+          "tempting": [
+            {
+              "move": [
+                44
+              ],
+              "kind": "match",
+              "cost": 0,
+              "result": "win"
+            },
+            {
+              "move": [
+                60,
+                62
+              ],
+              "kind": "pair",
+              "cost": 2,
+              "result": "win"
+            }
+          ],
+          "winning": [
+            44,
+            59,
+            61,
+            75
+          ]
+        },
+        {
+          "step": 2,
+          "moves": 2,
+          "inWindow": true,
+          "tempting": [
+            {
+              "move": [
+                44
+              ],
+              "kind": "match",
+              "cost": 0,
+              "result": "win"
+            },
+            {
+              "move": [
+                60,
+                62
+              ],
+              "kind": "pair",
+              "cost": 2,
+              "result": "win"
+            }
+          ],
+          "winning": [
+            44,
+            59,
+            75
+          ]
+        },
+        {
+          "step": 3,
+          "moves": 3,
+          "inWindow": true,
+          "tempting": [
+            {
+              "move": [
+                44
+              ],
+              "kind": "match",
+              "cost": 0,
+              "result": "win"
+            },
+            {
+              "move": [
+                60,
+                62
+              ],
+              "kind": "pair",
+              "cost": null,
+              "result": "lose",
+              "instant": true,
+              "fair": true,
+              "forkChecks": {
+                "tilesLeft": 0.961,
+                "forcedDepth": 0,
+                "perms": 1,
+                "permResults": [
+                  {
+                    "tempting": "lose",
+                    "alternative": 44
+                  }
+                ]
+              }
+            }
+          ],
+          "winning": [
+            44
+          ]
+        },
+        {
+          "step": 4,
+          "moves": 4,
+          "inWindow": true,
+          "tempting": [
+            {
+              "move": [
+                60,
+                62
+              ],
+              "kind": "pair",
+              "cost": 2,
+              "result": "win"
+            }
+          ],
+          "winning": [
+            5,
+            9,
+            75
+          ]
+        },
+        {
+          "step": 5,
+          "moves": 5,
+          "inWindow": true,
+          "tempting": [
+            {
+              "move": [
+                60,
+                62
+              ],
+              "kind": "pair",
+              "cost": null,
+              "result": "lose",
+              "instant": true,
+              "fair": true,
+              "forkChecks": {
+                "tilesLeft": 0.934,
+                "forcedDepth": 0,
+                "perms": 1,
+                "permResults": [
+                  {
+                    "tempting": "lose",
+                    "alternative": 9
+                  }
+                ]
+              }
+            }
+          ],
+          "winning": [
+            9
+          ]
+        },
+        {
+          "step": 6,
+          "moves": 6,
+          "inWindow": true,
+          "tempting": [
+            {
+              "move": [
+                60,
+                62
+              ],
+              "kind": "pair",
+              "cost": 2,
+              "result": "win"
+            }
+          ],
+          "winning": [
+            75
+          ]
+        },
+        {
+          "step": 7,
+          "moves": 7,
+          "inWindow": true,
+          "tempting": [
+            {
+              "move": [
+                60,
+                62
+              ],
+              "kind": "pair",
+              "cost": null,
+              "result": "lose",
+              "instant": true,
+              "fair": true,
+              "forkChecks": {
+                "tilesLeft": 0.908,
+                "forcedDepth": 0,
+                "perms": 1,
+                "permResults": [
+                  {
+                    "tempting": "lose",
+                    "alternative": 73
+                  }
+                ]
+              }
+            }
+          ],
+          "winning": [
+            73
+          ]
+        },
+        {
+          "step": 8,
+          "moves": 8,
+          "inWindow": false,
+          "tempting": [
+            {
+              "move": [
+                60,
+                62
+              ],
+              "kind": "pair",
+              "cost": 2,
+              "result": "win"
+            }
+          ],
+          "winning": [
+            68
+          ]
+        },
+        {
+          "step": 9,
+          "moves": 9,
+          "inWindow": false,
+          "tempting": [
+            {
+              "move": [
+                60,
+                62
+              ],
+              "kind": "pair",
+              "cost": null,
+              "result": "lose",
+              "instant": true,
+              "fair": true,
+              "forkChecks": {
+                "tilesLeft": 0.882,
+                "forcedDepth": 0,
+                "perms": 1,
+                "permResults": [
+                  {
+                    "tempting": "lose",
+                    "alternative": 65
+                  }
+                ]
+              }
+            }
+          ],
+          "winning": [
+            65
+          ]
+        },
+        {
+          "step": 10,
+          "moves": 10,
+          "inWindow": false,
+          "tempting": [
+            {
+              "move": [
+                60,
+                62
+              ],
+              "kind": "pair",
+              "cost": 2,
+              "result": "win"
+            }
+          ],
+          "winning": [
+            42,
+            50
+          ]
+        },
+        {
+          "step": 11,
+          "moves": 11,
+          "inWindow": false,
+          "tempting": [
+            {
+              "move": [
+                18,
+                56
+              ],
+              "kind": "pair",
+              "cost": null,
+              "result": "lose",
+              "instant": true,
+              "fair": true,
+              "forkChecks": {
+                "tilesLeft": 0.855,
+                "forcedDepth": 0,
+                "perms": 1,
+                "permResults": [
+                  {
+                    "tempting": "lose",
+                    "alternative": 50
+                  }
+                ]
+              }
+            },
+            {
+              "move": [
+                60,
+                62
+              ],
+              "kind": "pair",
+              "cost": null,
+              "result": "lose",
+              "instant": true,
+              "fair": true,
+              "forkChecks": {
+                "tilesLeft": 0.855,
+                "forcedDepth": 0,
+                "perms": 1,
+                "permResults": [
+                  {
+                    "tempting": "lose",
+                    "alternative": 50
+                  }
+                ]
+              }
+            }
+          ],
+          "winning": [
+            50
+          ]
+        },
+        {
+          "step": 12,
+          "moves": 12,
+          "inWindow": false,
+          "tempting": [
+            {
+              "move": [
+                18,
+                56
+              ],
+              "kind": "pair",
+              "cost": 2,
+              "result": "win"
+            },
+            {
+              "move": [
+                60,
+                62
+              ],
+              "kind": "pair",
+              "cost": 2,
+              "result": "win"
+            }
+          ],
+          "winning": [
+            26,
+            72
+          ]
+        }
+      ],
+      "card": "The clock needs 13 moves; taking the free pair in sight at move 3 before the clock costs 2 spare moves, and the free pair at move 4 loses the board.",
+      "archetype": "keys before the clock",
+      "k": 13,
+      "strictK": 13,
+      "shipSpares": [
+        2,
+        3
+      ],
+      "ms": 98,
+      "nodes": 26641,
+      "warnings": [],
+      "profile": {
+        "id": "e5-v1",
+        "fingerprint": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2"
+      }
+    },
+    "cpuS": 22.173,
+    "wallS": 21.95
+  },
+  "design": {
+    "tiles": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        2,
+        0,
+        0
+      ],
+      [
+        10,
+        0,
+        0
+      ],
+      [
+        12,
+        0,
+        0
+      ],
+      [
+        0,
+        2,
+        0
+      ],
+      [
+        2,
+        2,
+        0
+      ],
+      [
+        10,
+        2,
+        0
+      ],
+      [
+        12,
+        2,
+        0
+      ],
+      [
+        0,
+        4,
+        0
+      ],
+      [
+        2,
+        4,
+        0
+      ],
+      [
+        10,
+        4,
+        0
+      ],
+      [
+        12,
+        4,
+        0
+      ],
+      [
+        0,
+        6,
+        0
+      ],
+      [
+        2,
+        6,
+        0
+      ],
+      [
+        10,
+        6,
+        0
+      ],
+      [
+        12,
+        6,
+        0
+      ],
+      [
+        0,
+        8,
+        0
+      ],
+      [
+        2,
+        8,
+        0
+      ],
+      [
+        10,
+        8,
+        0
+      ],
+      [
+        12,
+        8,
+        0
+      ],
+      [
+        0,
+        10,
+        0
+      ],
+      [
+        2,
+        10,
+        0
+      ],
+      [
+        4,
+        10,
+        0
+      ],
+      [
+        6,
+        10,
+        0
+      ],
+      [
+        8,
+        10,
+        0
+      ],
+      [
+        10,
+        10,
+        0
+      ],
+      [
+        12,
+        10,
+        0
+      ],
+      [
+        0,
+        12,
+        0
+      ],
+      [
+        2,
+        12,
+        0
+      ],
+      [
+        4,
+        12,
+        0
+      ],
+      [
+        6,
+        12,
+        0
+      ],
+      [
+        8,
+        12,
+        0
+      ],
+      [
+        10,
+        12,
+        0
+      ],
+      [
+        12,
+        12,
+        0
+      ],
+      [
+        0,
+        14,
+        0
+      ],
+      [
+        2,
+        14,
+        0
+      ],
+      [
+        4,
+        14,
+        0
+      ],
+      [
+        6,
+        14,
+        0
+      ],
+      [
+        8,
+        14,
+        0
+      ],
+      [
+        10,
+        14,
+        0
+      ],
+      [
+        12,
+        14,
+        0
+      ],
+      [
+        1,
+        9,
+        1
+      ],
+      [
+        11,
+        9,
+        1
+      ],
+      [
+        1,
+        7,
+        1
+      ],
+      [
+        11,
+        7,
+        1
+      ],
+      [
+        3,
+        11,
+        1
+      ],
+      [
+        9,
+        11,
+        1
+      ],
+      [
+        5,
+        11,
+        1
+      ],
+      [
+        7,
+        11,
+        1
+      ],
+      [
+        1,
+        11,
+        1
+      ],
+      [
+        11,
+        11,
+        1
+      ],
+      [
+        1,
+        5,
+        1
+      ],
+      [
+        11,
+        5,
+        1
+      ],
+      [
+        3,
+        13,
+        1
+      ],
+      [
+        9,
+        13,
+        1
+      ],
+      [
+        1,
+        13,
+        1
+      ],
+      [
+        11,
+        13,
+        1
+      ],
+      [
+        5,
+        13,
+        1
+      ],
+      [
+        7,
+        13,
+        1
+      ],
+      [
+        1,
+        3,
+        1
+      ],
+      [
+        11,
+        3,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        11,
+        1,
+        1
+      ],
+      [
+        4,
+        12,
+        2
+      ],
+      [
+        8,
+        12,
+        2
+      ],
+      [
+        10,
+        12,
+        2
+      ],
+      [
+        2,
+        12,
+        2
+      ],
+      [
+        6,
+        12,
+        2
+      ],
+      [
+        9,
+        12,
+        3
+      ],
+      [
+        3,
+        12,
+        3
+      ],
+      [
+        5,
+        12,
+        3
+      ],
+      [
+        7,
+        12,
+        3
+      ],
+      [
+        4,
+        12,
+        4
+      ],
+      [
+        8,
+        12,
+        4
+      ],
+      [
+        6,
+        12,
+        4
+      ],
+      [
+        7,
+        12,
+        5
+      ]
+    ],
+    "faces": [
+      17,
+      7,
+      5,
+      14,
+      12,
+      28,
+      34,
+      33,
+      22,
+      28,
+      10,
+      2,
+      29,
+      16,
+      24,
+      2,
+      29,
+      16,
+      25,
+      15,
+      6,
+      6,
+      33,
+      34,
+      0,
+      27,
+      11,
+      7,
+      31,
+      32,
+      31,
+      10,
+      22,
+      1,
+      32,
+      8,
+      24,
+      15,
+      8,
+      12,
+      17,
+      5,
+      23,
+      27,
+      3,
+      35,
+      35,
+      13,
+      35,
+      21,
+      23,
+      3,
+      14,
+      9,
+      20,
+      0,
+      25,
+      20,
+      9,
+      1,
+      26,
+      21,
+      26,
+      13,
+      13,
+      19,
+      35,
+      13,
+      19,
+      4,
+      18,
+      4,
+      11,
+      30,
+      18,
+      30
+    ],
+    "down": [],
+    "gold": [],
+    "obst": {
+      "ice": {},
+      "locks": [
+        42
+      ],
+      "keys": [
+        5,
+        9
+      ]
+    },
+    "clock": {
+      "i": 26,
+      "n": 15
+    },
+    "solution": [
+      51,
+      61,
+      59,
+      44,
+      5,
+      9,
+      75,
+      73,
+      68,
+      65,
+      42,
+      50,
+      26,
+      72,
+      18,
+      56,
+      33,
+      0,
+      40,
+      60,
+      62,
+      2,
+      41,
+      3,
+      52,
+      11,
+      15,
+      69,
+      66,
+      49,
+      74,
+      70,
+      71,
+      63,
+      45,
+      64,
+      1,
+      4,
+      20,
+      21,
+      54,
+      39,
+      55,
+      27,
+      67,
+      47,
+      7,
+      22,
+      46,
+      48,
+      6,
+      23,
+      24,
+      8,
+      32,
+      25,
+      43,
+      12,
+      16,
+      13,
+      17,
+      53,
+      57,
+      58,
+      10,
+      31,
+      28,
+      30,
+      29,
+      34,
+      35,
+      38,
+      14,
+      36,
+      19,
+      37
+    ]
+  },
+  "profile": {
+    "schema": "gate-profile-v1",
+    "id": "e5-v1",
+    "experimental": true,
+    "static": {
+      "required": [
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "A6",
+        "A9"
+      ],
+      "reportOnly": [
+        "A5",
+        "A7"
+      ]
+    },
+    "traces": {
+      "required": [
+        "B1",
+        "B2",
+        "B3",
+        "B4",
+        "B5",
+        "B6"
+      ],
+      "thresholds": {
+        "B2": {
+          "min": 0.2
+        },
+        "B3": {
+          "min": 0.08
+        },
+        "B4": {
+          "max": 10
+        },
+        "B6": {
+          "max": 0.65
+        }
+      }
+    },
+    "evidence": {
+      "file": "library/gates-calibrated.json",
+      "sha256": "0eef391f1b9145c269f18dc2391f9f0e80c523c8ca37fcce313a159e8b6b55ed"
+    },
+    "fingerprint": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2"
+  },
+  "pins": {
+    "schema": "yardstick-v2",
+    "created": "2026-11-07",
+    "source": "source/analysis/builder/process-design-synthesis.md sections 2, 3 and 6 step 0e; code: source/tools/builder/loop/yardstick.js",
+    "family": {
+      "role": "the family ruler (D)",
+      "botVersion": "family-key-memory-v1-fast",
+      "version": "human-g6.3-key-memory-candidate1",
+      "fingerprint": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+      "note": "createMeter({botVersion:'family-key-memory-v1-fast'}) after Gemini Task G3 (commit 52edfa19). Zero drift against the slow family-key-memory-v1 on 60 boards / 635,635 moves (gemini-tasks/results/km-fast/km-fast.md section 3). About 1.7 s per 40-campaign rating on one core (same report, section 4).",
+      "slowFingerprint": "5372bd4e5d29acce926c537400b8a069dd0d04c3f4d2032024c9f34a1d99863d",
+      "slowNote": "createMeter({botVersion:'family-key-memory-v1'}) on wip/cc-builder-loop after merge 8d62405d: the same bot without the fast path.",
+      "codexFingerprint": "d362e85fba3d61523c54bc53a92745458e4467fb4a59624aad1312e9d9003ae3",
+      "codexNote": "Codex Task 11 rated family-key-memory-v1 under this hash before the G2 merge changed shared sources.",
+      "migration": "meter.js FAMILY_CACHE_MIGRATIONS['63be677e...'] = ['5372bd4e...', 'd362e85f...']. meter.measure applies it by itself: for setting 'family' only (never planner), only to entries with valid === true, and only for exactly the same settings key; a hit copies the old file to the new key. The yardstick therefore needs no reuse logic of its own (the draft's reusePrior was removed).",
+      "migrationCheck": {
+        "date": "2026-11-07",
+        "board": "qualified-200-225.jsonl row 0 (level 200, id 58a099f8cfe6eb4d), design as stored",
+        "settings": {
+          "setting": "family",
+          "runs": 20,
+          "seeds": 2,
+          "seed": 4711
+        },
+        "result": "No 63be677e entry existed; createMeter({botVersion:'family-key-memory-v1-fast'}).measure returned in 2 ms with stats {calls:0, hits:1, familyReused:1} from Codex's d362e85f entry (expectedTries 10.03, valid) and wrote it under the new key. A fresh fast rating of the same call without cache (2.7 s) gave expectedTries 10.03 and the same wonOn for all 20 visible campaigns.",
+        "cacheSurvey": "source/build/factory-cache holds d362e85f family ratings at 4711 and 18427 for 17 of the 18 qualified 200-225 boards as stored (204 has none), and none under 5372bd4e or 63be677e before this check."
+      }
+    },
+    "reference": {
+      "role": "counterfactual only (gate C1), and the planner",
+      "botVersion": null,
+      "version": "human-g6.2",
+      "fast": true,
+      "fingerprint": "4cf0b4c7057c2242f27fe529bb1885e4ad06cdf94588b79411cc06c522509e39",
+      "note": "createMeter() default (fast mode). The meter itself migrates the older f3285928 / cae3bc38 / ac24aad8 family cache entries (FAMILY_CACHE_MIGRATIONS, G2 zero-drift)."
+    },
+    "planner": {
+      "role": "S (skilled), better of route and plain styles (Task 05)",
+      "meter": "planner",
+      "botVersion": "planner-fast-v1",
+      "fingerprint": "e686e095300cec3926719ef63715fe3902bb1b4cf31825c3f36ee1872033ced9",
+      "migration": "meter.js PLANNER_CACHE_MIGRATIONS['e686e095...'] = ['4cf0b4c7...', 'f3285928...'] (planner settings only). Zero drift, about 10x faster (Gemini G4).",
+      "settings": {
+        "setting": "planner",
+        "runs": 20,
+        "seeds": 2,
+        "seed": 4711
+      },
+      "spare": 2,
+      "note": "Same settings as batch_evaluate.js quality mode, so cached planner ratings are reused (via migration)."
+    },
+    "subBlockStride": 7919,
+    "cap": 20,
+    "blocks": {
+      "SCREEN": {
+        "use": "early stop (synthesis section 6 step 4); discarded after use",
+        "campaigns": 20,
+        "calls": [
+          {
+            "runs": 20,
+            "seeds": 1,
+            "seed": 4711
+          }
+        ],
+        "equivalence": "Campaign r of a meter call uses seed (seed + imul(r+1, 0x9e3779b9))|0, so {runs:20,seeds:1,seed:4711} is exactly the first (visible) sub-block of the CURVE 4711 call. screen.js reads it from a cached CURVE 4711 rating when one exists.",
+        "sequential": {
+          "chunk": 5,
+          "looks": [
+            5,
+            10,
+            15
+          ],
+          "z": 3,
+          "rule": "After 5, 10 and 15 campaigns, stop when the running mean m_n is beyond threshold t by more than z * sd(t) / sqrt(n), where sd(t) is the per-campaign SD of a geometric number of tries with mean t, capped at 20. Chunk j is the meter call {runs:5, seeds:1, seed:(4711 + imul(5j, 0x9e3779b9))|0}: the same campaigns as SCREEN, so a board that is not stopped gets exactly the SCREEN value.",
+          "calibration": {
+            "command": "node source/tools/builder/loop/screen.js --calibrate --out source/build/screen-cal.json (2026-11-07, 1.5 min, no bot runs)",
+            "criterion": "smallest z with a false-stop rate <= 2% for a board exactly at the threshold, every threshold 2-18.5, both sides (task10_speed.js used the same 2% criterion)",
+            "simulatedMaxFalseStop": {
+              "2": 0.085,
+              "3": 0.0192,
+              "1.5": 0.15515,
+              "1.75": 0.11755,
+              "2.25": 0.06305,
+              "2.5": 0.04185,
+              "2.75": 0.02675,
+              "3.5": 0.008
+            },
+            "model": "min(Geometric, 20) with mean t; its SD matches the real per-campaign spread of 634 cached key-memory ratings (observed/model 0.97, 0.87, 0.94, 0.96, 1.00 in D bands 1-3, 3-6, 6-10, 10-14, 14-20)",
+            "realReplayFalseStop": {
+              "falseStopBelow": 0.0016,
+              "falseStopAbove": 0
+            },
+            "realReplayRows": 634,
+            "power": "z 3: a board at D 2 against lo-1 = 9 stops in 100% after 10.2 campaigns on average; D 3 vs 9: 93%, 13.0 campaigns; D 15 vs hi+1 = 7: 98%, 7.6 campaigns; a board 2 SCREEN-SEs beyond the threshold stops in only 0-25%. The censoring condition (D(1) >= 18.5) can never stop early at z 3 (its bound passes 20); it is checked at 20 campaigns."
+          }
+        }
+      },
+      "CURVE": {
+        "use": "every spare of a puzzle, paired (same seeds at every spare)",
+        "campaigns": 80,
+        "calls": [
+          {
+            "runs": 20,
+            "seeds": 2,
+            "seed": 4711
+          },
+          {
+            "runs": 20,
+            "seeds": 2,
+            "seed": 18427
+          }
+        ],
+        "cacheAlternatives": [
+          {
+            "capture": "tail"
+          }
+        ],
+        "pooling": "Production pooling (batch_evaluate.js rate mode, empirical_confirm.js, task11_rerate.js): two meter calls {setting:'family', runs:20, seeds:2} at seed 4711 and seed 18427, 40 campaigns each, pooled = (exp4711 + exp18427) / 2. Production rated the reference bot's 4711 call with capture:'tail' (part of the cache key, not of the rating); Codex rated key memory without capture. The yardstick looks up both cache variants before measuring.",
+        "visibleCampaigns": "The meter returns per-campaign results only for the first sub-block of each call (the first 20 of 40). SEs are estimated from those 40 of 80 campaigns (sample SD / sqrt(80)); D itself uses all 80 (mean of the two calls' expectedTries)."
+      },
+      "ACCEPT": {
+        "use": "the value of record; never reused, never used for choosing",
+        "blockCampaigns": 40,
+        "firstSeed": 29717,
+        "seedStep": 15838,
+        "runs": 20,
+        "seeds": 2,
+        "note": "Block j is meter call {runs:20, seeds:2, seed: 29717 + 15838*j}. Its two sub-blocks are 29717 + 7919*(2j) and 29717 + 7919*(2j+1), so blocks never overlap each other or 4711/12630/18427/26346. Block 0 equals production's reserved final seed (final_seed.js SEED = 29717)."
+      }
+    },
+    "acceptance": {
+      "rule": "sequential (synthesis section 2)",
+      "startCampaigns": 160,
+      "maxCampaigns": 320,
+      "acceptGap": 0.6,
+      "refuseGap": 2.5,
+      "finalGap": 1,
+      "steps": [
+        "Measure 160 ACCEPT campaigns (4 blocks).",
+        "If |D - T| <= 0.6 x tolerance: accept.",
+        "If |D - T| > 2.5 x tolerance: refuse the pair for that slot (the puzzle goes back to the library).",
+        "Otherwise measure up to 320 campaigns (8 blocks) and accept only if |D - T| <= tolerance."
+      ],
+      "ledger": "source/analysis/builder/library/accept-ledger.json",
+      "ledgerRule": "ACCEPT blocks are counted per puzzle (the design with clock.n removed), across all spares and fingerprints. accept() reserves blocks [start, start + maxCampaigns/40) in the ledger before measuring and never measures a reserved block again."
+    },
+    "tolerance": {
+      "level": {
+        "abs": 1,
+        "rel": 0,
+        "rule": "|D_accept - T| <= 1"
+      },
+      "window": {
+        "abs": 0.5,
+        "rel": 0,
+        "rule": "every 5-level window mean within 0.5"
+      },
+      "note": "Dennis's fixed tolerances, reaffirmed 2026-11-08. No relative widening."
+    },
+    "curveRules": {
+      "monotoneSlack": 0.5,
+      "monotoneSe": 2,
+      "neighbourRatio": 1.5,
+      "neighbourAdd": 3,
+      "censoredAt": 18.5,
+      "shippableSpares": [
+        1,
+        2,
+        3
+      ],
+      "maxClockN": 19,
+      "diallableRatio": 1.2,
+      "openingClockK": 6,
+      "openingClockMinSpare": 2,
+      "releaseTestSpare": [
+        1,
+        3
+      ],
+      "note": "canShip follows synthesis section 3. openingClock (k at move 0 <= 6 means spare >= 2) is a flag; shippableOpeningRule lists the spares that also pass it. No peak exception. releaseTestSpare is the spare t_clocks.js checks: clock.n - (index of the clock in the stored solution) - 1 must be 1-3."
+    }
+  },
+  "code": {
+    "builder.js": "af7188a444998ff6",
+    "engine.js": "e938495e38a027d1",
+    "gate.js": "ea6296ed31c45e65",
+    "knobs.js": "5d01fc14f53fefb2",
+    "static_gates.js": "81b25a171729b1bb",
+    "obvious.js": "96049dabb71877e7",
+    "detour.js": "b292479d080fc8d8",
+    "publicfork.js": "bcac18c2c7418b40",
+    "screen.js": "d4d356382fe17c1a",
+    "dial_curve.js": "50f383e41f316526",
+    "traces.js": "8553dfb8b874cfa7",
+    "counterfactual.js": "5ccc11a608c26263",
+    "yardstick.js": "6d47e7a928ac3704",
+    "library.js": "9f47e91f757d71da",
+    "run_pipeline.js": "48d8efce629c32b5",
+    "gate_profile.js": "9cfd206a86424fa1",
+    "policy.js": "a963c0521b110916",
+    "visible_choice.js": "8ff7d343f9323016",
+    "dependency_choice.js": "e14a6f7ff797bce4",
+    "reserve_cuts.js": "27b8a67972cdfb51"
+  },
+  "runner": "e93edec5bd5f985a7ec5770de522c2232dd8aaa76a62d77f6fb9b9ce3184a983",
+  "note": "Fixed target-13 candidate with early clock prelude and preserved late choice. Two-act pacing is declared before capture. No ACCEPT or independent acceptance seeds, assignment or publication."
+}

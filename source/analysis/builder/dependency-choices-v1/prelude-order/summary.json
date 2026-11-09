@@ -1,0 +1,16 @@
+{
+  "complete": true,
+  "attempted": 18,
+  "built": 16,
+  "protectedContinuation": 16,
+  "jointBandSettings": [
+    {
+      "id": "k5-9-lock42",
+      "spare": 2,
+      "D": 13.69,
+      "S": 3.48
+    }
+  ],
+  "cpuS": 417.34400000000005,
+  "note": "Visible pairs from a fixed prefix window; preserve and reach the exact original late decision state. Skilled first, full CURVE only for normal-band settings. No ACCEPT seeds or releases."
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "id": "control",
+    "mode": "dependencyChoice",
+    "shape": "clover",
+    "story": "reserveTray",
+    "seed": 1,
+    "frame": {
+      "spare": 2,
+      "thaw": 2
+    },
+    "targets": {
+      "choiceModules": 4,
+      "links": 3,
+      "baitModules": [
+        2,
+        3
+      ],
+      "rewardLures": false
+    }
+  },
+  {
+    "id": "reward",
+    "mode": "dependencyChoice",
+    "shape": "clover",
+    "story": "reserveTray",
+    "seed": 1,
+    "frame": {
+      "spare": 2,
+      "thaw": 2
+    },
+    "targets": {
+      "choiceModules": 4,
+      "links": 3,
+      "baitModules": [
+        2,
+        3
+      ],
+      "rewardLures": true
+    }
+  }
+]

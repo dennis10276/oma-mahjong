@@ -1,0 +1,16 @@
+{
+  "complete": true,
+  "attempted": 5,
+  "built": 2,
+  "protectedContinuation": 2,
+  "jointBandSettings": [
+    {
+      "id": "repair-0",
+      "spare": 2,
+      "D": 13.69,
+      "S": 3.48
+    }
+  ],
+  "cpuS": 19.764999999999997,
+  "note": "Visible pairs from a fixed prefix window; preserve and reach the exact original late decision state. Skilled first, full CURVE only for normal-band settings. No ACCEPT seeds or releases."
+}

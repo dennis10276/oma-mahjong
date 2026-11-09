@@ -1,0 +1,35 @@
+#!/usr/bin/env node
+'use strict';
+// One declared proposal, frozen before capture. Consumes no ACCEPT blocks.
+const fs=require('fs'),path=require('path');
+const GP=require('../gate_profile.js'),P=require('../run_pipeline.js'),K=require('../../knobs.js');
+const CF=require('../counterfactual.js'),DC=require('../dial_curve.js'),T=require('../traces.js'),SG=require('../static_gates.js');
+function main(){
+ const a={};for(let i=2;i<process.argv.length;i+=2)a[process.argv[i].slice(2)]=process.argv[i+1];
+ if(!a.out)throw Error('Use heavy.js -- node check_protected_prelude.js --out new-directory');
+ const root=path.resolve(__dirname,'../../../../..'),owner=JSON.parse(fs.readFileSync(path.join(root,'source/build/heavy.lock/owner.json'),'utf8'));if(owner.pid!==process.ppid)throw Error('Run through heavy.js');
+ const file=a.rows?path.resolve(a.rows):path.join(root,'source/analysis/builder/dependency-choices-v1/prelude-order/rows.jsonl');
+ const id=a.id||'k5-9-lock42',spare=Number(a.spare||2),familyTarget=Number(a.target||13),secondAct=a['second-act']==null?true:a['second-act']==='true';
+ if(![1,2,3].includes(spare)||!Number.isFinite(familyTarget)||familyTarget<1||familyTarget>19||a['second-act']!=null&&!['true','false'].includes(a['second-act']))throw Error('Invalid fixed plan');
+ const source=fs.readFileSync(file,'utf8').trim().split(/\r?\n/).map(JSON.parse).find(r=>r.id===id);
+ if(!source)throw Error('Missing declared candidate');
+ if(source.reach.status!=='win'||source.fork.before!=='win'||source.fork.after!=='lose')throw Error('Missing body contract');
+ const at=K.clockSpare(source.design,spare);if(at.fail)throw Error(at.fail);
+ const d=at.design,profile=GP.loadProfile('e5-v1'),ys=CF.rulerYardstick(),out=path.resolve(a.out);
+ if(fs.existsSync(out))throw Error('Preserve the previous fixed diagnostic');fs.mkdirSync(out,{recursive:true});
+ const manifest={schema:'protected-prelude-check-v2',plan:{familyTarget,skilled:[2.5,6],spare,secondAct},source,design:d,profile,pins:ys.pins,code:P.codeFingerprints(),runner:GP.digest(fs.readFileSync(__filename,'utf8')),
+ note:'Fixed candidate and plan with early clock prelude and preserved late choice. Pacing declared before capture; the protected later choice alone does not assert substantial family pressure after the clock. No ACCEPT or independent acceptance seeds, assignment or publication.'};
+ fs.writeFileSync(path.join(out,'manifest.json'),JSON.stringify(manifest,null,2)+'\n');fs.copyFileSync(__filename,path.join(out,'runner.js.txt'));
+ const cpu0=process.cpuUsage(),t0=Date.now(),checks={};
+ const save=(name,value)=>{checks[name]=value;fs.writeFileSync(path.join(out,name+'.json'),JSON.stringify(value,null,2)+'\n');console.log(JSON.stringify({step:name,pass:value.pass??null,ship:value.shippable??null}));};
+ save('static',GP.applyStatic(SG.staticGates(d,{story:'visibleKeyPrelude',shape:'ushape'}),profile));
+ save('curve',DC.measureCurve(d,ys,{spares:[0,1,2,3,4]}));
+ save('traces',T.traceGates(d,GP.traceOptions({spare,ys,campaigns:80,secondAct,maxExamples:12},profile)));
+ save('C1',CF.c1(d,{spare,ys}));save('C23',CF.c2c3(d,{plannerSpare:spare,ys}));
+ const cpu=process.cpuUsage(cpu0),tr=checks.traces,curve=checks.curve.verdicts[spare];
+ const summary={plan:manifest.plan,staticPass:checks.static.pass,unresolved:GP.unresolvedStatic(checks.static,profile,{spare}),curve:curve,tracePass:tr.pass,
+   traceGates:Object.fromEntries(['B1','B2','B3','B4','B5','B6','B7'].map(k=>[k,tr[k]])),C1:checks.C1,C2:checks.C23.C2,
+   cpuS:(cpu.user+cpu.system)/1e6,wallS:(Date.now()-t0)/1000,accepted:false,note:manifest.note};
+ fs.writeFileSync(path.join(out,'summary.json'),JSON.stringify(summary,null,2)+'\n');console.log(JSON.stringify(summary));
+}
+if(require.main===module)main();

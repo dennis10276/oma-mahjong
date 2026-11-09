@@ -1,0 +1,96 @@
+[
+  {
+    "id": "inspect-0",
+    "mode": "dependencyChoice",
+    "shape": "clover",
+    "story": "reserveTray",
+    "seed": 1,
+    "frame": {
+      "spare": 2,
+      "thaw": 2,
+      "clockPlacement": "thaw"
+    },
+    "targets": {
+      "choiceModules": 4,
+      "links": 3,
+      "inspect": []
+    }
+  },
+  {
+    "id": "inspect-1",
+    "mode": "dependencyChoice",
+    "shape": "clover",
+    "story": "reserveTray",
+    "seed": 1,
+    "frame": {
+      "spare": 2,
+      "thaw": 2,
+      "clockPlacement": "thaw"
+    },
+    "targets": {
+      "choiceModules": 4,
+      "links": 3,
+      "inspect": [
+        0
+      ]
+    }
+  },
+  {
+    "id": "inspect-2",
+    "mode": "dependencyChoice",
+    "shape": "clover",
+    "story": "reserveTray",
+    "seed": 1,
+    "frame": {
+      "spare": 2,
+      "thaw": 2,
+      "clockPlacement": "thaw"
+    },
+    "targets": {
+      "choiceModules": 4,
+      "links": 3,
+      "inspect": [
+        1
+      ]
+    }
+  },
+  {
+    "id": "inspect-3",
+    "mode": "dependencyChoice",
+    "shape": "clover",
+    "story": "reserveTray",
+    "seed": 1,
+    "frame": {
+      "spare": 2,
+      "thaw": 2,
+      "clockPlacement": "thaw"
+    },
+    "targets": {
+      "choiceModules": 4,
+      "links": 3,
+      "inspect": [
+        3
+      ]
+    }
+  },
+  {
+    "id": "inspect-4",
+    "mode": "dependencyChoice",
+    "shape": "clover",
+    "story": "reserveTray",
+    "seed": 1,
+    "frame": {
+      "spare": 2,
+      "thaw": 2,
+      "clockPlacement": "thaw"
+    },
+    "targets": {
+      "choiceModules": 4,
+      "links": 3,
+      "inspect": [
+        0,
+        3
+      ]
+    }
+  }
+]

@@ -1,0 +1,28 @@
+{
+  "pass": true,
+  "keyMemory": 13.69,
+  "reference": 13.69,
+  "diff": 0,
+  "tolerance": 3.42,
+  "seKeyMemory": 1.13,
+  "seReference": 1.13,
+  "n": 80,
+  "calls": {
+    "keyMemory": [
+      13.18,
+      14.2
+    ],
+    "reference": [
+      13.18,
+      14.2
+    ]
+  },
+  "valid": true,
+  "spare": 2,
+  "clockN": 15,
+  "fingerprints": {
+    "keyMemory": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+    "reference": "4cf0b4c7057c2242f27fe529bb1885e4ad06cdf94588b79411cc06c522509e39"
+  },
+  "ms": 4392
+}

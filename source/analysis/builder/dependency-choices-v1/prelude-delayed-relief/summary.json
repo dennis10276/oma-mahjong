@@ -1,0 +1,16 @@
+{
+  "complete": true,
+  "attempted": 1,
+  "built": 1,
+  "protectedContinuation": 1,
+  "jointBandSettings": [
+    {
+      "id": "delayed-relief",
+      "spare": 3,
+      "D": 13.2,
+      "S": 3.1
+    }
+  ],
+  "cpuS": 44.328,
+  "note": "Visible pairs from a fixed prefix window; preserve and reach the exact original late decision state. Skilled first, full CURVE only for normal-band settings. No ACCEPT seeds or releases."
+}

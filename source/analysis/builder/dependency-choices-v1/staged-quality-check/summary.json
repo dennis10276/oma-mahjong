@@ -1,0 +1,136 @@
+{
+  "plan": {
+    "familyTarget": 13,
+    "skilled": [
+      2.5,
+      6
+    ],
+    "spare": 3,
+    "secondAct": false
+  },
+  "staticPass": true,
+  "unresolved": [],
+  "curve": {
+    "spare": 3,
+    "D": 13.2,
+    "clockN": 16,
+    "reasons": [],
+    "monotoneLimit": 15.392846540314002,
+    "monotone": true,
+    "neighbourLimit": 16.2,
+    "tighterNeighbour": true,
+    "notCensored": true,
+    "shippableSpare": true,
+    "releaseSpare": 3,
+    "openingClockOk": true,
+    "canShip": true
+  },
+  "tracePass": true,
+  "traceGates": {
+    "B1": {
+      "pass": true,
+      "value": 1,
+      "bites": 80,
+      "firstTries": 80
+    },
+    "B2": {
+      "pass": true,
+      "value": 0.691,
+      "atTrap": 696,
+      "atForkState": 3,
+      "onTemptingMove": 694,
+      "provedFirstErrors": 1007,
+      "lostTries": 1007,
+      "coverage": 1
+    },
+    "B3": {
+      "pass": true,
+      "value": 0.122
+    },
+    "B4": {
+      "pass": true,
+      "value": 6
+    },
+    "B5": {
+      "pass": true,
+      "value": 0.001,
+      "lateTrayLosses": 1
+    },
+    "B6": {
+      "pass": true,
+      "value": 0.486,
+      "postClockLosses": 489,
+      "secondAct": false,
+      "postClockErrorMedianShare": 0.427
+    },
+    "B7": {
+      "pass": null,
+      "report": true,
+      "value": 0.567,
+      "repeats": 376,
+      "knownRepeats": 376,
+      "lossesTries6to20": 663,
+      "inflated": true,
+      "maxTarget": 10
+    }
+  },
+  "C1": {
+    "pass": true,
+    "keyMemory": 13.2,
+    "reference": 13.2,
+    "diff": 0,
+    "tolerance": 3.3,
+    "seKeyMemory": 1.14,
+    "seReference": 1.14,
+    "n": 80,
+    "calls": {
+      "keyMemory": [
+        12.65,
+        13.75
+      ],
+      "reference": [
+        12.65,
+        13.75
+      ]
+    },
+    "valid": true,
+    "spare": 3,
+    "clockN": 16,
+    "fingerprints": {
+      "keyMemory": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+      "reference": "4cf0b4c7057c2242f27fe529bb1885e4ad06cdf94588b79411cc06c522509e39"
+    },
+    "ms": 6057
+  },
+  "C2": {
+    "pass": true,
+    "asIs": 3.1,
+    "faceUp": 3.1,
+    "diff": 0,
+    "skilledCredit": true,
+    "plannerSpare": 3,
+    "clockN": 16,
+    "faceDownTiles": 0,
+    "styles": {
+      "asIs": {
+        "route": 3.17,
+        "plain": 3.1
+      },
+      "faceUp": {
+        "route": 3.17,
+        "plain": 3.1
+      }
+    },
+    "clockK": {
+      "asIs": 13,
+      "faceUp": 13
+    },
+    "valid": true,
+    "fingerprint": "e686e095300cec3926719ef63715fe3902bb1b4cf31825c3f36ee1872033ced9",
+    "ms": 5
+  },
+  "cpuS": 24.719,
+  "wallS": 22.592,
+  "accepted": false,
+  "note": "Fixed candidate and plan with early clock prelude and preserved late choice. Pacing declared before capture; the protected later choice alone does not assert substantial family pressure after the clock. No ACCEPT or independent acceptance seeds, assignment or publication."
+}

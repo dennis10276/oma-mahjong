@@ -10,6 +10,47 @@ content and proving a new minimum/witness. It does not qualify a level. See
 remaining lack of reliable joint family/skilled target control. Neither control
 changes defaults, difficulty requirements or the approved level curve.
 
+Further construction controls (2026-11-09): `mode: 'dependencyChoice'` builds an
+explicit clover with face-up reserve-space dependencies. Its brief is
+`{shape:'clover', story:'reserveTray', frame:{spare:2, thaw:2},
+targets:{choiceModules:1, links:0}, seed:1}`. Counts 1–4 select active lobes;
+`links` 0–count−1 links their matching partners. Optional `inspect:[lobeIds]`
+adds up to two known matching inspection pairs. The narrowly scoped
+`rewardLures` recipe is checked explicitly by the constructor. Unsupported
+controls fail instead of silently changing the request. These are proven
+construction choices, **not calibrated difficulty presets**: the corrected
+clover tests remain much too easy for the skilled bot.
+
+`knobs.clockKeys(design, keys, spare, {lockTile})` builds a meaningful visible
+key/lock prelude while preserving the matching puzzle. `clockKeyIce` requires
+a separate visible thaw prerequisite that increases the exact clock minimum.
+`framePictures` changes only tiles already removed at a declared protected
+continuation; it preserves all surviving pictures and the removed-picture
+multiset. This proves physical equivalence at that state, not its reachability
+or identical bot behaviour. `reachContinuation` in the research runner proves
+an explicit route there, and both bots are measured again for each new board.
+
+`frame_detours.build(design, pairs, spare)` adds up to three authored matching
+pairs, optionally in a staged uncovering order. It preserves every original
+tile/picture/neighbour, iced tile's neighbours and the rendered footprint.
+Only existing non-key pictures present twice may be extended to four copies.
+The entire declared pair chain clears in two moves per pair; a covered pair
+does not get an independent two-move detour claim. The exact clock minimum
+must remain unchanged, and a complete strict witness must replay.
+
+`reserve_cuts.js` infers closed, unique face-up matching dependencies from
+physics. It supplies sound dead-state certificates and an admissible clock
+bound, not card-based assumptions. `E.game(d,{reserveCuts:false})` disables
+these optimizations for independent checks. `clockShortest` accepts optional
+`totalNodes` across its frontier and finishing searches; exhausted proofs
+remain unknown. The new constructors use this aggregate limit so repeated
+finishing proofs cannot consume an unbounded multiple of the search budget.
+
+See `source/analysis/builder/dependency-choices-v1/REPORT.md` for the complete
+construction results. A new clock frame preserved a skilled rating near 3,
+but neither the fixed quality checks nor the later repairs produced a new
+accepted level. Following arbitrary family difficulty plans remains open.
+
 Dennis (2026-11-06): "We are spending a lot of time making levels in a unique and difficult way when we dont have the
 ground work done of designing levels and what makes them unique and difficult. Focus on making the builder better
 before letting it learn." Plan: the doc "Level builder plan" (phases 1-4). This folder is phases 1 and 2.
