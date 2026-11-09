@@ -1,0 +1,221 @@
+{
+  "stages": [
+    {
+      "stage": "coupled-pilot",
+      "scheduled": 27,
+      "built": 18,
+      "failed": 9,
+      "skilled": {
+        "n": 18,
+        "min": 1,
+        "max": 1.02
+      },
+      "cpuS": 23.39,
+      "strictWitnesses": 18,
+      "snapshots": [
+        {
+          "file": "coupled_row.js.txt",
+          "hash": "5e66ff0a03b5aa1c",
+          "recordedHash": null,
+          "verified": false
+        },
+        {
+          "file": "engine.js.txt",
+          "hash": "4169afc06bccd4b0",
+          "recordedHash": "4169afc06bccd4b0",
+          "verified": true
+        },
+        {
+          "file": "finish.js.txt",
+          "hash": "90666cca5bb79ef9",
+          "recordedHash": "90666cca5bb79ef9",
+          "verified": true
+        },
+        {
+          "file": "row_choice.js.txt",
+          "hash": "1868c4537e104acc",
+          "recordedHash": "1868c4537e104acc",
+          "verified": true
+        },
+        {
+          "file": "row_cut.js.txt",
+          "hash": "8ca9c9f59073e2eb",
+          "recordedHash": "8ca9c9f59073e2eb",
+          "verified": true
+        }
+      ],
+      "limitation": null
+    },
+    {
+      "stage": "reserve-note-deep-relief",
+      "scheduled": 1,
+      "built": 1,
+      "failed": 0,
+      "skilled": {
+        "n": 1,
+        "min": 1.05,
+        "max": 1.05
+      },
+      "cpuS": 1.375,
+      "strictWitnesses": 1,
+      "snapshots": [
+        {
+          "file": "bridge_cuts.js.txt",
+          "hash": "14eb50a231f5f4af",
+          "recordedHash": "14eb50a231f5f4af",
+          "verified": true
+        },
+        {
+          "file": "engine.js.txt",
+          "hash": "0660ce3b5e06a45c",
+          "recordedHash": "0660ce3b5e06a45c",
+          "verified": true
+        },
+        {
+          "file": "reserve_note.js.txt",
+          "hash": "c3414e9a410185b2",
+          "recordedHash": "c3414e9a410185b2",
+          "verified": true
+        }
+      ],
+      "limitation": null
+    },
+    {
+      "stage": "reserve-note-fit",
+      "scheduled": 2,
+      "built": 2,
+      "failed": 0,
+      "skilled": {
+        "n": 2,
+        "min": 1.3,
+        "max": 18.5
+      },
+      "cpuS": 9.593,
+      "strictWitnesses": 2,
+      "snapshots": [
+        {
+          "file": "bridge_cuts.js.txt",
+          "hash": "14eb50a231f5f4af",
+          "recordedHash": "14eb50a231f5f4af",
+          "verified": true
+        },
+        {
+          "file": "engine.js.txt",
+          "hash": "0660ce3b5e06a45c",
+          "recordedHash": "0660ce3b5e06a45c",
+          "verified": true
+        },
+        {
+          "file": "reserve_note.js.txt",
+          "hash": "732274e8674dcad7",
+          "recordedHash": "732274e8674dcad7",
+          "verified": true
+        }
+      ],
+      "limitation": "Second spare picture was hidden: high skilled score is not fair-challenge evidence."
+    },
+    {
+      "stage": "reserve-note-pilot",
+      "scheduled": 2,
+      "built": 1,
+      "failed": 1,
+      "skilled": {
+        "n": 1,
+        "min": 1.3,
+        "max": 1.3
+      },
+      "cpuS": 1.672,
+      "strictWitnesses": 1,
+      "snapshots": [
+        {
+          "file": "bridge_cuts.js.txt",
+          "hash": "14eb50a231f5f4af",
+          "recordedHash": "14eb50a231f5f4af",
+          "verified": true
+        },
+        {
+          "file": "engine.js.txt",
+          "hash": "0660ce3b5e06a45c",
+          "recordedHash": "0660ce3b5e06a45c",
+          "verified": true
+        },
+        {
+          "file": "reserve_note.js.txt",
+          "hash": "86747de91bab63d6",
+          "recordedHash": "86747de91bab63d6",
+          "verified": true
+        }
+      ],
+      "limitation": null
+    },
+    {
+      "stage": "reserve-note-readable",
+      "scheduled": 2,
+      "built": 2,
+      "failed": 0,
+      "skilled": {
+        "n": 2,
+        "min": 1.3,
+        "max": 16.5
+      },
+      "cpuS": 8.563,
+      "strictWitnesses": 2,
+      "snapshots": [
+        {
+          "file": "bridge_cuts.js.txt",
+          "hash": "14eb50a231f5f4af",
+          "recordedHash": "14eb50a231f5f4af",
+          "verified": true
+        },
+        {
+          "file": "engine.js.txt",
+          "hash": "0660ce3b5e06a45c",
+          "recordedHash": "0660ce3b5e06a45c",
+          "verified": true
+        },
+        {
+          "file": "reserve_note.js.txt",
+          "hash": "671c706a3c34c475",
+          "recordedHash": "671c706a3c34c475",
+          "verified": true
+        }
+      ],
+      "limitation": null
+    },
+    {
+      "stage": "reserve-note-relief",
+      "scheduled": 2,
+      "built": 2,
+      "failed": 0,
+      "skilled": {
+        "n": 2,
+        "min": 1.13,
+        "max": 1.13
+      },
+      "cpuS": 2.234,
+      "strictWitnesses": 2,
+      "snapshots": [
+        {
+          "file": "bridge_cuts.js.txt",
+          "hash": "14eb50a231f5f4af",
+          "recordedHash": "14eb50a231f5f4af",
+          "verified": true
+        },
+        {
+          "file": "engine.js.txt",
+          "hash": "0660ce3b5e06a45c",
+          "recordedHash": "0660ce3b5e06a45c",
+          "verified": true
+        },
+        {
+          "file": "reserve_note.js.txt",
+          "hash": "c37b50ad7b08e376",
+          "recordedHash": "c37b50ad7b08e376",
+          "verified": true
+        }
+      ],
+      "limitation": null
+    }
+  ],
+  "note": "Snapshot hashes checked where recorded; missing historical keys remain null. Timings include cache hits and are not clean CPU benchmarks. No qualified or accepted new levels."
+}

@@ -68,10 +68,29 @@ local pictures must be face-up. Four-copy matching escapes must all be gone
 before the certificate applies. It trusts actual geometry and pictures rather
 than cards. Geometry caching is bounded; each local table has at most 1,024
 alive masks × 32 waiting masks. `E.game(d,{rowCuts:false})` disables this family;
-`{reserveCuts:false}` disables both families for independent checks. See
+`{reserveCuts:false}` disables all certificate families for independent checks. See
 `source/analysis/builder/choice-motifs-v1/REPORT.md` for controls, context
 interactions and the remaining supply bottleneck. The real CLI smoke rejects
 the new template as too easy.
+
+2026-11-09 four-copy correction: free tray matches are interchangeable only
+when the matching tile is the sole remaining copy. Four-copy matching choices,
+including matching clocks, now branch. The offline strict clock finisher is a
+complete budgeted search; an exhausted proof stays unresolved. Rejection and
+acceptance identities include the proof helpers. See
+`source/analysis/builder/four-copy-correctness-v1/REPORT.md` for the counterexample,
+136-board audit, 250-test verification and negative construction experiments.
+
+Opt-in `mode:'coupledRowChoice'` accepts row-choice plans with
+`story:'chooseMatchingCopy'` and `targets.pairChoice` (candidate index). It proves
+a visible winning/losing matching-copy fork, without qualifying difficulty.
+Opt-in `mode:'reserveNote'` accepts `{shape:'musicNote',
+story:'reserveMatchingCopies',frame:{spare:2},targets:{bridges:1},seed:1}`.
+Bridges are 1 or 2; two bridges optionally accept relief `'open'`, `'covered'`,
+or `'covered2'` (default `'none'`). Unsupported controls fail. Known scores are
+too easy or too hard: these remain experimental components, not difficulty
+presets. `bridge_cuts.js` supplies conservative geometry-derived loss proofs;
+`reserveCuts:false` disables all certificate families. Defaults stay unchanged.
 
 Dennis (2026-11-06): "We are spending a lot of time making levels in a unique and difficult way when we dont have the
 ground work done of designing levels and what makes them unique and difficult. Focus on making the builder better
@@ -136,7 +155,8 @@ E.traps(g, path, {upTo, nodes, ms})  -> decision points along `path` (default th
                                         is in sight) and their depth
 ```
 - `winnable` must respect ice, locks, tray and the clock deadline; memoise on (alive, tray faces as a multiset,
-  clockTaken, moves when the clock is still on the board); take a tray match first when one is free (always safe);
+  clockTaken, moves when the clock is still on the board); take a face-up tray match first only when it is the sole remaining copy of its picture;
+  ambiguous matching copies branch (even a matching clock may be the wrong copy);
   `unknown` when the budget runs out - never claim a loss it could not prove.
 - Speed target on the 18 qualified boards (`analysis/builder/data/qualified-200-225.jsonl`): `winnable` from the start
   under 200 ms median, `classify` on one state under 2 s with a per-move budget.

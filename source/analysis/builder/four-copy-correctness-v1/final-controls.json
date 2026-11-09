@@ -1,0 +1,3595 @@
+{
+  "profile": {
+    "schema": "gate-profile-v1",
+    "id": "e5-v1",
+    "experimental": true,
+    "static": {
+      "required": [
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "A6",
+        "A9"
+      ],
+      "reportOnly": [
+        "A5",
+        "A7"
+      ]
+    },
+    "traces": {
+      "required": [
+        "B1",
+        "B2",
+        "B3",
+        "B4",
+        "B5",
+        "B6"
+      ],
+      "thresholds": {
+        "B2": {
+          "min": 0.2
+        },
+        "B3": {
+          "min": 0.08
+        },
+        "B4": {
+          "max": 10
+        },
+        "B6": {
+          "max": 0.65
+        }
+      }
+    },
+    "evidence": {
+      "file": "library/gates-calibrated.json",
+      "sha256": "0eef391f1b9145c269f18dc2391f9f0e80c523c8ca37fcce313a159e8b6b55ed"
+    },
+    "fingerprint": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2"
+  },
+  "code": {
+    "builder.js": "a30bd9c7ff28bdc7",
+    "engine.js": "765b66aae44a5164",
+    "gate.js": "ea6296ed31c45e65",
+    "knobs.js": "0d54b22dde0ef392",
+    "static_gates.js": "81b25a171729b1bb",
+    "obvious.js": "96049dabb71877e7",
+    "detour.js": "b292479d080fc8d8",
+    "publicfork.js": "bcac18c2c7418b40",
+    "screen.js": "d4d356382fe17c1a",
+    "dial_curve.js": "50f383e41f316526",
+    "traces.js": "8553dfb8b874cfa7",
+    "counterfactual.js": "5ccc11a608c26263",
+    "yardstick.js": "6d47e7a928ac3704",
+    "library.js": "9f47e91f757d71da",
+    "run_pipeline.js": "408dc3b08cc01bbc",
+    "gate_profile.js": "9cfd206a86424fa1",
+    "policy.js": "a963c0521b110916",
+    "visible_choice.js": "8ff7d343f9323016",
+    "dependency_choice.js": "2692e1a0851c8601",
+    "reserve_cuts.js": "27b8a67972cdfb51",
+    "frame_detours.js": "544bd99f5b5ce347",
+    "row_choice.js": "1868c4537e104acc",
+    "row_cut.js": "8ca9c9f59073e2eb",
+    "coupled_row.js": "7733903414178a6f",
+    "bridge_cuts.js": "14eb50a231f5f4af",
+    "reserve_note.js": "8f665ffc1ef9ea7a",
+    "exact.js": "db79790d3f0aeda3",
+    "finish.js": "90666cca5bb79ef9"
+  },
+  "rows": [
+    {
+      "brief": {
+        "mode": "reserveNote",
+        "shape": "musicNote",
+        "story": "reserveMatchingCopies",
+        "frame": {
+          "spare": 2
+        },
+        "targets": {
+          "bridges": 1,
+          "relief": "none"
+        },
+        "seed": 1
+      },
+      "design": {
+        "tiles": [
+          [
+            -3,
+            0,
+            13
+          ],
+          [
+            -2,
+            0,
+            12
+          ],
+          [
+            -1,
+            0,
+            11
+          ],
+          [
+            0,
+            0,
+            10
+          ],
+          [
+            1,
+            0,
+            9
+          ],
+          [
+            2,
+            0,
+            8
+          ],
+          [
+            3,
+            1,
+            7
+          ],
+          [
+            3,
+            2,
+            6
+          ],
+          [
+            3,
+            3,
+            5
+          ],
+          [
+            3,
+            4,
+            4
+          ],
+          [
+            3,
+            5,
+            3
+          ],
+          [
+            3,
+            6,
+            2
+          ],
+          [
+            3,
+            7,
+            1
+          ],
+          [
+            3,
+            8,
+            0
+          ],
+          [
+            1,
+            1,
+            7
+          ],
+          [
+            5,
+            1,
+            7
+          ],
+          [
+            -1,
+            6,
+            0
+          ],
+          [
+            1,
+            8,
+            0
+          ],
+          [
+            -1,
+            8,
+            0
+          ],
+          [
+            -3,
+            8,
+            0
+          ],
+          [
+            1,
+            10,
+            0
+          ],
+          [
+            -1,
+            10,
+            0
+          ],
+          [
+            -3,
+            10,
+            0
+          ],
+          [
+            -1,
+            12,
+            0
+          ],
+          [
+            -1,
+            6,
+            1
+          ],
+          [
+            1,
+            8,
+            1
+          ],
+          [
+            -1,
+            8,
+            1
+          ],
+          [
+            -3,
+            8,
+            1
+          ],
+          [
+            1,
+            10,
+            1
+          ],
+          [
+            -1,
+            10,
+            1
+          ],
+          [
+            -3,
+            10,
+            1
+          ],
+          [
+            -1,
+            12,
+            1
+          ],
+          [
+            -1,
+            6,
+            2
+          ],
+          [
+            1,
+            8,
+            2
+          ],
+          [
+            -1,
+            8,
+            2
+          ],
+          [
+            -3,
+            8,
+            2
+          ],
+          [
+            1,
+            10,
+            2
+          ],
+          [
+            -1,
+            10,
+            2
+          ],
+          [
+            -3,
+            10,
+            2
+          ],
+          [
+            -1,
+            12,
+            2
+          ],
+          [
+            -1,
+            6,
+            3
+          ],
+          [
+            1,
+            8,
+            3
+          ],
+          [
+            -1,
+            8,
+            3
+          ],
+          [
+            -3,
+            8,
+            3
+          ],
+          [
+            1,
+            10,
+            3
+          ],
+          [
+            -1,
+            10,
+            3
+          ],
+          [
+            -3,
+            10,
+            3
+          ],
+          [
+            -1,
+            12,
+            3
+          ],
+          [
+            -1,
+            6,
+            4
+          ],
+          [
+            1,
+            8,
+            4
+          ],
+          [
+            -1,
+            8,
+            4
+          ],
+          [
+            -3,
+            8,
+            4
+          ],
+          [
+            1,
+            10,
+            4
+          ],
+          [
+            -1,
+            10,
+            4
+          ],
+          [
+            -3,
+            10,
+            4
+          ],
+          [
+            -1,
+            12,
+            4
+          ],
+          [
+            -1,
+            6,
+            5
+          ],
+          [
+            1,
+            8,
+            5
+          ],
+          [
+            -1,
+            8,
+            5
+          ],
+          [
+            -3,
+            8,
+            5
+          ],
+          [
+            1,
+            10,
+            5
+          ],
+          [
+            -1,
+            10,
+            5
+          ],
+          [
+            -3,
+            10,
+            5
+          ],
+          [
+            -1,
+            12,
+            5
+          ],
+          [
+            -1,
+            6,
+            6
+          ],
+          [
+            1,
+            8,
+            6
+          ],
+          [
+            -1,
+            8,
+            6
+          ],
+          [
+            -3,
+            8,
+            6
+          ],
+          [
+            1,
+            10,
+            6
+          ],
+          [
+            -1,
+            10,
+            6
+          ],
+          [
+            -3,
+            10,
+            6
+          ],
+          [
+            -1,
+            12,
+            6
+          ]
+        ],
+        "faces": [
+          23,
+          23,
+          10,
+          10,
+          3,
+          3,
+          24,
+          30,
+          9,
+          13,
+          13,
+          9,
+          24,
+          30,
+          9,
+          9,
+          35,
+          35,
+          7,
+          7,
+          6,
+          6,
+          32,
+          32,
+          8,
+          8,
+          28,
+          28,
+          33,
+          33,
+          5,
+          5,
+          27,
+          27,
+          1,
+          1,
+          31,
+          31,
+          16,
+          16,
+          22,
+          22,
+          21,
+          21,
+          4,
+          4,
+          26,
+          26,
+          18,
+          18,
+          29,
+          29,
+          12,
+          12,
+          25,
+          25,
+          20,
+          20,
+          34,
+          34,
+          2,
+          2,
+          17,
+          17,
+          15,
+          15,
+          19,
+          19,
+          11,
+          11,
+          14,
+          14
+        ],
+        "down": [],
+        "gold": [],
+        "obst": {
+          "ice": {},
+          "locks": [],
+          "keys": []
+        },
+        "clock": {
+          "i": 7,
+          "n": 11
+        },
+        "solution": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          15,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          14,
+          12,
+          13,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ]
+      },
+      "card": {
+        "shape": "musicNote",
+        "story": "Keep the spare matching copies until the bridge needs them",
+        "tiles": 72,
+        "bridges": 1,
+        "relief": "none",
+        "reliefPairs": [],
+        "heads": [
+          [
+            14,
+            15
+          ]
+        ],
+        "clock": {
+          "fewestMoves": 9,
+          "spare": 2,
+          "tile": 7
+        },
+        "px": 55.539919317009094,
+        "trap": {
+          "prefix": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            15
+          ],
+          "wrong": 14,
+          "winning": 6
+        },
+        "proof": {
+          "clockLowerBound": 9,
+          "why": "Six compulsory flag tiles, one side head to free the first orphan, then the two orphan tiles including the clock. The strict witness attains nine.",
+          "bridgeCuts": [
+            {
+              "a": 8,
+              "b": 11,
+              "heads": [
+                14,
+                15
+              ],
+              "spacer": [
+                9,
+                10
+              ],
+              "orphans": [
+                [
+                  6,
+                  12
+                ],
+                [
+                  7,
+                  13
+                ]
+              ],
+              "scope": "two unmatched orphan pictures and the bridge must wait when the spacer opens"
+            }
+          ]
+        },
+        "scope": "Constructed reserve puzzle; bots and quality checks still required"
+      },
+      "summary": {
+        "bridges": 1,
+        "relief": "none",
+        "pass": false,
+        "unresolved": [],
+        "failed": [
+          "A6"
+        ],
+        "cpuS": 0.296
+      },
+      "result": {
+        "pass": false,
+        "gates": {
+          "A1": {
+            "pass": true,
+            "detail": {
+              "story": "reserveMatchingCopies",
+              "tiles": 72,
+              "clock": {
+                "n": 11,
+                "k": 9,
+                "unsure": false,
+                "spare": 2,
+                "winAtK": "win",
+                "winAtKProof": "clockShortest witness replay",
+                "atKminus1": "lose",
+                "kGame": 9,
+                "kPerTile": 9
+              },
+              "idle": 0,
+              "strictWitness": true,
+              "why": []
+            }
+          },
+          "A2": {
+            "pass": true,
+            "detail": {
+              "readable": true,
+              "roleConflicts": [],
+              "keys": [],
+              "keysShownAtStart": 0,
+              "bothKeysSeenAtMove": 0
+            }
+          },
+          "A3": {
+            "pass": true,
+            "detail": {
+              "k": 9,
+              "strictK": 9,
+              "witnessClockMove": 9,
+              "strictWitness": true,
+              "designSpare": 2,
+              "shippable": [
+                1,
+                2,
+                3
+              ],
+              "why": []
+            }
+          },
+          "A4": {
+            "pass": true,
+            "detail": {
+              "opening": {
+                "wins": 2,
+                "unknown": 0,
+                "legal": 8
+              },
+              "singleWinStates": 2,
+              "obviousSingles": 2,
+              "statesWithUnknown": 0,
+              "okSpares": [
+                1,
+                2,
+                3
+              ],
+              "perSpare": {
+                "1": {
+                  "ok": true,
+                  "openingWins": 2,
+                  "openingUnknown": 0,
+                  "notObvious": []
+                },
+                "2": {
+                  "ok": true,
+                  "openingWins": 8,
+                  "openingUnknown": 0,
+                  "notObvious": []
+                },
+                "3": {
+                  "ok": true,
+                  "openingWins": 8,
+                  "openingUnknown": 0,
+                  "notObvious": []
+                }
+              },
+              "why": []
+            }
+          },
+          "A5": {
+            "pass": null,
+            "detail": {
+              "window": [
+                2,
+                5
+              ],
+              "wayMoves": 9,
+              "priced": 8,
+              "best": {
+                "move": [
+                  64,
+                  65
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win",
+                "step": 2,
+                "moves": 2
+              },
+              "temptingSeen": 21
+            },
+            "wouldPass": true,
+            "reportOnly": true
+          },
+          "A6": {
+            "pass": false,
+            "detail": {
+              "loseForks": 3,
+              "fair": 0,
+              "unfair": [
+                {
+                  "move": [
+                    14,
+                    15
+                  ],
+                  "kind": "pair",
+                  "atMove": 7,
+                  "why": [
+                    "the loss shows only after 7+ more removals (> 6)",
+                    "the only winning moves are not goal-directed (obvious.js) under some deal"
+                  ]
+                },
+                {
+                  "move": [
+                    14
+                  ],
+                  "kind": "match",
+                  "atMove": 8,
+                  "why": [
+                    "the loss shows only after 7+ more removals (> 6)"
+                  ]
+                },
+                {
+                  "move": [
+                    14
+                  ],
+                  "kind": "match",
+                  "atMove": 9,
+                  "why": [
+                    "the loss shows only after 7+ more removals (> 6)"
+                  ]
+                }
+              ],
+              "unknown": 0
+            }
+          },
+          "A7": {
+            "pass": null,
+            "detail": {
+              "roomPass": true,
+              "dealsPass": true,
+              "roomOk": true,
+              "unrelieved": 0,
+              "tightBlind": 0,
+              "faceDown": 0,
+              "perms": 1,
+              "results": [
+                "win"
+              ],
+              "why": []
+            },
+            "wouldPass": true,
+            "reportOnly": true
+          },
+          "A8": {
+            "pass": true,
+            "flag": null,
+            "detail": {
+              "k": 9
+            }
+          },
+          "A9": {
+            "pass": true,
+            "flag": null,
+            "detail": {
+              "shape": "musicNote",
+              "tiles": 72,
+              "compared": 130,
+              "clashes": [],
+              "why": []
+            }
+          }
+        },
+        "forks": [
+          {
+            "step": 0,
+            "moves": 0,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  64,
+                  65
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  70,
+                  71
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              0,
+              15
+            ]
+          },
+          {
+            "step": 1,
+            "moves": 1,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  64,
+                  65
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  70,
+                  71
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              1,
+              15
+            ]
+          },
+          {
+            "step": 2,
+            "moves": 2,
+            "inWindow": true,
+            "tempting": [
+              {
+                "move": [
+                  64,
+                  65
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  70,
+                  71
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              2,
+              15
+            ]
+          },
+          {
+            "step": 3,
+            "moves": 3,
+            "inWindow": true,
+            "tempting": [
+              {
+                "move": [
+                  64,
+                  65
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  70,
+                  71
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              3,
+              15
+            ]
+          },
+          {
+            "step": 4,
+            "moves": 4,
+            "inWindow": true,
+            "tempting": [
+              {
+                "move": [
+                  64,
+                  65
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  70,
+                  71
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              4,
+              15
+            ]
+          },
+          {
+            "step": 5,
+            "moves": 5,
+            "inWindow": true,
+            "tempting": [
+              {
+                "move": [
+                  64,
+                  65
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  70,
+                  71
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              5,
+              15
+            ]
+          },
+          {
+            "step": 6,
+            "moves": 6,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  14,
+                  15
+                ],
+                "kind": "pair",
+                "cost": null,
+                "result": "lose",
+                "fair": false,
+                "why": [
+                  "the loss shows only after 7+ more removals (> 6)",
+                  "the only winning moves are not goal-directed (obvious.js) under some deal"
+                ],
+                "forkChecks": {
+                  "tilesLeft": 0.917,
+                  "forcedDepth": 7,
+                  "perms": 1,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": null,
+                      "board": {
+                        "win": 14
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "move": [
+                  64,
+                  65
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  70,
+                  71
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              14,
+              15
+            ]
+          },
+          {
+            "step": 7,
+            "moves": 7,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  14
+                ],
+                "kind": "match",
+                "cost": null,
+                "result": "lose",
+                "fair": false,
+                "why": [
+                  "the loss shows only after 7+ more removals (> 6)"
+                ],
+                "forkChecks": {
+                  "tilesLeft": 0.903,
+                  "forcedDepth": 7,
+                  "perms": 1,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 6
+                    }
+                  ]
+                }
+              },
+              {
+                "move": [
+                  64,
+                  65
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  70,
+                  71
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              6
+            ]
+          },
+          {
+            "step": 8,
+            "moves": 8,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  14
+                ],
+                "kind": "match",
+                "cost": null,
+                "result": "lose",
+                "fair": false,
+                "why": [
+                  "the loss shows only after 7+ more removals (> 6)"
+                ],
+                "forkChecks": {
+                  "tilesLeft": 0.889,
+                  "forcedDepth": 7,
+                  "perms": 1,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 7
+                    }
+                  ]
+                }
+              },
+              {
+                "move": [
+                  64,
+                  65
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  70,
+                  71
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              7
+            ]
+          }
+        ],
+        "card": "The clock needs 9 moves; taking the free pair in sight at move 3 before the clock costs 2 spare moves.",
+        "archetype": "free-pair relief",
+        "k": 9,
+        "strictK": 9,
+        "shipSpares": [
+          1,
+          2,
+          3
+        ],
+        "ms": 197,
+        "nodes": 65594,
+        "warnings": [],
+        "profile": {
+          "id": "e5-v1",
+          "fingerprint": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2"
+        }
+      }
+    },
+    {
+      "brief": {
+        "mode": "reserveNote",
+        "shape": "musicNote",
+        "story": "reserveMatchingCopies",
+        "frame": {
+          "spare": 2
+        },
+        "targets": {
+          "bridges": 2,
+          "relief": "none"
+        },
+        "seed": 1
+      },
+      "design": {
+        "tiles": [
+          [
+            -3,
+            0,
+            17
+          ],
+          [
+            -2,
+            0,
+            16
+          ],
+          [
+            -1,
+            0,
+            15
+          ],
+          [
+            0,
+            0,
+            14
+          ],
+          [
+            1,
+            0,
+            13
+          ],
+          [
+            2,
+            0,
+            12
+          ],
+          [
+            3,
+            1,
+            11
+          ],
+          [
+            3,
+            2,
+            10
+          ],
+          [
+            3,
+            3,
+            9
+          ],
+          [
+            3,
+            4,
+            8
+          ],
+          [
+            3,
+            5,
+            7
+          ],
+          [
+            3,
+            6,
+            6
+          ],
+          [
+            3,
+            7,
+            5
+          ],
+          [
+            3,
+            8,
+            4
+          ],
+          [
+            3,
+            9,
+            3
+          ],
+          [
+            3,
+            10,
+            2
+          ],
+          [
+            3,
+            11,
+            1
+          ],
+          [
+            3,
+            12,
+            0
+          ],
+          [
+            1,
+            1,
+            11
+          ],
+          [
+            5,
+            1,
+            11
+          ],
+          [
+            1,
+            7,
+            5
+          ],
+          [
+            5,
+            7,
+            6
+          ],
+          [
+            -1,
+            6,
+            0
+          ],
+          [
+            1,
+            8,
+            0
+          ],
+          [
+            -1,
+            8,
+            0
+          ],
+          [
+            -3,
+            8,
+            0
+          ],
+          [
+            1,
+            10,
+            0
+          ],
+          [
+            -1,
+            10,
+            0
+          ],
+          [
+            -3,
+            10,
+            0
+          ],
+          [
+            -1,
+            12,
+            0
+          ],
+          [
+            -1,
+            6,
+            1
+          ],
+          [
+            1,
+            8,
+            1
+          ],
+          [
+            -1,
+            8,
+            1
+          ],
+          [
+            -3,
+            8,
+            1
+          ],
+          [
+            1,
+            10,
+            1
+          ],
+          [
+            -1,
+            10,
+            1
+          ],
+          [
+            -3,
+            10,
+            1
+          ],
+          [
+            -1,
+            12,
+            1
+          ],
+          [
+            -1,
+            6,
+            2
+          ],
+          [
+            1,
+            8,
+            2
+          ],
+          [
+            -1,
+            8,
+            2
+          ],
+          [
+            -3,
+            8,
+            2
+          ],
+          [
+            1,
+            10,
+            2
+          ],
+          [
+            -1,
+            10,
+            2
+          ],
+          [
+            -3,
+            10,
+            2
+          ],
+          [
+            -1,
+            12,
+            2
+          ],
+          [
+            -1,
+            6,
+            3
+          ],
+          [
+            1,
+            8,
+            3
+          ],
+          [
+            -1,
+            8,
+            3
+          ],
+          [
+            -3,
+            8,
+            3
+          ],
+          [
+            1,
+            10,
+            3
+          ],
+          [
+            -1,
+            10,
+            3
+          ],
+          [
+            -3,
+            10,
+            3
+          ],
+          [
+            -1,
+            12,
+            3
+          ],
+          [
+            -1,
+            6,
+            4
+          ],
+          [
+            1,
+            8,
+            4
+          ],
+          [
+            -1,
+            8,
+            4
+          ],
+          [
+            -3,
+            8,
+            4
+          ],
+          [
+            1,
+            10,
+            4
+          ],
+          [
+            -1,
+            10,
+            4
+          ],
+          [
+            -3,
+            10,
+            4
+          ],
+          [
+            -1,
+            12,
+            4
+          ],
+          [
+            -1,
+            6,
+            5
+          ],
+          [
+            -1,
+            8,
+            5
+          ],
+          [
+            -3,
+            8,
+            5
+          ],
+          [
+            1,
+            10,
+            5
+          ],
+          [
+            -1,
+            10,
+            5
+          ],
+          [
+            -3,
+            10,
+            5
+          ],
+          [
+            -1,
+            12,
+            5
+          ],
+          [
+            -1,
+            6,
+            6
+          ],
+          [
+            0,
+            8,
+            6
+          ],
+          [
+            -2,
+            8,
+            6
+          ]
+        ],
+        "faces": [
+          23,
+          23,
+          10,
+          10,
+          3,
+          3,
+          24,
+          30,
+          9,
+          13,
+          13,
+          9,
+          15,
+          19,
+          19,
+          15,
+          24,
+          30,
+          9,
+          9,
+          15,
+          15,
+          5,
+          5,
+          35,
+          35,
+          7,
+          7,
+          6,
+          6,
+          16,
+          16,
+          8,
+          8,
+          28,
+          28,
+          33,
+          33,
+          26,
+          26,
+          27,
+          27,
+          1,
+          1,
+          31,
+          31,
+          25,
+          25,
+          22,
+          22,
+          21,
+          21,
+          4,
+          4,
+          17,
+          17,
+          18,
+          18,
+          29,
+          29,
+          12,
+          12,
+          14,
+          20,
+          20,
+          34,
+          34,
+          2,
+          2,
+          11,
+          11,
+          14
+        ],
+        "down": [],
+        "gold": [],
+        "obst": {
+          "ice": {},
+          "locks": [],
+          "keys": []
+        },
+        "clock": {
+          "i": 7,
+          "n": 11
+        },
+        "solution": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          19,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          18,
+          69,
+          70,
+          71,
+          62,
+          64,
+          63,
+          21,
+          12,
+          13,
+          14,
+          15,
+          20,
+          16,
+          17,
+          65,
+          66,
+          67,
+          68,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29
+        ]
+      },
+      "card": {
+        "shape": "musicNote",
+        "story": "Keep the spare matching copies until the bridge needs them",
+        "tiles": 72,
+        "bridges": 2,
+        "relief": "none",
+        "reliefPairs": [],
+        "heads": [
+          [
+            18,
+            19
+          ],
+          [
+            20,
+            21
+          ]
+        ],
+        "clock": {
+          "fewestMoves": 9,
+          "spare": 2,
+          "tile": 7
+        },
+        "px": 52.76762634815937,
+        "trap": {
+          "prefix": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            19
+          ],
+          "wrong": 18,
+          "winning": 6
+        },
+        "proof": {
+          "clockLowerBound": 9,
+          "why": "Six compulsory flag tiles, one side head to free the first orphan, then the two orphan tiles including the clock. The strict witness attains nine.",
+          "bridgeCuts": [
+            {
+              "a": 8,
+              "b": 11,
+              "heads": [
+                18,
+                19
+              ],
+              "spacer": [
+                9,
+                10
+              ],
+              "orphans": [
+                [
+                  6,
+                  16
+                ],
+                [
+                  7,
+                  17
+                ]
+              ],
+              "scope": "two unmatched orphan pictures and the bridge must wait when the spacer opens"
+            },
+            {
+              "a": 12,
+              "b": 15,
+              "heads": [
+                20,
+                21
+              ],
+              "spacer": [
+                13,
+                14
+              ],
+              "orphans": [
+                [
+                  6,
+                  16
+                ],
+                [
+                  7,
+                  17
+                ]
+              ],
+              "scope": "two unmatched orphan pictures and the bridge must wait when the spacer opens"
+            }
+          ]
+        },
+        "scope": "Constructed reserve puzzle; bots and quality checks still required"
+      },
+      "summary": {
+        "bridges": 2,
+        "relief": "none",
+        "pass": false,
+        "unresolved": [],
+        "failed": [
+          "A6"
+        ],
+        "cpuS": 0.141
+      },
+      "result": {
+        "pass": false,
+        "gates": {
+          "A1": {
+            "pass": true,
+            "detail": {
+              "story": "reserveMatchingCopies",
+              "tiles": 72,
+              "clock": {
+                "n": 11,
+                "k": 9,
+                "unsure": false,
+                "spare": 2,
+                "winAtK": "win",
+                "winAtKProof": "clockShortest witness replay",
+                "atKminus1": "lose",
+                "kGame": 9,
+                "kPerTile": 9
+              },
+              "idle": 0,
+              "strictWitness": true,
+              "why": []
+            }
+          },
+          "A2": {
+            "pass": true,
+            "detail": {
+              "readable": true,
+              "roleConflicts": [],
+              "keys": [],
+              "keysShownAtStart": 0,
+              "bothKeysSeenAtMove": 0
+            }
+          },
+          "A3": {
+            "pass": true,
+            "detail": {
+              "k": 9,
+              "strictK": 9,
+              "witnessClockMove": 9,
+              "strictWitness": true,
+              "designSpare": 2,
+              "shippable": [
+                1,
+                2,
+                3
+              ],
+              "why": []
+            }
+          },
+          "A4": {
+            "pass": true,
+            "detail": {
+              "opening": {
+                "wins": 2,
+                "unknown": 0,
+                "legal": 9
+              },
+              "singleWinStates": 2,
+              "obviousSingles": 2,
+              "statesWithUnknown": 0,
+              "okSpares": [
+                1,
+                2,
+                3
+              ],
+              "perSpare": {
+                "1": {
+                  "ok": true,
+                  "openingWins": 2,
+                  "openingUnknown": 0,
+                  "notObvious": []
+                },
+                "2": {
+                  "ok": true,
+                  "openingWins": 7,
+                  "openingUnknown": 0,
+                  "notObvious": []
+                },
+                "3": {
+                  "ok": true,
+                  "openingWins": 7,
+                  "openingUnknown": 0,
+                  "notObvious": []
+                }
+              },
+              "why": []
+            }
+          },
+          "A5": {
+            "pass": null,
+            "detail": {
+              "window": [
+                2,
+                5
+              ],
+              "wayMoves": 9,
+              "priced": 8,
+              "best": {
+                "move": [
+                  67,
+                  68
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win",
+                "step": 2,
+                "moves": 2
+              },
+              "temptingSeen": 21
+            },
+            "wouldPass": true,
+            "reportOnly": true
+          },
+          "A6": {
+            "pass": false,
+            "detail": {
+              "loseForks": 3,
+              "fair": 0,
+              "unfair": [
+                {
+                  "move": [
+                    18,
+                    19
+                  ],
+                  "kind": "pair",
+                  "atMove": 7,
+                  "why": [
+                    "the loss shows only after 7+ more removals (> 6)",
+                    "the only winning moves are not goal-directed (obvious.js) under some deal"
+                  ]
+                },
+                {
+                  "move": [
+                    18
+                  ],
+                  "kind": "match",
+                  "atMove": 8,
+                  "why": [
+                    "the loss shows only after 7+ more removals (> 6)"
+                  ]
+                },
+                {
+                  "move": [
+                    18
+                  ],
+                  "kind": "match",
+                  "atMove": 9,
+                  "why": [
+                    "the loss shows only after 7+ more removals (> 6)"
+                  ]
+                }
+              ],
+              "unknown": 0
+            }
+          },
+          "A7": {
+            "pass": null,
+            "detail": {
+              "roomPass": true,
+              "dealsPass": true,
+              "roomOk": true,
+              "unrelieved": 0,
+              "tightBlind": 0,
+              "faceDown": 0,
+              "perms": 1,
+              "results": [
+                "win"
+              ],
+              "why": []
+            },
+            "wouldPass": true,
+            "reportOnly": true
+          },
+          "A8": {
+            "pass": true,
+            "flag": null,
+            "detail": {
+              "k": 9
+            }
+          },
+          "A9": {
+            "pass": true,
+            "flag": null,
+            "detail": {
+              "shape": "musicNote",
+              "tiles": 72,
+              "compared": 130,
+              "clashes": [],
+              "why": []
+            }
+          }
+        },
+        "forks": [
+          {
+            "step": 0,
+            "moves": 0,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  67,
+                  68
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  69,
+                  70
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              0,
+              19
+            ]
+          },
+          {
+            "step": 1,
+            "moves": 1,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  67,
+                  68
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  69,
+                  70
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              1,
+              19
+            ]
+          },
+          {
+            "step": 2,
+            "moves": 2,
+            "inWindow": true,
+            "tempting": [
+              {
+                "move": [
+                  67,
+                  68
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  69,
+                  70
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              2,
+              19
+            ]
+          },
+          {
+            "step": 3,
+            "moves": 3,
+            "inWindow": true,
+            "tempting": [
+              {
+                "move": [
+                  67,
+                  68
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  69,
+                  70
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              3,
+              19
+            ]
+          },
+          {
+            "step": 4,
+            "moves": 4,
+            "inWindow": true,
+            "tempting": [
+              {
+                "move": [
+                  67,
+                  68
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  69,
+                  70
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              4,
+              19
+            ]
+          },
+          {
+            "step": 5,
+            "moves": 5,
+            "inWindow": true,
+            "tempting": [
+              {
+                "move": [
+                  67,
+                  68
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  69,
+                  70
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              5,
+              19
+            ]
+          },
+          {
+            "step": 6,
+            "moves": 6,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  18,
+                  19
+                ],
+                "kind": "pair",
+                "cost": null,
+                "result": "lose",
+                "fair": false,
+                "why": [
+                  "the loss shows only after 7+ more removals (> 6)",
+                  "the only winning moves are not goal-directed (obvious.js) under some deal"
+                ],
+                "forkChecks": {
+                  "tilesLeft": 0.917,
+                  "forcedDepth": 7,
+                  "perms": 1,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": null,
+                      "board": {
+                        "win": 18
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "move": [
+                  67,
+                  68
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  69,
+                  70
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              18,
+              19
+            ]
+          },
+          {
+            "step": 7,
+            "moves": 7,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  18
+                ],
+                "kind": "match",
+                "cost": null,
+                "result": "lose",
+                "fair": false,
+                "why": [
+                  "the loss shows only after 7+ more removals (> 6)"
+                ],
+                "forkChecks": {
+                  "tilesLeft": 0.903,
+                  "forcedDepth": 7,
+                  "perms": 1,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 6
+                    }
+                  ]
+                }
+              },
+              {
+                "move": [
+                  67,
+                  68
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  69,
+                  70
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              6
+            ]
+          },
+          {
+            "step": 8,
+            "moves": 8,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  18
+                ],
+                "kind": "match",
+                "cost": null,
+                "result": "lose",
+                "fair": false,
+                "why": [
+                  "the loss shows only after 7+ more removals (> 6)"
+                ],
+                "forkChecks": {
+                  "tilesLeft": 0.889,
+                  "forcedDepth": 7,
+                  "perms": 1,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 7
+                    }
+                  ]
+                }
+              },
+              {
+                "move": [
+                  67,
+                  68
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  69,
+                  70
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              7
+            ]
+          }
+        ],
+        "card": "The clock needs 9 moves; taking the free pair in sight at move 3 before the clock costs 2 spare moves.",
+        "archetype": "free-pair relief",
+        "k": 9,
+        "strictK": 9,
+        "shipSpares": [
+          1,
+          2,
+          3
+        ],
+        "ms": 101,
+        "nodes": 70664,
+        "warnings": [],
+        "profile": {
+          "id": "e5-v1",
+          "fingerprint": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2"
+        }
+      }
+    },
+    {
+      "brief": {
+        "mode": "reserveNote",
+        "shape": "musicNote",
+        "story": "reserveMatchingCopies",
+        "frame": {
+          "spare": 2
+        },
+        "targets": {
+          "bridges": 2,
+          "relief": "covered2"
+        },
+        "seed": 1
+      },
+      "design": {
+        "tiles": [
+          [
+            -3,
+            0,
+            17
+          ],
+          [
+            -2,
+            0,
+            16
+          ],
+          [
+            -1,
+            0,
+            15
+          ],
+          [
+            0,
+            0,
+            14
+          ],
+          [
+            1,
+            0,
+            13
+          ],
+          [
+            2,
+            0,
+            12
+          ],
+          [
+            3,
+            1,
+            11
+          ],
+          [
+            3,
+            2,
+            10
+          ],
+          [
+            3,
+            3,
+            9
+          ],
+          [
+            3,
+            4,
+            8
+          ],
+          [
+            3,
+            5,
+            7
+          ],
+          [
+            3,
+            6,
+            6
+          ],
+          [
+            3,
+            7,
+            5
+          ],
+          [
+            3,
+            8,
+            4
+          ],
+          [
+            3,
+            9,
+            3
+          ],
+          [
+            3,
+            10,
+            2
+          ],
+          [
+            3,
+            11,
+            1
+          ],
+          [
+            3,
+            12,
+            0
+          ],
+          [
+            1,
+            1,
+            11
+          ],
+          [
+            5,
+            1,
+            11
+          ],
+          [
+            1,
+            7,
+            5
+          ],
+          [
+            5,
+            7,
+            6
+          ],
+          [
+            -1,
+            6,
+            0
+          ],
+          [
+            1,
+            8,
+            0
+          ],
+          [
+            -1,
+            8,
+            0
+          ],
+          [
+            4,
+            5,
+            5
+          ],
+          [
+            1,
+            10,
+            0
+          ],
+          [
+            -1,
+            10,
+            0
+          ],
+          [
+            5,
+            4.25,
+            7
+          ],
+          [
+            6,
+            3.5,
+            10
+          ],
+          [
+            -1,
+            6,
+            1
+          ],
+          [
+            1,
+            8,
+            1
+          ],
+          [
+            -1,
+            8,
+            1
+          ],
+          [
+            -3,
+            8,
+            1
+          ],
+          [
+            1,
+            10,
+            1
+          ],
+          [
+            -1,
+            10,
+            1
+          ],
+          [
+            -3,
+            10,
+            1
+          ],
+          [
+            -1,
+            12,
+            1
+          ],
+          [
+            -1,
+            6,
+            2
+          ],
+          [
+            1,
+            8,
+            2
+          ],
+          [
+            -1,
+            8,
+            2
+          ],
+          [
+            -3,
+            8,
+            2
+          ],
+          [
+            1,
+            10,
+            2
+          ],
+          [
+            -1,
+            10,
+            2
+          ],
+          [
+            -3,
+            10,
+            2
+          ],
+          [
+            -1,
+            12,
+            2
+          ],
+          [
+            -1,
+            6,
+            3
+          ],
+          [
+            1,
+            8,
+            3
+          ],
+          [
+            -1,
+            8,
+            3
+          ],
+          [
+            -3,
+            8,
+            3
+          ],
+          [
+            1,
+            10,
+            3
+          ],
+          [
+            -1,
+            10,
+            3
+          ],
+          [
+            -3,
+            10,
+            3
+          ],
+          [
+            -1,
+            12,
+            3
+          ],
+          [
+            -1,
+            6,
+            4
+          ],
+          [
+            1,
+            8,
+            4
+          ],
+          [
+            -1,
+            8,
+            4
+          ],
+          [
+            -3,
+            8,
+            4
+          ],
+          [
+            1,
+            10,
+            4
+          ],
+          [
+            -1,
+            10,
+            4
+          ],
+          [
+            -3,
+            10,
+            4
+          ],
+          [
+            -1,
+            12,
+            4
+          ],
+          [
+            -1,
+            6,
+            5
+          ],
+          [
+            -1,
+            8,
+            5
+          ],
+          [
+            -3,
+            8,
+            5
+          ],
+          [
+            1,
+            10,
+            5
+          ],
+          [
+            -1,
+            10,
+            5
+          ],
+          [
+            -3,
+            10,
+            5
+          ],
+          [
+            -1,
+            12,
+            5
+          ],
+          [
+            -1,
+            6,
+            6
+          ],
+          [
+            0,
+            8,
+            6
+          ],
+          [
+            -2,
+            8,
+            6
+          ]
+        ],
+        "faces": [
+          23,
+          23,
+          10,
+          10,
+          3,
+          3,
+          24,
+          30,
+          9,
+          13,
+          13,
+          9,
+          15,
+          19,
+          19,
+          15,
+          11,
+          30,
+          9,
+          9,
+          15,
+          15,
+          11,
+          7,
+          7,
+          24,
+          6,
+          6,
+          14,
+          20,
+          28,
+          28,
+          33,
+          33,
+          5,
+          5,
+          35,
+          35,
+          1,
+          1,
+          31,
+          31,
+          16,
+          16,
+          8,
+          8,
+          21,
+          21,
+          4,
+          4,
+          26,
+          26,
+          27,
+          27,
+          29,
+          29,
+          12,
+          12,
+          25,
+          25,
+          22,
+          22,
+          34,
+          2,
+          2,
+          17,
+          17,
+          18,
+          18,
+          14,
+          34,
+          20
+        ],
+        "down": [],
+        "gold": [],
+        "obst": {
+          "ice": {},
+          "locks": [],
+          "keys": []
+        },
+        "clock": {
+          "i": 7,
+          "n": 11
+        },
+        "solution": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          19,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          18,
+          29,
+          71,
+          28,
+          69,
+          25,
+          70,
+          62,
+          64,
+          63,
+          21,
+          12,
+          13,
+          14,
+          15,
+          20,
+          16,
+          17,
+          65,
+          66,
+          67,
+          68,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          23,
+          24,
+          26,
+          27,
+          22
+        ]
+      },
+      "card": {
+        "shape": "musicNote",
+        "story": "Keep the spare matching copies until the bridge needs them",
+        "tiles": 72,
+        "bridges": 2,
+        "relief": "covered2",
+        "reliefTile": 25,
+        "reliefCover": 28,
+        "reliefMate": 69,
+        "reliefPairs": [
+          {
+            "cover": 28,
+            "mate": 69
+          },
+          {
+            "cover": 29,
+            "mate": 71
+          }
+        ],
+        "lateMate": 22,
+        "heads": [
+          [
+            18,
+            19
+          ],
+          [
+            20,
+            21
+          ]
+        ],
+        "clock": {
+          "fewestMoves": 9,
+          "spare": 2,
+          "tile": 7
+        },
+        "px": 52.76762634815937,
+        "trap": {
+          "prefix": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            19
+          ],
+          "wrong": 18,
+          "winning": 6
+        },
+        "proof": {
+          "clockLowerBound": 9,
+          "why": "Six compulsory flag tiles, one side head to free the first orphan, then the two orphan tiles including the clock. The strict witness attains nine.",
+          "bridgeCuts": [
+            {
+              "a": 8,
+              "b": 11,
+              "heads": [
+                18,
+                19
+              ],
+              "spacer": [
+                9,
+                10
+              ],
+              "orphans": [
+                [
+                  6,
+                  25
+                ],
+                [
+                  7,
+                  17
+                ]
+              ],
+              "scope": "two unmatched orphan pictures and the bridge must wait when the spacer opens"
+            }
+          ]
+        },
+        "scope": "Constructed reserve puzzle; bots and quality checks still required"
+      },
+      "summary": {
+        "bridges": 2,
+        "relief": "covered2",
+        "pass": false,
+        "unresolved": [],
+        "failed": [
+          "A6"
+        ],
+        "cpuS": 0.234
+      },
+      "result": {
+        "pass": false,
+        "gates": {
+          "A1": {
+            "pass": true,
+            "detail": {
+              "story": "reserveMatchingCopies",
+              "tiles": 72,
+              "clock": {
+                "n": 11,
+                "k": 9,
+                "unsure": false,
+                "spare": 2,
+                "winAtK": "win",
+                "winAtKProof": "clockShortest witness replay",
+                "atKminus1": "lose",
+                "kGame": 9,
+                "kPerTile": 9
+              },
+              "idle": 0,
+              "strictWitness": true,
+              "why": []
+            }
+          },
+          "A2": {
+            "pass": true,
+            "detail": {
+              "readable": true,
+              "roleConflicts": [],
+              "keys": [],
+              "keysShownAtStart": 0,
+              "bothKeysSeenAtMove": 0
+            }
+          },
+          "A3": {
+            "pass": true,
+            "detail": {
+              "k": 9,
+              "strictK": 9,
+              "witnessClockMove": 9,
+              "strictWitness": true,
+              "designSpare": 2,
+              "shippable": [
+                1,
+                2,
+                3
+              ],
+              "why": []
+            }
+          },
+          "A4": {
+            "pass": true,
+            "detail": {
+              "opening": {
+                "wins": 2,
+                "unknown": 0,
+                "legal": 10
+              },
+              "singleWinStates": 2,
+              "obviousSingles": 2,
+              "statesWithUnknown": 0,
+              "okSpares": [
+                1,
+                2,
+                3
+              ],
+              "perSpare": {
+                "1": {
+                  "ok": true,
+                  "openingWins": 2,
+                  "openingUnknown": 0,
+                  "notObvious": []
+                },
+                "2": {
+                  "ok": true,
+                  "openingWins": 7,
+                  "openingUnknown": 0,
+                  "notObvious": []
+                },
+                "3": {
+                  "ok": true,
+                  "openingWins": 7,
+                  "openingUnknown": 0,
+                  "notObvious": []
+                }
+              },
+              "why": []
+            }
+          },
+          "A5": {
+            "pass": null,
+            "detail": {
+              "window": [
+                2,
+                5
+              ],
+              "wayMoves": 9,
+              "priced": 8,
+              "best": {
+                "move": [
+                  29,
+                  71
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win",
+                "step": 2,
+                "moves": 2
+              },
+              "temptingSeen": 21
+            },
+            "wouldPass": true,
+            "reportOnly": true
+          },
+          "A6": {
+            "pass": false,
+            "detail": {
+              "loseForks": 3,
+              "fair": 0,
+              "unfair": [
+                {
+                  "move": [
+                    18,
+                    19
+                  ],
+                  "kind": "pair",
+                  "atMove": 7,
+                  "why": [
+                    "the loss shows only after 7+ more removals (> 6)",
+                    "the only winning moves are not goal-directed (obvious.js) under some deal"
+                  ]
+                },
+                {
+                  "move": [
+                    18
+                  ],
+                  "kind": "match",
+                  "atMove": 8,
+                  "why": [
+                    "the loss shows only after 7+ more removals (> 6)"
+                  ]
+                },
+                {
+                  "move": [
+                    18
+                  ],
+                  "kind": "match",
+                  "atMove": 9,
+                  "why": [
+                    "the loss shows only after 7+ more removals (> 6)"
+                  ]
+                }
+              ],
+              "unknown": 0
+            }
+          },
+          "A7": {
+            "pass": null,
+            "detail": {
+              "roomPass": true,
+              "dealsPass": true,
+              "roomOk": true,
+              "unrelieved": 0,
+              "tightBlind": 0,
+              "faceDown": 0,
+              "perms": 1,
+              "results": [
+                "win"
+              ],
+              "why": []
+            },
+            "wouldPass": true,
+            "reportOnly": true
+          },
+          "A8": {
+            "pass": true,
+            "flag": null,
+            "detail": {
+              "k": 9
+            }
+          },
+          "A9": {
+            "pass": true,
+            "flag": null,
+            "detail": {
+              "shape": "musicNote",
+              "tiles": 72,
+              "compared": 130,
+              "clashes": [],
+              "why": []
+            }
+          }
+        },
+        "forks": [
+          {
+            "step": 0,
+            "moves": 0,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  29,
+                  71
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  67,
+                  68
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              0,
+              19
+            ]
+          },
+          {
+            "step": 1,
+            "moves": 1,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  29,
+                  71
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  67,
+                  68
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              1,
+              19
+            ]
+          },
+          {
+            "step": 2,
+            "moves": 2,
+            "inWindow": true,
+            "tempting": [
+              {
+                "move": [
+                  29,
+                  71
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  67,
+                  68
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              2,
+              19
+            ]
+          },
+          {
+            "step": 3,
+            "moves": 3,
+            "inWindow": true,
+            "tempting": [
+              {
+                "move": [
+                  29,
+                  71
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  67,
+                  68
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              3,
+              19
+            ]
+          },
+          {
+            "step": 4,
+            "moves": 4,
+            "inWindow": true,
+            "tempting": [
+              {
+                "move": [
+                  29,
+                  71
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  67,
+                  68
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              4,
+              19
+            ]
+          },
+          {
+            "step": 5,
+            "moves": 5,
+            "inWindow": true,
+            "tempting": [
+              {
+                "move": [
+                  29,
+                  71
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  67,
+                  68
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              5,
+              19
+            ]
+          },
+          {
+            "step": 6,
+            "moves": 6,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  18,
+                  19
+                ],
+                "kind": "pair",
+                "cost": null,
+                "result": "lose",
+                "fair": false,
+                "why": [
+                  "the loss shows only after 7+ more removals (> 6)",
+                  "the only winning moves are not goal-directed (obvious.js) under some deal"
+                ],
+                "forkChecks": {
+                  "tilesLeft": 0.917,
+                  "forcedDepth": 7,
+                  "perms": 1,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": null,
+                      "board": {
+                        "win": 18
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "move": [
+                  29,
+                  71
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  67,
+                  68
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              18,
+              19
+            ]
+          },
+          {
+            "step": 7,
+            "moves": 7,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  18
+                ],
+                "kind": "match",
+                "cost": null,
+                "result": "lose",
+                "fair": false,
+                "why": [
+                  "the loss shows only after 7+ more removals (> 6)"
+                ],
+                "forkChecks": {
+                  "tilesLeft": 0.903,
+                  "forcedDepth": 7,
+                  "perms": 1,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 6
+                    }
+                  ]
+                }
+              },
+              {
+                "move": [
+                  29,
+                  71
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  67,
+                  68
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              6
+            ]
+          },
+          {
+            "step": 8,
+            "moves": 8,
+            "inWindow": false,
+            "tempting": [
+              {
+                "move": [
+                  18
+                ],
+                "kind": "match",
+                "cost": null,
+                "result": "lose",
+                "fair": false,
+                "why": [
+                  "the loss shows only after 7+ more removals (> 6)"
+                ],
+                "forkChecks": {
+                  "tilesLeft": 0.889,
+                  "forcedDepth": 7,
+                  "perms": 1,
+                  "permResults": [
+                    {
+                      "tempting": "lose",
+                      "alternative": 7
+                    }
+                  ]
+                }
+              },
+              {
+                "move": [
+                  29,
+                  71
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              },
+              {
+                "move": [
+                  67,
+                  68
+                ],
+                "kind": "pair",
+                "cost": 2,
+                "result": "win"
+              }
+            ],
+            "winning": [
+              7
+            ]
+          }
+        ],
+        "card": "The clock needs 9 moves; taking the free pair in sight at move 3 before the clock costs 2 spare moves.",
+        "archetype": "free-pair relief",
+        "k": 9,
+        "strictK": 9,
+        "shipSpares": [
+          1,
+          2,
+          3
+        ],
+        "ms": 103,
+        "nodes": 75231,
+        "warnings": [],
+        "profile": {
+          "id": "e5-v1",
+          "fingerprint": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2"
+        }
+      }
+    }
+  ],
+  "note": "Final source, calibrated static checks only; no bot ratings or ACCEPT blocks."
+}

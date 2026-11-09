@@ -1,0 +1,21 @@
+'use strict';
+// Two unique pictures must wait across a four-copy bridge. Once both outside
+// copies are gone, its first tail and the next spacer need a fourth tray place.
+function compile(g){
+ const copies=g.faceTiles||new Map();if(!g.faceTiles)g.faces.forEach((f,i)=>copies.set(f,(copies.get(f)||[]).concat(i)));
+ const above=g.tiles.map((_,i)=>{const set=new Set(),todo=[i];while(todo.length)for(const h of g.nb.above[todo.pop()])if(!set.has(h)){set.add(h);todo.push(h);}return set;});
+ const pairs=[...copies.values()].filter(ids=>ids.length===2),out=[];
+ for(const ids of copies.values())if(ids.length===4)for(const a of ids)for(const b of ids)if(a!==b&&above[b].has(a)){
+  const held=pairs.map(p=>p.find(h=>above[a].has(h)&&above[p.find(i=>i!==h)].has(b))).filter(Number.isInteger);
+  if(held.length<2)continue;
+  for(const pair of pairs)for(const x of pair){const y=pair.find(i=>i!==x);
+   if(!above[x].has(a)||!above[y].has(x)||!above[b].has(y))continue;
+   const heads=ids.filter(i=>i!==a&&i!==b),orphans=held.slice(0,2).map(h=>copies.get(g.faces[h]));
+   const proofTiles=ids.concat(pair,...orphans);if(proofTiles.some(i=>g.down[i]))continue;
+   out.push({a,b,heads,spacer:[x,y],orphans,scope:'two unmatched orphan pictures and the bridge must wait when the spacer opens'});
+  }
+ }
+ return out;
+}
+function dead(cuts,alive){return cuts.some(c=>c.heads.every(i=>!alive[i])&&alive[c.b]&&alive[c.spacer[0]]);}
+module.exports={compile,dead};

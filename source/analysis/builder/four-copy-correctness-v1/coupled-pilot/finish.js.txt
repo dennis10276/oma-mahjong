@@ -1,0 +1,24 @@
+'use strict';
+// Complete strict finishing proof for offline clock search. Never use the
+// game's heuristic Layouts.solve as evidence that a prefix cannot finish.
+const L=require('../../www/layouts.js');
+function finish(tiles,nb,faces,alive0,tray0,limit=30000,rules=null){
+ const alive=Uint8Array.from(alive0),initial=alive.slice(),copies=new Map(),dead=new Set(),path=[];let nodes=0;
+ faces.forEach((f,i)=>copies.set(f,(copies.get(f)||[]).concat(i)));const budget=Symbol('budget');
+ function rec(tray){
+  if(!alive.some(Boolean))return tray.length===0;
+  if(++nodes>limit)throw budget;
+  const key=alive.join('')+'/'+tray.map(i=>faces[i]).sort((a,b)=>a-b).join(',');if(dead.has(key))return false;
+  const free=[];for(let i=0;i<alive.length;i++)if(alive[i]&&(rules?L.takeable(i,alive,nb,rules,initial):L.isFree(i,alive,nb)))free.push(i);
+  const waiting=new Set(tray.map(i=>faces[i])),match=free.filter(i=>waiting.has(faces[i])||faces[i]===-1);
+  const safe=match.find(i=>faces[i]===-1||copies.get(faces[i]).every(j=>j===i||!alive[j]));
+  const rest=free.filter(i=>!waiting.has(faces[i])&&faces[i]!==-1),moves=safe!=null?[safe]:match.concat(tray.length<3?rest:[]);
+  for(const i of moves){const at=tray.findIndex(j=>faces[j]===faces[i]),next=faces[i]===-1?tray:at<0?tray.concat(i):tray.filter((_,j)=>j!==at);alive[i]=0;
+   if(rec(next)){alive[i]=1;path.push(i);return true;}alive[i]=1;
+  }
+  dead.add(key);return false;
+ }
+ try{const win=rec(tray0.slice());return {result:win?'win':'lose',nodes,...(win?{path:path.reverse()}:{} )};}
+ catch(e){if(e===budget)return {result:'unknown',nodes};throw e;}
+}
+module.exports={finish};

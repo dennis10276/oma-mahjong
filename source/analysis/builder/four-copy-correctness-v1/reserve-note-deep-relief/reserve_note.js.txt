@@ -1,0 +1,60 @@
+'use strict';
+const L=require('../../www/layouts.js'),E=require('./engine.js'),Bridge=require('./bridge_cuts.js');
+const {tileVisibility}=require('../sim/refit/human_board_visibility.js');
+function build(brief={},options={}){
+ const start=Date.now(),bridges=brief.targets?.bridges??1,spare=brief.frame?.spare??2,relief=brief.targets?.relief??'none';
+ if(![1,2].includes(bridges)||![1,2,3].includes(spare)||!['none','open','covered','covered2'].includes(relief)||relief!=='none'&&bridges!==2)return {fail:'invalidPlan'};
+ if(brief.shape&&brief.shape!=='musicNote'||brief.story&&brief.story!=='reserveMatchingCopies')return {fail:'incompatibleBrief'};
+ if(brief.tiles||brief.layout!=null||options.keep||options.hardWork!=null||options.softWork!=null)return {fail:'unsupportedOption'};
+ if(Object.keys(brief.targets||{}).some(k=>!['bridges','relief'].includes(k))||Object.keys(brief.frame||{}).some(k=>k!=='spare'))return {fail:'unsupportedTarget'};
+ if(options.wallMs===0)return {fail:'wallClock'};
+ const count=10+4*bridges,tiles=[],faces=[],heads=[];
+ for(let i=0;i<count;i++)tiles.push(i<6?[i-3,0,count-1-i]:[3,i-5,count-1-i]);
+ for(let i=0;i<6;i++)faces[i]=2+Math.floor(i/2);faces[6]=0;faces[7]=1;
+ for(let j=0;j<bridges;j++){const at=8+4*j,type=5+2*j;for(let k=0;k<4;k++)faces[at+k]=k===0||k===3?type:type+1;const y=j?tiles[at][1]:1,z=j?tiles[at][2]:tiles[6][2],left=tiles.length;heads.push([left,left+1]);tiles.push([1,y,z],[5,y,z+(j?1:0)]);faces[left]=faces[left+1]=type;}
+ faces[count-2]=0;faces[count-1]=1;
+ const padding=[],leaf=[[-1,6],[1,8],[-1,8],[-3,8],[1,10],[-1,10],[-3,10],[-1,12]];
+ for(let z=0;tiles.length<72&&z<12;z++)for(const [x,y] of leaf){if(tiles.length===72)break;if(tiles.some(t=>t[2]===z&&Math.abs(t[0]-x)<2&&Math.abs(t[1]-y)<2))continue;padding.push(tiles.length);tiles.push([x,y,z]);}
+ if(tiles.length!==72)return {fail:'padding'};
+ // The second spare stays blocked by a known pair, with its picture visible
+ // beside that cover. Do not manufacture difficulty by hiding this partner.
+ if(bridges===2){const blocker=padding.find(i=>tiles[i].join(',')==='1,8,6'),neighbour=padding.find(i=>tiles[i].join(',')==='-1,8,6');if(blocker==null||neighbour==null)return {fail:'reserveCover'};tiles[blocker][0]=0;tiles[neighbour][0]=-2;}
+ const reserved=new Set(),reliefPairs=[];let reliefTile,lateMate,reliefCover,reliefMate;
+ if(relief!=='none'){
+  const at=xyz=>padding.find(i=>tiles[i].join(',')===xyz);
+  reliefTile=at('-3,8,0');lateMate=at('-1,6,0');if(reliefTile==null||lateMate==null)return {fail:'reliefPlan'};
+  tiles[reliefTile]=[4,5,5];faces[reliefTile]=0;faces[count-2]=faces[lateMate]=5+2*bridges;reserved.add(reliefTile);reserved.add(lateMate);
+  if(relief.startsWith('covered')){reliefCover=at('-3,10,0');reliefMate=at('-1,6,6');if(reliefCover==null||reliefMate==null)return {fail:'reliefPlan'};tiles[reliefCover]=[5,4.25,7];reliefPairs.push({cover:reliefCover,mate:reliefMate});}
+  if(relief==='covered2'){const cover=at('-1,12,0'),mate=at('-2,8,6');if(cover==null||mate==null)return {fail:'reliefPlan'};tiles[cover]=[6,3.5,10];reliefPairs.push({cover,mate});}
+  reliefPairs.forEach((p,i)=>{faces[p.cover]=faces[p.mate]=6+2*bridges+i;reserved.add(p.cover);reserved.add(p.mate);});
+ }
+ for(let i=0;i<tiles.length;i++)for(let j=0;j<i;j++)if(tiles[i][2]===tiles[j][2]&&Math.abs(tiles[i][0]-tiles[j][0])<2&&Math.abs(tiles[i][1]-tiles[j][1])<2)return {fail:'tileOverlap'};
+ const objects=tiles.map(([x,y,z])=>({x,y,z})),nb=L.neighbors(objects),alive=new Uint8Array(72).fill(1),order=[],outside=[];
+ const free=i=>alive[i]&&L.isFree(i,alive,nb),take=i=>{if(!free(i))throw {stage:'geometryOrder',tile:i};alive[i]=0;order.push(i);};
+ const pad=()=>padding.filter(i=>!reserved.has(i)&&free(i)).sort((a,b)=>tiles[b][2]-tiles[a][2]||a-b)[0];
+ try{
+  for(let i=0;i<6;i++)take(i);take(heads[0][1]);take(6);take(7);
+  for(let j=0;j<bridges;j++){
+   if(j){while(!heads[j].every(free)||outside.length%2){const i=pad();if(i==null)return {fail:'headUnreachable'};take(i);outside.push(i);}take(heads[j][1]);}
+   for(let k=0;k<4;k++)take(8+4*j+k);take(heads[j][0]);
+   if(j===0&&relief!=='none'){for(const p of reliefPairs.slice().reverse()){take(p.cover);take(p.mate);}take(reliefTile);}
+  }
+  take(count-2);take(count-1);
+  while(padding.some(i=>!reserved.has(i)&&alive[i])){const i=pad();if(i==null)return {fail:'paddingOrder'};take(i);outside.push(i);}
+  if(lateMate!=null)take(lateMate);
+ }catch(e){if(e.stage)return {fail:e.stage,tile:e.tile};throw e;}
+ for(let i=0;i<outside.length;i+=2)faces[outside[i]]=faces[outside[i+1]]=5+2*bridges+(relief!=='none'?1:0)+reliefPairs.length+i/2;
+ if(faces.length!==72||Array.from({length:72},(_,i)=>faces[i]).some(f=>!Number.isInteger(f)||f<0||f>=36))return {fail:'pictures'};
+ const labels=Array.from({length:36},(_,i)=>i);let seed=(brief.seed??1)>>>0;for(let i=35;i>0;i--){seed=(Math.imul(seed,1664525)+1013904223)>>>0;const j=seed%(i+1);[labels[i],labels[j]]=[labels[j],labels[i]];}
+ const d={tiles,faces:faces.map(f=>labels[f]),down:[],gold:[],obst:{ice:{},locks:[],keys:[]},clock:{i:7,n:9+spare},solution:order};
+ if(!E.replay(d,order,{strict:true}).ok)return {fail:'strictWitness'};
+ const g=E.game(d);let s=E.start(g);for(const i of order.slice(0,7))s=E.step(g,s,i);const wrong=E.step(g,s,heads[0][0]);
+ if(!wrong||!Bridge.dead(Bridge.compile(g),wrong.alive))return {fail:'bridgeUnproven'};
+ const vis=tileVisibility(objects,{alive:new Uint8Array(72).fill(1),down:new Uint8Array(72),openPeek:-1},d.clock).tiles;
+ if(Array.from({length:count},(_,i)=>i).concat(heads.flat(),[reliefTile].filter(Number.isInteger),reliefPairs.flatMap(p=>[p.cover,p.mate])).some(i=>!vis[i].picture))return {fail:'reservePictureNotVisible'};
+ const xx=objects.map(t=>t.x/2-t.z*.14),yy=objects.map(t=>t.y/2*1.24-t.z*.14),w=Math.max(...xx)+1-Math.min(...xx),h=Math.max(...yy)+1.24-Math.min(...yy),px=Math.min((360-8)/(w+.125),(600-8)/(h+.159));
+ if(px<52)return {fail:'tilesTooSmall',px};if(Date.now()-start>(options.wallMs??60000))return {fail:'wallClock'};
+ return {design:d,card:{shape:'musicNote',story:'Keep the spare matching copies until the bridge needs them',tiles:72,bridges,relief,reliefTile,reliefCover,reliefMate,reliefPairs,lateMate,heads,clock:{fewestMoves:9,spare,tile:7},px,
+  trap:{prefix:order.slice(0,7),wrong:heads[0][0],winning:6},proof:{clockLowerBound:9,why:'Six compulsory flag tiles, one side head to free the first orphan, then the two orphan tiles including the clock. The strict witness attains nine.',bridgeCuts:g.bridgeCuts??Bridge.compile(g)},scope:'Constructed reserve puzzle; bots and quality checks still required'},ms:Date.now()-start};
+}
+module.exports={build};

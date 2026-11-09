@@ -1,0 +1,15 @@
+'use strict';const fs=require('fs'),path=require('path'),E=require(path.resolve('source/tools/builder/engine.js')),F=require(path.resolve('source/tools/builder/task11_physics.js')),P=require(path.resolve('source/tools/builder/loop/run_pipeline.js'));
+const out='source/analysis/builder/four-copy-correctness-v1/final-frozen-audit.json',owner=JSON.parse(fs.readFileSync('source/build/heavy.lock/owner.json'));if(owner.pid!==process.ppid)throw Error('Use heavy.js');if(fs.existsSync(out))throw Error('Preserve prior audit');
+const limits={nodes:400000,totalNodes:700000,ms:Infinity,finishNodes:200000,finishMs:Infinity},rows=[];
+for(const group of ['dependency-choices-v1','choice-motifs-v1']){const base=path.join('source/analysis/builder',group);for(const stage of fs.readdirSync(base)){
+ const file=path.join(base,stage,'rows.jsonl');if(!fs.existsSync(file)||stage==='pilot')continue;
+ for(const old of fs.readFileSync(file,'utf8').trim().split(/\r?\n/).filter(Boolean).map(JSON.parse))if(old.design&&!old.fail){
+  const d=old.design,game=E.clockShortest(E.game(d),limits),strict=E.clockShortest(E.game(d,{strict:true}),limits),expected=old.proof?.minimum??old.card?.clock?.fewestMoves??null;
+  const r={group,stage,id:old.id,expectedMinimum:expected,gameMinimum:game&&!game.unsure?game.k:null,strictMinimum:strict&&!strict.unsure?strict.k:null,witness:E.replay(d,d.solution,{strict:true}).ok};
+  const target=old.reach?.target||(old.card?.choice?{alive:old.card.choice.alive,tray:old.card.choice.tray,moves:old.card.choice.atMove}:null),move=old.fork?.move??old.card?.choice?.bad;
+  if(target&&move!=null){const g=E.game(d),s=F.state(g,target),after=E.step(g,s,move);r.before=E.winnable(g,s,{nodes:200000,ms:Infinity}).result;r.after=after?E.winnable(g,after,{nodes:200000,ms:Infinity}).result:'lose';r.expectedAfter=old.fork?.after??old.card?.choice?.after;}
+  r.changed=r.expectedMinimum!=null&&r.gameMinimum!=null&&r.expectedMinimum!==r.gameMinimum||r.expectedAfter!=null&&r.after!=='unknown'&&r.expectedAfter!==r.after;
+  rows.push(r);if(r.changed||r.gameMinimum==null||r.strictMinimum==null)console.log(JSON.stringify(r));
+ }
+}}
+const result={schema:'four-copy-frozen-proof-audit-v1',limits,code:P.codeFingerprints(),rows,summary:{boards:rows.length,changed:rows.filter(r=>r.changed).length,unknown:rows.filter(r=>r.gameMinimum==null||r.strictMinimum==null||r.before==='unknown'||r.after==='unknown').length,invalidWitness:rows.filter(r=>!r.witness).length},note:'Recheck old frozen proof claims with corrected four-copy matching. Old raw observations remain immutable. No bot ratings or ACCEPT campaigns.'};fs.writeFileSync(out,JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(result.summary));

@@ -1,5 +1,11 @@
 # Matching choices and their context, 2026-11-09
 
+Proof-audit follow-up: the offline four-copy matching correction rechecked the
+136 completed designs across these two reports, with no changed recorded
+minima/choice outcomes, unknowns or invalid strict witnesses. See
+[the correction report](../four-copy-correctness-v1/REPORT.md). Historical raw
+observations below remain unchanged.
+
 The builder now places a proven row-choice pattern in nine catalogue layouts.
 A small-subgame certificate resolves seven proofs that previously exhausted
 200,000 search nodes. However, isolated transfers remain too easy for the

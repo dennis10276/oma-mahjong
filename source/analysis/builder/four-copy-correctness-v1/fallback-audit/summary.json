@@ -1,0 +1,59 @@
+{
+  "oldK": 17,
+  "gameK": 17,
+  "strictK": 17,
+  "clockN": 19,
+  "staticPass": true,
+  "unresolved": [],
+  "tracePass": true,
+  "gates": {
+    "B1": {
+      "pass": true,
+      "value": 0.925,
+      "bites": 74,
+      "firstTries": 80
+    },
+    "B2": {
+      "pass": true,
+      "value": 0.28,
+      "atTrap": 203,
+      "atForkState": 62,
+      "onTemptingMove": 182,
+      "provedFirstErrors": 725,
+      "lostTries": 725,
+      "coverage": 1
+    },
+    "B3": {
+      "pass": true,
+      "value": 0.179
+    },
+    "B4": {
+      "pass": true,
+      "value": 1
+    },
+    "B5": {
+      "pass": true,
+      "value": 0,
+      "lateTrayLosses": 0
+    },
+    "B6": {
+      "pass": true,
+      "value": 0.604,
+      "postClockLosses": 438,
+      "secondAct": false,
+      "postClockErrorMedianShare": 0.238
+    },
+    "B7": {
+      "pass": null,
+      "report": true,
+      "value": 0.638,
+      "repeats": 261,
+      "knownRepeats": 261,
+      "lossesTries6to20": 409,
+      "inflated": true,
+      "maxTarget": 10
+    }
+  },
+  "acceptedAgain": false,
+  "noNewAcceptanceSeeds": true
+}

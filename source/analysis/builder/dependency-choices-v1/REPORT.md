@@ -1,5 +1,11 @@
 # Construction bottlenecks, 2026-11-09
 
+Proof-audit follow-up: the offline four-copy matching correction rechecked the
+136 completed designs across these two reports, with no changed recorded
+minima/choice outcomes, unknowns or invalid strict witnesses. See
+[the correction report](../four-copy-correctness-v1/REPORT.md). Historical raw
+observations below remain unchanged.
+
 The builder now has explicit geometry-aware dependency choices and clock-prelude
 controls that preserve an existing puzzle's later decision. The latter kept
 skilled difficulty near 3 while changing family difficulty substantially.

@@ -1,0 +1,2 @@
+# Preserve exact historical source snapshots and their recorded hashes.
+*.js.txt -text -whitespace
