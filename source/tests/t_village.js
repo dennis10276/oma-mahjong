@@ -77,7 +77,7 @@ module.exports = [
     },
   },
   {
-    name: 'village: no news file for days: stories fill in; the ranking shows 💬 for their characters',
+    name: 'village: no news file for days: stories fill in; fictional characters stay out of rankings',
     async run(t, { sleep }) {
       const p = await t.phone({ state: OMA, news: { updated: NOW - 5 * 864e5, items: [] } });
       await p.evaluate(() => loadNews(true)); await sleep(300);
@@ -85,8 +85,8 @@ module.exports = [
       t.eq([a, b], ['s:fiets:0', 's:kat:0'], 'two stories running side by side');
       await p.evaluate(() => __mj.show('ranking')); await sleep(300);
       const chat = await p.evaluate(() => [...document.querySelectorAll('.vg-chat')].map(b => b.dataset.who).sort());
-      t.eq(chat, ['Buurvrouw Ans', 'Truus'], '💬 next to Truus and Ans');
-      await p.evaluate(() => document.querySelector('.vg-chat[data-who="Truus"]').click()); await sleep(200);
+      t.eq(chat, [], 'no fictional players in leaderboard');
+      await p.evaluate(() => openWho('Truus')); await sleep(200);
       t.ok((await p.evaluate(() => document.querySelector('#modalBox').innerText)).includes('blauwe damesfiets'), 'tapping it shows her story so far');
       const q = await t.phone({ state: DENNIS, news: NEWS });
       await q.evaluate(() => __mj.show('ranking')); await sleep(300);
@@ -101,7 +101,7 @@ module.exports = [
         const e = [];
         if (st.parts.length < 4) e.push(st.id + ': too short');
         st.parts.forEach(([txt, cl], i) => { if (!txt) e.push(`${st.id} ${i}: no text`); if (i < st.parts.length - 1 ? !cl : cl) e.push(`${st.id} ${i}: cliffhanger`); });
-        if (!BOTS.some(b => b[0] === st.who)) e.push(st.id + ': unknown character ' + st.who);
+        if (!VILLAGE_CHARACTERS.some(b => b[0] === st.who)) e.push(st.id + ': unknown character ' + st.who);
         const a = st.ask;
         if (!a || a.at < 1 || a.at >= st.parts.length || !a.a[a.ok] || a.a.length !== 3) e.push(st.id + ': question');
         else if (!st.parts.slice(0, a.at).some(([x]) => x.toLowerCase().includes(a.a[a.ok].toLowerCase().replace(/^(om|uit|in het) /, '').split(' ')[0]))) e.push(st.id + ': answer not in an earlier part');

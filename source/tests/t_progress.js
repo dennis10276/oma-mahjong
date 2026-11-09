@@ -39,8 +39,8 @@ module.exports = [
       const p = await t.phone({ state: { ...DENNIS, level: 10, wk: { id: '2026-09-28', pts: 99999 } } });
       await sleep(900);
       const m = await modal(p);
-      t.ok(m && /Vorige week werd je #1/.test(m.title), 'last week\'s result', m);
-      t.eq(await p.evaluate(() => [__mj.S.wk, __mj.S.weekWins, __mj.S.stats.weeks]), [{ id: '2026-10-05', pts: 0 }, 1, 1], 'new week at 0, a week won');
+      t.ok(m && /Jouw vorige week/.test(m.title), 'last week\'s result', m);
+      t.eq(await p.evaluate(() => [__mj.S.wk, __mj.S.weekWins, __mj.S.stats.weeks]), [{ id: '2026-10-05', pts: 0 }, 0, 1], 'new week at 0, no unverified winner');
       await click(p, '#lwOk'); await p.reload(); await p.waitForFunction(() => window.__mjReady); await sleep(900);
       t.eq(await modal(p), null, 'not shown again');
     },

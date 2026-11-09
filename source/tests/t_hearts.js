@@ -13,7 +13,7 @@ module.exports = [
       // the family list comes from the database (test players are shown to test players)
       t.ok(db.get('scores/pOma/points') > 0, 'Oma\'s score in the database', db.get('scores/pOma'));
       await me.evaluate(() => fetchOnline()); await me.evaluate(() => __mj.show('ranking')); await sleep(800);
-      t.ok((await me.evaluate(() => document.querySelector('#famBox').innerText)).includes('Oma Test'), 'Oma in the family box');
+      t.ok((await me.evaluate(() => document.querySelector('#rankList').innerText)).includes('Oma Test'), 'Oma in the family box');
       // remember what Oma's screen shows when a heart arrives (it may come at home or during the level)
       await oma.evaluate(() => { for (const n of ['showHearts', 'heartPop']) { const f = window[n]; window[n] = function (...a) { const r = f.apply(this, a); setTimeout(() => { window.__heartTexts = (window.__heartTexts || []).concat(document.querySelector(n === 'showHearts' ? '#modalBox' : '#heartPop').innerText); }, 50); return r; }; } });
       await me.evaluate(() => __mj.sendHeart('pOma', 'Oma Test')); await sleep(400);
@@ -26,7 +26,7 @@ module.exports = [
       // Oma finishes a level and sees the heart
       await startLevel(oma, 10);
       await solve(oma, 3000);
-      await click(oma, '#wNext'); await sleep(2500);
+      if (await oma.locator('#wNext').count()) await click(oma, '#wNext'); await sleep(2500);
       let seen = false, msgSeen = false;
       const steps = [];
       for (let i = 0; i < 8 && !seen; i++) {
@@ -49,7 +49,7 @@ module.exports = [
       await me.evaluate(() => { __mj.show('home'); }); await sleep(200);
       await me.evaluate(() => checkSentHearts()); await sleep(800);
       await me.evaluate(() => __mj.show('ranking')); await sleep(1500);
-      const st = await me.evaluate(() => (document.querySelector('.fam-row .hs') || {}).textContent || '');
+      const st = await me.evaluate(() => (document.querySelector('.rrow .hs') || {}).textContent || '');
       t.ok(/gezien/.test(st), 'sender sees "gezien"', st);
     },
   },

@@ -13,7 +13,7 @@ module.exports = [
         t.ok(await p.evaluate(s => document.querySelector('#' + s).classList.contains('active'), s), `${s} shown`);
       }
       await p.evaluate(() => __mj.show('ranking')); await sleep(300);
-      const fam = await p.evaluate(() => document.querySelector('#famBox').innerText);
+      const fam = await p.evaluate(() => document.querySelector('#rankList').innerText);
       t.ok(fam.includes('Dennis') && fam.includes('level 18'), 'family box shows names and levels', fam);
       await click(p, '#rkAll'); await sleep(200);
       await p.evaluate(() => __mj.show('home'));
@@ -80,11 +80,12 @@ module.exports = [
     },
   },
   {
-    name: 'screens: short iPhone screens can scroll to the ranking button',
+    name: 'screens: home fits without scrolling on portrait and landscape screens',
     async run(t, { sleep }) {
-      for (const size of [[390, 664], [375, 560], [390, 820]]) {
+      for (const size of [[320, 480], [390, 664], [375, 560], [390, 820], [740, 360]]) {
         const p = await t.phone({ state: { level: 5 }, size, ios: true });
-        await p.evaluate(() => document.querySelector('#home').scrollTo(0, 9999)); await sleep(200);
+        await sleep(200);
+        t.ok(await p.evaluate(() => { const h = document.querySelector('#home'); return h.scrollHeight <= h.clientHeight + 1 && h.scrollWidth <= h.clientWidth + 1; }), 'home has no overflow');
         const r = await p.evaluate(() => ({ bottom: Math.round(document.querySelector('#btnRanking').getBoundingClientRect().bottom), vh: innerHeight }));
         t.ok(r.bottom <= r.vh, `${size.join('x')}: ranking button reachable`, r);
         await p.ctx.close();

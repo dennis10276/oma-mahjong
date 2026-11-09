@@ -62,7 +62,7 @@ $('#calNext').onclick = () => { calM++; if (calM > 11) { calM = 0; calY++; } ren
 document.querySelectorAll('.back').forEach(b => b.onclick = () => show('home'));
 document.addEventListener('click', e => { if (e.target.closest('button') && !e.target.closest('.tool')) { Sound.init(); Sound.button(); } }, true);
 document.addEventListener('pointerdown', () => Sound.init(), { once: true });
-addEventListener('resize', () => { if (curScreen === 'game') layoutBoard(); });
+addEventListener('resize', () => { if (curScreen === 'game') layoutBoard(); else fitTexts(document.getElementById(curScreen)); });
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) { Sound.suspend(); if (curScreen === 'game') pauseClock(); }
   else { Sound.resume(); resumeClock(); if (curScreen === 'home') { if (applyUpdate()) return; renderHome(); checkHearts(); } checkUpdate(); loadCfg().then(loadNews); }
