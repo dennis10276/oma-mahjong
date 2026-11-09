@@ -1,0 +1,61 @@
+{
+  "commit": "e1a622ff3a1007041d7af04c122e02d5e2bf2ae1",
+  "files": [
+    {
+      "source": "source/analysis/builder/g6-puzzle-balance/REPORT.md",
+      "archive": "REPORT.md",
+      "sha256": "a71f255527e884318d01c121d934f5cfd7c449c7ed64838cf7dfed8dd79761da"
+    },
+    {
+      "source": "source/analysis/builder/g6-puzzle-balance/diagnostics.json",
+      "archive": "diagnostics.json",
+      "sha256": "2665678b6861cc4a1a7cb978e86cf86a6194d4bf214b591b46ff30bf3f2efd25"
+    },
+    {
+      "source": "source/analysis/builder/g6-puzzle-balance/discovery_results.json",
+      "archive": "discovery_results.json",
+      "sha256": "c0d0e98c93765e93195fe81a220805e94ab8fd818894eb1d27a5420e68bbddd1"
+    },
+    {
+      "source": "source/analysis/builder/g6-puzzle-balance/discovery_sweep.js",
+      "archive": "discovery_sweep.js.txt",
+      "sha256": "1ec01e369e587cbbeb3eab0f4a14bafb19d8c9bbf419edd9942c061e5b5ceb51"
+    },
+    {
+      "source": "source/analysis/builder/g6-puzzle-balance/step1_diagnostics.js",
+      "archive": "step1_diagnostics.js.txt",
+      "sha256": "01dbe160107e1d56ec42969ad1d4477c9f01e18c951aa3174b27c65b00d5c3cb"
+    },
+    {
+      "source": "source/analysis/builder/g6-puzzle-balance/test_choke.js",
+      "archive": "test_choke.js.txt",
+      "sha256": "37efaa1acd8265242b5972bbdb17514b47f50ad5a465f20854d866a560df72e8"
+    },
+    {
+      "source": "source/analysis/builder/g6-puzzle-balance/test_interleave.js",
+      "archive": "test_interleave.js.txt",
+      "sha256": "a57c6de8c824f7b15745472a79ded6110a5dc57ece1a4b5f6ffb395b99db53c2"
+    },
+    {
+      "source": "source/analysis/builder/g6-puzzle-balance/test_prototype.js",
+      "archive": "test_prototype.js.txt",
+      "sha256": "33e337818928a05a5d64577cad09eb7d36356fceec69ef557c3b1bf0ce790fd9"
+    },
+    {
+      "source": "source/analysis/builder/g6-puzzle-balance/test_prototype2.js",
+      "archive": "test_prototype2.js.txt",
+      "sha256": "d9ae1df4719ec9d50e61d20c7873b51de2c8a6cb59ebe355fd1485f95c880b39"
+    },
+    {
+      "source": "source/tools/builder/puzzle_balance.js",
+      "archive": "puzzle_balance.js.txt",
+      "sha256": "7f5163014303c676f6bb957f5d7fb2cabdf72f209b900c683a4f563f3e9c1db8"
+    },
+    {
+      "source": "source/tools/builder/test_puzzle_balance.js",
+      "archive": "test_puzzle_balance.js.txt",
+      "sha256": "4f025ffa3908250e9d723ebcaf8731af611ca2270bbdb7093d7055caad25e223"
+    }
+  ],
+  "note": "Original Git blobs, unmodified. JavaScript archived as .js.txt; experimental constructor is not installed in builder API."
+}

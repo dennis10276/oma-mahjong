@@ -1,0 +1,4 @@
+# Preserve incoming source blobs and raw evidence exactly.
+*.js.txt -text -whitespace
+*.json -text
+REPORT.md -text -whitespace

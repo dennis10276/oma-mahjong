@@ -2,9 +2,12 @@
 
 Prepared by Codex for Gemini, 2026-11-09, at Dennis's request.
 
-Status: assignment prepared for handoff. This file does not establish that an
-experiment is running. G5 is integrated; this is new construction research on
-the corrected builder, not a request to resume the old G5 checkout.
+Status, 2026-11-09: G6 completed on `wip/gemini-puzzle-balance` at `e1a622ff`.
+The lead reproduced all discovery ratings, corrected the report's contradictions,
+and retained the work as research. Its unimplemented delay control and unsupported
+proof claims are not integrated into the builder API. Read
+`source/analysis/builder/g6-puzzle-balance/LEAD-REVIEW.md` before using the results.
+G7 is `TASK-G7-builder-completion.md`; this original assignment remains historical.
 
 ## Goal
 

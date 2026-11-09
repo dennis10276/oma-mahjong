@@ -1,0 +1,1279 @@
+{
+  "schema": "g6-diagnostics-v1",
+  "date": "2026-11-09T15:27:29.002Z",
+  "results": [
+    {
+      "id": "note-b1-none",
+      "desc": "1 bridges, relief: none",
+      "D": 19.560000000000002,
+      "S": 1.3,
+      "styles": {
+        "route": 1.3,
+        "plain": 1.3
+      },
+      "staticPass": false,
+      "failedGates": [
+        "A6"
+      ],
+      "a6": {
+        "pass": false,
+        "loseForks": 3,
+        "fair": 0,
+        "unfair": [
+          {
+            "move": [
+              14,
+              15
+            ],
+            "kind": "pair",
+            "atMove": 7,
+            "why": [
+              "the loss shows only after 7+ more removals (> 6)",
+              "the only winning moves are not goal-directed (obvious.js) under some deal"
+            ]
+          },
+          {
+            "move": [
+              14
+            ],
+            "kind": "match",
+            "atMove": 8,
+            "why": [
+              "the loss shows only after 7+ more removals (> 6)"
+            ]
+          },
+          {
+            "move": [
+              14
+            ],
+            "kind": "match",
+            "atMove": 9,
+            "why": [
+              "the loss shows only after 7+ more removals (> 6)"
+            ]
+          }
+        ]
+      },
+      "choice": {
+        "step": 7,
+        "tilesLeft": 65,
+        "tray": [
+          15
+        ],
+        "trayFaces": [
+          9
+        ],
+        "legalCount": 8,
+        "winningMoves": [
+          {
+            "action": 6,
+            "tiles": [
+              6
+            ],
+            "faces": [
+              24
+            ]
+          },
+          {
+            "action": 64,
+            "tiles": [
+              64
+            ],
+            "faces": [
+              15
+            ]
+          },
+          {
+            "action": 65,
+            "tiles": [
+              65
+            ],
+            "faces": [
+              15
+            ]
+          },
+          {
+            "action": 67,
+            "tiles": [
+              67
+            ],
+            "faces": [
+              19
+            ]
+          },
+          {
+            "action": 68,
+            "tiles": [
+              68
+            ],
+            "faces": [
+              11
+            ]
+          },
+          {
+            "action": 70,
+            "tiles": [
+              70
+            ],
+            "faces": [
+              14
+            ]
+          },
+          {
+            "action": 71,
+            "tiles": [
+              71
+            ],
+            "faces": [
+              14
+            ]
+          }
+        ],
+        "losingMoves": [
+          {
+            "action": 14,
+            "tiles": [
+              14
+            ],
+            "faces": [
+              9
+            ],
+            "forcedDepth": 10,
+            "depthMin": false
+          }
+        ],
+        "solMove": 6,
+        "solFace": 24
+      },
+      "plannerAttempts": [
+        {
+          "attempt": 1,
+          "win": true,
+          "taps": 72,
+          "left": 0,
+          "why": "win",
+          "actionsCount": 72
+        }
+      ],
+      "ms": 261
+    },
+    {
+      "id": "note-b2-none",
+      "desc": "2 bridges, relief: none",
+      "D": 19.155,
+      "S": 16.5,
+      "styles": {
+        "route": 16.5,
+        "plain": 16.5
+      },
+      "staticPass": false,
+      "failedGates": [
+        "A6"
+      ],
+      "a6": {
+        "pass": false,
+        "loseForks": 3,
+        "fair": 0,
+        "unfair": [
+          {
+            "move": [
+              18,
+              19
+            ],
+            "kind": "pair",
+            "atMove": 7,
+            "why": [
+              "the loss shows only after 7+ more removals (> 6)",
+              "the only winning moves are not goal-directed (obvious.js) under some deal"
+            ]
+          },
+          {
+            "move": [
+              18
+            ],
+            "kind": "match",
+            "atMove": 8,
+            "why": [
+              "the loss shows only after 7+ more removals (> 6)"
+            ]
+          },
+          {
+            "move": [
+              18
+            ],
+            "kind": "match",
+            "atMove": 9,
+            "why": [
+              "the loss shows only after 7+ more removals (> 6)"
+            ]
+          }
+        ]
+      },
+      "choice": {
+        "step": 0,
+        "tilesLeft": 72,
+        "tray": [],
+        "trayFaces": [],
+        "legalCount": 9,
+        "winningMoves": [
+          {
+            "action": 0,
+            "tiles": [
+              0
+            ],
+            "faces": [
+              23
+            ]
+          },
+          {
+            "action": 19,
+            "tiles": [
+              19
+            ],
+            "faces": [
+              9
+            ]
+          },
+          {
+            "action": 65,
+            "tiles": [
+              65
+            ],
+            "faces": [
+              34
+            ]
+          },
+          {
+            "action": 67,
+            "tiles": [
+              67
+            ],
+            "faces": [
+              2
+            ]
+          },
+          {
+            "action": 68,
+            "tiles": [
+              68
+            ],
+            "faces": [
+              2
+            ]
+          },
+          {
+            "action": 69,
+            "tiles": [
+              69
+            ],
+            "faces": [
+              11
+            ]
+          },
+          {
+            "action": 70,
+            "tiles": [
+              70
+            ],
+            "faces": [
+              11
+            ]
+          }
+        ],
+        "losingMoves": [
+          {
+            "action": 21,
+            "tiles": [
+              21
+            ],
+            "faces": [
+              15
+            ],
+            "forcedDepth": 10,
+            "depthMin": false
+          },
+          {
+            "action": 71,
+            "tiles": [
+              71
+            ],
+            "faces": [
+              14
+            ],
+            "forcedDepth": 10,
+            "depthMin": false
+          }
+        ],
+        "solMove": 0,
+        "solFace": 23
+      },
+      "plannerAttempts": [
+        {
+          "attempt": 1,
+          "win": false,
+          "taps": 68,
+          "left": 4,
+          "why": "tray",
+          "actionsCount": 68
+        },
+        {
+          "attempt": 2,
+          "win": false,
+          "taps": 20,
+          "left": 52,
+          "why": "tray",
+          "actionsCount": 20
+        },
+        {
+          "attempt": 3,
+          "win": false,
+          "taps": 14,
+          "left": 58,
+          "why": "tray",
+          "actionsCount": 14
+        },
+        {
+          "attempt": 4,
+          "win": true,
+          "taps": 72,
+          "left": 0,
+          "why": "win",
+          "actionsCount": 72
+        }
+      ],
+      "ms": 336
+    },
+    {
+      "id": "note-b2-open",
+      "desc": "2 bridges, relief: open",
+      "D": 15.05,
+      "S": 1.13,
+      "styles": {
+        "route": 1.13,
+        "plain": 1.13
+      },
+      "staticPass": false,
+      "failedGates": [
+        "A6"
+      ],
+      "a6": {
+        "pass": false,
+        "loseForks": 3,
+        "fair": 0,
+        "unfair": [
+          {
+            "move": [
+              18,
+              19
+            ],
+            "kind": "pair",
+            "atMove": 7,
+            "why": [
+              "the loss shows only after 7+ more removals (> 6)",
+              "the only winning moves are not goal-directed (obvious.js) under some deal"
+            ]
+          },
+          {
+            "move": [
+              18
+            ],
+            "kind": "match",
+            "atMove": 8,
+            "why": [
+              "the loss shows only after 7+ more removals (> 6)"
+            ]
+          },
+          {
+            "move": [
+              18
+            ],
+            "kind": "match",
+            "atMove": 9,
+            "why": [
+              "the loss shows only after 7+ more removals (> 6)"
+            ]
+          }
+        ]
+      },
+      "choice": {
+        "step": 0,
+        "tilesLeft": 72,
+        "tray": [],
+        "trayFaces": [],
+        "legalCount": 9,
+        "winningMoves": [
+          {
+            "action": 0,
+            "tiles": [
+              0
+            ],
+            "faces": [
+              23
+            ]
+          },
+          {
+            "action": 19,
+            "tiles": [
+              19
+            ],
+            "faces": [
+              9
+            ]
+          },
+          {
+            "action": 65,
+            "tiles": [
+              65
+            ],
+            "faces": [
+              2
+            ]
+          },
+          {
+            "action": 67,
+            "tiles": [
+              67
+            ],
+            "faces": [
+              17
+            ]
+          },
+          {
+            "action": 68,
+            "tiles": [
+              68
+            ],
+            "faces": [
+              17
+            ]
+          },
+          {
+            "action": 69,
+            "tiles": [
+              69
+            ],
+            "faces": [
+              14
+            ]
+          },
+          {
+            "action": 70,
+            "tiles": [
+              70
+            ],
+            "faces": [
+              14
+            ]
+          }
+        ],
+        "losingMoves": [
+          {
+            "action": 21,
+            "tiles": [
+              21
+            ],
+            "faces": [
+              15
+            ],
+            "forcedDepth": 10,
+            "depthMin": false
+          },
+          {
+            "action": 71,
+            "tiles": [
+              71
+            ],
+            "faces": [
+              20
+            ],
+            "forcedDepth": 10,
+            "depthMin": false
+          }
+        ],
+        "solMove": 0,
+        "solFace": 23
+      },
+      "plannerAttempts": [
+        {
+          "attempt": 1,
+          "win": true,
+          "taps": 72,
+          "left": 0,
+          "why": "win",
+          "actionsCount": 72
+        }
+      ],
+      "ms": 119
+    },
+    {
+      "id": "note-b2-covered",
+      "desc": "2 bridges, relief: covered",
+      "D": 14.615,
+      "S": 1.13,
+      "styles": {
+        "route": 1.13,
+        "plain": 1.13
+      },
+      "staticPass": false,
+      "failedGates": [
+        "A6"
+      ],
+      "a6": {
+        "pass": false,
+        "loseForks": 3,
+        "fair": 0,
+        "unfair": [
+          {
+            "move": [
+              18,
+              19
+            ],
+            "kind": "pair",
+            "atMove": 7,
+            "why": [
+              "the loss shows only after 7+ more removals (> 6)",
+              "the only winning moves are not goal-directed (obvious.js) under some deal"
+            ]
+          },
+          {
+            "move": [
+              18
+            ],
+            "kind": "match",
+            "atMove": 8,
+            "why": [
+              "the loss shows only after 7+ more removals (> 6)"
+            ]
+          },
+          {
+            "move": [
+              18
+            ],
+            "kind": "match",
+            "atMove": 9,
+            "why": [
+              "the loss shows only after 7+ more removals (> 6)"
+            ]
+          }
+        ]
+      },
+      "choice": {
+        "step": 0,
+        "tilesLeft": 72,
+        "tray": [],
+        "trayFaces": [],
+        "legalCount": 10,
+        "winningMoves": [
+          {
+            "action": 0,
+            "tiles": [
+              0
+            ],
+            "faces": [
+              23
+            ]
+          },
+          {
+            "action": 19,
+            "tiles": [
+              19
+            ],
+            "faces": [
+              9
+            ]
+          },
+          {
+            "action": 28,
+            "tiles": [
+              28
+            ],
+            "faces": [
+              14
+            ]
+          },
+          {
+            "action": 67,
+            "tiles": [
+              67
+            ],
+            "faces": [
+              17
+            ]
+          },
+          {
+            "action": 69,
+            "tiles": [
+              69
+            ],
+            "faces": [
+              14
+            ]
+          },
+          {
+            "action": 70,
+            "tiles": [
+              70
+            ],
+            "faces": [
+              20
+            ]
+          },
+          {
+            "action": 71,
+            "tiles": [
+              71
+            ],
+            "faces": [
+              20
+            ]
+          }
+        ],
+        "losingMoves": [
+          {
+            "action": 21,
+            "tiles": [
+              21
+            ],
+            "faces": [
+              15
+            ],
+            "forcedDepth": 10,
+            "depthMin": false
+          },
+          {
+            "action": 65,
+            "tiles": [
+              65
+            ],
+            "faces": [
+              2
+            ],
+            "forcedDepth": 10,
+            "depthMin": false
+          },
+          {
+            "action": 68,
+            "tiles": [
+              68
+            ],
+            "faces": [
+              18
+            ],
+            "forcedDepth": 10,
+            "depthMin": false
+          }
+        ],
+        "solMove": 0,
+        "solFace": 23
+      },
+      "plannerAttempts": [
+        {
+          "attempt": 1,
+          "win": true,
+          "taps": 72,
+          "left": 0,
+          "why": "win",
+          "actionsCount": 72
+        }
+      ],
+      "ms": 116
+    },
+    {
+      "id": "note-b2-covered2",
+      "desc": "2 bridges, relief: covered2",
+      "D": 13.735,
+      "S": 1.05,
+      "styles": {
+        "route": 1.05,
+        "plain": 1.05
+      },
+      "staticPass": false,
+      "failedGates": [
+        "A6"
+      ],
+      "a6": {
+        "pass": false,
+        "loseForks": 3,
+        "fair": 0,
+        "unfair": [
+          {
+            "move": [
+              18,
+              19
+            ],
+            "kind": "pair",
+            "atMove": 7,
+            "why": [
+              "the loss shows only after 7+ more removals (> 6)",
+              "the only winning moves are not goal-directed (obvious.js) under some deal"
+            ]
+          },
+          {
+            "move": [
+              18
+            ],
+            "kind": "match",
+            "atMove": 8,
+            "why": [
+              "the loss shows only after 7+ more removals (> 6)"
+            ]
+          },
+          {
+            "move": [
+              18
+            ],
+            "kind": "match",
+            "atMove": 9,
+            "why": [
+              "the loss shows only after 7+ more removals (> 6)"
+            ]
+          }
+        ]
+      },
+      "choice": {
+        "step": 0,
+        "tilesLeft": 72,
+        "tray": [],
+        "trayFaces": [],
+        "legalCount": 10,
+        "winningMoves": [
+          {
+            "action": 0,
+            "tiles": [
+              0
+            ],
+            "faces": [
+              23
+            ]
+          },
+          {
+            "action": 19,
+            "tiles": [
+              19
+            ],
+            "faces": [
+              9
+            ]
+          },
+          {
+            "action": 29,
+            "tiles": [
+              29
+            ],
+            "faces": [
+              20
+            ]
+          },
+          {
+            "action": 65,
+            "tiles": [
+              65
+            ],
+            "faces": [
+              17
+            ]
+          },
+          {
+            "action": 67,
+            "tiles": [
+              67
+            ],
+            "faces": [
+              18
+            ]
+          },
+          {
+            "action": 68,
+            "tiles": [
+              68
+            ],
+            "faces": [
+              18
+            ]
+          },
+          {
+            "action": 71,
+            "tiles": [
+              71
+            ],
+            "faces": [
+              20
+            ]
+          }
+        ],
+        "losingMoves": [
+          {
+            "action": 21,
+            "tiles": [
+              21
+            ],
+            "faces": [
+              15
+            ],
+            "forcedDepth": 10,
+            "depthMin": false
+          },
+          {
+            "action": 69,
+            "tiles": [
+              69
+            ],
+            "faces": [
+              14
+            ],
+            "forcedDepth": 10,
+            "depthMin": false
+          },
+          {
+            "action": 70,
+            "tiles": [
+              70
+            ],
+            "faces": [
+              34
+            ],
+            "forcedDepth": 10,
+            "depthMin": false
+          }
+        ],
+        "solMove": 0,
+        "solFace": 23
+      },
+      "plannerAttempts": [
+        {
+          "attempt": 1,
+          "win": true,
+          "taps": 72,
+          "left": 0,
+          "why": "win",
+          "actionsCount": 72
+        }
+      ],
+      "ms": 152
+    },
+    {
+      "id": "u-45-w2",
+      "desc": "U body 45-w2 (face-up 76-tile)",
+      "D": 3.125,
+      "S": 2.98,
+      "styles": {
+        "route": 2.98,
+        "plain": 2.98
+      },
+      "staticPass": true,
+      "failedGates": [],
+      "a6": {
+        "pass": true,
+        "loseForks": 0,
+        "fair": 0,
+        "unfair": []
+      },
+      "choice": null,
+      "plannerAttempts": [
+        {
+          "attempt": 1,
+          "win": false,
+          "taps": 52,
+          "left": 24,
+          "why": "tray",
+          "actionsCount": 52
+        },
+        {
+          "attempt": 2,
+          "win": true,
+          "taps": 76,
+          "left": 0,
+          "why": "win",
+          "actionsCount": 76
+        }
+      ],
+      "ms": 1879
+    },
+    {
+      "id": "u-k5-9-lock42",
+      "desc": "U prelude k5-9-lock42 (target 13 proposal)",
+      "D": 16.65,
+      "S": 3.48,
+      "styles": {
+        "route": 3.48,
+        "plain": 3.48
+      },
+      "staticPass": true,
+      "failedGates": [],
+      "a6": {
+        "pass": true,
+        "loseForks": 6,
+        "fair": 6,
+        "unfair": []
+      },
+      "choice": {
+        "step": 0,
+        "tilesLeft": 76,
+        "tray": [],
+        "trayFaces": [],
+        "legalCount": 11,
+        "winningMoves": [
+          {
+            "action": 44,
+            "tiles": [
+              44
+            ],
+            "faces": [
+              3
+            ]
+          },
+          {
+            "action": 51,
+            "tiles": [
+              51
+            ],
+            "faces": [
+              3
+            ]
+          },
+          {
+            "action": 59,
+            "tiles": [
+              59
+            ],
+            "faces": [
+              1
+            ]
+          },
+          {
+            "action": 61,
+            "tiles": [
+              61
+            ],
+            "faces": [
+              21
+            ]
+          },
+          {
+            "action": 75,
+            "tiles": [
+              75
+            ],
+            "faces": [
+              30
+            ]
+          }
+        ],
+        "losingMoves": [
+          {
+            "action": 41,
+            "tiles": [
+              41
+            ],
+            "faces": [
+              5
+            ],
+            "forcedDepth": 10,
+            "depthMin": false
+          },
+          {
+            "action": 43,
+            "tiles": [
+              43
+            ],
+            "faces": [
+              27
+            ],
+            "forcedDepth": 10,
+            "depthMin": false
+          },
+          {
+            "action": 52,
+            "tiles": [
+              52
+            ],
+            "faces": [
+              14
+            ],
+            "forcedDepth": 10,
+            "depthMin": false
+          },
+          {
+            "action": 60,
+            "tiles": [
+              60
+            ],
+            "faces": [
+              26
+            ],
+            "forcedDepth": 10,
+            "depthMin": false
+          },
+          {
+            "action": 62,
+            "tiles": [
+              62
+            ],
+            "faces": [
+              26
+            ],
+            "forcedDepth": 10,
+            "depthMin": false
+          },
+          {
+            "action": 72,
+            "tiles": [
+              72
+            ],
+            "faces": [
+              11
+            ],
+            "forcedDepth": 10,
+            "depthMin": false
+          }
+        ],
+        "solMove": 51,
+        "solFace": 3
+      },
+      "plannerAttempts": [
+        {
+          "attempt": 1,
+          "win": false,
+          "taps": 14,
+          "left": 62,
+          "why": "clock",
+          "actionsCount": 14
+        },
+        {
+          "attempt": 2,
+          "win": false,
+          "taps": 10,
+          "left": 66,
+          "why": "tray",
+          "actionsCount": 10
+        },
+        {
+          "attempt": 3,
+          "win": false,
+          "taps": 30,
+          "left": 46,
+          "why": "tray",
+          "actionsCount": 30
+        },
+        {
+          "attempt": 4,
+          "win": false,
+          "taps": 34,
+          "left": 42,
+          "why": "tray",
+          "actionsCount": 34
+        },
+        {
+          "attempt": 5,
+          "win": false,
+          "taps": 52,
+          "left": 24,
+          "why": "tray",
+          "actionsCount": 52
+        },
+        {
+          "attempt": 6,
+          "win": true,
+          "taps": 76,
+          "left": 0,
+          "why": "win",
+          "actionsCount": 76
+        }
+      ],
+      "ms": 2796
+    },
+    {
+      "id": "u-repair-0",
+      "desc": "U repaired prelude repair-0",
+      "D": 16.65,
+      "S": 3.48,
+      "styles": {
+        "route": 3.48,
+        "plain": 3.48
+      },
+      "staticPass": true,
+      "failedGates": [],
+      "a6": {
+        "pass": true,
+        "loseForks": 6,
+        "fair": 6,
+        "unfair": []
+      },
+      "choice": {
+        "step": 0,
+        "tilesLeft": 76,
+        "tray": [],
+        "trayFaces": [],
+        "legalCount": 11,
+        "winningMoves": [
+          {
+            "action": 44,
+            "tiles": [
+              44
+            ],
+            "faces": [
+              3
+            ]
+          },
+          {
+            "action": 51,
+            "tiles": [
+              51
+            ],
+            "faces": [
+              3
+            ]
+          },
+          {
+            "action": 59,
+            "tiles": [
+              59
+            ],
+            "faces": [
+              1
+            ]
+          },
+          {
+            "action": 61,
+            "tiles": [
+              61
+            ],
+            "faces": [
+              21
+            ]
+          },
+          {
+            "action": 75,
+            "tiles": [
+              75
+            ],
+            "faces": [
+              30
+            ]
+          }
+        ],
+        "losingMoves": [
+          {
+            "action": 41,
+            "tiles": [
+              41
+            ],
+            "faces": [
+              5
+            ],
+            "forcedDepth": 10,
+            "depthMin": false
+          },
+          {
+            "action": 43,
+            "tiles": [
+              43
+            ],
+            "faces": [
+              27
+            ],
+            "forcedDepth": 10,
+            "depthMin": false
+          },
+          {
+            "action": 52,
+            "tiles": [
+              52
+            ],
+            "faces": [
+              14
+            ],
+            "forcedDepth": 10,
+            "depthMin": false
+          },
+          {
+            "action": 60,
+            "tiles": [
+              60
+            ],
+            "faces": [
+              26
+            ],
+            "forcedDepth": 10,
+            "depthMin": false
+          },
+          {
+            "action": 62,
+            "tiles": [
+              62
+            ],
+            "faces": [
+              26
+            ],
+            "forcedDepth": 10,
+            "depthMin": false
+          },
+          {
+            "action": 72,
+            "tiles": [
+              72
+            ],
+            "faces": [
+              11
+            ],
+            "forcedDepth": 10,
+            "depthMin": false
+          }
+        ],
+        "solMove": 51,
+        "solFace": 3
+      },
+      "plannerAttempts": [
+        {
+          "attempt": 1,
+          "win": false,
+          "taps": 14,
+          "left": 62,
+          "why": "clock",
+          "actionsCount": 14
+        },
+        {
+          "attempt": 2,
+          "win": false,
+          "taps": 10,
+          "left": 66,
+          "why": "tray",
+          "actionsCount": 10
+        },
+        {
+          "attempt": 3,
+          "win": false,
+          "taps": 30,
+          "left": 46,
+          "why": "tray",
+          "actionsCount": 30
+        },
+        {
+          "attempt": 4,
+          "win": false,
+          "taps": 34,
+          "left": 42,
+          "why": "tray",
+          "actionsCount": 34
+        },
+        {
+          "attempt": 5,
+          "win": false,
+          "taps": 52,
+          "left": 24,
+          "why": "tray",
+          "actionsCount": 52
+        },
+        {
+          "attempt": 6,
+          "win": true,
+          "taps": 76,
+          "left": 0,
+          "why": "win",
+          "actionsCount": 76
+        }
+      ],
+      "ms": 260
+    }
+  ]
+}
