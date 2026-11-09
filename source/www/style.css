@@ -990,3 +990,45 @@ span.fx { font-size: inherit; }
 }
 
 #ranking .ra { position: relative; }
+
+/* Option A: a single family list in the original pink family-panel palette. */
+#ranking .header { gap: 12px; padding: 20px 20px 12px; }
+#ranking .header h2 { text-align: center; font-size: 29px; }
+#ranking .header .icon-btn { width: 44px; height: 44px; font-size: 23px; }
+#ranking #rankName { margin: 0; padding: 0; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; flex: none; }
+#ranking #rankName .ra { width: 32px; height: 32px; font-size: 24px; }
+#ranking > .scroll { padding: 12px 20px 28px; }
+.ranking-intro { margin: 0 0 23px; color: white; text-shadow: 0 1px 2px #0003; }
+.ranking-intro p { font-size: 12px; text-transform: uppercase; letter-spacing: 1.7px; margin: 0 0 5px; opacity: .85; }
+.ranking-intro h3 { margin: 0 0 8px; font-size: 26px; line-height: 1.15; }
+#ranking #rkMine { font-size: 15px; }
+#ranking .rk-tabs { background: rgba(0,0,0,.2); padding: 5px; gap: 4px; border-radius: 18px; margin-bottom: 12px; }
+#ranking .rk-tabs button { border-radius: 13px; background: none; padding: 11px 4px; font-size: 15px; max-width: none; }
+#ranking .rk-tabs button.on { background: #ffe9f1; color: #963d62; box-shadow: 0 3px 0 #e85d8f; }
+#ranking .wk-info { font-size: 13px; margin-bottom: 18px; }
+#ranking #rankList { gap: 6px; padding: 8px; border: 3px solid #ff7aa8; border-radius: 24px; background: linear-gradient(135deg, #ffe9f1, #ffd6e6); box-shadow: 0 5px 0 #e85d8f; }
+#ranking .rrow { grid-template-columns: 24px 36px minmax(0, 1fr) auto; gap: 8px; height: auto; min-height: 76px; padding: 10px 8px; border-radius: 16px; border: 0; background: #fff5f8; box-shadow: 0 2px 0 #edb9cc; }
+#ranking .rrow.me { background: #fff; box-shadow: inset 0 0 0 2px #e85d8f, 0 2px 0 #e85d8f; }
+#ranking .rrow .rk { color: #ad4870; font-size: 18px; }
+#ranking .rrow .ra { width: 34px; height: 36px; font-size: 24px; }
+#ranking .rrow .rn { font-size: 15px; line-height: 1.2; white-space: normal; overflow: visible; overflow-wrap: anywhere; }
+#ranking .rrow .rn i { font-size: 11px; color: #a25b77; }
+#ranking .rrow .rn .fam-tag { display: none; }
+#ranking .rrow .rn small { font-size: 12px; margin-top: 5px; color: #9c6680; }
+#ranking .rrow .rp { display: flex; align-items: center; justify-content: flex-end; gap: 6px; font-size: 17px; white-space: nowrap; }
+#ranking .heart-btn { display: inline-grid; place-items: center; margin: 0; padding: 0; min-width: 34px; height: 36px; background: #ffe3a0; box-shadow: 0 2px 0 #dfb85c; font-size: 19px; }
+#ranking .heart-btn.sent { font-size: 13px; background: #e9f7df; box-shadow: none; }
+#ranking .hs { display: block; font-size: 11px; color: #ad4870; margin-top: 3px; }
+#ranking .hs.seen { color: #318c47; }
+#ranking .rank-note { font-size: 12px; margin-top: 20px; }
+@media (min-width: 600px) { #ranking .header, #ranking > .scroll { width: min(100%, 560px); align-self: center; } }
+
+@media (max-width: 360px) {
+  #ranking .rrow { position: relative; grid-template-columns: 22px 32px minmax(0, 1fr); grid-template-rows: auto auto; gap: 3px 8px; padding: 10px 46px 10px 8px; }
+  #ranking .rrow .rk { grid-column: 1; grid-row: 1 / 3; }
+  #ranking .rrow .ra { grid-column: 2; grid-row: 1 / 3; width: 30px; height: 32px; }
+  #ranking .rrow .rn { grid-column: 3; grid-row: 1; }
+  #ranking .rrow .rn small { margin-top: 3px; }
+  #ranking .rrow .rp { grid-column: 3; grid-row: 2; justify-content: flex-start; font-size: 15px; }
+  #ranking .rrow .rp .heart-btn { position: absolute; right: 8px; top: calc(50% - 18px); }
+}
