@@ -1,0 +1,73 @@
+{
+  "code": {
+    "builder.js": "1805e64c3ed57f09",
+    "engine.js": "765b66aae44a5164",
+    "gate.js": "ea6296ed31c45e65",
+    "knobs.js": "0d54b22dde0ef392",
+    "static_gates.js": "81b25a171729b1bb",
+    "obvious.js": "96049dabb71877e7",
+    "detour.js": "b292479d080fc8d8",
+    "publicfork.js": "bcac18c2c7418b40",
+    "screen.js": "d4d356382fe17c1a",
+    "dial_curve.js": "50f383e41f316526",
+    "traces.js": "8553dfb8b874cfa7",
+    "counterfactual.js": "5ccc11a608c26263",
+    "yardstick.js": "6d47e7a928ac3704",
+    "library.js": "9f47e91f757d71da",
+    "run_pipeline.js": "69daeeaf129d250c",
+    "gate_profile.js": "9cfd206a86424fa1",
+    "policy.js": "a963c0521b110916",
+    "visible_choice.js": "8ff7d343f9323016",
+    "dependency_choice.js": "2692e1a0851c8601",
+    "reserve_cuts.js": "27b8a67972cdfb51",
+    "frame_detours.js": "544bd99f5b5ce347",
+    "row_choice.js": "1868c4537e104acc",
+    "row_cut.js": "8ca9c9f59073e2eb",
+    "coupled_row.js": "7733903414178a6f",
+    "bridge_cuts.js": "14eb50a231f5f4af",
+    "reserve_note.js": "8f665ffc1ef9ea7a",
+    "keyed_choice.js": "f70daa1b31299f39",
+    "exact.js": "db79790d3f0aeda3",
+    "finish.js": "90666cca5bb79ef9"
+  },
+  "rows": [
+    {
+      "id": "u-visible-thaw",
+      "key": "63b3df3394e71e1db101154aebe2f83373160e37e7af86a07ee3af7f34e44017",
+      "clock": {
+        "i": 26,
+        "n": 14
+      },
+      "minimum": 13,
+      "strictWitness": true,
+      "matchesFrozenRecipe": true
+    },
+    {
+      "id": "arch-cover-lock",
+      "key": "8615824c0968d3fac67d665087f7b22e831c3229a81920986ef87100a1e9becf",
+      "clock": {
+        "i": 1,
+        "n": 15
+      },
+      "minimum": 13,
+      "strictWitness": true,
+      "matchesFrozenRecipe": true
+    },
+    {
+      "id": "castle-cover-lock",
+      "key": "7d06534a066258ea5915ba9be7f1d5c74d11097cd0e3b1bb11cd505280e5fa13",
+      "clock": {
+        "i": 57,
+        "n": 16
+      },
+      "minimum": 14,
+      "strictWitness": true,
+      "matchesFrozenRecipe": true
+    }
+  ],
+  "originalFork": {
+    "error": "TypeError",
+    "message": "t.take is not iterable"
+  },
+  "note": "Exact recipe preservation and strict witness verification. No qualification or ACCEPT calls."
+}

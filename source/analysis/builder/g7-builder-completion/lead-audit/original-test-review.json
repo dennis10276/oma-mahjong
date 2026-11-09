@@ -1,0 +1,11 @@
+{
+  "pid": 21084,
+  "reason": "Original unbounded auto-selection test exceeded five-minute review limit",
+  "elapsedSeconds": 309.2935772,
+  "stoppedOriginalOnly": true,
+  "command": "node --test source/tools/builder/test_keyed_choice.js source/analysis/builder/g7-builder-completion/verify_original_tests.js",
+  "outcome": "original G7 test file stopped; five new explicit-frame tests passed",
+  "originalReportedSuiteReproduced": false,
+  "nodeReportedFileDurationMs": 309366.4779,
+  "newChecksPassed": 5
+}

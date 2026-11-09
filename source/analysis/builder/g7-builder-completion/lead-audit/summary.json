@@ -1,0 +1,22 @@
+{
+  "built": 12,
+  "normalSkilled": [
+    "u-base",
+    "arch-base",
+    "castle-base",
+    "hourglass-base",
+    "u-keys-s1",
+    "u-keys-s2",
+    "u-keys-s3",
+    "u-ice61",
+    "u-ice72",
+    "arch-keys7-59",
+    "castle-keys-s1",
+    "castle-keys-s2"
+  ],
+  "matchingTarget10": [
+    "u-ice72"
+  ],
+  "sameBoardForTargets10And13": true,
+  "note": "Exploratory catalogue recipes are not held-out plan validation. Required static/trace failures and off-band results remain failures. No final qualified levels or ACCEPT calls."
+}

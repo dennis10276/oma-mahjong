@@ -4,7 +4,13 @@ Prepared for Gemini by Codex, 2026-11-09, at Dennis's request:
 "Make a g7 task to let gemini look for bottlenecks to complete the builder like
 you are now."
 
-Assignment prepared for handoff; this document does not mean a run has started.
+Status, 2026-11-09: Gemini delivered `9522b6e1`. Lead review reproduced useful
+skilled bodies on four layouts, but found target selection and false-relief
+completion claims unsupported. Only corrected explicit recipes are integrated
+as `keyedChoice`; no new level qualified. Read
+`source/analysis/builder/g7-builder-completion/LEAD-REVIEW.md` and its evidence.
+The next assignment is `TASK-G8-builder-bottlenecks.md`. This original brief is
+retained for history.
 
 ## Objective and autonomy
 

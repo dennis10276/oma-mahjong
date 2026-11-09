@@ -1,0 +1,20 @@
+[
+  {
+    "id": "u-visible-thaw",
+    "mode": "keyedChoice",
+    "layout": 22,
+    "stage": "edge",
+    "seed": 1,
+    "frame": {
+      "spare": 1,
+      "keys": [
+        0,
+        40
+      ],
+      "keyIce": {
+        "tile": 61,
+        "h": 1
+      }
+    }
+  }
+]

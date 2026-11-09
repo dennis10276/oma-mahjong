@@ -1,0 +1,131 @@
+{
+  "commit": "9522b6e1c9239aa3d5fe13ebf0ea86ec56203d79",
+  "files": [
+    {
+      "source": "source/analysis/builder/g7-builder-completion/BOTTLENECKS.md",
+      "archive": "BOTTLENECKS.md",
+      "sha256": "0df5a29fc5e1a0649c25ce296bb3e8a4ad743dfa3d576cfe12b60c0b1468e7c6"
+    },
+    {
+      "source": "source/analysis/builder/g7-builder-completion/REPORT.md",
+      "archive": "REPORT.md",
+      "sha256": "0ea20749957f08533350ef1f78f42e039a852ee81f05fc4e06003e78e0f1a040"
+    },
+    {
+      "source": "source/analysis/builder/g7-builder-completion/builder_completion.js",
+      "archive": "builder_completion.js.txt",
+      "sha256": "d4a57d5b24cf0bfd27264e18f14b3ccb2e6850fcb596ab4c57967e4756d8e68e"
+    },
+    {
+      "source": "source/analysis/builder/g7-builder-completion/choke_builder.js",
+      "archive": "choke_builder.js.txt",
+      "sha256": "8a82270e6fff2400272eda3ab09f10906f16e58c619ab82dcb1fd897c4a37c1c"
+    },
+    {
+      "source": "source/analysis/builder/g7-builder-completion/choke_fork.js",
+      "archive": "choke_fork.js.txt",
+      "sha256": "b1b31562f1f3d5bf405038583a4d68a6aa1829ace42b5aac2bfc18c377d6506d"
+    },
+    {
+      "source": "source/analysis/builder/g7-builder-completion/diagnose_arch_keys.js",
+      "archive": "diagnose_arch_keys.js.txt",
+      "sha256": "39a66be0a2584c0f8c96695f76eb0fe664f0bf36012165217cec017ee98809d2"
+    },
+    {
+      "source": "source/analysis/builder/g7-builder-completion/eval_keyed_arch.js",
+      "archive": "eval_keyed_arch.js.txt",
+      "sha256": "748fecf26ef769bbe451c1e9806bcf622f331ad7831c6cb3ebe8c4ff3d0c2b1b"
+    },
+    {
+      "source": "source/analysis/builder/g7-builder-completion/eval_keyed_castle.js",
+      "archive": "eval_keyed_castle.js.txt",
+      "sha256": "2f0887d7e19835ed449e03fccde4449e1e7445e8b4ef36c162866cfb0c31dd59"
+    },
+    {
+      "source": "source/analysis/builder/g7-builder-completion/eval_keyed_ice_ushape.js",
+      "archive": "eval_keyed_ice_ushape.js.txt",
+      "sha256": "fa8f95dad861cedae0a990e8188f0a8c1d81edbff827143d3d9d587d7f730a23"
+    },
+    {
+      "source": "source/analysis/builder/g7-builder-completion/eval_keyed_ushape.js",
+      "archive": "eval_keyed_ushape.js.txt",
+      "sha256": "ce16593556d1c22fbe89b230d77f04f6111eabdd8ed937a39c60353ee3af2b91"
+    },
+    {
+      "source": "source/analysis/builder/g7-builder-completion/experiment_choke_distance.js",
+      "archive": "experiment_choke_distance.js.txt",
+      "sha256": "e25e0962a904e52b5b02665608943d7d65cf43c762050ff844573be719ae4017"
+    },
+    {
+      "source": "source/analysis/builder/g7-builder-completion/experiment_results.json",
+      "archive": "experiment_results.json",
+      "sha256": "010daa4058d17fcaf41e1e9dca27161f147e261604b9a3437f8c098b8ab13ed8"
+    },
+    {
+      "source": "source/analysis/builder/g7-builder-completion/find_choke_fork.js",
+      "archive": "find_choke_fork.js.txt",
+      "sha256": "d2da87e29e096dd279a6eeac0783db724d09aafa29aa98f2f59667fe889eb0b0"
+    },
+    {
+      "source": "source/analysis/builder/g7-builder-completion/probe_choke_fork.js",
+      "archive": "probe_choke_fork.js.txt",
+      "sha256": "39f250e65cc073f0d556050797a0cddbe4c98007bbdae7d8c844bda4ef21353d"
+    },
+    {
+      "source": "source/analysis/builder/g7-builder-completion/probe_stories.js",
+      "archive": "probe_stories.js.txt",
+      "sha256": "4d643136b7579a5aca1ad3d9b88cf49b00bbced9432da8ab6de3949531ba3399"
+    },
+    {
+      "source": "source/analysis/builder/g7-builder-completion/rate_probe.js",
+      "archive": "rate_probe.js.txt",
+      "sha256": "b94e9ce195c55f29fa0bb3a46907dc8bd1432f17ea92df7e744e38552ad2cfab"
+    },
+    {
+      "source": "source/analysis/builder/g7-builder-completion/skilled_candidates.json",
+      "archive": "skilled_candidates.json",
+      "sha256": "7daa43fd82ee7a2d5895bb2c55138b4d1ad1e520259e720caa0f14c71735fcf8"
+    },
+    {
+      "source": "source/analysis/builder/g7-builder-completion/sweep_skilled_candidates.js",
+      "archive": "sweep_skilled_candidates.js.txt",
+      "sha256": "0b845c4d18fbfdcc428e6a4ea7dc86c4a661b187790e85f29bb7a22958cd8553"
+    },
+    {
+      "source": "source/analysis/builder/g7-builder-completion/test_apply_keys.js",
+      "archive": "test_apply_keys.js.txt",
+      "sha256": "d2ad2fe496c454f6bec42b48fad6c8b448891b5ffc303b0c60743bb544f1c26e"
+    },
+    {
+      "source": "source/analysis/builder/g7-builder-completion/test_builder_completion.js",
+      "archive": "test_builder_completion.js.txt",
+      "sha256": "0da00c5aa50fba1c89401efea1891470af380551da87545a15a77745292af288"
+    },
+    {
+      "source": "source/analysis/builder/g7-builder-completion/test_choke_constructor.js",
+      "archive": "test_choke_constructor.js.txt",
+      "sha256": "59576047a030d4ec9d9e61fa5b458f8c124b6de2eae231b6cc5fb70b9d03ff57"
+    },
+    {
+      "source": "source/analysis/builder/g7-builder-completion/test_choke_mechanism.js",
+      "archive": "test_choke_mechanism.js.txt",
+      "sha256": "27696cf63a9f8c222d5eee7e26c2d03cb362326c8ae3d176891f5ec097dbff38"
+    },
+    {
+      "source": "source/analysis/builder/g7-builder-completion/test_choke_separation.js",
+      "archive": "test_choke_separation.js.txt",
+      "sha256": "ef398cbfb4579c9d72d89f23229697ac9f6d59741930c330afe4282534d408a4"
+    },
+    {
+      "source": "source/analysis/builder/g7-builder-completion/test_pyramid_lockbeside.js",
+      "archive": "test_pyramid_lockbeside.js.txt",
+      "sha256": "f9070f95873f52d5ea24533d83fd6842c55983fe626dff356f4e4308c00b17da"
+    },
+    {
+      "source": "source/analysis/builder/g7-builder-completion/test_separated_pair.js",
+      "archive": "test_separated_pair.js.txt",
+      "sha256": "0c0c686da4f90abd971c13990ba1b8714f05e629081a18d46ed472846bf4a6b0"
+    }
+  ],
+  "note": "Original Git blobs; JavaScript archived as .js.txt, no original builder completion API installed."
+}

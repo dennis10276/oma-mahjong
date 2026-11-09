@@ -1,0 +1,4 @@
+*.js.txt -text -whitespace
+*.json -text
+REPORT.md -text -whitespace
+BOTTLENECKS.md -text -whitespace

@@ -1,0 +1,10 @@
+[pipeline] 0 u-visible-thaw seed 1: reject at screen (tooEasyAtSpare1)
+Pipeline run 2026-11-09T18-09-44-314Z: candidates 0-0 (1 of 1).
+Outcomes: reject 1. CPU 1.813 s, wall 1.104 s.
+step       in  pass  fail  unres   CPU s  CPU s/in
+build       1     1     0      0   0.438  0.438
+dedupe      1     1     0      0       0  0
+static      1     1     0      0   0.297  0.297
+screen      1     0     1      0   1.078  1.078
+Next start: --start 1
+Library: C:\Users\den_k\Idea\OmasMahjong\cc-builder-loop\source\build\g7-keyed-smoke\library.jsonl (0 entries); rejects: 1; run log: source\build\g7-keyed-smoke\pipeline-runs.jsonl

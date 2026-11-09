@@ -1,0 +1,50 @@
+[
+  {
+    "id": "u-visible-thaw",
+    "mode": "keyedChoice",
+    "layout": 22,
+    "stage": "edge",
+    "seed": 1,
+    "frame": {
+      "spare": 1,
+      "keys": [
+        0,
+        40
+      ],
+      "keyIce": {
+        "tile": 61,
+        "h": 1
+      }
+    }
+  },
+  {
+    "id": "arch-cover-lock",
+    "mode": "keyedChoice",
+    "layout": 0,
+    "stage": "edge",
+    "seed": 1,
+    "frame": {
+      "spare": 2,
+      "keys": [
+        7,
+        59
+      ],
+      "lockTile": 0
+    }
+  },
+  {
+    "id": "castle-cover-lock",
+    "mode": "keyedChoice",
+    "layout": 20,
+    "stage": "top",
+    "seed": 2,
+    "frame": {
+      "spare": 2,
+      "keys": [
+        47,
+        62
+      ],
+      "lockTile": 77
+    }
+  }
+]
