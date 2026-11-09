@@ -14,7 +14,12 @@
         android:allowBackup="true"
         android:hardwareAccelerated="true">
         <!-- Keep the game upright when tablet compatibility settings try to
-             substitute the display's natural landscape orientation. -->
+             substitute the display's natural landscape orientation.
+             These opt-outs are application-level PackageManager properties. -->
+        <property android:name="android.window.PROPERTY_COMPAT_ALLOW_ORIENTATION_OVERRIDE"
+            android:value="false" />
+        <property android:name="android.window.PROPERTY_COMPAT_ALLOW_DISPLAY_ORIENTATION_OVERRIDE"
+            android:value="false" />
         <property android:name="android.window.PROPERTY_COMPAT_ALLOW_USER_ASPECT_RATIO_FULLSCREEN_OVERRIDE"
             android:value="false" />
         <activity
@@ -23,10 +28,6 @@
             android:screenOrientation="portrait"
             android:configChanges="orientation|screenSize|keyboardHidden|uiMode|screenLayout|smallestScreenSize|fontScale|density"
             android:launchMode="singleTask">
-            <property android:name="android.window.PROPERTY_COMPAT_ALLOW_ORIENTATION_OVERRIDE"
-                android:value="false" />
-            <property android:name="android.window.PROPERTY_COMPAT_ALLOW_DISPLAY_ORIENTATION_OVERRIDE"
-                android:value="false" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
