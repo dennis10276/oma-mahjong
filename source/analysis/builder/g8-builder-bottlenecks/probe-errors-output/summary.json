@@ -1,0 +1,337 @@
+[
+  {
+    "id": "u-ice61-s1",
+    "k": 13,
+    "clockN": 14,
+    "spare": 1,
+    "key": "63b3df3394e71e1db101154aebe2f83373160e37e7af86a07ee3af7f34e44017",
+    "strictWitness": true,
+    "staticPass": true,
+    "S": 3.33,
+    "D": 7.45,
+    "D_se": 0.6162103454774331,
+    "traces": {
+      "D": 7.25,
+      "pass": true,
+      "B1": {
+        "pass": true,
+        "value": 1,
+        "bites": 40,
+        "firstTries": 40
+      },
+      "B2": {
+        "pass": true,
+        "value": 0.444,
+        "atTrap": 112,
+        "atForkState": 70,
+        "onTemptingMove": 89,
+        "provedFirstErrors": 252,
+        "lostTries": 252,
+        "coverage": 1
+      },
+      "B3": {
+        "pass": true,
+        "value": 0.145
+      },
+      "B4": {
+        "pass": true,
+        "value": 5
+      },
+      "B5": {
+        "pass": true,
+        "value": 0.004,
+        "lateTrayLosses": 1
+      },
+      "B6": {
+        "pass": true,
+        "value": 0.468,
+        "postClockLosses": 118,
+        "secondAct": false,
+        "postClockErrorMedianShare": 0.368
+      },
+      "B7": {
+        "pass": null,
+        "report": true,
+        "value": 0.052,
+        "repeats": 6,
+        "knownRepeats": 6,
+        "lossesTries6to20": 115,
+        "inflated": false,
+        "maxTarget": null
+      },
+      "lossesAtTrapShare": 0.444,
+      "delayMedian": 5,
+      "lateSqueezeShare": 0.004,
+      "postClockShare": 0.468,
+      "repeatShare": 0.052
+    }
+  },
+  {
+    "id": "u-ice61-s2",
+    "k": 13,
+    "clockN": 15,
+    "spare": 2,
+    "key": "63b3df3394e71e1db101154aebe2f83373160e37e7af86a07ee3af7f34e44017",
+    "strictWitness": true,
+    "staticPass": true,
+    "S": 3.3,
+    "D": 5.875,
+    "D_se": 0.6234791623003809,
+    "traces": {
+      "D": 6.43,
+      "pass": false,
+      "B1": {
+        "pass": true,
+        "value": 1,
+        "bites": 40,
+        "firstTries": 40
+      },
+      "B2": {
+        "pass": false,
+        "value": 0.164,
+        "atTrap": 36,
+        "atForkState": 16,
+        "onTemptingMove": 23,
+        "provedFirstErrors": 219,
+        "lostTries": 219,
+        "coverage": 1
+      },
+      "B3": {
+        "pass": true,
+        "value": 0.263
+      },
+      "B4": {
+        "pass": true,
+        "value": 4
+      },
+      "B5": {
+        "pass": true,
+        "value": 0,
+        "lateTrayLosses": 0
+      },
+      "B6": {
+        "pass": true,
+        "value": 0.644,
+        "postClockLosses": 141,
+        "secondAct": false,
+        "postClockErrorMedianShare": 0.368
+      },
+      "B7": {
+        "pass": null,
+        "report": true,
+        "value": 0.098,
+        "repeats": 10,
+        "knownRepeats": 10,
+        "lossesTries6to20": 102,
+        "inflated": false,
+        "maxTarget": null
+      },
+      "lossesAtTrapShare": 0.164,
+      "delayMedian": 4,
+      "lateSqueezeShare": 0,
+      "postClockShare": 0.644,
+      "repeatShare": 0.098
+    }
+  },
+  {
+    "id": "u-ice42-s1",
+    "k": 13,
+    "clockN": 14,
+    "spare": 1,
+    "key": "eda9240b2d9141a903804c1e890ac1e96e3f92b72e06d733111e2650c27ffa84",
+    "strictWitness": true,
+    "staticPass": true,
+    "S": 2.58,
+    "D": 5.25,
+    "D_se": 0.5370748244784963,
+    "traces": {
+      "D": 4.5,
+      "pass": true,
+      "B1": {
+        "pass": true,
+        "value": 0.375,
+        "bites": 15,
+        "firstTries": 40
+      },
+      "B2": {
+        "pass": true,
+        "value": 0.326,
+        "atTrap": 46,
+        "atForkState": 17,
+        "onTemptingMove": 35,
+        "provedFirstErrors": 141,
+        "lostTries": 141,
+        "coverage": 1
+      },
+      "B3": {
+        "pass": true,
+        "value": 0.171
+      },
+      "B4": {
+        "pass": true,
+        "value": 4
+      },
+      "B5": {
+        "pass": true,
+        "value": 0,
+        "lateTrayLosses": 0
+      },
+      "B6": {
+        "pass": true,
+        "value": 0.504,
+        "postClockLosses": 71,
+        "secondAct": false,
+        "postClockErrorMedianShare": 0.368
+      },
+      "B7": {
+        "pass": null,
+        "report": true,
+        "value": 0.103,
+        "repeats": 4,
+        "knownRepeats": 4,
+        "lossesTries6to20": 39,
+        "inflated": false,
+        "maxTarget": null
+      },
+      "lossesAtTrapShare": 0.326,
+      "delayMedian": 4,
+      "lateSqueezeShare": 0,
+      "postClockShare": 0.504,
+      "repeatShare": 0.103
+    }
+  },
+  {
+    "id": "u-keys-5-9-s1",
+    "k": 13,
+    "clockN": 14,
+    "spare": 1,
+    "key": "209822cd43b52f435e5999fd81540eef288a4618119251d732a9ba83aa7afb66",
+    "strictWitness": true,
+    "staticPass": true,
+    "S": 3.63,
+    "D": 7.195,
+    "D_se": 0.6611746355798724,
+    "traces": {
+      "D": 6.68,
+      "pass": true,
+      "B1": {
+        "pass": true,
+        "value": 1,
+        "bites": 40,
+        "firstTries": 40
+      },
+      "B2": {
+        "pass": true,
+        "value": 0.367,
+        "atTrap": 84,
+        "atForkState": 27,
+        "onTemptingMove": 71,
+        "provedFirstErrors": 229,
+        "lostTries": 229,
+        "coverage": 1
+      },
+      "B3": {
+        "pass": true,
+        "value": 0.197
+      },
+      "B4": {
+        "pass": true,
+        "value": 4
+      },
+      "B5": {
+        "pass": true,
+        "value": 0,
+        "lateTrayLosses": 0
+      },
+      "B6": {
+        "pass": true,
+        "value": 0.559,
+        "postClockLosses": 128,
+        "secondAct": false,
+        "postClockErrorMedianShare": 0.368
+      },
+      "B7": {
+        "pass": null,
+        "report": true,
+        "value": 0.078,
+        "repeats": 8,
+        "knownRepeats": 8,
+        "lossesTries6to20": 103,
+        "inflated": false,
+        "maxTarget": null
+      },
+      "lossesAtTrapShare": 0.367,
+      "delayMedian": 4,
+      "lateSqueezeShare": 0,
+      "postClockShare": 0.559,
+      "repeatShare": 0.078
+    }
+  },
+  {
+    "id": "u-keys-11-15-s1",
+    "k": 13,
+    "clockN": 14,
+    "spare": 1,
+    "key": "161075c28eb395fb5ae4862292d90d032a036f80f63df3757a8d56cc90894b9e",
+    "strictWitness": true,
+    "staticPass": true,
+    "S": 3.45,
+    "D": 7.0600000000000005,
+    "D_se": 0.611426985715187,
+    "traces": {
+      "D": 6.98,
+      "pass": false,
+      "B1": {
+        "pass": true,
+        "value": 1,
+        "bites": 40,
+        "firstTries": 40
+      },
+      "B2": {
+        "pass": false,
+        "value": 0.152,
+        "atTrap": 37,
+        "atForkState": 3,
+        "onTemptingMove": 34,
+        "provedFirstErrors": 243,
+        "lostTries": 243,
+        "coverage": 1
+      },
+      "B3": {
+        "pass": true,
+        "value": 0.145
+      },
+      "B4": {
+        "pass": true,
+        "value": 5
+      },
+      "B5": {
+        "pass": true,
+        "value": 0.012,
+        "lateTrayLosses": 3
+      },
+      "B6": {
+        "pass": true,
+        "value": 0.473,
+        "postClockLosses": 115,
+        "secondAct": false,
+        "postClockErrorMedianShare": 0.368
+      },
+      "B7": {
+        "pass": null,
+        "report": true,
+        "value": 0.049,
+        "repeats": 5,
+        "knownRepeats": 5,
+        "lossesTries6to20": 103,
+        "inflated": false,
+        "maxTarget": null
+      },
+      "lossesAtTrapShare": 0.152,
+      "delayMedian": 5,
+      "lateSqueezeShare": 0.012,
+      "postClockShare": 0.473,
+      "repeatShare": 0.049
+    }
+  }
+]

@@ -655,6 +655,9 @@ function picturesFor(c, roles, P, hold, brief, rng, N, cap, spare, variants, not
 }
 
 function build(briefIn, opts = {}) {
+  if (opts.mode === 'targetChoice' || briefIn?.mode === 'targetChoice') {
+    return require('./target_planner.js').build(briefIn, opts);
+  }
   if (opts.mode === 'keyedChoice' || briefIn?.mode === 'keyedChoice') {
     return require('./keyed_choice.js').build(briefIn, opts);
   }
