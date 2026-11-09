@@ -5,7 +5,7 @@
 On 6 November 2026 Dennis requested: "Let it get published in the next release by another agent".
 This explicitly approves inclusion of the prepared replay changes in the next ordinary
 release. No standalone release is requested. This document and the pending section in
-`AGENTS.md` are the handoff to that release agent; the implementation remains unreleased.
+`AGENTS.md` are the handoff to that release agent; the implementation was subsequently shipped in 1.66 (see Completion below).
 
 Implementation commit: `c345840` (full title: "Bound replay storage at the source and
 skip background gaps in saved playback"). It is pushed to
@@ -65,4 +65,12 @@ current main and its newer level-replay features.
 
 ## Completion
 
-Pending: next ordinary release by the release agent.
+Released in **1.66** on 9 November 2026, release commit `97891f2c`.
+
+- Integrated `c345840` as `91e0bd21`, preserving 1.65 level replays; no conflicts.
+- Full offline release suite: **159/159 passed** in 343 seconds.
+- Built APK version 1.66 / versionCode 82; existing signing certificate and bundled assets verified.
+- GitHub Pages deployment and APK workflow succeeded.
+- Public `play/version.json` and `play/bundle.json` report 1.66.
+- Live `dash/playback.js` and `dash/watch.js` match integrated source (normalizing line endings); their tested cache references shipped. Live APK bytes match the signed local release exactly.
+- Pending approval section removed from AGENTS.md. No Firebase rule changes or player-history deletion.

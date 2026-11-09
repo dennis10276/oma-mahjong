@@ -20,17 +20,6 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
   guessing, clock planning), re-fitted to real players on 2026-10-15, and the tools that remade
   levels 106-269 for 1.53. Its code is not in the game; only the level table it made is.
 
-## Approved for the next release (Dennis, 2026-11-06)
-
-- Include the replay storage guard and saved-playback pause skipping in the **next release
-  made by the release agent**. Dennis explicitly requested this; no separate approval for
-  these changes is needed. Do not make a standalone release just for this handoff.
-- Ready commit: `c345840` on remote branch `origin/wip/replay-storage-guards`.
-  Integrate it with current main, preserving the newer game/level-replay features, update
-  viewer cache hashes if resolving conflicts, and run the full suite before releasing.
-- Details and completion checklist: `source/analysis/replay-next-release.md`.
-  Remove this pending section once the changes have shipped and record the release version there.
-
 ## Working together
 
 1. `git pull` before you start, and again right before a release. Look at `git log origin/main`:

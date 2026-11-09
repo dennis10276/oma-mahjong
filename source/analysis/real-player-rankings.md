@@ -6,7 +6,7 @@ Implemented on wip/real-player-rankings. All-time still sorts by level then poin
 
 Historical weekly standings are not stored: scores only contain each player's latest week. The rollover popup therefore reports recorded personal points without awarding an unverifiable weekly victory. Existing week victories and trophies remain. Reliable future week-winner awards need historical weekly score storage; this change introduces no database writes or rule changes for that purpose.
 
-No deployment or release requested. Published root files are untouched.
+Released as 1.66 on 9 November 2026 after Dennis requested release. Release commit: `97891f2c`.
 
 ## Verification
 
@@ -17,3 +17,7 @@ No deployment or release requested. Published root files are untouched.
 - Visually inspected home, ranking and the final win popup at 375x560. `git diff --check` passes.
 
 Playwright used the installed Chromium 1234 through the CHROME environment variable. No live database tests were run.
+
+## Release verification
+
+Full integrated release suite: **159/159 passed**. The public web bundle reports 1.66 and contains no botEntries generator. Live ranking source matches the release (normalizing line endings). The signed APK (versionCode 82) matches the public download byte for byte. GitHub Pages deployment and APK workflow succeeded.
