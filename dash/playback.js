@@ -2,7 +2,7 @@
 (function (root) {
   'use strict';
   const DELAY = 60000;
-  function timeline(replay, summaries, aid) {
+  function timeline(replay, summaries, aid, activeOnly = false) {
     if (!replay.initial || !replay.frames.length) return { frames: [], coverage: 0, timingMissing: false };
     const starts = summaries.filter(e => e.k === 'start' && e.aid === aid).sort((a, b) => a.t - b.t);
     const first = replay.frames[0];
@@ -14,9 +14,14 @@
     for (const frame of replay.frames) {
       if (frame.ms < lastMs) { timingMissing = true; break; }
       if (frame.kind === 'resume' && paused) {
-        const resumed = controls.find(e => e.t > pauseWall + 1);
-        if (!resumed) { timingMissing = true; break; }
-        base = resumed.t - frame.ms; paused = false;
+        // Saved playback uses the recorder's active time; background gaps have no
+        // recorded moves. Live playback still follows the real wall-clock timing.
+        if (!activeOnly) {
+          const resumed = controls.find(e => e.t > pauseWall + 1);
+          if (!resumed) { timingMissing = true; break; }
+          base = resumed.t - frame.ms;
+        }
+        paused = false;
       }
       const wall = base + frame.ms;
       if (wall < lastWall) { timingMissing = true; break; }

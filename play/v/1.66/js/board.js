@@ -8,10 +8,10 @@ let G = null;                        // the level being played
 
 // ---------- saving a level half-way (continues after closing the app) ----------
 const CUR_V = 7;
-const loadCur = () => { try { const c = JSON.parse(localStorage.getItem(CUR) || 'null'); return c && c.v === CUR_V ? c : null; } catch (e) { return null; } };
+const loadCur = () => { try { const c = JSON.parse(localStorage.getItem(CUR) || 'null'); return c && c.v === CUR_V && !c.rp?.closed ? c : null; } catch (e) { return null; } };
 const clearCur = () => { try { localStorage.removeItem(CUR); } catch (e) { } };
 function saveCur() {
-  if (!G || G.done) return;
+  if (!G || G.done || G.logged) return;
   syncClock();
   try {
     replayCapture();
@@ -133,6 +133,7 @@ function begin(o, restart = false) {
     else { setTimeout(checkStuck, 500); setTimeout(jokerLeftover, 700); setTimeout(specialTip, 1200); }
   };
   if (!clockIntro(ready) && !newTileIntro(ready) && !retryTileHelp(ready, resumed)) ready();
+  if (!resumed) proCheck();     // stuck on this level: how Dennisisdebeste won it (js/pro.js)
 }
 const restart = () => { if (G) { if (!G.done && !G.logged) { noteFail(); coachCount(); endLevel('restart'); } begin(G.o, true); } };
 // failed tries per level (cleared when it is won); a failed try also ends a win streak
@@ -404,6 +405,7 @@ function tapTile(i) {
   if (!free(i)) {
     G.st.bt++;
     replay(el, 'shake'); showBlockers(i);
+    if (lockedT(i)) showKeys();       // a covered locked tile: the keys show too
     Sound.blocked(); buzz(30);
     if (++blockedTaps === 3) toast(tx('stillStuck'), 3000);
     return;
@@ -657,9 +659,11 @@ function hint() {
   if (!path || !path.length) { toast(tx('noWay')); Sound.blocked(); return; }
   G.usedHint = true; updateTools(); saveCur();
   logLvl('hint');
-  // show the next one or two safe taps
+  // show the next one or two safe taps. With 3 waiting and a face-down tile next (a peek pair), show only that
+  // tile: tapping its face-up twin first would be a 4th tile in the tray.
   const show2 = [path[0]];
-  if (path[1] !== undefined && faceOf(path[1]) === faceOf(path[0])) show2.push(path[1]);
+  const peekNext = G.tray.length >= SLOTS - 1 && G.down[path[0]] && !trayHas(faceOf(path[0]));
+  if (!peekNext && path[1] !== undefined && faceOf(path[1]) === faceOf(path[0])) show2.push(path[1]);
   replayMark('hint', show2);
   show2.forEach(i => G.tiles[i].el.classList.add('hint'));
   Sound.hint(); buzz(15);
@@ -715,7 +719,7 @@ function solveNow(limit = 30000) {
     if (jt.length) tray = tray.filter(t => t !== jt[0]);
     else faces[jb[jb.length - 1]] = -1;
   }
-  return Layouts.solve(G.tiles, G.nb, faces, G.alive, tray, limit, obRules());
+  return Layouts.solve(G.tiles, G.nb, faces, G.alive, tray, limit, obRules(), G.down);
 }
 
 // ---------- ⏰ the alarm clock (from RULES.hard.clockFrom, designed in hard.js) ----------
@@ -753,7 +757,9 @@ function checkClock() {
       <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false, null, review ? 'tile-help coach-help coach-loss' : coach ? 'clock-help' : 'clock-help coach-help');
     if (review) coachReviewStart(review);
     else if (!coach) coachPlay($('#modalBox .coach-demo'), coachClockClip());
-    const message = recordHelpMessage(review ? 'coach-' + review.tip : 'clock', 'timeout');
+    // (only a film or an explanation is logged as help: the plain loss window of a coach level is not
+    // a lesson, and the dashboard showed it as "Uitleg getoond: Wekker" after every lost try; 1.62)
+    const message = review || !coach ? recordHelpMessage(review ? 'coach-' + review.tip : 'clock', 'timeout') : () => { };
     $('#sRetry').onclick = () => { message('retry'); closeModal(); restart(); };
     $('#sMenu').onclick = () => { message('menu'); closeModal(); clearCur(); G.done = true; show('home'); };
   }, 600);

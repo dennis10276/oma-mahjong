@@ -76,7 +76,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 .reset-btn { display: block; margin: 14px auto 0; padding: 10px 16px; border-radius: 14px; font-size: 17px; color: #b3261e; background: #fbe3df; }
 
 /* ========== 3 home ========== */
-#home { padding: 14px 18px 18px; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
+#home { padding: 14px 18px 18px; overflow: hidden; gap: clamp(6px, 1.2vh, 14px); }
 #home > * { flex-shrink: 0; }
 .home-top { display: flex; justify-content: space-between; align-items: center; }
 .logo { text-align: center; margin: 2vh 0 2vh; flex: 1 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; }
@@ -940,3 +940,53 @@ span.fx { font-size: inherit; }
 /* a paced film: quicker hand and tiles */
 .cz-stage.cz-fast .lz-hand { transition: transform .18s cubic-bezier(.4,0,.2,1), opacity .15s; }
 .cz-stage.cz-fast .tile.cz-moving { transition: transform .16s cubic-bezier(.35,.1,.25,1), opacity .12s; }
+
+/* Home fits the available safe area; decoration gives way before controls. */
+#home .logo { min-height: 0; flex: 1 1 0; margin: 0; overflow: hidden; }
+#home .logo-tiles { flex-shrink: 1; min-height: 0; }
+#home .home-buttons { gap: clamp(8px, 1.7vh, 18px); }
+#home #nextUnlock { margin-top: 0; }
+#ranking .rrow { min-height: 76px; }
+#ranking .rn { min-width: 0; overflow-wrap: anywhere; }
+#ranking .rk { flex-shrink: 0; }
+#ranking .header .chip { font-size: 16px; }
+#wRanking { font-size: 15px; margin: 4px auto; padding: 3px 10px; }
+@keyframes rankRise { from { transform: translateY(12px); background: #ffe58a; } to { transform: translateY(0); } }
+.win-rank-rise { animation: rankRise .8s ease-out; }
+@media (max-height: 680px) {
+  #home { padding: 8px 12px 12px; gap: 8px; }
+  #home .logo-tiles { display: none; }
+  #home .logo h1 { font-size: clamp(26px, 8vw, 36px); }
+  #home .greet { font-size: 17px; }
+  #home .home-buttons .big-btn { padding: 10px 14px; gap: 12px; }
+  #home .big-btn b { font-size: 26px; }
+  #home .big-btn small { font-size: 16px; }
+  #home .bb-icon { width: 44px; height: 44px; }
+  #home .row2 { gap: 10px; }
+  #home .row2 .mid-btn { padding: 9px 5px; font-size: 17px; }
+  #home .goal { padding: 7px 10px; font-size: 15px; }
+  #home .goal .g-ico { font-size: 28px; }
+}
+@media (orientation: landscape) and (max-height: 600px) {
+  #home.active { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); grid-template-rows: auto minmax(0, 1fr) auto; gap: 8px 18px; }
+  #home .home-top { grid-column: 1; grid-row: 1; }
+  #home .logo { grid-column: 1; grid-row: 2; }
+  #home .home-buttons { grid-column: 2; grid-row: 1 / 4; align-self: center; }
+  #home #nextUnlock { grid-column: 1; grid-row: 3; }
+  #home .home-top .chip { padding: 5px 8px; font-size: 15px; }
+  #home .home-top .icon-btn { width: 40px; height: 40px; }
+  #home .logo h1 { font-size: 28px; }
+  #home .home-buttons .big-btn { padding: 7px 10px; }
+}
+
+@media (max-height: 740px) {
+  .compact .win-stats { flex-wrap: nowrap; gap: 5px; }
+  .compact .win-stats div { padding: 4px 6px; gap: 4px; font-size: 13px; white-space: nowrap; }
+  .compact .win-stats b { font-size: 18px; }
+  .compact .win-stats .ws-streak, .compact .win-stats .ws-streak b { font-size: 14px; }
+  .compact p.note { font-size: 14px; margin: 3px 0; }
+  .compact .chase { font-size: 14px !important; }
+  .compact .link-btn { padding-top: 3px; padding-bottom: 3px; }
+}
+
+#ranking .ra { position: relative; }

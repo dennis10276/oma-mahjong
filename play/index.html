@@ -11,7 +11,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Mahjong">
-<link rel="stylesheet" href="v/1.65/style.css" id="css">
+<link rel="stylesheet" href="v/1.66/style.css" id="css">
 <script>
   // if anything fails to load, say so instead of showing a dead screen
   window.addEventListener('error', function (e) {
@@ -116,7 +116,6 @@
   <!-- RANKING -->
   <section id="ranking" class="screen">
     <div class="header"><button class="icon-btn back">←</button><h2 data-t="ranking">Ranglijst</h2><div class="chip" id="rkMine">🏆 #1</div></div>
-    <div id="famBox" class="fam-fixed"></div>
     <div class="scroll">
       <button class="name-chip" id="rankName">😊 Naam kiezen ✏️</button>
       <div class="rk-tabs"><button id="rkWeek" class="on" data-t="thisWeek">📅 Deze week</button><button id="rkAll" data-t="allTime">🏆 Altijd</button></div>
@@ -155,7 +154,7 @@
    and keeps them on the phone. On start we use that downloaded version when it is newer
    than the one built into the app; if it does not start properly, we fall back at once. */
 (function () {
-  var BUILT = '1.65', KEY = 'omamj.code', FILES = ['v/1.65/tiles.js', 'v/1.65/audio.js', 'v/1.65/layouts.js', 'v/1.65/hard.js', 'v/1.65/levels-hard.js', 'v/1.65/levels-early.js', 'v/1.65/coach-clips.js', 'v/1.65/js/rules.js', 'v/1.65/js/lang.js', 'v/1.65/js/core.js', 'v/1.65/js/fx.js', 'v/1.65/js/update.js', 'v/1.65/js/screens.js', 'v/1.65/js/board.js', 'v/1.65/js/help.js', 'v/1.65/js/specials.js', 'v/1.65/js/coach.js', 'v/1.65/js/pro.js', 'v/1.65/js/rewards.js', 'v/1.65/js/telemetry.js', 'v/1.65/js/social.js', 'v/1.65/js/hearts.js', 'v/1.65/js/stories.js', 'v/1.65/js/village.js', 'v/1.65/js/win.js', 'v/1.65/js/main.js'];
+  var BUILT = '1.66', KEY = 'omamj.code', FILES = ['v/1.66/tiles.js', 'v/1.66/audio.js', 'v/1.66/layouts.js', 'v/1.66/hard.js', 'v/1.66/levels-hard.js', 'v/1.66/levels-early.js', 'v/1.66/coach-clips.js', 'v/1.66/js/rules.js', 'v/1.66/js/lang.js', 'v/1.66/js/core.js', 'v/1.66/js/fx.js', 'v/1.66/js/update.js', 'v/1.66/js/screens.js', 'v/1.66/js/board.js', 'v/1.66/js/help.js', 'v/1.66/js/specials.js', 'v/1.66/js/coach.js', 'v/1.66/js/pro.js', 'v/1.66/js/rewards.js', 'v/1.66/js/telemetry.js', 'v/1.66/js/social.js', 'v/1.66/js/hearts.js', 'v/1.66/js/stories.js', 'v/1.66/js/village.js', 'v/1.66/js/win.js', 'v/1.66/js/main.js'];
   function newer(a, b) { a = String(a).split('.'); b = String(b).split('.'); for (var i = 0; i < Math.max(a.length, b.length); i++) { var x = +a[i] || 0, y = +b[i] || 0; if (x !== y) return x > y; } return false; }
   function builtIn() { FILES.forEach(function (f) { var s = document.createElement('script'); s.src = f; s.async = false; document.body.appendChild(s); }); }
   var c = null;
