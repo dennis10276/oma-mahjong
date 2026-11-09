@@ -1,0 +1,35 @@
+[
+  {
+    "layout": 14,
+    "shape": "hourglass",
+    "tiles": 80,
+    "story": "deepClock",
+    "stage": "edge",
+    "seed": 2,
+    "spare": 2,
+    "k": 6,
+    "S": 3.1
+  },
+  {
+    "layout": 20,
+    "shape": "castle · two islands",
+    "tiles": 84,
+    "story": "deepClock",
+    "stage": "top",
+    "seed": 2,
+    "spare": 2,
+    "k": 8,
+    "S": 3.45
+  },
+  {
+    "layout": 22,
+    "shape": "ushape",
+    "tiles": 76,
+    "story": "deepClock",
+    "stage": "edge",
+    "seed": 1,
+    "spare": 2,
+    "k": 7,
+    "S": 2.98
+  }
+]

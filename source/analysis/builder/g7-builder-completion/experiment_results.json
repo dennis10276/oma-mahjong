@@ -1,0 +1,310 @@
+[
+  {
+    "layout": 22,
+    "shape": "ushape",
+    "dist": 1,
+    "staticPass": true,
+    "k": 7,
+    "S": 2.98,
+    "plValid": true
+  },
+  {
+    "layout": 22,
+    "shape": "ushape",
+    "dist": 2,
+    "staticPass": true,
+    "k": 7,
+    "S": 2.98,
+    "plValid": true,
+    "modified": [
+      {
+        "x": 44,
+        "y": 51,
+        "px": 21,
+        "oldPy": 22,
+        "newPy": 23
+      },
+      {
+        "x": 60,
+        "y": 62,
+        "px": 31,
+        "oldPy": 32,
+        "newPy": 33
+      }
+    ]
+  },
+  {
+    "layout": 22,
+    "shape": "ushape",
+    "dist": 3,
+    "staticPass": true,
+    "k": 7,
+    "S": 2.98,
+    "plValid": true,
+    "modified": [
+      {
+        "x": 44,
+        "y": 51,
+        "px": 21,
+        "oldPy": 22,
+        "newPy": 24
+      },
+      {
+        "x": 60,
+        "y": 62,
+        "px": 31,
+        "oldPy": 32,
+        "newPy": 34
+      }
+    ]
+  },
+  {
+    "layout": 22,
+    "shape": "ushape",
+    "dist": 4,
+    "staticPass": true,
+    "k": 7,
+    "S": 2.98,
+    "plValid": true,
+    "modified": [
+      {
+        "x": 44,
+        "y": 51,
+        "px": 21,
+        "oldPy": 22,
+        "newPy": 25
+      },
+      {
+        "x": 60,
+        "y": 62,
+        "px": 31,
+        "oldPy": 32,
+        "newPy": 35
+      }
+    ]
+  },
+  {
+    "layout": 8,
+    "shape": "cross",
+    "dist": 1,
+    "staticPass": true,
+    "k": 7,
+    "S": 1,
+    "plValid": true
+  },
+  {
+    "layout": 8,
+    "shape": "cross",
+    "dist": 2,
+    "staticPass": true,
+    "k": 7,
+    "S": 1,
+    "plValid": true,
+    "modified": [
+      {
+        "x": 70,
+        "y": 71,
+        "px": 8,
+        "oldPy": 9,
+        "newPy": 10
+      }
+    ]
+  },
+  {
+    "layout": 8,
+    "shape": "cross",
+    "dist": 3,
+    "staticPass": true,
+    "k": 7,
+    "S": 1,
+    "plValid": true,
+    "modified": [
+      {
+        "x": 70,
+        "y": 71,
+        "px": 8,
+        "oldPy": 9,
+        "newPy": 11
+      },
+      {
+        "x": 81,
+        "y": 82,
+        "px": 9,
+        "oldPy": 10,
+        "newPy": 12
+      }
+    ]
+  },
+  {
+    "layout": 8,
+    "shape": "cross",
+    "dist": 4,
+    "staticPass": true,
+    "k": 7,
+    "S": 1,
+    "plValid": true,
+    "modified": [
+      {
+        "x": 70,
+        "y": 71,
+        "px": 8,
+        "oldPy": 9,
+        "newPy": 12
+      },
+      {
+        "x": 81,
+        "y": 82,
+        "px": 9,
+        "oldPy": 10,
+        "newPy": 13
+      }
+    ]
+  },
+  {
+    "layout": 0,
+    "shape": "arch",
+    "dist": 1,
+    "staticPass": true,
+    "k": 9,
+    "S": 3.95,
+    "plValid": true
+  },
+  {
+    "layout": 0,
+    "shape": "arch",
+    "dist": 2,
+    "staticPass": true,
+    "k": 9,
+    "S": 3.95,
+    "plValid": true,
+    "modified": [
+      {
+        "x": 28,
+        "y": 41,
+        "px": 39,
+        "oldPy": 40,
+        "newPy": 41
+      },
+      {
+        "x": 70,
+        "y": 76,
+        "px": 10,
+        "oldPy": 11,
+        "newPy": 12
+      }
+    ]
+  },
+  {
+    "layout": 0,
+    "shape": "arch",
+    "dist": 3,
+    "staticPass": true,
+    "k": 9,
+    "S": 3.95,
+    "plValid": true,
+    "modified": [
+      {
+        "x": 28,
+        "y": 41,
+        "px": 39,
+        "oldPy": 40,
+        "newPy": 42
+      },
+      {
+        "x": 70,
+        "y": 76,
+        "px": 10,
+        "oldPy": 11,
+        "newPy": 13
+      }
+    ]
+  },
+  {
+    "layout": 0,
+    "shape": "arch",
+    "dist": 4,
+    "staticPass": true,
+    "k": 9,
+    "S": 3.95,
+    "plValid": true,
+    "modified": [
+      {
+        "x": 28,
+        "y": 41,
+        "px": 39,
+        "oldPy": 40,
+        "newPy": 43
+      },
+      {
+        "x": 70,
+        "y": 76,
+        "px": 10,
+        "oldPy": 11,
+        "newPy": 14
+      }
+    ]
+  },
+  {
+    "layout": 25,
+    "shape": "frame",
+    "dist": 1,
+    "staticPass": true,
+    "k": 6,
+    "S": 1,
+    "plValid": true
+  },
+  {
+    "layout": 25,
+    "shape": "frame",
+    "dist": 2,
+    "staticPass": true,
+    "k": 6,
+    "S": 1,
+    "plValid": true,
+    "modified": [
+      {
+        "x": 57,
+        "y": 64,
+        "px": 25,
+        "oldPy": 26,
+        "newPy": 27
+      }
+    ]
+  },
+  {
+    "layout": 25,
+    "shape": "frame",
+    "dist": 3,
+    "staticPass": true,
+    "k": 6,
+    "S": 1,
+    "plValid": true,
+    "modified": [
+      {
+        "x": 57,
+        "y": 64,
+        "px": 25,
+        "oldPy": 26,
+        "newPy": 28
+      }
+    ]
+  },
+  {
+    "layout": 25,
+    "shape": "frame",
+    "dist": 4,
+    "staticPass": true,
+    "k": 6,
+    "S": 1,
+    "plValid": true,
+    "modified": [
+      {
+        "x": 57,
+        "y": 64,
+        "px": 25,
+        "oldPy": 26,
+        "newPy": 29
+      }
+    ]
+  }
+]

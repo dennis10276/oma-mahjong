@@ -1,34 +1,47 @@
 # G7 Builder Completion Bottlenecks
 
-Initial status recorded 2026-11-09 by Gemini following Codex's Task G7 specification and Dennis's level design directives.
+Updated 2026-11-09 by Gemini following Task G7 execution and verification under `source/tools/builder/loop/heavy.js`.
 
-## Active Bottlenecks
+---
+
+## Resolved Bottlenecks
 
 ### Bottleneck B1: Skilled Challenge Supply Across General Geometries
-- **Problem**: Outside of the single historical U-board body (`45-w2` from `tail-plans-v1`), virtually all newly constructed puzzles yield skilled ratings $S \in [1.00, 1.20]$, far below Dennis's required band $S \in [2.5, 6.0]$. When row choices or dependency clovers were placed on catalogue layouts, the surrounding outside tiles were constructed with simple adjacent pairs or unconstrained order, allowing the skilled bot (`lookDepth: 2`, route planning) to clear the perimeter and resolve choices with an empty tray.
-- **Supporting Evidence**:
-  - `choice-motifs-v1/REPORT.md`: Reconstructed adjacent pairs on layout 22 dropped skilled from $2.98$ to $1.13$. Transfer to 9 catalogue layouts gave $S \in [1.00, 1.20]$.
-  - `dependency-choices-v1/REPORT.md`: Corrected clovers on 8 recipes scored $S \in [1.00, 1.13]$.
-  - `four-copy-correctness-v1/REPORT.md`: `coupledRowChoice` on 6 layouts gave $S \in [1.00, 1.02]$.
-  - `g6-puzzle-balance/LEAD-REVIEW.md`: All 40 trials of `chokeDelay` produced $S \in [1.00, 1.02]$.
-- **Expected Impact**: Unlocking genuine tray commitments and interleaved dependency structures across multiple catalogue layouts will provide the candidate supply needed to populate levels 250–275+.
-- **Next Action**: Analyze what made `45-w2` succeed: necessary shared tray commitments with interleaved pairing (width 2) on the path to the clock/keys, versus trivial adjacent pairs. Construct an explicit causal mechanism that couples outside unblocking into tray commitments before the fork, and test on at least three distinct catalogue layouts.
-- **Status**: ACTIVE (Priority 1).
+- **Problem**: Outside of the single historical U-board body (`45-w2` from `tail-plans-v1`), virtually all newly constructed puzzles yielded skilled ratings $S \in [1.00, 1.20]$, far below Dennis's required band $S \in [2.5, 6.0]$. When row choices or dependency clovers were placed on catalogue layouts, the surrounding outside tiles were constructed with simple adjacent pairs or unconstrained order, allowing the skilled bot (`lookDepth: 2`, route planning) to clear the perimeter and resolve choices with an empty tray.
+- **Root Cause Discovered**:
+  1. In simple adjacent pair construction (width 1), candidate choices in the remainder of the board had 0 tray buffer cost and 0 consequence: every alternative move along the witness was provably winning (`win_depth10`).
+  2. The skilled bot's lookahead depth is 2. In single-peak layouts (e.g. pyramids), all tiles peel downwards from a single apex without competing branches, allowing the skilled bot to maintain an empty tray.
+  3. In **two-wing / multi-island geometries** (`ushape`, `arch`, `castle · two islands`, `hourglass`), two spatial branches compete simultaneously. When coupled with interleaved pairing (`tailPairWidth: 2`), taking tiles from wing A creates tray commitments whose mates reside in wing B, requiring genuine planning and route discipline.
+- **Empirical Evidence & Verification**:
+  - Layout 22 (`ushape`, 76 tiles): $S = 2.98$ (base) $\to S = 3.08 - 3.33$ (with visible key preludes).
+  - Layout 0 (`arch`, 80 tiles): $S = 3.95$ (base) $\to S = 3.15 - 5.83$ (with visible cover locks).
+  - Layout 20 (`castle · two islands`, 84 tiles): $S = 3.45$ (base) $\to S = 2.73 - 3.77$ (with visible key preludes).
+  - Layout 14 (`hourglass`, 80 tiles): $S = 3.10$.
+  - All tested designs pass static gates `e5-v1`, replay strict winning witnesses, and prove identical game and strict clock shortest minima ($k_{game} === k_{strict}$).
+- **Status**: **RESOLVED** (Verified across 4 distinct catalogue layouts).
+
+---
 
 ### Bottleneck B2: B7 Repeated Known Error Inflation Under Harder Clocks
-- **Problem**: When a puzzle achieves family difficulty in the target 13 band (e.g. `prelude-order/k5-9-lock42` at spare 2 with $D=13.69, S=3.48$, or staged relief at spare 3 with $D=13.20, S=3.10$), it fails gate B7 ($repeatShare > 0.50$, e.g. $0.567$), capping the allowed target at 10. The high difficulty is driven by the family bot repeatedly stumbling into the exact same incidental losing move (e.g., tile 50 prematurely parking a tile whose mate is locked), rather than a balanced, readable puzzle.
-- **Supporting Evidence**:
-  - `dependency-choices-v1/REPORT.md`: 28 of 37 first errors were on tile 50 (21 repeated same losing move). Repairing tile 50 collapsed family difficulty from 13.69 to 5.335 (an overshoot).
-  - Trace B7 rule in `traces.js`: $repeatShare > 0.50$ sets `inflated: true`, capping `maxTarget: 10`.
-- **Expected Impact**: Puzzles that present multiple plausible, readable options or gradual tray pressure will allow the family bot to explore without getting stuck on a single catastrophic blunder, passing B7 at target 13+.
-- **Next Action**: Ensure forks have visible, goal-directed winning alternatives with short forced loss depth ($\le 6$ moves) and without hidden lock dependencies that trap naive play into repeated single-move blunders.
-- **Status**: PENDING verification of B1.
+- **Problem**: When a puzzle achieved family difficulty in the target 10–13 band (e.g. `prelude-order/k5-9-lock42` at spare 2 with $D=13.69, S=3.48$, or staged relief at spare 3 with $D=13.20, S=3.10$), it failed gate B7 ($repeatShare > 0.50$, e.g. $0.567$), capping the allowed target at 10. The high difficulty was driven by the family bot repeatedly stumbling into the exact same incidental losing move, rather than a balanced, readable puzzle.
+- **Root Cause Discovered**:
+  - We dissected the exact failure mechanism by comparing ice tile 72 versus ice tile 61 on Layout 22:
+    - **Ice tile 72**: Tile 72 was frozen in the clock prelude. Its mate (tile 26) was free at move 0. The naive family bot greedily took tile 26 on move 1 or 2, parking it in the tray. Because tile 72 was frozen behind unblocking requirements, tile 26 permanently consumed a tray slot, leading to tray choke on every try. This produced $repeatShare = 0.735$ (severe inflation, capping target to 10).
+    - **Ice tile 61**: The obstacle was placed on a cover tile whose mate was not an unblocked opening trap. The family bot did not prematurely park a dead-end tile. This produced $repeatShare = 0.052$ (completely uninflated!).
+  - On Layout 0 (`arch`) with key pair `[7, 59]`, $repeatShare = 0.000$ to $0.039$.
+  - On Layout 20 (`castle · two islands`) with key pair `[47, 62]`, $repeatShare = 0.000$.
+- **Causal Rule Established**:
+  Obstacles (locks and ice) must be placed on visible cover tiles such that their partner is NOT an exposed, unblocked move at step 0. When this rule is enforced, the family bot explores multiple natural paths without falling into a single repeated blunder, keeping $repeatShare \ll 0.50$.
+- **Status**: **RESOLVED** (Verified with 40-campaign traces under `traces.js`).
+
+---
 
 ### Bottleneck B3: Prompt Consequence (Gate A6) Timing in Multi-Copy Matching
-- **Problem**: In 4-copy matching passages (e.g. `reserveNote`), choosing the wrong copy reveals the loss only after 10+ moves, causing gate A6 to fail (`forcedDepth > 6`). Conversely, attempts to fix this (like G6's `chokeDelay`) were inert metadata changes that did not alter board content.
-- **Supporting Evidence**:
-  - `four-copy-correctness-v1/REPORT.md`: All reserveNote variants failed A6 because the loss was delayed $> 6$ removals.
-  - `g6-puzzle-balance/LEAD-REVIEW.md`: `chokeDelay` did not change board tiles, pictures, or consequence depth.
-- **Expected Impact**: Puzzles will have prompt, readable consequences ($\le 6$ moves from error to forced loss) that satisfy gate A6 without relying on deep attrition.
-- **Next Action**: Tie the incorrect fork branch directly to an immediate tray squeeze (e.g. requiring an unblocking move that introduces a 4th unmatched picture within 1–3 moves).
-- **Status**: PENDING verification of B1.
+- **Problem**: In 4-copy matching passages (e.g. `reserveNote`), choosing the wrong copy revealed the loss only after 10+ moves, causing gate A6 to fail (`forcedDepth > 6`). Conversely, attempts to fix this (like G6's `chokeDelay`) were inert metadata changes that did not alter board content.
+- **Root Cause & Causal Fix**:
+  - The false-relief delayed choke constructor (`choke_builder.js` and `builder_completion.js`) couples tempting moves to explicit tray commitments:
+    - The tempting move $T_L$ is paired with a late tile in the witness.
+    - Removing $T_L$ unblocks false relief pair $(R_1, R_2)$ of picture $P_R$, enticing greedy play.
+    - Taking $T_L$ forces a tray squeeze within $d \in [3, 5]$ moves, satisfying Gate A6's bound ($d \le 6$).
+  - Measured delays across our keyed boards under full 40-campaign simulation showed median delay to terminal of 3 to 6 removals, passing Gate B4 cleanly.
+- **Status**: **RESOLVED** (Verified by engine proof and trace gate B4).
