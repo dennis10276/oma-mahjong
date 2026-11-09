@@ -137,3 +137,21 @@ test('no mutation of frozen designs during gate and engine evaluation', () => {
     SG.staticGates(d, { story: brief.story });
   }, 'evaluating static gates on frozen design does not mutate it');
 });
+
+test('tail pairing plan changes the puzzle while preserving roles, legality and visible pictures', () => {
+  const original=require('./briefs-v1.json')[5];
+  const brief={...original,mode:'visibleChoice',targets:{...original.targets,hiddenOnWay:0,maxDown:0}};
+  const a=B.build(brief), explicit=B.build({...brief,targets:{...brief.targets,tailPairWidth:1}});
+  assert.deepEqual(a.design,explicit.design,'default remains the G5 adjacent-pair construction');
+  const b=B.build({...brief,targets:{...brief.targets,tailPairWidth:3}});
+  assert.ok(a.design&&b.design);
+  assert.deepEqual(a.design.tiles,b.design.tiles);
+  assert.deepEqual(a.design.obst,b.design.obst,'the change does not relocate the specials');
+  assert.deepEqual(a.design.clock,b.design.clock,'the change does not tighten the clock');
+  assert.notDeepEqual(a.design.faces,b.design.faces,'the plan must change actual pairings');
+  assert.equal(E.replay(b.design,b.design.solution).ok,true);
+  assert.deepEqual(b.design.down,[],'no hidden information supplies this control');
+  assert.ok(b.card.tailPlan.wovenPairs>a.card.tailPlan.wovenPairs);
+  assert.deepEqual(b.design,B.build({...brief,targets:{...brief.targets,tailPairWidth:3}}).design);
+  assert.equal(B.build({...brief,targets:{tailPairWidth:4}}).fail,'incompatibleBrief');
+});

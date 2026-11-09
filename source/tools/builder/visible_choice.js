@@ -188,6 +188,7 @@ function findTemptingPairCandidates(c, roles, P, wanted) {
 // Plan pictures with visible choice and calm tail
 function placePicturesVC(c, roles, P, hold, brief, rng, N, variant = 0) {
   const cap = capOf(brief), spare = brief.frame?.spare ?? 1;
+  const tailPairWidth = brief.targets?.tailPairWidth ?? 1;
   const inP = new Set(P), { cov, holders } = hold, ck = roles.clock;
 
   const after = new Uint8Array(c.n).fill(1); for (const i of P) after[i] = 0;
@@ -224,7 +225,11 @@ const W = P.concat(Q), pos = new Array(c.n);
   const open = dig.open.slice(), fromDig = o => pos[o] < P.length;
   const closeWith = (t, o) => { pairOf[t] = o; pairOf[o] = t; open.splice(open.indexOf(o), 1); };
 
-  // Calm tail pairing: close open tiles promptly to keep tray occupancy low in Q
+  // A planned sequence AABB (width 1), ABAB (2), or ABCABC (3).
+  // Only the early/middle remainder is woven; the final third closes promptly.
+  // Dig holders and fixed keys/temptations retain priority over this pattern.
+  let closingBlock = false;
+  const weaveEnd = P.length + Math.floor(Q.length * 2 / 3);
   let freeLeft = Q.filter(t => !fixed.has(t)).length;
   for (let k = P.length; k < W.length; k++) {
     const t = W[k];
@@ -241,8 +246,10 @@ const W = P.concat(Q), pos = new Array(c.n);
     const openFree = open.filter(o => !fixed.has(o)).length;
     const mustClose = open.length >= 3 || openFree >= freeLeft;
     freeLeft--;
-    // CALM TAIL: if closable exists and we can close, close promptly!
-    const close = closable.some(fromDig) || mustClose || closable.length > 0;
+    const tailOpen = open.filter(o => !fixed.has(o) && !fromDig(o)).length;
+    if (!tailOpen) closingBlock = false;
+    if (tailOpen >= tailPairWidth) closingBlock = true;
+    const close = closable.some(fromDig) || mustClose || closingBlock || k >= weaveEnd;
     if (close && closable.length) {
       const target = closable.filter(fromDig)[0] || closable[0];
       closeWith(t, target);
@@ -296,8 +303,16 @@ const W = P.concat(Q), pos = new Array(c.n);
     for (const q of [lateList[k], lateList[k + 1]]) faces[pairs[q][0]] = faces[pairs[q][1]] = face;
   }
 
+  const wovenPairs = pairs.filter(([a,b]) => pos[a] >= P.length && pos[b] >= P.length && Math.abs(pos[a]-pos[b]) > 1);
+  // Keep the pictures and covers of the deliberate interleavings face-up. These
+  // challenges must not be manufactured by adding hidden tiles to the weave.
+  const weaveVisible = new Set();
+  if (tailPairWidth > 1) for (const [a,b] of wovenPairs) for (const t of [a,b]) {
+    weaveVisible.add(t); for (const cover of c.above[t]) weaveVisible.add(cover);
+  }
   const maxWait = Math.max(0, ...dig.occ), atCap = dig.occ.filter(w => w >= cap).length;
-  return { W, Q, faces, pairOf, pos, cap, maxWait, atCap, dig, traps, clockTwin: pairOf[ck] };
+  return { W, Q, faces, pairOf, pos, cap, maxWait, atCap, dig, traps, clockTwin: pairOf[ck], weaveVisible,
+    tailPlan: {pairWidth:tailPairWidth, wovenPairs:wovenPairs.length, untilRemoval:weaveEnd, scope:'planned order; not a bot difficulty guarantee'} };
 }
 
 // Place face-down tiles with guaranteed readable intent
@@ -308,7 +323,7 @@ function placeDownVC(c, roles, P, plan, brief, rng) {
   const onDig = Math.min(1, Math.max(onWay, brief.targets?.hiddenOnWay ?? 0));
 
   const special = new Set([roles.clock, ...roles.keys, ...roles.locks, ...Object.keys(roles.ice).map(Number)]);
-  const avoid = new Set([...special, plan.clockTwin, ...plan.traps.flat()]);
+  const avoid = new Set([...special, plan.clockTwin, ...plan.traps.flat(), ...(plan.weaveVisible || [])]);
   const inP = new Set(P);
 
   const alive = new Uint8Array(c.n).fill(1), luckSteps = [], atLuck = new Set();
@@ -360,6 +375,7 @@ function designOf(c, faces, down, roles, clock, solution = []) {
 function build(briefIn, opts = {}) {
   if (opts.keep || opts.hardWork != null || opts.softWork != null) return {fail:'unsupportedOption',detail:'visibleChoice does not implement keep or aggregate hardWork/softWork budgets; individual searches have node limits',ms:0};
   const brief = { targets: {}, ...briefIn };
+  if (brief.targets?.tailPairWidth != null && ![1,2,3].includes(brief.targets.tailPairWidth)) return {fail:'incompatibleBrief',detail:'tailPairWidth must be 1, 2 or 3',ms:0};
   brief.targets = {
     ...brief.targets,
     hiddenOnWay: Math.min(1, brief.targets.hiddenOnWay ?? 0),
@@ -476,6 +492,7 @@ function build(briefIn, opts = {}) {
       traps: [...new Map(proofs.map(p=>[p.move.slice().sort((a,b)=>a-b).join(','),p.move])).values()],
       choiceProofs: proofs,
       tail: witnessTail(design),
+      tailPlan: plan.tailPlan,
       attempt,
     };
 
