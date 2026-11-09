@@ -1,0 +1,2 @@
+# Preserve fingerprinted historical source verbatim.
+*.js.txt -text -whitespace

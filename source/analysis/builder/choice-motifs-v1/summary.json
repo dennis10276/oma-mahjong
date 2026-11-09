@@ -1,0 +1,365 @@
+{
+  "schema": "choice-motif-construction-summary-v1",
+  "stages": [
+    {
+      "name": "clock-both-unique",
+      "attempted": 3,
+      "built": 3,
+      "failures": [],
+      "skilledRange": [
+        3.23,
+        3.65
+      ],
+      "familyRange": [
+        5.465,
+        7.215
+      ],
+      "cpuS": 90.14099999999999,
+      "cpuRecordedForEveryRow": true
+    },
+    {
+      "name": "clock-D-unique",
+      "attempted": 3,
+      "built": 3,
+      "failures": [],
+      "skilledRange": [
+        3.42,
+        3.98
+      ],
+      "familyRange": [
+        5.975,
+        7.715
+      ],
+      "cpuS": 106.656,
+      "cpuRecordedForEveryRow": true
+    },
+    {
+      "name": "context",
+      "attempted": 4,
+      "built": 4,
+      "failures": [],
+      "skilledRange": [
+        1,
+        2.98
+      ],
+      "familyRange": [
+        1.06,
+        3.8
+      ],
+      "cpuS": 11,
+      "cpuRecordedForEveryRow": true
+    },
+    {
+      "name": "copy-context",
+      "attempted": 3,
+      "built": 3,
+      "failures": [],
+      "skilledRange": [
+        2.73,
+        3.77
+      ],
+      "familyRange": [
+        3.065,
+        5.5
+      ],
+      "cpuS": 21.688,
+      "cpuRecordedForEveryRow": true
+    },
+    {
+      "name": "echo",
+      "attempted": 6,
+      "built": 6,
+      "failures": [],
+      "skilledRange": [
+        1.07,
+        1.4
+      ],
+      "familyRange": null,
+      "cpuS": 8.407,
+      "cpuRecordedForEveryRow": true
+    },
+    {
+      "name": "labels",
+      "attempted": 8,
+      "built": 8,
+      "failures": [],
+      "skilledRange": [
+        1.27,
+        2.98
+      ],
+      "familyRange": null,
+      "cpuS": null,
+      "cpuRecordedForEveryRow": false
+    },
+    {
+      "name": "phases",
+      "attempted": 2,
+      "built": 2,
+      "failures": [],
+      "skilledRange": [
+        2.98,
+        3.13
+      ],
+      "familyRange": [
+        3.005,
+        3.14
+      ],
+      "cpuS": 15.312,
+      "cpuRecordedForEveryRow": true
+    },
+    {
+      "name": "pilot",
+      "attempted": 18,
+      "built": 0,
+      "failures": [
+        {
+          "id": "L8-choice",
+          "fail": "safeOrderBlocked"
+        },
+        {
+          "id": "L8-calm",
+          "fail": "safeOrderBlocked"
+        },
+        {
+          "id": "L19-choice",
+          "fail": "safeOrderBlocked"
+        },
+        {
+          "id": "L19-calm",
+          "fail": "safeOrderBlocked"
+        },
+        {
+          "id": "L22-choice",
+          "fail": "safeOrderBlocked"
+        },
+        {
+          "id": "L22-calm",
+          "fail": "safeOrderBlocked"
+        },
+        {
+          "id": "L25-choice",
+          "fail": "safeOrderBlocked"
+        },
+        {
+          "id": "L25-calm",
+          "fail": "safeOrderBlocked"
+        },
+        {
+          "id": "L28-choice",
+          "fail": "safeOrderBlocked"
+        },
+        {
+          "id": "L28-calm",
+          "fail": "safeOrderBlocked"
+        },
+        {
+          "id": "L34-choice",
+          "fail": "safeOrderBlocked"
+        },
+        {
+          "id": "L34-calm",
+          "fail": "safeOrderBlocked"
+        },
+        {
+          "id": "L40-choice",
+          "fail": "safeOrderBlocked"
+        },
+        {
+          "id": "L40-calm",
+          "fail": "safeOrderBlocked"
+        },
+        {
+          "id": "L41-choice",
+          "fail": "safeOrderBlocked"
+        },
+        {
+          "id": "L41-calm",
+          "fail": "safeOrderBlocked"
+        },
+        {
+          "id": "L44-choice",
+          "fail": "safeOrderBlocked"
+        },
+        {
+          "id": "L44-calm",
+          "fail": "safeOrderBlocked"
+        }
+      ],
+      "skilledRange": null,
+      "familyRange": null,
+      "cpuS": 0.064,
+      "cpuRecordedForEveryRow": true
+    },
+    {
+      "name": "staged-clock-D-unique",
+      "attempted": 1,
+      "built": 1,
+      "failures": [],
+      "skilledRange": [
+        3.73,
+        3.92
+      ],
+      "familyRange": [
+        6.85,
+        8.35
+      ],
+      "cpuS": 41.797,
+      "cpuRecordedForEveryRow": true
+    },
+    {
+      "name": "thaw-clock-D-unique",
+      "attempted": 3,
+      "built": 0,
+      "failures": [
+        {
+          "id": "thaw51-0",
+          "fail": "minimumUnproven"
+        },
+        {
+          "id": "thaw51-1",
+          "fail": "minimumUnproven"
+        },
+        {
+          "id": "thaw51-2",
+          "fail": "minimumUnproven"
+        }
+      ],
+      "skilledRange": null,
+      "familyRange": null,
+      "cpuS": 0.687,
+      "cpuRecordedForEveryRow": true
+    },
+    {
+      "name": "transfer",
+      "attempted": 18,
+      "built": 11,
+      "failures": [
+        {
+          "id": "L8-choice",
+          "fail": "choiceUnproven"
+        },
+        {
+          "id": "L19-choice",
+          "fail": "choiceUnproven"
+        },
+        {
+          "id": "L22-choice",
+          "fail": "choiceUnproven"
+        },
+        {
+          "id": "L25-choice",
+          "fail": "choiceUnproven"
+        },
+        {
+          "id": "L28-choice",
+          "fail": "choiceUnproven"
+        },
+        {
+          "id": "L34-choice",
+          "fail": "choiceUnproven"
+        },
+        {
+          "id": "L41-choice",
+          "fail": "choiceUnproven"
+        }
+      ],
+      "skilledRange": [
+        1,
+        1.13
+      ],
+      "familyRange": null,
+      "cpuS": 27.466999999999995,
+      "cpuRecordedForEveryRow": true
+    },
+    {
+      "name": "weave",
+      "attempted": 54,
+      "built": 36,
+      "failures": [
+        {
+          "id": "L8-w3-choice",
+          "fail": "prefixDoesNotReplay"
+        },
+        {
+          "id": "L8-w3-calm",
+          "fail": "prefixDoesNotReplay"
+        },
+        {
+          "id": "L19-w3-choice",
+          "fail": "prefixDoesNotReplay"
+        },
+        {
+          "id": "L19-w3-calm",
+          "fail": "prefixDoesNotReplay"
+        },
+        {
+          "id": "L22-w3-choice",
+          "fail": "prefixDoesNotReplay"
+        },
+        {
+          "id": "L22-w3-calm",
+          "fail": "prefixDoesNotReplay"
+        },
+        {
+          "id": "L25-w3-choice",
+          "fail": "prefixDoesNotReplay"
+        },
+        {
+          "id": "L25-w3-calm",
+          "fail": "prefixDoesNotReplay"
+        },
+        {
+          "id": "L28-w3-choice",
+          "fail": "prefixDoesNotReplay"
+        },
+        {
+          "id": "L28-w3-calm",
+          "fail": "prefixDoesNotReplay"
+        },
+        {
+          "id": "L34-w3-choice",
+          "fail": "prefixDoesNotReplay"
+        },
+        {
+          "id": "L34-w3-calm",
+          "fail": "prefixDoesNotReplay"
+        },
+        {
+          "id": "L40-w3-choice",
+          "fail": "prefixDoesNotReplay"
+        },
+        {
+          "id": "L40-w3-calm",
+          "fail": "prefixDoesNotReplay"
+        },
+        {
+          "id": "L41-w3-choice",
+          "fail": "prefixDoesNotReplay"
+        },
+        {
+          "id": "L41-w3-calm",
+          "fail": "prefixDoesNotReplay"
+        },
+        {
+          "id": "L44-w3-choice",
+          "fail": "prefixDoesNotReplay"
+        },
+        {
+          "id": "L44-w3-calm",
+          "fail": "prefixDoesNotReplay"
+        }
+      ],
+      "skilledRange": [
+        1,
+        1.2
+      ],
+      "familyRange": null,
+      "cpuS": 31.141,
+      "cpuRecordedForEveryRow": true
+    }
+  ],
+  "strictWitnessesReplayed": 77,
+  "exactRuntimeSnapshotsChecked": 9,
+  "accepted": 0,
+  "note": "Adaptive diagnostic stages, not an unbiased yield experiment. No ACCEPT campaigns or production writes. Timings can reuse warm caches."
+}

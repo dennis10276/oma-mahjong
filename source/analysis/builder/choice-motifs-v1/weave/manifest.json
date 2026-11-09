@@ -1,0 +1,1075 @@
+{
+  "schedule": [
+    {
+      "id": "L8-w1-choice",
+      "brief": {
+        "layout": 8,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 1
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L8-w1-calm",
+      "brief": {
+        "layout": 8,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 1
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L8-w2-choice",
+      "brief": {
+        "layout": 8,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 2
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L8-w2-calm",
+      "brief": {
+        "layout": 8,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 2
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L8-w3-choice",
+      "brief": {
+        "layout": 8,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 3
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L8-w3-calm",
+      "brief": {
+        "layout": 8,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 3
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L19-w1-choice",
+      "brief": {
+        "layout": 19,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 1
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L19-w1-calm",
+      "brief": {
+        "layout": 19,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 1
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L19-w2-choice",
+      "brief": {
+        "layout": 19,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 2
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L19-w2-calm",
+      "brief": {
+        "layout": 19,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 2
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L19-w3-choice",
+      "brief": {
+        "layout": 19,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 3
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L19-w3-calm",
+      "brief": {
+        "layout": 19,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 3
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L22-w1-choice",
+      "brief": {
+        "layout": 22,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 1
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L22-w1-calm",
+      "brief": {
+        "layout": 22,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 1
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L22-w2-choice",
+      "brief": {
+        "layout": 22,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 2
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L22-w2-calm",
+      "brief": {
+        "layout": 22,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 2
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L22-w3-choice",
+      "brief": {
+        "layout": 22,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 3
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L22-w3-calm",
+      "brief": {
+        "layout": 22,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 3
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L25-w1-choice",
+      "brief": {
+        "layout": 25,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 1
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L25-w1-calm",
+      "brief": {
+        "layout": 25,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 1
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L25-w2-choice",
+      "brief": {
+        "layout": 25,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 2
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L25-w2-calm",
+      "brief": {
+        "layout": 25,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 2
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L25-w3-choice",
+      "brief": {
+        "layout": 25,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 3
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L25-w3-calm",
+      "brief": {
+        "layout": 25,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 3
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L28-w1-choice",
+      "brief": {
+        "layout": 28,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 1
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L28-w1-calm",
+      "brief": {
+        "layout": 28,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 1
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L28-w2-choice",
+      "brief": {
+        "layout": 28,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 2
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L28-w2-calm",
+      "brief": {
+        "layout": 28,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 2
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L28-w3-choice",
+      "brief": {
+        "layout": 28,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 3
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L28-w3-calm",
+      "brief": {
+        "layout": 28,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 3
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L34-w1-choice",
+      "brief": {
+        "layout": 34,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 1
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L34-w1-calm",
+      "brief": {
+        "layout": 34,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 1
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L34-w2-choice",
+      "brief": {
+        "layout": 34,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 2
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L34-w2-calm",
+      "brief": {
+        "layout": 34,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 2
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L34-w3-choice",
+      "brief": {
+        "layout": 34,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 3
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L34-w3-calm",
+      "brief": {
+        "layout": 34,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 3
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L40-w1-choice",
+      "brief": {
+        "layout": 40,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 1
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L40-w1-calm",
+      "brief": {
+        "layout": 40,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 1
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L40-w2-choice",
+      "brief": {
+        "layout": 40,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 2
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L40-w2-calm",
+      "brief": {
+        "layout": 40,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 2
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L40-w3-choice",
+      "brief": {
+        "layout": 40,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 3
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L40-w3-calm",
+      "brief": {
+        "layout": 40,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 3
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L41-w1-choice",
+      "brief": {
+        "layout": 41,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 1
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L41-w1-calm",
+      "brief": {
+        "layout": 41,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 1
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L41-w2-choice",
+      "brief": {
+        "layout": 41,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 2
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L41-w2-calm",
+      "brief": {
+        "layout": 41,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 2
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L41-w3-choice",
+      "brief": {
+        "layout": 41,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 3
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L41-w3-calm",
+      "brief": {
+        "layout": 41,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 3
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L44-w1-choice",
+      "brief": {
+        "layout": 44,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 1
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L44-w1-calm",
+      "brief": {
+        "layout": 44,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 1
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L44-w2-choice",
+      "brief": {
+        "layout": 44,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 2
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L44-w2-calm",
+      "brief": {
+        "layout": 44,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 2
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L44-w3-choice",
+      "brief": {
+        "layout": 44,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 3
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L44-w3-calm",
+      "brief": {
+        "layout": 44,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near",
+          "outsideWidth": 3
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    }
+  ],
+  "code": {
+    "builder.js": "af7188a444998ff6",
+    "engine.js": "6978e2eb39a2d143",
+    "gate.js": "ea6296ed31c45e65",
+    "knobs.js": "0d54b22dde0ef392",
+    "static_gates.js": "81b25a171729b1bb",
+    "obvious.js": "96049dabb71877e7",
+    "detour.js": "b292479d080fc8d8",
+    "publicfork.js": "bcac18c2c7418b40",
+    "screen.js": "d4d356382fe17c1a",
+    "dial_curve.js": "50f383e41f316526",
+    "traces.js": "8553dfb8b874cfa7",
+    "counterfactual.js": "5ccc11a608c26263",
+    "yardstick.js": "6d47e7a928ac3704",
+    "library.js": "9f47e91f757d71da",
+    "run_pipeline.js": "77727af561bc21cc",
+    "gate_profile.js": "9cfd206a86424fa1",
+    "policy.js": "a963c0521b110916",
+    "visible_choice.js": "8ff7d343f9323016",
+    "dependency_choice.js": "2692e1a0851c8601",
+    "reserve_cuts.js": "27b8a67972cdfb51",
+    "frame_detours.js": "544bd99f5b5ce347",
+    "row_choice.js": "2bedec7ab90073ad",
+    "row_cut.js": "6a6b9bb218189eb3"
+  },
+  "pins": {
+    "schema": "yardstick-v2",
+    "created": "2026-11-07",
+    "source": "source/analysis/builder/process-design-synthesis.md sections 2, 3 and 6 step 0e; code: source/tools/builder/loop/yardstick.js",
+    "family": {
+      "role": "the family ruler (D)",
+      "botVersion": "family-key-memory-v1-fast",
+      "version": "human-g6.3-key-memory-candidate1",
+      "fingerprint": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+      "note": "createMeter({botVersion:'family-key-memory-v1-fast'}) after Gemini Task G3 (commit 52edfa19). Zero drift against the slow family-key-memory-v1 on 60 boards / 635,635 moves (gemini-tasks/results/km-fast/km-fast.md section 3). About 1.7 s per 40-campaign rating on one core (same report, section 4).",
+      "slowFingerprint": "5372bd4e5d29acce926c537400b8a069dd0d04c3f4d2032024c9f34a1d99863d",
+      "slowNote": "createMeter({botVersion:'family-key-memory-v1'}) on wip/cc-builder-loop after merge 8d62405d: the same bot without the fast path.",
+      "codexFingerprint": "d362e85fba3d61523c54bc53a92745458e4467fb4a59624aad1312e9d9003ae3",
+      "codexNote": "Codex Task 11 rated family-key-memory-v1 under this hash before the G2 merge changed shared sources.",
+      "migration": "meter.js FAMILY_CACHE_MIGRATIONS['63be677e...'] = ['5372bd4e...', 'd362e85f...']. meter.measure applies it by itself: for setting 'family' only (never planner), only to entries with valid === true, and only for exactly the same settings key; a hit copies the old file to the new key. The yardstick therefore needs no reuse logic of its own (the draft's reusePrior was removed).",
+      "migrationCheck": {
+        "date": "2026-11-07",
+        "board": "qualified-200-225.jsonl row 0 (level 200, id 58a099f8cfe6eb4d), design as stored",
+        "settings": {
+          "setting": "family",
+          "runs": 20,
+          "seeds": 2,
+          "seed": 4711
+        },
+        "result": "No 63be677e entry existed; createMeter({botVersion:'family-key-memory-v1-fast'}).measure returned in 2 ms with stats {calls:0, hits:1, familyReused:1} from Codex's d362e85f entry (expectedTries 10.03, valid) and wrote it under the new key. A fresh fast rating of the same call without cache (2.7 s) gave expectedTries 10.03 and the same wonOn for all 20 visible campaigns.",
+        "cacheSurvey": "source/build/factory-cache holds d362e85f family ratings at 4711 and 18427 for 17 of the 18 qualified 200-225 boards as stored (204 has none), and none under 5372bd4e or 63be677e before this check."
+      }
+    },
+    "reference": {
+      "role": "counterfactual only (gate C1), and the planner",
+      "botVersion": null,
+      "version": "human-g6.2",
+      "fast": true,
+      "fingerprint": "4cf0b4c7057c2242f27fe529bb1885e4ad06cdf94588b79411cc06c522509e39",
+      "note": "createMeter() default (fast mode). The meter itself migrates the older f3285928 / cae3bc38 / ac24aad8 family cache entries (FAMILY_CACHE_MIGRATIONS, G2 zero-drift)."
+    },
+    "planner": {
+      "role": "S (skilled), better of route and plain styles (Task 05)",
+      "meter": "planner",
+      "botVersion": "planner-fast-v1",
+      "fingerprint": "e686e095300cec3926719ef63715fe3902bb1b4cf31825c3f36ee1872033ced9",
+      "migration": "meter.js PLANNER_CACHE_MIGRATIONS['e686e095...'] = ['4cf0b4c7...', 'f3285928...'] (planner settings only). Zero drift, about 10x faster (Gemini G4).",
+      "settings": {
+        "setting": "planner",
+        "runs": 20,
+        "seeds": 2,
+        "seed": 4711
+      },
+      "spare": 2,
+      "note": "Same settings as batch_evaluate.js quality mode, so cached planner ratings are reused (via migration)."
+    },
+    "subBlockStride": 7919,
+    "cap": 20,
+    "blocks": {
+      "SCREEN": {
+        "use": "early stop (synthesis section 6 step 4); discarded after use",
+        "campaigns": 20,
+        "calls": [
+          {
+            "runs": 20,
+            "seeds": 1,
+            "seed": 4711
+          }
+        ],
+        "equivalence": "Campaign r of a meter call uses seed (seed + imul(r+1, 0x9e3779b9))|0, so {runs:20,seeds:1,seed:4711} is exactly the first (visible) sub-block of the CURVE 4711 call. screen.js reads it from a cached CURVE 4711 rating when one exists.",
+        "sequential": {
+          "chunk": 5,
+          "looks": [
+            5,
+            10,
+            15
+          ],
+          "z": 3,
+          "rule": "After 5, 10 and 15 campaigns, stop when the running mean m_n is beyond threshold t by more than z * sd(t) / sqrt(n), where sd(t) is the per-campaign SD of a geometric number of tries with mean t, capped at 20. Chunk j is the meter call {runs:5, seeds:1, seed:(4711 + imul(5j, 0x9e3779b9))|0}: the same campaigns as SCREEN, so a board that is not stopped gets exactly the SCREEN value.",
+          "calibration": {
+            "command": "node source/tools/builder/loop/screen.js --calibrate --out source/build/screen-cal.json (2026-11-07, 1.5 min, no bot runs)",
+            "criterion": "smallest z with a false-stop rate <= 2% for a board exactly at the threshold, every threshold 2-18.5, both sides (task10_speed.js used the same 2% criterion)",
+            "simulatedMaxFalseStop": {
+              "2": 0.085,
+              "3": 0.0192,
+              "1.5": 0.15515,
+              "1.75": 0.11755,
+              "2.25": 0.06305,
+              "2.5": 0.04185,
+              "2.75": 0.02675,
+              "3.5": 0.008
+            },
+            "model": "min(Geometric, 20) with mean t; its SD matches the real per-campaign spread of 634 cached key-memory ratings (observed/model 0.97, 0.87, 0.94, 0.96, 1.00 in D bands 1-3, 3-6, 6-10, 10-14, 14-20)",
+            "realReplayFalseStop": {
+              "falseStopBelow": 0.0016,
+              "falseStopAbove": 0
+            },
+            "realReplayRows": 634,
+            "power": "z 3: a board at D 2 against lo-1 = 9 stops in 100% after 10.2 campaigns on average; D 3 vs 9: 93%, 13.0 campaigns; D 15 vs hi+1 = 7: 98%, 7.6 campaigns; a board 2 SCREEN-SEs beyond the threshold stops in only 0-25%. The censoring condition (D(1) >= 18.5) can never stop early at z 3 (its bound passes 20); it is checked at 20 campaigns."
+          }
+        }
+      },
+      "CURVE": {
+        "use": "every spare of a puzzle, paired (same seeds at every spare)",
+        "campaigns": 80,
+        "calls": [
+          {
+            "runs": 20,
+            "seeds": 2,
+            "seed": 4711
+          },
+          {
+            "runs": 20,
+            "seeds": 2,
+            "seed": 18427
+          }
+        ],
+        "cacheAlternatives": [
+          {
+            "capture": "tail"
+          }
+        ],
+        "pooling": "Production pooling (batch_evaluate.js rate mode, empirical_confirm.js, task11_rerate.js): two meter calls {setting:'family', runs:20, seeds:2} at seed 4711 and seed 18427, 40 campaigns each, pooled = (exp4711 + exp18427) / 2. Production rated the reference bot's 4711 call with capture:'tail' (part of the cache key, not of the rating); Codex rated key memory without capture. The yardstick looks up both cache variants before measuring.",
+        "visibleCampaigns": "The meter returns per-campaign results only for the first sub-block of each call (the first 20 of 40). SEs are estimated from those 40 of 80 campaigns (sample SD / sqrt(80)); D itself uses all 80 (mean of the two calls' expectedTries)."
+      },
+      "ACCEPT": {
+        "use": "the value of record; never reused, never used for choosing",
+        "blockCampaigns": 40,
+        "firstSeed": 29717,
+        "seedStep": 15838,
+        "runs": 20,
+        "seeds": 2,
+        "note": "Block j is meter call {runs:20, seeds:2, seed: 29717 + 15838*j}. Its two sub-blocks are 29717 + 7919*(2j) and 29717 + 7919*(2j+1), so blocks never overlap each other or 4711/12630/18427/26346. Block 0 equals production's reserved final seed (final_seed.js SEED = 29717)."
+      }
+    },
+    "acceptance": {
+      "rule": "sequential (synthesis section 2)",
+      "startCampaigns": 160,
+      "maxCampaigns": 320,
+      "acceptGap": 0.6,
+      "refuseGap": 2.5,
+      "finalGap": 1,
+      "steps": [
+        "Measure 160 ACCEPT campaigns (4 blocks).",
+        "If |D - T| <= 0.6 x tolerance: accept.",
+        "If |D - T| > 2.5 x tolerance: refuse the pair for that slot (the puzzle goes back to the library).",
+        "Otherwise measure up to 320 campaigns (8 blocks) and accept only if |D - T| <= tolerance."
+      ],
+      "ledger": "source/analysis/builder/library/accept-ledger.json",
+      "ledgerRule": "ACCEPT blocks are counted per puzzle (the design with clock.n removed), across all spares and fingerprints. accept() reserves blocks [start, start + maxCampaigns/40) in the ledger before measuring and never measures a reserved block again."
+    },
+    "tolerance": {
+      "level": {
+        "abs": 1,
+        "rel": 0,
+        "rule": "|D_accept - T| <= 1"
+      },
+      "window": {
+        "abs": 0.5,
+        "rel": 0,
+        "rule": "every 5-level window mean within 0.5"
+      },
+      "note": "Dennis's fixed tolerances, reaffirmed 2026-11-08. No relative widening."
+    },
+    "curveRules": {
+      "monotoneSlack": 0.5,
+      "monotoneSe": 2,
+      "neighbourRatio": 1.5,
+      "neighbourAdd": 3,
+      "censoredAt": 18.5,
+      "shippableSpares": [
+        1,
+        2,
+        3
+      ],
+      "maxClockN": 19,
+      "diallableRatio": 1.2,
+      "openingClockK": 6,
+      "openingClockMinSpare": 2,
+      "releaseTestSpare": [
+        1,
+        3
+      ],
+      "note": "canShip follows synthesis section 3. openingClock (k at move 0 <= 6 means spare >= 2) is a flag; shippableOpeningRule lists the spares that also pass it. No peak exception. releaseTestSpare is the spare t_clocks.js checks: clock.n - (index of the clock in the stored solution) - 1 must be 1-3."
+    }
+  },
+  "note": "Fixed motif transfer x outside interleaving widths x calm two-picture controls. All successful builds screened on skilled; family CURVE only for normal skilled band. No static/trace qualification or acceptance."
+}

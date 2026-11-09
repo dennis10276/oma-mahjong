@@ -1,0 +1,119 @@
+[
+  {
+    "id": "row-choice-8",
+    "layout": 8,
+    "shape": "cross",
+    "story": "reserveBeforeRoof",
+    "frame": {
+      "spare": 2
+    },
+    "targets": {
+      "motifIndex": 0,
+      "outsideWidth": 1
+    }
+  },
+  {
+    "id": "row-choice-19",
+    "layout": 19,
+    "shape": "hourglass · ridges",
+    "story": "reserveBeforeRoof",
+    "frame": {
+      "spare": 2
+    },
+    "targets": {
+      "motifIndex": 0,
+      "outsideWidth": 1
+    }
+  },
+  {
+    "id": "row-choice-22",
+    "layout": 22,
+    "shape": "ushape",
+    "story": "reserveBeforeRoof",
+    "frame": {
+      "spare": 2
+    },
+    "targets": {
+      "motifIndex": 0,
+      "outsideWidth": 1
+    }
+  },
+  {
+    "id": "row-choice-25",
+    "layout": 25,
+    "shape": "frame",
+    "story": "reserveBeforeRoof",
+    "frame": {
+      "spare": 2
+    },
+    "targets": {
+      "motifIndex": 0,
+      "outsideWidth": 1
+    }
+  },
+  {
+    "id": "row-choice-28",
+    "layout": 28,
+    "shape": "arch",
+    "story": "reserveBeforeRoof",
+    "frame": {
+      "spare": 2
+    },
+    "targets": {
+      "motifIndex": 0,
+      "outsideWidth": 1
+    }
+  },
+  {
+    "id": "row-choice-34",
+    "layout": 34,
+    "shape": "bowtie",
+    "story": "reserveBeforeRoof",
+    "frame": {
+      "spare": 2
+    },
+    "targets": {
+      "motifIndex": 0,
+      "outsideWidth": 1
+    }
+  },
+  {
+    "id": "row-choice-40",
+    "layout": 40,
+    "shape": "vase",
+    "story": "reserveBeforeRoof",
+    "frame": {
+      "spare": 2
+    },
+    "targets": {
+      "motifIndex": 0,
+      "outsideWidth": 1
+    }
+  },
+  {
+    "id": "row-choice-41",
+    "layout": 41,
+    "shape": "hourglass",
+    "story": "reserveBeforeRoof",
+    "frame": {
+      "spare": 2
+    },
+    "targets": {
+      "motifIndex": 0,
+      "outsideWidth": 1
+    }
+  },
+  {
+    "id": "row-choice-44",
+    "layout": 44,
+    "shape": "hourglass",
+    "story": "reserveBeforeRoof",
+    "frame": {
+      "spare": 2
+    },
+    "targets": {
+      "motifIndex": 0,
+      "outsideWidth": 1
+    }
+  }
+]

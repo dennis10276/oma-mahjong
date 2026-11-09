@@ -51,6 +51,28 @@ construction results. A new clock frame preserved a skilled rating near 3,
 but neither the fixed quality checks nor the later repairs produced a new
 accepted level. Following arbitrary family difficulty plans remains open.
 
+2026-11-09 row-choice continuation: opt-in `mode:'rowChoice'` accepts a catalogue
+`layout`, `story:'reserveBeforeRoof'`, `frame:{spare:2}`, and targets
+`{motifIndex:0, outsideOrder:'near', outsideWidth:1, echoPairs:0}`. Geometry,
+matching and a concrete prefix with one waiting picture determine the proven
+losing side choice. Outside order also accepts `'height'`, widths are 1–2,
+and 0–2 echo pairs reuse row pictures before the checkpoint. Width 3 conflicts
+with the reserved tray place. `control:true` is an explicit two-picture easier
+diagnostic. The strict witness replays; seed changes picture labels. Unsupported
+plan fields fail. This transfers a real choice to nine layouts but does not
+yet supply normal-band skilled puzzles.
+
+`row_cut.js` proves losses on a ten-tile relaxation of a closed five-picture
+group. It removes outside blockers/tray pictures, obstacles and the clock;
+local pictures must be face-up. Four-copy matching escapes must all be gone
+before the certificate applies. It trusts actual geometry and pictures rather
+than cards. Geometry caching is bounded; each local table has at most 1,024
+alive masks × 32 waiting masks. `E.game(d,{rowCuts:false})` disables this family;
+`{reserveCuts:false}` disables both families for independent checks. See
+`source/analysis/builder/choice-motifs-v1/REPORT.md` for controls, context
+interactions and the remaining supply bottleneck. The real CLI smoke rejects
+the new template as too easy.
+
 Dennis (2026-11-06): "We are spending a lot of time making levels in a unique and difficult way when we dont have the
 ground work done of designing levels and what makes them unique and difficult. Focus on making the builder better
 before letting it learn." Plan: the doc "Level builder plan" (phases 1-4). This folder is phases 1 and 2.

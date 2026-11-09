@@ -1,0 +1,130 @@
+{
+  "schema": "row-projection-proof-audit-v1",
+  "code": {
+    "builder.js": "931a031fc4035e3e",
+    "engine.js": "6978e2eb39a2d143",
+    "gate.js": "ea6296ed31c45e65",
+    "knobs.js": "0d54b22dde0ef392",
+    "static_gates.js": "81b25a171729b1bb",
+    "obvious.js": "96049dabb71877e7",
+    "detour.js": "b292479d080fc8d8",
+    "publicfork.js": "bcac18c2c7418b40",
+    "screen.js": "d4d356382fe17c1a",
+    "dial_curve.js": "50f383e41f316526",
+    "traces.js": "8553dfb8b874cfa7",
+    "counterfactual.js": "5ccc11a608c26263",
+    "yardstick.js": "6d47e7a928ac3704",
+    "library.js": "9f47e91f757d71da",
+    "run_pipeline.js": "966599a4a4fb1244",
+    "gate_profile.js": "9cfd206a86424fa1",
+    "policy.js": "a963c0521b110916",
+    "visible_choice.js": "8ff7d343f9323016",
+    "dependency_choice.js": "2692e1a0851c8601",
+    "reserve_cuts.js": "27b8a67972cdfb51",
+    "frame_detours.js": "544bd99f5b5ce347",
+    "row_choice.js": "1868c4537e104acc",
+    "row_cut.js": "8ca9c9f59073e2eb"
+  },
+  "rows": [
+    {
+      "id": "L8-w1-choice",
+      "projected": {
+        "result": "lose",
+        "nodes": 1
+      },
+      "unpruned": {
+        "result": "unknown",
+        "nodes": 200001
+      }
+    },
+    {
+      "id": "L19-w1-choice",
+      "projected": {
+        "result": "lose",
+        "nodes": 1
+      },
+      "unpruned": {
+        "result": "unknown",
+        "nodes": 200001
+      }
+    },
+    {
+      "id": "L22-w1-choice",
+      "projected": {
+        "result": "lose",
+        "nodes": 1
+      },
+      "unpruned": {
+        "result": "unknown",
+        "nodes": 200001
+      }
+    },
+    {
+      "id": "L25-w1-choice",
+      "projected": {
+        "result": "lose",
+        "nodes": 1
+      },
+      "unpruned": {
+        "result": "unknown",
+        "nodes": 200001
+      }
+    },
+    {
+      "id": "L28-w1-choice",
+      "projected": {
+        "result": "lose",
+        "nodes": 1
+      },
+      "unpruned": {
+        "result": "unknown",
+        "nodes": 200001
+      }
+    },
+    {
+      "id": "L34-w1-choice",
+      "projected": {
+        "result": "lose",
+        "nodes": 1
+      },
+      "unpruned": {
+        "result": "unknown",
+        "nodes": 200001
+      }
+    },
+    {
+      "id": "L40-w1-choice",
+      "projected": {
+        "result": "lose",
+        "nodes": 1
+      },
+      "unpruned": {
+        "result": "lose",
+        "nodes": 11545
+      }
+    },
+    {
+      "id": "L41-w1-choice",
+      "projected": {
+        "result": "lose",
+        "nodes": 1
+      },
+      "unpruned": {
+        "result": "unknown",
+        "nodes": 200001
+      }
+    },
+    {
+      "id": "L44-w1-choice",
+      "projected": {
+        "result": "lose",
+        "nodes": 1
+      },
+      "unpruned": {
+        "result": "lose",
+        "nodes": 182497
+      }
+    }
+  ],
+  "note": "Same frozen physical states, 200000-node finishing budget. Search node counts exclude work inside the bounded ten-tile relaxation. Unknown reference proofs are not read as losses."
+}

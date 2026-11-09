@@ -1,0 +1,298 @@
+{
+  "schedule": [
+    {
+      "id": "L8-choice",
+      "brief": {
+        "layout": 8,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near"
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L8-calm",
+      "brief": {
+        "layout": 8,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near"
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L19-choice",
+      "brief": {
+        "layout": 19,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near"
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L19-calm",
+      "brief": {
+        "layout": 19,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near"
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L22-choice",
+      "brief": {
+        "layout": 22,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near"
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L22-calm",
+      "brief": {
+        "layout": 22,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near"
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L25-choice",
+      "brief": {
+        "layout": 25,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near"
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L25-calm",
+      "brief": {
+        "layout": 25,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near"
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L28-choice",
+      "brief": {
+        "layout": 28,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near"
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L28-calm",
+      "brief": {
+        "layout": 28,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near"
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L34-choice",
+      "brief": {
+        "layout": 34,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near"
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L34-calm",
+      "brief": {
+        "layout": 34,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near"
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L40-choice",
+      "brief": {
+        "layout": 40,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near"
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L40-calm",
+      "brief": {
+        "layout": 40,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near"
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L41-choice",
+      "brief": {
+        "layout": 41,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near"
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L41-calm",
+      "brief": {
+        "layout": 41,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near"
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L44-choice",
+      "brief": {
+        "layout": 44,
+        "targets": {
+          "control": false,
+          "motifIndex": 0,
+          "outsideOrder": "near"
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    },
+    {
+      "id": "L44-calm",
+      "brief": {
+        "layout": 44,
+        "targets": {
+          "control": true,
+          "motifIndex": 0,
+          "outsideOrder": "near"
+        },
+        "seed": 1,
+        "frame": {
+          "spare": 2
+        }
+      }
+    }
+  ],
+  "code": {
+    "builder.js": "af7188a444998ff6",
+    "engine.js": "f4b1a47f815ae8eb",
+    "gate.js": "ea6296ed31c45e65",
+    "knobs.js": "0d54b22dde0ef392",
+    "static_gates.js": "81b25a171729b1bb",
+    "obvious.js": "96049dabb71877e7",
+    "detour.js": "b292479d080fc8d8",
+    "publicfork.js": "bcac18c2c7418b40",
+    "screen.js": "d4d356382fe17c1a",
+    "dial_curve.js": "50f383e41f316526",
+    "traces.js": "8553dfb8b874cfa7",
+    "counterfactual.js": "5ccc11a608c26263",
+    "yardstick.js": "6d47e7a928ac3704",
+    "library.js": "9f47e91f757d71da",
+    "run_pipeline.js": "15fb82fd4a23098c",
+    "gate_profile.js": "9cfd206a86424fa1",
+    "policy.js": "a963c0521b110916",
+    "visible_choice.js": "8ff7d343f9323016",
+    "dependency_choice.js": "2692e1a0851c8601",
+    "reserve_cuts.js": "27b8a67972cdfb51",
+    "frame_detours.js": "544bd99f5b5ce347"
+  },
+  "note": "Fixed geometry-motif transfer and calm partner-swap controls. All built boards screened on skilled; family CURVE only for normal skilled band. No acceptance."
+}

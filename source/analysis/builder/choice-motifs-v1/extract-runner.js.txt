@@ -1,0 +1,19 @@
+'use strict';
+const fs=require('fs'),path=require('path');
+const E=require(path.resolve('source/tools/builder/engine.js')),GP=require(path.resolve('source/tools/builder/loop/gate_profile.js'));
+const file='source/analysis/builder/dependency-choices-v1/diagnostic.json',diagnosis=JSON.parse(fs.readFileSync(file,'utf8'));
+const d=diagnosis.inputs.find(r=>r.id==='45-w2').design,error=diagnosis.rows.find(r=>r.id==='45-w2').profile.attemptProfiles.find(r=>r.firstError).firstError;
+const owner=JSON.parse(fs.readFileSync('source/build/heavy.lock/owner.json'));if(owner.pid!==process.ppid)throw Error('Run through heavy.js');
+const out='source/analysis/builder/choice-motifs-v1';if(fs.existsSync(out))throw Error('Preserve previous output');fs.mkdirSync(out,{recursive:true});fs.copyFileSync(__filename,path.join(out,'extract-runner.js.txt'));
+const held=54,chosen=error.move,protectedIds=new Set([held,chosen,...d.faces.flatMap((f,i)=>f===d.faces[chosen]||f===d.faces[held]?[i]:[])]);
+const initial=d.faces.flatMap((_,i)=>error.before.alive[i]||i===held?[i]:[]),attempts=[];
+function design(ids){return {tiles:ids.map(i=>i===held?[20,20,0]:d.tiles[i]),faces:ids.map(i=>d.faces[i]),down:[],gold:[],obst:{ice:{},locks:[],keys:[]},clock:null,solution:[]};}
+function assess(ids){const x=design(ids),g=E.game(x,{reserveCuts:false}),s=E.step(g,E.start(g),ids.indexOf(held)),after=E.step(g,s,ids.indexOf(chosen));const a=E.winnable(g,s,{nodes:200000,ms:Infinity}),b=after?E.winnable(g,after,{nodes:200000,ms:Infinity}):{result:'lose',nodes:0};return {before:a.result,after:b.result,nodes:a.nodes+b.nodes,witness:a.path};}
+let kept=initial.slice(),base=assess(kept);if(base.before!=='win'||base.after!=='lose')throw Error('Initial extraction changed fork');
+let changed=true;while(changed){changed=false;outer:for(let a=0;a<kept.length;a++)for(let b=a+1;b<kept.length;b++)if(!protectedIds.has(kept[a])&&!protectedIds.has(kept[b])&&d.faces[kept[a]]===d.faces[kept[b]]){
+ const remove=[kept[a],kept[b]],next=kept.filter(i=>!remove.includes(i)),r=assess(next);attempts.push({remove,remaining:next.length,...r,witness:undefined});
+ if(r.before==='win'&&r.after==='lose'){kept=next;changed=true;console.log(JSON.stringify({kept:kept.length,remove,nodes:r.nodes}));break outer;}
+}}
+const x=design(kept),g=E.game(x,{reserveCuts:false}),s=E.step(g,E.start(g),kept.indexOf(held)),proof=assess(kept),cls=E.classify(g,s,{nodes:200000,ms:Infinity});x.solution=[kept.indexOf(held),...E.flatten(proof.witness)];
+const result={schema:'known-fork-extraction-v1',source:{file,fingerprint:GP.digest(d),error},initial,kept,entry:kept.indexOf(held),bad:kept.indexOf(chosen),design:x,proof,choices:cls,attempts,tiles:kept.map((old,i)=>({old,i,face:d.faces[old],at:x.tiles[i]})),scope:'Greedy paired deletion; locally irreducible in this order, not globally minimal. Synthetic loose entry represents the known waiting picture. No difficulty or quality claim.'};
+fs.writeFileSync(path.join(out,'extraction.json'),JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({kept,tiles:result.tiles,proof:{...proof,witness:undefined},choices:cls}));

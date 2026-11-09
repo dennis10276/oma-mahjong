@@ -1,0 +1,55 @@
+'use strict';
+// Authored row fork: reserve one tray place before clearing the roof.
+// Matching partners follow a fixed geometry motif, not a selected bot score.
+const E=require('./engine.js'),L=require('../../www/layouts.js');
+const {tileVisibility}=require('../sim/refit/human_board_visibility.js');
+const PATTERN=[[8,0,0],[3,1,1],[5,1,1],[7,1,1],[3,3,1],[1,3,1],[5,3,1],[7,3,1],[6,2,2]];
+const SAFE=[1,8,2,3,0,5,4,6,7];
+function placements(tiles){
+ const idx=new Map(tiles.map((t,i)=>[t.join(','),i])),out=[],seen=new Set();
+ for(const sx of [1,-1])for(const sy of [1,-1])for(const anchor of tiles){
+  const dx=anchor[0]-sx*8,dy=anchor[1],dz=anchor[2];
+  const ids=PATTERN.map(([x,y,z])=>idx.get([dx+sx*x,dy+sy*y,dz+z].join(',')));
+  const key=ids.join(',');if(ids.every(Number.isInteger)&&!seen.has(key)){seen.add(key);out.push({ids,sx,sy,offset:[dx,dy,dz]});}
+ }
+ return out;
+}
+function build(brief={},options={}){
+ const begin=Date.now(),B=require('./builder.js'),catalog=B.LAYOUTS;
+ const layout=brief.layout,spare=brief.frame?.spare??2,motifIndex=brief.targets?.motifIndex??0,order=brief.targets?.outsideOrder??'near',control=brief.targets?.control??false;
+ if(!Number.isInteger(layout)||!catalog[layout])return {fail:'invalidLayout'};
+ if(![1,2,3].includes(spare)||!Number.isInteger(motifIndex)||motifIndex<0||!['near','height'].includes(order)||typeof control!=='boolean')return {fail:'invalidPlan'};
+ if(Object.keys(brief.frame||{}).some(k=>k!=='spare')||Object.keys(brief.targets||{}).some(k=>!['motifIndex','outsideOrder','control'].includes(k)))return {fail:'unsupportedTarget'};
+ if(brief.tiles||options.keep||options.hardWork!=null||options.softWork!=null)return {fail:'unsupportedOption'};
+ if(brief.story&&brief.story!=='reserveBeforeRoof')return {fail:'incompatibleStory'};
+ const lay=catalog[layout];if(brief.shape&&brief.shape!==lay.shape)return {fail:'incompatibleShape'};
+ const matches=placements(lay.tiles),motif=matches[motifIndex];if(!motif)return {fail:'motifNotFound',placements:matches.length};
+ const c=B.context(lay.tiles),n=c.n,core=new Set(motif.ids),alive=new Uint8Array(n).fill(1),outside=[];
+ const free=i=>alive[i]&&L.isFree(i,alive,c.nb),anchors=[motif.ids[1],motif.ids[5],motif.ids[8]];
+ const allShown=()=>{const v=tileVisibility(c.tiles,{alive,down:new Uint8Array(n),openPeek:-1},null).tiles;return motif.ids.every(i=>v[i].picture);};
+ const pick=()=>{const candidates=Array.from({length:n},(_,i)=>i).filter(i=>!core.has(i)&&free(i));
+  candidates.sort((a,b)=>{const score=i=>(order==='near'?anchors.filter(t=>c.above[t].has(i)).length*100:0)+c.tiles[i].z;return score(b)-score(a)||a-b;});return candidates[0];};
+ const entry=pick();if(entry==null)return {fail:'noEntry'};alive[entry]=0;
+ const prefix=[entry];
+ while(!anchors.every(free)||!allShown()||outside.length%2){const i=pick();if(i==null)return {fail:'choiceNotExposed',entry,prefix,placements:matches.length};alive[i]=0;outside.push(i);prefix.push(i);}
+ const checkpoint=prefix.length,geometric=prefix.slice();
+ for(const k of SAFE){const goal=motif.ids[k];while(!free(goal)){const i=pick();if(i==null)return {fail:'safeOrderBlocked',goal};alive[i]=0;outside.push(i);geometric.push(i);}alive[goal]=0;geometric.push(goal);}
+ while(alive.some(Boolean)){const i=pick();if(i==null)return {fail:'outsideOrderBlocked'};alive[i]=0;outside.push(i);geometric.push(i);}
+ const pairs=[[motif.ids[0],motif.ids[5]],[motif.ids[1],motif.ids[3]],[motif.ids[2],motif.ids[8]],[motif.ids[4],motif.ids[7]],[entry,motif.ids[6]]];
+ if(control)[pairs[1],pairs[2]]=[[motif.ids[1],motif.ids[8]],[motif.ids[3],motif.ids[2]]];
+ for(let i=0;i<outside.length;i+=2)pairs.push([outside[i],outside[i+1]]);
+ if(pairs.some(p=>p.some(i=>!Number.isInteger(i)))||new Set(pairs.flat()).size!==n)return {fail:'pairing'};
+ const faces=new Array(n),duplicates=n/2-36,lateStart=pairs.length-2*duplicates;
+ pairs.forEach((p,i)=>{const face=i<lateStart?i:lateStart+Math.floor((i-lateStart)/2);for(const t of p)faces[t]=face;});
+ // Seed relabels pictures only. It cannot choose a different geometry or plan.
+ const labels=Array.from({length:36},(_,i)=>i);let seed=(brief.seed??1)>>>0;
+ for(let i=35;i>0;i--){seed=(Math.imul(seed,1664525)+1013904223)>>>0;const j=seed%(i+1);[labels[i],labels[j]]=[labels[j],labels[i]];}
+ const design={tiles:lay.tiles.map(t=>t.slice()),faces:faces.map(f=>labels[f]),down:[],gold:[],obst:{ice:{},locks:[],keys:[]},clock:{i:entry,n:1+spare},solution:[]};
+ const g=E.game(design,{reserveCuts:false});let s=E.start(g);for(const i of prefix){s=E.step(g,s,i);if(!s)return {fail:'prefixDoesNotReplay'};}
+ if(s.tray.length!==1||g.faces[s.tray[0]]!==g.faces[entry])return {fail:'prefixDoesNotPreserveReserve'};
+ const budget={nodes:options.nodes??200000,ms:Infinity},before=E.winnable(g,s,budget),bad=motif.ids[5],next=E.step(g,s,bad),after=next?E.winnable(g,next,budget):{result:'lose',nodes:0};
+ if(before.result!=='win'||after.result!==(control?'win':'lose'))return {fail:'choiceUnproven',before:before.result,after:after.result};
+ design.solution=prefix.concat(E.flatten(before.path));if(!E.replay(design,design.solution,{strict:true}).ok)return {fail:'strictWitness'};
+ return {design,card:{shape:lay.shape,story:'Keep room before opening the roof',tiles:n,layout,motifIndex,outsideOrder:order,control,choice:{entry,bad,good:motif.ids[1],roof:motif.ids[8],tiles:motif.ids,prefix:prefix.slice(),atMove:checkpoint,alive:Array.from(s.alive),tray:s.tray.map(i=>g.faces[i]),before:before.result,after:after.result,allPicturesVisible:true},clock:{tile:entry,fewestMoves:1,spare},scope:'Exact physical choice and strict witness; difficulty and quality require measurement'},ms:Date.now()-begin};
+}
+module.exports={build,placements,PATTERN,SAFE};
