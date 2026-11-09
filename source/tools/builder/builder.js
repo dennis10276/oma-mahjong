@@ -655,6 +655,9 @@ function picturesFor(c, roles, P, hold, brief, rng, N, cap, spare, variants, not
 }
 
 function build(briefIn, opts = {}) {
+  if (opts.mode === 'rowChoice' || briefIn?.mode === 'rowChoice') {
+    return require('./row_choice.js').build(briefIn, opts);
+  }
   if (opts.mode === 'dependencyChoice' || briefIn?.mode === 'dependencyChoice') {
     return require('./dependency_choice.js').build(briefIn, opts);
   }

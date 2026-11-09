@@ -27,7 +27,14 @@ function main(){
  const a={};for(let i=2;i<process.argv.length;i+=2)a[process.argv[i].slice(2)]=process.argv[i+1];if(!a.out)throw Error('Use heavy.js -- node probe_clock_prelude.js --out directory');
  const root=path.resolve(__dirname,'../../../../..'),owner=JSON.parse(fs.readFileSync(path.join(root,'source/build/heavy.lock/owner.json'),'utf8'));if(owner.pid!==process.ppid)throw Error('Run through heavy.js');
  const diagnosis=JSON.parse(fs.readFileSync(path.join(root,'source/analysis/builder/dependency-choices-v1/diagnostic.json'),'utf8'));
- const source=diagnosis.inputs.find(r=>r.id==='45-w2'),error=diagnosis.rows.find(r=>r.id==='45-w2').profile.attemptProfiles.find(r=>r.firstError).firstError;
+ const original=diagnosis.inputs.find(r=>r.id==='45-w2'),error=diagnosis.rows.find(r=>r.id==='45-w2').profile.attemptProfiles.find(r=>r.firstError).firstError;
+ let source=original;
+ if(a['source-rows']){
+  const row=fs.readFileSync(path.resolve(a['source-rows']),'utf8').trim().split(/\r?\n/).filter(Boolean).map(JSON.parse).find(r=>r.id===a['source-id']);
+  if(!row?.design)throw Error('Missing declared source board');
+  if(GP.digest(row.design.tiles)!==GP.digest(original.design.tiles)||error.before.alive.some((alive,i)=>alive&&row.design.faces[i]!==original.design.faces[i]))throw Error('Source must preserve the protected body geometry and surviving pictures');
+  source={id:row.id,design:row.design,provenance:{file:path.resolve(a['source-rows']),fingerprint:GP.digest(row)}};
+ }
  const c=B.context(source.design.tiles),seen=new Map();let schedule=[];
  const maxKeyMove=Number(a['max-key-move']||20),minKeyMove=Number(a['min-key-move']||8);
  error.prefixTaps.slice(0,maxKeyMove).forEach((tile,step)=>{const face=source.design.faces[tile];if(seen.has(face)){
