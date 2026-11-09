@@ -1,0 +1,14 @@
+{
+  "reviewedCommit": "dad2fe45",
+  "seed": 18427,
+  "runs": 20,
+  "seeds": 2,
+  "maxAttempts": 20,
+  "candidateVersion": "skilled-b1-candidate-v1",
+  "execution": "node source/tools/builder/loop/heavy.js --label b1-review-fresh-seeds -- node source/build/b1-review/fresh-seed.js",
+  "sha256": {
+    "source/analysis/skilled-bot-b1/candidate_controller.js": "5194512c1841668d850f67f491623d05d981517fa140ee12e411baec3a72e096",
+    "source/analysis/skilled-bot-b1/candidate_measure.js": "5e6ba2215f807501e4c0bdf4ad905de20c209065e369325ecad655b906f7826c",
+    "source/tools/sim/refit/human_planner_measure_fast.js": "2d62c08bb08ba4d14f6df79c55e42e23dbd90ea1d9a06756de2cf3630a6cfc3f"
+  }
+}

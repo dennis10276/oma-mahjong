@@ -1,0 +1,1450 @@
+[
+  {
+    "name": "G9",
+    "seed": 18427,
+    "runs": 20,
+    "seeds": 2,
+    "maxAttempts": 20,
+    "faceDown": 0,
+    "baseline": {
+      "S": 10.15,
+      "styles": {
+        "route": 10.28,
+        "plain": 10.15
+      },
+      "pooledFirst": 0,
+      "pooledUncleared": 14,
+      "campaigns": 40,
+      "valid": true,
+      "resultsBySeed": [
+        [
+          {
+            "wonOn": 5,
+            "tries": 5
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 6,
+            "tries": 6
+          },
+          {
+            "wonOn": null,
+            "tries": 20
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 5,
+            "tries": 5
+          },
+          {
+            "wonOn": 10,
+            "tries": 10
+          },
+          {
+            "wonOn": null,
+            "tries": 20
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": null,
+            "tries": 20
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": null,
+            "tries": 20
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 6,
+            "tries": 6
+          },
+          {
+            "wonOn": null,
+            "tries": 20
+          }
+        ],
+        [
+          {
+            "wonOn": null,
+            "tries": 20
+          },
+          {
+            "wonOn": null,
+            "tries": 20
+          },
+          {
+            "wonOn": 6,
+            "tries": 6
+          },
+          {
+            "wonOn": 5,
+            "tries": 5
+          },
+          {
+            "wonOn": null,
+            "tries": 20
+          },
+          {
+            "wonOn": null,
+            "tries": 20
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 7,
+            "tries": 7
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": null,
+            "tries": 20
+          },
+          {
+            "wonOn": 7,
+            "tries": 7
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": null,
+            "tries": 20
+          },
+          {
+            "wonOn": 5,
+            "tries": 5
+          },
+          {
+            "wonOn": null,
+            "tries": 20
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": null,
+            "tries": 20
+          },
+          {
+            "wonOn": null,
+            "tries": 20
+          },
+          {
+            "wonOn": 6,
+            "tries": 6
+          }
+        ]
+      ]
+    },
+    "candidate": {
+      "S": 1.05,
+      "styles": {
+        "route": 1.05,
+        "plain": 1.07
+      },
+      "pooledFirst": 38,
+      "pooledUncleared": 0,
+      "campaigns": 40,
+      "valid": true,
+      "resultsBySeed": [
+        [
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          }
+        ],
+        [
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "name": "factory2-184",
+    "seed": 18427,
+    "runs": 20,
+    "seeds": 2,
+    "maxAttempts": 20,
+    "faceDown": 34,
+    "baseline": {
+      "S": 3.8,
+      "styles": {
+        "route": 3.85,
+        "plain": 3.8
+      },
+      "pooledFirst": 4,
+      "pooledUncleared": 0,
+      "campaigns": 40,
+      "valid": true,
+      "resultsBySeed": [
+        [
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 10,
+            "tries": 10
+          },
+          {
+            "wonOn": 8,
+            "tries": 8
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 8,
+            "tries": 8
+          },
+          {
+            "wonOn": 7,
+            "tries": 7
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 5,
+            "tries": 5
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 5,
+            "tries": 5
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          }
+        ],
+        [
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 9,
+            "tries": 9
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 7,
+            "tries": 7
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 9,
+            "tries": 9
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          }
+        ]
+      ]
+    },
+    "candidate": {
+      "S": 4.03,
+      "styles": {
+        "route": 4.03,
+        "plain": 4.03
+      },
+      "pooledFirst": 2,
+      "pooledUncleared": 0,
+      "campaigns": 40,
+      "valid": true,
+      "resultsBySeed": [
+        [
+          {
+            "wonOn": 6,
+            "tries": 6
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 7,
+            "tries": 7
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 7,
+            "tries": 7
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 6,
+            "tries": 6
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 5,
+            "tries": 5
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 6,
+            "tries": 6
+          },
+          {
+            "wonOn": 6,
+            "tries": 6
+          },
+          {
+            "wonOn": 6,
+            "tries": 6
+          }
+        ],
+        [
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 9,
+            "tries": 9
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 8,
+            "tries": 8
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 9,
+            "tries": 9
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 5,
+            "tries": 5
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 8,
+            "tries": 8
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 1,
+            "tries": 1
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "name": "qualified-201",
+    "seed": 18427,
+    "runs": 20,
+    "seeds": 2,
+    "maxAttempts": 20,
+    "faceDown": 20,
+    "baseline": {
+      "S": 5.92,
+      "styles": {
+        "route": 5.92,
+        "plain": 6.05
+      },
+      "pooledFirst": 0,
+      "pooledUncleared": 1,
+      "campaigns": 40,
+      "valid": true,
+      "resultsBySeed": [
+        [
+          {
+            "wonOn": 13,
+            "tries": 13
+          },
+          {
+            "wonOn": 7,
+            "tries": 7
+          },
+          {
+            "wonOn": 9,
+            "tries": 9
+          },
+          {
+            "wonOn": 5,
+            "tries": 5
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 6,
+            "tries": 6
+          },
+          {
+            "wonOn": 5,
+            "tries": 5
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 7,
+            "tries": 7
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 5,
+            "tries": 5
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": null,
+            "tries": 20
+          },
+          {
+            "wonOn": 14,
+            "tries": 14
+          },
+          {
+            "wonOn": 5,
+            "tries": 5
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 9,
+            "tries": 9
+          }
+        ],
+        [
+          {
+            "wonOn": 12,
+            "tries": 12
+          },
+          {
+            "wonOn": 6,
+            "tries": 6
+          },
+          {
+            "wonOn": 7,
+            "tries": 7
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 7,
+            "tries": 7
+          },
+          {
+            "wonOn": 10,
+            "tries": 10
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 6,
+            "tries": 6
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 8,
+            "tries": 8
+          },
+          {
+            "wonOn": 12,
+            "tries": 12
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          }
+        ]
+      ]
+    },
+    "candidate": {
+      "S": 6.3,
+      "styles": {
+        "route": 6.95,
+        "plain": 6.3
+      },
+      "pooledFirst": 0,
+      "pooledUncleared": 2,
+      "campaigns": 40,
+      "valid": true,
+      "resultsBySeed": [
+        [
+          {
+            "wonOn": 7,
+            "tries": 7
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 6,
+            "tries": 6
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 5,
+            "tries": 5
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 17,
+            "tries": 17
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 5,
+            "tries": 5
+          },
+          {
+            "wonOn": 18,
+            "tries": 18
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 7,
+            "tries": 7
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": null,
+            "tries": 20
+          },
+          {
+            "wonOn": 5,
+            "tries": 5
+          }
+        ],
+        [
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 11,
+            "tries": 11
+          },
+          {
+            "wonOn": 19,
+            "tries": 19
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 9,
+            "tries": 9
+          },
+          {
+            "wonOn": 18,
+            "tries": 18
+          },
+          {
+            "wonOn": 6,
+            "tries": 6
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 5,
+            "tries": 5
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 8,
+            "tries": 8
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 6,
+            "tries": 6
+          },
+          {
+            "wonOn": null,
+            "tries": 20
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "name": "qualified-223",
+    "seed": 18427,
+    "runs": 20,
+    "seeds": 2,
+    "maxAttempts": 20,
+    "faceDown": 30,
+    "baseline": {
+      "S": 5.42,
+      "styles": {
+        "route": 17.45,
+        "plain": 5.42
+      },
+      "pooledFirst": 0,
+      "pooledUncleared": 3,
+      "campaigns": 40,
+      "valid": true,
+      "resultsBySeed": [
+        [
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 16,
+            "tries": 16
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": null,
+            "tries": 20
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": null,
+            "tries": 20
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 5,
+            "tries": 5
+          },
+          {
+            "wonOn": 16,
+            "tries": 16
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 6,
+            "tries": 6
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          }
+        ],
+        [
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 12,
+            "tries": 12
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": null,
+            "tries": 20
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 12,
+            "tries": 12
+          }
+        ]
+      ]
+    },
+    "candidate": {
+      "S": 3.45,
+      "styles": {
+        "route": 17.4,
+        "plain": 3.45
+      },
+      "pooledFirst": 0,
+      "pooledUncleared": 0,
+      "campaigns": 40,
+      "valid": true,
+      "resultsBySeed": [
+        [
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 20,
+            "tries": 20
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 5,
+            "tries": 5
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          }
+        ],
+        [
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 5,
+            "tries": 5
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 4,
+            "tries": 4
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 5,
+            "tries": 5
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 2,
+            "tries": 2
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          },
+          {
+            "wonOn": 3,
+            "tries": 3
+          }
+        ]
+      ]
+    }
+  }
+]
