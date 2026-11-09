@@ -85,6 +85,7 @@ add new decisions with a date.
 ## How work is done
 - **The level builder is the way levels are made from now on.** The main objective is a robust builder for all
   levels ahead, not one batch (2026-11-07). 200–225 (20 of 26 qualified) is a historical test case; new work starts at 250 (2026-11-08). This continuation does not replace levels below 250.
+- **Experimental rebuild** (2026-11-09): rebuild the construction and difficulty-planning layer in a separate folder, reusing verified physics, pinned bots and useful checks. Treat this phase as an experiment: prioritize a working prototype and small real bot runs, with lightweight validation rather than extensive test infrastructure. The aim remains target-driven construction with a bounded build-rate-repair loop; existing difficulty, quality and release decisions stay unchanged.
 - **Approval:** nothing goes into the game's levels without Dennis's OK, and nothing is released without his
   explicit OK.
 - **Rules for agents:**
