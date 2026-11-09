@@ -12,13 +12,14 @@ function main() {
   const owner=JSON.parse(fs.readFileSync(path.join(ROOT,'source/build/heavy.lock/owner.json'),'utf8'));
   if(owner.pid!==process.ppid) throw Error('Run through heavy.js');
   const out=path.resolve(args.out), file=path.join(out,'rows.jsonl'), mf=path.join(out,'manifest.json');
-  const all=require('../../briefs-v1.json'), ids=(args.briefs||'0,5,10,15,20,35,40,45').split(',').map(Number);
+  const all=args['recipe-file']?JSON.parse(fs.readFileSync(path.resolve(args['recipe-file']),'utf8')):require('../../briefs-v1.json');
+  const ids=(args.briefs||(args['recipe-file']?all.map((_,i)=>i).join(','):'0,5,10,15,20,35,40,45')).split(',').map(Number);
   const widths=(args.widths||'1,2,3').split(',').map(Number), spares=(args.spares||'1,2,3').split(',').map(Number);
   if(ids.some(i=>!all[i])||widths.some(w=>![1,2,3].includes(w))||spares.some(s=>![1,2,3].includes(s))) throw Error('Invalid schedule');
   const profile=GP.loadProfile('e5-v1'), ys=CF.rulerYardstick();
   const schedule=ids.flatMap(index=>widths.map(width=>({id:`${index}-w${width}`, index, width,
-    brief:{...all[index],seed:Number(args.seed||1),mode:'visibleChoice',targets:{...all[index].targets,hiddenOnWay:0,maxDown:0,tailPairWidth:width}}})));
-  const manifest={schema:'tail-plans-v1',schedule,spares,campaigns:80,profile,code:Pipeline.codeFingerprints(),
+    brief:{...all[index],seed:Number(args.seed??all[index].seed??1),mode:'visibleChoice',targets:{...all[index].targets,hiddenOnWay:0,maxDown:0,tailPairWidth:width}}})));
+  const manifest={schema:'tail-plans-v2',schedule,spares,campaigns:80,profile,code:Pipeline.codeFingerprints(),
     runner:GP.digest(fs.readFileSync(__filename,'utf8')),pins:ys.pins,
     note:'Fixed paired construction schedule. No hidden tiles in any arm. CURVE 4711/18427 only; no ACCEPT. Width 1 is G5 adjacent pairing. Results are diagnostics, not finished levels.'};
   fs.mkdirSync(out,{recursive:true});
@@ -51,7 +52,7 @@ function main() {
   const arms=widths.map(width=>{const rr=rows.filter(r=>r.width===width),rated=rr.flatMap(r=>r.ratings).filter(r=>r.valid);return {width,attempted:rr.length,built:rr.filter(r=>r.design).length,staticPass:rr.filter(r=>r.static?.pass).length,
     settings:rated.length,meanD:mean(rated.map(r=>r.D)),meanS:mean(rated.map(r=>r.S)),
     normalBandSettings:rated.filter(r=>r.staticEligible&&r.familyNormalBand&&r.skilledNormalBand).length,cpuS:rr.reduce((s,r)=>s+r.cpuS,0)};});
-  const paired=widths.filter(w=>w!==1).map(width=>{const deltas=[];for(const base of rows.filter(r=>r.width===1)) {const alt=rows.find(r=>r.index===base.index&&r.width===width);if(!alt)continue;for(const b of base.ratings) {const a=alt.ratings.find(a=>a.spare===b.spare);if(b.valid&&a?.valid)deltas.push({index:base.index,spare:b.spare,D:a.D-b.D,S:a.S-b.S});}}return {width,n:deltas.length,meanDeltaD:mean(deltas.map(r=>r.D)),meanDeltaS:mean(deltas.map(r=>r.S)),deltas};});
+  const paired=widths.filter(w=>w!==1).map(width=>{const deltas=[];for(const base of rows.filter(r=>r.width===1)) {const alt=rows.find(r=>r.index===base.index&&r.width===width);if(!alt)continue;const sameRoles=GP.digest(base.design?.obst)===GP.digest(alt.design?.obst)&&base.design?.clock.i===alt.design?.clock.i;for(const b of base.ratings) {const a=alt.ratings.find(a=>a.spare===b.spare);if(b.valid&&a?.valid)deltas.push({index:base.index,spare:b.spare,D:a.D-b.D,S:a.S-b.S,sameRoles,sameAttempt:base.card.attempt===alt.card.attempt});}}return {width,n:deltas.length,meanDeltaD:mean(deltas.map(r=>r.D)),meanDeltaS:mean(deltas.map(r=>r.S)),deltas};});
   const summary={complete:rows.length===schedule.length,planned:schedule.length,arms,paired,note:manifest.note};
   fs.writeFileSync(path.join(out,'summary.json'),JSON.stringify(summary,null,2)+'\n');console.log(JSON.stringify(summary.arms));
 }

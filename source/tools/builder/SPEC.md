@@ -1,5 +1,15 @@
 # Builder v2 — specification (Claude, 2026-11-06)
 
+2026-11-09 experimental construction controls: opt-in `mode: 'visibleChoice'` supports
+`targets.tailPairWidth` 1 (default adjacent pairs), 2 (ABAB), or 3 (ABCABC). The
+early/middle remainder is woven; deliberate interleavings are kept face-up. This
+is a pairing plan, not a monotone difficulty preset. `knobs.clockTile(design,
+tile, spare)` can reframe a frozen matching puzzle, preserving its physical
+content and proving a new minimum/witness. It does not qualify a level. See
+`source/analysis/builder/tail-plans-v1/REPORT.md` for the fixed comparisons and
+remaining lack of reliable joint family/skilled target control. Neither control
+changes defaults, difficulty requirements or the approved level curve.
+
 Dennis (2026-11-06): "We are spending a lot of time making levels in a unique and difficult way when we dont have the
 ground work done of designing levels and what makes them unique and difficult. Focus on making the builder better
 before letting it learn." Plan: the doc "Level builder plan" (phases 1-4). This folder is phases 1 and 2.

@@ -1,0 +1,142 @@
+[
+  {
+    "id": "deepClock-planned-wnull-room2",
+    "why": "Fixed confirmation grid: visible pair weave with clock-route length and tray capacity varied before rating.",
+    "layout": 22,
+    "shape": "ushape",
+    "story": "deepClock",
+    "stage": "edge",
+    "frame": {
+      "spare": 1
+    },
+    "targets": {
+      "trayRoom": 2,
+      "hiddenOnWay": 0,
+      "maxDown": 0
+    },
+    "seed": 1
+  },
+  {
+    "id": "deepClock-planned-wnull-room0",
+    "why": "Fixed confirmation grid: visible pair weave with clock-route length and tray capacity varied before rating.",
+    "layout": 22,
+    "shape": "ushape",
+    "story": "deepClock",
+    "stage": "edge",
+    "frame": {
+      "spare": 1
+    },
+    "targets": {
+      "trayRoom": 0,
+      "hiddenOnWay": 0,
+      "maxDown": 0
+    },
+    "seed": 1
+  },
+  {
+    "id": "deepClock-planned-w10-room2",
+    "why": "Fixed confirmation grid: visible pair weave with clock-route length and tray capacity varied before rating.",
+    "layout": 22,
+    "shape": "ushape",
+    "story": "deepClock",
+    "stage": "edge",
+    "frame": {
+      "spare": 1,
+      "way": 10
+    },
+    "targets": {
+      "trayRoom": 2,
+      "hiddenOnWay": 0,
+      "maxDown": 0
+    },
+    "seed": 1
+  },
+  {
+    "id": "deepClock-planned-w10-room0",
+    "why": "Fixed confirmation grid: visible pair weave with clock-route length and tray capacity varied before rating.",
+    "layout": 22,
+    "shape": "ushape",
+    "story": "deepClock",
+    "stage": "edge",
+    "frame": {
+      "spare": 1,
+      "way": 10
+    },
+    "targets": {
+      "trayRoom": 0,
+      "hiddenOnWay": 0,
+      "maxDown": 0
+    },
+    "seed": 1
+  },
+  {
+    "id": "deepClock-planned-w13-room2",
+    "why": "Fixed confirmation grid: visible pair weave with clock-route length and tray capacity varied before rating.",
+    "layout": 22,
+    "shape": "ushape",
+    "story": "deepClock",
+    "stage": "edge",
+    "frame": {
+      "spare": 1,
+      "way": 13
+    },
+    "targets": {
+      "trayRoom": 2,
+      "hiddenOnWay": 0,
+      "maxDown": 0
+    },
+    "seed": 1
+  },
+  {
+    "id": "deepClock-planned-w13-room0",
+    "why": "Fixed confirmation grid: visible pair weave with clock-route length and tray capacity varied before rating.",
+    "layout": 22,
+    "shape": "ushape",
+    "story": "deepClock",
+    "stage": "edge",
+    "frame": {
+      "spare": 1,
+      "way": 13
+    },
+    "targets": {
+      "trayRoom": 0,
+      "hiddenOnWay": 0,
+      "maxDown": 0
+    },
+    "seed": 1
+  },
+  {
+    "id": "deepClock-replica-room2",
+    "why": "Unseen construction seed 2, declared before rating.",
+    "layout": 22,
+    "shape": "ushape",
+    "story": "deepClock",
+    "stage": "edge",
+    "frame": {
+      "spare": 1
+    },
+    "targets": {
+      "trayRoom": 2,
+      "hiddenOnWay": 0,
+      "maxDown": 0
+    },
+    "seed": 2
+  },
+  {
+    "id": "deepClock-replica-room0",
+    "why": "Unseen construction seed 2, declared before rating.",
+    "layout": 22,
+    "shape": "ushape",
+    "story": "deepClock",
+    "stage": "edge",
+    "frame": {
+      "spare": 1
+    },
+    "targets": {
+      "trayRoom": 0,
+      "hiddenOnWay": 0,
+      "maxDown": 0
+    },
+    "seed": 2
+  }
+]
