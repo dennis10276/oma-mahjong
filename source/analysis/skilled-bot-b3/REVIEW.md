@@ -1,5 +1,8 @@
 # B3 adoption review, 2026-11-10
 
+Historical review of `7cf39383`. For the subsequently delivered `faa0295c`, see
+[the updated assessment](REVIEW-faa0295c.md); the main blocker below is now fixed.
+
 **Not ready for sole autonomous rejection authority.** This agrees with B3's
 own verdict. Reviewed commit `7cf39383`. B3 remains experimental; no adoption,
 code or pin change was made during this review.

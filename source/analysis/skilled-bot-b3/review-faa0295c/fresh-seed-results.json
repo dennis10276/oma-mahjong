@@ -1,0 +1,1522 @@
+[
+  {
+    "id": "human-reserved-blind1-185",
+    "boardHash": "22ca66f6ba4a1c82c077b902e5c728b61c3a47b12d0b4315d1c728a397719628",
+    "seed": 424243,
+    "runs": 20,
+    "seeds": 2,
+    "maxAttempts": 20,
+    "S": 5.2,
+    "styles": {
+      "route": 10.6,
+      "plain": 5.2
+    },
+    "firstWins": 0,
+    "uncleared": 0,
+    "total": 40,
+    "valid": true,
+    "byStyle": {
+      "route": [
+        {
+          "seed": 424243,
+          "firstTryWins": 0,
+          "cleared": 19,
+          "uncleared": 1,
+          "runs": [
+            {
+              "wonOn": 11,
+              "tries": 11
+            },
+            {
+              "wonOn": 11,
+              "tries": 11
+            },
+            {
+              "wonOn": 11,
+              "tries": 11
+            },
+            {
+              "wonOn": 10,
+              "tries": 10
+            },
+            {
+              "wonOn": 9,
+              "tries": 9
+            },
+            {
+              "wonOn": 11,
+              "tries": 11
+            },
+            {
+              "wonOn": 11,
+              "tries": 11
+            },
+            {
+              "wonOn": 10,
+              "tries": 10
+            },
+            {
+              "wonOn": 10,
+              "tries": 10
+            },
+            {
+              "wonOn": 10,
+              "tries": 10
+            },
+            {
+              "wonOn": 11,
+              "tries": 11
+            },
+            {
+              "wonOn": 11,
+              "tries": 11
+            },
+            {
+              "wonOn": 11,
+              "tries": 11
+            },
+            {
+              "wonOn": 9,
+              "tries": 9
+            },
+            {
+              "wonOn": 12,
+              "tries": 12
+            },
+            {
+              "wonOn": 8,
+              "tries": 8
+            },
+            {
+              "wonOn": 10,
+              "tries": 10
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": 12,
+              "tries": 12
+            },
+            {
+              "wonOn": 12,
+              "tries": 12
+            }
+          ]
+        },
+        {
+          "seed": 432162,
+          "firstTryWins": 0,
+          "cleared": 19,
+          "uncleared": 1,
+          "runs": [
+            {
+              "wonOn": 5,
+              "tries": 5
+            },
+            {
+              "wonOn": 14,
+              "tries": 14
+            },
+            {
+              "wonOn": 11,
+              "tries": 11
+            },
+            {
+              "wonOn": 11,
+              "tries": 11
+            },
+            {
+              "wonOn": 11,
+              "tries": 11
+            },
+            {
+              "wonOn": 11,
+              "tries": 11
+            },
+            {
+              "wonOn": 11,
+              "tries": 11
+            },
+            {
+              "wonOn": 10,
+              "tries": 10
+            },
+            {
+              "wonOn": 6,
+              "tries": 6
+            },
+            {
+              "wonOn": 10,
+              "tries": 10
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": 10,
+              "tries": 10
+            },
+            {
+              "wonOn": 12,
+              "tries": 12
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 12,
+              "tries": 12
+            },
+            {
+              "wonOn": 10,
+              "tries": 10
+            },
+            {
+              "wonOn": 10,
+              "tries": 10
+            },
+            {
+              "wonOn": 11,
+              "tries": 11
+            },
+            {
+              "wonOn": 11,
+              "tries": 11
+            },
+            {
+              "wonOn": 6,
+              "tries": 6
+            }
+          ]
+        }
+      ],
+      "plain": [
+        {
+          "seed": 424243,
+          "firstTryWins": 0,
+          "cleared": 20,
+          "uncleared": 0,
+          "runs": [
+            {
+              "wonOn": 5,
+              "tries": 5
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 4,
+              "tries": 4
+            },
+            {
+              "wonOn": 7,
+              "tries": 7
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 10,
+              "tries": 10
+            },
+            {
+              "wonOn": 5,
+              "tries": 5
+            },
+            {
+              "wonOn": 4,
+              "tries": 4
+            },
+            {
+              "wonOn": 7,
+              "tries": 7
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 4,
+              "tries": 4
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 4,
+              "tries": 4
+            },
+            {
+              "wonOn": 11,
+              "tries": 11
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 17,
+              "tries": 17
+            }
+          ]
+        },
+        {
+          "seed": 432162,
+          "firstTryWins": 0,
+          "cleared": 20,
+          "uncleared": 0,
+          "runs": [
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 11,
+              "tries": 11
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 6,
+              "tries": 6
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 13,
+              "tries": 13
+            },
+            {
+              "wonOn": 20,
+              "tries": 20
+            },
+            {
+              "wonOn": 19,
+              "tries": 19
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 8,
+              "tries": 8
+            }
+          ]
+        }
+      ]
+    },
+    "timing": {
+      "routeMinutes": 0.09643428999999999,
+      "plainMinutes": 0.125839005,
+      "totalMinutes": 0.2223985566666667
+    }
+  },
+  {
+    "id": "builder-qualified-223",
+    "boardHash": "ae124c834da62a09647f3a9fb8e0ca9f0b99617f29147636a301ebfcb5cdf156",
+    "seed": 424243,
+    "runs": 20,
+    "seeds": 2,
+    "maxAttempts": 20,
+    "S": 4.8,
+    "styles": {
+      "route": 4.8,
+      "plain": 17.73
+    },
+    "firstWins": 0,
+    "uncleared": 0,
+    "total": 40,
+    "valid": true,
+    "byStyle": {
+      "route": [
+        {
+          "seed": 424243,
+          "firstTryWins": 0,
+          "cleared": 20,
+          "uncleared": 0,
+          "runs": [
+            {
+              "wonOn": 5,
+              "tries": 5
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 6,
+              "tries": 6
+            },
+            {
+              "wonOn": 4,
+              "tries": 4
+            },
+            {
+              "wonOn": 4,
+              "tries": 4
+            },
+            {
+              "wonOn": 5,
+              "tries": 5
+            },
+            {
+              "wonOn": 5,
+              "tries": 5
+            },
+            {
+              "wonOn": 4,
+              "tries": 4
+            },
+            {
+              "wonOn": 5,
+              "tries": 5
+            },
+            {
+              "wonOn": 9,
+              "tries": 9
+            },
+            {
+              "wonOn": 8,
+              "tries": 8
+            },
+            {
+              "wonOn": 7,
+              "tries": 7
+            },
+            {
+              "wonOn": 5,
+              "tries": 5
+            },
+            {
+              "wonOn": 4,
+              "tries": 4
+            },
+            {
+              "wonOn": 5,
+              "tries": 5
+            },
+            {
+              "wonOn": 5,
+              "tries": 5
+            },
+            {
+              "wonOn": 7,
+              "tries": 7
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 4,
+              "tries": 4
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            }
+          ]
+        },
+        {
+          "seed": 432162,
+          "firstTryWins": 0,
+          "cleared": 20,
+          "uncleared": 0,
+          "runs": [
+            {
+              "wonOn": 5,
+              "tries": 5
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 4,
+              "tries": 4
+            },
+            {
+              "wonOn": 8,
+              "tries": 8
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 6,
+              "tries": 6
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 5,
+              "tries": 5
+            },
+            {
+              "wonOn": 5,
+              "tries": 5
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 5,
+              "tries": 5
+            },
+            {
+              "wonOn": 4,
+              "tries": 4
+            },
+            {
+              "wonOn": 4,
+              "tries": 4
+            },
+            {
+              "wonOn": 4,
+              "tries": 4
+            },
+            {
+              "wonOn": 4,
+              "tries": 4
+            },
+            {
+              "wonOn": 6,
+              "tries": 6
+            },
+            {
+              "wonOn": 8,
+              "tries": 8
+            },
+            {
+              "wonOn": 4,
+              "tries": 4
+            },
+            {
+              "wonOn": 6,
+              "tries": 6
+            },
+            {
+              "wonOn": 4,
+              "tries": 4
+            }
+          ]
+        }
+      ],
+      "plain": [
+        {
+          "seed": 424243,
+          "firstTryWins": 0,
+          "cleared": 4,
+          "uncleared": 16,
+          "runs": [
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 20,
+              "tries": 20
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": 5,
+              "tries": 5
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": 6,
+              "tries": 6
+            }
+          ]
+        },
+        {
+          "seed": 432162,
+          "firstTryWins": 0,
+          "cleared": 4,
+          "uncleared": 16,
+          "runs": [
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": 4,
+              "tries": 4
+            },
+            {
+              "wonOn": 17,
+              "tries": 17
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": 12,
+              "tries": 12
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": null,
+              "tries": 20
+            }
+          ]
+        }
+      ]
+    },
+    "timing": {
+      "routeMinutes": 0.16941110166666667,
+      "plainMinutes": 0.5319393066666668,
+      "totalMinutes": 0.7013837083333333
+    }
+  },
+  {
+    "id": "human-dev-factory1-189",
+    "boardHash": "e56e70699a38c8a84269ef2a516f0ce8bb694a9bc409b83981664a93faab5253",
+    "seed": 424243,
+    "runs": 20,
+    "seeds": 2,
+    "maxAttempts": 20,
+    "S": 1.73,
+    "styles": {
+      "route": 1.73,
+      "plain": 1.93
+    },
+    "firstWins": 23,
+    "uncleared": 0,
+    "total": 40,
+    "valid": true,
+    "byStyle": {
+      "route": [
+        {
+          "seed": 424243,
+          "firstTryWins": 13,
+          "cleared": 20,
+          "uncleared": 0,
+          "runs": [
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 4,
+              "tries": 4
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 5,
+              "tries": 5
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            }
+          ]
+        },
+        {
+          "seed": 432162,
+          "firstTryWins": 10,
+          "cleared": 20,
+          "uncleared": 0,
+          "runs": [
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            }
+          ]
+        }
+      ],
+      "plain": [
+        {
+          "seed": 424243,
+          "firstTryWins": 9,
+          "cleared": 20,
+          "uncleared": 0,
+          "runs": [
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 6,
+              "tries": 6
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            }
+          ]
+        },
+        {
+          "seed": 432162,
+          "firstTryWins": 9,
+          "cleared": 20,
+          "uncleared": 0,
+          "runs": [
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 5,
+              "tries": 5
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            }
+          ]
+        }
+      ]
+    },
+    "timing": {
+      "routeMinutes": 0.09951442,
+      "plainMinutes": 0.1060773733333334,
+      "totalMinutes": 0.2056277399999999
+    }
+  },
+  {
+    "id": "human-dev-factory3-176",
+    "boardHash": "ceca376ae4fd50164fe1b9c9549e139253bc278951b72acca9a97a7862799571",
+    "seed": 424243,
+    "runs": 20,
+    "seeds": 2,
+    "maxAttempts": 20,
+    "S": 1.45,
+    "styles": {
+      "route": 1.5,
+      "plain": 1.45
+    },
+    "firstWins": 23,
+    "uncleared": 0,
+    "total": 40,
+    "valid": true,
+    "byStyle": {
+      "route": [
+        {
+          "seed": 424243,
+          "firstTryWins": 9,
+          "cleared": 20,
+          "uncleared": 0,
+          "runs": [
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            }
+          ]
+        },
+        {
+          "seed": 432162,
+          "firstTryWins": 14,
+          "cleared": 20,
+          "uncleared": 0,
+          "runs": [
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            }
+          ]
+        }
+      ],
+      "plain": [
+        {
+          "seed": 424243,
+          "firstTryWins": 11,
+          "cleared": 20,
+          "uncleared": 0,
+          "runs": [
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            }
+          ]
+        },
+        {
+          "seed": 432162,
+          "firstTryWins": 12,
+          "cleared": 20,
+          "uncleared": 0,
+          "runs": [
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 3,
+              "tries": 3
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 2,
+              "tries": 2
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            },
+            {
+              "wonOn": 1,
+              "tries": 1
+            }
+          ]
+        }
+      ]
+    },
+    "timing": {
+      "routeMinutes": 0.06316530999999984,
+      "plainMinutes": 0.05545136666666682,
+      "totalMinutes": 0.11865490333333316
+    }
+  }
+]

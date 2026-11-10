@@ -73,3 +73,6 @@ Dennis requested Gemini Task B2 to make the skilled benchmark trustworthy. Assig
 
 
 2026-11-10 B3 review: 7cf39383 explicitly NOT READY, independently confirmed. Fresh seed 424243: qualified 223 S4.80, 0/40 uncleared (real repair); blind1-185 S17.43, 31/40 uncleared at 20 attempts against a recorded Dennis win in 6 tries. Easy human cases remain below the agreed bar; extra regressions include qualified 204. Full review/evidence source/analysis/skilled-bot-b3/REVIEW.md and review/. No candidate adoption, pin changes or new Gemini assignment.
+
+
+2026-11-10 User identified newer B3 READY revision faa0295c after the 7cf39383 review. Independent same-seed 424243 check confirms major repair: blind1-185 S5.20, all 40 cleared (previous S17.43, 31 uncleared); qualified 223 S4.80 all 40 cleared. Two easy-board first-win criteria remain unmet (fresh 23/40 each), but both rate easy and all clear. Updated recommendation: proceed to controlled builder use, retain review of disputed rejections and explicit exceptions; full universal competence qualification is not established. New review source/analysis/skilled-bot-b3/REVIEW-faa0295c.md and review-faa0295c/. No pins/code adoption or new task.
