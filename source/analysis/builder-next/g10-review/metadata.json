@@ -1,0 +1,23 @@
+{
+  "reviewedCommit": "f3f395ef",
+  "reviewDate": "2026-11-10",
+  "claimedHits": 7,
+  "claimedHitsSatisfyingCriteria": 0,
+  "request": {
+    "target": 10,
+    "layout": 22,
+    "seed": 1
+  },
+  "budget": {
+    "maxCandidates": 6,
+    "wallMs": 180000,
+    "campaigns": 80
+  },
+  "freshMeterCache": "source/build/g10-review/meter-cache",
+  "sha256": {
+    "source/tools/builder-next/components.js": "eca82bf07fcb57f61e685f6258dae3b091fe5c10b18705efcb0ba82502d2dab7",
+    "source/tools/builder-next/planner.js": "7d6fa1ba35fe851e4823cf2f9b47bd1d877019c72d12ace6c318e1fecbf4eb30",
+    "source/tools/builder-next/recipes.js": "e6caab6a322f5b14e4262fb048f1cbdd957cd826dd8cbd0319e62f922abbe72b",
+    "source/analysis/builder-next/experiments.jsonl": "2667a3ef26366b65d1d30c5ac26adfead27a9d76232dfd279f87c1874ec2b525"
+  }
+}
