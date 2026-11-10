@@ -1,0 +1,52 @@
+{
+  "date": "2026-11-10",
+  "leadBeforeWork": "ad55adf3",
+  "skilledSourceCommit": "faa0295c",
+  "componentSourceCommit": "f7f6638b",
+  "contextKey": "d490c4d7f19a8196d7beb1c95ebe8b2bee092d6ceb3e687e39adc4e72a02ac7f",
+  "context": {
+    "family": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+    "skilled": "93ed5c9c9419bf4146c0b965d7bedfa18248ff16609967b945d1767faea0ed4f",
+    "familySettings": {
+      "use": "every spare of a puzzle, paired (same seeds at every spare)",
+      "campaigns": 80,
+      "calls": [
+        {
+          "runs": 20,
+          "seeds": 2,
+          "seed": 4711
+        },
+        {
+          "runs": 20,
+          "seeds": 2,
+          "seed": 18427
+        }
+      ],
+      "cacheAlternatives": [
+        {
+          "capture": "tail"
+        }
+      ],
+      "pooling": "Production pooling (batch_evaluate.js rate mode, empirical_confirm.js, task11_rerate.js): two meter calls {setting:'family', runs:20, seeds:2} at seed 4711 and seed 18427, 40 campaigns each, pooled = (exp4711 + exp18427) / 2. Production rated the reference bot's 4711 call with capture:'tail' (part of the cache key, not of the rating); Codex rated key memory without capture. The yardstick looks up both cache variants before measuring.",
+      "visibleCampaigns": "The meter returns per-campaign results only for the first sub-block of each call (the first 20 of 40). SEs are estimated from those 40 of 80 campaigns (sample SD / sqrt(80)); D itself uses all 80 (mean of the two calls' expectedTries)."
+    },
+    "skilledSettings": {
+      "setting": "planner",
+      "runs": 20,
+      "seeds": 2,
+      "seed": 4711
+    },
+    "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2",
+    "source": "ab54a7f2f7728fb746cec566de818ad6512fc6bdde9236788bf402c4b28f068e"
+  },
+  "requests": 4,
+  "proposalTrials": 16,
+  "ratedBoards": 12,
+  "hits": 0,
+  "totalWallMs": 82219,
+  "totalCpuS": 86.484,
+  "sha256": {
+    "results.json": "f55eb97fb579eac38be67e5778b02537240798b60c5b2fce0b8f2bb604bbc039",
+    "knowledge.json": "0e7690c2490a14baa9125ad0f8ea0f839301bba710f8dc2d451a439387c84125"
+  }
+}
