@@ -58,7 +58,25 @@ function analyzeTileTopography(design) {
  */
 function composeCandidate(baseDesign, recipe, options = {}) {
   const spare = recipe.spare ?? 1;
-  const proofOpts = recipe.lockTile != null ? { lockTile: recipe.lockTile } : {};
+
+  if (recipe.design) {
+    const d = JSON.parse(JSON.stringify(recipe.design));
+    const k = recipe.clockK ?? (d.clock.n - (recipe.priorSpare ?? recipe.spare ?? 1));
+    if (recipe.spare != null) {
+      d.clock.n = k + recipe.spare;
+    }
+    return {
+      ok: true,
+      design: d,
+      proof: { minimum: k, spare, changed: ['clock.n'] },
+      k,
+      clockN: d.clock.n,
+      spare,
+      recipe
+    };
+  }
+
+  const proofOpts = { ...(recipe.lockTile != null ? { lockTile: recipe.lockTile } : {}), ...options };
 
   let built;
   // Check if ice is a multi-tile ice map { tile1: h1, tile2: h2 }
@@ -123,6 +141,30 @@ function composeCandidate(baseDesign, recipe, options = {}) {
   }
 
   const d = built.design;
+
+  // Place controlled face-down tiles if requested (Dennis's rule: background only or at most 1 on route)
+  const downCount = recipe.downCount ?? (recipe.maxDown ? Math.round(recipe.maxDown * d.tiles.length) : 0);
+  if (downCount > 0 && (!d.down || d.down.length === 0)) {
+    const g = E.game(d);
+    const special = new Set([d.clock?.i, ...(d.obst?.keys || []), ...(d.obst?.locks || []), ...Object.keys(d.obst?.ice || {}).map(Number)]);
+    const clockIdx = d.solution ? d.solution.indexOf(d.clock?.i) : -1;
+    const route = new Set(clockIdx >= 0 ? d.solution.slice(0, clockIdx + 1) : []);
+    const down = [];
+    const hiddenOnWay = Math.min(1, recipe.hiddenOnWay ?? 0);
+    if (hiddenOnWay > 0 && d.solution) {
+      const routeCands = d.solution.filter(i => route.has(i) && !special.has(i) && g.nb.above[i].length > 0 && i !== d.clock?.i);
+      if (routeCands.length > 0) down.push(routeCands[0]);
+    }
+    const bg = [];
+    for (let i = 0; i < d.tiles.length; i++) {
+      if (!special.has(i) && !route.has(i) && g.nb.above[i].length > 0 && !down.includes(i)) bg.push(i);
+    }
+    for (const t of bg) {
+      if (down.length >= downCount) break;
+      down.push(t);
+    }
+    d.down = down;
+  }
 
   // Verify readability
   const isReadable = PS.readable(d);

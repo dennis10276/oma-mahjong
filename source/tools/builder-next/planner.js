@@ -3,7 +3,15 @@ const M = require('../factory/meter.js');
 const { HISTORICAL_RECIPES } = require('./recipes.js');
 
 function structure(recipe) {
-  return { keys: recipe.keys ?? null, ice: recipe.ice ?? null, lockTile: recipe.lockTile ?? null };
+  return {
+    keys: recipe.keys ?? null,
+    ice: recipe.ice ?? null,
+    lockTile: recipe.lockTile ?? null,
+    downCount: recipe.downCount ?? null,
+    baseId: recipe.id ? recipe.id.replace(/-spare\d+$/, '') : null,
+    design: recipe.design ?? null,
+    clockK: recipe.clockK ?? null
+  };
 }
 const structureKey = r => M.digest(structure(r));
 const recipeKey = r => M.digest({ ...structure(r), spare: r.spare });
