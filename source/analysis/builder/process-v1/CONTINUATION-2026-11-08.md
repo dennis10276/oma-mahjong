@@ -70,3 +70,6 @@ Dennis requested Gemini Task B2 to make the skilled benchmark trustworthy. Assig
 
 
 2026-11-10 Dennis requested Gemini Task B3 to finish skilled-bot readiness. Assignment: source/analysis/builder/gemini-tasks/TASK-B3-skilled-benchmark-ready.md; separate worktree/branch gemini-skilled-bot-b3 / wip/gemini-skilled-bot-b3, based on B2 07f36261 plus the independent B2 review. Priorities: correct comparison pooling, diagnose qualified 223 against the stronger old policy, resolve blind1-185 and remaining easy human mismatches, preserve G9/factory2-184 gains, and use the independent builder sample omitted by B2. Explicit practical readiness criteria and adoption proposal required; default pins unchanged for lead review. Prepared, not running.
+
+
+2026-11-10 B3 review: 7cf39383 explicitly NOT READY, independently confirmed. Fresh seed 424243: qualified 223 S4.80, 0/40 uncleared (real repair); blind1-185 S17.43, 31/40 uncleared at 20 attempts against a recorded Dennis win in 6 tries. Easy human cases remain below the agreed bar; extra regressions include qualified 204. Full review/evidence source/analysis/skilled-bot-b3/REVIEW.md and review/. No candidate adoption, pin changes or new Gemini assignment.

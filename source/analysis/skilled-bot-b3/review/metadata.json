@@ -1,0 +1,13 @@
+{
+  "reviewedCommit": "7cf39383",
+  "reviewDate": "2026-11-10",
+  "seed": 424243,
+  "runs": 20,
+  "seeds": 2,
+  "maxAttempts": 20,
+  "sha256": {
+    "candidate_controller.js": "3a6a2c144e9b69bff50704c6fa53d4961f64e2d9511151a1f84cc9115849852f",
+    "candidate_measure.js": "a270a693b618eff051813e955e756a99a68e16c74806dc9399ad56a88794bdbd",
+    "results/b3_benchmark_results.json": "28601bf20df49f5f7f4b2bc631c17c68ebbdc468d82bcd3c763d1bac9ca05201"
+  }
+}
