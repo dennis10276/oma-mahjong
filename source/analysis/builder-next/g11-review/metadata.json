@@ -1,0 +1,33 @@
+{
+  "reviewedCommit": "f2147271",
+  "date": "2026-11-10",
+  "requests": [
+    {
+      "target": 13,
+      "layout": 6,
+      "seed": 4,
+      "skilledBand": [
+        2.5,
+        6
+      ]
+    },
+    {
+      "target": 13,
+      "layout": 6,
+      "seed": 5,
+      "skilledBand": [
+        2.5,
+        6
+      ]
+    }
+  ],
+  "budget": {
+    "maxCandidates": 6,
+    "wallMs": 120000,
+    "campaigns": 80
+  },
+  "freshMeterCache": true,
+  "sha256": {
+    "results.json": "2afe1b312c2d5ef8f3f192a9e33962739d87a5d66369662b595bc28ae0e9cecf"
+  }
+}
