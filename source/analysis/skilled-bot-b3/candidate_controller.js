@@ -263,7 +263,8 @@ function createCandidatePlannerController(tiles, profile, seed) {
     if (phase !== null && tookEarlyClockThisAttempt) earlyClockLosses++;
     if (p.retryLockedCarryKeys && ['beforeClock', 'mid', 'late'].includes(phase) && Array.isArray(terminalTray)) {
       for (const face of terminalTray) {
-        const partner = memory.findIndex((f, i) => f === face && state.alive[i] && roles[i] === 'lock');
+        const boardHasLocks = roles.some(r => r === 'lock');
+        const partner = memory.findIndex((f, i) => f === face && state.alive[i] && (roles[i] === 'lock' || boardHasLocks || i === (initialClock ? initialClock.i : -1)));
         if (partner >= 0 && !learnedLockedCarry.has(face)) {
           learnedLockedCarry.set(face, {
             face, partner, attempt, physicalTaps: state.physicalTaps,
@@ -292,7 +293,7 @@ function createCandidatePlannerController(tiles, profile, seed) {
         const addedFace = s.tray.at(-1);
         if (initialClock && lastDecision.index === initialClock.i) {
           initialClock.face = addedFace;
-          if (initialClock.n >= 14 && (initialClock.n - lastDecision.moves) >= 8) {
+          if ((initialClock.n - lastDecision.moves) >= 4) {
             tookEarlyClockThisAttempt = true;
           }
         }
@@ -1637,7 +1638,7 @@ function createCandidatePlannerController(tiles, profile, seed) {
             score -= (tray.length >= 2 ? 60 : 30);
           }
           const prevFail = failedDigs.get(i) ?? 0;
-          if (prevFail > 0 && tray.length >= 1 && (!clock || ownGoal === 0)) {
+          if (prevFail > 0 && tray.length >= 1 && (!clock || clockSlack >= 2 || ownGoal === 0)) {
             score -= prevFail * 28;
           }
         }
@@ -1726,8 +1727,8 @@ function createCandidatePlannerController(tiles, profile, seed) {
           if (i === clock.i) score += p.pairReward * 2.6;
           else if (trayMatch && fInt === memInt[clock.i]) score -= p.pairReward * 2.6;
         }
-        if (clock && clock.n >= 14 && i === clock.i && !trayMatch && clock.remaining >= 5) {
-          if (earlyClockLosses > 0 && random() < Math.min(0.85, earlyClockLosses * 0.45)) score -= p.clockWeight * 1.5;
+        if (clock && i === clock.i && !trayMatch && !openTwin && clock.remaining >= 4) {
+          if (earlyClockLosses > 0) score -= (p.clockWeight * 3 + earlyClockLosses * 50);
           else if (tray.length >= 2) score -= p.clockWeight * 1.1;
         }
         if (clock && (i === clock.i || (openTwin && openPeek === clock.i))) score += p.clockCompletionBonus ?? 0;
@@ -1777,7 +1778,7 @@ function createCandidatePlannerController(tiles, profile, seed) {
             if (!ok) score -= p.lookPenalty;
           }
         }
-        if (routeNext !== null && i === routeNext) score += p.routePlan;
+        if (routeNext !== null && i === routeNext && (tray.length < 3 || trayMatch)) score += p.routePlan;
         if (p.clockFirst && clock && offClock && tray.length < 3 && clockSlack <= (p.clockFirstSlack ?? 1) && (trayMatch || openTwin || hasTwin)) score -= p.clockFirst;
         if (p.pairFirst && !clock && hasTwin && !trayMatch && !openTwin && !anyTrayMatch) score += p.pairFirst;
         if (p.spotPenalty && !clock && tray.length >= 2 && !trayMatch && !openTwin && !(peek && fInt === NO_PIC)) score -= p.spotPenalty;

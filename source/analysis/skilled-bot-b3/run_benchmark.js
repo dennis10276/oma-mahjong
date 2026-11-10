@@ -112,6 +112,23 @@ async function main() {
       console.warn('Could not load B2 prior results:', e.message);
     }
   }
+  if (fs.existsSync(OUT_FILE)) {
+    try {
+      const priorB3 = JSON.parse(fs.readFileSync(OUT_FILE, 'utf8'));
+      if (Array.isArray(priorB3.records)) {
+        let added = 0;
+        for (const rec of priorB3.records) {
+          if (!b2PriorMap[rec.id] && rec.baseline && rec.b1 && rec.b2) {
+            b2PriorMap[rec.id] = rec;
+            added++;
+          }
+        }
+        if (added > 0) console.log(`Loaded ${added} independent board baseline/B1/B2 records from prior benchmark.`);
+      }
+    } catch (e) {
+      console.warn('Could not load prior B3 benchmark results for baseline/b1/b2 cache:', e.message);
+    }
+  }
 
   // Load existing B3 results if resuming
   let resultsMap = {};
