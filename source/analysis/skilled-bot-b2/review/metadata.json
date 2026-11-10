@@ -1,0 +1,30 @@
+{
+  "reviewedCommit": "07f36261",
+  "reviewDate": "2026-11-10",
+  "freshSeed": 99173,
+  "runs": 20,
+  "seeds": 2,
+  "maxAttempts": 20,
+  "correctedBenchmarkAggregates": {
+    "baseline": {
+      "firstWins": 1103,
+      "total": 3720,
+      "uncleared": 200
+    },
+    "b1": {
+      "firstWins": 1347,
+      "total": 3720,
+      "uncleared": 182
+    },
+    "b2": {
+      "firstWins": 1503,
+      "total": 3720,
+      "uncleared": 192
+    }
+  },
+  "sha256": {
+    "candidate_controller.js": "ec591196fd2a9d99957eb2e57af5da8ec1e2cc591802b153e47fd4ae15e9f060",
+    "candidate_measure.js": "b0f5353a887dc0a927d31bd30da6392f082b6760b9277f5f2ee3d2be48705318",
+    "results/b2_benchmark_results.json": "cae31040304665931275b0cad69b43d2a5bd977f08ce277112bcacd1d9ff5d75"
+  }
+}
