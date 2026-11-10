@@ -1,0 +1,343 @@
+{
+  "success": false,
+  "status": "NO_MEASURED_HIT",
+  "request": {
+    "target": 10,
+    "layout": 22,
+    "seed": 1,
+    "tol": 1,
+    "skilledBand": [
+      2.5,
+      6
+    ]
+  },
+  "contextKey": "bad96147947133496983813c630949962e76d03e9ee88696c1daaa3085a0bbd5",
+  "context": {
+    "family": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+    "skilled": "93ed5c9c9419bf4146c0b965d7bedfa18248ff16609967b945d1767faea0ed4f",
+    "familySettings": {
+      "use": "every spare of a puzzle, paired (same seeds at every spare)",
+      "campaigns": 80,
+      "calls": [
+        {
+          "runs": 20,
+          "seeds": 2,
+          "seed": 4711
+        },
+        {
+          "runs": 20,
+          "seeds": 2,
+          "seed": 18427
+        }
+      ],
+      "cacheAlternatives": [
+        {
+          "capture": "tail"
+        }
+      ],
+      "pooling": "Production pooling (batch_evaluate.js rate mode, empirical_confirm.js, task11_rerate.js): two meter calls {setting:'family', runs:20, seeds:2} at seed 4711 and seed 18427, 40 campaigns each, pooled = (exp4711 + exp18427) / 2. Production rated the reference bot's 4711 call with capture:'tail' (part of the cache key, not of the rating); Codex rated key memory without capture. The yardstick looks up both cache variants before measuring.",
+      "visibleCampaigns": "The meter returns per-campaign results only for the first sub-block of each call (the first 20 of 40). SEs are estimated from those 40 of 80 campaigns (sample SD / sqrt(80)); D itself uses all 80 (mean of the two calls' expectedTries)."
+    },
+    "skilledSettings": {
+      "setting": "planner",
+      "runs": 20,
+      "seeds": 2,
+      "seed": 4711
+    },
+    "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2",
+    "source": "a0841da9a2a37bae04992457f12f6efb25c8a4d67eeeea31bafb05df0850a035"
+  },
+  "normalMinimum": true,
+  "explicitFallback": false,
+  "finalCandidate": null,
+  "evaluation": null,
+  "attempts": [
+    {
+      "recipe": {
+        "keys": [
+          5,
+          9
+        ],
+        "ice": {
+          "tile": 44,
+          "h": 2
+        },
+        "lockTile": null,
+        "downCount": 10,
+        "baseId": "u-plan10-keys5-9-ice44-s2",
+        "design": null,
+        "clockK": null,
+        "spare": 2,
+        "id": "u-plan10-keys5-9-ice44-s2-spare2",
+        "priorD": 10.5,
+        "priorSpare": 2
+      },
+      "selection": {
+        "basis": "historical-family-prior",
+        "predictedD": 10.5
+      },
+      "boardKey": "1d14c80145074a4c0fb7772cc91289138580d880df5347ea08991ae6aaa72d9b",
+      "evaluation": {
+        "staticPass": true,
+        "S": 1.05,
+        "S_valid": true,
+        "styles": {
+          "route": 1.18,
+          "plain": 1.05
+        },
+        "D": 4.59,
+        "D_valid": true,
+        "D_se": 0.6164141275005615,
+        "familyCampaigns": 80,
+        "familyFingerprint": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+        "skilledFingerprint": "93ed5c9c9419bf4146c0b965d7bedfa18248ff16609967b945d1767faea0ed4f",
+        "clockN": 19,
+        "tracePass": null,
+        "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2",
+        "pass": false,
+        "ms": 5204,
+        "cpuS": 7.422
+      },
+      "issues": [
+        "SKILLED_TOO_EASY",
+        "FAMILY_TOO_EASY",
+        "TRACE_NOT_CHECKED"
+      ],
+      "reused": false
+    },
+    {
+      "recipe": {
+        "keys": [
+          5,
+          9
+        ],
+        "ice": {
+          "tile": 44,
+          "h": 2
+        },
+        "lockTile": null,
+        "downCount": null,
+        "baseId": "u-keys5-9-ice44-s1",
+        "design": null,
+        "clockK": null,
+        "spare": 1,
+        "id": "u-keys5-9-ice44-s1-spare1",
+        "priorD": 8.51,
+        "priorSpare": 1
+      },
+      "selection": {
+        "basis": "historical-family-prior",
+        "predictedD": 8.51
+      },
+      "boardKey": "02dedbdc27f4f8f890a160c385892f390a08e912ed81d70cbaad0d8a1ee8e8be",
+      "evaluation": {
+        "staticPass": true,
+        "S": 1.13,
+        "S_valid": true,
+        "styles": {
+          "route": 1.15,
+          "plain": 1.13
+        },
+        "D": 8.505,
+        "D_valid": true,
+        "D_se": 0.738412597777802,
+        "familyCampaigns": 80,
+        "familyFingerprint": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+        "skilledFingerprint": "93ed5c9c9419bf4146c0b965d7bedfa18248ff16609967b945d1767faea0ed4f",
+        "clockN": 18,
+        "tracePass": null,
+        "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2",
+        "pass": false,
+        "ms": 5709,
+        "cpuS": 5.954
+      },
+      "issues": [
+        "SKILLED_TOO_EASY",
+        "FAMILY_TOO_EASY",
+        "TRACE_NOT_CHECKED"
+      ],
+      "reused": false
+    },
+    {
+      "recipe": {
+        "keys": [
+          5,
+          9
+        ],
+        "ice": {
+          "44": 2,
+          "61": 1
+        },
+        "lockTile": null,
+        "downCount": null,
+        "baseId": "u-keys5-9-dualIce-s2",
+        "design": null,
+        "clockK": null,
+        "spare": 2,
+        "id": "u-keys5-9-dualIce-s2-spare2",
+        "priorD": 8.09,
+        "priorSpare": 2
+      },
+      "selection": {
+        "basis": "historical-family-prior",
+        "predictedD": 8.09
+      },
+      "boardKey": "d4122bc90b930715e0c99b18fa4a917920abc008cef31cc105a2dd545d6ec00f",
+      "evaluation": {
+        "staticPass": false,
+        "tracePass": null,
+        "failedGates": [
+          "A1"
+        ],
+        "unresolved": [],
+        "shipSpares": [
+          1,
+          2
+        ],
+        "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2",
+        "ms": 265,
+        "cpuS": 0.297
+      },
+      "issues": [
+        "STATIC_FAILURE",
+        "SKILLED_UNRESOLVED",
+        "FAMILY_UNRESOLVED",
+        "TRACE_NOT_CHECKED"
+      ],
+      "reused": false
+    },
+    {
+      "recipe": {
+        "keys": [
+          5,
+          9
+        ],
+        "ice": {
+          "44": 2,
+          "61": 1
+        },
+        "lockTile": null,
+        "downCount": null,
+        "baseId": "u-keys5-9-dualIce-s2",
+        "design": null,
+        "clockK": null,
+        "spare": 3,
+        "id": "u-keys5-9-dualIce-s2-spare3",
+        "priorD": 8.09,
+        "priorSpare": 2
+      },
+      "selection": {
+        "basis": "historical-family-prior",
+        "predictedD": 8.09
+      },
+      "failure": "clockTooDeep"
+    },
+    {
+      "recipe": {
+        "keys": [
+          5,
+          9
+        ],
+        "ice": {
+          "44": 2,
+          "61": 1
+        },
+        "lockTile": null,
+        "downCount": null,
+        "baseId": "u-keys5-9-dualIce-s2",
+        "design": null,
+        "clockK": null,
+        "spare": 1,
+        "id": "u-keys5-9-dualIce-s2-spare1",
+        "priorD": 8.09,
+        "priorSpare": 2
+      },
+      "selection": {
+        "basis": "historical-family-prior",
+        "predictedD": 8.09
+      },
+      "boardKey": "45e35df296247476e98d694f12a166589de8b9045410d68a25777deafd6febe0",
+      "evaluation": {
+        "staticPass": false,
+        "tracePass": null,
+        "failedGates": [
+          "A1"
+        ],
+        "unresolved": [],
+        "shipSpares": [
+          1,
+          2
+        ],
+        "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2",
+        "ms": 267,
+        "cpuS": 0.25
+      },
+      "issues": [
+        "STATIC_FAILURE",
+        "SKILLED_UNRESOLVED",
+        "FAMILY_UNRESOLVED",
+        "TRACE_NOT_CHECKED"
+      ],
+      "reused": false
+    },
+    {
+      "recipe": {
+        "keys": [
+          0,
+          40
+        ],
+        "ice": {
+          "tile": 61,
+          "h": 1
+        },
+        "lockTile": null,
+        "downCount": null,
+        "baseId": "u-keys0-40-ice61-s1",
+        "design": null,
+        "clockK": null,
+        "spare": 1,
+        "id": "u-keys0-40-ice61-s1-spare1",
+        "priorD": 7.45,
+        "priorSpare": 1
+      },
+      "selection": {
+        "basis": "historical-family-prior",
+        "predictedD": 7.45
+      },
+      "boardKey": "df476cf907d8621420f2a8e16549103db59ef922f0e9dc16b47e05a3443aad7d",
+      "evaluation": {
+        "staticPass": true,
+        "S": 1.07,
+        "S_valid": true,
+        "styles": {
+          "route": 1.07,
+          "plain": 1.1
+        },
+        "D": 7.45,
+        "D_valid": true,
+        "D_se": 0.6162103454774331,
+        "familyCampaigns": 80,
+        "familyFingerprint": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+        "skilledFingerprint": "93ed5c9c9419bf4146c0b965d7bedfa18248ff16609967b945d1767faea0ed4f",
+        "clockN": 14,
+        "tracePass": null,
+        "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2",
+        "pass": false,
+        "ms": 4730,
+        "cpuS": 5.125
+      },
+      "issues": [
+        "SKILLED_TOO_EASY",
+        "FAMILY_TOO_EASY",
+        "TRACE_NOT_CHECKED"
+      ],
+      "reused": false
+    }
+  ],
+  "measured": 5,
+  "cost": {
+    "cpuS": 20,
+    "wallMs": 16752
+  },
+  "note": "Experimental construction result; no fresh ACCEPT blocks, library promotion or game-level change."
+}
