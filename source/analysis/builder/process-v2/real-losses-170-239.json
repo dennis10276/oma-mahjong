@@ -1,0 +1,5740 @@
+{
+ "generated": "2026-11-11T21:58:55.999Z",
+ "replayStats": {
+  "Dennis": {
+   "attempts": 312,
+   "inRange": 114,
+   "incomplete": 0,
+   "noEnd": 0,
+   "oldBoard": 0
+  },
+  "Gerda": {
+   "attempts": 1549,
+   "inRange": 312,
+   "incomplete": 1,
+   "noEnd": 1,
+   "oldBoard": 0
+  },
+  "MrsD": {
+   "attempts": 407,
+   "inRange": 61,
+   "incomplete": 3,
+   "noEnd": 2,
+   "oldBoard": 0
+  }
+ },
+ "triesOnCurrentBoard": 477,
+ "ledgerLostTriesByPlayer": {
+  "Dennis": 44,
+  "Gerda": 267,
+  "MrsD": 46
+ },
+ "perPlayer": {
+  "Dennis": {
+   "tries": 114,
+   "wins": 70,
+   "lost": 44,
+   "replayOfLost": 44,
+   "repAnyOfLost": 44,
+   "cause": {
+    "tray": 14,
+    "clock": 16,
+    "restart": 14
+   },
+   "timing": {
+    "tray": {
+     "n": 14,
+     "medShare": 0.1,
+     "medMoves": 3,
+     "medSec": 39,
+     "early": 10,
+     "middle": 4,
+     "late": 0
+    },
+    "clock": {
+     "n": 16,
+     "medShare": 0.09,
+     "medMoves": 2,
+     "medSec": 19,
+     "early": 16,
+     "middle": 0,
+     "late": 0
+    },
+    "restart": {
+     "n": 14,
+     "medShare": 0.43,
+     "medMoves": 12,
+     "medSec": 105,
+     "early": 6,
+     "middle": 7,
+     "late": 1
+    }
+   },
+   "hintOrShuffleUsedInLost": 0,
+   "hintOrShuffleUsedInWins": 0,
+   "clockLossesByClockLevel": {
+    "174": 1,
+    "177": 2,
+    "179": 1,
+    "190": 1,
+    "196": 4,
+    "213": 1,
+    "216": 1,
+    "222": 1,
+    "228": 1,
+    "230": 1,
+    "234": 1,
+    "237": 1
+   },
+   "at3": {
+    "n": 14,
+    "matchFree": 4,
+    "pairFreeNoMatch": 7,
+    "neither": 3,
+    "faceDownTile": 1,
+    "medTapsSince": 1
+   },
+   "traySituation": {
+    "n": 14,
+    "twinsBuriedShare": 77,
+    "twinsUnderTilesShare": 59,
+    "twinsFaceDownShare": 42,
+    "twinsIceLockShare": 15,
+    "meanTilesAboveTwin": 1.21,
+    "withFreeTwinAtLoss": 11,
+    "missedMatchBeforeFatalTap": 4,
+    "freePairExistedBeforeFatalTap": 12,
+    "fatalTileWasFaceDown": 1,
+    "shuffleUsed": 0,
+    "medianTaps": 11
+   }
+  },
+  "Gerda": {
+   "tries": 306,
+   "wins": 39,
+   "lost": 267,
+   "replayOfLost": 267,
+   "repAnyOfLost": 267,
+   "cause": {
+    "tray": 182,
+    "clock": 62,
+    "restart": 23
+   },
+   "timing": {
+    "tray": {
+     "n": 182,
+     "medShare": 0.27,
+     "medMoves": 7,
+     "medSec": 62,
+     "early": 111,
+     "middle": 57,
+     "late": 14
+    },
+    "clock": {
+     "n": 62,
+     "medShare": 0.09,
+     "medMoves": 2,
+     "medSec": 23,
+     "early": 62,
+     "middle": 0,
+     "late": 0
+    },
+    "restart": {
+     "n": 23,
+     "medShare": 0.06,
+     "medMoves": 2,
+     "medSec": 25,
+     "early": 17,
+     "middle": 6,
+     "late": 0
+    }
+   },
+   "hintOrShuffleUsedInLost": 0,
+   "hintOrShuffleUsedInWins": 0,
+   "clockLossesByClockLevel": {
+    "173": 1,
+    "176": 1,
+    "179": 3,
+    "180": 1,
+    "187": 2,
+    "188": 7,
+    "190": 2,
+    "196": 11,
+    "197": 3,
+    "201": 4,
+    "203": 2,
+    "205": 6,
+    "209": 19
+   },
+   "at3": {
+    "n": 182,
+    "matchFree": 44,
+    "pairFreeNoMatch": 78,
+    "neither": 60,
+    "faceDownTile": 59,
+    "medTapsSince": 2
+   },
+   "traySituation": {
+    "n": 182,
+    "twinsBuriedShare": 78,
+    "twinsUnderTilesShare": 63,
+    "twinsFaceDownShare": 48,
+    "twinsIceLockShare": 11,
+    "meanTilesAboveTwin": 1.17,
+    "withFreeTwinAtLoss": 150,
+    "missedMatchBeforeFatalTap": 60,
+    "freePairExistedBeforeFatalTap": 152,
+    "fatalTileWasFaceDown": 61,
+    "shuffleUsed": 0,
+    "medianTaps": 38
+   }
+  },
+  "MrsD": {
+   "tries": 57,
+   "wins": 12,
+   "lost": 45,
+   "replayOfLost": 44,
+   "repAnyOfLost": 45,
+   "cause": {
+    "tray": 40,
+    "clock": 5,
+    "restart": 0
+   },
+   "timing": {
+    "tray": {
+     "n": 40,
+     "medShare": 0.48,
+     "medMoves": 12,
+     "medSec": 93,
+     "early": 13,
+     "middle": 19,
+     "late": 8
+    },
+    "clock": {
+     "n": 5,
+     "medShare": 0.09,
+     "medMoves": 2,
+     "medSec": 16,
+     "early": 5,
+     "middle": 0,
+     "late": 0
+    },
+    "restart": {
+     "n": 0,
+     "medShare": null,
+     "medMoves": null,
+     "medSec": null,
+     "early": 0,
+     "middle": 0,
+     "late": 0
+    }
+   },
+   "hintOrShuffleUsedInLost": 0,
+   "hintOrShuffleUsedInWins": 0,
+   "clockLossesByClockLevel": {
+    "173": 2,
+    "174": 1,
+    "176": 1,
+    "177": 1
+   },
+   "at3": {
+    "n": 39,
+    "matchFree": 5,
+    "pairFreeNoMatch": 19,
+    "neither": 15,
+    "faceDownTile": 19,
+    "medTapsSince": 9
+   },
+   "traySituation": {
+    "n": 39,
+    "twinsBuriedShare": 84,
+    "twinsUnderTilesShare": 80,
+    "twinsFaceDownShare": 41,
+    "twinsIceLockShare": 6,
+    "meanTilesAboveTwin": 1.49,
+    "withFreeTwinAtLoss": 24,
+    "missedMatchBeforeFatalTap": 8,
+    "freePairExistedBeforeFatalTap": 25,
+    "fatalTileWasFaceDown": 4,
+    "shuffleUsed": 0,
+    "medianTaps": 94
+   }
+  }
+ },
+ "repeat": {
+  "Dennis": {
+   "levelsWithTwoPlusLosses": 9,
+   "consecutiveLossPairs": 21,
+   "sameCause": 8,
+   "clockClockPairs": 1,
+   "trayTrayPairs": 4,
+   "shareAbsDiffMedian": 0.06,
+   "trayPairsWithReplay": 4,
+   "sameFatalTile": 0,
+   "sameTrayFaces": 0,
+   "medianSharedOpeningTaps": 1,
+   "openingIdentical12": 1,
+   "openingPairs": 21
+  },
+  "Gerda": {
+   "levelsWithTwoPlusLosses": 22,
+   "consecutiveLossPairs": 235,
+   "sameCause": 143,
+   "clockClockPairs": 20,
+   "trayTrayPairs": 119,
+   "shareAbsDiffMedian": 0.07,
+   "trayPairsWithReplay": 119,
+   "sameFatalTile": 5,
+   "sameTrayFaces": 2,
+   "medianSharedOpeningTaps": 1,
+   "openingIdentical12": 2,
+   "openingPairs": 235
+  },
+  "MrsD": {
+   "levelsWithTwoPlusLosses": 8,
+   "consecutiveLossPairs": 33,
+   "sameCause": 27,
+   "clockClockPairs": 1,
+   "trayTrayPairs": 26,
+   "shareAbsDiffMedian": 0.14,
+   "trayPairsWithReplay": 25,
+   "sameFatalTile": 1,
+   "sameTrayFaces": 0,
+   "medianSharedOpeningTaps": 2,
+   "openingIdentical12": 0,
+   "openingPairs": 32
+  }
+ },
+ "features": {
+  "170": {
+   "tiles": 96,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 17.063,
+   "clockN": 8,
+   "clockRatio": 0.083,
+   "clockSlack": 2,
+   "clockDig": 5,
+   "clockSlackDig": 3,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 6,
+   "layer3": 0.385,
+   "freeStart": 11,
+   "freeShare": 0.115,
+   "faceGroupsTwoFree": 3,
+   "faceGroupsTwoFreeShare": 0.083,
+   "buriedTwinShare": 0.771,
+   "meanAbove": 2.292
+  },
+  "171": {
+   "tiles": 74,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 14.446,
+   "clockN": 8,
+   "clockRatio": 0.108,
+   "clockSlack": 2,
+   "clockDig": 4,
+   "clockSlackDig": 4,
+   "clockFreeAtStart": false,
+   "ice": 11,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.257,
+   "freeStart": 14,
+   "freeShare": 0.189,
+   "faceGroupsTwoFree": 3,
+   "faceGroupsTwoFreeShare": 0.083,
+   "buriedTwinShare": 0.703,
+   "meanAbove": 1.446
+  },
+  "172": {
+   "tiles": 76,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 14.105,
+   "clockN": 6,
+   "clockRatio": 0.079,
+   "clockSlack": 1,
+   "clockDig": 3,
+   "clockSlackDig": 3,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 3,
+   "layer3": 0.026,
+   "freeStart": 16,
+   "freeShare": 0.211,
+   "faceGroupsTwoFree": 3,
+   "faceGroupsTwoFreeShare": 0.083,
+   "buriedTwinShare": 0.658,
+   "meanAbove": 1.5
+  },
+  "173": {
+   "tiles": 80,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 12.887,
+   "clockN": 7,
+   "clockRatio": 0.087,
+   "clockSlack": 2,
+   "clockDig": 4,
+   "clockSlackDig": 3,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 5,
+   "layer3": 0.263,
+   "freeStart": 14,
+   "freeShare": 0.175,
+   "faceGroupsTwoFree": 3,
+   "faceGroupsTwoFreeShare": 0.083,
+   "buriedTwinShare": 0.7,
+   "meanAbove": 1.6
+  },
+  "174": {
+   "tiles": 88,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 15.83,
+   "clockN": 8,
+   "clockRatio": 0.091,
+   "clockSlack": 2,
+   "clockDig": 4,
+   "clockSlackDig": 4,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.25,
+   "freeStart": 11,
+   "freeShare": 0.125,
+   "faceGroupsTwoFree": 2,
+   "faceGroupsTwoFreeShare": 0.056,
+   "buriedTwinShare": 0.705,
+   "meanAbove": 2.705
+  },
+  "175": {
+   "tiles": 88,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 17.795,
+   "clockN": 6,
+   "clockRatio": 0.068,
+   "clockSlack": 1,
+   "clockDig": 3,
+   "clockSlackDig": 3,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.193,
+   "freeStart": 16,
+   "freeShare": 0.182,
+   "faceGroupsTwoFree": 4,
+   "faceGroupsTwoFreeShare": 0.111,
+   "buriedTwinShare": 0.636,
+   "meanAbove": 2.239
+  },
+  "176": {
+   "tiles": 88,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 14.716,
+   "clockN": 7,
+   "clockRatio": 0.08,
+   "clockSlack": 2,
+   "clockDig": 3,
+   "clockSlackDig": 4,
+   "clockFreeAtStart": false,
+   "ice": 8,
+   "locks": 5,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.125,
+   "freeStart": 20,
+   "freeShare": 0.227,
+   "faceGroupsTwoFree": 5,
+   "faceGroupsTwoFreeShare": 0.139,
+   "buriedTwinShare": 0.568,
+   "meanAbove": 1.989
+  },
+  "177": {
+   "tiles": 88,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 16.807,
+   "clockN": 10,
+   "clockRatio": 0.114,
+   "clockSlack": 2,
+   "clockDig": 5,
+   "clockSlackDig": 5,
+   "clockFreeAtStart": false,
+   "ice": 11,
+   "locks": 6,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.159,
+   "freeStart": 10,
+   "freeShare": 0.114,
+   "faceGroupsTwoFree": 2,
+   "faceGroupsTwoFreeShare": 0.056,
+   "buriedTwinShare": 0.75,
+   "meanAbove": 2.068
+  },
+  "178": {
+   "tiles": 88,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 19.42,
+   "clockN": 8,
+   "clockRatio": 0.091,
+   "clockSlack": 1,
+   "clockDig": 5,
+   "clockSlackDig": 3,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 6,
+   "layer3": 0.364,
+   "freeStart": 12,
+   "freeShare": 0.136,
+   "faceGroupsTwoFree": 3,
+   "faceGroupsTwoFreeShare": 0.083,
+   "buriedTwinShare": 0.75,
+   "meanAbove": 2.136
+  },
+  "179": {
+   "tiles": 88,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 16.568,
+   "clockN": 8,
+   "clockRatio": 0.091,
+   "clockSlack": 1,
+   "clockDig": 7,
+   "clockSlackDig": 1,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.239,
+   "freeStart": 9,
+   "freeShare": 0.102,
+   "faceGroupsTwoFree": 2,
+   "faceGroupsTwoFreeShare": 0.056,
+   "buriedTwinShare": 0.75,
+   "meanAbove": 2.648
+  },
+  "180": {
+   "tiles": 96,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 19.406,
+   "clockN": 6,
+   "clockRatio": 0.063,
+   "clockSlack": 1,
+   "clockDig": 3,
+   "clockSlackDig": 3,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.25,
+   "freeStart": 10,
+   "freeShare": 0.104,
+   "faceGroupsTwoFree": 3,
+   "faceGroupsTwoFreeShare": 0.083,
+   "buriedTwinShare": 0.771,
+   "meanAbove": 2.667
+  },
+  "181": {
+   "tiles": 88,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 17.898,
+   "clockN": 9,
+   "clockRatio": 0.102,
+   "clockSlack": 3,
+   "clockDig": 4,
+   "clockSlackDig": 5,
+   "clockFreeAtStart": false,
+   "ice": 7,
+   "locks": 4,
+   "keys": 2,
+   "maxLayer": 5,
+   "layer3": 0.227,
+   "freeStart": 8,
+   "freeShare": 0.091,
+   "faceGroupsTwoFree": 2,
+   "faceGroupsTwoFreeShare": 0.056,
+   "buriedTwinShare": 0.841,
+   "meanAbove": 2.705
+  },
+  "182": {
+   "tiles": 88,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 17.455,
+   "clockN": 6,
+   "clockRatio": 0.068,
+   "clockSlack": 1,
+   "clockDig": 5,
+   "clockSlackDig": 1,
+   "clockFreeAtStart": false,
+   "ice": 10,
+   "locks": 6,
+   "keys": 2,
+   "maxLayer": 6,
+   "layer3": 0.261,
+   "freeStart": 7,
+   "freeShare": 0.08,
+   "faceGroupsTwoFree": 1,
+   "faceGroupsTwoFreeShare": 0.028,
+   "buriedTwinShare": 0.795,
+   "meanAbove": 2.864
+  },
+  "183": {
+   "tiles": 88,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 17.068,
+   "clockN": 10,
+   "clockRatio": 0.114,
+   "clockSlack": 2,
+   "clockDig": 5,
+   "clockSlackDig": 5,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.17,
+   "freeStart": 14,
+   "freeShare": 0.159,
+   "faceGroupsTwoFree": 4,
+   "faceGroupsTwoFreeShare": 0.111,
+   "buriedTwinShare": 0.659,
+   "meanAbove": 2.216
+  },
+  "184": {
+   "tiles": 86,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 17.663,
+   "clockN": 9,
+   "clockRatio": 0.105,
+   "clockSlack": 2,
+   "clockDig": 4,
+   "clockSlackDig": 5,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.256,
+   "freeStart": 8,
+   "freeShare": 0.093,
+   "faceGroupsTwoFree": 1,
+   "faceGroupsTwoFreeShare": 0.028,
+   "buriedTwinShare": 0.791,
+   "meanAbove": 2.767
+  },
+  "185": {
+   "tiles": 84,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 14.333,
+   "clockN": 7,
+   "clockRatio": 0.083,
+   "clockSlack": 2,
+   "clockDig": 4,
+   "clockSlackDig": 3,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.202,
+   "freeStart": 11,
+   "freeShare": 0.131,
+   "faceGroupsTwoFree": 2,
+   "faceGroupsTwoFreeShare": 0.056,
+   "buriedTwinShare": 0.714,
+   "meanAbove": 2.25
+  },
+  "186": {
+   "tiles": 86,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 17.919,
+   "clockN": 8,
+   "clockRatio": 0.093,
+   "clockSlack": 2,
+   "clockDig": 6,
+   "clockSlackDig": 2,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 6,
+   "layer3": 0.279,
+   "freeStart": 18,
+   "freeShare": 0.209,
+   "faceGroupsTwoFree": 4,
+   "faceGroupsTwoFreeShare": 0.111,
+   "buriedTwinShare": 0.558,
+   "meanAbove": 1.709
+  },
+  "187": {
+   "tiles": 88,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 16.898,
+   "clockN": 6,
+   "clockRatio": 0.068,
+   "clockSlack": 1,
+   "clockDig": 3,
+   "clockSlackDig": 3,
+   "clockFreeAtStart": false,
+   "ice": 7,
+   "locks": 4,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.216,
+   "freeStart": 11,
+   "freeShare": 0.125,
+   "faceGroupsTwoFree": 3,
+   "faceGroupsTwoFreeShare": 0.083,
+   "buriedTwinShare": 0.727,
+   "meanAbove": 2.443
+  },
+  "188": {
+   "tiles": 88,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 16.136,
+   "clockN": 8,
+   "clockRatio": 0.091,
+   "clockSlack": 2,
+   "clockDig": 4,
+   "clockSlackDig": 4,
+   "clockFreeAtStart": false,
+   "ice": 8,
+   "locks": 5,
+   "keys": 2,
+   "maxLayer": 5,
+   "layer3": 0.352,
+   "freeStart": 12,
+   "freeShare": 0.136,
+   "faceGroupsTwoFree": 4,
+   "faceGroupsTwoFreeShare": 0.111,
+   "buriedTwinShare": 0.705,
+   "meanAbove": 1.966
+  },
+  "189": {
+   "tiles": 88,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 18.898,
+   "clockN": 10,
+   "clockRatio": 0.114,
+   "clockSlack": 2,
+   "clockDig": 3,
+   "clockSlackDig": 7,
+   "clockFreeAtStart": false,
+   "ice": 7,
+   "locks": 4,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.239,
+   "freeStart": 8,
+   "freeShare": 0.091,
+   "faceGroupsTwoFree": 2,
+   "faceGroupsTwoFreeShare": 0.056,
+   "buriedTwinShare": 0.841,
+   "meanAbove": 2.739
+  },
+  "190": {
+   "tiles": 96,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 17.833,
+   "clockN": 6,
+   "clockRatio": 0.063,
+   "clockSlack": 1,
+   "clockDig": 5,
+   "clockSlackDig": 1,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.177,
+   "freeStart": 19,
+   "freeShare": 0.198,
+   "faceGroupsTwoFree": 5,
+   "faceGroupsTwoFreeShare": 0.139,
+   "buriedTwinShare": 0.646,
+   "meanAbove": 2.219
+  },
+  "191": {
+   "tiles": 84,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 17.083,
+   "clockN": 7,
+   "clockRatio": 0.083,
+   "clockSlack": 2,
+   "clockDig": 4,
+   "clockSlackDig": 3,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 5,
+   "layer3": 0.238,
+   "freeStart": 8,
+   "freeShare": 0.095,
+   "faceGroupsTwoFree": 1,
+   "faceGroupsTwoFreeShare": 0.028,
+   "buriedTwinShare": 0.81,
+   "meanAbove": 2.643
+  },
+  "192": {
+   "tiles": 76,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 13.237,
+   "clockN": 6,
+   "clockRatio": 0.079,
+   "clockSlack": 1,
+   "clockDig": 3,
+   "clockSlackDig": 3,
+   "clockFreeAtStart": false,
+   "ice": 11,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 5,
+   "layer3": 0.276,
+   "freeStart": 19,
+   "freeShare": 0.25,
+   "faceGroupsTwoFree": 4,
+   "faceGroupsTwoFreeShare": 0.111,
+   "buriedTwinShare": 0.553,
+   "meanAbove": 1.579
+  },
+  "193": {
+   "tiles": 86,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 16.163,
+   "clockN": 9,
+   "clockRatio": 0.105,
+   "clockSlack": 2,
+   "clockDig": 3,
+   "clockSlackDig": 6,
+   "clockFreeAtStart": false,
+   "ice": 8,
+   "locks": 5,
+   "keys": 2,
+   "maxLayer": 6,
+   "layer3": 0.337,
+   "freeStart": 12,
+   "freeShare": 0.14,
+   "faceGroupsTwoFree": 3,
+   "faceGroupsTwoFreeShare": 0.083,
+   "buriedTwinShare": 0.744,
+   "meanAbove": 1.988
+  },
+  "194": {
+   "tiles": 84,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 16.5,
+   "clockN": 7,
+   "clockRatio": 0.083,
+   "clockSlack": 2,
+   "clockDig": 4,
+   "clockSlackDig": 3,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.19,
+   "freeStart": 16,
+   "freeShare": 0.19,
+   "faceGroupsTwoFree": 4,
+   "faceGroupsTwoFreeShare": 0.111,
+   "buriedTwinShare": 0.619,
+   "meanAbove": 2.286
+  },
+  "195": {
+   "tiles": 72,
+   "faces": 36,
+   "copiesMax": 2,
+   "downShare": 15.556,
+   "clockN": 16,
+   "clockRatio": 0.222,
+   "clockSlack": 2,
+   "clockDig": 10,
+   "clockSlackDig": 6,
+   "clockFreeAtStart": false,
+   "ice": 11,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 5,
+   "layer3": 0.236,
+   "freeStart": 8,
+   "freeShare": 0.111,
+   "faceGroupsTwoFree": 1,
+   "faceGroupsTwoFreeShare": 0.028,
+   "buriedTwinShare": 0.806,
+   "meanAbove": 2.597
+  },
+  "196": {
+   "tiles": 88,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 15.83,
+   "clockN": 6,
+   "clockRatio": 0.068,
+   "clockSlack": 1,
+   "clockDig": 3,
+   "clockSlackDig": 3,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 6,
+   "layer3": 0.307,
+   "freeStart": 16,
+   "freeShare": 0.182,
+   "faceGroupsTwoFree": 5,
+   "faceGroupsTwoFreeShare": 0.139,
+   "buriedTwinShare": 0.682,
+   "meanAbove": 1.818
+  },
+  "197": {
+   "tiles": 88,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 17.386,
+   "clockN": 7,
+   "clockRatio": 0.08,
+   "clockSlack": 2,
+   "clockDig": 2,
+   "clockSlackDig": 5,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 5,
+   "layer3": 0.307,
+   "freeStart": 15,
+   "freeShare": 0.17,
+   "faceGroupsTwoFree": 3,
+   "faceGroupsTwoFreeShare": 0.083,
+   "buriedTwinShare": 0.636,
+   "meanAbove": 1.773
+  },
+  "198": {
+   "tiles": 82,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 18.037,
+   "clockN": 8,
+   "clockRatio": 0.098,
+   "clockSlack": 1,
+   "clockDig": 7,
+   "clockSlackDig": 1,
+   "clockFreeAtStart": false,
+   "ice": 11,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.232,
+   "freeStart": 10,
+   "freeShare": 0.122,
+   "faceGroupsTwoFree": 1,
+   "faceGroupsTwoFreeShare": 0.028,
+   "buriedTwinShare": 0.707,
+   "meanAbove": 2.524
+  },
+  "199": {
+   "tiles": 88,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 16.477,
+   "clockN": 8,
+   "clockRatio": 0.091,
+   "clockSlack": 2,
+   "clockDig": 4,
+   "clockSlackDig": 4,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 5,
+   "layer3": 0.227,
+   "freeStart": 12,
+   "freeShare": 0.136,
+   "faceGroupsTwoFree": 3,
+   "faceGroupsTwoFreeShare": 0.083,
+   "buriedTwinShare": 0.727,
+   "meanAbove": 2.477
+  },
+  "200": {
+   "tiles": 96,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 18.677,
+   "clockN": 6,
+   "clockRatio": 0.063,
+   "clockSlack": 1,
+   "clockDig": 5,
+   "clockSlackDig": 1,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 6,
+   "layer3": 0.208,
+   "freeStart": 10,
+   "freeShare": 0.104,
+   "faceGroupsTwoFree": 3,
+   "faceGroupsTwoFreeShare": 0.083,
+   "buriedTwinShare": 0.813,
+   "meanAbove": 2.479
+  },
+  "201": {
+   "tiles": 80,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 15.825,
+   "clockN": 7,
+   "clockRatio": 0.087,
+   "clockSlack": 1,
+   "clockDig": 8,
+   "clockSlackDig": -1,
+   "clockFreeAtStart": false,
+   "ice": 11,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.263,
+   "freeStart": 7,
+   "freeShare": 0.087,
+   "faceGroupsTwoFree": 2,
+   "faceGroupsTwoFreeShare": 0.056,
+   "buriedTwinShare": 0.85,
+   "meanAbove": 2.813
+  },
+  "202": {
+   "tiles": 86,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 17.709,
+   "clockN": 8,
+   "clockRatio": 0.093,
+   "clockSlack": 2,
+   "clockDig": 4,
+   "clockSlackDig": 4,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.209,
+   "freeStart": 18,
+   "freeShare": 0.209,
+   "faceGroupsTwoFree": 4,
+   "faceGroupsTwoFreeShare": 0.111,
+   "buriedTwinShare": 0.581,
+   "meanAbove": 1.233
+  },
+  "203": {
+   "tiles": 84,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 16.714,
+   "clockN": 7,
+   "clockRatio": 0.083,
+   "clockSlack": 2,
+   "clockDig": 3,
+   "clockSlackDig": 4,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.19,
+   "freeStart": 10,
+   "freeShare": 0.119,
+   "faceGroupsTwoFree": 2,
+   "faceGroupsTwoFreeShare": 0.056,
+   "buriedTwinShare": 0.762,
+   "meanAbove": 2.381
+  },
+  "204": {
+   "tiles": 74,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 13.811,
+   "clockN": 7,
+   "clockRatio": 0.095,
+   "clockSlack": 2,
+   "clockDig": 2,
+   "clockSlackDig": 5,
+   "clockFreeAtStart": false,
+   "ice": 10,
+   "locks": 6,
+   "keys": 2,
+   "maxLayer": 5,
+   "layer3": 0.203,
+   "freeStart": 8,
+   "freeShare": 0.108,
+   "faceGroupsTwoFree": 1,
+   "faceGroupsTwoFreeShare": 0.028,
+   "buriedTwinShare": 0.811,
+   "meanAbove": 2.5
+  },
+  "205": {
+   "tiles": 88,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 15.989,
+   "clockN": 6,
+   "clockRatio": 0.068,
+   "clockSlack": 1,
+   "clockDig": 3,
+   "clockSlackDig": 3,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 5,
+   "layer3": 0.318,
+   "freeStart": 14,
+   "freeShare": 0.159,
+   "faceGroupsTwoFree": 3,
+   "faceGroupsTwoFreeShare": 0.083,
+   "buriedTwinShare": 0.614,
+   "meanAbove": 1.784
+  },
+  "206": {
+   "tiles": 78,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 11.769,
+   "clockN": 7,
+   "clockRatio": 0.09,
+   "clockSlack": 2,
+   "clockDig": 3,
+   "clockSlackDig": 4,
+   "clockFreeAtStart": false,
+   "ice": 8,
+   "locks": 5,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.218,
+   "freeStart": 19,
+   "freeShare": 0.244,
+   "faceGroupsTwoFree": 4,
+   "faceGroupsTwoFreeShare": 0.111,
+   "buriedTwinShare": 0.538,
+   "meanAbove": 1.295
+  },
+  "207": {
+   "tiles": 86,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 18.012,
+   "clockN": 8,
+   "clockRatio": 0.093,
+   "clockSlack": 2,
+   "clockDig": 7,
+   "clockSlackDig": 1,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.151,
+   "freeStart": 14,
+   "freeShare": 0.163,
+   "faceGroupsTwoFree": 2,
+   "faceGroupsTwoFreeShare": 0.056,
+   "buriedTwinShare": 0.628,
+   "meanAbove": 2.151
+  },
+  "208": {
+   "tiles": 76,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 12.618,
+   "clockN": 12,
+   "clockRatio": 0.158,
+   "clockSlack": 2,
+   "clockDig": 8,
+   "clockSlackDig": 4,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.211,
+   "freeStart": 10,
+   "freeShare": 0.132,
+   "faceGroupsTwoFree": 2,
+   "faceGroupsTwoFreeShare": 0.056,
+   "buriedTwinShare": 0.763,
+   "meanAbove": 2.053
+  },
+  "209": {
+   "tiles": 88,
+   "faces": 32,
+   "copiesMax": 4,
+   "downShare": 16.648,
+   "clockN": 12,
+   "clockRatio": 0.136,
+   "clockSlack": 2,
+   "clockDig": 7,
+   "clockSlackDig": 5,
+   "clockFreeAtStart": false,
+   "ice": 11,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 5,
+   "layer3": 0.216,
+   "freeStart": 12,
+   "freeShare": 0.136,
+   "faceGroupsTwoFree": 4,
+   "faceGroupsTwoFreeShare": 0.125,
+   "buriedTwinShare": 0.682,
+   "meanAbove": 2.511
+  },
+  "210": {
+   "tiles": 96,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 15.448,
+   "clockN": 6,
+   "clockRatio": 0.063,
+   "clockSlack": 1,
+   "clockDig": 2,
+   "clockSlackDig": 4,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.167,
+   "freeStart": 24,
+   "freeShare": 0.25,
+   "faceGroupsTwoFree": 7,
+   "faceGroupsTwoFreeShare": 0.194,
+   "buriedTwinShare": 0.458,
+   "meanAbove": 1.125
+  },
+  "211": {
+   "tiles": 78,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 15.051,
+   "clockN": 10,
+   "clockRatio": 0.128,
+   "clockSlack": 1,
+   "clockDig": 5,
+   "clockSlackDig": 5,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.179,
+   "freeStart": 14,
+   "freeShare": 0.179,
+   "faceGroupsTwoFree": 4,
+   "faceGroupsTwoFreeShare": 0.111,
+   "buriedTwinShare": 0.744,
+   "meanAbove": 2.128
+  },
+  "212": {
+   "tiles": 80,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 15.35,
+   "clockN": 11,
+   "clockRatio": 0.138,
+   "clockSlack": 2,
+   "clockDig": 6,
+   "clockSlackDig": 5,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 6,
+   "layer3": 0.25,
+   "freeStart": 6,
+   "freeShare": 0.075,
+   "faceGroupsTwoFree": 1,
+   "faceGroupsTwoFreeShare": 0.028,
+   "buriedTwinShare": 0.825,
+   "meanAbove": 2.763
+  },
+  "213": {
+   "tiles": 74,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 13.811,
+   "clockN": 9,
+   "clockRatio": 0.122,
+   "clockSlack": 1,
+   "clockDig": 7,
+   "clockSlackDig": 2,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.095,
+   "freeStart": 15,
+   "freeShare": 0.203,
+   "faceGroupsTwoFree": 2,
+   "faceGroupsTwoFreeShare": 0.056,
+   "buriedTwinShare": 0.676,
+   "meanAbove": 1.986
+  },
+  "214": {
+   "tiles": 74,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 11.257,
+   "clockN": 9,
+   "clockRatio": 0.122,
+   "clockSlack": 2,
+   "clockDig": 4,
+   "clockSlackDig": 5,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.095,
+   "freeStart": 15,
+   "freeShare": 0.203,
+   "faceGroupsTwoFree": 3,
+   "faceGroupsTwoFreeShare": 0.083,
+   "buriedTwinShare": 0.649,
+   "meanAbove": 1.986
+  },
+  "215": {
+   "tiles": 88,
+   "faces": 32,
+   "copiesMax": 4,
+   "downShare": 18.932,
+   "clockN": 7,
+   "clockRatio": 0.08,
+   "clockSlack": 2,
+   "clockDig": 6,
+   "clockSlackDig": 1,
+   "clockFreeAtStart": false,
+   "ice": 7,
+   "locks": 4,
+   "keys": 2,
+   "maxLayer": 5,
+   "layer3": 0.295,
+   "freeStart": 16,
+   "freeShare": 0.182,
+   "faceGroupsTwoFree": 2,
+   "faceGroupsTwoFreeShare": 0.063,
+   "buriedTwinShare": 0.5,
+   "meanAbove": 1.67
+  },
+  "216": {
+   "tiles": 86,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 18.709,
+   "clockN": 7,
+   "clockRatio": 0.081,
+   "clockSlack": 2,
+   "clockDig": 4,
+   "clockSlackDig": 3,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 6,
+   "layer3": 0.372,
+   "freeStart": 13,
+   "freeShare": 0.151,
+   "faceGroupsTwoFree": 4,
+   "faceGroupsTwoFreeShare": 0.111,
+   "buriedTwinShare": 0.744,
+   "meanAbove": 2.128
+  },
+  "217": {
+   "tiles": 76,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 15.513,
+   "clockN": 6,
+   "clockRatio": 0.079,
+   "clockSlack": 1,
+   "clockDig": 5,
+   "clockSlackDig": 1,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.211,
+   "freeStart": 7,
+   "freeShare": 0.092,
+   "faceGroupsTwoFree": 0,
+   "faceGroupsTwoFreeShare": 0,
+   "buriedTwinShare": 0.816,
+   "meanAbove": 2.421
+  },
+  "218": {
+   "tiles": 74,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 13.973,
+   "clockN": 7,
+   "clockRatio": 0.095,
+   "clockSlack": 1,
+   "clockDig": 4,
+   "clockSlackDig": 3,
+   "clockFreeAtStart": false,
+   "ice": 9,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.149,
+   "freeStart": 12,
+   "freeShare": 0.162,
+   "faceGroupsTwoFree": 0,
+   "faceGroupsTwoFreeShare": 0,
+   "buriedTwinShare": 0.649,
+   "meanAbove": 2.149
+  },
+  "219": {
+   "tiles": 84,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 14.024,
+   "clockN": 6,
+   "clockRatio": 0.071,
+   "clockSlack": 1,
+   "clockDig": 3,
+   "clockSlackDig": 3,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.06,
+   "freeStart": 19,
+   "freeShare": 0.226,
+   "faceGroupsTwoFree": 5,
+   "faceGroupsTwoFreeShare": 0.139,
+   "buriedTwinShare": 0.571,
+   "meanAbove": 1.821
+  },
+  "220": {
+   "tiles": 92,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 18.37,
+   "clockN": 12,
+   "clockRatio": 0.13,
+   "clockSlack": 1,
+   "clockDig": 6,
+   "clockSlackDig": 6,
+   "clockFreeAtStart": false,
+   "ice": 9,
+   "locks": 5,
+   "keys": 2,
+   "maxLayer": 6,
+   "layer3": 0.359,
+   "freeStart": 13,
+   "freeShare": 0.141,
+   "faceGroupsTwoFree": 4,
+   "faceGroupsTwoFreeShare": 0.111,
+   "buriedTwinShare": 0.739,
+   "meanAbove": 2.12
+  },
+  "221": {
+   "tiles": 76,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 16.763,
+   "clockN": 8,
+   "clockRatio": 0.105,
+   "clockSlack": 1,
+   "clockDig": 4,
+   "clockSlackDig": 4,
+   "clockFreeAtStart": false,
+   "ice": 10,
+   "locks": 6,
+   "keys": 2,
+   "maxLayer": 5,
+   "layer3": 0.263,
+   "freeStart": 5,
+   "freeShare": 0.066,
+   "faceGroupsTwoFree": 1,
+   "faceGroupsTwoFreeShare": 0.028,
+   "buriedTwinShare": 0.868,
+   "meanAbove": 2.855
+  },
+  "222": {
+   "tiles": 86,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 18.058,
+   "clockN": 8,
+   "clockRatio": 0.093,
+   "clockSlack": 1,
+   "clockDig": 5,
+   "clockSlackDig": 3,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 5,
+   "layer3": 0.233,
+   "freeStart": 10,
+   "freeShare": 0.116,
+   "faceGroupsTwoFree": 1,
+   "faceGroupsTwoFreeShare": 0.028,
+   "buriedTwinShare": 0.744,
+   "meanAbove": 2.674
+  },
+  "223": {
+   "tiles": 80,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 15.988,
+   "clockN": 7,
+   "clockRatio": 0.087,
+   "clockSlack": 2,
+   "clockDig": 2,
+   "clockSlackDig": 5,
+   "clockFreeAtStart": false,
+   "ice": 9,
+   "locks": 5,
+   "keys": 2,
+   "maxLayer": 5,
+   "layer3": 0.287,
+   "freeStart": 12,
+   "freeShare": 0.15,
+   "faceGroupsTwoFree": 0,
+   "faceGroupsTwoFreeShare": 0,
+   "buriedTwinShare": 0.65,
+   "meanAbove": 1.6
+  },
+  "224": {
+   "tiles": 76,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 14.75,
+   "clockN": 14,
+   "clockRatio": 0.184,
+   "clockSlack": 2,
+   "clockDig": 10,
+   "clockSlackDig": 4,
+   "clockFreeAtStart": false,
+   "ice": 9,
+   "locks": 5,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.145,
+   "freeStart": 14,
+   "freeShare": 0.184,
+   "faceGroupsTwoFree": 3,
+   "faceGroupsTwoFreeShare": 0.083,
+   "buriedTwinShare": 0.658,
+   "meanAbove": 2.092
+  },
+  "225": {
+   "tiles": 86,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 17.372,
+   "clockN": 6,
+   "clockRatio": 0.07,
+   "clockSlack": 1,
+   "clockDig": 4,
+   "clockSlackDig": 2,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 5,
+   "layer3": 0.291,
+   "freeStart": 16,
+   "freeShare": 0.186,
+   "faceGroupsTwoFree": 4,
+   "faceGroupsTwoFreeShare": 0.111,
+   "buriedTwinShare": 0.651,
+   "meanAbove": 1.663
+  },
+  "226": {
+   "tiles": 72,
+   "faces": 36,
+   "copiesMax": 2,
+   "downShare": 10.347,
+   "clockN": 9,
+   "clockRatio": 0.125,
+   "clockSlack": 1,
+   "clockDig": 5,
+   "clockSlackDig": 4,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.042,
+   "freeStart": 16,
+   "freeShare": 0.222,
+   "faceGroupsTwoFree": 4,
+   "faceGroupsTwoFreeShare": 0.111,
+   "buriedTwinShare": 0.667,
+   "meanAbove": 1.722
+  },
+  "227": {
+   "tiles": 78,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 11.872,
+   "clockN": 6,
+   "clockRatio": 0.077,
+   "clockSlack": 1,
+   "clockDig": 3,
+   "clockSlackDig": 3,
+   "clockFreeAtStart": false,
+   "ice": 9,
+   "locks": 5,
+   "keys": 2,
+   "maxLayer": 5,
+   "layer3": 0.231,
+   "freeStart": 14,
+   "freeShare": 0.179,
+   "faceGroupsTwoFree": 3,
+   "faceGroupsTwoFreeShare": 0.083,
+   "buriedTwinShare": 0.667,
+   "meanAbove": 2.333
+  },
+  "228": {
+   "tiles": 74,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 13.716,
+   "clockN": 10,
+   "clockRatio": 0.135,
+   "clockSlack": 1,
+   "clockDig": 9,
+   "clockSlackDig": 1,
+   "clockFreeAtStart": false,
+   "ice": 11,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.081,
+   "freeStart": 10,
+   "freeShare": 0.135,
+   "faceGroupsTwoFree": 1,
+   "faceGroupsTwoFreeShare": 0.028,
+   "buriedTwinShare": 0.757,
+   "meanAbove": 1.73
+  },
+  "229": {
+   "tiles": 84,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 16.905,
+   "clockN": 6,
+   "clockRatio": 0.071,
+   "clockSlack": 1,
+   "clockDig": 3,
+   "clockSlackDig": 3,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 5,
+   "layer3": 0.238,
+   "freeStart": 20,
+   "freeShare": 0.238,
+   "faceGroupsTwoFree": 3,
+   "faceGroupsTwoFreeShare": 0.083,
+   "buriedTwinShare": 0.5,
+   "meanAbove": 1.464
+  },
+  "230": {
+   "tiles": 96,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 17.021,
+   "clockN": 10,
+   "clockRatio": 0.104,
+   "clockSlack": 2,
+   "clockDig": 7,
+   "clockSlackDig": 3,
+   "clockFreeAtStart": false,
+   "ice": 8,
+   "locks": 5,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.198,
+   "freeStart": 16,
+   "freeShare": 0.167,
+   "faceGroupsTwoFree": 3,
+   "faceGroupsTwoFreeShare": 0.083,
+   "buriedTwinShare": 0.667,
+   "meanAbove": 2.24
+  },
+  "231": {
+   "tiles": 76,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 14.026,
+   "clockN": 9,
+   "clockRatio": 0.118,
+   "clockSlack": 2,
+   "clockDig": 5,
+   "clockSlackDig": 4,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 5,
+   "layer3": 0.276,
+   "freeStart": 18,
+   "freeShare": 0.237,
+   "faceGroupsTwoFree": 4,
+   "faceGroupsTwoFreeShare": 0.111,
+   "buriedTwinShare": 0.605,
+   "meanAbove": 1.579
+  },
+  "232": {
+   "tiles": 88,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 15.33,
+   "clockN": 15,
+   "clockRatio": 0.17,
+   "clockSlack": 2,
+   "clockDig": 9,
+   "clockSlackDig": 6,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.08,
+   "freeStart": 19,
+   "freeShare": 0.216,
+   "faceGroupsTwoFree": 5,
+   "faceGroupsTwoFreeShare": 0.139,
+   "buriedTwinShare": 0.636,
+   "meanAbove": 1.943
+  },
+  "233": {
+   "tiles": 88,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 17.443,
+   "clockN": 6,
+   "clockRatio": 0.068,
+   "clockSlack": 1,
+   "clockDig": 3,
+   "clockSlackDig": 3,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 5,
+   "layer3": 0.227,
+   "freeStart": 8,
+   "freeShare": 0.091,
+   "faceGroupsTwoFree": 1,
+   "faceGroupsTwoFreeShare": 0.028,
+   "buriedTwinShare": 0.773,
+   "meanAbove": 2.705
+  },
+  "234": {
+   "tiles": 88,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 17.477,
+   "clockN": 7,
+   "clockRatio": 0.08,
+   "clockSlack": 2,
+   "clockDig": 4,
+   "clockSlackDig": 3,
+   "clockFreeAtStart": false,
+   "ice": 10,
+   "locks": 6,
+   "keys": 2,
+   "maxLayer": 5,
+   "layer3": 0.364,
+   "freeStart": 12,
+   "freeShare": 0.136,
+   "faceGroupsTwoFree": 2,
+   "faceGroupsTwoFreeShare": 0.056,
+   "buriedTwinShare": 0.705,
+   "meanAbove": 2.045
+  },
+  "235": {
+   "tiles": 88,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 18.216,
+   "clockN": 6,
+   "clockRatio": 0.068,
+   "clockSlack": 1,
+   "clockDig": 3,
+   "clockSlackDig": 3,
+   "clockFreeAtStart": false,
+   "ice": 9,
+   "locks": 5,
+   "keys": 2,
+   "maxLayer": 6,
+   "layer3": 0.375,
+   "freeStart": 9,
+   "freeShare": 0.102,
+   "faceGroupsTwoFree": 2,
+   "faceGroupsTwoFreeShare": 0.056,
+   "buriedTwinShare": 0.818,
+   "meanAbove": 2.193
+  },
+  "236": {
+   "tiles": 88,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 15.5,
+   "clockN": 6,
+   "clockRatio": 0.068,
+   "clockSlack": 1,
+   "clockDig": 3,
+   "clockSlackDig": 3,
+   "clockFreeAtStart": false,
+   "ice": 9,
+   "locks": 5,
+   "keys": 2,
+   "maxLayer": 6,
+   "layer3": 0.318,
+   "freeStart": 14,
+   "freeShare": 0.159,
+   "faceGroupsTwoFree": 4,
+   "faceGroupsTwoFreeShare": 0.111,
+   "buriedTwinShare": 0.659,
+   "meanAbove": 1.864
+  },
+  "237": {
+   "tiles": 88,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 16.227,
+   "clockN": 7,
+   "clockRatio": 0.08,
+   "clockSlack": 2,
+   "clockDig": 3,
+   "clockSlackDig": 4,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 5,
+   "layer3": 0.227,
+   "freeStart": 8,
+   "freeShare": 0.091,
+   "faceGroupsTwoFree": 0,
+   "faceGroupsTwoFreeShare": 0,
+   "buriedTwinShare": 0.75,
+   "meanAbove": 2.705
+  },
+  "238": {
+   "tiles": 86,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 17.581,
+   "clockN": 8,
+   "clockRatio": 0.093,
+   "clockSlack": 3,
+   "clockDig": 4,
+   "clockSlackDig": 4,
+   "clockFreeAtStart": false,
+   "ice": 6,
+   "locks": 4,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.221,
+   "freeStart": 10,
+   "freeShare": 0.116,
+   "faceGroupsTwoFree": 3,
+   "faceGroupsTwoFreeShare": 0.083,
+   "buriedTwinShare": 0.767,
+   "meanAbove": 2.5
+  },
+  "239": {
+   "tiles": 86,
+   "faces": 36,
+   "copiesMax": 4,
+   "downShare": 16.535,
+   "clockN": 10,
+   "clockRatio": 0.116,
+   "clockSlack": 1,
+   "clockDig": 5,
+   "clockSlackDig": 5,
+   "clockFreeAtStart": false,
+   "ice": 12,
+   "locks": 7,
+   "keys": 2,
+   "maxLayer": 4,
+   "layer3": 0.221,
+   "freeStart": 8,
+   "freeShare": 0.093,
+   "faceGroupsTwoFree": 0,
+   "faceGroupsTwoFreeShare": 0,
+   "buriedTwinShare": 0.767,
+   "meanAbove": 2.407
+  }
+ },
+ "corr": {
+  "tiles": {
+   "Gerda": {
+    "rho": 0.38,
+    "lo": 0.13,
+    "hi": 0.58,
+    "n": 40
+   },
+   "Dennis": {
+    "rho": 0.16,
+    "lo": -0.04,
+    "hi": 0.36,
+    "n": 70
+   },
+   "Y": {
+    "rho": 0.34,
+    "lo": 0.16,
+    "hi": 0.51,
+    "n": 70
+   },
+   "Dennis200_239": {
+    "rho": 0.17,
+    "lo": -0.09,
+    "hi": 0.44,
+    "n": 40
+   }
+  },
+  "downShare": {
+   "Gerda": {
+    "rho": -0.14,
+    "lo": -0.37,
+    "hi": 0.12,
+    "n": 40
+   },
+   "Dennis": {
+    "rho": -0.07,
+    "lo": -0.25,
+    "hi": 0.13,
+    "n": 70
+   },
+   "Y": {
+    "rho": 0.01,
+    "lo": -0.16,
+    "hi": 0.2,
+    "n": 70
+   },
+   "Dennis200_239": {
+    "rho": 0.04,
+    "lo": -0.22,
+    "hi": 0.29,
+    "n": 40
+   }
+  },
+  "clockN": {
+   "Gerda": {
+    "rho": -0.25,
+    "lo": -0.5,
+    "hi": 0.02,
+    "n": 40
+   },
+   "Dennis": {
+    "rho": -0.09,
+    "lo": -0.29,
+    "hi": 0.13,
+    "n": 70
+   },
+   "Y": {
+    "rho": -0.15,
+    "lo": -0.36,
+    "hi": 0.05,
+    "n": 70
+   },
+   "Dennis200_239": {
+    "rho": -0.09,
+    "lo": -0.36,
+    "hi": 0.19,
+    "n": 40
+   }
+  },
+  "clockRatio": {
+   "Gerda": {
+    "rho": -0.3,
+    "lo": -0.54,
+    "hi": 0,
+    "n": 40
+   },
+   "Dennis": {
+    "rho": -0.14,
+    "lo": -0.33,
+    "hi": 0.05,
+    "n": 70
+   },
+   "Y": {
+    "rho": -0.23,
+    "lo": -0.42,
+    "hi": -0.02,
+    "n": 70
+   },
+   "Dennis200_239": {
+    "rho": -0.13,
+    "lo": -0.37,
+    "hi": 0.13,
+    "n": 40
+   }
+  },
+  "clockSlack": {
+   "Gerda": {
+    "rho": -0.16,
+    "lo": -0.42,
+    "hi": 0.12,
+    "n": 40
+   },
+   "Dennis": {
+    "rho": -0.11,
+    "lo": -0.31,
+    "hi": 0.09,
+    "n": 70
+   },
+   "Y": {
+    "rho": -0.01,
+    "lo": -0.2,
+    "hi": 0.19,
+    "n": 70
+   },
+   "Dennis200_239": {
+    "rho": -0.15,
+    "lo": -0.38,
+    "hi": 0.11,
+    "n": 40
+   }
+  },
+  "clockDig": {
+   "Gerda": {
+    "rho": -0.14,
+    "lo": -0.4,
+    "hi": 0.18,
+    "n": 40
+   },
+   "Dennis": {
+    "rho": 0.09,
+    "lo": -0.11,
+    "hi": 0.29,
+    "n": 70
+   },
+   "Y": {
+    "rho": 0,
+    "lo": -0.19,
+    "hi": 0.22,
+    "n": 70
+   },
+   "Dennis200_239": {
+    "rho": 0.01,
+    "lo": -0.26,
+    "hi": 0.27,
+    "n": 40
+   }
+  },
+  "clockSlackDig": {
+   "Gerda": {
+    "rho": -0.02,
+    "lo": -0.29,
+    "hi": 0.22,
+    "n": 40
+   },
+   "Dennis": {
+    "rho": -0.21,
+    "lo": -0.41,
+    "hi": -0.01,
+    "n": 70
+   },
+   "Y": {
+    "rho": -0.16,
+    "lo": -0.35,
+    "hi": 0.03,
+    "n": 70
+   },
+   "Dennis200_239": {
+    "rho": -0.27,
+    "lo": -0.52,
+    "hi": -0.02,
+    "n": 40
+   }
+  },
+  "ice": {
+   "Gerda": {
+    "rho": -0.09,
+    "lo": -0.35,
+    "hi": 0.18,
+    "n": 40
+   },
+   "Dennis": {
+    "rho": -0.07,
+    "lo": -0.27,
+    "hi": 0.12,
+    "n": 70
+   },
+   "Y": {
+    "rho": -0.04,
+    "lo": -0.24,
+    "hi": 0.17,
+    "n": 70
+   },
+   "Dennis200_239": {
+    "rho": -0.17,
+    "lo": -0.45,
+    "hi": 0.11,
+    "n": 40
+   }
+  },
+  "locks": {
+   "Gerda": {
+    "rho": -0.07,
+    "lo": -0.33,
+    "hi": 0.21,
+    "n": 40
+   },
+   "Dennis": {
+    "rho": -0.12,
+    "lo": -0.32,
+    "hi": 0.08,
+    "n": 70
+   },
+   "Y": {
+    "rho": 0,
+    "lo": -0.21,
+    "hi": 0.19,
+    "n": 70
+   },
+   "Dennis200_239": {
+    "rho": -0.19,
+    "lo": -0.48,
+    "hi": 0.07,
+    "n": 40
+   }
+  },
+  "keys": {
+   "Gerda": null,
+   "Dennis": null,
+   "Y": null,
+   "Dennis200_239": null
+  },
+  "maxLayer": {
+   "Gerda": {
+    "rho": -0.01,
+    "lo": -0.32,
+    "hi": 0.29,
+    "n": 40
+   },
+   "Dennis": {
+    "rho": 0.07,
+    "lo": -0.14,
+    "hi": 0.28,
+    "n": 70
+   },
+   "Y": {
+    "rho": 0.03,
+    "lo": -0.16,
+    "hi": 0.22,
+    "n": 70
+   },
+   "Dennis200_239": {
+    "rho": 0.16,
+    "lo": -0.12,
+    "hi": 0.45,
+    "n": 40
+   }
+  },
+  "layer3": {
+   "Gerda": {
+    "rho": -0.06,
+    "lo": -0.35,
+    "hi": 0.26,
+    "n": 40
+   },
+   "Dennis": {
+    "rho": 0.04,
+    "lo": -0.16,
+    "hi": 0.24,
+    "n": 70
+   },
+   "Y": {
+    "rho": 0.09,
+    "lo": -0.11,
+    "hi": 0.29,
+    "n": 70
+   },
+   "Dennis200_239": {
+    "rho": 0.24,
+    "lo": -0.03,
+    "hi": 0.49,
+    "n": 40
+   }
+  },
+  "freeStart": {
+   "Gerda": {
+    "rho": 0.14,
+    "lo": -0.14,
+    "hi": 0.39,
+    "n": 40
+   },
+   "Dennis": {
+    "rho": -0.05,
+    "lo": -0.26,
+    "hi": 0.15,
+    "n": 70
+   },
+   "Y": {
+    "rho": -0.05,
+    "lo": -0.26,
+    "hi": 0.15,
+    "n": 70
+   },
+   "Dennis200_239": {
+    "rho": -0.01,
+    "lo": -0.25,
+    "hi": 0.24,
+    "n": 40
+   }
+  },
+  "freeShare": {
+   "Gerda": {
+    "rho": 0.06,
+    "lo": -0.18,
+    "hi": 0.31,
+    "n": 40
+   },
+   "Dennis": {
+    "rho": -0.09,
+    "lo": -0.27,
+    "hi": 0.09,
+    "n": 70
+   },
+   "Y": {
+    "rho": -0.11,
+    "lo": -0.32,
+    "hi": 0.09,
+    "n": 70
+   },
+   "Dennis200_239": {
+    "rho": -0.06,
+    "lo": -0.3,
+    "hi": 0.19,
+    "n": 40
+   }
+  },
+  "faceGroupsTwoFreeShare": {
+   "Gerda": {
+    "rho": 0.39,
+    "lo": 0.11,
+    "hi": 0.61,
+    "n": 40
+   },
+   "Dennis": {
+    "rho": -0.09,
+    "lo": -0.3,
+    "hi": 0.11,
+    "n": 70
+   },
+   "Y": {
+    "rho": 0.13,
+    "lo": -0.09,
+    "hi": 0.33,
+    "n": 70
+   },
+   "Dennis200_239": {
+    "rho": -0.07,
+    "lo": -0.3,
+    "hi": 0.21,
+    "n": 40
+   }
+  },
+  "buriedTwinShare": {
+   "Gerda": {
+    "rho": -0.11,
+    "lo": -0.36,
+    "hi": 0.15,
+    "n": 40
+   },
+   "Dennis": {
+    "rho": 0.05,
+    "lo": -0.14,
+    "hi": 0.25,
+    "n": 70
+   },
+   "Y": {
+    "rho": 0.08,
+    "lo": -0.12,
+    "hi": 0.29,
+    "n": 70
+   },
+   "Dennis200_239": {
+    "rho": 0.02,
+    "lo": -0.24,
+    "hi": 0.26,
+    "n": 40
+   }
+  },
+  "meanAbove": {
+   "Gerda": {
+    "rho": -0.09,
+    "lo": -0.36,
+    "hi": 0.19,
+    "n": 40
+   },
+   "Dennis": {
+    "rho": 0.08,
+    "lo": -0.1,
+    "hi": 0.27,
+    "n": 70
+   },
+   "Y": {
+    "rho": 0.1,
+    "lo": -0.08,
+    "hi": 0.3,
+    "n": 70
+   },
+   "Dennis200_239": {
+    "rho": 0.01,
+    "lo": -0.23,
+    "hi": 0.24,
+    "n": 40
+   }
+  },
+  "D20": {
+   "Gerda": {
+    "rho": 0.31,
+    "lo": 0.06,
+    "hi": 0.52,
+    "n": 40
+   },
+   "Dennis": {
+    "rho": 0.12,
+    "lo": -0.07,
+    "hi": 0.32,
+    "n": 70
+   },
+   "Y": {
+    "rho": 0.12,
+    "lo": -0.09,
+    "hi": 0.31,
+    "n": 70
+   },
+   "Dennis200_239": {
+    "rho": 0.16,
+    "lo": -0.1,
+    "hi": 0.39,
+    "n": 40
+   }
+  },
+  "S": {
+   "Gerda": {
+    "rho": 0.15,
+    "lo": -0.1,
+    "hi": 0.43,
+    "n": 40
+   },
+   "Dennis": {
+    "rho": 0.15,
+    "lo": -0.04,
+    "hi": 0.34,
+    "n": 70
+   },
+   "Y": {
+    "rho": 0.11,
+    "lo": -0.09,
+    "hi": 0.33,
+    "n": 70
+   },
+   "Dennis200_239": {
+    "rho": 0.25,
+    "lo": 0.01,
+    "hi": 0.46,
+    "n": 40
+   }
+  }
+ },
+ "groups": {
+  "Gerda 10+ tries (n of 40 levels)": {
+   "hardLevels": [
+    171,
+    176,
+    187,
+    188,
+    190,
+    196,
+    197,
+    200,
+    205,
+    209
+   ],
+   "g": {
+    "tiles": {
+     "auc": 0.73,
+     "lo": 0.58,
+     "hi": 0.88,
+     "nHard": 10,
+     "nEasy": 30,
+     "medHard": 88,
+     "medEasy": 86
+    },
+    "downShare": {
+     "auc": 0.47,
+     "lo": 0.31,
+     "hi": 0.63,
+     "nHard": 10,
+     "nEasy": 30,
+     "medHard": 16.648,
+     "medEasy": 16.807
+    },
+    "clockN": {
+     "auc": 0.31,
+     "lo": 0.16,
+     "hi": 0.47,
+     "nHard": 10,
+     "nEasy": 30,
+     "medHard": 7,
+     "medEasy": 8
+    },
+    "clockRatio": {
+     "auc": 0.28,
+     "lo": 0.12,
+     "hi": 0.47,
+     "nHard": 10,
+     "nEasy": 30,
+     "medHard": 0.08,
+     "medEasy": 0.091
+    },
+    "clockSlack": {
+     "auc": 0.39,
+     "lo": 0.25,
+     "hi": 0.55,
+     "nHard": 10,
+     "nEasy": 30,
+     "medHard": 2,
+     "medEasy": 2
+    },
+    "clockDig": {
+     "auc": 0.38,
+     "lo": 0.23,
+     "hi": 0.54,
+     "nHard": 10,
+     "nEasy": 30,
+     "medHard": 4,
+     "medEasy": 4
+    },
+    "clockSlackDig": {
+     "auc": 0.48,
+     "lo": 0.33,
+     "hi": 0.64,
+     "nHard": 10,
+     "nEasy": 30,
+     "medHard": 4,
+     "medEasy": 3
+    },
+    "ice": {
+     "auc": 0.42,
+     "lo": 0.26,
+     "hi": 0.57,
+     "nHard": 10,
+     "nEasy": 30,
+     "medHard": 12,
+     "medEasy": 12
+    },
+    "locks": {
+     "auc": 0.46,
+     "lo": 0.3,
+     "hi": 0.6,
+     "nHard": 10,
+     "nEasy": 30,
+     "medHard": 7,
+     "medEasy": 7
+    },
+    "keys": {
+     "auc": 0.5,
+     "lo": 0.5,
+     "hi": 0.5,
+     "nHard": 10,
+     "nEasy": 30,
+     "medHard": 2,
+     "medEasy": 2
+    },
+    "maxLayer": {
+     "auc": 0.6,
+     "lo": 0.44,
+     "hi": 0.74,
+     "nHard": 10,
+     "nEasy": 30,
+     "medHard": 5,
+     "medEasy": 4
+    },
+    "layer3": {
+     "auc": 0.56,
+     "lo": 0.37,
+     "hi": 0.74,
+     "nHard": 10,
+     "nEasy": 30,
+     "medHard": 0.257,
+     "medEasy": 0.236
+    },
+    "freeStart": {
+     "auc": 0.71,
+     "lo": 0.56,
+     "hi": 0.84,
+     "nHard": 10,
+     "nEasy": 30,
+     "medHard": 14,
+     "medEasy": 11
+    },
+    "freeShare": {
+     "auc": 0.67,
+     "lo": 0.52,
+     "hi": 0.81,
+     "nHard": 10,
+     "nEasy": 30,
+     "medHard": 0.17,
+     "medEasy": 0.131
+    },
+    "faceGroupsTwoFreeShare": {
+     "auc": 0.81,
+     "lo": 0.71,
+     "hi": 0.91,
+     "nHard": 10,
+     "nEasy": 30,
+     "medHard": 0.111,
+     "medEasy": 0.056
+    },
+    "buriedTwinShare": {
+     "auc": 0.33,
+     "lo": 0.19,
+     "hi": 0.5,
+     "nHard": 10,
+     "nEasy": 30,
+     "medHard": 0.682,
+     "medEasy": 0.75
+    },
+    "meanAbove": {
+     "auc": 0.33,
+     "lo": 0.18,
+     "hi": 0.48,
+     "nHard": 10,
+     "nEasy": 30,
+     "medHard": 1.989,
+     "medEasy": 2.292
+    },
+    "D20": {
+     "auc": 0.78,
+     "lo": 0.65,
+     "hi": 0.9,
+     "nHard": 10,
+     "nEasy": 30,
+     "medHard": 4.67,
+     "medEasy": 2.39
+    },
+    "S": {
+     "auc": 0.63,
+     "lo": 0.46,
+     "hi": 0.79,
+     "nHard": 10,
+     "nEasy": 30,
+     "medHard": 1.4,
+     "medEasy": 1.1
+    }
+   }
+  },
+  "Dennis 3+ tries (n of 70 levels)": {
+   "hardLevels": [
+    176,
+    177,
+    182,
+    185,
+    196,
+    205,
+    217,
+    220,
+    230
+   ],
+   "g": {
+    "tiles": {
+     "auc": 0.7,
+     "lo": 0.54,
+     "hi": 0.82,
+     "nHard": 9,
+     "nEasy": 61,
+     "medHard": 88,
+     "medEasy": 86
+    },
+    "downShare": {
+     "auc": 0.49,
+     "lo": 0.35,
+     "hi": 0.64,
+     "nHard": 9,
+     "nEasy": 61,
+     "medHard": 15.989,
+     "medEasy": 16.535
+    },
+    "clockN": {
+     "auc": 0.43,
+     "lo": 0.23,
+     "hi": 0.62,
+     "nHard": 9,
+     "nEasy": 61,
+     "medHard": 7,
+     "medEasy": 8
+    },
+    "clockRatio": {
+     "auc": 0.39,
+     "lo": 0.22,
+     "hi": 0.57,
+     "nHard": 9,
+     "nEasy": 61,
+     "medHard": 0.08,
+     "medEasy": 0.091
+    },
+    "clockSlack": {
+     "auc": 0.44,
+     "lo": 0.3,
+     "hi": 0.58,
+     "nHard": 9,
+     "nEasy": 61,
+     "medHard": 1,
+     "medEasy": 2
+    },
+    "clockDig": {
+     "auc": 0.53,
+     "lo": 0.38,
+     "hi": 0.69,
+     "nHard": 9,
+     "nEasy": 61,
+     "medHard": 5,
+     "medEasy": 4
+    },
+    "clockSlackDig": {
+     "auc": 0.44,
+     "lo": 0.28,
+     "hi": 0.61,
+     "nHard": 9,
+     "nEasy": 61,
+     "medHard": 3,
+     "medEasy": 3
+    },
+    "ice": {
+     "auc": 0.42,
+     "lo": 0.26,
+     "hi": 0.57,
+     "nHard": 9,
+     "nEasy": 61,
+     "medHard": 11,
+     "medEasy": 12
+    },
+    "locks": {
+     "auc": 0.38,
+     "lo": 0.24,
+     "hi": 0.52,
+     "nHard": 9,
+     "nEasy": 61,
+     "medHard": 6,
+     "medEasy": 7
+    },
+    "keys": {
+     "auc": 0.5,
+     "lo": 0.5,
+     "hi": 0.5,
+     "nHard": 9,
+     "nEasy": 61,
+     "medHard": 2,
+     "medEasy": 2
+    },
+    "maxLayer": {
+     "auc": 0.53,
+     "lo": 0.35,
+     "hi": 0.7,
+     "nHard": 9,
+     "nEasy": 61,
+     "medHard": 4,
+     "medEasy": 4
+    },
+    "layer3": {
+     "auc": 0.5,
+     "lo": 0.32,
+     "hi": 0.69,
+     "nHard": 9,
+     "nEasy": 61,
+     "medHard": 0.211,
+     "medEasy": 0.231
+    },
+    "freeStart": {
+     "auc": 0.5,
+     "lo": 0.32,
+     "hi": 0.66,
+     "nHard": 9,
+     "nEasy": 61,
+     "medHard": 13,
+     "medEasy": 12
+    },
+    "freeShare": {
+     "auc": 0.45,
+     "lo": 0.3,
+     "hi": 0.62,
+     "nHard": 9,
+     "nEasy": 61,
+     "medHard": 0.141,
+     "medEasy": 0.14
+    },
+    "faceGroupsTwoFreeShare": {
+     "auc": 0.52,
+     "lo": 0.35,
+     "hi": 0.71,
+     "nHard": 9,
+     "nEasy": 61,
+     "medHard": 0.083,
+     "medEasy": 0.083
+    },
+    "buriedTwinShare": {
+     "auc": 0.51,
+     "lo": 0.34,
+     "hi": 0.67,
+     "nHard": 9,
+     "nEasy": 61,
+     "medHard": 0.714,
+     "medEasy": 0.705
+    },
+    "meanAbove": {
+     "auc": 0.5,
+     "lo": 0.38,
+     "hi": 0.65,
+     "nHard": 9,
+     "nEasy": 61,
+     "medHard": 2.12,
+     "medEasy": 2.151
+    },
+    "D20": {
+     "auc": 0.52,
+     "lo": 0.33,
+     "hi": 0.69,
+     "nHard": 9,
+     "nEasy": 61,
+     "medHard": 2.83,
+     "medEasy": 2.94
+    },
+    "S": {
+     "auc": 0.49,
+     "lo": 0.34,
+     "hi": 0.64,
+     "nHard": 9,
+     "nEasy": 61,
+     "medHard": 1.18,
+     "medEasy": 1.15
+    }
+   }
+  },
+  "Dennis 3+ tries within the 40 Gerda levels": {
+   "hardLevels": [
+    176,
+    177,
+    182,
+    185,
+    196,
+    205
+   ],
+   "g": {
+    "tiles": {
+     "auc": 0.64,
+     "lo": 0.51,
+     "hi": 0.78,
+     "nHard": 6,
+     "nEasy": 34,
+     "medHard": 88,
+     "medEasy": 86
+    },
+    "downShare": {
+     "auc": 0.35,
+     "lo": 0.2,
+     "hi": 0.51,
+     "nHard": 6,
+     "nEasy": 34,
+     "medHard": 15.989,
+     "medEasy": 16.898
+    },
+    "clockN": {
+     "auc": 0.31,
+     "lo": 0.13,
+     "hi": 0.52,
+     "nHard": 6,
+     "nEasy": 34,
+     "medHard": 7,
+     "medEasy": 8
+    },
+    "clockRatio": {
+     "auc": 0.29,
+     "lo": 0.11,
+     "hi": 0.51,
+     "nHard": 6,
+     "nEasy": 34,
+     "medHard": 0.08,
+     "medEasy": 0.091
+    },
+    "clockSlack": {
+     "auc": 0.4,
+     "lo": 0.23,
+     "hi": 0.59,
+     "nHard": 6,
+     "nEasy": 34,
+     "medHard": 2,
+     "medEasy": 2
+    },
+    "clockDig": {
+     "auc": 0.4,
+     "lo": 0.24,
+     "hi": 0.59,
+     "nHard": 6,
+     "nEasy": 34,
+     "medHard": 4,
+     "medEasy": 4
+    },
+    "clockSlackDig": {
+     "auc": 0.43,
+     "lo": 0.26,
+     "hi": 0.62,
+     "nHard": 6,
+     "nEasy": 34,
+     "medHard": 3,
+     "medEasy": 4
+    },
+    "ice": {
+     "auc": 0.45,
+     "lo": 0.25,
+     "hi": 0.63,
+     "nHard": 6,
+     "nEasy": 34,
+     "medHard": 12,
+     "medEasy": 12
+    },
+    "locks": {
+     "auc": 0.39,
+     "lo": 0.21,
+     "hi": 0.54,
+     "nHard": 6,
+     "nEasy": 34,
+     "medHard": 7,
+     "medEasy": 7
+    },
+    "keys": {
+     "auc": 0.5,
+     "lo": 0.5,
+     "hi": 0.5,
+     "nHard": 6,
+     "nEasy": 34,
+     "medHard": 2,
+     "medEasy": 2
+    },
+    "maxLayer": {
+     "auc": 0.57,
+     "lo": 0.37,
+     "hi": 0.77,
+     "nHard": 6,
+     "nEasy": 34,
+     "medHard": 5,
+     "medEasy": 4
+    },
+    "layer3": {
+     "auc": 0.46,
+     "lo": 0.2,
+     "hi": 0.73,
+     "nHard": 6,
+     "nEasy": 34,
+     "medHard": 0.261,
+     "medEasy": 0.236
+    },
+    "freeStart": {
+     "auc": 0.54,
+     "lo": 0.3,
+     "hi": 0.77,
+     "nHard": 6,
+     "nEasy": 34,
+     "medHard": 14,
+     "medEasy": 12
+    },
+    "freeShare": {
+     "auc": 0.51,
+     "lo": 0.27,
+     "hi": 0.72,
+     "nHard": 6,
+     "nEasy": 34,
+     "medHard": 0.159,
+     "medEasy": 0.136
+    },
+    "faceGroupsTwoFreeShare": {
+     "auc": 0.52,
+     "lo": 0.27,
+     "hi": 0.78,
+     "nHard": 6,
+     "nEasy": 34,
+     "medHard": 0.083,
+     "medEasy": 0.083
+    },
+    "buriedTwinShare": {
+     "auc": 0.41,
+     "lo": 0.23,
+     "hi": 0.61,
+     "nHard": 6,
+     "nEasy": 34,
+     "medHard": 0.714,
+     "medEasy": 0.727
+    },
+    "meanAbove": {
+     "auc": 0.43,
+     "lo": 0.23,
+     "hi": 0.65,
+     "nHard": 6,
+     "nEasy": 34,
+     "medHard": 2.068,
+     "medEasy": 2.292
+    },
+    "D20": {
+     "auc": 0.5,
+     "lo": 0.27,
+     "hi": 0.74,
+     "nHard": 6,
+     "nEasy": 34,
+     "medHard": 2.83,
+     "medEasy": 3.13
+    },
+    "S": {
+     "auc": 0.43,
+     "lo": 0.24,
+     "hi": 0.61,
+     "nHard": 6,
+     "nEasy": 34,
+     "medHard": 1.13,
+     "medEasy": 1.25
+    }
+   }
+  }
+ },
+ "clockCorr": {
+  "clockN": {
+   "gerdaClockLosses": {
+    "rho": -0.28,
+    "lo": -0.55,
+    "hi": 0.01,
+    "n": 40
+   },
+   "gerdaTrayLosses": {
+    "rho": -0.19,
+    "lo": -0.45,
+    "hi": 0.1,
+    "n": 40
+   }
+  },
+  "clockRatio": {
+   "gerdaClockLosses": {
+    "rho": -0.34,
+    "lo": -0.56,
+    "hi": -0.08,
+    "n": 40
+   },
+   "gerdaTrayLosses": {
+    "rho": -0.23,
+    "lo": -0.51,
+    "hi": 0.08,
+    "n": 40
+   }
+  },
+  "clockSlack": {
+   "gerdaClockLosses": {
+    "rho": -0.29,
+    "lo": -0.54,
+    "hi": -0.02,
+    "n": 40
+   },
+   "gerdaTrayLosses": {
+    "rho": -0.09,
+    "lo": -0.36,
+    "hi": 0.18,
+    "n": 40
+   }
+  },
+  "clockDig": {
+   "gerdaClockLosses": {
+    "rho": -0.12,
+    "lo": -0.4,
+    "hi": 0.16,
+    "n": 40
+   },
+   "gerdaTrayLosses": {
+    "rho": -0.08,
+    "lo": -0.35,
+    "hi": 0.19,
+    "n": 40
+   }
+  },
+  "clockSlackDig": {
+   "gerdaClockLosses": {
+    "rho": -0.15,
+    "lo": -0.42,
+    "hi": 0.12,
+    "n": 40
+   },
+   "gerdaTrayLosses": {
+    "rho": 0.02,
+    "lo": -0.27,
+    "hi": 0.29,
+    "n": 40
+   }
+  },
+  "tiles": {
+   "gerdaClockLosses": {
+    "rho": 0.3,
+    "lo": 0.09,
+    "hi": 0.51,
+    "n": 40
+   },
+   "gerdaTrayLosses": {
+    "rho": 0.36,
+    "lo": 0.1,
+    "hi": 0.59,
+    "n": 40
+   }
+  },
+  "faceGroupsTwoFreeShare": {
+   "gerdaClockLosses": {
+    "rho": 0.33,
+    "lo": 0.08,
+    "hi": 0.55,
+    "n": 40
+   },
+   "gerdaTrayLosses": {
+    "rho": 0.41,
+    "lo": 0.18,
+    "hi": 0.61,
+    "n": 40
+   }
+  },
+  "downShare": {
+   "gerdaClockLosses": {
+    "rho": -0.11,
+    "lo": -0.33,
+    "hi": 0.11,
+    "n": 40
+   },
+   "gerdaTrayLosses": {
+    "rho": -0.15,
+    "lo": -0.41,
+    "hi": 0.11,
+    "n": 40
+   }
+  },
+  "freeStart": {
+   "gerdaClockLosses": {
+    "rho": 0.1,
+    "lo": -0.13,
+    "hi": 0.35,
+    "n": 40
+   },
+   "gerdaTrayLosses": {
+    "rho": 0.21,
+    "lo": -0.05,
+    "hi": 0.43,
+    "n": 40
+   }
+  }
+ },
+ "gerdaLostCorr": {
+  "tiles": {
+   "rho": 0.38,
+   "lo": 0.13,
+   "hi": 0.58,
+   "n": 40
+  },
+  "downShare": {
+   "rho": -0.14,
+   "lo": -0.39,
+   "hi": 0.11,
+   "n": 40
+  },
+  "clockN": {
+   "rho": -0.25,
+   "lo": -0.5,
+   "hi": 0.03,
+   "n": 40
+  },
+  "clockRatio": {
+   "rho": -0.29,
+   "lo": -0.55,
+   "hi": -0.02,
+   "n": 40
+  },
+  "clockSlack": {
+   "rho": -0.16,
+   "lo": -0.41,
+   "hi": 0.12,
+   "n": 40
+  },
+  "clockDig": {
+   "rho": -0.13,
+   "lo": -0.38,
+   "hi": 0.16,
+   "n": 40
+  },
+  "clockSlackDig": {
+   "rho": -0.02,
+   "lo": -0.28,
+   "hi": 0.25,
+   "n": 40
+  },
+  "ice": {
+   "rho": -0.1,
+   "lo": -0.35,
+   "hi": 0.18,
+   "n": 40
+  },
+  "locks": {
+   "rho": -0.07,
+   "lo": -0.34,
+   "hi": 0.2,
+   "n": 40
+  },
+  "maxLayer": {
+   "rho": -0.01,
+   "lo": -0.3,
+   "hi": 0.28,
+   "n": 40
+  },
+  "layer3": {
+   "rho": -0.06,
+   "lo": -0.34,
+   "hi": 0.25,
+   "n": 40
+  },
+  "freeStart": {
+   "rho": 0.14,
+   "lo": -0.14,
+   "hi": 0.39,
+   "n": 40
+  },
+  "freeShare": {
+   "rho": 0.06,
+   "lo": -0.19,
+   "hi": 0.31,
+   "n": 40
+  },
+  "faceGroupsTwoFreeShare": {
+   "rho": 0.39,
+   "lo": 0.13,
+   "hi": 0.61,
+   "n": 40
+  },
+  "buriedTwinShare": {
+   "rho": -0.11,
+   "lo": -0.37,
+   "hi": 0.15,
+   "n": 40
+  },
+  "meanAbove": {
+   "rho": -0.09,
+   "lo": -0.38,
+   "hi": 0.19,
+   "n": 40
+  },
+  "D20": {
+   "rho": 0.3,
+   "lo": 0.05,
+   "hi": 0.52,
+   "n": 40
+  },
+  "S": {
+   "rho": 0.16,
+   "lo": -0.12,
+   "hi": 0.43,
+   "n": 40
+  }
+ },
+ "gerdaHardMix": {
+  "hardLevels": [
+   171,
+   176,
+   187,
+   188,
+   190,
+   196,
+   197,
+   200,
+   205,
+   209
+  ],
+  "hard": {
+   "clock": 51,
+   "tray": 138,
+   "restart": 17
+  },
+  "easy": {
+   "clock": 11,
+   "tray": 44,
+   "restart": 6
+  }
+ },
+ "clockLevelsTable": [
+  {
+   "lv": 170,
+   "clockN": 8,
+   "tiles": 96,
+   "slack": 2,
+   "dig": 5,
+   "Dennis": 1,
+   "Gerda": 2,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 171,
+   "clockN": 8,
+   "tiles": 74,
+   "slack": 2,
+   "dig": 4,
+   "Dennis": 1,
+   "Gerda": 11,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 172,
+   "clockN": 6,
+   "tiles": 76,
+   "slack": 1,
+   "dig": 3,
+   "Dennis": 1,
+   "Gerda": 1,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 173,
+   "clockN": 7,
+   "tiles": 80,
+   "slack": 2,
+   "dig": 4,
+   "Dennis": 1,
+   "Gerda": 2,
+   "clockLossesAll": 3
+  },
+  {
+   "lv": 174,
+   "clockN": 8,
+   "tiles": 88,
+   "slack": 2,
+   "dig": 4,
+   "Dennis": 2,
+   "Gerda": 1,
+   "clockLossesAll": 2
+  },
+  {
+   "lv": 175,
+   "clockN": 6,
+   "tiles": 88,
+   "slack": 1,
+   "dig": 3,
+   "Dennis": 1,
+   "Gerda": 5,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 176,
+   "clockN": 7,
+   "tiles": 88,
+   "slack": 2,
+   "dig": 3,
+   "Dennis": 3,
+   "Gerda": 15,
+   "clockLossesAll": 2
+  },
+  {
+   "lv": 177,
+   "clockN": 10,
+   "tiles": 88,
+   "slack": 2,
+   "dig": 5,
+   "Dennis": 6,
+   "Gerda": 7,
+   "clockLossesAll": 3
+  },
+  {
+   "lv": 178,
+   "clockN": 8,
+   "tiles": 88,
+   "slack": 1,
+   "dig": 5,
+   "Dennis": 1,
+   "Gerda": 1,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 179,
+   "clockN": 8,
+   "tiles": 88,
+   "slack": 1,
+   "dig": 7,
+   "Dennis": 2,
+   "Gerda": 6,
+   "clockLossesAll": 4
+  },
+  {
+   "lv": 180,
+   "clockN": 6,
+   "tiles": 96,
+   "slack": 1,
+   "dig": 3,
+   "Dennis": 1,
+   "Gerda": 3,
+   "clockLossesAll": 1
+  },
+  {
+   "lv": 181,
+   "clockN": 9,
+   "tiles": 88,
+   "slack": 3,
+   "dig": 4,
+   "Dennis": 1,
+   "Gerda": 4,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 182,
+   "clockN": 6,
+   "tiles": 88,
+   "slack": 1,
+   "dig": 5,
+   "Dennis": 3,
+   "Gerda": 2,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 183,
+   "clockN": 10,
+   "tiles": 88,
+   "slack": 2,
+   "dig": 5,
+   "Dennis": 1,
+   "Gerda": 6,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 184,
+   "clockN": 9,
+   "tiles": 86,
+   "slack": 2,
+   "dig": 4,
+   "Dennis": 1,
+   "Gerda": 2,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 185,
+   "clockN": 7,
+   "tiles": 84,
+   "slack": 2,
+   "dig": 4,
+   "Dennis": 3,
+   "Gerda": 5,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 186,
+   "clockN": 8,
+   "tiles": 86,
+   "slack": 2,
+   "dig": 6,
+   "Dennis": 1,
+   "Gerda": 1,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 187,
+   "clockN": 6,
+   "tiles": 88,
+   "slack": 1,
+   "dig": 3,
+   "Dennis": 1,
+   "Gerda": 12,
+   "clockLossesAll": 2
+  },
+  {
+   "lv": 188,
+   "clockN": 8,
+   "tiles": 88,
+   "slack": 2,
+   "dig": 4,
+   "Dennis": 1,
+   "Gerda": 20,
+   "clockLossesAll": 7
+  },
+  {
+   "lv": 189,
+   "clockN": 10,
+   "tiles": 88,
+   "slack": 2,
+   "dig": 3,
+   "Dennis": 1,
+   "Gerda": 2,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 190,
+   "clockN": 6,
+   "tiles": 96,
+   "slack": 1,
+   "dig": 5,
+   "Dennis": 2,
+   "Gerda": 12,
+   "clockLossesAll": 3
+  },
+  {
+   "lv": 191,
+   "clockN": 7,
+   "tiles": 84,
+   "slack": 2,
+   "dig": 4,
+   "Dennis": 2,
+   "Gerda": 2,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 192,
+   "clockN": 6,
+   "tiles": 76,
+   "slack": 1,
+   "dig": 3,
+   "Dennis": 1,
+   "Gerda": 5,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 193,
+   "clockN": 9,
+   "tiles": 86,
+   "slack": 2,
+   "dig": 3,
+   "Dennis": 1,
+   "Gerda": 1,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 194,
+   "clockN": 7,
+   "tiles": 84,
+   "slack": 2,
+   "dig": 4,
+   "Dennis": 1,
+   "Gerda": 2,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 195,
+   "clockN": 16,
+   "tiles": 72,
+   "slack": 2,
+   "dig": 10,
+   "Dennis": 2,
+   "Gerda": 1,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 196,
+   "clockN": 6,
+   "tiles": 88,
+   "slack": 1,
+   "dig": 3,
+   "Dennis": 9,
+   "Gerda": 20,
+   "clockLossesAll": 15
+  },
+  {
+   "lv": 197,
+   "clockN": 7,
+   "tiles": 88,
+   "slack": 2,
+   "dig": 2,
+   "Dennis": 1,
+   "Gerda": 14,
+   "clockLossesAll": 3
+  },
+  {
+   "lv": 198,
+   "clockN": 8,
+   "tiles": 82,
+   "slack": 1,
+   "dig": 7,
+   "Dennis": 1,
+   "Gerda": 1,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 199,
+   "clockN": 8,
+   "tiles": 88,
+   "slack": 2,
+   "dig": 4,
+   "Dennis": 1,
+   "Gerda": 5,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 200,
+   "clockN": 6,
+   "tiles": 96,
+   "slack": 1,
+   "dig": 5,
+   "Dennis": 1,
+   "Gerda": 10,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 201,
+   "clockN": 7,
+   "tiles": 80,
+   "slack": 1,
+   "dig": 8,
+   "Dennis": 1,
+   "Gerda": 7,
+   "clockLossesAll": 4
+  },
+  {
+   "lv": 202,
+   "clockN": 8,
+   "tiles": 86,
+   "slack": 2,
+   "dig": 4,
+   "Dennis": 1,
+   "Gerda": 1,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 203,
+   "clockN": 7,
+   "tiles": 84,
+   "slack": 2,
+   "dig": 3,
+   "Dennis": 1,
+   "Gerda": 6,
+   "clockLossesAll": 2
+  },
+  {
+   "lv": 204,
+   "clockN": 7,
+   "tiles": 74,
+   "slack": 2,
+   "dig": 2,
+   "Dennis": 1,
+   "Gerda": 2,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 205,
+   "clockN": 6,
+   "tiles": 88,
+   "slack": 1,
+   "dig": 3,
+   "Dennis": 3,
+   "Gerda": 18,
+   "clockLossesAll": 6
+  },
+  {
+   "lv": 206,
+   "clockN": 7,
+   "tiles": 78,
+   "slack": 2,
+   "dig": 3,
+   "Dennis": 2,
+   "Gerda": 2,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 207,
+   "clockN": 8,
+   "tiles": 86,
+   "slack": 2,
+   "dig": 7,
+   "Dennis": 1,
+   "Gerda": 2,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 208,
+   "clockN": 12,
+   "tiles": 76,
+   "slack": 2,
+   "dig": 8,
+   "Dennis": 1,
+   "Gerda": 4,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 209,
+   "clockN": 12,
+   "tiles": 88,
+   "slack": 2,
+   "dig": 7,
+   "Dennis": 1,
+   "Gerda": 20,
+   "clockLossesAll": 19
+  },
+  {
+   "lv": 210,
+   "clockN": 6,
+   "tiles": 96,
+   "slack": 1,
+   "dig": 2,
+   "Dennis": 1,
+   "Gerda": null,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 211,
+   "clockN": 10,
+   "tiles": 78,
+   "slack": 1,
+   "dig": 5,
+   "Dennis": 1,
+   "Gerda": null,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 212,
+   "clockN": 11,
+   "tiles": 80,
+   "slack": 2,
+   "dig": 6,
+   "Dennis": 1,
+   "Gerda": null,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 213,
+   "clockN": 9,
+   "tiles": 74,
+   "slack": 1,
+   "dig": 7,
+   "Dennis": 2,
+   "Gerda": null,
+   "clockLossesAll": 1
+  },
+  {
+   "lv": 214,
+   "clockN": 9,
+   "tiles": 74,
+   "slack": 2,
+   "dig": 4,
+   "Dennis": 1,
+   "Gerda": null,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 215,
+   "clockN": 7,
+   "tiles": 88,
+   "slack": 2,
+   "dig": 6,
+   "Dennis": 1,
+   "Gerda": null,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 216,
+   "clockN": 7,
+   "tiles": 86,
+   "slack": 2,
+   "dig": 4,
+   "Dennis": 2,
+   "Gerda": null,
+   "clockLossesAll": 1
+  },
+  {
+   "lv": 217,
+   "clockN": 6,
+   "tiles": 76,
+   "slack": 1,
+   "dig": 5,
+   "Dennis": 4,
+   "Gerda": null,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 218,
+   "clockN": 7,
+   "tiles": 74,
+   "slack": 1,
+   "dig": 4,
+   "Dennis": 1,
+   "Gerda": null,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 219,
+   "clockN": 6,
+   "tiles": 84,
+   "slack": 1,
+   "dig": 3,
+   "Dennis": 1,
+   "Gerda": null,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 220,
+   "clockN": 12,
+   "tiles": 92,
+   "slack": 1,
+   "dig": 6,
+   "Dennis": 3,
+   "Gerda": null,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 221,
+   "clockN": 8,
+   "tiles": 76,
+   "slack": 1,
+   "dig": 4,
+   "Dennis": 1,
+   "Gerda": null,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 222,
+   "clockN": 8,
+   "tiles": 86,
+   "slack": 1,
+   "dig": 5,
+   "Dennis": 2,
+   "Gerda": null,
+   "clockLossesAll": 1
+  },
+  {
+   "lv": 223,
+   "clockN": 7,
+   "tiles": 80,
+   "slack": 2,
+   "dig": 2,
+   "Dennis": 1,
+   "Gerda": null,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 224,
+   "clockN": 14,
+   "tiles": 76,
+   "slack": 2,
+   "dig": 10,
+   "Dennis": 1,
+   "Gerda": null,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 225,
+   "clockN": 6,
+   "tiles": 86,
+   "slack": 1,
+   "dig": 4,
+   "Dennis": 1,
+   "Gerda": null,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 226,
+   "clockN": 9,
+   "tiles": 72,
+   "slack": 1,
+   "dig": 5,
+   "Dennis": 1,
+   "Gerda": null,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 227,
+   "clockN": 6,
+   "tiles": 78,
+   "slack": 1,
+   "dig": 3,
+   "Dennis": 2,
+   "Gerda": null,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 228,
+   "clockN": 10,
+   "tiles": 74,
+   "slack": 1,
+   "dig": 9,
+   "Dennis": 2,
+   "Gerda": null,
+   "clockLossesAll": 1
+  },
+  {
+   "lv": 229,
+   "clockN": 6,
+   "tiles": 84,
+   "slack": 1,
+   "dig": 3,
+   "Dennis": 1,
+   "Gerda": null,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 230,
+   "clockN": 10,
+   "tiles": 96,
+   "slack": 2,
+   "dig": 7,
+   "Dennis": 5,
+   "Gerda": null,
+   "clockLossesAll": 1
+  },
+  {
+   "lv": 231,
+   "clockN": 9,
+   "tiles": 76,
+   "slack": 2,
+   "dig": 5,
+   "Dennis": 1,
+   "Gerda": null,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 232,
+   "clockN": 15,
+   "tiles": 88,
+   "slack": 2,
+   "dig": 9,
+   "Dennis": 1,
+   "Gerda": null,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 233,
+   "clockN": 6,
+   "tiles": 88,
+   "slack": 1,
+   "dig": 3,
+   "Dennis": 1,
+   "Gerda": null,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 234,
+   "clockN": 7,
+   "tiles": 88,
+   "slack": 2,
+   "dig": 4,
+   "Dennis": 2,
+   "Gerda": null,
+   "clockLossesAll": 1
+  },
+  {
+   "lv": 235,
+   "clockN": 6,
+   "tiles": 88,
+   "slack": 1,
+   "dig": 3,
+   "Dennis": 1,
+   "Gerda": null,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 236,
+   "clockN": 6,
+   "tiles": 88,
+   "slack": 1,
+   "dig": 3,
+   "Dennis": 2,
+   "Gerda": null,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 237,
+   "clockN": 7,
+   "tiles": 88,
+   "slack": 2,
+   "dig": 3,
+   "Dennis": 2,
+   "Gerda": null,
+   "clockLossesAll": 1
+  },
+  {
+   "lv": 238,
+   "clockN": 8,
+   "tiles": 86,
+   "slack": 3,
+   "dig": 4,
+   "Dennis": 1,
+   "Gerda": null,
+   "clockLossesAll": 0
+  },
+  {
+   "lv": 239,
+   "clockN": 10,
+   "tiles": 86,
+   "slack": 1,
+   "dig": 5,
+   "Dennis": 1,
+   "Gerda": null,
+   "clockLossesAll": 0
+  }
+ ],
+ "lostTable": [
+  {
+   "lv": 170,
+   "Dennis": 1,
+   "Gerda": 2,
+   "MrsD": 2,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 1,
+     "tray": 1,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 1,
+     "tray": 1,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 171,
+   "Dennis": 1,
+   "Gerda": 11,
+   "MrsD": 8,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 10,
+     "tray": 7,
+     "clock": 0,
+     "restart": 3
+    },
+    "MrsD": {
+     "lost": 7,
+     "tray": 7,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 172,
+   "Dennis": 1,
+   "Gerda": 1,
+   "MrsD": 2,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 1,
+     "tray": 1,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 173,
+   "Dennis": 1,
+   "Gerda": 2,
+   "MrsD": 7,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 1,
+     "tray": 0,
+     "clock": 1,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 5,
+     "tray": 3,
+     "clock": 2,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 174,
+   "Dennis": 2,
+   "Gerda": 1,
+   "MrsD": 3,
+   "mix": {
+    "Dennis": {
+     "lost": 1,
+     "tray": 0,
+     "clock": 1,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 2,
+     "tray": 1,
+     "clock": 1,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 175,
+   "Dennis": 1,
+   "Gerda": 5,
+   "MrsD": 2,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 4,
+     "tray": 4,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 1,
+     "tray": 1,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 176,
+   "Dennis": 3,
+   "Gerda": 15,
+   "MrsD": 12,
+   "mix": {
+    "Dennis": {
+     "lost": 2,
+     "tray": 2,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 14,
+     "tray": 10,
+     "clock": 1,
+     "restart": 3
+    },
+    "MrsD": {
+     "lost": 11,
+     "tray": 10,
+     "clock": 1,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 177,
+   "Dennis": 6,
+   "Gerda": 7,
+   "MrsD": 7,
+   "mix": {
+    "Dennis": {
+     "lost": 5,
+     "tray": 1,
+     "clock": 2,
+     "restart": 2
+    },
+    "Gerda": {
+     "lost": 6,
+     "tray": 6,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 6,
+     "tray": 5,
+     "clock": 1,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 178,
+   "Dennis": 1,
+   "Gerda": 1,
+   "MrsD": 4,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 3,
+     "tray": 3,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 179,
+   "Dennis": 2,
+   "Gerda": 6,
+   "MrsD": 5,
+   "mix": {
+    "Dennis": {
+     "lost": 1,
+     "tray": 0,
+     "clock": 1,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 5,
+     "tray": 2,
+     "clock": 3,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 4,
+     "tray": 4,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 180,
+   "Dennis": 1,
+   "Gerda": 3,
+   "MrsD": 1,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 2,
+     "tray": 0,
+     "clock": 1,
+     "restart": 1
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 181,
+   "Dennis": 1,
+   "Gerda": 4,
+   "MrsD": 2,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 3,
+     "tray": 3,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 1,
+     "tray": 1,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 182,
+   "Dennis": 3,
+   "Gerda": 2,
+   "MrsD": 4,
+   "mix": {
+    "Dennis": {
+     "lost": 2,
+     "tray": 0,
+     "clock": 0,
+     "restart": 2
+    },
+    "Gerda": {
+     "lost": 1,
+     "tray": 1,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 3,
+     "tray": 3,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 183,
+   "Dennis": 1,
+   "Gerda": 6,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 5,
+     "tray": 5,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 184,
+   "Dennis": 1,
+   "Gerda": 2,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 1,
+     "tray": 1,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 185,
+   "Dennis": 3,
+   "Gerda": 5,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 2,
+     "tray": 1,
+     "clock": 0,
+     "restart": 1
+    },
+    "Gerda": {
+     "lost": 4,
+     "tray": 3,
+     "clock": 0,
+     "restart": 1
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 186,
+   "Dennis": 1,
+   "Gerda": 1,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 187,
+   "Dennis": 1,
+   "Gerda": 12,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 11,
+     "tray": 8,
+     "clock": 2,
+     "restart": 1
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 188,
+   "Dennis": 1,
+   "Gerda": 20,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 36,
+     "tray": 25,
+     "clock": 7,
+     "restart": 4
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 189,
+   "Dennis": 1,
+   "Gerda": 2,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 1,
+     "tray": 0,
+     "clock": 0,
+     "restart": 1
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 190,
+   "Dennis": 2,
+   "Gerda": 12,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 1,
+     "tray": 0,
+     "clock": 1,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 11,
+     "tray": 9,
+     "clock": 2,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 191,
+   "Dennis": 2,
+   "Gerda": 2,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 1,
+     "tray": 1,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 1,
+     "tray": 1,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 192,
+   "Dennis": 1,
+   "Gerda": 5,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 4,
+     "tray": 3,
+     "clock": 0,
+     "restart": 1
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 193,
+   "Dennis": 1,
+   "Gerda": 1,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 194,
+   "Dennis": 1,
+   "Gerda": 2,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 1,
+     "tray": 1,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 195,
+   "Dennis": 2,
+   "Gerda": 1,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 1,
+     "tray": 0,
+     "clock": 0,
+     "restart": 1
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 196,
+   "Dennis": 9,
+   "Gerda": 20,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 8,
+     "tray": 3,
+     "clock": 4,
+     "restart": 1
+    },
+    "Gerda": {
+     "lost": 31,
+     "tray": 16,
+     "clock": 11,
+     "restart": 4
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 197,
+   "Dennis": 1,
+   "Gerda": 14,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 13,
+     "tray": 10,
+     "clock": 3,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 198,
+   "Dennis": 1,
+   "Gerda": 1,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 199,
+   "Dennis": 1,
+   "Gerda": 5,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 4,
+     "tray": 4,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 200,
+   "Dennis": 1,
+   "Gerda": 10,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 9,
+     "tray": 9,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 201,
+   "Dennis": 1,
+   "Gerda": 7,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 6,
+     "tray": 2,
+     "clock": 4,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 202,
+   "Dennis": 1,
+   "Gerda": 1,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 203,
+   "Dennis": 1,
+   "Gerda": 6,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 5,
+     "tray": 1,
+     "clock": 2,
+     "restart": 2
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 204,
+   "Dennis": 1,
+   "Gerda": 2,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 1,
+     "tray": 1,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 205,
+   "Dennis": 3,
+   "Gerda": 18,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 2,
+     "tray": 1,
+     "clock": 0,
+     "restart": 1
+    },
+    "Gerda": {
+     "lost": 17,
+     "tray": 11,
+     "clock": 6,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 206,
+   "Dennis": 2,
+   "Gerda": 2,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 1,
+     "tray": 0,
+     "clock": 0,
+     "restart": 1
+    },
+    "Gerda": {
+     "lost": 1,
+     "tray": 1,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 207,
+   "Dennis": 1,
+   "Gerda": 2,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 1,
+     "tray": 1,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 208,
+   "Dennis": 1,
+   "Gerda": 4,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 3,
+     "tray": 3,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 209,
+   "Dennis": 1,
+   "Gerda": 20,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 54,
+     "tray": 33,
+     "clock": 19,
+     "restart": 2
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 210,
+   "Dennis": 1,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 211,
+   "Dennis": 1,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 212,
+   "Dennis": 1,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 213,
+   "Dennis": 2,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 1,
+     "tray": 0,
+     "clock": 1,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 214,
+   "Dennis": 1,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 215,
+   "Dennis": 1,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 216,
+   "Dennis": 2,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 1,
+     "tray": 0,
+     "clock": 1,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 217,
+   "Dennis": 4,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 3,
+     "tray": 1,
+     "clock": 0,
+     "restart": 2
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 218,
+   "Dennis": 1,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 219,
+   "Dennis": 1,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 220,
+   "Dennis": 3,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 2,
+     "tray": 0,
+     "clock": 0,
+     "restart": 2
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 221,
+   "Dennis": 1,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 222,
+   "Dennis": 2,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 1,
+     "tray": 0,
+     "clock": 1,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 223,
+   "Dennis": 1,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 224,
+   "Dennis": 1,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 225,
+   "Dennis": 1,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 226,
+   "Dennis": 1,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 227,
+   "Dennis": 2,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 1,
+     "tray": 1,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 228,
+   "Dennis": 2,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 1,
+     "tray": 0,
+     "clock": 1,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 229,
+   "Dennis": 1,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 230,
+   "Dennis": 5,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 4,
+     "tray": 3,
+     "clock": 1,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 231,
+   "Dennis": 1,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 232,
+   "Dennis": 1,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 233,
+   "Dennis": 1,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 234,
+   "Dennis": 2,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 1,
+     "tray": 0,
+     "clock": 1,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 235,
+   "Dennis": 1,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 236,
+   "Dennis": 2,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 1,
+     "tray": 0,
+     "clock": 0,
+     "restart": 1
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 237,
+   "Dennis": 2,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 1,
+     "tray": 0,
+     "clock": 1,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 238,
+   "Dennis": 1,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  },
+  {
+   "lv": 239,
+   "Dennis": 1,
+   "Gerda": null,
+   "MrsD": null,
+   "mix": {
+    "Dennis": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "Gerda": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    },
+    "MrsD": {
+     "lost": 0,
+     "tray": 0,
+     "clock": 0,
+     "restart": 0
+    }
+   }
+  }
+ ]
+}
