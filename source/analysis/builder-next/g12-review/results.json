@@ -1,0 +1,1524 @@
+[
+  {
+    "seed": 4,
+    "result": {
+      "success": true,
+      "status": "EXPERIMENTAL_HIT",
+      "request": {
+        "target": 10,
+        "layout": 30,
+        "shape": "diamond",
+        "seed": 4,
+        "tol": 1,
+        "skilledBand": [
+          2.5,
+          6
+        ]
+      },
+      "contextKey": "1118f47659add229ac464ee825e81fb31874432a2d223de9b908129a0561c454",
+      "context": {
+        "family": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+        "skilled": "93ed5c9c9419bf4146c0b965d7bedfa18248ff16609967b945d1767faea0ed4f",
+        "familySettings": {
+          "use": "every spare of a puzzle, paired (same seeds at every spare)",
+          "campaigns": 80,
+          "calls": [
+            {
+              "runs": 20,
+              "seeds": 2,
+              "seed": 4711
+            },
+            {
+              "runs": 20,
+              "seeds": 2,
+              "seed": 18427
+            }
+          ],
+          "cacheAlternatives": [
+            {
+              "capture": "tail"
+            }
+          ],
+          "pooling": "Production pooling (batch_evaluate.js rate mode, empirical_confirm.js, task11_rerate.js): two meter calls {setting:'family', runs:20, seeds:2} at seed 4711 and seed 18427, 40 campaigns each, pooled = (exp4711 + exp18427) / 2. Production rated the reference bot's 4711 call with capture:'tail' (part of the cache key, not of the rating); Codex rated key memory without capture. The yardstick looks up both cache variants before measuring.",
+          "visibleCampaigns": "The meter returns per-campaign results only for the first sub-block of each call (the first 20 of 40). SEs are estimated from those 40 of 80 campaigns (sample SD / sqrt(80)); D itself uses all 80 (mean of the two calls' expectedTries)."
+        },
+        "skilledSettings": {
+          "setting": "planner",
+          "runs": 20,
+          "seeds": 2,
+          "seed": 4711
+        },
+        "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2",
+        "layoutsCatalogue": "8a811c841faabc125c11621b9ec247ce7fbb519b119e24d56111f2d6d3085a81",
+        "protocol": "standard-20-v1",
+        "source": "d45b28b840704fa1418139364bbe17871537e8994553949b54a3a7fc671d6fac"
+      },
+      "normalMinimum": true,
+      "explicitFallback": false,
+      "finalCandidate": {
+        "ok": true,
+        "design": {
+          "tiles": [
+            [
+              6,
+              0,
+              0
+            ],
+            [
+              5,
+              2,
+              0
+            ],
+            [
+              7,
+              2,
+              0
+            ],
+            [
+              2,
+              4,
+              0
+            ],
+            [
+              4,
+              4,
+              0
+            ],
+            [
+              6,
+              4,
+              0
+            ],
+            [
+              8,
+              4,
+              0
+            ],
+            [
+              10,
+              4,
+              0
+            ],
+            [
+              1,
+              6,
+              0
+            ],
+            [
+              3,
+              6,
+              0
+            ],
+            [
+              5,
+              6,
+              0
+            ],
+            [
+              7,
+              6,
+              0
+            ],
+            [
+              9,
+              6,
+              0
+            ],
+            [
+              11,
+              6,
+              0
+            ],
+            [
+              0,
+              8,
+              0
+            ],
+            [
+              2,
+              8,
+              0
+            ],
+            [
+              4,
+              8,
+              0
+            ],
+            [
+              6,
+              8,
+              0
+            ],
+            [
+              8,
+              8,
+              0
+            ],
+            [
+              10,
+              8,
+              0
+            ],
+            [
+              12,
+              8,
+              0
+            ],
+            [
+              1,
+              10,
+              0
+            ],
+            [
+              3,
+              10,
+              0
+            ],
+            [
+              5,
+              10,
+              0
+            ],
+            [
+              7,
+              10,
+              0
+            ],
+            [
+              9,
+              10,
+              0
+            ],
+            [
+              11,
+              10,
+              0
+            ],
+            [
+              2,
+              12,
+              0
+            ],
+            [
+              4,
+              12,
+              0
+            ],
+            [
+              6,
+              12,
+              0
+            ],
+            [
+              8,
+              12,
+              0
+            ],
+            [
+              10,
+              12,
+              0
+            ],
+            [
+              5,
+              14,
+              0
+            ],
+            [
+              7,
+              14,
+              0
+            ],
+            [
+              6,
+              16,
+              0
+            ],
+            [
+              3,
+              8,
+              1
+            ],
+            [
+              9,
+              8,
+              1
+            ],
+            [
+              4,
+              6,
+              1
+            ],
+            [
+              8,
+              6,
+              1
+            ],
+            [
+              2,
+              10,
+              1
+            ],
+            [
+              10,
+              10,
+              1
+            ],
+            [
+              2,
+              6,
+              1
+            ],
+            [
+              10,
+              6,
+              1
+            ],
+            [
+              5,
+              8,
+              1
+            ],
+            [
+              7,
+              8,
+              1
+            ],
+            [
+              1,
+              8,
+              1
+            ],
+            [
+              11,
+              8,
+              1
+            ],
+            [
+              4,
+              10,
+              1
+            ],
+            [
+              8,
+              10,
+              1
+            ],
+            [
+              6,
+              10,
+              1
+            ],
+            [
+              3,
+              12,
+              1
+            ],
+            [
+              9,
+              12,
+              1
+            ],
+            [
+              6,
+              6,
+              1
+            ],
+            [
+              3,
+              4,
+              1
+            ],
+            [
+              9,
+              4,
+              1
+            ],
+            [
+              6,
+              2,
+              1
+            ],
+            [
+              10,
+              8,
+              2
+            ],
+            [
+              2,
+              8,
+              2
+            ],
+            [
+              4,
+              8,
+              2
+            ],
+            [
+              8,
+              8,
+              2
+            ],
+            [
+              3,
+              10,
+              2
+            ],
+            [
+              9,
+              10,
+              2
+            ],
+            [
+              9,
+              6,
+              2
+            ],
+            [
+              3,
+              6,
+              2
+            ],
+            [
+              5,
+              10,
+              2
+            ],
+            [
+              7,
+              10,
+              2
+            ],
+            [
+              5,
+              6,
+              2
+            ],
+            [
+              7,
+              6,
+              2
+            ],
+            [
+              3,
+              8,
+              3
+            ],
+            [
+              9,
+              8,
+              3
+            ],
+            [
+              4,
+              10,
+              3
+            ],
+            [
+              8,
+              10,
+              3
+            ],
+            [
+              4,
+              6,
+              3
+            ],
+            [
+              8,
+              6,
+              3
+            ],
+            [
+              6,
+              10,
+              3
+            ],
+            [
+              6,
+              6,
+              3
+            ],
+            [
+              5,
+              6,
+              4
+            ],
+            [
+              7,
+              6,
+              4
+            ],
+            [
+              5,
+              10,
+              4
+            ],
+            [
+              7,
+              10,
+              4
+            ]
+          ],
+          "faces": [
+            13,
+            19,
+            19,
+            2,
+            27,
+            27,
+            24,
+            24,
+            1,
+            1,
+            28,
+            1,
+            28,
+            23,
+            17,
+            12,
+            16,
+            16,
+            4,
+            4,
+            9,
+            33,
+            33,
+            15,
+            15,
+            26,
+            23,
+            5,
+            10,
+            12,
+            10,
+            34,
+            21,
+            21,
+            13,
+            29,
+            18,
+            28,
+            14,
+            8,
+            3,
+            7,
+            3,
+            6,
+            14,
+            17,
+            9,
+            8,
+            35,
+            26,
+            5,
+            34,
+            14,
+            0,
+            0,
+            2,
+            14,
+            22,
+            29,
+            31,
+            20,
+            30,
+            30,
+            28,
+            20,
+            35,
+            25,
+            31,
+            22,
+            31,
+            1,
+            11,
+            32,
+            11,
+            18,
+            6,
+            32,
+            25,
+            31,
+            7
+          ],
+          "down": [
+            61,
+            35,
+            65,
+            20,
+            43,
+            66,
+            72,
+            49,
+            22,
+            9,
+            36,
+            31,
+            10,
+            4,
+            59,
+            27,
+            46,
+            64,
+            52,
+            2,
+            11,
+            63,
+            3,
+            60,
+            37,
+            7,
+            17,
+            70
+          ],
+          "gold": [],
+          "obst": {
+            "ice": {},
+            "locks": [
+              68
+            ],
+            "keys": [
+              13,
+              26
+            ]
+          },
+          "clock": {
+            "i": 14,
+            "n": 15
+          },
+          "solution": [
+            79,
+            77,
+            71,
+            73,
+            61,
+            62,
+            42,
+            40,
+            13,
+            26,
+            68,
+            57,
+            45,
+            14,
+            58,
+            35,
+            76,
+            72,
+            75,
+            43,
+            63,
+            41,
+            66,
+            37,
+            8,
+            9,
+            78,
+            67,
+            52,
+            38,
+            10,
+            12,
+            11,
+            70,
+            69,
+            59,
+            44,
+            56,
+            36,
+            74,
+            60,
+            64,
+            39,
+            47,
+            21,
+            22,
+            46,
+            20,
+            19,
+            18,
+            17,
+            16,
+            65,
+            48,
+            49,
+            25,
+            24,
+            23,
+            51,
+            53,
+            54,
+            31,
+            0,
+            34,
+            32,
+            33,
+            3,
+            55,
+            50,
+            27,
+            2,
+            1,
+            30,
+            28,
+            29,
+            15,
+            4,
+            5,
+            6,
+            7
+          ]
+        },
+        "k": 14,
+        "clockN": 15,
+        "spare": 1,
+        "recipe": {
+          "id": "diamond-lockBeside-d3-sp1",
+          "layout": 30,
+          "shape": "diamond",
+          "story": "lockBeside",
+          "stage": "edge",
+          "depth": 3,
+          "spare": 1,
+          "frameSpare": 3,
+          "trayRoom": 0,
+          "hiddenOnWay": 1,
+          "traps": 2,
+          "maxDown": 0.35,
+          "expectedD": 10.3,
+          "expectedS": 3.33,
+          "priorD": 10.3,
+          "priorSpare": 1,
+          "seed": 4
+        },
+        "brief": {
+          "layout": 30,
+          "shape": "diamond",
+          "story": "lockBeside",
+          "stage": "edge",
+          "seed": 4,
+          "mode": "visibleChoice",
+          "frame": {
+            "spare": 3,
+            "depth": 3
+          },
+          "targets": {
+            "trayRoom": 0,
+            "hiddenOnWay": 1,
+            "maxDown": 0.35,
+            "traps": 2
+          }
+        },
+        "card": {
+          "story": "A lock beside the clock",
+          "sentence": "A locked tile sits on the clock; dig out the keys before you can reach it.",
+          "shape": "diamond",
+          "tiles": 80,
+          "clock": {
+            "tile": 14,
+            "fewestMoves": 14,
+            "spare": 3,
+            "n": 17
+          },
+          "readable": true,
+          "cardText": "The clock needs 14 moves; taking the free pair in sight at move 5 before the clock costs 2 spare moves, and the free pair at move 4 loses the board.",
+          "traps": [
+            [
+              32,
+              33
+            ],
+            [
+              53,
+              54
+            ]
+          ],
+          "choiceProofs": [
+            {
+              "step": 0,
+              "moves": 0,
+              "move": [
+                32,
+                33
+              ],
+              "cost": 2,
+              "result": "win",
+              "fair": null
+            },
+            {
+              "step": 0,
+              "moves": 0,
+              "move": [
+                53,
+                54
+              ],
+              "cost": 2,
+              "result": "win",
+              "fair": null
+            },
+            {
+              "step": 1,
+              "moves": 1,
+              "move": [
+                32,
+                33
+              ],
+              "cost": 2,
+              "result": "win",
+              "fair": null
+            },
+            {
+              "step": 1,
+              "moves": 1,
+              "move": [
+                53,
+                54
+              ],
+              "cost": 2,
+              "result": "win",
+              "fair": null
+            },
+            {
+              "step": 2,
+              "moves": 2,
+              "move": [
+                32,
+                33
+              ],
+              "cost": 2,
+              "result": "win",
+              "fair": null
+            },
+            {
+              "step": 2,
+              "moves": 2,
+              "move": [
+                53,
+                54
+              ],
+              "cost": 2,
+              "result": "win",
+              "fair": null
+            },
+            {
+              "step": 3,
+              "moves": 3,
+              "move": [
+                32,
+                33
+              ],
+              "cost": null,
+              "result": "lose",
+              "fair": true
+            },
+            {
+              "step": 3,
+              "moves": 3,
+              "move": [
+                53,
+                54
+              ],
+              "cost": null,
+              "result": "lose",
+              "fair": true
+            },
+            {
+              "step": 4,
+              "moves": 4,
+              "move": [
+                32,
+                33
+              ],
+              "cost": 2,
+              "result": "win",
+              "fair": null
+            },
+            {
+              "step": 4,
+              "moves": 4,
+              "move": [
+                53,
+                54
+              ],
+              "cost": 2,
+              "result": "win",
+              "fair": null
+            },
+            {
+              "step": 5,
+              "moves": 5,
+              "move": [
+                32,
+                33
+              ],
+              "cost": null,
+              "result": "lose",
+              "fair": true
+            },
+            {
+              "step": 5,
+              "moves": 5,
+              "move": [
+                53,
+                54
+              ],
+              "cost": null,
+              "result": "lose",
+              "fair": true
+            },
+            {
+              "step": 6,
+              "moves": 6,
+              "move": [
+                32,
+                33
+              ],
+              "cost": 2,
+              "result": "win",
+              "fair": null
+            },
+            {
+              "step": 6,
+              "moves": 6,
+              "move": [
+                53,
+                54
+              ],
+              "cost": 2,
+              "result": "win",
+              "fair": null
+            },
+            {
+              "step": 7,
+              "moves": 7,
+              "move": [
+                32,
+                33
+              ],
+              "cost": null,
+              "result": "lose",
+              "fair": true
+            },
+            {
+              "step": 7,
+              "moves": 7,
+              "move": [
+                53,
+                54
+              ],
+              "cost": null,
+              "result": "lose",
+              "fair": true
+            },
+            {
+              "step": 8,
+              "moves": 8,
+              "move": [
+                32,
+                33
+              ],
+              "cost": 2,
+              "result": "win",
+              "fair": null
+            },
+            {
+              "step": 8,
+              "moves": 8,
+              "move": [
+                53,
+                54
+              ],
+              "cost": 2,
+              "result": "win",
+              "fair": null
+            },
+            {
+              "step": 9,
+              "moves": 9,
+              "move": [
+                32,
+                33
+              ],
+              "cost": null,
+              "result": "lose",
+              "fair": true
+            },
+            {
+              "step": 9,
+              "moves": 9,
+              "move": [
+                53,
+                54
+              ],
+              "cost": null,
+              "result": "lose",
+              "fair": true
+            },
+            {
+              "step": 10,
+              "moves": 10,
+              "move": [
+                32,
+                33
+              ],
+              "cost": 2,
+              "result": "win",
+              "fair": null
+            },
+            {
+              "step": 10,
+              "moves": 10,
+              "move": [
+                53,
+                54
+              ],
+              "cost": 2,
+              "result": "win",
+              "fair": null
+            },
+            {
+              "step": 11,
+              "moves": 11,
+              "move": [
+                32,
+                33
+              ],
+              "cost": null,
+              "result": "lose",
+              "fair": true
+            },
+            {
+              "step": 11,
+              "moves": 11,
+              "move": [
+                53,
+                54
+              ],
+              "cost": null,
+              "result": "lose",
+              "fair": true
+            },
+            {
+              "step": 12,
+              "moves": 12,
+              "move": [
+                32,
+                33
+              ],
+              "cost": 2,
+              "result": "win",
+              "fair": null
+            },
+            {
+              "step": 12,
+              "moves": 12,
+              "move": [
+                53,
+                54
+              ],
+              "cost": 2,
+              "result": "win",
+              "fair": null
+            },
+            {
+              "step": 13,
+              "moves": 13,
+              "move": [
+                32,
+                33
+              ],
+              "cost": null,
+              "result": "lose",
+              "fair": true
+            },
+            {
+              "step": 13,
+              "moves": 13,
+              "move": [
+                53,
+                54
+              ],
+              "cost": null,
+              "result": "lose",
+              "fair": true
+            }
+          ],
+          "tail": {
+            "valid": true,
+            "maxTray": 3,
+            "removals": 67,
+            "scope": "stored witness only; trace gates judge actual pacing"
+          },
+          "tailPlan": {
+            "pairWidth": 1,
+            "wovenPairs": 2,
+            "untilRemoval": 58,
+            "scope": "planned order; not a bot difficulty guarantee"
+          },
+          "attempt": 0
+        }
+      },
+      "evaluation": {
+        "staticPass": true,
+        "S": 3.33,
+        "S_valid": true,
+        "styles": {
+          "route": 3.33,
+          "plain": 4.25
+        },
+        "D": 10.3,
+        "D_valid": true,
+        "D_se": 0.6920433878254393,
+        "familyCampaigns": 80,
+        "familyFingerprint": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+        "skilledFingerprint": "93ed5c9c9419bf4146c0b965d7bedfa18248ff16609967b945d1767faea0ed4f",
+        "clockN": 15,
+        "tracePass": true,
+        "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2",
+        "failedTraces": [],
+        "traces": {
+          "B1": {
+            "pass": true,
+            "value": 1,
+            "bites": 80,
+            "firstTries": 80
+          },
+          "B2": {
+            "pass": true,
+            "value": 0.539,
+            "atTrap": 406,
+            "atForkState": 363,
+            "onTemptingMove": 311,
+            "provedFirstErrors": 753,
+            "lostTries": 753,
+            "coverage": 1
+          },
+          "B3": {
+            "pass": true,
+            "value": 0.138
+          },
+          "B4": {
+            "pass": true,
+            "value": 1
+          },
+          "B5": {
+            "pass": true,
+            "value": 0.005,
+            "lateTrayLosses": 4
+          },
+          "B6": {
+            "pass": true,
+            "value": 0.432,
+            "postClockLosses": 325,
+            "secondAct": false,
+            "postClockErrorMedianShare": 0.388
+          },
+          "B7": {
+            "pass": null,
+            "report": true,
+            "value": 0.064,
+            "repeats": 26,
+            "knownRepeats": 26,
+            "lossesTries6to20": 405,
+            "inflated": false,
+            "maxTarget": null
+          }
+        },
+        "traceCampaigns": 80,
+        "maxTarget": null,
+        "pass": true,
+        "ms": 16830,
+        "cpuS": 20.016
+      },
+      "attempts": [
+        {
+          "recipe": {
+            "id": "diamond-lockBeside-d3-sp1",
+            "layout": 30,
+            "shape": "diamond",
+            "story": "lockBeside",
+            "stage": "edge",
+            "depth": 3,
+            "spare": 1,
+            "frameSpare": 3,
+            "trayRoom": 0,
+            "hiddenOnWay": 1,
+            "traps": 2,
+            "maxDown": 0.35,
+            "expectedD": 10.3,
+            "expectedS": 3.33,
+            "priorD": 10.3,
+            "priorSpare": 1
+          },
+          "seed": 4,
+          "selection": {
+            "basis": "historical-prior",
+            "predictedD": 10.3
+          },
+          "boardKey": "00bde54bd9de61c11a62008dd31310141e1f64fd2aa8c205b4c281e8449ce569",
+          "evaluation": {
+            "staticPass": true,
+            "S": 3.33,
+            "S_valid": true,
+            "styles": {
+              "route": 3.33,
+              "plain": 4.25
+            },
+            "D": 10.3,
+            "D_valid": true,
+            "D_se": 0.6920433878254393,
+            "familyCampaigns": 80,
+            "familyFingerprint": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+            "skilledFingerprint": "93ed5c9c9419bf4146c0b965d7bedfa18248ff16609967b945d1767faea0ed4f",
+            "clockN": 15,
+            "tracePass": true,
+            "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2",
+            "failedTraces": [],
+            "traces": {
+              "B1": {
+                "pass": true,
+                "value": 1,
+                "bites": 80,
+                "firstTries": 80
+              },
+              "B2": {
+                "pass": true,
+                "value": 0.539,
+                "atTrap": 406,
+                "atForkState": 363,
+                "onTemptingMove": 311,
+                "provedFirstErrors": 753,
+                "lostTries": 753,
+                "coverage": 1
+              },
+              "B3": {
+                "pass": true,
+                "value": 0.138
+              },
+              "B4": {
+                "pass": true,
+                "value": 1
+              },
+              "B5": {
+                "pass": true,
+                "value": 0.005,
+                "lateTrayLosses": 4
+              },
+              "B6": {
+                "pass": true,
+                "value": 0.432,
+                "postClockLosses": 325,
+                "secondAct": false,
+                "postClockErrorMedianShare": 0.388
+              },
+              "B7": {
+                "pass": null,
+                "report": true,
+                "value": 0.064,
+                "repeats": 26,
+                "knownRepeats": 26,
+                "lossesTries6to20": 405,
+                "inflated": false,
+                "maxTarget": null
+              }
+            },
+            "traceCampaigns": 80,
+            "maxTarget": null,
+            "pass": true,
+            "ms": 16830,
+            "cpuS": 20.016
+          },
+          "issues": [],
+          "reused": false
+        }
+      ],
+      "measured": 1,
+      "cost": {
+        "cpuS": 20.453,
+        "wallMs": 17099
+      },
+      "note": "Experimental construction result; no fresh ACCEPT blocks, library promotion or game-level change."
+    }
+  },
+  {
+    "seed": 11,
+    "result": {
+      "success": false,
+      "status": "NO_MEASURED_HIT",
+      "request": {
+        "target": 10,
+        "layout": 30,
+        "shape": "diamond",
+        "seed": 11,
+        "tol": 1,
+        "skilledBand": [
+          2.5,
+          6
+        ]
+      },
+      "contextKey": "1118f47659add229ac464ee825e81fb31874432a2d223de9b908129a0561c454",
+      "context": {
+        "family": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+        "skilled": "93ed5c9c9419bf4146c0b965d7bedfa18248ff16609967b945d1767faea0ed4f",
+        "familySettings": {
+          "use": "every spare of a puzzle, paired (same seeds at every spare)",
+          "campaigns": 80,
+          "calls": [
+            {
+              "runs": 20,
+              "seeds": 2,
+              "seed": 4711
+            },
+            {
+              "runs": 20,
+              "seeds": 2,
+              "seed": 18427
+            }
+          ],
+          "cacheAlternatives": [
+            {
+              "capture": "tail"
+            }
+          ],
+          "pooling": "Production pooling (batch_evaluate.js rate mode, empirical_confirm.js, task11_rerate.js): two meter calls {setting:'family', runs:20, seeds:2} at seed 4711 and seed 18427, 40 campaigns each, pooled = (exp4711 + exp18427) / 2. Production rated the reference bot's 4711 call with capture:'tail' (part of the cache key, not of the rating); Codex rated key memory without capture. The yardstick looks up both cache variants before measuring.",
+          "visibleCampaigns": "The meter returns per-campaign results only for the first sub-block of each call (the first 20 of 40). SEs are estimated from those 40 of 80 campaigns (sample SD / sqrt(80)); D itself uses all 80 (mean of the two calls' expectedTries)."
+        },
+        "skilledSettings": {
+          "setting": "planner",
+          "runs": 20,
+          "seeds": 2,
+          "seed": 4711
+        },
+        "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2",
+        "layoutsCatalogue": "8a811c841faabc125c11621b9ec247ce7fbb519b119e24d56111f2d6d3085a81",
+        "protocol": "standard-20-v1",
+        "source": "d45b28b840704fa1418139364bbe17871537e8994553949b54a3a7fc671d6fac"
+      },
+      "normalMinimum": true,
+      "explicitFallback": false,
+      "finalCandidate": null,
+      "evaluation": null,
+      "attempts": [
+        {
+          "recipe": {
+            "id": "diamond-lockBeside-d3-sp1",
+            "layout": 30,
+            "shape": "diamond",
+            "story": "lockBeside",
+            "stage": "edge",
+            "depth": 3,
+            "spare": 1,
+            "frameSpare": 3,
+            "trayRoom": 0,
+            "hiddenOnWay": 1,
+            "traps": 2,
+            "maxDown": 0.35,
+            "expectedD": 10.3,
+            "expectedS": 3.33,
+            "priorD": 10.3,
+            "priorSpare": 1
+          },
+          "seed": 11,
+          "selection": {
+            "basis": "historical-prior",
+            "predictedD": 10.3
+          },
+          "boardKey": "3753007a519bcd73df404216d12b7244536a1a3d364d142105af5554be84036c",
+          "evaluation": {
+            "staticPass": true,
+            "S": 1.05,
+            "S_valid": true,
+            "styles": {
+              "route": 1.05,
+              "plain": 3.05
+            },
+            "D": 4.2,
+            "D_valid": true,
+            "D_se": 0.15344153217909534,
+            "familyCampaigns": 80,
+            "familyFingerprint": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+            "skilledFingerprint": "93ed5c9c9419bf4146c0b965d7bedfa18248ff16609967b945d1767faea0ed4f",
+            "clockN": 15,
+            "tracePass": null,
+            "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2",
+            "pass": false,
+            "ms": 5759,
+            "cpuS": 6.343
+          },
+          "issues": [
+            "SKILLED_TOO_EASY",
+            "FAMILY_TOO_EASY",
+            "TRACE_NOT_CHECKED"
+          ],
+          "reused": false
+        },
+        {
+          "recipe": {
+            "id": "diamond-lockBeside-d3-sp2",
+            "layout": 30,
+            "shape": "diamond",
+            "story": "lockBeside",
+            "stage": "edge",
+            "depth": 3,
+            "spare": 2,
+            "frameSpare": 3,
+            "trayRoom": 0,
+            "hiddenOnWay": 1,
+            "traps": 2,
+            "maxDown": 0.35,
+            "expectedD": 8.5,
+            "expectedS": 3.08,
+            "priorD": 8.5,
+            "priorSpare": 2
+          },
+          "seed": 11,
+          "selection": {
+            "basis": "same-structure",
+            "predictedD": 2.2
+          },
+          "boardKey": "edf9c49b05c3d1b9bc0acaf02cc396e7b843eeda3f7a6e6285d79cecb52a84fa",
+          "evaluation": {
+            "staticPass": true,
+            "S": 1.05,
+            "S_valid": true,
+            "styles": {
+              "route": 1.05,
+              "plain": 2.52
+            },
+            "D": 3.705,
+            "D_valid": true,
+            "D_se": 0.13825311588037684,
+            "familyCampaigns": 80,
+            "familyFingerprint": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+            "skilledFingerprint": "93ed5c9c9419bf4146c0b965d7bedfa18248ff16609967b945d1767faea0ed4f",
+            "clockN": 16,
+            "tracePass": null,
+            "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2",
+            "pass": false,
+            "ms": 5235,
+            "cpuS": 5.469
+          },
+          "issues": [
+            "SKILLED_TOO_EASY",
+            "FAMILY_TOO_EASY",
+            "TRACE_NOT_CHECKED"
+          ],
+          "reused": false
+        },
+        {
+          "recipe": {
+            "id": "diamond-lockBeside-d3-sp3",
+            "layout": 30,
+            "shape": "diamond",
+            "story": "lockBeside",
+            "stage": "edge",
+            "depth": 3,
+            "spare": 3,
+            "frameSpare": 3,
+            "trayRoom": 0,
+            "hiddenOnWay": 1,
+            "traps": 2,
+            "maxDown": 0.35,
+            "expectedD": 6.8,
+            "expectedS": 2.65,
+            "priorD": 6.8,
+            "priorSpare": 3
+          },
+          "seed": 11,
+          "selection": {
+            "basis": "paired-response",
+            "predictedD": 3.21
+          },
+          "boardKey": "9eae79abaed97139bfbdab4d22f9f7fbf34f93b9d79ec2c3ec835190d060d5ac",
+          "evaluation": {
+            "staticPass": true,
+            "S": 1.05,
+            "S_valid": true,
+            "styles": {
+              "route": 1.05,
+              "plain": 2.4
+            },
+            "D": 3.545,
+            "D_valid": true,
+            "D_se": 0.11095100982991761,
+            "familyCampaigns": 80,
+            "familyFingerprint": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+            "skilledFingerprint": "93ed5c9c9419bf4146c0b965d7bedfa18248ff16609967b945d1767faea0ed4f",
+            "clockN": 17,
+            "tracePass": null,
+            "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2",
+            "pass": false,
+            "ms": 5571,
+            "cpuS": 5.797
+          },
+          "issues": [
+            "SKILLED_TOO_EASY",
+            "FAMILY_TOO_EASY",
+            "TRACE_NOT_CHECKED"
+          ],
+          "reused": false
+        },
+        {
+          "recipe": {
+            "id": "diamond-lockBeside-d3-sp1",
+            "layout": 30,
+            "shape": "diamond",
+            "story": "lockBeside",
+            "stage": "edge",
+            "depth": 3,
+            "spare": 1,
+            "frameSpare": 3,
+            "trayRoom": 0,
+            "hiddenOnWay": 1,
+            "traps": 2,
+            "maxDown": 0.35,
+            "expectedD": 10.3,
+            "expectedS": 3.33,
+            "priorD": 10.3,
+            "priorSpare": 1
+          },
+          "seed": 7930,
+          "selection": {
+            "basis": "derived-seed",
+            "predictedD": 10.3,
+            "derivedIndex": 1
+          },
+          "boardKey": "c99638e99f4b9c05433e7960abec15216226e85cc61eecf7b610d3495f95cb99",
+          "evaluation": {
+            "staticPass": true,
+            "S": 1.05,
+            "S_valid": true,
+            "styles": {
+              "route": 1.05,
+              "plain": 2.55
+            },
+            "D": 3.69,
+            "D_valid": true,
+            "D_se": 0.17025088523720114,
+            "familyCampaigns": 80,
+            "familyFingerprint": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+            "skilledFingerprint": "93ed5c9c9419bf4146c0b965d7bedfa18248ff16609967b945d1767faea0ed4f",
+            "clockN": 15,
+            "tracePass": null,
+            "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2",
+            "pass": false,
+            "ms": 3363,
+            "cpuS": 3.499
+          },
+          "issues": [
+            "SKILLED_TOO_EASY",
+            "FAMILY_TOO_EASY",
+            "TRACE_NOT_CHECKED"
+          ],
+          "reused": false
+        }
+      ],
+      "measured": 4,
+      "cost": {
+        "cpuS": 21.89,
+        "wallMs": 20563
+      },
+      "note": "Experimental construction result; no fresh ACCEPT blocks, library promotion or game-level change."
+    }
+  }
+]
