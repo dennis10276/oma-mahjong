@@ -1,5 +1,8 @@
 # G13 review, 2026-11-11
 
+Historical review of `32180fb2`. See the [updated review](G13-REVIEW-9b7bb9c0.md)
+for `9b7bb9c0`, which fixes the missing-range planner path but not production yield.
+
 Reviewed `32180fb2`. **The builder's main G13 objective is unfinished.** Useful
 protocol and exporter changes were delivered, but construction yield remains
 at the G12 level and the claimed general planner still uses fixed level entries.

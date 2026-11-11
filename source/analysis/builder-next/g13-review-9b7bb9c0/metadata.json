@@ -1,0 +1,14 @@
+{
+  "reviewedCommit": "9b7bb9c0",
+  "date": "2026-11-11",
+  "request": {
+    "start": 275,
+    "count": 1,
+    "seed": 99,
+    "fallback": "none",
+    "wallMs": 15000,
+    "maxCandidates": 1,
+    "campaigns": 40
+  },
+  "note": "Bounded API-path check, not a yield estimate; maxCandidates applies per body call."
+}

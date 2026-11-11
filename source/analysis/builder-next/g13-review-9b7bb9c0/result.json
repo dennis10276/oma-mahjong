@@ -1,0 +1,91 @@
+{
+  "executed": true,
+  "producedPlan": false,
+  "wallMs": 1918,
+  "out": {
+    "schema": "g13-sequence-v1",
+    "timestamp": "2026-11-11T12:10:20.281Z",
+    "success": false,
+    "start": 275,
+    "count": 1,
+    "masterSeed": 99,
+    "protocol": "standard-20-v1",
+    "fallbackPolicy": "none",
+    "levels": [
+      {
+        "level": 275,
+        "target": 13,
+        "slot": {
+          "level": 275,
+          "isBigBoard": false,
+          "allow96": false,
+          "maxTiles": 88,
+          "minTiles": 72,
+          "desc": "Standard level slot: 96 tiles strictly forbidden; normal skilled band [2.5, 6.0]."
+        },
+        "success": false,
+        "status": "NO_MEASURED_HIT",
+        "attempts": [
+          {
+            "recipe": {
+              "id": "diamond-lockBeside-d4-sp1",
+              "layout": 30,
+              "shape": "diamond",
+              "story": "lockBeside",
+              "stage": "edge",
+              "depth": 4,
+              "spare": 1,
+              "frameSpare": 3,
+              "trayRoom": 0,
+              "hiddenOnWay": 1,
+              "traps": 2,
+              "maxDown": 0.35,
+              "expectedD": 10.4,
+              "expectedS": 2.6,
+              "priorD": 10.4,
+              "priorSpare": 1
+            },
+            "seed": 901227,
+            "selection": {
+              "basis": "historical-prior",
+              "predictedD": 10.4
+            },
+            "boardKey": "2f05c36c1bff15821929f0884712adfb6be4464a5d4dafa39788e5c17e9c9d7d",
+            "evaluation": {
+              "staticPass": false,
+              "tracePass": null,
+              "failedGates": [],
+              "unresolved": [],
+              "shipSpares": [
+                2,
+                3
+              ],
+              "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2",
+              "ms": 139,
+              "cpuS": 0.141
+            },
+            "issues": [
+              "STATIC_FAILURE",
+              "SKILLED_UNRESOLVED",
+              "FAMILY_UNRESOLVED",
+              "TRACE_NOT_CHECKED"
+            ],
+            "reused": false
+          }
+        ]
+      }
+    ],
+    "metrics": {
+      "averageTarget": 0,
+      "averageMeasuredD": 0,
+      "averageGap": 0,
+      "averageGapPassing": false,
+      "normalBandLevels": 0,
+      "fallbackLevels": 0,
+      "distinctBoards": 0,
+      "distinctMatchingBodies": 0,
+      "totalWallSeconds": 1.802,
+      "totalCpuSeconds": 2.516
+    }
+  }
+}
