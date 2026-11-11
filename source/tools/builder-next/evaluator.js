@@ -40,7 +40,14 @@ function evaluateDesign(design, { ys, request, shape, spare, campaigns = 80 }) {
   const { target, tol = 1, skilledBand = [2.5, 6] } = request;
   if (pl.valid && fam.valid && Number.isFinite(pl.S) && Number.isFinite(fam.D) &&
       pl.S >= skilledBand[0] && pl.S <= skilledBand[1] && Math.abs(fam.D - target) <= tol) {
-    const trace = T.traceGates(design, GP.traceOptions({ ys, spare: null, campaigns }, profile));
+    const trace = T.traceGates(design, GP.traceOptions({
+      ys,
+      spare: null,
+      campaigns,
+      cap: ys.pins?.cap,
+      maxAttempts: ys.pins?.cap,
+      protocol: ys.protocol
+    }, profile));
     result.tracePass = trace.pass === true;
     result.failedTraces = profile.traces.required.filter(k => trace[k]?.pass !== true);
     result.traces = Object.fromEntries(['B1','B2','B3','B4','B5','B6','B7'].map(k => [k, trace[k]]));

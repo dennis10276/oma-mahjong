@@ -1,0 +1,327 @@
+{
+  "generatedAt": "2026-11-10T20:14:47.476Z",
+  "matrix": [
+    {
+      "slot": "Level 250 (Big Board, 10th level slot)",
+      "target": 10,
+      "layout": 27,
+      "shape": "steps",
+      "tiles": 96,
+      "seed": 2,
+      "spare": 1,
+      "clockN": 15,
+      "k": 14,
+      "D": 10.91,
+      "S": 2.15,
+      "skilledBand": "[2.0, 6.0] (recorded fallback)",
+      "staticPass": true,
+      "tracePass": true,
+      "traces": {
+        "B1": {
+          "pass": true,
+          "value": 1,
+          "bites": 80,
+          "firstTries": 80
+        },
+        "B2": {
+          "pass": true,
+          "value": 0.476,
+          "atTrap": 386,
+          "atForkState": 341,
+          "onTemptingMove": 311,
+          "provedFirstErrors": 811,
+          "lostTries": 811,
+          "coverage": 1
+        },
+        "B3": {
+          "pass": true,
+          "value": 0.146
+        },
+        "B4": {
+          "pass": true,
+          "value": 3
+        },
+        "B5": {
+          "pass": true,
+          "value": 0.02,
+          "lateTrayLosses": 16
+        },
+        "B6": {
+          "pass": true,
+          "value": 0.491,
+          "postClockLosses": 398,
+          "secondAct": false,
+          "postClockErrorMedianShare": 0.552
+        },
+        "B7": {
+          "pass": null,
+          "report": true,
+          "value": 0.032,
+          "repeats": 15,
+          "knownRepeats": 15,
+          "lossesTries6to20": 469,
+          "inflated": false,
+          "maxTarget": null
+        }
+      },
+      "pass": true,
+      "boardFile": "boards/level_250_target10_steps_s2.json",
+      "cardFile": "cards/level_250_card.md"
+    },
+    {
+      "slot": "Target 13 Standard Board (Normal Band)",
+      "target": 13,
+      "layout": 6,
+      "shape": "pyramid · tall",
+      "tiles": 84,
+      "seed": 4,
+      "spare": 2,
+      "clockN": 17,
+      "k": 15,
+      "D": 12.114999999999998,
+      "S": 2.67,
+      "skilledBand": "[2.5, 6.0] (NORMAL BAND)",
+      "staticPass": true,
+      "tracePass": true,
+      "traces": {
+        "B1": {
+          "pass": true,
+          "value": 1,
+          "bites": 80,
+          "firstTries": 80
+        },
+        "B2": {
+          "pass": true,
+          "value": 0.259,
+          "atTrap": 234,
+          "atForkState": 81,
+          "onTemptingMove": 200,
+          "provedFirstErrors": 905,
+          "lostTries": 905,
+          "coverage": 1
+        },
+        "B3": {
+          "pass": true,
+          "value": 0.274
+        },
+        "B4": {
+          "pass": true,
+          "value": 3
+        },
+        "B5": {
+          "pass": true,
+          "value": 0.098,
+          "lateTrayLosses": 89
+        },
+        "B6": {
+          "pass": true,
+          "value": 0.576,
+          "postClockLosses": 521,
+          "secondAct": false,
+          "postClockErrorMedianShare": 0.589
+        },
+        "B7": {
+          "pass": null,
+          "report": true,
+          "value": 0.023,
+          "repeats": 12,
+          "knownRepeats": 12,
+          "lossesTries6to20": 530,
+          "inflated": false,
+          "maxTarget": null
+        }
+      },
+      "pass": true,
+      "boardFile": "boards/target13_pyramid_s4.json",
+      "cardFile": "cards/target13_pyramid_s4_card.md"
+    },
+    {
+      "slot": "Target 10 Standard Board",
+      "target": 10,
+      "layout": 6,
+      "shape": "pyramid · tall",
+      "tiles": 84,
+      "seed": 9,
+      "spare": 2,
+      "clockN": 19,
+      "k": 17,
+      "D": 9.875,
+      "S": 2.33,
+      "skilledBand": "[2.0, 6.0] (recorded fallback)",
+      "staticPass": true,
+      "tracePass": true,
+      "traces": {
+        "B1": {
+          "pass": true,
+          "value": 0.925,
+          "bites": 74,
+          "firstTries": 80
+        },
+        "B2": {
+          "pass": true,
+          "value": 0.28,
+          "atTrap": 203,
+          "atForkState": 62,
+          "onTemptingMove": 182,
+          "provedFirstErrors": 725,
+          "lostTries": 725,
+          "coverage": 1
+        },
+        "B3": {
+          "pass": true,
+          "value": 0.179
+        },
+        "B4": {
+          "pass": true,
+          "value": 1
+        },
+        "B5": {
+          "pass": true,
+          "value": 0,
+          "lateTrayLosses": 0
+        },
+        "B6": {
+          "pass": true,
+          "value": 0.604,
+          "postClockLosses": 438,
+          "secondAct": false,
+          "postClockErrorMedianShare": 0.238
+        },
+        "B7": {
+          "pass": null,
+          "report": true,
+          "value": 0.638,
+          "repeats": 261,
+          "knownRepeats": 261,
+          "lossesTries6to20": 409,
+          "inflated": true,
+          "maxTarget": 10
+        }
+      },
+      "pass": true,
+      "boardFile": "boards/target10_pyramid_s9.json",
+      "cardFile": "cards/target10_pyramid_s9_card.md"
+    },
+    {
+      "slot": "Target 13 Secondary Layout",
+      "target": 13,
+      "layout": 6,
+      "shape": "pyramid · tall",
+      "tiles": 84,
+      "seed": 9,
+      "spare": 1,
+      "clockN": 18,
+      "k": 17,
+      "D": 12.135,
+      "S": 2.45,
+      "skilledBand": "[2.0, 6.0] (recorded fallback)",
+      "staticPass": true,
+      "tracePass": true,
+      "traces": {
+        "B1": {
+          "pass": true,
+          "value": 0.925,
+          "bites": 74,
+          "firstTries": 80
+        },
+        "B2": {
+          "pass": true,
+          "value": 0.81,
+          "atTrap": 740,
+          "atForkState": 633,
+          "onTemptingMove": 181,
+          "provedFirstErrors": 914,
+          "lostTries": 914,
+          "coverage": 1
+        },
+        "B3": {
+          "pass": true,
+          "value": 0.179
+        },
+        "B4": {
+          "pass": true,
+          "value": 1
+        },
+        "B5": {
+          "pass": true,
+          "value": 0,
+          "lateTrayLosses": 0
+        },
+        "B6": {
+          "pass": true,
+          "value": 0.633,
+          "postClockLosses": 579,
+          "secondAct": false,
+          "postClockErrorMedianShare": 0.274
+        },
+        "B7": {
+          "pass": null,
+          "report": true,
+          "value": 0.643,
+          "repeats": 351,
+          "knownRepeats": 351,
+          "lossesTries6to20": 546,
+          "inflated": true,
+          "maxTarget": 10
+        }
+      },
+      "pass": true,
+      "boardFile": "boards/target13_pyramid_s9.json",
+      "cardFile": "cards/target10_pyramid_s9_card.md"
+    }
+  ],
+  "sequence": [
+    {
+      "level": 250,
+      "target": 10,
+      "measuredD": 10.91,
+      "layout": 27,
+      "shape": "steps",
+      "tiles": 96,
+      "isBigBoard": true
+    },
+    {
+      "level": 251,
+      "target": 10.1,
+      "measuredD": 9.875,
+      "layout": 6,
+      "shape": "pyramid · tall",
+      "tiles": 84,
+      "isBigBoard": false
+    },
+    {
+      "level": 252,
+      "target": 10.2,
+      "measuredD": 10.44,
+      "layout": 6,
+      "shape": "pyramid · tall (sp3)",
+      "tiles": 84,
+      "isBigBoard": false
+    },
+    {
+      "level": 253,
+      "target": 10.25,
+      "measuredD": 10.91,
+      "layout": 27,
+      "shape": "steps",
+      "tiles": 96,
+      "isBigBoard": false
+    },
+    {
+      "level": 254,
+      "target": 10.33,
+      "measuredD": 10.44,
+      "layout": 6,
+      "shape": "pyramid · tall (sp3)",
+      "tiles": 84,
+      "isBigBoard": false
+    }
+  ],
+  "sequenceAverage": {
+    "targetAvg": 10.175999999999998,
+    "measuredAvg": 10.515,
+    "diff": 0.3390000000000022,
+    "tolerance": 0.5,
+    "pass": true
+  }
+}

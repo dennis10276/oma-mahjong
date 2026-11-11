@@ -17,14 +17,14 @@ async function main() {
   assert.equal(new Set(pool.map(P.recipeKey)).size,pool.length);
   assert.notEqual(P.recipeKey(P.rankProposals(pool,[],request)[0].recipe),
     P.recipeKey(P.rankProposals(pool,[],{...request,target:13})[0].recipe));
-  assert(pool.every(r => !('expectedS' in r)));
+  assert(pool.every(r => Number.isFinite(r.expectedS) && r.expectedS >= 2.0));
   const ys = createYardstick({cacheDir:false});
   assert.equal(ys.pins.family.fingerprint,require('../builder/loop/yardstick.js').loadPins().family.fingerprint);
   assert.notEqual(ys.pins.planner.fingerprint,require('../builder/loop/yardstick.js').loadPins().planner.fingerprint);
   const design = require('../../analysis/skilled-bot-b1/evidence/g9-board.json');
   let evaluations = 0;
   const builder = createBuilder({ys,knowledgeFile:false,sourceIdentity:'focused-regression',
-    buildBase:()=>({design}), compose:(base,recipe)=>({ok:true,design:{...base,clock:{...base.clock,n:16+recipe.spare}},recipe}),
+    buildBase:()=>({design}), compose:(base,recipe)=>{ const b = base?.design || base || design; return {ok:true,design:{...b,clock:{...b.clock,n:16+recipe.spare}},recipe}; },
     evaluate:()=>{evaluations++;return {...good,pass:true,tracePass:false};} });
   const out = await builder.build(request,{maxCandidates:4});
   assert.equal(out.success,false,'A failed trace must never qualify a numerical target hit');

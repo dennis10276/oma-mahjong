@@ -1,151 +1,152 @@
 'use strict';
 /**
  * components.js - Modular puzzle components for builder-next.
- * Encapsulates verified puzzle primitives:
- * 1. Base Bodies (recognizable shapes >= 72 tiles with normal skilled baseline)
- * 2. Keyed Preludes (visible key pairs unlocking the clock or a gateway tile)
- * 3. Thaw Prerequisites (ice obstacles on gateway tiles, requiring neighbor clearance)
- * 4. Pacing & Clock Controls (spare tuning: spare 1 vs spare 2)
+ * Dynamically builds and composes puzzles topologically using visibleChoice.
+ * Eliminates brittle hardcoded tile IDs in favor of structured parameterized proposals.
  */
 
+const fs = require('fs'), path = require('path');
 const E = require('../builder/engine.js');
-const K = require('../builder/knobs.js');
-const VC = require('../builder/visible_choice.js');
+const VC = require('./construct.js');
 const PS = require('../factory/placement_score.js');
 
-// G9 construction bodies; historical ratings below are not used as B3 calibration.
+const LAYOUTS_FILE = path.resolve(__dirname, '../../analysis/builder/data/layouts.json');
+const LAYOUTS = fs.existsSync(LAYOUTS_FILE) ? JSON.parse(fs.readFileSync(LAYOUTS_FILE, 'utf8')) : [];
+
+function getLayoutMeta(layoutId) {
+  if (typeof layoutId === 'number') {
+    const l = LAYOUTS[layoutId];
+    if (l) {
+      const maxZ = Math.max(...l.tiles.map(t => t[2]));
+      return { layout: layoutId, shape: l.shape, tiles: l.tiles.length, layers: maxZ + 1, bigBoard: l.tiles.length === 96 };
+    }
+  }
+  const found = LAYOUTS.findIndex(l => l.shape === layoutId || l.base === layoutId);
+  if (found >= 0) {
+    const l = LAYOUTS[found];
+    const maxZ = Math.max(...l.tiles.map(t => t[2]));
+    return { layout: found, shape: l.shape, tiles: l.tiles.length, layers: maxZ + 1, bigBoard: l.tiles.length === 96 };
+  }
+  return { layout: 22, shape: 'ushape', tiles: 76, layers: 6, bigBoard: false };
+}
+
 const BASE_BODIES = {
-  ushape: { layout: 22, shape: 'ushape', stage: 'edge', seed: 1, tiles: 76, baseS: 2.98, baseD: 3.175 },
-  arch: { layout: 0, shape: 'arch', stage: 'edge', seed: 1, tiles: 80, baseS: 3.95, baseD: 1.940 },
-  castle: { layout: 20, shape: 'castle · two islands', stage: 'top', seed: 2, tiles: 84, baseS: 3.45, baseD: 1.315 },
-  hourglass: { layout: 14, shape: 'hourglass', stage: 'edge', seed: 2, tiles: 80, baseS: 3.10, baseD: 1.205 }
+  steps: { layout: 27, shape: 'steps', stage: 'edge', seed: 2, tiles: 96, bigBoard: true },
+  pyramid: { layout: 6, shape: 'pyramid · tall', stage: 'top', seed: 4, tiles: 84, bigBoard: false },
+  diamond: { layout: 30, shape: 'diamond', stage: 'edge', seed: 11, tiles: 80, bigBoard: false },
+  ushape: { layout: 22, shape: 'ushape', stage: 'edge', seed: 1, tiles: 76, bigBoard: false },
+  castle: { layout: 20, shape: 'castle · two islands', stage: 'top', seed: 2, tiles: 84, bigBoard: false },
+  arch: { layout: 0, shape: 'arch', stage: 'edge', seed: 1, tiles: 80, bigBoard: false },
+  letterH: { layout: 10, shape: 'letterH', stage: 'edge', seed: 2, tiles: 80, bigBoard: false },
+  hourglass: { layout: 14, shape: 'hourglass', stage: 'edge', seed: 1, tiles: 80, bigBoard: false }
 };
 
 /**
- * Builds the base visible-choice body for a given layout and seed.
+ * Builds a puzzle candidate topologically from a parameterized proposal.
  */
-function buildBase(layout = 22, shape = 'ushape', stage = 'edge', seed = 1, options = {}) {
+function buildCandidate(layout, shape, seed, recipe, options = {}) {
+  const meta = getLayoutMeta(layout);
+  const layoutNum = meta.layout;
+  const layoutShape = shape || meta.shape;
+
   const brief = {
-    layout, shape, story: 'deepClock', stage,
-    seed, mode: 'visibleChoice',
-    frame: { spare: 2 },
-    targets: { trayRoom: 2, hiddenOnWay: 0, maxDown: 0, tailPairWidth: 2, ...(options.traps ? { traps: options.traps } : {}) }
-  };
-  return VC.build(brief, { wallMs: options.wallMs || 60000 });
-}
-
-/**
- * Classifies tiles on a board by structural layer and topological position.
- * Layer 1 wing tiles are safe for ice/locks (minimal repeated blunders B7).
- * Layers >= 3 in dense stacks cause severe B7 repeat inflation and must be avoided.
- */
-function analyzeTileTopography(design) {
-  const tiles = design.tiles.map(t => Array.isArray(t) ? { x: t[0], y: t[1], z: t[2] } : t);
-  const layer1Wings = [];
-  const denseStack = [];
-
-  tiles.forEach((t, i) => {
-    if (t.z === 1) layer1Wings.push(i);
-    else if (t.z >= 3) denseStack.push(i);
-  });
-
-  return { layer1Wings, denseStack };
-}
-
-/**
- * Builds a component candidate by composing base + keys + ice + spare.
- * Supports single ice obstacle or multi-ice wing obstacles.
- */
-function composeCandidate(baseDesign, recipe, options = {}) {
-  const spare = recipe.spare ?? 1;
-  const proofOpts = recipe.lockTile != null ? { lockTile: recipe.lockTile } : {};
-
-  let built;
-  // Check if ice is a multi-tile ice map { tile1: h1, tile2: h2 }
-  const isMultiIce = recipe.ice && typeof recipe.ice === 'object' && !('tile' in recipe.ice);
-
-  if (isMultiIce) {
-    const keyBuilt = K.clockKeys(baseDesign, recipe.keys, spare, proofOpts);
-    if (keyBuilt.fail) return keyBuilt;
-
-    const d = JSON.parse(JSON.stringify(keyBuilt.design));
-    d.obst = d.obst || {};
-    d.obst.ice = { ...(d.obst.ice || {}), ...recipe.ice };
-    d.clock.n = 99;
-
-    // Verify visibility of all ice tiles
-    const tiles = d.tiles.map(p => Array.isArray(p) ? { x: p[0], y: p[1], z: p[2] } : p);
-    const vis = require('../sim/refit/human_board_visibility.js').tileVisibility(
-      tiles,
-      { alive: new Uint8Array(tiles.length).fill(1), down: new Uint8Array(tiles.length), openPeek: -1 },
-      d.clock
-    ).tiles;
-
-    for (const iceTileStr of Object.keys(recipe.ice)) {
-      const it = Number(iceTileStr);
-      if (!vis[it] || !vis[it].role) return { fail: `iceNotVisible: tile ${it}` };
+    layout: layoutNum,
+    shape: layoutShape,
+    story: recipe.story || 'lockBeside',
+    stage: recipe.stage || (meta.layers >= 5 ? 'top' : 'edge'),
+    seed: seed ?? 1,
+    mode: 'visibleChoice',
+    frame: {
+      spare: recipe.frameSpare ?? 2,
+      ...(recipe.depth != null ? { depth: recipe.depth } : {}),
+      ...(recipe.way != null ? { way: recipe.way } : {})
+    },
+    targets: {
+      trayRoom: recipe.trayRoom ?? 0,
+      hiddenOnWay: Math.min(3, recipe.hiddenOnWay ?? 1),
+      maxDown: recipe.maxDown ?? 0.30,
+      ...(recipe.tailPairWidth != null ? { tailPairWidth: recipe.tailPairWidth } : {}),
+      ...(recipe.traps != null ? { traps: recipe.traps } : {})
     }
+  };
 
-    const limits = { nodes: 400000, totalNodes: 700000, ms: Infinity, finishNodes: 200000, finishMs: Infinity, ...options };
-    const way = E.clockShortest(E.game(d), limits);
-    if (!way || way.unsure) return { fail: 'minimumUnproven' };
-    if (way.k <= keyBuilt.proof.minimum && Object.keys(recipe.ice).length > 0) return { fail: 'idleIce' };
-    if (way.k + spare > 19) return { fail: 'clockTooDeep', minimum: way.k };
-
-    const strict = E.clockShortest(E.game(d, { strict: true }), limits);
-    if (!strict || strict.unsure || strict.k !== way.k) return { fail: 'strictMinimumUnproven' };
-
-    d.clock.n = way.k + spare;
-    d.solution = E.flatten(strict.path);
-    if (!E.replay(d, d.solution, { strict: true }).ok) return { fail: 'witnessUnproven' };
-
-    built = {
-      design: d,
-      proof: {
-        ...keyBuilt.proof,
-        ice: recipe.ice,
-        minimum: way.k,
-        spare,
-        changed: ['obst.keys', 'obst.locks', 'obst.ice', 'clock.n', 'solution']
-      }
-    };
-  } else if (recipe.ice) {
-    built = K.clockKeyIce(baseDesign, recipe.keys, recipe.ice, spare, proofOpts);
-  } else if (recipe.keys) {
-    built = K.clockKeys(baseDesign, recipe.keys, spare, proofOpts);
-  } else {
-    // Plain clock spare adjustment
-    built = K.clockSpare(baseDesign, spare);
+  const res = VC.build(brief, {
+    wallMs: options.wallMs || 30000,
+    startAttempt: recipe.startAttempt ?? options.startAttempt,
+    tries: recipe.tries ?? options.tries
+  });
+  if (!res.design) {
+    return { ok: false, fail: res.fail || 'buildFailed', detail: res.fails };
   }
 
-  if (built.fail || !built.design) {
-    return { fail: built.fail || 'buildFailed', detail: built };
+  const d = res.design;
+  const cs = E.clockShortest(E.game(d));
+  if (!cs || !cs.k || cs.unsure) {
+    return { ok: false, fail: 'shortestUnproven' };
   }
 
-  const d = built.design;
+  const spare = recipe.spare ?? 2;
+  d.clock.n = cs.k + spare;
+  if (!d.solution || !d.solution.length) {
+    d.solution = E.flatten(cs.path);
+  }
 
-  // Verify readability
-  const isReadable = PS.readable(d);
-  if (!isReadable) return { fail: 'unreadableDesign' };
+  if (!E.replay(d, d.solution, { strict: true }).ok) {
+    return { ok: false, fail: 'strictWitnessFailed' };
+  }
 
-  // Verify strict witness
-  const strictWitness = E.replay(d, d.solution, { strict: true }).ok;
-  if (!strictWitness) return { fail: 'strictWitnessFailed' };
+  // Ensure placement readability
+  if (!PS.readable(d)) {
+    return { ok: false, fail: 'unreadableDesign' };
+  }
 
   return {
     ok: true,
     design: d,
-    proof: built.proof,
-    k: built.proof.minimum,
+    k: cs.k,
     clockN: d.clock.n,
     spare,
-    recipe
+    recipe,
+    brief,
+    card: res.card
   };
 }
 
+/**
+ * Legacy interface for composeCandidate: accepts either baseDesign + recipe or direct recipe.
+ */
+function composeCandidate(baseDesign, recipe, options = {}) {
+  if (recipe.design) {
+    const d = JSON.parse(JSON.stringify(recipe.design));
+    const k = recipe.clockK ?? (d.clock.n - (recipe.priorSpare ?? recipe.spare ?? 1));
+    if (recipe.spare != null) d.clock.n = k + recipe.spare;
+    return {
+      ok: true,
+      design: d,
+      proof: { minimum: k, spare: recipe.spare ?? 1, changed: ['clock.n'] },
+      k,
+      clockN: d.clock.n,
+      spare: recipe.spare ?? 1,
+      recipe
+    };
+  }
+
+  const layout = recipe.layout ?? baseDesign?.layout ?? 22;
+  const shape = recipe.shape ?? baseDesign?.shape ?? 'ushape';
+  const seed = recipe.seed ?? options.seed ?? 1;
+
+  return buildCandidate(layout, shape, seed, recipe, options);
+}
+
+function buildBase(layout = 22, shape = 'ushape', stage = 'edge', seed = 1, options = {}) {
+  return buildCandidate(layout, shape, seed, { story: 'deepClock', stage, spare: 2, trayRoom: 0, maxDown: 0.30 }, options);
+}
+
 module.exports = {
+  LAYOUTS,
   BASE_BODIES,
-  buildBase,
-  analyzeTileTopography,
-  composeCandidate
+  getLayoutMeta,
+  buildCandidate,
+  composeCandidate,
+  buildBase
 };

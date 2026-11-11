@@ -86,14 +86,18 @@ function botEntry(botVersion) {
 // The CURVE block's sub-block seeds in meter order (each meter call {runs, seeds, seed} = seeds sub-blocks of runs).
 function curveSubBlocks(ys) {
   const pins = ys?.pins || loadPins(), b = pins?.blocks?.CURVE, stride = pins?.subBlockStride ?? 7919;
-  if (!b) return CURVE_SUBBLOCKS.map(seed => ({ seed, runs: SUBBLOCK_RUNS }));
-  return b.calls.flatMap(c => Array.from({ length: c.seeds }, (_, s) => ({ seed: (c.seed + s * stride) | 0, runs: c.runs })));
+  if (!b) return CURVE_SUBBLOCKS.map(seed => ({ seed, runs: SUBBLOCK_RUNS, maxAttempts: MAX_ATTEMPTS }));
+  return b.calls.flatMap(c => Array.from({ length: c.seeds }, (_, s) => ({
+    seed: (c.seed + s * stride) | 0,
+    runs: c.runs,
+    maxAttempts: c.maxAttempts ?? pins?.cap ?? MAX_ATTEMPTS
+  })));
 }
 
 // ---------- capture: one sub-block (the same call task11_capture_worker.js makes, with a chosen bot) ----------
-function captureFamily(design, { runs = SUBBLOCK_RUNS, seed = 4711, botVersion = FAST } = {}) {
+function captureFamily(design, { runs = SUBBLOCK_RUNS, seed = 4711, botVersion = FAST, maxAttempts = MAX_ATTEMPTS } = {}) {
   const t = Date.now(), bot = require(botEntry(botVersion));
-  const options = { runs, seeds: 1, seed, maxAttempts: MAX_ATTEMPTS, capture: true, setting: 'family' };
+  const options = { runs, seeds: 1, seed, maxAttempts, capture: true, setting: 'family' };
   const result = bot.measureHuman(M.boardOf(design), options);
   return { profile: 'family', botVersion, options, ms: Date.now() - t, result };
 }
@@ -159,6 +163,8 @@ function mergeThresholds(over) {
 function traceGates(input, opts = {}) {
   const TH = mergeThresholds(opts.thresholds);
   const { spare = null, ys = null, campaigns = 40, secondAct = false, budget = BUDGET, maxExamples = 6 } = opts;
+  const cap = opts.cap ?? ys?.pins?.cap ?? (opts.protocol === 'extended-40-v1' ? 40 : MAX_ATTEMPTS);
+  const maxAtt = opts.maxAttempts ?? cap;
   const at = atSpare(input, spare); if (at.fail) return { spare, fail: at.fail };
   const design = at.design, n = design.tiles.length;
   const rule = opts.capture ? { botVersion: opts.botVersion ?? 'injected', fingerprint: null, pinned: null, injected: true } : ruler(ys, opts.botVersion);
@@ -171,7 +177,7 @@ function traceGates(input, opts = {}) {
   for (const blk of opts.subBlocks || curveSubBlocks(ys)) {
     if (wonOn.length >= campaigns) break;
     const runs = Math.min(blk.runs, campaigns - wonOn.length), t0 = Date.now();
-    const raw = capture(design, { runs, seed: blk.seed, botVersion: rule.botVersion });
+    const raw = capture(design, { runs, seed: blk.seed, botVersion: rule.botVersion, maxAttempts: blk.maxAttempts ?? maxAtt });
     captureMs += raw?.ms ?? Date.now() - t0;
     const results = raw?.result?.results;
     if (!Array.isArray(results) || results.some(c => c.attempts.some(x => !x.decisions || !x.terminal)))
@@ -181,7 +187,7 @@ function traceGates(input, opts = {}) {
     valid = valid && raw.result.valid === true;
     subBlocks.push({ seed: blk.seed, runs: results.length, expectedTries: raw.result.expectedTries ?? null, valid: raw.result.valid ?? null });
     for (const [c, r] of results.entries()) {
-      wonOn.push(r.wonOn); perCampaign.push(r.wonOn ?? MAX_ATTEMPTS);
+      wonOn.push(r.wonOn); perCampaign.push(r.wonOn ?? cap);
       for (const x of r.attempts) left.set((off + c) + ':' + x.attempt, x.left);
     }
     for (const x of tr.profile.attemptProfiles) {
