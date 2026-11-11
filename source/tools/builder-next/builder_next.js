@@ -87,7 +87,7 @@ function createBuilder(options = {}) {
     };
 
     // Scoped observation cache
-    const scope = M.digest({ layout: request.layout, shape: request.shape, seed: request.seed, campaigns });
+    const scope = M.digest({ layout: request.layout, shape: request.shape, seed: request.seed, campaigns, protocol: context.protocol });
     const observed = knowledge.observations.filter(r => r.scope === scope);
 
     // Check if an existing observed candidate in this scope meets all criteria
@@ -105,7 +105,7 @@ function createBuilder(options = {}) {
     let derivedIndex = 0;
     while (attempts.length < maxCandidates && Date.now() - started < wallMs) {
       const currentSeed = derivedIndex === 0 ? request.seed : ((request.seed + derivedIndex * 7919) | 0);
-      const currentScope = M.digest({ layout: request.layout, shape: request.shape, seed: currentSeed, campaigns });
+      const currentScope = M.digest({ layout: request.layout, shape: request.shape, seed: currentSeed, campaigns, protocol: context.protocol });
       const currentObserved = knowledge.observations.filter(r => r.scope === currentScope);
 
       const worthMeasuring = recipe => {
@@ -122,7 +122,7 @@ function createBuilder(options = {}) {
 
       const unmeasured = pool.filter(worthMeasuring);
       if (!unmeasured.length) {
-        if (derivedIndex < 2 && attempts.length < maxCandidates) {
+        if (attempts.length < maxCandidates) {
           derivedIndex++;
           continue;
         }
@@ -132,7 +132,7 @@ function createBuilder(options = {}) {
       const ranked = P.rankProposals(unmeasured, currentObserved, request);
       const next = ranked[0];
       if (!next) {
-        if (derivedIndex < 2 && attempts.length < maxCandidates) {
+        if (attempts.length < maxCandidates) {
           derivedIndex++;
           continue;
         }

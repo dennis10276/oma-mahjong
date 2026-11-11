@@ -27,7 +27,9 @@ const RECIPES_BY_LAYOUT = {
   30: [
     { id: 'diamond-lockBeside-d3-sp1', layout: 30, shape: 'diamond', story: 'lockBeside', stage: 'edge', depth: 3, spare: 1, frameSpare: 3, trayRoom: 0, hiddenOnWay: 1, traps: 2, maxDown: 0.35, expectedD: 10.3, expectedS: 3.33 },
     { id: 'diamond-lockBeside-d3-sp2', layout: 30, shape: 'diamond', story: 'lockBeside', stage: 'edge', depth: 3, spare: 2, frameSpare: 3, trayRoom: 0, hiddenOnWay: 1, traps: 2, maxDown: 0.35, expectedD: 8.5, expectedS: 3.08 },
-    { id: 'diamond-lockBeside-d3-sp3', layout: 30, shape: 'diamond', story: 'lockBeside', stage: 'edge', depth: 3, spare: 3, frameSpare: 3, trayRoom: 0, hiddenOnWay: 1, traps: 2, maxDown: 0.35, expectedD: 6.8, expectedS: 2.65 }
+    { id: 'diamond-lockBeside-d3-sp3', layout: 30, shape: 'diamond', story: 'lockBeside', stage: 'edge', depth: 3, spare: 3, frameSpare: 3, trayRoom: 0, hiddenOnWay: 1, traps: 2, maxDown: 0.35, expectedD: 6.8, expectedS: 2.65 },
+    { id: 'diamond-lockBeside-d4-sp1', layout: 30, shape: 'diamond', story: 'lockBeside', stage: 'edge', depth: 4, spare: 1, frameSpare: 3, trayRoom: 0, hiddenOnWay: 1, traps: 2, maxDown: 0.35, expectedD: 10.4, expectedS: 2.60 },
+    { id: 'diamond-lockBeside-d4-sp2', layout: 30, shape: 'diamond', story: 'lockBeside', stage: 'edge', depth: 4, spare: 2, frameSpare: 3, trayRoom: 0, hiddenOnWay: 1, traps: 2, maxDown: 0.35, expectedD: 8.8, expectedS: 2.50 }
   ],
 
   // Layout 22: ushape (76 tiles, 6 layers) - Standard level

@@ -9,6 +9,9 @@ const Y = require('../builder/loop/yardstick.js');
 function createYardstick(options = {}) {
   const pins = structuredClone(Y.loadPins());
   const protocol = options.protocol || (options.extended40 ? 'extended-40-v1' : 'standard-20-v1');
+  if (protocol !== 'standard-20-v1' && protocol !== 'extended-40-v1') {
+    throw Error(`Unknown protocol '${protocol}'. Supported protocols: 'standard-20-v1', 'extended-40-v1'`);
+  }
   if (protocol === 'extended-40-v1') {
     pins.cap = 40;
     pins.protocol = 'extended-40-v1';
@@ -17,7 +20,12 @@ function createYardstick(options = {}) {
       calls: pins.blocks.CURVE.calls.map(c => ({ ...c, maxAttempts: 40 }))
     };
   } else {
+    pins.cap = 20;
     pins.protocol = 'standard-20-v1';
+    pins.blocks.CURVE = {
+      ...pins.blocks.CURVE,
+      calls: pins.blocks.CURVE.calls.map(c => ({ ...c, maxAttempts: 20 }))
+    };
   }
   const cacheDir = options.cacheDir ?? path.resolve(__dirname, '../../build/factory-cache');
   const planner = M.createMeter({ cacheDir, bot: path.resolve(__dirname,
