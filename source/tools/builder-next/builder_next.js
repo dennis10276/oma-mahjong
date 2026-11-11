@@ -16,7 +16,8 @@ const V = require('./evaluator.js');
 const { createYardstick } = require('./yardstick.js');
 
 function createBuilder(options = {}) {
-  const ys = options.ys || createYardstick();
+  const protocol = options.protocol || (options.extended40 ? 'extended-40-v1' : 'standard-20-v1');
+  const ys = options.ys || createYardstick({ protocol });
   const knowledgeFile = options.knowledgeFile === false ? null : path.resolve(options.knowledgeFile ||
     path.join(__dirname, '../../build/builder-next/knowledge.json'));
   const context = {
@@ -25,6 +26,8 @@ function createBuilder(options = {}) {
     familySettings: ys.pins.blocks.CURVE,
     skilledSettings: ys.pins.planner.settings,
     gateProfile: GP.loadProfile('e5-v1').fingerprint,
+    layoutsCatalogue: M.sourceHash(path.resolve(__dirname, '../../analysis/builder/data/layouts.json')),
+    protocol: ys.pins.protocol || protocol,
     source: options.sourceIdentity || M.sourceHash(__filename)
   };
   const contextKey = M.digest(context);
@@ -99,41 +102,66 @@ function createBuilder(options = {}) {
       }
     }
 
-    const worthMeasuring = recipe => {
-      if (seenRecipes.has(P.recipeKey(recipe))) return false;
-      const old = observed.find(r => r.recipeKey === P.recipeKey(recipe));
-      if (!old) return true;
-      if (old.failure) return false;
-      if (old.evaluation) {
-        return old.evaluation.tracePass == null && V.diagnose({ ...old.evaluation, tracePass: true }, request).length === 0;
-      }
-      return true;
-    };
-
+    let derivedIndex = 0;
     while (attempts.length < maxCandidates && Date.now() - started < wallMs) {
-      const ranked = P.rankProposals(pool.filter(worthMeasuring), observed, request);
+      const currentSeed = derivedIndex === 0 ? request.seed : ((request.seed + derivedIndex * 7919) | 0);
+      const currentScope = M.digest({ layout: request.layout, shape: request.shape, seed: currentSeed, campaigns });
+      const currentObserved = knowledge.observations.filter(r => r.scope === currentScope);
+
+      const worthMeasuring = recipe => {
+        const k = P.recipeKey(recipe) + (derivedIndex ? `:${currentSeed}` : '');
+        if (seenRecipes.has(k)) return false;
+        const old = currentObserved.find(r => r.recipeKey === P.recipeKey(recipe));
+        if (!old) return true;
+        if (old.failure) return false;
+        if (old.evaluation) {
+          return old.evaluation.tracePass == null && V.diagnose({ ...old.evaluation, tracePass: true }, request).length === 0;
+        }
+        return true;
+      };
+
+      const unmeasured = pool.filter(worthMeasuring);
+      if (!unmeasured.length) {
+        if (derivedIndex < 2 && attempts.length < maxCandidates) {
+          derivedIndex++;
+          continue;
+        }
+        break;
+      }
+
+      const ranked = P.rankProposals(unmeasured, currentObserved, request);
       const next = ranked[0];
-      if (!next) break;
+      if (!next) {
+        if (derivedIndex < 2 && attempts.length < maxCandidates) {
+          derivedIndex++;
+          continue;
+        }
+        break;
+      }
 
       const recipe = next.recipe, key = P.recipeKey(recipe);
-      seenRecipes.add(key);
+      seenRecipes.add(key + (derivedIndex ? `:${currentSeed}` : ''));
 
-      const previous = observed.find(r => r.recipeKey === key);
+      const previous = currentObserved.find(r => r.recipeKey === key);
       let candidate = previous?.candidate;
 
       if (!candidate) {
-        candidate = compose(null, { ...recipe, layout: request.layout, shape: request.shape, seed: request.seed },
+        candidate = compose(null, { ...recipe, layout: request.layout, shape: request.shape, seed: currentSeed },
           { wallMs: Math.min(20000, wallMs - (Date.now() - started)) });
       }
 
-      const attempt = { recipe, selection: { basis: next.basis, predictedD: next.predictedD } };
+      const attempt = {
+        recipe,
+        seed: currentSeed,
+        selection: { basis: derivedIndex ? 'derived-seed' : next.basis, predictedD: next.predictedD, derivedIndex: derivedIndex || undefined }
+      };
 
       if (!candidate.ok) {
         attempt.failure = candidate.fail;
         attempts.push(attempt);
         if (!previous) {
-          const row = { scope, recipeKey: key, recipe, failure: candidate.fail };
-          observed.push(row);
+          const row = { scope: currentScope, recipeKey: key, recipe, failure: candidate.fail };
+          currentObserved.push(row);
           knowledge.observations.push(row);
           persist();
         }
@@ -163,11 +191,11 @@ function createBuilder(options = {}) {
       const issues = V.diagnose(evaluation, request);
       attempts.push({ ...attempt, boardKey, evaluation, issues, reused: !!reusable });
 
-      const row = { scope, recipeKey: key, recipe, boardKey, candidate, evaluation };
+      const row = { scope: currentScope, recipeKey: key, recipe, boardKey, candidate, evaluation };
       if (previous) {
         Object.assign(previous, row);
       } else {
-        observed.push(row);
+        currentObserved.push(row);
         knowledge.observations.push(row);
       }
       persist();
@@ -201,7 +229,7 @@ if (require.main === module) {
   const layout = parseInt(getArg('--layout', '6'), 10);
   const seed = parseInt(getArg('--seed', '4'), 10);
   const tol = parseFloat(getArg('--tol', '1.0'));
-  const fallback = hasFlag('--fallback') || layout === 27;
+  const fallback = hasFlag('--fallback') || hasFlag('--allowFallback');
   const skilledBand = fallback ? [2.0, 6.0] : [2.5, 6.0];
   const campaigns = parseInt(getArg('--campaigns', '80'), 10);
   const wallMs = parseInt(getArg('--wallMs', '60000'), 10);

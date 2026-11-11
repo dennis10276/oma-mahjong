@@ -7,7 +7,7 @@
 
 const fs = require('fs'), path = require('path');
 const E = require('../builder/engine.js');
-const VC = require('../builder/visible_choice.js');
+const VC = require('./construct.js');
 const PS = require('../factory/placement_score.js');
 
 const LAYOUTS_FILE = path.resolve(__dirname, '../../analysis/builder/data/layouts.json');
@@ -70,7 +70,11 @@ function buildCandidate(layout, shape, seed, recipe, options = {}) {
     }
   };
 
-  const res = VC.build(brief, { wallMs: options.wallMs || 30000 });
+  const res = VC.build(brief, {
+    wallMs: options.wallMs || 30000,
+    startAttempt: recipe.startAttempt ?? options.startAttempt,
+    tries: recipe.tries ?? options.tries
+  });
   if (!res.design) {
     return { ok: false, fail: res.fail || 'buildFailed', detail: res.fails };
   }

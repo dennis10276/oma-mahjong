@@ -14,9 +14,12 @@ function structure(recipe) {
     story: recipe.story ?? null,
     stage: recipe.stage ?? null,
     depth: recipe.depth ?? null,
+    frameSpare: recipe.frameSpare ?? null,
     trayRoom: recipe.trayRoom ?? 0,
     maxDown: recipe.maxDown ?? 0.30,
     hiddenOnWay: recipe.hiddenOnWay ?? 1,
+    tailPairWidth: recipe.tailPairWidth ?? null,
+    traps: recipe.traps ?? null,
     baseId: recipe.id ? recipe.id.replace(/-sp\d+$/, '') : null,
     design: recipe.design ?? null
   };
