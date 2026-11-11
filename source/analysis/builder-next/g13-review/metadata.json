@@ -1,0 +1,21 @@
+{
+  "reviewedCommit": "32180fb2",
+  "date": "2026-11-11",
+  "request": {
+    "start": 275,
+    "count": 1,
+    "seed": 99,
+    "fallback": "none"
+  },
+  "result": {
+    "success": false,
+    "error": "No calibrated blueprint available for level 275 in plan sequence."
+  },
+  "constructorUnchangedFromG12": true,
+  "sha256": {
+    "source/tools/builder-next/plan_sequence.js": "d6e73be43f36b42bcd682bb79c9cd4f47413636b2f1e6a61bb44542be45ae672",
+    "source/tools/builder-next/builder_next.js": "0f77ae44ee4a7dac95f83ebd3fd3518aaa401f31b3de4c330acb98e00cc4967b",
+    "source/tools/builder/loop/traces.js": "b63eca81ef1408ff8e6c98405b2e33c026383accca1c723f56e058466f60fdee",
+    "source/analysis/builder-next/g13/request_matrix.json": "670aa77a60896b14051efb7e7d542bf02468eb3c8b0fc49a0adce55af45394db"
+  }
+}
