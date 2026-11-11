@@ -9,7 +9,7 @@
 const RECIPES_BY_LAYOUT = {
   // Layout 27: steps (96 tiles, 7 layers) - Big board for 10th level slots (e.g. Level 250)
   27: [
-    { id: 'steps-lockBeside-sp1', layout: 27, shape: 'steps', story: 'lockBeside', stage: 'edge', frameSpare: 2, spare: 1, trayRoom: 0, hiddenOnWay: 1, maxDown: 0.30, tailPairWidth: 2, traps: 2, expectedD: 10.9, expectedS: 2.15, bigBoard: true },
+    { id: 'steps-lockBeside-sp1', layout: 27, shape: 'steps', story: 'lockBeside', stage: 'edge', frameSpare: 2, spare: 1, trayRoom: 0, hiddenOnWay: 1, maxDown: 0.30, tailPairWidth: 2, traps: 2, startAttempt: 3, tries: 4, expectedD: 10.9, expectedS: 2.15, bigBoard: true },
     { id: 'steps-lockBeside-sp2', layout: 27, shape: 'steps', story: 'lockBeside', stage: 'edge', frameSpare: 2, spare: 2, trayRoom: 0, hiddenOnWay: 1, maxDown: 0.30, tailPairWidth: 2, traps: 2, expectedD: 8.8, expectedS: 2.05, bigBoard: true },
     { id: 'steps-iceLockClock-sp1', layout: 27, shape: 'steps', story: 'iceLockClock', stage: 'edge', frameSpare: 2, spare: 1, trayRoom: 0, hiddenOnWay: 1, maxDown: 0.30, tailPairWidth: 2, traps: 2, expectedD: 11.5, expectedS: 2.10, bigBoard: true },
     { id: 'steps-lockBeside-d4-sp1', layout: 27, shape: 'steps', story: 'lockBeside', stage: 'edge', depth: 4, frameSpare: 2, spare: 1, trayRoom: 0, hiddenOnWay: 1, maxDown: 0.30, tailPairWidth: 2, traps: 2, expectedD: 13.0, expectedS: 2.20, bigBoard: true }

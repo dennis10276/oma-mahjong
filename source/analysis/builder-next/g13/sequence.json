@@ -1,6 +1,7 @@
 {
   "schema": "g13-sequence-v1",
-  "timestamp": "2026-11-11T08:41:44.153Z",
+  "timestamp": "2026-11-11T12:00:46.717Z",
+  "success": true,
   "start": 250,
   "count": 5,
   "masterSeed": 1,
@@ -10,6 +11,15 @@
     {
       "level": 250,
       "target": 10,
+      "slot": {
+        "level": 250,
+        "isBigBoard": true,
+        "allow96": true,
+        "maxTiles": 96,
+        "minTiles": 72,
+        "desc": "10th-level milestone slot: 96 tiles permitted; recorded fallback band [2.0, 2.5) allowed on policy."
+      },
+      "success": true,
       "layout": 27,
       "shape": "steps",
       "tiles": 96,
@@ -19,6 +29,7 @@
       "k": 14,
       "clockN": 15,
       "boardKey": "4fd388e56f36c417e4c239846599df35f8661ff519d43676f79e1e62cd37c432",
+      "matchingBodyKey": "bd85e94ac739c5038256a6773cf41b38876431b20a7c326e88f19491dc122fe5",
       "D": 10.91,
       "S": 2.15,
       "error": 0.9100000000000001,
@@ -26,11 +37,353 @@
       "tracePass": true,
       "isNormalBand": false,
       "isFallback": true,
-      "policy": "Tenth-level slot (96 tiles permitted). Recorded fallback skilled band [2.0, 2.5)."
+      "fallbackRationale": "10th-level milestone slot (96 tiles permitted): normal skilled band search exhausted; caller authorized recorded fallback [2.0, 2.5).",
+      "failedNormalAttempts": [
+        {
+          "recipe": {
+            "id": "steps-iceLockClock-sp3",
+            "layout": 27,
+            "shape": "steps",
+            "story": "iceLockClock",
+            "stage": "edge",
+            "frameSpare": 2,
+            "spare": 3,
+            "trayRoom": 0,
+            "hiddenOnWay": 1,
+            "maxDown": 0.3,
+            "tailPairWidth": 2,
+            "traps": 2,
+            "expectedD": 11.5,
+            "expectedS": 2.1,
+            "bigBoard": true,
+            "priorD": 7.5,
+            "priorSpare": 1
+          },
+          "seed": 2,
+          "selection": {
+            "basis": "same-structure",
+            "predictedD": 8.440000000000001
+          },
+          "boardKey": "721c8bda42d398ec6b16e10213a8a690350073b67b819bdf6d5a3628c9f88baa",
+          "evaluation": {
+            "staticPass": true,
+            "S": 1.02,
+            "S_valid": true,
+            "styles": {
+              "route": 1.02,
+              "plain": 1.02
+            },
+            "D": 11.04,
+            "D_valid": true,
+            "D_se": 0.7703861743274844,
+            "familyCampaigns": 80,
+            "familyFingerprint": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+            "skilledFingerprint": "93ed5c9c9419bf4146c0b965d7bedfa18248ff16609967b945d1767faea0ed4f",
+            "clockN": 17,
+            "tracePass": null,
+            "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2",
+            "pass": false,
+            "ms": 173,
+            "cpuS": 0.297
+          },
+          "issues": [
+            "SKILLED_TOO_EASY",
+            "FAMILY_TOO_HARD",
+            "TRACE_NOT_CHECKED"
+          ],
+          "reused": false
+        },
+        {
+          "recipe": {
+            "id": "steps-iceLockClock-sp1",
+            "layout": 27,
+            "shape": "steps",
+            "story": "iceLockClock",
+            "stage": "edge",
+            "frameSpare": 2,
+            "spare": 1,
+            "trayRoom": 0,
+            "hiddenOnWay": 1,
+            "maxDown": 0.3,
+            "tailPairWidth": 2,
+            "traps": 2,
+            "expectedD": 11.5,
+            "expectedS": 2.1,
+            "bigBoard": true,
+            "priorD": 11.5,
+            "priorSpare": 1
+          },
+          "seed": 2,
+          "selection": {
+            "basis": "paired-response",
+            "predictedD": 9.840000000000003
+          },
+          "boardKey": "664537e428f11e1ec570dc6aa0fbdd6675907f6b996b1389aad065b290fb384c",
+          "evaluation": {
+            "staticPass": true,
+            "S": 1.02,
+            "S_valid": true,
+            "styles": {
+              "route": 1.02,
+              "plain": 1.55
+            },
+            "D": 14.524999999999999,
+            "D_valid": true,
+            "D_se": 0.7221572376909113,
+            "familyCampaigns": 80,
+            "familyFingerprint": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+            "skilledFingerprint": "93ed5c9c9419bf4146c0b965d7bedfa18248ff16609967b945d1767faea0ed4f",
+            "clockN": 15,
+            "tracePass": null,
+            "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2",
+            "pass": false,
+            "ms": 172,
+            "cpuS": 0.235
+          },
+          "issues": [
+            "SKILLED_TOO_EASY",
+            "FAMILY_TOO_HARD",
+            "TRACE_NOT_CHECKED"
+          ],
+          "reused": false
+        },
+        {
+          "recipe": {
+            "id": "steps-lockBeside-sp3",
+            "layout": 27,
+            "shape": "steps",
+            "story": "lockBeside",
+            "stage": "edge",
+            "frameSpare": 2,
+            "spare": 3,
+            "trayRoom": 0,
+            "hiddenOnWay": 1,
+            "maxDown": 0.3,
+            "tailPairWidth": 2,
+            "traps": 2,
+            "startAttempt": 3,
+            "tries": 4,
+            "expectedD": 10.9,
+            "expectedS": 2.15,
+            "bigBoard": true,
+            "priorD": 6.9,
+            "priorSpare": 1
+          },
+          "seed": 2,
+          "selection": {
+            "basis": "paired-response",
+            "predictedD": 1
+          },
+          "boardKey": "506b4775ef04e37ac13e68f093c23b8c88786401341f11f694baa00baf2592b1",
+          "evaluation": {
+            "staticPass": true,
+            "S": 2.02,
+            "S_valid": true,
+            "styles": {
+              "route": 2.02,
+              "plain": 2.58
+            },
+            "D": 9.2,
+            "D_valid": true,
+            "D_se": 0.6839942260471373,
+            "familyCampaigns": 80,
+            "familyFingerprint": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+            "skilledFingerprint": "93ed5c9c9419bf4146c0b965d7bedfa18248ff16609967b945d1767faea0ed4f",
+            "clockN": 17,
+            "tracePass": null,
+            "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2",
+            "pass": false,
+            "ms": 13243,
+            "cpuS": 15.921
+          },
+          "issues": [
+            "SKILLED_TOO_EASY",
+            "TRACE_NOT_CHECKED"
+          ],
+          "reused": false
+        },
+        {
+          "recipe": {
+            "id": "steps-iceLockClock-sp2",
+            "layout": 27,
+            "shape": "steps",
+            "story": "iceLockClock",
+            "stage": "edge",
+            "frameSpare": 2,
+            "spare": 2,
+            "trayRoom": 0,
+            "hiddenOnWay": 1,
+            "maxDown": 0.3,
+            "tailPairWidth": 2,
+            "traps": 2,
+            "expectedD": 11.5,
+            "expectedS": 2.1,
+            "bigBoard": true,
+            "priorD": 9.5,
+            "priorSpare": 1
+          },
+          "seed": 7921,
+          "selection": {
+            "basis": "derived-seed",
+            "predictedD": 9.5,
+            "derivedIndex": 1
+          },
+          "boardKey": "61e7c5fb9635634dd14e18caae20ed3aadfd8826119350f6c96690336d2a1e7e",
+          "evaluation": {
+            "staticPass": true,
+            "S": 1.1,
+            "S_valid": true,
+            "styles": {
+              "route": 1.15,
+              "plain": 1.1
+            },
+            "D": 3.325,
+            "D_valid": true,
+            "D_se": 0.14206323248932662,
+            "familyCampaigns": 80,
+            "familyFingerprint": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+            "skilledFingerprint": "93ed5c9c9419bf4146c0b965d7bedfa18248ff16609967b945d1767faea0ed4f",
+            "clockN": 14,
+            "tracePass": null,
+            "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2",
+            "pass": false,
+            "ms": 163,
+            "cpuS": 0.234
+          },
+          "issues": [
+            "SKILLED_TOO_EASY",
+            "FAMILY_TOO_EASY",
+            "TRACE_NOT_CHECKED"
+          ],
+          "reused": false
+        },
+        {
+          "recipe": {
+            "id": "steps-lockBeside-sp1",
+            "layout": 27,
+            "shape": "steps",
+            "story": "lockBeside",
+            "stage": "edge",
+            "frameSpare": 2,
+            "spare": 1,
+            "trayRoom": 0,
+            "hiddenOnWay": 1,
+            "maxDown": 0.3,
+            "tailPairWidth": 2,
+            "traps": 2,
+            "startAttempt": 3,
+            "tries": 4,
+            "expectedD": 10.9,
+            "expectedS": 2.15,
+            "bigBoard": true,
+            "priorD": 10.9,
+            "priorSpare": 1
+          },
+          "seed": 7921,
+          "selection": {
+            "basis": "derived-seed",
+            "predictedD": 10.9,
+            "derivedIndex": 1
+          },
+          "boardKey": "d53d66b191db4c6330fb07c4145b1fafbcec4488b6c427278c7fd61f41a96d79",
+          "evaluation": {
+            "staticPass": true,
+            "S": 1.05,
+            "S_valid": true,
+            "styles": {
+              "route": 1.05,
+              "plain": 3.02
+            },
+            "D": 3.54,
+            "D_valid": true,
+            "D_se": 0.1388740322574491,
+            "familyCampaigns": 80,
+            "familyFingerprint": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+            "skilledFingerprint": "93ed5c9c9419bf4146c0b965d7bedfa18248ff16609967b945d1767faea0ed4f",
+            "clockN": 15,
+            "tracePass": null,
+            "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2",
+            "pass": false,
+            "ms": 141,
+            "cpuS": 0.14
+          },
+          "issues": [
+            "SKILLED_TOO_EASY",
+            "FAMILY_TOO_EASY",
+            "TRACE_NOT_CHECKED"
+          ],
+          "reused": false
+        },
+        {
+          "recipe": {
+            "id": "steps-lockBeside-d4-sp2",
+            "layout": 27,
+            "shape": "steps",
+            "story": "lockBeside",
+            "stage": "edge",
+            "depth": 4,
+            "frameSpare": 2,
+            "spare": 2,
+            "trayRoom": 0,
+            "hiddenOnWay": 1,
+            "maxDown": 0.3,
+            "tailPairWidth": 2,
+            "traps": 2,
+            "expectedD": 13,
+            "expectedS": 2.2,
+            "bigBoard": true,
+            "priorD": 11,
+            "priorSpare": 1
+          },
+          "seed": 7921,
+          "selection": {
+            "basis": "derived-seed",
+            "predictedD": 11,
+            "derivedIndex": 1
+          },
+          "boardKey": "c33ce59da2a68ab4b57187269aac1cda083772a0aea2577febf67a8c4d163732",
+          "evaluation": {
+            "staticPass": true,
+            "S": 1.02,
+            "S_valid": true,
+            "styles": {
+              "route": 1.1,
+              "plain": 1.02
+            },
+            "D": 4.345,
+            "D_valid": true,
+            "D_se": 0.31926537511423847,
+            "familyCampaigns": 80,
+            "familyFingerprint": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+            "skilledFingerprint": "93ed5c9c9419bf4146c0b965d7bedfa18248ff16609967b945d1767faea0ed4f",
+            "clockN": 17,
+            "tracePass": null,
+            "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2",
+            "pass": false,
+            "ms": 172,
+            "cpuS": 0.188
+          },
+          "issues": [
+            "SKILLED_TOO_EASY",
+            "FAMILY_TOO_EASY",
+            "TRACE_NOT_CHECKED"
+          ],
+          "reused": false
+        }
+      ]
     },
     {
       "level": 251,
       "target": 10.083333333333334,
+      "slot": {
+        "level": 251,
+        "isBigBoard": false,
+        "allow96": false,
+        "maxTiles": 88,
+        "minTiles": 72,
+        "desc": "Standard level slot: 96 tiles strictly forbidden; normal skilled band [2.5, 6.0]."
+      },
+      "success": true,
       "layout": 10,
       "shape": "letterH",
       "tiles": 80,
@@ -40,6 +393,7 @@
       "k": 11,
       "clockN": 13,
       "boardKey": "14c1cb900b3c662d9a8cc4c660a3c7b3d0a0c185f46e62c9566cb46e512bd479",
+      "matchingBodyKey": "29fdfd92516c63497b925a38b982c4f47faba8f53e5e17a3f28b527e2f159547",
       "D": 9.28,
       "S": 4.85,
       "error": -0.8033333333333346,
@@ -47,11 +401,21 @@
       "tracePass": true,
       "isNormalBand": true,
       "isFallback": false,
-      "policy": "Standard board (80 tiles). Normal skilled band S in [2.5, 6.0]."
+      "fallbackRationale": null,
+      "failedNormalAttempts": []
     },
     {
       "level": 252,
       "target": 10.166666666666666,
+      "slot": {
+        "level": 252,
+        "isBigBoard": false,
+        "allow96": false,
+        "maxTiles": 88,
+        "minTiles": 72,
+        "desc": "Standard level slot: 96 tiles strictly forbidden; normal skilled band [2.5, 6.0]."
+      },
+      "success": true,
       "layout": 30,
       "shape": "diamond",
       "tiles": 80,
@@ -61,6 +425,7 @@
       "k": 14,
       "clockN": 15,
       "boardKey": "b8f94a202bc292a2e8f7a09c75888d38e6c0233d765438d1d9aef20358faffad",
+      "matchingBodyKey": "ef8148eeda69c7b5375785d498cd0105fcb7a4d65c3cb0da3aa1fecdfa5db71e",
       "D": 10.015,
       "S": 2.7,
       "error": -0.1516666666666655,
@@ -68,11 +433,21 @@
       "tracePass": true,
       "isNormalBand": true,
       "isFallback": false,
-      "policy": "Standard board (80 tiles). Normal skilled band S in [2.5, 6.0]."
+      "fallbackRationale": null,
+      "failedNormalAttempts": []
     },
     {
       "level": 253,
       "target": 10.25,
+      "slot": {
+        "level": 253,
+        "isBigBoard": false,
+        "allow96": false,
+        "maxTiles": 88,
+        "minTiles": 72,
+        "desc": "Standard level slot: 96 tiles strictly forbidden; normal skilled band [2.5, 6.0]."
+      },
+      "success": true,
       "layout": 30,
       "shape": "diamond",
       "tiles": 80,
@@ -82,6 +457,7 @@
       "k": 14,
       "clockN": 15,
       "boardKey": "00bde54bd9de61c11a62008dd31310141e1f64fd2aa8c205b4c281e8449ce569",
+      "matchingBodyKey": "2759ae75a521179e0a985dfc4bf22ec6ddd64bce13355f432fa1d34105036e9f",
       "D": 10.3,
       "S": 3.33,
       "error": 0.05000000000000071,
@@ -89,11 +465,21 @@
       "tracePass": true,
       "isNormalBand": true,
       "isFallback": false,
-      "policy": "Standard board (80 tiles). 96 tiles strictly forbidden. Normal skilled band S in [2.5, 6.0]."
+      "fallbackRationale": null,
+      "failedNormalAttempts": []
     },
     {
       "level": 254,
       "target": 10.333333333333334,
+      "slot": {
+        "level": 254,
+        "isBigBoard": false,
+        "allow96": false,
+        "maxTiles": 88,
+        "minTiles": 72,
+        "desc": "Standard level slot: 96 tiles strictly forbidden; normal skilled band [2.5, 6.0]."
+      },
+      "success": true,
       "layout": 30,
       "shape": "diamond",
       "tiles": 80,
@@ -103,6 +489,7 @@
       "k": 14,
       "clockN": 15,
       "boardKey": "30c86befd28a0cc0bd87a58b2c41c88e6dee9776024421da3b2642c3f3e27468",
+      "matchingBodyKey": "cf3d69073d51d7c35bc7fc052b29d94a71d5ab64219df512608f8ec776dffb83",
       "D": 9.66,
       "S": 3.45,
       "error": -0.6733333333333338,
@@ -110,7 +497,8 @@
       "tracePass": true,
       "isNormalBand": true,
       "isFallback": false,
-      "policy": "Standard board (80 tiles). Distinct matching body with unique board key. Normal skilled band S in [2.5, 6.0]."
+      "fallbackRationale": null,
+      "failedNormalAttempts": []
     }
   ],
   "metrics": {
@@ -121,7 +509,8 @@
     "normalBandLevels": 4,
     "fallbackLevels": 1,
     "distinctBoards": 5,
-    "totalWallSeconds": 61.469,
-    "totalCpuSeconds": 67.953
+    "distinctMatchingBodies": 5,
+    "totalWallSeconds": 40.98,
+    "totalCpuSeconds": 47.109
   }
 }

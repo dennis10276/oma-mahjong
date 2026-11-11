@@ -1,0 +1,808 @@
+{
+  "schema": "g13-protocol-drift-v1",
+  "timestamp": "2026-11-11T12:01:58.762Z",
+  "campaigns": 40,
+  "boardsCount": 5,
+  "boards": [
+    {
+      "id": "drift-10-diamond-s4",
+      "tier": 10,
+      "target": 10,
+      "layout": 30,
+      "shape": "diamond",
+      "seed": 4,
+      "spare": 1,
+      "desc": "Tier 10 baseline anchor: Diamond layout 30, seed 4",
+      "boardKey": "00bde54bd9de61c11a62008dd31310141e1f64fd2aa8c205b4c281e8449ce569",
+      "matchingBodyKey": "2759ae75a521179e0a985dfc4bf22ec6ddd64bce13355f432fa1d34105036e9f",
+      "tilesCount": 80,
+      "clock": {
+        "i": 14,
+        "n": 15
+      },
+      "standard20": {
+        "protocol": "standard-20-v1",
+        "cap": 20,
+        "D": 9.5,
+        "se": 1.0006408203156871,
+        "pHat": 0.1,
+        "n": 40,
+        "lossPhase": {
+          "beforeClock": 0.5985401459854015,
+          "mid": 0.40145985401459855,
+          "late": 0
+        },
+        "S": 3.33,
+        "styles": {
+          "route": 3.33,
+          "plain": 4.25
+        },
+        "tracePass": true,
+        "traces": {
+          "B1": {
+            "pass": true,
+            "value": 1,
+            "bites": 40,
+            "firstTries": 40
+          },
+          "B2": {
+            "pass": true,
+            "value": 0.544,
+            "atTrap": 186,
+            "atForkState": 169,
+            "onTemptingMove": 146,
+            "provedFirstErrors": 342,
+            "lostTries": 342,
+            "coverage": 1
+          },
+          "B3": {
+            "pass": true,
+            "value": 0.15
+          },
+          "B4": {
+            "pass": true,
+            "value": 1
+          },
+          "B5": {
+            "pass": true,
+            "value": 0.003,
+            "lateTrayLosses": 1
+          },
+          "B6": {
+            "pass": true,
+            "value": 0.433,
+            "postClockLosses": 148,
+            "secondAct": false,
+            "postClockErrorMedianShare": 0.388
+          },
+          "B7": {
+            "pass": null,
+            "report": true,
+            "value": 0.073,
+            "repeats": 13,
+            "knownRepeats": 13,
+            "lossesTries6to20": 179,
+            "inflated": false,
+            "maxTarget": null
+          }
+        },
+        "failedTraces": []
+      },
+      "extended40": {
+        "protocol": "extended-40-v1",
+        "cap": 40,
+        "D": 9.9,
+        "se": 1.1383749100790281,
+        "pHat": 0.10101010101010101,
+        "n": 40,
+        "lossPhase": {
+          "beforeClock": 0.5874125874125874,
+          "mid": 0.4125874125874126,
+          "late": 0
+        },
+        "S": 3.33,
+        "styles": {
+          "route": 3.33,
+          "plain": 4.25
+        },
+        "tracePass": true,
+        "traces": {
+          "B1": {
+            "pass": true,
+            "value": 1,
+            "bites": 40,
+            "firstTries": 40
+          },
+          "B2": {
+            "pass": true,
+            "value": 0.537,
+            "atTrap": 191,
+            "atForkState": 171,
+            "onTemptingMove": 150,
+            "provedFirstErrors": 356,
+            "lostTries": 356,
+            "coverage": 1
+          },
+          "B3": {
+            "pass": true,
+            "value": 0.15
+          },
+          "B4": {
+            "pass": true,
+            "value": 1
+          },
+          "B5": {
+            "pass": true,
+            "value": 0.006,
+            "lateTrayLosses": 2
+          },
+          "B6": {
+            "pass": true,
+            "value": 0.441,
+            "postClockLosses": 157,
+            "secondAct": false,
+            "postClockErrorMedianShare": 0.388
+          },
+          "B7": {
+            "pass": null,
+            "report": true,
+            "value": 0.088,
+            "repeats": 17,
+            "knownRepeats": 17,
+            "lossesTries6to20": 193,
+            "inflated": false,
+            "maxTarget": null
+          }
+        },
+        "failedTraces": []
+      },
+      "drift": {
+        "deltaD": 0.40000000000000036,
+        "driftPercent": 4.210526315789478,
+        "tracePassIdentical": true
+      }
+    },
+    {
+      "id": "drift-10-letterH-s5",
+      "tier": 10,
+      "target": 10,
+      "layout": 10,
+      "shape": "letterH",
+      "seed": 5,
+      "spare": 2,
+      "desc": "Tier 10 high-skilled anchor: LetterH layout 10, seed 5",
+      "boardKey": "14c1cb900b3c662d9a8cc4c660a3c7b3d0a0c185f46e62c9566cb46e512bd479",
+      "matchingBodyKey": "29fdfd92516c63497b925a38b982c4f47faba8f53e5e17a3f28b527e2f159547",
+      "tilesCount": 80,
+      "clock": {
+        "i": 1,
+        "n": 13
+      },
+      "standard20": {
+        "protocol": "standard-20-v1",
+        "cap": 20,
+        "D": 9.78,
+        "se": 0.8207934716339567,
+        "pHat": 0.09974424552429667,
+        "n": 40,
+        "lossPhase": {
+          "beforeClock": 0.40718562874251496,
+          "mid": 0.592814371257485,
+          "late": 0
+        },
+        "S": 4.85,
+        "styles": {
+          "route": 4.85,
+          "plain": 5.85
+        },
+        "tracePass": true,
+        "traces": {
+          "B1": {
+            "pass": true,
+            "value": 1,
+            "bites": 40,
+            "firstTries": 40
+          },
+          "B2": {
+            "pass": true,
+            "value": 0.264,
+            "atTrap": 93,
+            "atForkState": 27,
+            "onTemptingMove": 83,
+            "provedFirstErrors": 352,
+            "lostTries": 352,
+            "coverage": 1
+          },
+          "B3": {
+            "pass": true,
+            "value": 0.225
+          },
+          "B4": {
+            "pass": true,
+            "value": 1
+          },
+          "B5": {
+            "pass": true,
+            "value": 0.023,
+            "lateTrayLosses": 8
+          },
+          "B6": {
+            "pass": true,
+            "value": 0.58,
+            "postClockLosses": 204,
+            "secondAct": false,
+            "postClockErrorMedianShare": 0.338
+          },
+          "B7": {
+            "pass": null,
+            "report": true,
+            "value": 0.224,
+            "repeats": 38,
+            "knownRepeats": 38,
+            "lossesTries6to20": 170,
+            "inflated": false,
+            "maxTarget": null
+          }
+        },
+        "failedTraces": []
+      },
+      "extended40": {
+        "protocol": "extended-40-v1",
+        "cap": 40,
+        "D": 9.97,
+        "se": 0.9047506385456258,
+        "pHat": 0.10025062656641603,
+        "n": 40,
+        "lossPhase": {
+          "beforeClock": 0.39655172413793105,
+          "mid": 0.603448275862069,
+          "late": 0
+        },
+        "S": 4.85,
+        "styles": {
+          "route": 4.85,
+          "plain": 5.85
+        },
+        "tracePass": true,
+        "traces": {
+          "B1": {
+            "pass": true,
+            "value": 1,
+            "bites": 40,
+            "firstTries": 40
+          },
+          "B2": {
+            "pass": true,
+            "value": 0.259,
+            "atTrap": 93,
+            "atForkState": 27,
+            "onTemptingMove": 83,
+            "provedFirstErrors": 359,
+            "lostTries": 359,
+            "coverage": 1
+          },
+          "B3": {
+            "pass": true,
+            "value": 0.225
+          },
+          "B4": {
+            "pass": true,
+            "value": 1
+          },
+          "B5": {
+            "pass": true,
+            "value": 0.022,
+            "lateTrayLosses": 8
+          },
+          "B6": {
+            "pass": true,
+            "value": 0.585,
+            "postClockLosses": 210,
+            "secondAct": false,
+            "postClockErrorMedianShare": 0.338
+          },
+          "B7": {
+            "pass": null,
+            "report": true,
+            "value": 0.232,
+            "repeats": 41,
+            "knownRepeats": 41,
+            "lossesTries6to20": 177,
+            "inflated": false,
+            "maxTarget": null
+          }
+        },
+        "failedTraces": []
+      },
+      "drift": {
+        "deltaD": 0.19000000000000128,
+        "driftPercent": 1.9427402862985819,
+        "tracePassIdentical": true
+      }
+    },
+    {
+      "id": "drift-13-pyramid-s4",
+      "tier": 13,
+      "target": 13,
+      "layout": 6,
+      "shape": "pyramid · tall",
+      "seed": 4,
+      "spare": 2,
+      "desc": "Tier 13 mid-curve anchor: Pyramid layout 6, seed 4",
+      "boardKey": "1c103dcf4568c5ab502833898d486a06e6671f45a808816c9155ec1a96103433",
+      "matchingBodyKey": "00b86145f00eacfaab024eea93af16f72beb1b265d0ff0224dd52271813f4bc8",
+      "tilesCount": 84,
+      "clock": {
+        "i": 64,
+        "n": 17
+      },
+      "standard20": {
+        "protocol": "standard-20-v1",
+        "cap": 20,
+        "D": 12.53,
+        "se": 0.9170657639365974,
+        "pHat": 0.06187624750499002,
+        "n": 40,
+        "lossPhase": {
+          "beforeClock": 0.49,
+          "mid": 0.505,
+          "late": 0.005
+        },
+        "S": 2.67,
+        "styles": {
+          "route": 2.67,
+          "plain": 3.75
+        },
+        "tracePass": false,
+        "traces": {
+          "B1": {
+            "pass": true,
+            "value": 1,
+            "bites": 40,
+            "firstTries": 40
+          },
+          "B2": {
+            "pass": true,
+            "value": 0.27,
+            "atTrap": 127,
+            "atForkState": 48,
+            "onTemptingMove": 109,
+            "provedFirstErrors": 470,
+            "lostTries": 470,
+            "coverage": 1
+          },
+          "B3": {
+            "pass": true,
+            "value": 0.274
+          },
+          "B4": {
+            "pass": true,
+            "value": 3
+          },
+          "B5": {
+            "pass": false,
+            "value": 0.115,
+            "lateTrayLosses": 54
+          },
+          "B6": {
+            "pass": true,
+            "value": 0.564,
+            "postClockLosses": 265,
+            "secondAct": false,
+            "postClockErrorMedianShare": 0.619
+          },
+          "B7": {
+            "pass": null,
+            "report": true,
+            "value": 0.022,
+            "repeats": 6,
+            "knownRepeats": 6,
+            "lossesTries6to20": 279,
+            "inflated": false,
+            "maxTarget": null
+          }
+        },
+        "failedTraces": [
+          "B5"
+        ]
+      },
+      "extended40": {
+        "protocol": "extended-40-v1",
+        "cap": 40,
+        "D": 13.93,
+        "se": 1.310405838486101,
+        "pHat": 0.07001795332136446,
+        "n": 40,
+        "lossPhase": {
+          "beforeClock": 0.47596153846153844,
+          "mid": 0.5192307692307693,
+          "late": 0.004807692307692308
+        },
+        "S": 2.67,
+        "styles": {
+          "route": 2.67,
+          "plain": 3.75
+        },
+        "tracePass": false,
+        "traces": {
+          "B1": {
+            "pass": true,
+            "value": 1,
+            "bites": 40,
+            "firstTries": 40
+          },
+          "B2": {
+            "pass": true,
+            "value": 0.251,
+            "atTrap": 130,
+            "atForkState": 51,
+            "onTemptingMove": 110,
+            "provedFirstErrors": 518,
+            "lostTries": 518,
+            "coverage": 1
+          },
+          "B3": {
+            "pass": true,
+            "value": 0.286
+          },
+          "B4": {
+            "pass": true,
+            "value": 1.5
+          },
+          "B5": {
+            "pass": false,
+            "value": 0.12,
+            "lateTrayLosses": 62
+          },
+          "B6": {
+            "pass": true,
+            "value": 0.581,
+            "postClockLosses": 301,
+            "secondAct": false,
+            "postClockErrorMedianShare": 0.607
+          },
+          "B7": {
+            "pass": null,
+            "report": true,
+            "value": 0.031,
+            "repeats": 10,
+            "knownRepeats": 10,
+            "lossesTries6to20": 327,
+            "inflated": false,
+            "maxTarget": null
+          }
+        },
+        "failedTraces": [
+          "B5"
+        ]
+      },
+      "drift": {
+        "deltaD": 1.4000000000000004,
+        "driftPercent": 11.173184357541903,
+        "tracePassIdentical": true
+      }
+    },
+    {
+      "id": "drift-13-letterH-s5",
+      "tier": 13,
+      "target": 13,
+      "layout": 10,
+      "shape": "letterH",
+      "seed": 5,
+      "spare": 2,
+      "desc": "Tier 13 normal-band candidate: LetterH layout 10, seed 5",
+      "boardKey": "1b5ebaf3f704ca0ff649bfb1ce03887f8f4be31ba2160dcdcc71f78779f419b1",
+      "matchingBodyKey": "29fdfd92516c63497b925a38b982c4f47faba8f53e5e17a3f28b527e2f159547",
+      "tilesCount": 80,
+      "clock": {
+        "i": 1,
+        "n": 13
+      },
+      "standard20": {
+        "protocol": "standard-20-v1",
+        "cap": 20,
+        "D": 12.85,
+        "se": 0.9848532364956197,
+        "pHat": 0.05642023346303502,
+        "n": 40,
+        "lossPhase": {
+          "beforeClock": 0.34980988593155893,
+          "mid": 0.6501901140684411,
+          "late": 0
+        },
+        "S": 4.15,
+        "styles": {
+          "route": 4.35,
+          "plain": 4.15
+        },
+        "tracePass": true,
+        "traces": {
+          "B1": {
+            "pass": true,
+            "value": 1,
+            "bites": 40,
+            "firstTries": 40
+          },
+          "B2": {
+            "pass": true,
+            "value": 0.241,
+            "atTrap": 117,
+            "atForkState": 45,
+            "onTemptingMove": 101,
+            "provedFirstErrors": 485,
+            "lostTries": 485,
+            "coverage": 1
+          },
+          "B3": {
+            "pass": true,
+            "value": 0.288
+          },
+          "B4": {
+            "pass": true,
+            "value": 1
+          },
+          "B5": {
+            "pass": true,
+            "value": 0.008,
+            "lateTrayLosses": 4
+          },
+          "B6": {
+            "pass": true,
+            "value": 0.643,
+            "postClockLosses": 312,
+            "secondAct": false,
+            "postClockErrorMedianShare": 0.388
+          },
+          "B7": {
+            "pass": null,
+            "report": true,
+            "value": 0.126,
+            "repeats": 38,
+            "knownRepeats": 38,
+            "lossesTries6to20": 302,
+            "inflated": false,
+            "maxTarget": null
+          }
+        },
+        "failedTraces": []
+      },
+      "extended40": {
+        "protocol": "extended-40-v1",
+        "cap": 40,
+        "D": 16.1,
+        "se": 1.7733063425746223,
+        "pHat": 0.059006211180124224,
+        "n": 40,
+        "lossPhase": {
+          "beforeClock": 0.3157894736842105,
+          "mid": 0.6842105263157895,
+          "late": 0
+        },
+        "S": 4.15,
+        "styles": {
+          "route": 4.35,
+          "plain": 4.15
+        },
+        "tracePass": false,
+        "traces": {
+          "B1": {
+            "pass": true,
+            "value": 1,
+            "bites": 40,
+            "firstTries": 40
+          },
+          "B2": {
+            "pass": true,
+            "value": 0.215,
+            "atTrap": 130,
+            "atForkState": 54,
+            "onTemptingMove": 111,
+            "provedFirstErrors": 606,
+            "lostTries": 606,
+            "coverage": 1
+          },
+          "B3": {
+            "pass": true,
+            "value": 0.306
+          },
+          "B4": {
+            "pass": true,
+            "value": 1
+          },
+          "B5": {
+            "pass": true,
+            "value": 0.007,
+            "lateTrayLosses": 4
+          },
+          "B6": {
+            "pass": false,
+            "value": 0.68,
+            "postClockLosses": 412,
+            "secondAct": false,
+            "postClockErrorMedianShare": 0.388
+          },
+          "B7": {
+            "pass": null,
+            "report": true,
+            "value": 0.165,
+            "repeats": 70,
+            "knownRepeats": 70,
+            "lossesTries6to20": 423,
+            "inflated": false,
+            "maxTarget": null
+          }
+        },
+        "failedTraces": [
+          "B6"
+        ]
+      },
+      "drift": {
+        "deltaD": 3.2500000000000018,
+        "driftPercent": 25.291828793774336,
+        "tracePassIdentical": false
+      }
+    },
+    {
+      "id": "drift-19-letterH-s4",
+      "tier": 19,
+      "target": 19,
+      "layout": 10,
+      "shape": "letterH",
+      "seed": 4,
+      "spare": 1,
+      "desc": "Tier 19 frontier boundary candidate: LetterH layout 10, seed 4",
+      "boardKey": "0106d5d8c508961b316a1ac903170c1eafead923b9f41b340b27bcad8a0a3e97",
+      "matchingBodyKey": "8ad25141c0ac4ed13c904a091cc997f8566f4149793acc058c69445ecfe24707",
+      "tilesCount": 80,
+      "clock": {
+        "i": 30,
+        "n": 13
+      },
+      "standard20": {
+        "protocol": "standard-20-v1",
+        "cap": 20,
+        "D": 19.73,
+        "se": 0.27499999999999997,
+        "pHat": 0.0012674271229404308,
+        "n": 40,
+        "lossPhase": {
+          "beforeClock": 0.9975,
+          "mid": 0.0025,
+          "late": 0
+        },
+        "S": 3.1,
+        "styles": {
+          "route": 4.75,
+          "plain": 3.1
+        },
+        "tracePass": false,
+        "traces": {
+          "B1": {
+            "pass": true,
+            "value": 1,
+            "bites": 40,
+            "firstTries": 40
+          },
+          "B2": {
+            "pass": true,
+            "value": 0.996,
+            "atTrap": 785,
+            "atForkState": 785,
+            "onTemptingMove": 54,
+            "provedFirstErrors": 788,
+            "lostTries": 788,
+            "coverage": 1
+          },
+          "B3": {
+            "pass": false,
+            "value": 0.013
+          },
+          "B4": {
+            "pass": true,
+            "value": 9
+          },
+          "B5": {
+            "pass": true,
+            "value": 0,
+            "lateTrayLosses": 0
+          },
+          "B6": {
+            "pass": true,
+            "value": 0.004,
+            "postClockLosses": 3,
+            "secondAct": false,
+            "postClockErrorMedianShare": 0.225
+          },
+          "B7": {
+            "pass": null,
+            "report": true,
+            "value": 0.971,
+            "repeats": 571,
+            "knownRepeats": 571,
+            "lossesTries6to20": 588,
+            "inflated": true,
+            "maxTarget": 10
+          }
+        },
+        "failedTraces": [
+          "B3"
+        ]
+      },
+      "extended40": {
+        "protocol": "extended-40-v1",
+        "cap": 40,
+        "D": 38.98,
+        "se": 0.808201152290754,
+        "pHat": 0.0012828736369467607,
+        "n": 40,
+        "lossPhase": {
+          "beforeClock": 0.9987325728770595,
+          "mid": 0.0012674271229404308,
+          "late": 0
+        },
+        "S": 3.1,
+        "styles": {
+          "route": 4.75,
+          "plain": 3.1
+        },
+        "tracePass": false,
+        "traces": {
+          "B1": {
+            "pass": true,
+            "value": 1,
+            "bites": 40,
+            "firstTries": 40
+          },
+          "B2": {
+            "pass": true,
+            "value": 0.998,
+            "atTrap": 1554,
+            "atForkState": 1554,
+            "onTemptingMove": 76,
+            "provedFirstErrors": 1557,
+            "lostTries": 1557,
+            "coverage": 1
+          },
+          "B3": {
+            "pass": false,
+            "value": 0.013
+          },
+          "B4": {
+            "pass": true,
+            "value": 9
+          },
+          "B5": {
+            "pass": true,
+            "value": 0,
+            "lateTrayLosses": 0
+          },
+          "B6": {
+            "pass": true,
+            "value": 0.002,
+            "postClockLosses": 3,
+            "secondAct": false,
+            "postClockErrorMedianShare": 0.225
+          },
+          "B7": {
+            "pass": null,
+            "report": true,
+            "value": 0.968,
+            "repeats": 1314,
+            "knownRepeats": 1314,
+            "lossesTries6to20": 1357,
+            "inflated": true,
+            "maxTarget": 10
+          }
+        },
+        "failedTraces": [
+          "B3"
+        ]
+      },
+      "drift": {
+        "deltaD": 19.249999999999996,
+        "driftPercent": 97.56715661429294,
+        "tracePassIdentical": true
+      }
+    }
+  ]
+}
