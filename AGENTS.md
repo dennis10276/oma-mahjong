@@ -151,6 +151,12 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 
 ## Game tips (from 1.59, js/coach.js; decisions by Dennis, 2026-10-22)
 
+- Unreleased change (Dennis, 2026-11-12, `wip/level-instructions`): automatic tips between attempts
+  are removed, including retry reminders, restart reviews and clock/tray loss films. Tips remain
+  available manually. First appearances of new tiles require instructions before play; animated
+  examples must finish once before confirmation. Existing completed introductions remain completed.
+  This supersedes the automatic-tip schedule below. Do not release until Dennis asks.
+
 - From level 60 (`RULES.coach`) no lesson shows on its own: no retry reminders, no lesson after a
   clock timeout. First-time introductions of a new tile kind stay (the clock at 80 is a real-game film).
 - After a lost try (a 4th tile, the clock, or starting over: a restart counts) the player sees a film

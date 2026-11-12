@@ -20,7 +20,7 @@ function saveCur() {
 }
 function syncClock() { if (G && G.tStart) { const n = performance.now(); G.elapsed += (n - G.tStart) / 1000; G.tStart = n; } }
 function pauseClock() { syncClock(); if (G) { G.tStart = 0; replayMark('pause'); replayCapture(); replayDrain(G); } saveCur(); }
-function resumeClock() { if (G && !G.done && curScreen === 'game') { G.tStart = performance.now(); replayMark('resume'); } }
+function resumeClock() { if (G && !G.done && !G.introducing && curScreen === 'game') { G.tStart = performance.now(); replayMark('resume'); } }
 
 // ---------- starting a level ----------
 // the part "own, easier levels" (grandma mode) plays its own, gentler levels (Layouts track 'care')
@@ -129,13 +129,20 @@ function begin(o, restart = false) {
   if (villageOn()) setTimeout(villageTease, 1800);
   const ready = () => {
     if (!S.seenTray) setTimeout(() => showIntro(), 700);
-    else if (!S.seenDown && G.down.some(x => x)) setTimeout(showDownTip, 900);
     else { setTimeout(checkStuck, 500); setTimeout(jokerLeftover, 700); setTimeout(specialTip, 1200); }
   };
-  if (!clockIntro(ready) && !newTileIntro(ready) && !retryTileHelp(ready, resumed)) ready();
-  if (!resumed) proCheck();     // stuck on this level: how Dennisisdebeste won it (js/pro.js)
+  // Finish every new-tile introduction before starting play or any optional replay.
+  const introductions = () => {
+    if (clockIntro(introductions) || newTileIntro(introductions)) return;
+    if (!S.seenDown && G.down.some(Boolean)) { showDownTip(introductions); return; }
+    G.introducing = false; resumeClock();
+    ready();
+    if (!resumed) proCheck();
+  };
+  G.introducing = true; syncClock(); G.tStart = 0;
+  introductions();
 }
-const restart = () => { if (G) { if (!G.done && !G.logged) { noteFail(); coachCount(); endLevel('restart'); } begin(G.o, true); } };
+const restart = () => { if (G) { if (!G.done && !G.logged) { noteFail(); endLevel('restart'); } begin(G.o, true); } };
 // failed tries per level (cleared when it is won); a failed try also ends a win streak
 function noteFail() { if (!G) return; S.fails[G.key] = (S.fails[G.key] || 0) + 1; S.winStreak = 0; save(); }
 
@@ -390,7 +397,7 @@ function showBlockers(i) {
 // ---------- tapping ----------
 let blockedTaps = 0, comboTimer;
 function onTap(i, auto = false, point = null) {
-  if (!G || G.done) return;
+  if (!G || G.done || G.introducing) return;
   if (G.busy || !G.alive[i] || (G.autoFin && !auto)) {
     replayMark('ignored', [i, auto ? 1 : 0, point, G.busy ? 'busy' : !G.alive[i] ? 'gone' : 'auto']);
     return;   // (auto-finish: hands off)
@@ -501,14 +508,13 @@ function turn(i, faceDown) {
 }
 // work that can wait until the screen has shown the change (saving, task counting)
 const afterPaint = fn => requestAnimationFrame(() => setTimeout(fn, 0));
-function showDownTip() {
+function showDownTip(after = null) {
   openModal(`<h2>${tx('downTitle')}</h2>
     <div class="how-tray" style="grid-template-columns:repeat(2,52px)"><div class="hm backmini"></div><div class="hm glow">${Tiles.faceHTML('classic', 32)}</div></div>
     <p>${tx('down1')}</p>
     <p>${tx('down2')}</p>
-    <button class="big-btn play" id="mGo"><span class="bb-text"><b>${tx('gotIt')}</b></span></button>`, true);
-  $('#mGo').onclick = closeModal;
-  S.seenDown = true; save();
+    <button class="big-btn play" id="mGo"><span class="bb-text"><b>${tx('gotIt')}</b></span></button>`, false);
+  $('#mGo').onclick = () => { S.seenDown = true; save(); closeModal(); if (after) after(); };
 }
 
 // ---------- a pair is made ----------
@@ -628,20 +634,14 @@ function checkStuck() {
 function failTry() { bumpStat('losses'); noteFail(); endLevel('stuck'); }
 function gameOver() {
   failTry();
-  // from RULES.coach.fromLevel: the film of the last moves and what would have worked (coach.js)
-  let review = null;
-  try { review = coachDue() ? coachReview('tray') : null; } catch (e) { review = null; }
-  if (review) coachShown();
   setTimeout(() => {
     Sound.stuck(); buzz([40, 80, 40]);
-    openModal(`<h2>${tx(review ? 'czOwnTitle' : 'fullTitle')}</h2>
-      ${review ? coachReviewHTML(review) : `<p>${tx('fullText')}</p>`}
+    openModal(`<h2>${tx('fullTitle')}</h2>
+      <p>${tx('fullText')}</p>
       <button class="big-btn play" id="sRetry"><span class="bb-text"><b>${tx('tryAgain')}</b></span></button>
-      <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false, null, review ? 'tile-help coach-help coach-loss' : '');
-    let message = null;
-    if (review) { coachReviewStart(review); message = recordHelpMessage('coach-' + review.tip, 'review'); }
-    $('#sRetry').onclick = () => { if (message) message('retry'); closeModal(); restart(); };
-    $('#sMenu').onclick = () => { if (message) message('menu'); closeModal(); clearCur(); G.done = true; show('home'); };
+      <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false);
+    $('#sRetry').onclick = () => { closeModal(); restart(); };
+    $('#sMenu').onclick = () => { closeModal(); clearCur(); G.done = true; show('home'); };
   }, 450);
 }
 
@@ -745,22 +745,11 @@ function checkClock() {
   setTimeout(() => {
     Sound.stuck(); buzz([40, 80, 40]);
     replay(G.tiles[G.clock.i].el, 'shake');
-    // from RULES.coach.fromLevel: the film of this try and a route that reached the clock in time
-    const coach = coachLevelOn();
-    let review = null;
-    if (coach) try { review = coachDue() ? coachReview('clock') : null; } catch (e) { review = null; }
-    if (review) coachShown();
-    // (from there no lesson film of its own: without a film of the own try only what happened)
     openModal(`<div class="nt-ico">⏰</div><h2>${tx('clockTitle')}</h2>
-      ${review ? coachReviewHTML(review) : coach ? `<p>${tx('clockText', G.clock.n)}</p>` : `<p>${tx('clockText', G.clock.n)}</p>${coachDemoHTML(false, 'clock')}${clockHelpShort()}`}
+      <p>${tx('clockText', G.clock.n)}</p>
       <button class="big-btn play" id="sRetry"><span class="bb-text"><b>${tx('tryAgain')}</b></span></button>
-      <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false, null, review ? 'tile-help coach-help coach-loss' : coach ? 'clock-help' : 'clock-help coach-help');
-    if (review) coachReviewStart(review);
-    else if (!coach) coachPlay($('#modalBox .coach-demo'), coachClockClip());
-    // (only a film or an explanation is logged as help: the plain loss window of a coach level is not
-    // a lesson, and the dashboard showed it as "Uitleg getoond: Wekker" after every lost try; 1.62)
-    const message = review || !coach ? recordHelpMessage(review ? 'coach-' + review.tip : 'clock', 'timeout') : () => { };
-    $('#sRetry').onclick = () => { message('retry'); closeModal(); restart(); };
-    $('#sMenu').onclick = () => { message('menu'); closeModal(); clearCur(); G.done = true; show('home'); };
+      <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false, null, 'clock-help');
+    $('#sRetry').onclick = () => { closeModal(); restart(); };
+    $('#sMenu').onclick = () => { closeModal(); clearCur(); G.done = true; show('home'); };
   }, 600);
 }

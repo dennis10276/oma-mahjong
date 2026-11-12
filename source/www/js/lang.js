@@ -10,6 +10,8 @@ const pl = (n, one, more) => n === 1 ? one : more;
 const TEXT = {
   // ---------- general ----------
   gotIt: ['Begrepen!', 'Got it!'],
+  lessonWatch: ['Bekijk eerst het voorbeeld', 'Watch the example first'],
+  lessonContinue: ['Begrepen, verder!', 'Got it, continue!'],
   close: ['Sluiten', 'Close'],
   menu: ['Menu', 'Menu'],
   nice: ['Fijn! 😊', 'Lovely! 😊'],
@@ -154,6 +156,8 @@ const TEXT = {
   lockedTap: ['🔒 Op slot: speel eerst het 🔑-paar weg', '🔒 Locked: first clear the 🔑 pair'],
   iceSun: ['☀️ Het ijs smelt vanzelf', '☀️ The ice melts by itself'],
   newTile: [t => `Nieuw: ${t}`, t => `New: ${t}`],
+  nt_gold: ['Gouden stenen', 'Golden tiles'],
+  nt_gold_text: ['Speel de twee <b>gouden stenen</b> als paar weg. Voor dat paar krijg je <b>dubbele punten</b>!', 'Match the two <b>golden tiles</b> as a pair. That pair gives you <b>double points</b>!'],
   nt_joker2: ['De joker', 'The joker'],
   nt_joker2_text: ['De joker past bij <b>elke</b> steen! Zitten er stenen in je vakjes? Tik de joker aan: hij haalt er een weg, <b>samen met zijn tweeling</b>, waar die ook ligt. Zijn je vakjes leeg? Dan wacht de joker en neemt hij de volgende steen mee.',
     'The joker fits <b>every</b> tile! Are there tiles in your slots? Tap the joker: it takes one of them away, <b>together with its twin</b>, wherever that lies. Are your slots empty? Then the joker waits and takes the next tile you tap along with it.'],

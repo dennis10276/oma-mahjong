@@ -23,10 +23,9 @@ module.exports = [
         t.eq([ack.action, ack.mid], ['ack', shown.mid], 'acknowledgment identifies the shown message');
       }
       t.eq(messages().length, 8, 'animation frames do not add feed events');
-      await p.evaluate(() => { S.fails.L55 = 3; clearCur(); __mj.startLevel(55); });   // below level 60: reminders; from 60 none (js/coach.js)
+      await p.evaluate(() => { S.fails.L55 = 3; clearCur(); __mj.startLevel(55); });
       await drain();
-      t.eq([messages().at(-1).why, messages().at(-1).fails], ['retry', 3], 'real third-failure reminder is logged when displayed');
-      await click(p, '#ntGo');
+      t.eq(messages().length, 8, 'retry no longer emits a help message');
       await p.evaluate(() => showLessonMenu());
       await click(p, '.cz-pick[data-kind="clockFirst"]'); await drain();
       t.eq(messages().at(-1).why, 'manual', 'manually reopened clock explanation is distinguished');
@@ -39,16 +38,12 @@ module.exports = [
       t.eq(await p.evaluate(() => !!$('#modalBox .coach-demo')), false, 'no film after a timeout without an own film');
       t.eq(messages().length, before, 'plain loss window of a game-tip level is not logged as help');
       await click(p, '#sMenu');
-      // without game tips (grandma's track): the explanation with the film is shown and logged
-      await p.evaluate(() => { RULES.coach.fromLevel = 999; clearCur(); __mj.startLevel(80); });
-      await p.evaluate(() => { G.clock.n = G.mv; checkClock(); });
+      // Plain losses also stay quiet below the coach menu threshold.
+      await p.evaluate(() => { RULES.coach.fromLevel = 999; clearCur(); __mj.startLevel(80); G.clock.n = G.mv; checkClock(); });
       await p.waitForSelector('#sMenu', { state: 'visible' }); await drain();
+      t.eq(messages().length, before, 'no automatic lesson or help event on any clock timeout');
+      await click(p, '#sMenu');
       await p.evaluate(() => { RULES.coach.fromLevel = 60; });
-      const timeout = messages().at(-1);
-      t.eq([timeout.topic, timeout.why, timeout.action], ['clock', 'timeout', 'shown'], 'clock timeout is logged after its modal appears');
-      t.ok(messageText(timeout).includes(lang === 'en' ? 'still there' : 'lag er nog'), 'timeout includes the actual loss explanation');
-      await click(p, '#sMenu'); await drain();
-      t.eq([messages().at(-1).action, messages().at(-1).mid], ['menu', timeout.mid], 'closing the timeout to the menu is logged');
       await p.evaluate(() => showLessonMenu()); await click(p, '.cz-pick[data-kind="three"]'); await drain();
       t.eq([messages().at(-1).why, messages().at(-1).scr, messages().at(-1).at], ['manual', 'home', undefined], 'help from home is not assigned to an old attempt');
     }

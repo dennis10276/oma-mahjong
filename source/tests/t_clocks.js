@@ -4,7 +4,7 @@ const H=require('../www/hard'), C=require('../tools/sim/clock_routes');
 const {game}=require('../tools/sim/tighten_clocks');
 const table=()=>vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../www/levels-hard.js'),'utf8')+';HARD_LEVELS');
 module.exports=[
-  {name:'clocks: explain before level 80 even after the old tip; after a timeout the own film or what happened, in both languages',async run(t,{startLevel,modal,click,sleep}){
+  {name:'clocks: explain before level 80 even after the old tip; after a timeout only what happened, in both languages',async run(t,{startLevel,modal,click,sleep}){
     for(const lang of ['nl','en']){
       const p=await t.phone({size:[360,640],state:{name:'Dennis',pid:'test-clock-help-'+lang,level:81,sunSeen:true,lang,seenSp:{clock:1,ice:1,lock:1,gold:1,joker2:1}}});
       await startLevel(p,79);t.eq(await modal(p),null,'no clock popup before 80 '+lang);
@@ -16,6 +16,7 @@ module.exports=[
       for(const part of text)t.ok(full.includes(part),'complete move explanation (part folds open under the film) '+lang);
       await sleep(1400);t.ok((await modal(p)).buttons.includes('ntGo'),'other tile tips do not replace the clock explanation '+lang);
       t.ok(await p.evaluate(()=>$('#modalBox').scrollHeight<=$('#modalBox').clientHeight+1),'intro and acknowledgment fit on a small phone '+lang);
+      await p.waitForFunction(() => !$('#ntGo').disabled, null, { timeout: 60000 });
       await click(p,'#ntGo');
       t.ok(await p.evaluate(()=>JSON.parse(localStorage.getItem(STORE)).seenSp.clockMoves),'remember acknowledgment '+lang);
       await startLevel(p,80);t.eq(await modal(p),null,'normal starts do not repeat the acknowledged tip '+lang);
@@ -74,7 +75,7 @@ module.exports=[
   }},
   {name:'clocks: final allowed tap works in the game',async run(t,{startLevel,sleep}){
     const T=table(),d=H.unpack(80,T.levels[80-T.from]);
-    const p=await t.phone({state:{name:'Dennis',pid:'test-clock-hard',level:90,seenSp:{clock:1,ice:1,lock:1,gold:1,joker:1}}});
+    const p=await t.phone({state:{name:'Dennis',pid:'test-clock-hard',level:90,seenSp:{clockMoves:1,clock:1,ice:1,lock:1,gold:1,joker:1}}});
     await startLevel(p,80);
     t.eq(await p.evaluate(()=>G.clock.n),d.clock.n,'designed counter starts');
     const prefix=d.solution.slice(0,d.solution.indexOf(d.clock.i));

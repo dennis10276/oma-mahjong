@@ -207,6 +207,7 @@ function keepKeysPaired(faces) {
 // the first time a new kind of tile shows up: a short explanation before playing
 // (title and text in lang.js: nt_<key>, nt_<key>_text)
 const NEW_TILES = {
+  gold: { has: () => G.gold.size > 0, ico: '✨' },
   lock: { has: () => !!(G.ob && G.ob.keys.length), ico: '🔒' },
   ice: { has: () => !!(G.ob && Object.keys(G.ob.need).length), ico: '🧊' },
   joker2: { has: () => G.tiles.some(t => t.face === JOKER), ico: '🃏' },
@@ -405,31 +406,31 @@ function startLessonDemo() {
   demo.querySelector('.lesson-replay').onclick = () => { step = 0; playing = true; paint(); fresh(true); run(); };
   paint(); fresh(false); run();
 }
-function showTileLesson(kind, after = null, reminder = false, why = reminder ? 'retry' : 'intro') {
+function showTileLesson(kind, after = null, reminder = false, why = reminder ? 'retry' : 'intro', required = false) {
   // (from 1.60: a film of a real game in the player's own tiles, background and tray, js/coach.js;
   // the explanation folds open under it)
-  openModal(`${reminder ? `<p class="lesson-reminder">${tx('lessonReminder')}</p>` : ''}<h2>${tx('nt_' + kind)}</h2>
-    ${coachDemoHTML(false, kind)}<details class="cz-more"><summary>${tx('czMore')}</summary><p>${tx('nt_' + kind + '_text')}</p></details>
-    <button class="big-btn play" id="ntGo"><span class="bb-text"><b>${tx('gotIt')}</b></span></button>`, false, () => {
-      S.seenSp[kind] = true; save();
-      if (after) after();
-    }, 'tile-help coach-help');
-  coachPlay($('#modalBox .coach-demo'), coachTileClip(kind));
-  const message = recordHelpMessage(kind, why);
-  $('#ntGo').onclick = () => { message('ack'); closeModal(); };
+  openModal(`${reminder ? `<p class="lesson-reminder">${tx('lessonReminder')}</p>` : ''}<h2>${required ? tx('newTile', tx('nt_' + kind)) : tx('nt_' + kind)}</h2>
+    ${coachDemoHTML(false, kind)}${required ? `<p>${tx('nt_' + kind + '_text')}</p>` : `<details class="cz-more"><summary>${tx('czMore')}</summary><p>${tx('nt_' + kind + '_text')}</p></details>`}
+    ${tileLessonButton(required)}`, false, null, 'tile-help coach-help' + (required ? ' tile-intro' : ''));
+  tileLessonPlay(kind, coachTileClip(kind), after, why, required);
 }
-// One relevant reminder per retry, from the third failure; rotate as failures accumulate.
-// Resuming an unfinished try does not trigger it again.
-function retryTileHelp(after = null, resumed = false) {
-  if (!G || resumed || G.o.mode !== 'level' || (S.fails[G.key] || 0) < 3) return false;
-  if (coachLevelOn()) return false;        // from RULES.coach.fromLevel: no reminders, only the film of the own lost try
-  const kinds = ['ice', 'lock', 'trayPair'].filter(k => NEW_TILES[k].has());
-  if (G.clock) kinds.push('clock');
-  if (!kinds.length) return false;
-  const kind = kinds[((S.fails[G.key] || 0) - 3) % kinds.length];
-  if (kind === 'clock') showClockLesson(after, true);
-  else showTileLesson(kind, after, true);
-  return true;
+const tileLessonButton = required => `<button class="big-btn play" id="ntGo"${required ? ' disabled' : ''}><span class="bb-text"><b>${tx(required ? 'lessonWatch' : 'gotIt')}</b></span></button>`;
+function tileLessonPlay(kind, clip, after, why, required) {
+  const go = $('#ntGo'), message = recordHelpMessage(kind, why);
+  if (required) clip.onComplete = () => {
+    if (!go.isConnected) return;
+    go.disabled = false;
+    go.querySelector('b').textContent = tx('lessonContinue');
+  };
+  go.onclick = () => {
+    if (go.disabled) return;
+    // Persist completion only after the player actually acknowledges the instruction.
+    S.seenSp[kind] = true;
+    if (kind === 'clock') { S.seenSp.clockMoves = true; replayMark('clock-help', 'acknowledged'); }
+    save(); message('ack'); closeModal();
+    if (after) after();
+  };
+  coachPlay($('#modalBox .coach-demo'), clip);
 }
 function showLessonMenu() {
   if (coachOn(S.level)) { showCoachMenu(); return; }      // from RULES.coach.fromLevel the game tips replace these
@@ -438,37 +439,31 @@ function showLessonMenu() {
   $('#modalBox').querySelectorAll('.lesson-pick').forEach(b => { b.onclick = () => b.dataset.kind === 'clock' ? showClockLesson(showLessonMenu, false, 'manual') : showTileLesson(b.dataset.kind, showLessonMenu, false, 'manual'); });
   $('#mClose').onclick = closeModal;
 }
-// The same explanation before the first clock level and after every clock timeout.
+// The explanation at the first clock level, also available from the help menu.
 const clockHelpText = () => ['nt_clock_text', 'clockMoves', 'clockFree', 'clockGoal'].map(k => `<p>${tx(k)}</p>`).join('');
 // (from 1.59, with the film: the first line shows, the rest folds open, so the film can be big)
 const clockHelpShort = () => `<p>${tx('nt_clock_text')}</p><details class="cz-more"><summary>${tx('czMore')}</summary>${['clockMoves', 'clockFree', 'clockGoal'].map(k => `<p>${tx(k)}</p>`).join('')}</details>`;
-function showClockLesson(after = null, reminder = false, why = reminder ? 'retry' : 'intro') {
+function showClockLesson(after = null, reminder = false, why = reminder ? 'retry' : 'intro', required = false) {
   // (from 1.59: a film of a real game in the player's own tiles, js/coach.js)
-  openModal(`${reminder ? `<p class="lesson-reminder">${tx('lessonReminder')}</p>` : ''}<h2>${tx('nt_clock')}</h2>${coachDemoHTML(false, 'clock')}${clockHelpShort()}
-    <button class="big-btn play" id="ntGo"><span class="bb-text"><b>${tx('gotIt')}</b></span></button>`, false, () => {
-      S.seenSp.clock = S.seenSp.clockMoves = true; save();
-      replayMark('clock-help', 'acknowledged');
-      if (after) after();
-    }, 'clock-help coach-help');
-  coachPlay($('#modalBox .coach-demo'), coachClockClip());
+  openModal(`${reminder ? `<p class="lesson-reminder">${tx('lessonReminder')}</p>` : ''}<h2>${required ? tx('newTile', tx('nt_clock')) : tx('nt_clock')}</h2>${coachDemoHTML(false, 'clock')}${clockHelpShort()}
+    ${tileLessonButton(required)}`, false, null, 'clock-help coach-help');
   replayMark('clock-help', 'intro');
-  const message = recordHelpMessage('clock', why);
-  $('#ntGo').onclick = () => { message('ack'); closeModal(); };
+  tileLessonPlay('clock', coachClockClip(), after, why, required);
 }
 function clockIntro(after = null) {
   if (!clockOn() || S.seenSp.clockMoves) return false;
-  showClockLesson(after);
+  showClockLesson(after, false, 'intro', true);
   return true;
 }
 function newTileIntro(after = null) {
   if (!G || G.done) return false;
   const k = Object.keys(NEW_TILES).find(k => !S.seenSp[k] && NEW_TILES[k].has() && (!NEW_TILES[k].first || NEW_TILES[k].first()));
   if (!k) return false;
-  if (k !== 'joker2') { showTileLesson(k, after); return true; }
-  S.seenSp[k] = true; save();
+  if (k !== 'joker2' && k !== 'gold') { showTileLesson(k, after, false, 'intro', true); return true; }
   const t = NEW_TILES[k];
   openModal(`<div class="nt-ico">${t.ico}</div><h2>${tx('newTile', tx('nt_' + k))}</h2><p>${tx('nt_' + k + '_text')}</p>
-    <button class="big-btn play" id="ntGo"><span class="bb-text"><b>${tx('gotIt')}</b></span></button>`, true, after);
-  $('#ntGo').onclick = closeModal;
+    <button class="big-btn play" id="ntGo"><span class="bb-text"><b>${tx('lessonContinue')}</b></span></button>`, false);
+  const message = recordHelpMessage(k, 'intro');
+  $('#ntGo').onclick = () => { S.seenSp[k] = true; save(); message('ack'); closeModal(); if (after) after(); };
   return true;
 }

@@ -10,7 +10,7 @@ const asGame = d => {
   return { tiles, nb, n, rules };
 };
 const STARS = Object.fromEntries(Array.from({ length: 99 }, (_, i) => [i + 1, 2]));
-const SEEN = { gold: 1, gift: 1, joker: 1, joker2: 1, ice: 1, lock: 1, clock: 1 };
+const SEEN = { gold: 1, gift: 1, joker: 1, joker2: 1, ice: 1, lock: 1, clock: 1, clockMoves: 1 };
 
 module.exports = [
   {

@@ -88,47 +88,6 @@ module.exports = [
     }
     t.ok(n > 30, 'enough taps were checked', n);
   }},
-  { name: 'game tips: a lost try shows the player\'s own last moves and the better move', async run(t, { startLevel, sleep }) {
-    const p = await t.phone({ size: [360, 640], state: { name: 'Dennis', level: 111, sunSeen: true, theme: 'animals', seenSp: seen } });
-    await startLevel(p, 110);
-    await p.evaluate(() => { S.czLoss[G.key] = { n: 2, shown: 0 }; save(); });   // this loss is the 3rd: the film is due
-    // one free tile of an open pair lies face down; three single tiles fill the tray; then the peeked tile is tapped again
-    const [x, y] = await p.evaluate(() => {
-      const fr = []; for (let i = 0; i < G.tiles.length; i++) if (G.alive[i] && canTake(i)) fr.push(i);
-      const x = fr.find(i => !G.down[i] && fr.some(j => j !== i && !G.down[j] && faceOf(j) === faceOf(i)));
-      G.down[x] = 1; renderBoard(false); updateBlocked();
-      return [x, fr.find(j => j !== x && faceOf(j) === faceOf(x))];
-    });
-    for (let k = 0; k < 3; k++) {
-      const c = await p.evaluate(([x, y]) => { const fr = []; for (let i = 0; i < G.tiles.length; i++) if (G.alive[i] && canTake(i)) fr.push(i);
-        return fr.find(i => i !== x && i !== y && !G.down[i] && !trayHas(faceOf(i)) && !fr.some(j => j !== i && faceOf(j) === faceOf(i)) && (!G.clock || i !== G.clock.i)); }, [x, y]);
-      t.ok(c !== undefined, 'a single tile to fill the tray'); await p.evaluate(i => onTap(i), c); await sleep(500);
-    }
-    await p.evaluate(x => onTap(x), x); await sleep(400);
-    await p.evaluate(x => onTap(x), x); await sleep(1400);
-    t.ok(await p.evaluate(() => !!$('#modalBox .coach-own')), 'the loss shows the own film');
-    t.ok(await p.evaluate(() => !!czMine().twin), 'the own film is kept with its tip for the menu');
-    t.eq(await p.evaluate(() => coachReview('tray') && coachReview('tray').kind), 'twin', 'the right tip: tap the twin');
-    t.ok(await p.evaluate(() => { const c = coachReview('tray').clip; return JSON.stringify(c.segs[0].start) === JSON.stringify(c.segs[1].start); }), 'the right way starts at the same moment as the own replay');
-    t.ok(await p.evaluate(() => $('#modalBox').scrollHeight <= $('#modalBox').clientHeight + 1), 'the own film fits a small phone');
-    t.ok(await p.evaluate(() => !!$('.cz-board .tile .emo')), 'in the player\'s own tiles');
-    // never a picture the player has not seen: every picture in the film belongs to a seen tile
-    for (let k = 0; k < 6; k++) {
-      const bad = await p.evaluate(() => { const r = coachReview('tray'), known = new Set(r.clip.known);
-        return [...document.querySelectorAll('.cz-board .tile:not(.back)')].filter(e => !e.classList.contains('cz-unseen') && !known.has(+e.dataset.i)).length; });
-      t.eq(bad, 0, 'no unseen picture in the film (' + k + ')');
-      await sleep(1500);
-    }
-    // the own film is tied to its tip: the better move is shown "with the tip", and the tip opens from here
-    t.ok(/maatje|twin/i.test(await p.locator('#czTip').innerText()), 'the link names the tip');
-    await p.evaluate(() => $('#czTip').click()); await sleep(500);
-    t.eq(await p.evaluate(() => [!!$('#modalBox .coach-demo:not(.coach-own)'), $('#modalBox h2').textContent]), [true, await p.evaluate(() => tx('czT_twin'))], 'the tip opens with its film');
-    await p.evaluate(() => $('#ntGo').click()); await sleep(500);
-    t.eq(await p.evaluate(() => [!!$('#modalBox .coach-own'), !!$('#sRetry'), !!coachRun]), [true, true, true], 'back to the own film after the tip');
-    await sleep(200);
-    await p.evaluate(() => $('#sRetry').click()); await sleep(600);
-    t.eq(await p.evaluate(() => [G.mv, G.tray.length, !!G.cz]), [0, 0, false], 'trying again starts a fresh try and fresh notes');
-  }},
   { name: 'game tips: a better route only uses tiles the player has seen, in this try or an earlier try of the same board', async run(t, { startLevel, sleep }) {
     const p = await t.phone({ state: { name: 'Dennis', level: 141, sunSeen: true, seenSp: seen } });
     let checked = 0;
@@ -171,60 +130,5 @@ module.exports = [
     const k = await p.evaluate(() => G.key);
     await p.evaluate(() => { const fr = []; for (let i = 0; i < G.tiles.length; i++) if (G.alive[i] && canTake(i) && !G.down[i]) fr.push(i); onTap(fr[0]); });
     t.ok(await p.evaluate(([k, i]) => !!czMemory.get(k) && czMemory.get(k).seen.has(i), [k, peeked]), 'the peeked tile is remembered for the retry');
-  }},
-  { name: 'game tips: the own film shows once from the 3rd lost try, then from the 9th every 3rd and after the 20th every one, when the try was over 60% done', async run(t, { startLevel }) {
-    const p = await t.phone({ state: { name: 'Dennis', level: 101, sunSeen: true, seenSp: seen } });
-    await startLevel(p, 100);
-    const due = await p.evaluate(() => {
-      const keep = Array.from(G.alive), n = G.tiles.length;
-      const setDone = f => { G.alive = Uint8Array.from(keep); let k = Math.round(n * f); for (let i = 0; i < n && k > 0; i++) if (G.alive[i]) { G.alive[i] = 0; k--; } };
-      const run = (f, shownOn) => { S.czLoss[G.key] = { n: 0, shown: 0 }; setDone(f); const out = [];
-        for (let l = 1; l <= 24; l++) if (coachDue()) { out.push(l); if (!shownOn || shownOn(l)) coachShown(); }
-        return out; };
-      const r = { half: run(0.55), most: run(0.65), noFilmAt3: run(0.55, l => l !== 3) };
-      G.alive = Uint8Array.from(keep);
-      return r;
-    });
-    t.eq(due.half, [3], 'a try less than 60% done: only once, at the 3rd loss');
-    t.eq(due.most, [3, 9, 12, 15, 18, 21, 22, 23, 24], 'over 60% done: the 3rd, then 9, 12, 15, 18, and after the 20th every loss');
-    t.eq(due.noFilmAt3.slice(0, 2), [3, 4], 'no film possible at the 3rd loss: the next loss gets it');
-    t.eq(await p.evaluate(() => { S.czLoss = {}; save(); restart(); return S.czLoss[G.key]; }), { n: 1, shown: 0 }, 'starting over counts as a lost try');
-    t.eq(await p.evaluate(() => { S.czLoss = {}; save(); failTry(); restart(); return S.czLoss[G.key] || null; }), null, '"try again" after a lost try is not counted a second time');
-  }},
-  { name: 'game tips: starting over shows the way out that was still there (keep playing counts nothing), or where it went wrong', async run(t, { startLevel, sleep, click }) {
-    const p = await t.phone({ size: [360, 640], state: { name: 'Dennis', level: 141, sunSeen: true, seenSp: seen } });
-    const single = () => p.evaluate(() => { const fr = []; for (let i = 0; i < G.tiles.length; i++) if (G.alive[i] && canTake(i)) fr.push(i);
-      const known = i => !G.down[i];
-      return fr.find(i => known(i) && !trayHas(faceOf(i)) && !G.tiles.some((u, j) => j !== i && G.alive[j] && faceOf(j) === faceOf(i) && canTake(j)) && (!G.clock || i !== G.clock.i)); });
-    const openPair = () => p.evaluate(() => { const fr = []; for (let i = 0; i < G.tiles.length; i++) if (G.alive[i] && canTake(i) && !G.down[i] && (!G.clock || i !== G.clock.i)) fr.push(i);
-      for (const x of fr) for (const y of fr) if (x < y && faceOf(x) === faceOf(y)) return [x, y]; return null; });
-    let lv = null;
-    const singles4 = () => p.evaluate(() => { const fr = []; for (let i = 0; i < G.tiles.length; i++) if (G.alive[i] && canTake(i)) fr.push(i);
-      return fr.filter(i => !G.down[i] && !G.tiles.some((u, j) => j !== i && G.alive[j] && faceOf(j) === faceOf(i) && canTake(j)) && (!G.clock || i !== G.clock.i)).length >= 4; });
-    for (const l of [100, 102, 104, 105, 108, 110, 112, 115, 118, 120, 122, 125, 128, 130, 132, 135, 138, 140]) { await startLevel(p, l); if (await openPair() && await singles4()) { lv = l; break; } }
-    t.ok(lv, 'a level with an open pair and a single tile');
-    // 1. a way out is still there: an open pair while the tray has room
-    await p.evaluate(() => { S.czLoss[G.key] = { n: 2, shown: 0 }; save(); });
-    const pair = await openPair();
-    await p.evaluate(i => onTap(i), await single()); await sleep(500);
-    await click(p, '#btnRestart'); await sleep(400);
-    t.ok(await p.evaluate(() => !!$('#modalBox .coach-own') && $('#modalBox .coach-own').dataset.part !== undefined), 'the restart window shows the way out that was still there');
-    t.ok(await p.evaluate(() => $('#modalBox').scrollHeight <= $('#modalBox').clientHeight + 1), 'it fits a small phone');
-    t.eq(await p.evaluate(() => { const r = coachReview('restart'); return [r.still, r.kind]; }), [true, 'pair'], 'an open pair you knew');
-    const before = await p.evaluate(() => [G.mv, G.tray.length, S.czLoss[G.key].n]);
-    await click(p, '#rNo'); await sleep(300);
-    t.eq(await p.evaluate(() => [G.mv, G.tray.length, S.czLoss[G.key].n]), before, 'keep playing: back to the try, nothing counted');
-    await click(p, '#btnRestart'); await sleep(300);
-    await click(p, '#rYes'); await sleep(800);
-    t.eq(await p.evaluate(() => [G.mv, S.czLoss[G.key]]), [0, { n: 3, shown: 3 }], 'starting over counts the try and the film as seen');
-    // 2. a lost try whose last tap had no way out: the film goes back to where a known pair was skipped
-    await p.evaluate(() => { S.czLoss[G.key] = { n: 2, shown: 0 }; save(); });
-    const singles = [];
-    for (let k = 0; k < 4; k++) { const i = await single(); if (i === undefined) break; singles.push(i); await p.evaluate(i => onTap(i), i); await sleep(450); }
-    t.eq(singles.length, 4, 'four single tiles: the 4th loses');
-    await sleep(900);
-    t.ok(await p.evaluate(() => !!$('#modalBox .coach-own')), 'the lost try shows a film');
-    const r = await p.evaluate(() => { const c = coachReview('tray').clip; return { kind: coachReview('tray').kind, bad: c.segs[0].marks.map(m => m[2]), same: JSON.stringify(c.segs[0].start) === JSON.stringify(c.segs[1].start) }; });
-    t.eq([r.kind, r.bad, r.same], ['pair', ['bad'], true], 'the skipped pair: the wrong tap is marked and the right way starts at the same moment');
   }},
 ];

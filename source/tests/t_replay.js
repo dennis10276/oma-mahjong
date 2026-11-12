@@ -66,7 +66,7 @@ module.exports = [
   {
     name: 'replay: reopening after a loss starts a fresh try instead of replaying the ended board',
     async run(t, { startLevel, sleep }) {
-      const pid = 'test-replay-ended', p = await t.phone({ state: { level: 158, name: 'Dennis', pid, sunSeen: true, seenSp: { clockMoves: 1 } } });
+      const pid = 'test-replay-ended', p = await t.phone({ state: { level: 158, name: 'Dennis', pid, sunSeen: true } });
       await startLevel(p, 158);
       // The real level-158 failure was a full tray, followed by hide and reload.
       // Give four takeable tiles distinct visible faces; obstacles and peeks would
@@ -230,7 +230,7 @@ module.exports = [
   {
     name: 'replay: clock peeks, covered taps, automatic peek matches and timeout are distinguishable',
     async run(t, { startLevel, sleep }) {
-      const pid = 'test-replay-clock', p = await t.phone({ state: { level: 80, name: 'Dennis', pid, sunSeen: true, seenSp: { clockMoves: 1 } } });
+      const pid = 'test-replay-clock', p = await t.phone({ state: { level: 80, name: 'Dennis', pid, sunSeen: true } });
       await startLevel(p, 80);
       const out = await p.evaluate(() => {
         const [a, b] = G.tiles.map((t, i) => i).filter(i => i !== G.clock.i && canTake(i));

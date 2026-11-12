@@ -800,6 +800,9 @@ body.sunny .cz-tray { background: linear-gradient(#f3b73a, #c98317); box-shadow:
 .coach-help p { font-size: 15px; margin: 4px 0; line-height: 1.3; }
 .coach-help .big-btn { margin-top: 6px; }
 .coach-help .big-btn b { font-size: 22px; }
+.coach-help .big-btn:disabled { opacity: .55; cursor: default; }
+.coach-help .big-btn:disabled b { font-size: 18px; }
+.tile-intro.coach-help .cz-stage { height: calc(97vh - 365px); height: calc(97dvh - 365px); }
 .coach-help .link-btn { padding-top: 4px; padding-bottom: 4px; }
 .coach-menu .cz-stage { height: auto; }
 .cz-more { margin: 2px 0; font-size: 14px; color: #52674c; }
