@@ -4,20 +4,20 @@
   "count": 40,
   "stat": "D40",
   "allowFallback": [],
-  "poolSize": 71
+  "poolSize": 105
  },
  "rows": [
   {
    "level": 250,
    "target": 6,
-   "key": null,
-   "layout": null,
-   "tiles": null,
-   "D": null,
-   "S": null,
-   "band": null,
-   "dev": null,
-   "bodyKey": null
+   "key": "08bf7b3401215b5e23bc99f75f41fe4f03cc8c4c2f0b4581df61cb370de4c6e8",
+   "layout": 21,
+   "tiles": 96,
+   "D": 5.36,
+   "S": 2.08,
+   "band": "normal",
+   "dev": -0.64,
+   "bodyKey": "6735423cb579b909363f5373410187a596e7ec40aa2a6eb2d0c98b6dfdec6411"
   },
   {
    "level": 251,
@@ -46,38 +46,38 @@
   {
    "level": 253,
    "target": 6.2,
-   "key": "5623afed9aa2e0326dae85b49ed1dd0d3e27213b61a23061e4d488f96d97a268",
-   "layout": 23,
-   "tiles": 76,
-   "D": 5.86,
-   "S": 1.86,
-   "band": "normal",
-   "dev": -0.34,
-   "bodyKey": "04654b1b9bf0ca75c764e1ff8cca8eea867bb2546d98b1f08c1a8be5757f09a8"
-  },
-  {
-   "level": 254,
-   "target": 6.267,
-   "key": "f2cb553e8c69b99385755c4c83bf5482d6c2b6624f0581905b24f65c6e732754",
-   "layout": 14,
-   "tiles": 80,
-   "D": 5.84,
-   "S": 5.1,
-   "band": "normal",
-   "dev": -0.427,
-   "bodyKey": "a1c315ed353ed5fe29bbe4a3c975a5e0869aa9e25f917cafb99b070ca5dbff66"
-  },
-  {
-   "level": 255,
-   "target": 6.333,
    "key": "060d1a5d80eee5f2741b02504b1682928e1347003e56660295a5d82ef91bbc90",
    "layout": 40,
    "tiles": 72,
    "D": 5.89,
    "S": 2.17,
    "band": "normal",
-   "dev": -0.443,
+   "dev": -0.31,
    "bodyKey": "82b998544d25115744a2236916c7c8ddf3fff5de4132696ddcf463ef19c883be"
+  },
+  {
+   "level": 254,
+   "target": 6.267,
+   "key": "5623afed9aa2e0326dae85b49ed1dd0d3e27213b61a23061e4d488f96d97a268",
+   "layout": 23,
+   "tiles": 76,
+   "D": 5.86,
+   "S": 1.86,
+   "band": "normal",
+   "dev": -0.407,
+   "bodyKey": "04654b1b9bf0ca75c764e1ff8cca8eea867bb2546d98b1f08c1a8be5757f09a8"
+  },
+  {
+   "level": 255,
+   "target": 6.333,
+   "key": "f2cb553e8c69b99385755c4c83bf5482d6c2b6624f0581905b24f65c6e732754",
+   "layout": 14,
+   "tiles": 80,
+   "D": 5.84,
+   "S": 5.1,
+   "band": "normal",
+   "dev": -0.493,
+   "bodyKey": "a1c315ed353ed5fe29bbe4a3c975a5e0869aa9e25f917cafb99b070ca5dbff66"
   },
   {
    "level": 256,
@@ -94,14 +94,14 @@
   {
    "level": 257,
    "target": 6.467,
-   "key": null,
-   "layout": null,
-   "tiles": null,
-   "D": null,
-   "S": null,
-   "band": null,
-   "dev": null,
-   "bodyKey": null
+   "key": "02257721565efcb5fc4a468a28efc821fb2257e291e27a3b38807b461dfc8789",
+   "layout": 30,
+   "tiles": 80,
+   "D": 5.92,
+   "S": 1.89,
+   "band": "normal",
+   "dev": -0.547,
+   "bodyKey": "90382708b322ef6268d39998ec1b5b6a47bb1216153050b6f39fc4e1d01976cb"
   },
   {
    "level": 258,
@@ -130,14 +130,14 @@
   {
    "level": 260,
    "target": 6.667,
-   "key": null,
-   "layout": null,
-   "tiles": null,
-   "D": null,
-   "S": null,
-   "band": null,
-   "dev": null,
-   "bodyKey": null
+   "key": "62088c711df51060961774515fa08b019d189f171e19ae2a04691d0eebc1389c",
+   "layout": 29,
+   "tiles": 96,
+   "D": 6.28,
+   "S": 2.88,
+   "band": "normal",
+   "dev": -0.387,
+   "bodyKey": "78a51d9e1cceae6ddb513df481f20660947e18d1456c374c1ea50080a058cf49"
   },
   {
    "level": 261,
@@ -370,14 +370,14 @@
   {
    "level": 280,
    "target": 8,
-   "key": null,
-   "layout": null,
-   "tiles": null,
-   "D": null,
-   "S": null,
-   "band": null,
-   "dev": null,
-   "bodyKey": null
+   "key": "fdb8bb473db53e24e097b3f71298f21eb322d47eeca5c99b3993920c7674dc52",
+   "layout": 47,
+   "tiles": 96,
+   "D": 8.3,
+   "S": 2.36,
+   "band": "normal",
+   "dev": 0.3,
+   "bodyKey": "b5b740c84ade21bf31436dd98df75538c293ab0394dd91920b1b33aeeb6fdd45"
   },
   {
    "level": 281,
@@ -492,7 +492,10 @@
   {
    "from": 250,
    "to": 254,
-   "skipped": "hole"
+   "meanD": 5.68,
+   "meanTarget": 6.133,
+   "diff": -0.453,
+   "ok": true
   },
   {
    "from": 251,
@@ -513,7 +516,10 @@
   {
    "from": 253,
    "to": 257,
-   "skipped": "hole"
+   "meanD": 5.982,
+   "meanTarget": 6.333,
+   "diff": -0.351,
+   "ok": true
   },
   {
    "from": 254,
@@ -688,32 +694,6 @@
  ],
  "holes": [
   {
-   "level": 250,
-   "target": 6,
-   "needD": [
-    5,
-    7
-   ],
-   "tileClass": "96",
-   "S": [
-    1.75,
-    6
-   ]
-  },
-  {
-   "level": 257,
-   "target": 6.467,
-   "needD": [
-    5.47,
-    7.47
-   ],
-   "tileClass": "72-88",
-   "S": [
-    1.75,
-    6
-   ]
-  },
-  {
    "level": 258,
    "target": 6.533,
    "needD": [
@@ -734,19 +714,6 @@
     7.6
    ],
    "tileClass": "72-88",
-   "S": [
-    1.75,
-    6
-   ]
-  },
-  {
-   "level": 260,
-   "target": 6.667,
-   "needD": [
-    5.67,
-    7.67
-   ],
-   "tileClass": "96",
    "S": [
     1.75,
     6
@@ -974,19 +941,6 @@
    ]
   },
   {
-   "level": 280,
-   "target": 8,
-   "needD": [
-    7,
-    9
-   ],
-   "tileClass": "96",
-   "S": [
-    1.75,
-    6
-   ]
-  },
-  {
    "level": 281,
    "target": 8.067,
    "needD": [
@@ -1094,37 +1048,42 @@
  "supply": {
   "96": {
    "4": 2,
-   "5": 1,
+   "5": 4,
+   "6": 2,
+   "8": 1,
    "10": 1,
    "13": 1,
+   "15": 1,
    "19": 1,
    "39": 1
   },
   "72-88": {
    "3": 1,
-   "4": 11,
-   "5": 12,
-   "6": 5,
-   "7": 2,
+   "4": 19,
+   "5": 16,
+   "6": 8,
+   "7": 3,
    "8": 1,
-   "9": 2,
-   "10": 1,
+   "9": 3,
+   "10": 2,
    "11": 1,
-   "13": 1,
-   "17": 1,
+   "12": 1,
+   "13": 2,
+   "17": 2,
    "20": 2,
+   "21": 1,
    "22": 2,
    "27": 3,
-   "28": 1,
+   "28": 2,
    "30": 1,
-   "31": 2,
+   "31": 3,
    "34": 1,
    "35": 1,
-   "36": 2,
+   "36": 3,
    "37": 2,
    "38": 2,
-   "39": 3,
-   "40": 4
+   "39": 4,
+   "40": 5
   }
  },
  "demand": {
@@ -1139,7 +1098,7 @@
    "8": 9
   }
  },
- "filled": 9,
- "totalAbsDev": 2.633,
+ "filled": 13,
+ "totalAbsDev": 4.507,
  "violationsLeft": 0
 }
