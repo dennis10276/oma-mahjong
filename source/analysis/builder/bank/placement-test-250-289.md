@@ -1,49 +1,49 @@
 # Placement proposal
 
-levels 250..289, stat D40, pool 9, filled 3/40, total |dev| 0.88, violations left 0
+levels 250..289, stat D40, pool 27, filled 4/40, total |dev| 0.713, violations left 0
 
 | level | target | puzzle | layout | tiles | D | S | band | dev |
 |---|---|---|---|---|---|---|---|---|
-| 250 | 10 | HOLE | | | | | | |
-| 251 | 10.1 | HOLE | | | | | | |
-| 252 | 10.2 | HOLE | | | | | | |
-| 253 | 10.3 | HOLE | | | | | | |
-| 254 | 10.4 | HOLE | | | | | | |
-| 255 | 10.5 | HOLE | | | | | | |
-| 256 | 10.6 | HOLE | | | | | | |
-| 257 | 10.7 | HOLE | | | | | | |
-| 258 | 10.8 | HOLE | | | | | | |
-| 259 | 10.9 | HOLE | | | | | | |
-| 260 | 11 | 2b11a1116266150e2306d2332043996c0f2055a1cd4ca14540a493d13bcd36a3 | 27 | 96 | 10.67 | 3.19 | normal | -0.33 |
-| 261 | 11.1 | HOLE | | | | | | |
-| 262 | 11.2 | HOLE | | | | | | |
-| 263 | 11.3 | HOLE | | | | | | |
-| 264 | 11.4 | HOLE | | | | | | |
-| 265 | 11.5 | HOLE | | | | | | |
-| 266 | 11.6 | 16f918114c547d76c9692b30697ad4131961ae21a27c8ba61902b1dfb2ac7287 | 0 | 80 | 11.56 | 4.95 | normal | -0.04 |
-| 267 | 11.7 | HOLE | | | | | | |
-| 268 | 11.8 | HOLE | | | | | | |
-| 269 | 11.9 | HOLE | | | | | | |
-| 270 | 12 | HOLE | | | | | | |
-| 271 | 12.1 | HOLE | | | | | | |
-| 272 | 12.2 | HOLE | | | | | | |
-| 273 | 12.3 | HOLE | | | | | | |
-| 274 | 12.4 | HOLE | | | | | | |
-| 275 | 12.5 | HOLE | | | | | | |
-| 276 | 12.6 | HOLE | | | | | | |
-| 277 | 12.7 | HOLE | | | | | | |
-| 278 | 12.8 | HOLE | | | | | | |
-| 279 | 12.9 | HOLE | | | | | | |
-| 280 | 13 | e70f2226be74e5f42acfad92525e7ddbf7a8ca4b472321c1adc00b1a2363bed1 | 27 | 96 | 13.51 | 4.9 | normal | 0.51 |
-| 281 | 13.1 | HOLE | | | | | | |
-| 282 | 13.2 | HOLE | | | | | | |
-| 283 | 13.3 | HOLE | | | | | | |
-| 284 | 13.4 | HOLE | | | | | | |
-| 285 | 13.5 | HOLE | | | | | | |
-| 286 | 13.6 | HOLE | | | | | | |
-| 287 | 13.7 | HOLE | | | | | | |
-| 288 | 13.8 | HOLE | | | | | | |
-| 289 | 13.9 | HOLE | | | | | | |
+| 250 | 6 | HOLE | | | | | | |
+| 251 | 6.067 | f2cb553e8c69b99385755c4c83bf5482d6c2b6624f0581905b24f65c6e732754 | 14 | 80 | 5.84 | 5.1 | normal | -0.227 |
+| 252 | 6.133 | HOLE | | | | | | |
+| 253 | 6.2 | HOLE | | | | | | |
+| 254 | 6.267 | HOLE | | | | | | |
+| 255 | 6.333 | HOLE | | | | | | |
+| 256 | 6.4 | a631c3ae37b235a52bf2add3c801f854066f3ee2ff53186d483bd992feb3e492 | 4 | 84 | 6.4 | 4.7 | normal | 0 |
+| 257 | 6.467 | HOLE | | | | | | |
+| 258 | 6.533 | HOLE | | | | | | |
+| 259 | 6.6 | HOLE | | | | | | |
+| 260 | 6.667 | HOLE | | | | | | |
+| 261 | 6.733 | HOLE | | | | | | |
+| 262 | 6.8 | HOLE | | | | | | |
+| 263 | 6.867 | HOLE | | | | | | |
+| 264 | 6.933 | HOLE | | | | | | |
+| 265 | 7 | HOLE | | | | | | |
+| 266 | 7.067 | HOLE | | | | | | |
+| 267 | 7.133 | HOLE | | | | | | |
+| 268 | 7.2 | HOLE | | | | | | |
+| 269 | 7.267 | HOLE | | | | | | |
+| 270 | 7.333 | HOLE | | | | | | |
+| 271 | 7.4 | HOLE | | | | | | |
+| 272 | 7.467 | HOLE | | | | | | |
+| 273 | 7.533 | HOLE | | | | | | |
+| 274 | 7.6 | HOLE | | | | | | |
+| 275 | 7.667 | eadb34f1069985e26b23abea27ce09307055b5de3fd7c44d34bbe8e1f0e54a35 | 24 | 76 | 7.64 | 2.41 | normal | -0.027 |
+| 276 | 7.733 | HOLE | | | | | | |
+| 277 | 7.8 | HOLE | | | | | | |
+| 278 | 7.867 | HOLE | | | | | | |
+| 279 | 7.933 | HOLE | | | | | | |
+| 280 | 8 | HOLE | | | | | | |
+| 281 | 8.067 | HOLE | | | | | | |
+| 282 | 8.133 | HOLE | | | | | | |
+| 283 | 8.2 | HOLE | | | | | | |
+| 284 | 8.267 | HOLE | | | | | | |
+| 285 | 8.333 | HOLE | | | | | | |
+| 286 | 8.4 | HOLE | | | | | | |
+| 287 | 8.467 | HOLE | | | | | | |
+| 288 | 8.533 | HOLE | | | | | | |
+| 289 | 8.6 | 2073ccd93f55cd933588192f114216b0ff2702fdffc3185908640539a8392b41 | 30 | 80 | 9.06 | 3.29 | normal | 0.46 |
 
 ## 5-level window checks
 
@@ -88,47 +88,46 @@ Unchecked (cross plan edge): 246..250 (crosses start); 286..290 (crosses end); 2
 
 ## Holes / needs
 
-- L250: D in [9, 11], tiles 96, S 1.75-6
-- L251: D in [9.1, 11.1], tiles 72-88, S 1.75-6
-- L252: D in [9.2, 11.2], tiles 72-88, S 1.75-6
-- L253: D in [9.3, 11.3], tiles 72-88, S 1.75-6
-- L254: D in [9.4, 11.4], tiles 72-88, S 1.75-6
-- L255: D in [9.5, 11.5], tiles 72-88, S 1.75-6
-- L256: D in [9.6, 11.6], tiles 72-88, S 1.75-6
-- L257: D in [9.7, 11.7], tiles 72-88, S 1.75-6
-- L258: D in [9.8, 11.8], tiles 72-88, S 1.75-6
-- L259: D in [9.9, 11.9], tiles 72-88, S 1.75-6
-- L261: D in [10.1, 12.1], tiles 72-88, S 1.75-6
-- L262: D in [10.2, 12.2], tiles 72-88, S 1.75-6
-- L263: D in [10.3, 12.3], tiles 72-88, S 1.75-6
-- L264: D in [10.4, 12.4], tiles 72-88, S 1.75-6
-- L265: D in [10.5, 12.5], tiles 72-88, S 1.75-6
-- L267: D in [10.7, 12.7], tiles 72-88, S 1.75-6
-- L268: D in [10.8, 12.8], tiles 72-88, S 1.75-6
-- L269: D in [10.9, 12.9], tiles 72-88, S 1.75-6
-- L270: D in [11, 13], tiles 96, S 1.75-6
-- L271: D in [11.1, 13.1], tiles 72-88, S 1.75-6
-- L272: D in [11.2, 13.2], tiles 72-88, S 1.75-6
-- L273: D in [11.3, 13.3], tiles 72-88, S 1.75-6
-- L274: D in [11.4, 13.4], tiles 72-88, S 1.75-6
-- L275: D in [11.5, 13.5], tiles 72-88, S 1.75-6
-- L276: D in [11.6, 13.6], tiles 72-88, S 1.75-6
-- L277: D in [11.7, 13.7], tiles 72-88, S 1.75-6
-- L278: D in [11.8, 13.8], tiles 72-88, S 1.75-6
-- L279: D in [11.9, 13.9], tiles 72-88, S 1.75-6
-- L281: D in [12.1, 14.1], tiles 72-88, S 1.75-6
-- L282: D in [12.2, 14.2], tiles 72-88, S 1.75-6
-- L283: D in [12.3, 14.3], tiles 72-88, S 1.75-6
-- L284: D in [12.4, 14.4], tiles 72-88, S 1.75-6
-- L285: D in [12.5, 14.5], tiles 72-88, S 1.75-6
-- L286: D in [12.6, 14.6], tiles 72-88, S 1.75-6
-- L287: D in [12.7, 14.7], tiles 72-88, S 1.75-6
-- L288: D in [12.8, 14.8], tiles 72-88, S 1.75-6
-- L289: D in [12.9, 14.9], tiles 72-88, S 1.75-6
+- L250: D in [5, 7], tiles 96, S 1.75-6
+- L252: D in [5.13, 7.13], tiles 72-88, S 1.75-6
+- L253: D in [5.2, 7.2], tiles 72-88, S 1.75-6
+- L254: D in [5.27, 7.27], tiles 72-88, S 1.75-6
+- L255: D in [5.33, 7.33], tiles 72-88, S 1.75-6
+- L257: D in [5.47, 7.47], tiles 72-88, S 1.75-6
+- L258: D in [5.53, 7.53], tiles 72-88, S 1.75-6
+- L259: D in [5.6, 7.6], tiles 72-88, S 1.75-6
+- L260: D in [5.67, 7.67], tiles 96, S 1.75-6
+- L261: D in [5.73, 7.73], tiles 72-88, S 1.75-6
+- L262: D in [5.8, 7.8], tiles 72-88, S 1.75-6
+- L263: D in [5.87, 7.87], tiles 72-88, S 1.75-6
+- L264: D in [5.93, 7.93], tiles 72-88, S 1.75-6
+- L265: D in [6, 8], tiles 72-88, S 1.75-6
+- L266: D in [6.07, 8.07], tiles 72-88, S 1.75-6
+- L267: D in [6.13, 8.13], tiles 72-88, S 1.75-6
+- L268: D in [6.2, 8.2], tiles 72-88, S 1.75-6
+- L269: D in [6.27, 8.27], tiles 72-88, S 1.75-6
+- L270: D in [6.33, 8.33], tiles 96, S 1.75-6
+- L271: D in [6.4, 8.4], tiles 72-88, S 1.75-6
+- L272: D in [6.47, 8.47], tiles 72-88, S 1.75-6
+- L273: D in [6.53, 8.53], tiles 72-88, S 1.75-6
+- L274: D in [6.6, 8.6], tiles 72-88, S 1.75-6
+- L276: D in [6.73, 8.73], tiles 72-88, S 1.75-6
+- L277: D in [6.8, 8.8], tiles 72-88, S 1.75-6
+- L278: D in [6.87, 8.87], tiles 72-88, S 1.75-6
+- L279: D in [6.93, 8.93], tiles 72-88, S 1.75-6
+- L280: D in [7, 9], tiles 96, S 1.75-6
+- L281: D in [7.07, 9.07], tiles 72-88, S 1.75-6
+- L282: D in [7.13, 9.13], tiles 72-88, S 1.75-6
+- L283: D in [7.2, 9.2], tiles 72-88, S 1.75-6
+- L284: D in [7.27, 9.27], tiles 72-88, S 1.75-6
+- L285: D in [7.33, 9.33], tiles 72-88, S 1.75-6
+- L286: D in [7.4, 9.4], tiles 72-88, S 1.75-6
+- L287: D in [7.47, 9.47], tiles 72-88, S 1.75-6
+- L288: D in [7.53, 9.53], tiles 72-88, S 1.75-6
 
 ## Supply vs demand by 1-try D bin (floor(D))
 
-72-88 tiles: D5: supply 1 / demand 0; D6: supply 1 / demand 0; D7: supply 1 / demand 0; D9: supply 2 / demand 0; D10: supply 0 / demand 9; D11: supply 1 / demand 9; D12: supply 0 / demand 9; D13: supply 0 / demand 9
+72-88 tiles: D5: supply 1 / demand 0; D6: supply 1 / demand 13; D7: supply 1 / demand 14; D8: supply 0 / demand 9; D9: supply 2 / demand 0; D10: supply 1 / demand 0; D11: supply 1 / demand 0; D13: supply 1 / demand 0; D20: supply 2 / demand 0; D22: supply 1 / demand 0; D27: supply 1 / demand 0; D31: supply 2 / demand 0; D34: supply 1 / demand 0; D35: supply 1 / demand 0; D37: supply 2 / demand 0; D38: supply 2 / demand 0; D39: supply 2 / demand 0; D40: supply 1 / demand 0
 
-96 tiles: D10: supply 1 / demand 1; D11: supply 0 / demand 1; D12: supply 0 / demand 1; D13: supply 1 / demand 1; D19: supply 1 / demand 0
+96 tiles: D6: supply 0 / demand 2; D7: supply 0 / demand 1; D8: supply 0 / demand 1; D10: supply 1 / demand 0; D13: supply 1 / demand 0; D19: supply 1 / demand 0; D39: supply 1 / demand 0
 

@@ -38,11 +38,16 @@ add new decisions with a date.
 - **Decisions of 2026-11-12 (they supersede the lines below where they differ):**
   - **The curve follows the normal players:** Gerda, Mrs. Doubtfire, D4v3 and Loulou. Not Dennis, and not the old
     weighted sum (Dennis ×2, Gerda ×1, Mrs. Doubtfire ×2).
-  - **Start: about 10 tries at 250**, because the most difficult levels before 250 had that difficulty.
-  - **Rise: at least 1 try per 10 levels** after 250. Slower than the earlier +3 per 25 is fine.
+  - **Start: 6 tries on the family bot's scale at 250, then +1 try every 15 levels** (7 at 265, 8 at 280, 10 at
+    310). Final decision of 2026-11-12, after seeing that the bot rates the hardest live levels (132, 150) at
+    about 7 while normal players need 20+ tries there. It supersedes "about 10 at 250" from earlier that day.
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
-  - **Repeated-blunder check (B7) is a requirement:** a level is rejected when more than 0.3 of the bot's lost
-    tries repeat a mistake it already made.
+  - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
+    played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is
+    improved by steering before it is placed.
+  - **Steering:** a puzzle with a good trap idea but an easy remainder should be steered to be a bit harder after
+    the trap (Dennis on 254: "a nice trap idea, the rest is quite easy").
+
 - **Old levels:** levels up to 199 are live and played; 175–199 stay as they are (2026-11-04).
 - **New levels now start at 250 instead of 200** (2026-11-08; supersedes the 2026-11-04 start):
   - the same opening curve shifts by 50 levels: family about 10 tries at 250, rising evenly to 12 at 274, then 13 at 275 (a small step up);

@@ -17,7 +17,7 @@ const MS = require('./measure.js');
 
 const CENSUS_DIR = path.join(ROOT, 'source/build/bank');
 const PUZZLE_DIR = path.join(ROOT, 'source/analysis/builder/bank/puzzles');
-const THR = { D_SCREEN_MIN: 7, STABLE_RATIO: 0.55, BAND: [1.75, 6], FALLBACK_MIN: 1.75, B7_MAX: 0.3 };
+const THR = { D_SCREEN_MIN: 4.5, STABLE_RATIO: 0.55, BAND: [1.75, 6], FALLBACK_MIN: 1.75, B7_MAX: 0.3 };
 // fixed measurement seeds; screen and full seeds are disjoint, and none is a CURVE/ACCEPT seed.
 const SEEDS = { S_SCREEN: 90001, D_SCREEN: 90002, S_FULL: [91001, 91002], D_FULL: [92001, 92002, 92003, 92004] };
 
@@ -129,7 +129,8 @@ function main() {
           gates: Object.fromEntries(['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7'].map(k => [k, tr[k]])), counts: tr.counts, errorKinds: tr.errorKinds, lossKinds: tr.lossKinds, examples: tr.examples };
         if (tr.valid !== true) { fail('trace', 'trace_invalid'); break run; }
         if (tr.pass !== true) { fail('trace', ['B1', 'B2', 'B3', 'B4', 'B5', 'B6'].filter(k => tr[k]?.pass !== true).map(k => k + (tr[k]?.pass == null ? '?' : '')).join('+') || 'pass_not_true'); break run; }
-        if (!(tr.B7 && typeof tr.B7.value === 'number' && tr.B7.value <= THR.B7_MAX)) { fail('trace', 'B7'); break run; } // Dennis 2026-11-12
+        // Dennis 2026-11-12 (later the same day): a high repeated-blunder share is a trigger to steer the puzzle, not a rejection.
+        if (!(tr.B7 && typeof tr.B7.value === 'number' && tr.B7.value <= THR.B7_MAX)) rec.steer = ['B7'];
         rec.banked = true;
       }
     } catch (e) {
@@ -143,7 +144,7 @@ function main() {
         specials: { gold: (d.gold || []).length, locks: (sp.locks || []).length, keys: (sp.keys || []).length, ice: Object.keys(sp.ice || {}).length },
         clock: { n: d.clock.n, k: rec.k, spare: d.clock.n - rec.k, tile: d.clock.i }, faceDown: d.down.length,
         story: spec.story, stage: spec.stage, knobs: rec.knobs,
-        stability: rec.stability, stats: { S: rec.sFull.S, S_se: rec.sFull.se, band: rec.band, D20: rec.dFull.D20, D40: rec.dFull.D40, median: rec.dFull.median, censoredShare: rec.dFull.censoredShare, D_se: rec.dFull.se, nS: rec.sFull.n, nD: rec.dFull.n },
+        stability: rec.stability, steer: rec.steer || [], stats: { S: rec.sFull.S, S_se: rec.sFull.se, band: rec.band, D20: rec.dFull.D20, D40: rec.dFull.D40, median: rec.dFull.median, censoredShare: rec.dFull.censoredShare, D_se: rec.dFull.se, nS: rec.sFull.n, nD: rec.dFull.n },
         traceGates: rec.trace.gates, lossCauseMix: rec.trace.lossKinds, errorKinds: rec.trace.errorKinds,
         fingerprints: { family: rec.dFull.fingerprint, skilled: rec.sFull.fingerprint, gateProfile: profile.fingerprint }, protocol: ys.protocol, sourceHash: srcHash };
       M.atomicJson(path.join(PUZZLE_DIR, rec.boardKey + '.json'), { schema: 'bank-puzzle-v1', card, design: d, spec, measurements: { sFull: rec.sFull, dFull: rec.dFull, dScreen: rec.dScreen, stability: rec.stability, trace: rec.trace }, ident });

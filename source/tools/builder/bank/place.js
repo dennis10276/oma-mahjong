@@ -6,8 +6,8 @@ const fs = require('fs'), path = require('path');
 const ROOT = path.resolve(__dirname, '../../..');
 const DEF_BANK = path.join(ROOT, 'analysis/builder/bank/puzzles');
 
-// Dennis 2026-11-12: about 10 at 250, then at least 1 try per 10 levels (on the normal-player scale).
-function targetCurve(l) { return 10 + (l - 250) / 10; }
+// Dennis 2026-11-12 (final that day): 6 bot tries at 250, +1 try every 15 levels.
+function targetCurve(l) { return 6 + (l - 250) / 15; }
 function slot(l) { const big = l % 10 === 0; return { big, minTiles: big ? 96 : 72, maxTiles: big ? 96 : 88 }; }
 const tileClass = t => (t >= 96 ? '96' : '72-88');
 
@@ -59,7 +59,7 @@ function place(bank, o) {
     const L = levels[li], s = slot(L);
     if (b.tiles < s.minTiles || b.tiles > s.maxTiles) return false;
     if (Math.abs(D(b) - tgt[li]) > 1 + 1e-9) return false;
-    if (!(typeof b.B7 === 'number' && b.B7 <= 0.3)) return false; // Dennis 2026-11-12: repeated-blunder share is a requirement
+    if (!(typeof b.B7 === 'number' && b.B7 <= 0.3)) return false; // Dennis 2026-11-12: a high repeated-blunder share means "steer first" (steer.js), so it is not placed as it is
     if (b.S < (o.sMin != null ? o.sMin : 1.75) || b.S > 6) return false;
     return true;
   };

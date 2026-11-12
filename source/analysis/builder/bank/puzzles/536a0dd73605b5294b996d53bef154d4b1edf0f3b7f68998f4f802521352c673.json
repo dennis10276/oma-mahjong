@@ -1,0 +1,2882 @@
+{
+ "schema": "bank-puzzle-v1",
+ "card": {
+  "boardKey": "536a0dd73605b5294b996d53bef154d4b1edf0f3b7f68998f4f802521352c673",
+  "matchingBodyKey": "2690dd66f16bd0851ff3720c19291969a39275035800e494d703c5f72974f432",
+  "layout": 22,
+  "shape": "ushape",
+  "tiles": 76,
+  "big": false,
+  "specials": {
+   "gold": 0,
+   "locks": 1,
+   "keys": 2,
+   "ice": 1
+  },
+  "clock": {
+   "n": 16,
+   "k": 13,
+   "spare": 3,
+   "tile": 69
+  },
+  "faceDown": 15,
+  "story": "iceLockClock",
+  "stage": "edge",
+  "knobs": {
+   "spare": 3,
+   "depth": null,
+   "traps": 1,
+   "maxDown": 0.2,
+   "hiddenOnWay": 1,
+   "trayRoom": 0,
+   "tailPairWidth": 3,
+   "buildSeed": 5111,
+   "story": "iceLockClock",
+   "stage": "edge",
+   "layout": 22,
+   "shape": "ushape",
+   "tiles": 76,
+   "big": false
+  },
+  "stability": {
+   "base": 32.15,
+   "steps": [
+    {
+     "extra": 1,
+     "ok": true,
+     "D20": 16.33,
+     "D40": 29.38
+    },
+    {
+     "extra": 2,
+     "ok": true,
+     "D20": 15.5,
+     "D40": 28.93
+    }
+   ],
+   "ratio": 0.9
+  },
+  "stats": {
+   "S": 1.04,
+   "S_se": 0.02,
+   "band": "below",
+   "D20": 18.47,
+   "D40": 34.58,
+   "median": 40,
+   "censoredShare": 0.74375,
+   "D_se": 0.89,
+   "nS": 80,
+   "nD": 160
+  },
+  "traceGates": {
+   "B1": {
+    "pass": true,
+    "value": 1,
+    "bites": 80,
+    "firstTries": 80
+   },
+   "B2": {
+    "pass": true,
+    "value": 0.307,
+    "atTrap": 821,
+    "atForkState": 14,
+    "onTemptingMove": 814,
+    "provedFirstErrors": 2670,
+    "lostTries": 2710,
+    "coverage": 0.985
+   },
+   "B3": {
+    "pass": true,
+    "value": 0.145
+   },
+   "B4": {
+    "pass": true,
+    "value": 4
+   },
+   "B5": {
+    "pass": true,
+    "value": 0,
+    "lateTrayLosses": 0
+   },
+   "B6": {
+    "pass": true,
+    "value": 0.001,
+    "postClockLosses": 3,
+    "secondAct": false,
+    "postClockErrorMedianShare": 0.263
+   },
+   "B7": {
+    "pass": null,
+    "report": true,
+    "value": 0.706,
+    "repeats": 1641,
+    "knownRepeats": 1641,
+    "lossesTries6to20": 2325,
+    "inflated": true,
+    "maxTarget": 10
+   }
+  },
+  "lossCauseMix": {
+   "tray": 763,
+   "clock": 1947
+  },
+  "errorKinds": {
+   "free pair taken early": 693,
+   "off stored clock route": 804,
+   "peek pair": 901,
+   "4th tile": 272
+  },
+  "fingerprints": {
+   "family": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+   "skilled": "93ed5c9c9419bf4146c0b965d7bedfa18248ff16609967b945d1767faea0ed4f",
+   "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2"
+  },
+  "protocol": "extended-40-v1",
+  "sourceHash": "b64f2dcd160781b6c1b3f62405b49a9688000b11eb723f653b4c8640173d4869",
+  "steer": [
+   "B7"
+  ]
+ },
+ "design": {
+  "tiles": [
+   [
+    0,
+    0,
+    0
+   ],
+   [
+    2,
+    0,
+    0
+   ],
+   [
+    10,
+    0,
+    0
+   ],
+   [
+    12,
+    0,
+    0
+   ],
+   [
+    0,
+    2,
+    0
+   ],
+   [
+    2,
+    2,
+    0
+   ],
+   [
+    10,
+    2,
+    0
+   ],
+   [
+    12,
+    2,
+    0
+   ],
+   [
+    0,
+    4,
+    0
+   ],
+   [
+    2,
+    4,
+    0
+   ],
+   [
+    10,
+    4,
+    0
+   ],
+   [
+    12,
+    4,
+    0
+   ],
+   [
+    0,
+    6,
+    0
+   ],
+   [
+    2,
+    6,
+    0
+   ],
+   [
+    10,
+    6,
+    0
+   ],
+   [
+    12,
+    6,
+    0
+   ],
+   [
+    0,
+    8,
+    0
+   ],
+   [
+    2,
+    8,
+    0
+   ],
+   [
+    10,
+    8,
+    0
+   ],
+   [
+    12,
+    8,
+    0
+   ],
+   [
+    0,
+    10,
+    0
+   ],
+   [
+    2,
+    10,
+    0
+   ],
+   [
+    4,
+    10,
+    0
+   ],
+   [
+    6,
+    10,
+    0
+   ],
+   [
+    8,
+    10,
+    0
+   ],
+   [
+    10,
+    10,
+    0
+   ],
+   [
+    12,
+    10,
+    0
+   ],
+   [
+    0,
+    12,
+    0
+   ],
+   [
+    2,
+    12,
+    0
+   ],
+   [
+    4,
+    12,
+    0
+   ],
+   [
+    6,
+    12,
+    0
+   ],
+   [
+    8,
+    12,
+    0
+   ],
+   [
+    10,
+    12,
+    0
+   ],
+   [
+    12,
+    12,
+    0
+   ],
+   [
+    0,
+    14,
+    0
+   ],
+   [
+    2,
+    14,
+    0
+   ],
+   [
+    4,
+    14,
+    0
+   ],
+   [
+    6,
+    14,
+    0
+   ],
+   [
+    8,
+    14,
+    0
+   ],
+   [
+    10,
+    14,
+    0
+   ],
+   [
+    12,
+    14,
+    0
+   ],
+   [
+    1,
+    9,
+    1
+   ],
+   [
+    11,
+    9,
+    1
+   ],
+   [
+    1,
+    7,
+    1
+   ],
+   [
+    11,
+    7,
+    1
+   ],
+   [
+    3,
+    11,
+    1
+   ],
+   [
+    9,
+    11,
+    1
+   ],
+   [
+    5,
+    11,
+    1
+   ],
+   [
+    7,
+    11,
+    1
+   ],
+   [
+    1,
+    11,
+    1
+   ],
+   [
+    11,
+    11,
+    1
+   ],
+   [
+    1,
+    5,
+    1
+   ],
+   [
+    11,
+    5,
+    1
+   ],
+   [
+    3,
+    13,
+    1
+   ],
+   [
+    9,
+    13,
+    1
+   ],
+   [
+    1,
+    13,
+    1
+   ],
+   [
+    11,
+    13,
+    1
+   ],
+   [
+    5,
+    13,
+    1
+   ],
+   [
+    7,
+    13,
+    1
+   ],
+   [
+    1,
+    3,
+    1
+   ],
+   [
+    11,
+    3,
+    1
+   ],
+   [
+    1,
+    1,
+    1
+   ],
+   [
+    11,
+    1,
+    1
+   ],
+   [
+    4,
+    12,
+    2
+   ],
+   [
+    8,
+    12,
+    2
+   ],
+   [
+    10,
+    12,
+    2
+   ],
+   [
+    2,
+    12,
+    2
+   ],
+   [
+    6,
+    12,
+    2
+   ],
+   [
+    9,
+    12,
+    3
+   ],
+   [
+    3,
+    12,
+    3
+   ],
+   [
+    5,
+    12,
+    3
+   ],
+   [
+    7,
+    12,
+    3
+   ],
+   [
+    4,
+    12,
+    4
+   ],
+   [
+    8,
+    12,
+    4
+   ],
+   [
+    6,
+    12,
+    4
+   ],
+   [
+    7,
+    12,
+    5
+   ]
+  ],
+  "faces": [
+   19,
+   1,
+   20,
+   9,
+   30,
+   17,
+   20,
+   5,
+   16,
+   30,
+   8,
+   5,
+   7,
+   22,
+   16,
+   35,
+   19,
+   35,
+   7,
+   28,
+   34,
+   13,
+   2,
+   15,
+   21,
+   21,
+   24,
+   29,
+   27,
+   2,
+   15,
+   13,
+   10,
+   10,
+   8,
+   6,
+   0,
+   0,
+   18,
+   18,
+   22,
+   31,
+   31,
+   6,
+   28,
+   34,
+   12,
+   12,
+   34,
+   3,
+   24,
+   1,
+   32,
+   29,
+   14,
+   3,
+   3,
+   27,
+   23,
+   17,
+   4,
+   9,
+   32,
+   3,
+   11,
+   26,
+   11,
+   34,
+   33,
+   26,
+   25,
+   25,
+   23,
+   33,
+   4,
+   14
+  ],
+  "down": [
+   37,
+   40,
+   38,
+   17,
+   1,
+   4,
+   8,
+   5,
+   13,
+   14,
+   12,
+   39,
+   36,
+   16,
+   18
+  ],
+  "gold": [],
+  "obst": {
+   "ice": {
+    "69": 2
+   },
+   "locks": [
+    70
+   ],
+   "keys": [
+    11,
+    7
+   ]
+  },
+  "clock": {
+   "i": 69,
+   "n": 16
+  },
+  "solution": [
+   75,
+   72,
+   74,
+   60,
+   62,
+   52,
+   11,
+   7,
+   73,
+   68,
+   71,
+   70,
+   69,
+   65,
+   64,
+   66,
+   42,
+   41,
+   55,
+   56,
+   54,
+   67,
+   58,
+   49,
+   27,
+   20,
+   63,
+   53,
+   45,
+   47,
+   57,
+   48,
+   46,
+   28,
+   21,
+   29,
+   30,
+   31,
+   22,
+   23,
+   24,
+   50,
+   32,
+   25,
+   26,
+   33,
+   2,
+   10,
+   3,
+   61,
+   43,
+   6,
+   34,
+   35,
+   36,
+   37,
+   38,
+   39,
+   16,
+   0,
+   44,
+   19,
+   1,
+   51,
+   17,
+   15,
+   18,
+   12,
+   40,
+   13,
+   59,
+   5,
+   9,
+   4,
+   8,
+   14
+  ]
+ },
+ "spec": {
+  "id": "205-190",
+  "index": 190,
+  "layout": 22,
+  "shape": "ushape",
+  "tiles": 76,
+  "big": false,
+  "story": "iceLockClock",
+  "stage": "edge",
+  "spare": 3,
+  "depth": null,
+  "traps": 1,
+  "maxDown": 0.2,
+  "hiddenOnWay": 1,
+  "trayRoom": 0,
+  "tailPairWidth": 3,
+  "buildSeed": 5111
+ },
+ "measurements": {
+  "sFull": {
+   "ok": true,
+   "calls": [
+    {
+     "runs": 40,
+     "seed": 91001
+    },
+    {
+     "runs": 40,
+     "seed": 91002
+    }
+   ],
+   "styles": {
+    "route": 1.04,
+    "plain": 1.11
+   },
+   "bestStyle": "route",
+   "rawByStyle": {
+    "route": [
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 2,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 2,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 2,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     }
+    ],
+    "plain": [
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 2,
+      "censored": false
+     },
+     {
+      "tries": 2,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 2,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 2,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 2,
+      "censored": false
+     },
+     {
+      "tries": 2,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 2,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 2,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     },
+     {
+      "tries": 2,
+      "censored": false
+     },
+     {
+      "tries": 1,
+      "censored": false
+     }
+    ]
+   },
+   "raw": [
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 2,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 2,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 2,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    }
+   ],
+   "S": 1.04,
+   "Smeter": 1.04,
+   "fingerprint": "93ed5c9c9419bf4146c0b965d7bedfa18248ff16609967b945d1767faea0ed4f",
+   "n": 80,
+   "cap": 20,
+   "D": 1.04,
+   "D20": 1.04,
+   "D40": 1.04,
+   "median": 1,
+   "censoredShare": 0,
+   "se": 0.02
+  },
+  "dFull": {
+   "ok": true,
+   "calls": [
+    {
+     "runs": 40,
+     "seed": 92001
+    },
+    {
+     "runs": 40,
+     "seed": 92002
+    },
+    {
+     "runs": 40,
+     "seed": 92003
+    },
+    {
+     "runs": 40,
+     "seed": 92004
+    }
+   ],
+   "raw": [
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 35,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 10,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 8,
+     "censored": false
+    },
+    {
+     "tries": 32,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 15,
+     "censored": false
+    },
+    {
+     "tries": 26,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 20,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 35,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 6,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": false
+    },
+    {
+     "tries": 12,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 11,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 3,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 31,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 11,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 19,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 12,
+     "censored": false
+    },
+    {
+     "tries": 18,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": false
+    },
+    {
+     "tries": 18,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 31,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 33,
+     "censored": false
+    },
+    {
+     "tries": 38,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 18,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 19,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 28,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 8,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 4,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 37,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 12,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 17,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 9,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 22,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 24,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 26,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    }
+   ],
+   "fingerprint": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+   "n": 160,
+   "cap": 40,
+   "D": 34.58,
+   "D20": 18.47,
+   "D40": 34.58,
+   "median": 40,
+   "censoredShare": 0.74375,
+   "se": 0.89
+  },
+  "dScreen": {
+   "ok": true,
+   "calls": [
+    {
+     "runs": 40,
+     "seed": 90002
+    }
+   ],
+   "raw": [
+    {
+     "tries": 3,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 19,
+     "censored": false
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 17,
+     "censored": false
+    },
+    {
+     "tries": 39,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 39,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 13,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 1,
+     "censored": false
+    },
+    {
+     "tries": 30,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 2,
+     "censored": false
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    },
+    {
+     "tries": 40,
+     "censored": true
+    }
+   ],
+   "fingerprint": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+   "n": 40,
+   "cap": 40,
+   "D": 32.15,
+   "D20": 16.95,
+   "D40": 32.15,
+   "median": 40,
+   "censoredShare": 0.7,
+   "se": 2.3
+  },
+  "stability": {
+   "base": 32.15,
+   "steps": [
+    {
+     "extra": 1,
+     "ok": true,
+     "D20": 16.33,
+     "D40": 29.38
+    },
+    {
+     "extra": 2,
+     "ok": true,
+     "D20": 15.5,
+     "D40": 28.93
+    }
+   ],
+   "ratio": 0.9
+  },
+  "trace": {
+   "pass": true,
+   "D": 34.14,
+   "campaigns": 80,
+   "wonOn": [
+    null,
+    null,
+    null,
+    5,
+    14,
+    null,
+    null,
+    null,
+    null,
+    24,
+    39,
+    null,
+    null,
+    5,
+    null,
+    2,
+    null,
+    null,
+    null,
+    8,
+    null,
+    null,
+    37,
+    null,
+    null,
+    34,
+    null,
+    null,
+    23,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    8,
+    null,
+    null,
+    null,
+    null,
+    30,
+    null,
+    null,
+    1,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    37,
+    19,
+    25,
+    null,
+    8,
+    6,
+    null,
+    7,
+    37,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "valid": true,
+   "ruler": {
+    "botVersion": "family-key-memory-v1-fast",
+    "fingerprint": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+    "pin": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+    "pinned": true
+   },
+   "gates": {
+    "B1": {
+     "pass": true,
+     "value": 1,
+     "bites": 80,
+     "firstTries": 80
+    },
+    "B2": {
+     "pass": true,
+     "value": 0.307,
+     "atTrap": 821,
+     "atForkState": 14,
+     "onTemptingMove": 814,
+     "provedFirstErrors": 2670,
+     "lostTries": 2710,
+     "coverage": 0.985
+    },
+    "B3": {
+     "pass": true,
+     "value": 0.145
+    },
+    "B4": {
+     "pass": true,
+     "value": 4
+    },
+    "B5": {
+     "pass": true,
+     "value": 0,
+     "lateTrayLosses": 0
+    },
+    "B6": {
+     "pass": true,
+     "value": 0.001,
+     "postClockLosses": 3,
+     "secondAct": false,
+     "postClockErrorMedianShare": 0.263
+    },
+    "B7": {
+     "pass": null,
+     "report": true,
+     "value": 0.706,
+     "repeats": 1641,
+     "knownRepeats": 1641,
+     "lossesTries6to20": 2325,
+     "inflated": true,
+     "maxTarget": 10
+    }
+   },
+   "counts": {
+    "attempts": 2731,
+    "losses": 2710,
+    "provedFirstErrors": 2670,
+    "unknownChosen": 40,
+    "engineMismatches": 0,
+    "recoveries": 0,
+    "engineStates": 1160,
+    "forkStates": 6,
+    "temptingMoves": 30,
+    "forkStatesUnmapped": 0,
+    "forksSource": "engine.classify on the witness"
+   },
+   "errorKinds": {
+    "free pair taken early": 693,
+    "off stored clock route": 804,
+    "peek pair": 901,
+    "4th tile": 272
+   },
+   "lossKinds": {
+    "tray": 763,
+    "clock": 1947
+   },
+   "examples": [
+    {
+     "campaign": 0,
+     "attempt": 1,
+     "errorAtRemoval": 11,
+     "errorShare": 0.14,
+     "move": 41,
+     "kind": "free pair taken early",
+     "atForkState": false,
+     "temptingMoves": 3,
+     "delay": 5,
+     "lossWhy": "tray",
+     "phase": "clock",
+     "left": 60,
+     "repeated": false,
+     "depth": 6,
+     "text": "Try 1 of campaign 1: the first losing move (free pair taken early, tile 41) was removal 11 of 76, at a designed trap; the loss (tray) showed 5 removals later."
+    },
+    {
+     "campaign": 1,
+     "attempt": 1,
+     "errorAtRemoval": 6,
+     "errorShare": 0.08,
+     "move": 2,
+     "kind": "4th tile",
+     "atForkState": false,
+     "temptingMoves": 5,
+     "delay": 0,
+     "lossWhy": "tray",
+     "phase": "clock",
+     "left": 70,
+     "repeated": false,
+     "depth": 0,
+     "text": "Try 1 of campaign 2: the first losing move (4th tile, tile 2) was removal 6 of 76, at a designed trap; the loss (tray) showed 0 removals later."
+    },
+    {
+     "campaign": 2,
+     "attempt": 1,
+     "errorAtRemoval": 11,
+     "errorShare": 0.14,
+     "move": 41,
+     "kind": "free pair taken early",
+     "atForkState": false,
+     "temptingMoves": 3,
+     "delay": 5,
+     "lossWhy": "clock",
+     "phase": "clock",
+     "left": 60,
+     "repeated": false,
+     "depth": 6,
+     "text": "Try 1 of campaign 3: the first losing move (free pair taken early, tile 41) was removal 11 of 76, at a designed trap; the loss (clock) showed 5 removals later."
+    },
+    {
+     "campaign": 15,
+     "attempt": 1,
+     "errorAtRemoval": 11,
+     "errorShare": 0.14,
+     "move": {
+      "pair": [
+       51,
+       1
+      ]
+     },
+     "kind": "peek pair",
+     "atForkState": false,
+     "temptingMoves": null,
+     "delay": 5,
+     "lossWhy": "clock",
+     "phase": "clock",
+     "left": 59,
+     "repeated": false,
+     "depth": 5,
+     "text": "Try 1 of campaign 16: the first losing move (peek pair, tile {\"pair\":[51,1]}) was removal 11 of 76, away from any designed trap; the loss (clock) showed 5 removals later."
+    },
+    {
+     "campaign": 16,
+     "attempt": 1,
+     "errorAtRemoval": 6,
+     "errorShare": 0.08,
+     "move": 73,
+     "kind": "4th tile",
+     "atForkState": false,
+     "temptingMoves": null,
+     "delay": 0,
+     "lossWhy": "tray",
+     "phase": "clock",
+     "left": 70,
+     "repeated": false,
+     "depth": 0,
+     "text": "Try 1 of campaign 17: the first losing move (4th tile, tile 73) was removal 6 of 76, away from any designed trap; the loss (tray) showed 0 removals later."
+    },
+    {
+     "campaign": 28,
+     "attempt": 1,
+     "errorAtRemoval": 6,
+     "errorShare": 0.08,
+     "move": 44,
+     "kind": "4th tile",
+     "atForkState": false,
+     "temptingMoves": null,
+     "delay": 0,
+     "lossWhy": "tray",
+     "phase": "clock",
+     "left": 70,
+     "repeated": false,
+     "depth": 0,
+     "text": "Try 1 of campaign 29: the first losing move (4th tile, tile 44) was removal 6 of 76, away from any designed trap; the loss (tray) showed 0 removals later."
+    }
+   ]
+  }
+ },
+ "ident": {
+  "protocol": "extended-40-v1",
+  "family": "63be677ee17677754b17e9c835e8a0f757d1d5ec62738950bf2a2f5e4357413a",
+  "skilled": "93ed5c9c9419bf4146c0b965d7bedfa18248ff16609967b945d1767faea0ed4f",
+  "gateProfile": "3905c8225920f8845357ee59921e56f4af79a7574e3e39d57ede3ef51851a4d2",
+  "source": "b64f2dcd160781b6c1b3f62405b49a9688000b11eb723f653b4c8640173d4869"
+ }
+}
