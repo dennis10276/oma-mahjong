@@ -2,7 +2,7 @@
 'use strict';
 // Measured steering for a banked puzzle (Dennis 2026-11-12: "a nice trap idea, the rest is easy; steer it harder after the trap").
 //   node source/tools/builder/loop/heavy.js --label steer -- node source/tools/builder/bank/steer.js --puzzle c6b10b7f [--goal second-act|fewer-repeats]
-//        [--rounds 8] [--proposals 8] [--seed 1] [--target-D x] [--wall-min 8] [--finalize] [--fresh]
+//        [--moves down,relabel,obstacle|weave|spread|swap] [--dry] [--jobs 3] [--rounds 8] [--proposals 8] [--seed 1] [--target-D x] [--wall-min 8] [--finalize] [--fresh]
 // Edit move: swap the faces of two tiles that the stored solution takes AFTER the clock tile, so the pairs (a1,a2),(b1,b2)
 // become (a1,b1),(a2,b2). The clock tile, the stored solution up to and including the clock tile, keys, locks, ice, gold, every
 // tile in a designed trap (static forks + engine forks) and every tile sharing a face with those are never touched; layout,
@@ -22,7 +22,7 @@ const r3 = x => x == null || !Number.isFinite(x) ? x ?? null : Math.round(x * 10
 // seed blocks used for steering; disjoint from the generate.js screen/full seeds and from the CURVE seeds
 const BLOCK = { A: [93001, 93002, 93003, 93004].map(seed => ({ seed, runs: 20 })), B: [93005, 93006, 93007, 93008].map(seed => ({ seed, runs: 20 })) };
 const BUDGET = { nodes: 30000, ms: 60, cap: 12, depthNodes: 1500 };
-const TOL = { B7: 0.02, minGain: 0.015, band: [0.30, 0.50], B7max: 0.3, Dnoise: 1.0 };
+const TOL = { B7: 0.02, minGain: 0.05, screen: 0.05, band: [0.30, 0.50], B7max: 0.3, Dnoise: 1.0 };
 
 // ---------------------------------------------------------------- shared machinery (lazy: the main process needs little)
 let _lib = null;
@@ -67,32 +67,120 @@ function coverOf(d) {
 }
 
 // ---------------------------------------------------------------- proposals (main process)
-function rng(seed) { let s = (seed >>> 0) || 1; return () => (s = (s * 1103515245 + 12345) >>> 0) / 4294967296; }
-function propose(d, spec, prot, count, goal, rand, tried, hints) {
-  const pos = posOf(d), cov = coverOf(d), pairs = movablePairs(d, prot);
-  const gap = (a, b) => Math.abs(pos.get(a) - pos.get(b));
-  const cost = (a, b) => gap(a, b) / 10 + Math.abs(cov[a] - cov[b]); // late tray cost proxy: a twin far away / buried while its partner is free
-  const cands = [];
-  if (pairs.length < 2) return [];
-  for (let n = 0; n < 4000 && cands.length < 600; n++) {
-    const A = pairs[Math.floor(rand() * pairs.length)], B = pairs[Math.floor(rand() * pairs.length)];
-    if (A === B) continue;
-    const i = Math.floor(rand() * 2), j = Math.floor(rand() * 2), u = A[i], v = B[j], uo = A[1 - i], vo = B[1 - j];
-    const key = u < v ? u + '-' + v : v + '-' + u;
-    if (tried.has(key) || cands.some(c => c.key === key)) continue;
-    const before = cost(A[0], A[1]) + cost(B[0], B[1]), after = cost(uo, v) + cost(vo, u);
-    const kind = goal === 'fewer-repeats' && hints.length && ([u, v, uo, vo].some(t => hints.includes(t))) ? 'c' : (Math.min(gap(A[0], A[1]), gap(B[0], B[1])) <= 3 && gap(uo, v) + gap(vo, u) > gap(A[0], A[1]) + gap(B[0], B[1]) ? 'b' : 'a');
-    cands.push({ key, move: kind, tiles: [u, v], pairsBefore: [[...A], [...B]], pairsAfter: [[uo, v], [vo, u]], gain: r3(after - before), score: (after - before) + rand() * 2 });
+// Edit kinds (design edits; all leave the clock tile, the solution prefix through the clock, keys, locks, ice, trap tiles and clock.n alone):
+//   swap     legacy: cross-swap faces of two late solution pairs
+//   down     turn 1-3 late (after the clock) tiles face-down
+//   weave    relabel whole late solution pairs so the two pairs of a repeated picture are open together
+//   spread   relabel whole late solution pairs: swap a repeated picture's pair with a pair of an unrepeated picture
+//   obstacle ice (strength 1 or 2) on a late tile whose ice-neighbours are gone in time in the stored solution
+// (A second lock needs its own keys; the engine has one shared key set per board, so a late lock/keys obstacle is not offered.)
+const MOVES_ALL = ['down', 'weave', 'spread', 'obstacle', 'swap'], MOVES_DEFAULT = ['down', 'weave', 'spread', 'obstacle'];
+function parseMoves(s) {
+  if (!s) return MOVES_DEFAULT.slice();
+  const out = [];
+  for (const t of String(s).split(',').map(x => x.trim()).filter(Boolean)) {
+    const add = t === 'relabel' ? ['weave', 'spread'] : t === 'all' ? MOVES_DEFAULT : [t];
+    for (const m of add) { if (!MOVES_ALL.includes(m)) throw Error('unknown move ' + m + ' (down, relabel|weave|spread, obstacle, swap)'); if (!out.includes(m)) out.push(m); }
   }
-  if (goal === 'fewer-repeats' && hints.length) cands.forEach(c => { if (c.move === 'c') c.score += 100; });
-  cands.sort((p, q) => q.score - p.score);
-  // mix: top-scored plus a few random ones so the climb does not only follow the heuristic
-  const out = cands.slice(0, Math.ceil(count * 0.75));
-  const rest = cands.slice(out.length);
-  while (out.length < count && rest.length) out.push(rest.splice(Math.floor(rand() * rest.length), 1)[0]);
   return out;
 }
-const applySwap = (d, u, v) => { const c = clone(d); [c.faces[u], c.faces[v]] = [c.faces[v], c.faces[u]]; return c; };
+function rng(seed) { let s = (seed >>> 0) || 1; return () => (s = (s * 1103515245 + 12345) >>> 0) / 4294967296; }
+const sortedKey = a => a.slice().sort((x, y) => x - y).join(',');
+// solution pairs: how the tray matches the stored solution (earliest waiting twin)
+function solPairs(d) {
+  const tray = [], pairs = [];
+  for (const t of d.solution) { const q = tray.findIndex(x => d.faces[x] === d.faces[t]); if (q >= 0) { pairs.push([tray[q], t]); tray.splice(q, 1); } else tray.push(t); }
+  return pairs;
+}
+// avail[t]: first solution step after which t is free (takeable) when tiles leave in stored order
+function availOf(d) {
+  const L = lib(), g = L.E.game(clone(d)), n = d.tiles.length, alive = new Uint8Array(n).fill(1), init = alive.slice(), av = new Array(n).fill(-1);
+  const can = i => alive[i] && (g.rules ? global.Layouts.takeable(i, alive, g.nb, g.rules, init) : global.Layouts.isFree(i, alive, g.nb));
+  for (let s = 0; s <= d.solution.length; s++) {
+    for (let i = 0; i < n; i++) if (av[i] < 0 && can(i)) av[i] = s;
+    if (s < d.solution.length) alive[d.solution[s]] = 0;
+  }
+  return av;
+}
+function ctxOfDesign(d, prot) {
+  const pos = posOf(d), cp0 = clockPos(d), cov = coverOf(d), av = availOf(d), L = lib();
+  const protFaces = new Set([...prot].map(t => d.faces[t]));
+  const pairs = solPairs(d).map(p => { const lo = Math.min(av[p[0]], av[p[1]]), hi = Math.max(pos.get(p[0]), pos.get(p[1])); return { t: p, lo, hi, face: d.faces[p[0]], late: p.every(t => pos.get(t) > cp0 && !prot.has(t)) && !protFaces.has(d.faces[p[0]]) }; });
+  const byFace = new Map(); for (const p of pairs) { if (!byFace.has(p.face)) byFace.set(p.face, []); byFace.get(p.face).push(p); }
+  const iceNb = L.E.game(clone(d)).iceNb;
+  return { pos, cp0, cov, av, pairs, byFace, iceNb, prot };
+}
+const overlap = (a, b) => Math.max(0, Math.min(a.hi, b.hi) - Math.max(a.lo, b.lo));
+// report: repeated pictures and where their pairs sit
+function repeatReport(d, ctx) {
+  const rep = [...ctx.byFace.values()].filter(g => g.length > 1);
+  const pre = rep.reduce((s, g) => s + g.filter(p => !p.t.every(t => ctx.pos.get(t) > ctx.cp0)).length, 0), post = rep.reduce((s, g) => s + g.length, 0) - pre;
+  return { repeatedPictures: rep.length, repeatedPairsBeforeClock: pre, repeatedPairsAfterClock: post, movableLatePairs: ctx.pairs.filter(p => p.late).length,
+    movableRepeated: rep.filter(g => g.some(p => p.late)).length, repeatedWindows: rep.map(g => ({ face: g[0].face, windows: g.map(p => [p.lo, p.hi]), overlap: g.length > 1 ? overlap(g[0], g[1]) : 0 })) };
+}
+function relabelEdit(P, Q) { // exchange the pictures of two whole pairs
+  return { type: 'relabel', assign: [[P.t[0], Q.face], [P.t[1], Q.face], [Q.t[0], P.face], [Q.t[1], P.face]] };
+}
+function genMove(kind, d, ctx, count, rand, tried) {
+  const out = [], seen = new Set(), push = c => { if (!tried.has(c.key) && !seen.has(c.key)) { seen.add(c.key); out.push(c); } };
+  const late = ctx.pairs.filter(p => p.late), rep = [...ctx.byFace.values()].filter(g => g.length > 1);
+  const pick = a => a[Math.floor(rand() * a.length)];
+  for (let n = 0; n < count * 40 && out.length < count; n++) {
+    if (kind === 'down') {
+      const cand = [...Array(d.tiles.length).keys()].filter(t => ctx.pos.get(t) > ctx.cp0 && !ctx.prot.has(t) && !d.down.includes(t));
+      if (!cand.length) break;
+      const k = 1 + Math.floor(rand() * 3), pool = cand.map(t => ({ t, w: 1 + (ctx.cov[t] > 0 ? 3 : 0) + rand() * 2 })).sort((a, b) => b.w - a.w);
+      const chosen = [];
+      if (rand() < 0.5) { const p = pick(late); if (p) for (const t of p.t) if (cand.includes(t) && chosen.length < k) chosen.push(t); } // twins of a late pair
+      for (const x of pool) { if (chosen.length >= k) break; if (!chosen.includes(x.t) && rand() < 0.6) chosen.push(x.t); }
+      if (!chosen.length) continue;
+      push({ key: 'down:' + sortedKey(chosen), move: 'down', edit: { type: 'down', tiles: chosen }, tiles: chosen, score: chosen.reduce((s, t) => s + (ctx.cov[t] > 0 ? 1 : 0), 0) + rand() });
+    } else if (kind === 'weave') {
+      const g = pick(rep); if (!g) break;
+      const [A, B] = g.length > 1 ? [g[0], g[1]] : [g[0], g[0]];
+      const moved = rand() < 0.5 ? B : A, fixed = moved === B ? A : B;
+      if (!moved.late) continue;
+      const C = pick(late.filter(p => p !== moved && p.face !== moved.face)); if (!C) continue;
+      const gain = overlap(fixed, C) - overlap(fixed, moved), key = 'rl:' + sortedKey([...moved.t, ...C.t]);
+      push({ key, move: 'weave', edit: relabelEdit(moved, C), tiles: [...moved.t, ...C.t], pairsBefore: [moved.t, C.t], pairsAfter: [[moved.face, C.face]], gain, score: gain + rand() * 2 });
+    } else if (kind === 'spread') {
+      const g = pick(rep.filter(r => r.some(p => p.late))); if (!g) break;
+      const P = pick(g.filter(p => p.late)), Q = pick(late.filter(p => ctx.byFace.get(p.face).length === 1)); if (!Q) continue;
+      const gain = Math.abs(P.hi - Q.hi), key = 'rl:' + sortedKey([...P.t, ...Q.t]);
+      push({ key, move: 'spread', edit: relabelEdit(P, Q), tiles: [...P.t, ...Q.t], pairsBefore: [P.t, Q.t], pairsAfter: [[P.face, Q.face]], gain, score: gain / 10 + rand() * 2 });
+    } else if (kind === 'obstacle') {
+      const cand = [...Array(d.tiles.length).keys()].filter(t => ctx.pos.get(t) > ctx.cp0 && !ctx.prot.has(t) && !d.down.includes(t) && ctx.iceNb[t].length > 0);
+      if (!cand.length) break;
+      const t = pick(cand), h = rand() < 0.5 ? 1 : 2, gone = ctx.iceNb[t].filter(j => ctx.pos.get(j) < ctx.pos.get(t)).length;
+      if (h > ctx.iceNb[t].length || gone < h) continue; // stored solution would break
+      push({ key: 'ice:' + t + ':' + h, move: 'obstacle', edit: { type: 'ice', tile: t, h }, tiles: [t], h, score: gone - h + rand() * 2 });
+    } else if (kind === 'swap') {
+      if (late.length < 2) break;
+      const A = pick(late), B = pick(late); if (A === B) continue;
+      const i = Math.floor(rand() * 2), j = Math.floor(rand() * 2), u = A.t[i], v = B.t[j];
+      push({ key: 'sw:' + sortedKey([u, v]), move: 'swap', edit: { type: 'swap', tiles: [u, v] }, tiles: [u, v], pairsBefore: [A.t, B.t], score: rand() * 2 });
+    }
+  }
+  out.sort((a, b) => b.score - a.score);
+  const top = out.slice(0, Math.ceil(count * 0.75)), rest = out.slice(top.length);
+  while (top.length < count && rest.length) top.push(rest.splice(Math.floor(rand() * rest.length), 1)[0]);
+  return top;
+}
+function propose(d, ctx, moves, total, rand, tried) {
+  const per = Math.ceil(total / moves.length), out = [];
+  for (const m of moves) out.push(...genMove(m, d, ctx, per, rand, tried));
+  return out;
+}
+function applyEdit(d, e) {
+  const c = clone(d);
+  if (e.type === 'swap') [c.faces[e.tiles[0]], c.faces[e.tiles[1]]] = [c.faces[e.tiles[1]], c.faces[e.tiles[0]]];
+  else if (e.type === 'down') c.down = c.down.concat(e.tiles);
+  else if (e.type === 'relabel') for (const [t, f] of e.assign) c.faces[t] = f;
+  else if (e.type === 'ice') { c.obst = clone(c.obst || {}); c.obst.ice = { ...(c.obst.ice || {}), [e.tile]: e.h }; }
+  else throw Error('bad edit ' + e.type);
+  return c;
+}
+
 
 // ---------------------------------------------------------------- validation (worker)
 function validate(parent, child, spec, parentK, parentSig) {
@@ -132,7 +220,7 @@ async function worker() {
   let res;
   try {
     if (input.task === 'proposal') {
-      const parent = input.parent, child = applySwap(parent, input.tiles[0], input.tiles[1]);
+      const parent = input.parent, child = applyEdit(parent, input.edit);
       const v = validate(parent, child, input.spec, input.k, input.sig);
       res = { ...v };
       if (v.valid && input.validateOnly) res.solution = child.solution;
@@ -204,20 +292,39 @@ async function main() {
   const file = fs.readdirSync(BANK).find(f => f.startsWith(prefix)); if (!file) throw Error('no banked puzzle ' + prefix);
   const base = JSON.parse(fs.readFileSync(path.join(BANK, file), 'utf8'));
   const key8 = base.card.boardKey.slice(0, 8), goal = arg('goal', 'second-act'), maxRounds = +arg('rounds', 8), P = +arg('proposals', 8), seed = +arg('seed', 1);
-  const targetD = arg('target-D') != null ? +arg('target-D') : null, wallMs = +arg('wall-min', 8) * 60000, started = Date.now();
+  const moves = parseMoves(arg('moves')), targetD = arg('target-D') != null ? +arg('target-D') : null, wallMs = +arg('wall-min', 8) * 60000, started = Date.now();
+  if (flag('dry')) { // generate and VALIDATE proposals only: no state, no log, no measurement
+    const d0 = base.design, spec0 = base.spec, k0 = base.card.clock.k, N = +arg('proposals', 60), jobs = +arg('jobs', 3);
+    const trap = trapTiles(d0, spec0), prot = protectedSet(d0, spec0, trap), sig = forkSig(d0), ctx = ctxOfDesign(d0, prot);
+    console.log('[dry] ' + key8 + ' tiles ' + d0.tiles.length + ' clock pos ' + ctx.cp0 + ' k ' + k0 + ' protected ' + prot.size + ' (trap ' + trap.size + ') down ' + d0.down.length);
+    console.log('[dry] repeats ' + JSON.stringify({ ...repeatReport(d0, ctx), repeatedWindows: undefined }));
+    console.log('[dry] repeated windows [open..taken] per picture ' + JSON.stringify(repeatReport(d0, ctx).repeatedWindows));
+    const rep0 = repeatReport(d0, ctx);
+    if (rep0.repeatedPairsBeforeClock === 0) console.log('[dry] all repeated pictures already sit after the clock; spread/weave can only move repetition between late pairs (' + rep0.movableLatePairs + ' movable late pairs)');
+    for (const m of moves) {
+      const t0 = Date.now(), props = genMove(m, d0, ctx, N, rng(seed * 1000003 + 17), new Set());
+      const res = await pool(props.map(p => ({ task: 'proposal', validateOnly: true, parent: d0, edit: p.edit, spec: spec0, k: k0, sig })), jobs);
+      const why = {}; let valid = 0, cpu = 0; const ex = [];
+      res.forEach((x, i) => { cpu += x._cpuSec || 0; if (x.valid) { valid++; if (ex.length < 3) ex.push({ tiles: props[i].tiles, edit: props[i].edit, route: x.route }); } else { const k = (x.why || '').replace(/(?<![A-Z])[0-9>-]+/g, '#'); why[k] = (why[k] || 0) + 1; } });
+      console.log('[dry] ' + m + ': proposed ' + props.length + ' valid ' + valid + ' invalid ' + (props.length - valid) + ' ' + JSON.stringify(why) + ' cpu ' + Math.round(cpu) + 's (' + (props.length ? (cpu / props.length).toFixed(1) : 0) + 's each), wall ' + Math.round((Date.now() - t0) / 1000) + 's');
+      for (const e of ex) console.log('[dry]   example ' + JSON.stringify(e));
+    }
+    return;
+  }
   fs.mkdirSync(BUILD, { recursive: true });
   const stateFile = path.join(BUILD, `steer-${key8}.state.json`), logFile = path.join(BUILD, `steer-${key8}.jsonl`);
   const log = o => fs.appendFileSync(logFile, JSON.stringify(o) + '\n');
   let st = !flag('fresh') && fs.existsSync(stateFile) ? JSON.parse(fs.readFileSync(stateFile, 'utf8')) : null;
-  if (!st) { st = { goal, base: base.card.boardKey, swaps: [], steps: [], round: 0, noImprove: 0, tried: [], cpuSec: 0, wallSec: 0, counts: { proposals: 0, invalid: 0, valid: 0, accepted: 0, rejectedAtConfirm: 0 }, parent: null, done: false, finalized: false }; if (fs.existsSync(logFile)) fs.unlinkSync(logFile); }
+  if (!st) { st = { goal, base: base.card.boardKey, edits: [], steps: [], round: 0, noImprove: 0, tried: [], cpuSec: 0, wallSec: 0, counts: { proposals: 0, invalid: 0, valid: 0, accepted: 0, rejectedAtConfirm: 0 }, parent: null, done: false, finalized: false }; if (fs.existsSync(logFile)) fs.unlinkSync(logFile); }
   const save = () => { st.wallSec = (st.wallSecBase || 0) + (Date.now() - started) / 1000; fs.writeFileSync(stateFile, JSON.stringify(st)); };
   st.wallSecBase = st.wallSec || 0;
-  const designOfSwaps = swaps => swaps.reduce((d, [u, v]) => applySwap(d, u, v), base.design);
+  if (st.swaps) { st.edits = st.swaps.map(t => ({ type: 'swap', tiles: t })); delete st.swaps; }
+  const designOfEdits = edits => edits.reduce((d, e) => applyEdit(d, e), base.design);
   const spec = base.spec;
-  let cur = designOfSwaps(st.swaps);
-  if (st.swaps.length) cur.solution = st.solution || cur.solution;
+  let cur = designOfEdits(st.edits);
+  if (st.edits.length) cur.solution = st.solution || cur.solution;
   const curK = base.card.clock.k;
-  console.log(`[steer] ${key8} goal ${goal}, state: round ${st.round}, ${st.swaps.length} accepted swaps, done=${st.done}`);
+  console.log(`[steer] ${key8} goal ${goal}, state: round ${st.round}, ${st.edits.length} accepted edits, done=${st.done}`);
 
   if (!flag('finalize') && !st.done) {
     // parent baselines on both blocks
@@ -228,46 +335,47 @@ async function main() {
       log({ event: 'parent', A: a.m.s, B: b.m.s }); save();
     }
     if (reached(goal, st.parent.A, st.parent.B)) st.done = true;
-    const hints = []; // goal fewer-repeats move (c): tiles named by repeated first-error examples that are editable
     for (let r = 0; r < maxRounds && !st.done; r++) {
       if (Date.now() - started > wallMs - 90000) { console.log('[steer] wall budget reached, state saved; rerun to resume'); break; }
       st.round++;
       const trap = trapTiles(cur, spec), prot = protectedSet(cur, spec, trap), sig = forkSig(cur);
-      if (goal === 'fewer-repeats') for (const e of (st.parent.A.examples || [])) if (e.repeated && Number.isInteger(e.move) && !prot.has(e.move)) hints.push(e.move);
-      const rand = rng(seed * 1000003 + st.round * 7919 + st.swaps.length);
-      const props = propose(cur, spec, prot, P * 5, goal, rand, new Set(st.tried), hints);
-      console.log(`[steer] round ${st.round}: ${props.length} candidate swaps (movable pairs ${movablePairs(cur, prot).length}, protected ${prot.size}), validating then measuring up to ${P}`);
+      const rand = rng(seed * 1000003 + st.round * 7919 + st.edits.length);
+      const ctx = ctxOfDesign(cur, prot), props = propose(cur, ctx, moves, P * 5, rand, new Set(st.tried));
+      console.log(`[steer] round ${st.round}: ${props.length} candidate edits [${moves.join(',')}] (movable late pairs ${ctx.pairs.filter(p => p.late).length}, protected ${prot.size}), validating then measuring up to ${P}`);
       if (!props.length) { st.noImprove = 99; st.done = true; save(); break; }
-      const vres = await pool(props.map(p => ({ task: 'proposal', validateOnly: true, parent: cur, tiles: p.tiles, spec, k: curK, sig })), 8);
+      const vres = await pool(props.map(p => ({ task: 'proposal', validateOnly: true, parent: cur, edit: p.edit, spec, k: curK, sig })), 8);
       const validIdx = []; const rows = [];
       props.forEach((p, i) => { const x = vres[i]; st.cpuSec += x._cpuSec || 0; st.counts.proposals++; st.tried.push(p.key);
-        if (!x.valid) { st.counts.invalid++; log({ event: 'proposal', round: st.round, move: p.move, tiles: p.tiles, pairsBefore: p.pairsBefore, pairsAfter: p.pairsAfter, heuristicGain: p.gain, valid: false, invalidWhy: x.why }); }
+        if (!x.valid) { st.counts.invalid++; log({ event: 'proposal', round: st.round, move: p.move, edit: p.edit, tiles: p.tiles, heuristicGain: p.gain, valid: false, invalidWhy: x.why }); }
         else { st.counts.valid++; validIdx.push(i); } });
-      const why = {}; props.forEach((p, i) => { if (!vres[i].valid) { const k = (vres[i].why || '').replace(/[0-9>-]+/g, '#'); why[k] = (why[k] || 0) + 1; } });
+      const why = {}; props.forEach((p, i) => { if (!vres[i].valid) { const k = (vres[i].why || '').replace(/(?<![A-Z])[0-9>-]+/g, '#'); why[k] = (why[k] || 0) + 1; } });
       console.log('  invalid:', JSON.stringify(why), ' valid:', validIdx.length);
-      const pick = validIdx.slice(0, P);
-      const mres = await pool(pick.map(i => { const c = applySwap(cur, props[i].tiles[0], props[i].tiles[1]); c.solution = vres[i].solution; return { task: 'measure', design: c, block: 'A' }; }), 8);
+      const byMove = {}; validIdx.forEach(i => (byMove[props[i].move] ||= []).push(i));
+      const pick = []; for (let n = 0; pick.length < Math.min(P, validIdx.length); n++) for (const m of Object.keys(byMove)) if (byMove[m][n] != null && pick.length < P) pick.push(byMove[m][n]); // mix the kinds
+      const mres = await pool(pick.map(i => { const c = applyEdit(cur, props[i].edit); c.solution = vres[i].solution; return { task: 'measure', design: c, block: 'A' }; }), 8);
       pick.forEach((i, n) => {
         const p = props[i], x = { valid: true, route: vres[i].route, solution: vres[i].solution, A: mres[n].m, _cpuSec: mres[n]._cpuSec }; st.cpuSec += x._cpuSec || 0;
         const j = judge(goal, st.parent.A, x.A, targetD);
-        log({ event: 'proposal', round: st.round, move: p.move, tiles: p.tiles, pairsBefore: p.pairsBefore, pairsAfter: p.pairsAfter, heuristicGain: p.gain, valid: true, route: x.route, A: x.A.s, judged: { ok: j.ok, why: j.why, value: r3(j.value) } });
+        log({ event: 'proposal', round: st.round, move: p.move, edit: p.edit, tiles: p.tiles, heuristicGain: p.gain, valid: true, route: x.route, A: x.A.s, judged: { ok: j.ok, why: j.why, value: r3(j.value) } });
         rows.push({ p, x, j });
         console.log(`  ${p.move} ${p.tiles.join('<->')} D ${x.A.D} B6 ${x.A.B6.value} B7 ${x.A.B7.value} B1 ${x.A.B1.pass} B2 ${x.A.B2.pass} B5 ${x.A.B5.pass} -> ${j.ok ? 'ok ' + r3(j.value) : 'no ' + j.why}`);
       });
-      const good = rows.filter(r => r.x.valid && r.j.ok && r.j.value >= TOL.minGain).sort((a, b) => b.j.value - a.j.value);
+      const kindRows = {}; for (const r of rows) { const k = kindRows[r.p.move] ||= { measured: 0, ok: 0, best: null }; k.measured++; if (r.j.ok) k.ok++; if (r.j.value != null && (k.best == null || r.j.value > k.best)) k.best = r3(r.j.value); }
+      log({ event: 'roundKinds', round: st.round, kinds: kindRows });
+      const good = rows.filter(r => r.x.valid && r.j.ok && r.j.value >= TOL.screen).sort((a, b) => b.j.value - a.j.value);
       let accepted = null;
       for (const g of good.slice(0, 2)) {
-        const child = applySwap(cur, g.p.tiles[0], g.p.tiles[1]); child.solution = g.x.solution;
+        const child = applyEdit(cur, g.p.edit); child.solution = g.x.solution;
         const [c] = await pool([{ task: 'measure', design: child, block: 'B' }], 1); st.cpuSec += c._cpuSec || 0;
-        const j = judge(goal, st.parent.B, c.m, targetD), okB = j.ok && j.value > 0;
-        log({ event: 'confirm', round: st.round, tiles: g.p.tiles, B: c.m.s, judged: { ok: j.ok, why: j.why, value: r3(j.value) }, confirmed: okB });
-        console.log(`  confirm ${g.p.tiles.join('<->')} on block B: D ${c.m.D} B6 ${c.m.B6.value} B7 ${c.m.B7.value} -> ${okB ? 'CONFIRMED' : 'rejected ' + (j.why || 'no gain')}`);
+        const j = judge(goal, st.parent.B, c.m, targetD), okB = j.ok && j.value >= TOL.minGain; // confirmed gain on the second seed block must be at least 0.05
+        log({ event: 'confirm', round: st.round, move: g.p.move, tiles: g.p.tiles, B: c.m.s, judged: { ok: j.ok, why: j.why, value: r3(j.value) }, confirmed: okB });
+        console.log(`  confirm ${g.p.tiles.join('<->')} on block B: D ${c.m.D} B6 ${c.m.B6.value} B7 ${c.m.B7.value} -> ${okB ? 'CONFIRMED' : 'rejected ' + (j.why || 'gain ' + r3(j.value) + ' < ' + TOL.minGain)}`);
         if (okB) { accepted = { g, child, mB: c.m }; break; } else st.counts.rejectedAtConfirm++;
       }
       if (accepted) {
         const { g, child, mB } = accepted;
-        st.steps.push({ move: g.p.move, tiles: g.p.tiles, pairsBefore: g.p.pairsBefore, pairsAfter: g.p.pairsAfter, before: { A: st.parent.A.s, B: st.parent.B.s }, after: { A: g.x.A.s, B: mB.s }, route: g.x.route });
-        st.swaps.push(g.p.tiles); st.solution = child.solution; cur = child; st.parent = { A: g.x.A, B: mB }; st.counts.accepted++; st.noImprove = 0; st.tried = [];
+        st.steps.push({ move: g.p.move, edit: g.p.edit, tiles: g.p.tiles, pairsBefore: g.p.pairsBefore, pairsAfter: g.p.pairsAfter, before: { A: st.parent.A.s, B: st.parent.B.s }, after: { A: g.x.A.s, B: mB.s }, route: g.x.route });
+        st.edits.push(g.p.edit); st.solution = child.solution; cur = child; st.parent = { A: g.x.A, B: mB }; st.counts.accepted++; st.noImprove = 0; st.tried = [];
         if (reached(goal, st.parent.A, st.parent.B)) st.done = true;
       } else { st.noImprove++; if (st.noImprove >= 2) st.done = true; }
       console.log(`[steer] round ${st.round} ${accepted ? 'ACCEPTED' : 'no improvement'} (noImprove ${st.noImprove}), parent A: D ${st.parent.A.D} B6 ${st.parent.A.B6.value} B7 ${st.parent.A.B7.value}; B6 B-block ${st.parent.B.B6.value}`);

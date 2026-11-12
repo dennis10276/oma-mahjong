@@ -1,21 +1,21 @@
 # Placement proposal
 
-levels 250..289, stat D40, pool 27, filled 4/40, total |dev| 0.713, violations left 0
+levels 250..289, stat D40, pool 71, filled 9/40, total |dev| 2.633, violations left 0
 
 | level | target | puzzle | layout | tiles | D | S | band | dev |
 |---|---|---|---|---|---|---|---|---|
 | 250 | 6 | HOLE | | | | | | |
-| 251 | 6.067 | f2cb553e8c69b99385755c4c83bf5482d6c2b6624f0581905b24f65c6e732754 | 14 | 80 | 5.84 | 5.1 | normal | -0.227 |
-| 252 | 6.133 | HOLE | | | | | | |
-| 253 | 6.2 | HOLE | | | | | | |
-| 254 | 6.267 | HOLE | | | | | | |
-| 255 | 6.333 | HOLE | | | | | | |
+| 251 | 6.067 | 47b8684cda679d6d008d16df1a4eb791c0a98a39ae71bf4d725a11a9bea16b12 | 16 | 74 | 5.96 | 2.09 | normal | -0.107 |
+| 252 | 6.133 | 99191c2e58f0df001a577388c051887c6eb4902dbf731bcf890d67f16c58932b | 33 | 72 | 5.33 | 1.91 | normal | -0.803 |
+| 253 | 6.2 | 5623afed9aa2e0326dae85b49ed1dd0d3e27213b61a23061e4d488f96d97a268 | 23 | 76 | 5.86 | 1.86 | normal | -0.34 |
+| 254 | 6.267 | f2cb553e8c69b99385755c4c83bf5482d6c2b6624f0581905b24f65c6e732754 | 14 | 80 | 5.84 | 5.1 | normal | -0.427 |
+| 255 | 6.333 | 060d1a5d80eee5f2741b02504b1682928e1347003e56660295a5d82ef91bbc90 | 40 | 72 | 5.89 | 2.17 | normal | -0.443 |
 | 256 | 6.4 | a631c3ae37b235a52bf2add3c801f854066f3ee2ff53186d483bd992feb3e492 | 4 | 84 | 6.4 | 4.7 | normal | 0 |
 | 257 | 6.467 | HOLE | | | | | | |
 | 258 | 6.533 | HOLE | | | | | | |
 | 259 | 6.6 | HOLE | | | | | | |
 | 260 | 6.667 | HOLE | | | | | | |
-| 261 | 6.733 | HOLE | | | | | | |
+| 261 | 6.733 | 1a1d1b5bc1d3e303536041e43fce16b42631cbcb11c24cad9899c9b06377e8b8 | 24 | 76 | 6.76 | 2.42 | normal | 0.027 |
 | 262 | 6.8 | HOLE | | | | | | |
 | 263 | 6.867 | HOLE | | | | | | |
 | 264 | 6.933 | HOLE | | | | | | |
@@ -48,8 +48,8 @@ levels 250..289, stat D40, pool 27, filled 4/40, total |dev| 0.713, violations l
 ## 5-level window checks
 
 - 250-254: skipped (hole)
-- 251-255: skipped (hole)
-- 252-256: skipped (hole)
+- 251-255: meanD 5.776 vs 6.2 diff -0.424 ok
+- 252-256: meanD 5.864 vs 6.267 diff -0.403 ok
 - 253-257: skipped (hole)
 - 254-258: skipped (hole)
 - 255-259: skipped (hole)
@@ -89,15 +89,10 @@ Unchecked (cross plan edge): 246..250 (crosses start); 286..290 (crosses end); 2
 ## Holes / needs
 
 - L250: D in [5, 7], tiles 96, S 1.75-6
-- L252: D in [5.13, 7.13], tiles 72-88, S 1.75-6
-- L253: D in [5.2, 7.2], tiles 72-88, S 1.75-6
-- L254: D in [5.27, 7.27], tiles 72-88, S 1.75-6
-- L255: D in [5.33, 7.33], tiles 72-88, S 1.75-6
 - L257: D in [5.47, 7.47], tiles 72-88, S 1.75-6
 - L258: D in [5.53, 7.53], tiles 72-88, S 1.75-6
 - L259: D in [5.6, 7.6], tiles 72-88, S 1.75-6
 - L260: D in [5.67, 7.67], tiles 96, S 1.75-6
-- L261: D in [5.73, 7.73], tiles 72-88, S 1.75-6
 - L262: D in [5.8, 7.8], tiles 72-88, S 1.75-6
 - L263: D in [5.87, 7.87], tiles 72-88, S 1.75-6
 - L264: D in [5.93, 7.93], tiles 72-88, S 1.75-6
@@ -127,7 +122,7 @@ Unchecked (cross plan edge): 246..250 (crosses start); 286..290 (crosses end); 2
 
 ## Supply vs demand by 1-try D bin (floor(D))
 
-72-88 tiles: D5: supply 1 / demand 0; D6: supply 1 / demand 13; D7: supply 1 / demand 14; D8: supply 0 / demand 9; D9: supply 2 / demand 0; D10: supply 1 / demand 0; D11: supply 1 / demand 0; D13: supply 1 / demand 0; D20: supply 2 / demand 0; D22: supply 1 / demand 0; D27: supply 1 / demand 0; D31: supply 2 / demand 0; D34: supply 1 / demand 0; D35: supply 1 / demand 0; D37: supply 2 / demand 0; D38: supply 2 / demand 0; D39: supply 2 / demand 0; D40: supply 1 / demand 0
+72-88 tiles: D3: supply 1 / demand 0; D4: supply 11 / demand 0; D5: supply 12 / demand 0; D6: supply 5 / demand 13; D7: supply 2 / demand 14; D8: supply 1 / demand 9; D9: supply 2 / demand 0; D10: supply 1 / demand 0; D11: supply 1 / demand 0; D13: supply 1 / demand 0; D17: supply 1 / demand 0; D20: supply 2 / demand 0; D22: supply 2 / demand 0; D27: supply 3 / demand 0; D28: supply 1 / demand 0; D30: supply 1 / demand 0; D31: supply 2 / demand 0; D34: supply 1 / demand 0; D35: supply 1 / demand 0; D36: supply 2 / demand 0; D37: supply 2 / demand 0; D38: supply 2 / demand 0; D39: supply 3 / demand 0; D40: supply 4 / demand 0
 
-96 tiles: D6: supply 0 / demand 2; D7: supply 0 / demand 1; D8: supply 0 / demand 1; D10: supply 1 / demand 0; D13: supply 1 / demand 0; D19: supply 1 / demand 0; D39: supply 1 / demand 0
+96 tiles: D4: supply 2 / demand 0; D5: supply 1 / demand 0; D6: supply 0 / demand 2; D7: supply 0 / demand 1; D8: supply 0 / demand 1; D10: supply 1 / demand 0; D13: supply 1 / demand 0; D19: supply 1 / demand 0; D39: supply 1 / demand 0
 
