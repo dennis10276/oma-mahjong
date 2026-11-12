@@ -1,4 +1,4 @@
-# Required new-tile instructions (unreleased, 2026-11-12)
+# Required new-tile instructions — released in 1.68 (2026-11-12)
 
 Requested by Dennis: remove unused tips between levels, introduce new tiles with instructions that cannot be skipped, and do not release yet.
 
@@ -25,3 +25,17 @@ No real-player data was written. Tests used FakeDB. Nothing was released.
 
 
 Release authorization: Dennis approved publication with "release" on 2026-11-12. Preparing version 1.68 from current main; final release checks and verification follow below.
+
+
+## Release completion
+
+Dennis approved release on 2026-11-12. Published **1.68**, signed APK **versionCode 84**, with `python source/release.py 1.68 --deploy` from up-to-date main. Release commit: `11f5386a`.
+
+- Release gate: **162/162 offline tests passed in 440 seconds**, using FakeDB.
+- Standard release refreshed the winning replay files before testing. Game boards and difficulty were not changed.
+- Signed APK build verified the existing certificate and every bundled asset.
+- [Pages deployment](https://github.com/dennis10276/oma-mahjong/actions/runs/43256089932) and [APK workflow](https://github.com/dennis10276/oma-mahjong/actions/runs/43256092174) succeeded.
+- Public version and bundle report 1.68. All 27 versioned scripts/style assets and the bundle match source. Download-page version and web loader point to 1.68.
+- Public APK is byte-for-byte identical to the verified local signed build. SHA-256: `70b56340f08c7913f04b09f633516ed4c65afe3b97369d2be8962bb62949a16f`.
+
+- Live Chromium check at 360x640 passed: required ice/clock instructions, full playback, blocked Back/backdrop/taps, remembered completion and no automatic retry film. No browser errors. Firebase traffic was routed to FakeDB, so no player data was written. Verification reports and screenshots are in the ignored `source/analysis/archive/release-1.68/` folder.
