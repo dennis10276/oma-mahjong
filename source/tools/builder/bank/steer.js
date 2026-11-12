@@ -419,4 +419,6 @@ async function main() {
   st.final = { newKey, summary }; save();
 }
 
-if (process.argv.includes('--worker')) worker(); else main().catch(e => { console.error(e); process.exit(1); });
+// require()d by smarten.js: export the validated-move helpers, run nothing.
+if (require.main !== module) module.exports = { validate, forkSig, protectedSet, trapTiles, applyEdit, solPairs, availOf, ctxOfDesign, relabelEdit, clockPos, posOf, ysOf, lib };
+else if (process.argv.includes('--worker')) worker(); else main().catch(e => { console.error(e); process.exit(1); });

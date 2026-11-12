@@ -41,7 +41,8 @@ function specAt(seed, i, opts = {}) {
     spare,
     depth: pick([null, null, 2, 3, 4, 5, 6]),
     traps: pick([0, 1, 2, 3]),
-    maxDown: pick([0, 0.1, 0.2, 0.3, 0.4, 0.5]),
+    // --smart (Dennis 2026-11-12: too many face-down tiles feel like luck): at most 30% face-down
+    maxDown: pick(opts.smart ? [0, 0.1, 0.2, 0.3] : [0, 0.1, 0.2, 0.3, 0.4, 0.5]),
     hiddenOnWay: pick([0, 1]),
     trayRoom: pick(opts.focus ? [0, 0, 0, 0, 1] : [0, 1, 2]),
     tailPairWidth: pick([null, 1, 2, 3]),

@@ -3,6 +3,9 @@
 // Puzzle bank generator ("bank and place", first half). No difficulty target anywhere.
 //   node source/tools/builder/loop/heavy.js --label bank -- node source/tools/builder/bank/generate.js --seed 1 --wall-min 5
 // Options: --seed N  --max-candidates N  --wall-min M  --big (only 96-tile layouts)
+//   --smart   optional stage after the static gates: smarten.js relabels/re-pairs late pictures and turns face-down tiles up (share <= 0.30),
+//             re-checks the static gates, recomputes the keys, stores texture before/after (census record + card.texture); census suffix -smart;
+//             specs draw maxDown from [0, 0.1, 0.2, 0.3] only. Default behaviour is unchanged.
 const fs = require('fs'), path = require('path');
 const ROOT = path.resolve(__dirname, '../../../..');
 const M = require('../../factory/meter.js');
@@ -14,6 +17,7 @@ const GP = require('../loop/gate_profile.js');
 const T = require('../loop/traces.js');
 const S = require('./specs.js');
 const MS = require('./measure.js');
+let SM = null; // smarten.js is loaded only under --smart (it pulls in steer.js)
 
 const CENSUS_DIR = path.join(ROOT, 'source/build/bank');
 const PUZZLE_DIR = path.join(ROOT, 'source/analysis/builder/bank/puzzles');
@@ -40,10 +44,11 @@ function loadCensus() {
 const cpuMs = u => (u.user + u.system) / 1000;
 
 function main() {
-  const seed = +arg('seed', 1), maxC = +arg('max-candidates', 1e9), wallMs = +arg('wall-min', 1e9) * 60000, big = flag('big'), focus = flag('focus'), small = flag('small');
+  const seed = +arg('seed', 1), maxC = +arg('max-candidates', 1e9), wallMs = +arg('wall-min', 1e9) * 60000, big = flag('big'), focus = flag('focus'), small = flag('small'), smart = flag('smart');
+  if (smart) SM = require('./smarten.js');
   const started = Date.now();
   fs.mkdirSync(CENSUS_DIR, { recursive: true }); fs.mkdirSync(PUZZLE_DIR, { recursive: true });
-  const censusFile = path.join(CENSUS_DIR, `census-${seed}${big ? '-big' : ''}${focus ? '-focus' : ''}${small ? '-small' : ''}.jsonl`);
+  const censusFile = path.join(CENSUS_DIR, `census-${seed}${big ? '-big' : ''}${focus ? '-focus' : ''}${small ? '-small' : ''}${smart ? '-smart' : ''}.jsonl`);
   const all = loadCensus();
   const done = new Set(all.filter(r => r.file === path.basename(censusFile)).map(r => r.index));
   const boardKeys = new Set(all.map(r => r.boardKey).filter(Boolean)), bodyKeys = new Set(all.map(r => r.matchingBodyKey).filter(Boolean));
@@ -57,7 +62,7 @@ function main() {
   for (let i = 0; n < maxC && Date.now() - started < wallMs; i++) {
     if (done.has(i)) continue;
     n++;
-    const spec = S.specAt(seed, i, { big, focus, small });
+    const spec = S.specAt(seed, i, { big, focus, small, smart });
     const rec = { id: spec.id, index: i, seed, spec, knobs: { spare: spec.spare, depth: spec.depth, traps: spec.traps, maxDown: spec.maxDown, hiddenOnWay: spec.hiddenOnWay, trayRoom: spec.trayRoom, tailPairWidth: spec.tailPairWidth, buildSeed: spec.buildSeed, story: spec.story, stage: spec.stage, layout: spec.layout, shape: spec.shape, tiles: spec.tiles, big: spec.big },
       cpuMs: {}, stages: [], at: new Date().toISOString() };
     let design = null, stageName = null, c0 = null;
@@ -91,6 +96,23 @@ function main() {
         if (!(stat.pass === true && okSpare && !unresolved.length)) {
           const failed = profile.static.required.filter(k => stat.gates[k]?.pass !== true);
           fail('static', failed.length ? failed.join('+') : unresolved.length ? 'unresolved:' + unresolved.join('+') : 'spareNotShippable'); break run;
+        }
+        // (c2) optional smarter picture placement (--smart): same layout, specials, clock route and trap; then the static gates again
+        if (smart) {
+          begin('smarten');
+          const sm = SM.smarten(design, { spec, k: rec.k, seed: spec.buildSeed, cpuSec: 5 });
+          end();
+          rec.texture = { before: sm.before, after: sm.after, J: sm.J, edits: sm.edits, changed: sm.changed, notes: sm.notes.slice(0, 4), cpuMs: sm.cpuMs };
+          if (sm.changed) {
+            const raw2 = SG.staticGates(sm.design, { shape: spec.shape, stopEarly: false });
+            const stat2 = GP.applyStatic(raw2, profile), unres2 = GP.unresolvedStatic(stat2, profile, { spare: spec.spare });
+            if (!(stat2.pass === true && stat2.shipSpares.includes(spec.spare) && !unres2.length)) { rec.texture.rejected = 'static after smarten'; rec.texture.after = rec.texture.before; }
+            else {
+              design = sm.design; rec.downCount = design.down.length;
+              rec.preSmartKey = rec.boardKey; rec.boardKey = M.boardKey(design); rec.matchingBodyKey = PSEQ.matchingBodyKey(design);
+              boardKeys.add(rec.boardKey); bodyKeys.add(rec.matchingBodyKey);
+            }
+          }
         }
         // (d) D screen first (v2): family ruler, 40 campaigns, cap 40. The census showed ~95% of readable boards rate D < 6.
         begin('dScreen');
@@ -144,6 +166,7 @@ function main() {
         specials: { gold: (d.gold || []).length, locks: (sp.locks || []).length, keys: (sp.keys || []).length, ice: Object.keys(sp.ice || {}).length },
         clock: { n: d.clock.n, k: rec.k, spare: d.clock.n - rec.k, tile: d.clock.i }, faceDown: d.down.length,
         story: spec.story, stage: spec.stage, knobs: rec.knobs,
+        texture: rec.texture ? { before: rec.texture.before, after: rec.texture.after, J: rec.texture.J, edits: rec.texture.edits } : undefined,
         stability: rec.stability, steer: rec.steer || [], stats: { S: rec.sFull.S, S_se: rec.sFull.se, band: rec.band, D20: rec.dFull.D20, D40: rec.dFull.D40, median: rec.dFull.median, censoredShare: rec.dFull.censoredShare, D_se: rec.dFull.se, nS: rec.sFull.n, nD: rec.dFull.n },
         traceGates: rec.trace.gates, lossCauseMix: rec.trace.lossKinds, errorKinds: rec.trace.errorKinds,
         fingerprints: { family: rec.dFull.fingerprint, skilled: rec.sFull.fingerprint, gateProfile: profile.fingerprint }, protocol: ys.protocol, sourceHash: srcHash };
