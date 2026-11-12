@@ -7,6 +7,7 @@
    star too, a joker that finishes the level will not. Count them here, e.g. G.boughtJokersUsed.) */
 const starsFor = G => Math.max(1, 3 - [G.usedHint, G.usedShuffle, G.rescued].filter(Boolean).length - (G.boughtJokersUsed || 0));
 let winFamilyRefresh = null;
+addEventListener('resize', () => { if (winFamilyRefresh) winFamilyRefresh(); });
 
 function win() {
   syncClock(); G.tStart = 0;
@@ -17,6 +18,7 @@ function win() {
   endLevel('win', { st: stars });
   const before = totalStars();
   const ptsBefore = myPoints(), lvlBefore = S.level;
+  const rankBefore = myRank(undefined, 'all');
   ensureWeek();
   const wkBefore = S.wk.pts;
   S.wk.pts += G.score;               // every finished level counts for the weekly challenge
@@ -54,15 +56,19 @@ function win() {
   ensureId();
   // the weekly challenge moves most, so its climb comes first; otherwise the all-time list
   const wkRankBefore = myRank(wkBefore, 'week'), wkRankAfter = myRank(wkAfter, 'week');
-  const rankBefore = myRank(lvlBefore, 'all'), rankAfter = myRank(S.level, 'all');
-  if (wkRankAfter < wkRankBefore) rewards.push({ type: 'rank', mode: 'week', from: wkBefore, to: wkAfter });
-  else if (rankAfter < rankBefore) rewards.push({ type: 'rank', mode: 'all', from: lvlBefore, to: S.level });
+  const rankAfter = myRank(S.level, 'all');
+  const climbMode = wkRankAfter < wkRankBefore ? 'week' : rankAfter < rankBefore ? 'all' : null;
+  const overtaken = climbMode ? ranking(undefined, climbMode).slice(climbMode === 'week' ? wkRankAfter : rankAfter, climbMode === 'week' ? wkRankBefore : rankBefore) : [];
+  const rankChange = climbMode ? `<p class="chase win-rank-up">${tx(climbMode === 'week' ? 'thisWeek' : 'allTime')} · ${tx('winRankUp', climbMode === 'week' ? wkRankBefore : rankBefore, climbMode === 'week' ? wkRankAfter : rankAfter)}${overtaken.length === 1 ? ' · ' + tx('passedOne', esc(overtaken[0].name)) : ''}</p>` : '';
   // the family is always on the win screen, so you see where everyone stands
   const famNow = famHTML('week', ranking(wkAfter, 'week'), tx('famWeek'), true, true);
   pushScore();
   const heartsP = Promise.race([fetchHearts(), new Promise(r => setTimeout(() => r([]), 2500))]);
-  const nextUp = ranking(wkAfter, 'week')[wkRankAfter - 2];
-  const chase = nextUp && wkRankAfter >= wkRankBefore ? `<p class="chase">${tx('chase', wkRankAfter, fmtN(nextUp.points - wkAfter + 1), nextUp.avatar + ' ' + esc(nextUp.name))}</p>` : '';
+  const standingsText = () => {
+    const list = ranking(wkAfter, 'week'), rank = list.findIndex(e => e.me) + 1;
+    const nextUp = list[rank - 2];
+    return rankChange || `<p class="chase">${nextUp ? tx('chase', rank, fmtN(nextUp.points - wkAfter + 1), nextUp.avatar + ' ' + esc(nextUp.name)) : tx(list.length > 1 ? 'winLeading' : 'winSolo')}</p>`;
+  };
   if (sunUnlocked() && !wasSun) rewards.push({ type: 'sun' });
   if (S.level >= RULES.tools.fromLevel && !S.toolsSeen) rewards.push({ type: 'tools' });
   if (toolsEarnLevel(S.level)) { const st = { b: toolBlock(S.level), on: toolsEarned(S.level) }; if (!S.toolsSt || S.toolsSt.b !== st.b || S.toolsSt.on !== st.on) rewards.push({ type: 'toolsEarn', st }); }
@@ -81,7 +87,8 @@ function win() {
       <div class="stars"><span class="st">★</span><span class="st">★</span><span class="st">★</span></div>
       <div class="win-stats"><div>${tx('scoreWord')}<b id="wScore">0</b></div><div>${tx('timeWord')}<b>${mins}:${pad(secs)}</b></div>${G.mode === 'level' && S.winStreak >= 2 ? `<div class="ws-streak${streakBonus ? ' bonus' : ''}">🔥<b>${tx('inARow', S.winStreak)}${streakBonus ? ' +⭐' : ''}</b></div>` : ''}</div>
       <div class="perfect" id="wPerfect">${stars === 3 ? tx('perfect') : ''}</div>
-      ${extra}${chase}<div id="wFamily">${famNow}</div>
+      ${extra}<div id="wStanding">${standingsText()}</div><div id="wFamily">${famNow}</div>
+      <button class="link-btn" id="wRanking">${tx('fullRanking')}</button>
       <div class="goal" id="wGoal"></div>
       <button class="big-btn play pulse" id="wNext"><span class="bb-text"><b>${nextLbl}</b></span></button>
       <button class="link-btn" id="wMenu">${tx('menu')}</button>`, false, null, 'compact');
@@ -95,6 +102,7 @@ function win() {
     winFamilyRefresh = () => {
       if (!$('#wNext') || $('#wFamily') !== familyNode) return;
       familyNode.innerHTML = famHTML('week', ranking(wkAfter, 'week'), tx('famWeek'), true, true);
+      $('#wStanding').innerHTML = standingsText();
       bindHearts();
     };
     bindHearts();
@@ -119,7 +127,7 @@ function win() {
           return setTimeout(() => location.reload(), 900);
         }
         if (dest === 'next') { if (G.mode === 'daily') show('daily'); else startLevel(G.level + 1); }
-        else show('home');
+        else show(dest === 'ranking' ? 'ranking' : 'home');
       };
       heartsP.then(fresh => {
         const all = [...S.pendingHearts, ...(fresh || [])];
@@ -127,6 +135,8 @@ function win() {
         runRewards(rewards, finish);
       });
     };
+    if (climbMode) familyNode.querySelector('.me')?.classList.add('win-rank-rise');
+    $('#wRanking').onclick = () => go('ranking');
     $('#wNext').onclick = () => go('next');
     $('#wMenu').onclick = () => go('menu');
   }, 700);

@@ -1,5 +1,5 @@
 /* Oma's Mahjong — game tips (from 1.59, from level RULES.coach.fromLevel on).
-   From that level no lesson shows on its own any more. After a lost try the player sees a small film
+   Tips are available from the help menu. The review helpers can build a small film
    of their own last moves in their own tiles, background and tray: where it went wrong and what would
    have worked, tied to the game tip of that trick (coachReview). The tips themselves (a film of a real
    game, COACH_CLIPS, without names: first the move that went wrong, then the better one) open from
@@ -342,6 +342,8 @@ function coachPlay(demo, clip) {
         say(seg.caps[1]);
         await sleep(2800);
       }
+      // Required introductions unlock only after one complete, visible playback.
+      if (!loop && clip.onComplete) clip.onComplete();
     }
   };
   toggle.onclick = () => { run.paused = !run.paused; controls(); };
@@ -618,29 +620,6 @@ function coachReview(why) {
     ] },
   };
 }
-/* Is the film of the own try due at this loss (RULES.coach)? Counts the real lost tries of each level
-   (S.czLoss, restarts included): once from the first-th loss (the next one if no film could be made then),
-   and from again-th on every every-th loss, from always-th on every loss, when the try was more than
-   done (share of tiles gone). */
-// count a lost try (a restart counts too: decision Dennis 2026-10-22)
-function coachCount() {
-  if (!coachLevelOn()) return null;
-  const e = S.czLoss[G.key] || (S.czLoss[G.key] = { n: 0, shown: 0 });
-  e.n++; save();
-  return e;
-}
-function coachDueAt(n, shown) {
-  const C = RULES.coach, t = G.tiles.length, done = (t - aliveCount() - G.tray.length) / t;
-  return (!shown && n >= C.first) || (n >= C.again && ((n - C.again) % C.every === 0 || n >= C.always) && done > C.done);
-}
-function coachDue() { const e = coachCount(); return !!e && coachDueAt(e.n, e.shown); }
-// would the film be due if the player starts over now (nothing is counted yet)
-function coachDueRestart() {
-  if (!coachLevelOn()) return false;
-  const e = S.czLoss[G.key] || { n: 0, shown: 0 };
-  return coachDueAt(e.n + 1, e.shown);
-}
-const coachShown = () => { const e = S.czLoss[G.key]; if (e) { e.shown = e.n; save(); } };
 /* The film of the own try, inside the window that tells the try was lost. It is tied to the tip whose
    trick would have saved the try: the better move is shown "with the tip ...", and the tip itself
    (the film of a real game and its explanation) opens from here; afterwards this window comes back. */

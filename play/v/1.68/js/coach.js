@@ -1,5 +1,5 @@
 /* Oma's Mahjong — game tips (from 1.59, from level RULES.coach.fromLevel on).
-   From that level no lesson shows on its own any more. After a lost try the player sees a small film
+   Tips are available from the help menu. The review helpers can build a small film
    of their own last moves in their own tiles, background and tray: where it went wrong and what would
    have worked, tied to the game tip of that trick (coachReview). The tips themselves (a film of a real
    game, COACH_CLIPS, without names: first the move that went wrong, then the better one) open from
@@ -118,7 +118,10 @@ function czSameStart(segA, better, faces, good, cut = null) {
    parts the little pile is set up again. Loops until the window closes. */
 function coachPlay(demo, clip) {
   stopCoach();
-  const run = coachRun = { dead: false, paused: matchMedia('(prefers-reduced-motion: reduce)').matches, timers: [] };
+  // clip.pace (js/pro.js): a whole recorded win once, at its own pace (speed ×, long pauses shortened),
+  // with quicker animations, the whole pile in view; no captions, no loop
+  const pace = clip.pace || null, A = pace ? 0.4 : 1;
+  const run = coachRun = { dead: false, paused: !pace && matchMedia('(prefers-reduced-motion: reduce)').matches, timers: [], vt: 0 };
   const stage = demo.querySelector('.cz-stage'), boardEl = stage.querySelector('.cz-board'), ov = stage.querySelector('.cz-ov');
   const trayEl = stage.querySelector('.cz-tray'), slots = [...trayEl.children], hand = stage.querySelector('.lz-hand');
   const verdict = stage.querySelector('.cz-verdict'), capEl = demo.querySelector('.lesson-caption'), toggle = demo.querySelector('.lesson-toggle');
@@ -159,8 +162,10 @@ function coachPlay(demo, clip) {
   const rect = i => { const t = tiles[i]; return { l: ox + t.x / 2 * tw - t.z * dz, t: oy + t.y / 2 * th - t.z * dz, w: tw - 1.5, h: th - 1.5 }; };
   let s = null, els = [], marks = new Map(), badge = null;
 
+  stage.classList.toggle('cz-fast', !!pace);
+  // animation times are shortened in a paced film (A); run.vt counts the film's own time
   const sleep = ms => new Promise((res, rej) => {
-    let left = ms;
+    let left = ms * A; run.vt += ms * A;
     const tick = () => {
       if (run.dead || !demo.isConnected) return rej(COACH_STOP);
       if (run.paused || document.hidden) { run.timers.push(setTimeout(tick, 120)); return; }
@@ -301,7 +306,22 @@ function coachPlay(demo, clip) {
     toggle.textContent = tx(run.paused ? 'lessonPlay' : 'lessonPause');
     toggle.setAttribute('aria-pressed', String(!run.paused));
   };
+  const playPaced = async () => {
+    const seg = clip.segs[0];
+    build(seg.start); say('');
+    let at0 = pace.lead, last = null;
+    for (const act of seg.acts) {
+      if (act[0] === 'end') { await ending(act[1]); continue; }
+      const ms = act[act.length - 1];
+      at0 += last === null ? 0 : Math.min(pace.maxGap, Math.max(0, ms - last) / pace.speed); last = ms;
+      if (at0 > run.vt) await sleep((at0 - run.vt) / A);
+      await doAct(act.slice(0, -1), -1, seg);
+    }
+    await sleep(1200 / A);
+    if (pace.onDone) pace.onDone();
+  };
   const play = async () => {
+    if (pace) return playPaced();
     for (let loop = 0; ; loop++) {
       for (let n = 0; n < clip.segs.length; n++) {
         const seg = clip.segs[n];
@@ -322,6 +342,8 @@ function coachPlay(demo, clip) {
         say(seg.caps[1]);
         await sleep(2800);
       }
+      // Required introductions unlock only after one complete, visible playback.
+      if (!loop && clip.onComplete) clip.onComplete();
     }
   };
   toggle.onclick = () => { run.paused = !run.paused; controls(); };
@@ -598,29 +620,6 @@ function coachReview(why) {
     ] },
   };
 }
-/* Is the film of the own try due at this loss (RULES.coach)? Counts the real lost tries of each level
-   (S.czLoss, restarts included): once from the first-th loss (the next one if no film could be made then),
-   and from again-th on every every-th loss, from always-th on every loss, when the try was more than
-   done (share of tiles gone). */
-// count a lost try (a restart counts too: decision Dennis 2026-10-22)
-function coachCount() {
-  if (!coachLevelOn()) return null;
-  const e = S.czLoss[G.key] || (S.czLoss[G.key] = { n: 0, shown: 0 });
-  e.n++; save();
-  return e;
-}
-function coachDueAt(n, shown) {
-  const C = RULES.coach, t = G.tiles.length, done = (t - aliveCount() - G.tray.length) / t;
-  return (!shown && n >= C.first) || (n >= C.again && ((n - C.again) % C.every === 0 || n >= C.always) && done > C.done);
-}
-function coachDue() { const e = coachCount(); return !!e && coachDueAt(e.n, e.shown); }
-// would the film be due if the player starts over now (nothing is counted yet)
-function coachDueRestart() {
-  if (!coachLevelOn()) return false;
-  const e = S.czLoss[G.key] || { n: 0, shown: 0 };
-  return coachDueAt(e.n + 1, e.shown);
-}
-const coachShown = () => { const e = S.czLoss[G.key]; if (e) { e.shown = e.n; save(); } };
 /* The film of the own try, inside the window that tells the try was lost. It is tied to the tip whose
    trick would have saved the try: the better move is shown "with the tip ...", and the tip itself
    (the film of a real game and its explanation) opens from here; afterwards this window comes back. */

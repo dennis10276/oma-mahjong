@@ -2,23 +2,25 @@
 'use strict';
 
 // ---------- wiring ----------
-/* Easy tapping: the tile under the finger wins; if that one is stuck (or the finger
-   lands just next to a tile) a free tile within a few pixels is taken instead.
+/* Easy tapping: always keep the tile under the finger, including blocked tiles.
+   Only a tap in empty space can snap to the nearest free tile, within 6–10px.
    Every finger is handled on its own, so two tiles can be tapped at the same time. */
 function pickTile(cx, cy) {
   if (!G) return -1;
   const br = $('#board').getBoundingClientRect();
-  const x = cx - br.left, y = cy - br.top, pad = Math.max(6, (G.tw || 50) * 0.16);
-  let top = -1, topZ = -1, near = -1, nearZ = -1;
+  const x = cx - br.left, y = cy - br.top, pad = Math.min(10, Math.max(6, (G.tw || 50) * 0.16));
+  let top = -1, topZ = -1, near = -1, nearZ = -1, nearD = Infinity;
   G.tiles.forEach((t, i) => {
     if (!G.alive[i] || !t.r) return;
     const r = t.r;
     if (x >= r.l && x <= r.l + r.w && y >= r.t && y <= r.t + r.h) { if (r.zi > topZ) { topZ = r.zi; top = i; } }
-    else if (x >= r.l - pad && x <= r.l + r.w + pad && y >= r.t - pad && y <= r.t + r.h + pad && free(i)) { if (r.zi > nearZ) { nearZ = r.zi; near = i; } }
+    else {
+      const dx = Math.max(r.l - x, 0, x - r.l - r.w), dy = Math.max(r.t - y, 0, y - r.t - r.h);
+      const d = dx * dx + dy * dy;
+      if (d <= pad * pad && (d < nearD || (d === nearD && r.zi > nearZ)) && free(i)) { nearD = d; nearZ = r.zi; near = i; }
+    }
   });
-  if (top >= 0 && free(top)) return top;
-  if (near >= 0) return near;
-  return top;
+  return top >= 0 ? top : near;
 }
 $('#boardWrap').addEventListener('pointerdown', e => {
   if (e.button > 0) return;
@@ -31,18 +33,12 @@ $('#btnHint').onclick = hint;
 $('#btnShuffle').onclick = shuffle;
 $('#btnRestart').onclick = () => {
   if (!G || G.done || G.busy) return;
-  // from RULES.coach.fromLevel, when the film is due: the way out that was still there, or where it went
-  // wrong; "keep playing" goes back to the try (and nothing is counted)
-  let review = null;
-  try { review = coachDueRestart() ? coachReview('restart') : null; } catch (e) { review = null; }
   openModal(`<h2>${tx('restartTitle')}</h2>
-    ${review ? coachReviewHTML(review) : `<p>${tx('restartText')}</p>`}
+    <p>${tx('restartText')}</p>
     <button class="big-btn play" id="rYes"><span class="bb-text"><b>${tx('restartYes')}</b></span></button>
-    <button class="link-btn" id="rNo">${tx(review ? 'czKeepPlaying' : 'restartNo')}</button>`, true, null, review ? 'tile-help coach-help coach-loss' : '');
-  let message = null;
-  if (review) { coachReviewStart(review); message = recordHelpMessage('coach-' + review.tip, 'restart'); }
-  $('#rYes').onclick = () => { if (message) message('retry'); closeModal(); restart(); if (review) coachShown(); };
-  $('#rNo').onclick = () => { if (message) message('ack'); closeModal(); };
+    <button class="link-btn" id="rNo">${tx('restartNo')}</button>`, true);
+  $('#rYes').onclick = () => { closeModal(); restart(); };
+  $('#rNo').onclick = closeModal;
 };
 $('#btnHome').onclick = () => { saveCur(); if (G && !G.done) logLvl('pause'); show('home'); };
 $('#btnPlay').onclick = () => startLevel(S.level);
@@ -62,7 +58,7 @@ $('#calNext').onclick = () => { calM++; if (calM > 11) { calM = 0; calY++; } ren
 document.querySelectorAll('.back').forEach(b => b.onclick = () => show('home'));
 document.addEventListener('click', e => { if (e.target.closest('button') && !e.target.closest('.tool')) { Sound.init(); Sound.button(); } }, true);
 document.addEventListener('pointerdown', () => Sound.init(), { once: true });
-addEventListener('resize', () => { if (curScreen === 'game') layoutBoard(); });
+addEventListener('resize', () => { if (curScreen === 'game') layoutBoard(); else fitTexts(document.getElementById(curScreen)); });
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) { Sound.suspend(); if (curScreen === 'game') pauseClock(); }
   else { Sound.resume(); resumeClock(); if (curScreen === 'home') { if (applyUpdate()) return; renderHome(); checkHearts(); } checkUpdate(); loadCfg().then(loadNews); }

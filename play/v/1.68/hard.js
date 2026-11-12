@@ -246,18 +246,30 @@ const Hard = (() => {
   const TOWER = ['block', 'oval', 'diamond', 'octagon', 'cross', 'pyramid', 'house', 'hourglass', 'bowtie', 'butterfly', 'heart'];
   const clockSpare = level => level < 90 ? [3, 4] : level < 110 ? [2, 3] : [1, 2];
   // Replay a complete witness, checking every tap including ice, locks, tray capacity and deadline.
+  // With g.down (1 = face-down): a peek pair (board.js peekPair) - when a tile would be the 4th waiting one, it and
+  // the next tile of the path go together without a tray slot if they share a picture, one is face-down, both can
+  // be taken before either goes, and the picture is not waiting. Each counts as a move for the clock.
   function validSolution(g, path) {
     if (!path || path.length !== g.tiles.length) return false;
     const initial = new Uint8Array(g.tiles.length).fill(1), alive = initial.slice(), tray = [];
+    const can = i => Number.isInteger(i) && alive[i] && (g.rules ? L.takeable(i, alive, g.nb, g.rules, initial) : L.isFree(i, alive, g.nb));
     let clockTaken = !g.clock;
     for (let move = 0; move < path.length; move++) {
       const i = path[move];
-      if (!Number.isInteger(i) || !alive[i] || !(g.rules ? L.takeable(i, alive, g.nb, g.rules, initial) : L.isFree(i, alive, g.nb))) return false;
+      if (!can(i)) return false;
       if (!clockTaken && move >= g.clock.n) return false;
+      const q = tray.indexOf(g.faces[i]);
+      if (q < 0 && tray.length >= SLOTS - 1) {
+        const j = path[move + 1];
+        if (!(g.down && j !== i && can(j) && g.faces[j] === g.faces[i] && (g.down[i] || g.down[j]))) return false;
+        if (!clockTaken && move + 1 >= g.clock.n) return false;
+        alive[i] = 0; alive[j] = 0;
+        if (g.clock && (i === g.clock.i || j === g.clock.i)) clockTaken = true;
+        move++; continue;
+      }
       alive[i] = 0;
       if (g.clock && i === g.clock.i) clockTaken = true;
-      const q = tray.indexOf(g.faces[i]); if (q >= 0) tray.splice(q, 1); else tray.push(g.faces[i]);
-      if (tray.length >= SLOTS) return false;
+      if (q >= 0) tray.splice(q, 1); else tray.push(g.faces[i]);
     }
     return clockTaken && tray.length === 0;
   }
