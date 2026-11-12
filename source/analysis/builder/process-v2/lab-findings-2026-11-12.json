@@ -1,0 +1,257 @@
+{
+ "savedAt": "2026-11-12T20:53:54.167Z",
+ "source": "Dennis, local level lab (ports 8254/8255), read from the lab server",
+ "ratings": {
+  "2026254": {
+   "lab": "254",
+   "stars": 0,
+   "note": "(said in chat) a nice trap idea. The rest of the level is quite easy. Looked like a level that could be steered to improve. Good once it is a bit harder after the trap. A lot of the same pairs.",
+   "tries": 2,
+   "wins": 1,
+   "results": [
+    "stuck, 80 left",
+    "win"
+   ],
+   "boardKey": "c6b10b7f8137d02307e82dc2bf63b97b24ac09781e386d9067b85f03efa14a03",
+   "board": {
+    "shape": "arch",
+    "tiles": 88,
+    "story": "iceLockClock",
+    "faceDown": 18,
+    "clock": {
+     "n": 14,
+     "k": 11,
+     "spare": 3,
+     "tile": 81
+    },
+    "specials": {
+     "gold": 0,
+     "locks": 1,
+     "keys": 2,
+     "ice": 1
+    },
+    "D40": 10.34,
+    "S": 3.8,
+    "lateLossShare": 0.133,
+    "B7": 0.367,
+    "knobs": {
+     "spare": 3,
+     "depth": null,
+     "traps": 0,
+     "maxDown": 0.2,
+     "hiddenOnWay": 1,
+     "trayRoom": 0,
+     "tailPairWidth": 1,
+     "buildSeed": 4385,
+     "story": "iceLockClock",
+     "stage": "top",
+     "layout": 12,
+     "shape": "arch",
+     "tiles": 88,
+     "big": false
+    }
+   }
+  },
+  "2026261": {
+   "lab": "261",
+   "stars": 2,
+   "note": "I liked the trap but the board after feels too luck based. Cant plan much..",
+   "tries": 3,
+   "wins": 0,
+   "results": [
+    "restart, 77 left",
+    "stuck, 58 left",
+    "restart, 17 left"
+   ],
+   "boardKey": "2073ccd93f55cd933588192f114216b0ff2702fdffc3185908640539a8392b41",
+   "board": {
+    "shape": "diamond",
+    "tiles": 80,
+    "story": "lockBeside",
+    "faceDown": 40,
+    "clock": {
+     "n": 15,
+     "k": 14,
+     "spare": 1,
+     "tile": 40
+    },
+    "specials": {
+     "gold": 0,
+     "locks": 1,
+     "keys": 2,
+     "ice": 0
+    },
+    "D40": 9.06,
+    "S": 3.29,
+    "lateLossShare": 0.41,
+    "B7": 0.057,
+    "knobs": {
+     "spare": 1,
+     "depth": 3,
+     "traps": 1,
+     "maxDown": 0.5,
+     "hiddenOnWay": 1,
+     "trayRoom": 0,
+     "tailPairWidth": 1,
+     "buildSeed": 8583,
+     "story": "lockBeside",
+     "stage": "edge",
+     "layout": 30,
+     "shape": "diamond",
+     "tiles": 80,
+     "big": false
+    }
+   }
+  },
+  "2026262": {
+   "lab": "262",
+   "stars": 4,
+   "verdict": "right",
+   "note": "fun. Trap can be harder but fun was puzzle at the end",
+   "tries": 2,
+   "wins": 1,
+   "results": [
+    "stuck, 22 left",
+    "win"
+   ],
+   "boardKey": "eadb34f1069985e26b23abea27ce09307055b5de3fd7c44d34bbe8e1f0e54a35",
+   "board": {
+    "shape": "twins",
+    "tiles": 76,
+    "story": "lockBeside",
+    "faceDown": 15,
+    "clock": {
+     "n": 13,
+     "k": 12,
+     "spare": 1,
+     "tile": 58
+    },
+    "specials": {
+     "gold": 0,
+     "locks": 1,
+     "keys": 2,
+     "ice": 0
+    },
+    "D40": 7.64,
+    "S": 2.41,
+    "lateLossShare": 0.474,
+    "B7": 0.127,
+    "knobs": {
+     "spare": 1,
+     "depth": null,
+     "traps": 0,
+     "maxDown": 0.2,
+     "hiddenOnWay": 1,
+     "trayRoom": 0,
+     "tailPairWidth": 2,
+     "buildSeed": 2150,
+     "story": "lockBeside",
+     "stage": "top",
+     "layout": 24,
+     "shape": "twins",
+     "tiles": 76,
+     "big": false
+    }
+   }
+  },
+  "2026263": {
+   "lab": "263",
+   "stars": 1,
+   "note": "mwuah. puzzle meh and level meh. The planned builder puts pairs too obvious, it should be smarter about making levels and placing tiles.",
+   "tries": 1,
+   "wins": 1,
+   "results": [
+    "win"
+   ],
+   "boardKey": "f2cb553e8c69b99385755c4c83bf5482d6c2b6624f0581905b24f65c6e732754",
+   "board": {
+    "shape": "hourglass",
+    "tiles": 80,
+    "story": "lockBeside",
+    "faceDown": 16,
+    "clock": {
+     "n": 16,
+     "k": 15,
+     "spare": 1,
+     "tile": 35
+    },
+    "specials": {
+     "gold": 0,
+     "locks": 1,
+     "keys": 2,
+     "ice": 0
+    },
+    "D40": 5.84,
+    "S": 5.1,
+    "lateLossShare": 0.462,
+    "B7": 0.049,
+    "knobs": {
+     "spare": 1,
+     "depth": 5,
+     "traps": 0,
+     "maxDown": 0.2,
+     "hiddenOnWay": 0,
+     "trayRoom": 0,
+     "tailPairWidth": 3,
+     "buildSeed": 1447,
+     "story": "lockBeside",
+     "stage": "edge",
+     "layout": 14,
+     "shape": "hourglass",
+     "tiles": 80,
+     "big": false
+    }
+   }
+  },
+  "2026264": {
+   "lab": "264",
+   "stars": 3,
+   "note": "More fun then the rest but the trap clock was boring.",
+   "tries": 2,
+   "wins": 1,
+   "results": [
+    "stuck, 44 left",
+    "win"
+   ],
+   "boardKey": "1a1d1b5bc1d3e303536041e43fce16b42631cbcb11c24cad9899c9b06377e8b8",
+   "board": {
+    "shape": "twins",
+    "tiles": 76,
+    "story": "deepClock",
+    "faceDown": 38,
+    "clock": {
+     "n": 9,
+     "k": 6,
+     "spare": 3,
+     "tile": 43
+    },
+    "specials": {
+     "gold": 0,
+     "locks": 0,
+     "keys": 0,
+     "ice": 0
+    },
+    "D40": 6.76,
+    "S": 2.42,
+    "lateLossShare": 0.586,
+    "B7": 0.041,
+    "knobs": {
+     "spare": 3,
+     "depth": null,
+     "traps": 2,
+     "maxDown": 0.5,
+     "hiddenOnWay": 0,
+     "trayRoom": 0,
+     "tailPairWidth": 1,
+     "buildSeed": 1122,
+     "story": "deepClock",
+     "stage": "edge",
+     "layout": 24,
+     "shape": "twins",
+     "tiles": 76,
+     "big": false
+    }
+   }
+  }
+ }
+}
