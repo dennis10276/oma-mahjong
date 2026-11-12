@@ -1,628 +1,686 @@
 {
- "candidates": 189,
+ "candidates": 3739,
  "funnel": {
   "construct": {
-   "entered": 189,
-   "failed": 44,
-   "passed": 145,
+   "entered": 3739,
+   "failed": 919,
+   "passed": 2820,
    "reasons": {
-    "noProvenVisibleChoice": 41,
-    "wallClock": 3
+    "noProvenVisibleChoice": 802,
+    "wallClock": 117
    }
   },
   "dedupe": {
-   "entered": 145,
+   "entered": 2820,
    "failed": 0,
-   "passed": 145,
+   "passed": 2820,
    "reasons": {}
   },
   "static": {
-   "entered": 145,
-   "failed": 38,
-   "passed": 107,
+   "entered": 2820,
+   "failed": 864,
+   "passed": 1956,
    "reasons": {
-    "spareNotShippable": 10,
-    "A1": 26,
-    "A3": 2
+    "spareNotShippable": 233,
+    "A1": 572,
+    "unresolved:A6": 19,
+    "A3": 33,
+    "unresolved:A4": 6,
+    "unresolved:A4+A6": 1
    }
   },
   "dScreen": {
-   "entered": 107,
-   "failed": 97,
-   "passed": 10,
+   "entered": 1956,
+   "failed": 1795,
+   "passed": 161,
    "reasons": {
-    "D<7": 97
+    "D<7": 1795
    }
   },
   "stability": {
-   "entered": 10,
-   "failed": 3,
-   "passed": 7,
+   "entered": 161,
+   "failed": 29,
+   "passed": 132,
    "reasons": {
-    "cliff": 3
+    "cliff": 29
    }
   },
   "full": {
-   "entered": 7,
+   "entered": 132,
    "failed": 0,
-   "passed": 7,
+   "passed": 132,
    "reasons": {}
   },
   "band": {
-   "entered": 7,
-   "failed": 1,
-   "passed": 6,
+   "entered": 132,
+   "failed": 17,
+   "passed": 115,
    "reasons": {
-    "S>6": 1
+    "S>6": 17
    }
   },
   "trace": {
-   "entered": 6,
-   "failed": 4,
-   "passed": 2,
+   "entered": 115,
+   "failed": 103,
+   "passed": 12,
    "reasons": {
-    "B1+B2+B3+B4": 1,
-    "B1+B2+B3": 1,
-    "B3+B4": 1,
-    "B1+B2": 1
+    "B1+B2+B3+B4": 5,
+    "B1+B2+B4": 1,
+    "B1+B2+B3": 16,
+    "B2+B5+B6": 1,
+    "B3": 11,
+    "B3+B4": 9,
+    "B2+B3": 18,
+    "B2?+B3?+B4?": 1,
+    "B2+B3+B4": 10,
+    "B2": 5,
+    "B1+B2+B6": 10,
+    "B1+B2+B4+B6": 2,
+    "B2+B6": 5,
+    "B1+B2+B5+B6": 2,
+    "B1+B2+B3+B5+B6": 2,
+    "B1+B2+B3+B6": 1,
+    "B1+B2": 2,
+    "B5+B6": 1,
+    "B2+B5": 1
    }
   }
  },
  "cpu": {
   "construct": {
-   "cpuSec": 168.309,
-   "runs": 189,
-   "perRunSec": 0.8905238095238095
+   "cpuSec": 3759.904,
+   "runs": 3739,
+   "perRunSec": 1.0055907996790585
   },
   "dedupe": {
-   "cpuSec": 0,
-   "runs": 145,
-   "perRunSec": 0
+   "cpuSec": 0.016,
+   "runs": 2820,
+   "perRunSec": 0.000005673758865248227
   },
   "static": {
-   "cpuSec": 57.718,
-   "runs": 145,
-   "perRunSec": 0.3980551724137931
+   "cpuSec": 1218.142,
+   "runs": 2820,
+   "perRunSec": 0.43196524822695037
   },
   "dScreen": {
-   "cpuSec": 201.363,
-   "runs": 107,
-   "perRunSec": 1.8818971962616822
+   "cpuSec": 3307.172,
+   "runs": 1956,
+   "perRunSec": 1.6907832310838447
   },
   "stability": {
-   "cpuSec": 80.377,
-   "runs": 10,
-   "perRunSec": 8.0377
+   "cpuSec": 1764.712,
+   "runs": 161,
+   "perRunSec": 10.960944099378882
   },
   "full": {
-   "cpuSec": 394.67,
-   "runs": 7,
-   "perRunSec": 56.38142857142857
+   "cpuSec": 6187.918,
+   "runs": 132,
+   "perRunSec": 46.878166666666665
   },
   "trace": {
-   "cpuSec": 108.515,
-   "runs": 6,
-   "perRunSec": 18.085833333333333
+   "cpuSec": 2636.034,
+   "runs": 115,
+   "perRunSec": 22.922034782608698
   }
  },
- "totalCpuSec": 1010.952,
- "bankedCount": 2,
- "bankedPerCpuHour": 7.121999857560002,
+ "totalCpuSec": 18873.898,
+ "bankedCount": 12,
+ "bankedPerCpuHour": 2.288875355795607,
  "dScreenKnobTables": {
   "spare": [
    {
     "value": "1",
-    "n": 31,
+    "n": 535,
     "sPassRate": 0,
-    "d40q1": 1.15,
-    "d40med": 1.68,
-    "d40q3": 3.315
+    "d40q1": 1.2,
+    "d40med": 1.7,
+    "d40q3": 2.98
    },
    {
     "value": "2",
-    "n": 39,
+    "n": 730,
     "sPassRate": 0,
-    "d40q1": 1.13,
-    "d40med": 1.23,
-    "d40q3": 2.15
+    "d40q1": 1.1,
+    "d40med": 1.35,
+    "d40q3": 2.3725
    },
    {
     "value": "3",
-    "n": 37,
+    "n": 691,
     "sPassRate": 0,
-    "d40q1": 1.02,
-    "d40med": 1.13,
-    "d40q3": 1.7
+    "d40q1": 1.05,
+    "d40med": 1.23,
+    "d40q3": 2.42
    }
   ],
   "maxDown": [
    {
     "value": "0",
-    "n": 16,
+    "n": 299,
     "sPassRate": 0,
-    "d40q1": 1.0425,
-    "d40med": 1.115,
-    "d40q3": 1.285
+    "d40q1": 1.1,
+    "d40med": 1.27,
+    "d40q3": 2.2
    },
    {
     "value": "1-10",
-    "n": 9,
+    "n": 379,
     "sPassRate": 0,
-    "d40q1": 1.35,
-    "d40med": 1.48,
-    "d40q3": 2.33
+    "d40q1": 1.115,
+    "d40med": 1.4,
+    "d40q3": 2.65
    },
    {
     "value": "11-20",
-    "n": 35,
+    "n": 524,
     "sPassRate": 0,
-    "d40q1": 1.065,
-    "d40med": 1.2,
-    "d40q3": 2.175
+    "d40q1": 1.1,
+    "d40med": 1.4,
+    "d40q3": 2.5349999999999997
    },
    {
     "value": "21-30",
-    "n": 28,
+    "n": 501,
     "sPassRate": 0,
-    "d40q1": 1.0725,
-    "d40med": 1.15,
-    "d40q3": 1.8325
+    "d40q1": 1.08,
+    "d40med": 1.27,
+    "d40q3": 2.53
    },
    {
     "value": "31+",
-    "n": 19,
+    "n": 253,
     "sPassRate": 0,
-    "d40q1": 1.24,
-    "d40med": 2.3,
-    "d40q3": 3.49
+    "d40q1": 1.13,
+    "d40med": 1.63,
+    "d40q3": 3.08
    }
   ],
   "hiddenOnWay": [
    {
     "value": "0",
-    "n": 57,
+    "n": 1000,
     "sPassRate": 0,
-    "d40q1": 1.08,
-    "d40med": 1.25,
-    "d40q3": 2.48
+    "d40q1": 1.1,
+    "d40med": 1.4,
+    "d40q3": 2.7925
    },
    {
     "value": "1",
-    "n": 50,
+    "n": 956,
     "sPassRate": 0,
-    "d40q1": 1.1075,
-    "d40med": 1.2,
-    "d40q3": 1.83
+    "d40q1": 1.1,
+    "d40med": 1.35,
+    "d40q3": 2.385
    }
   ],
   "traps": [
    {
     "value": "0",
-    "n": 35,
+    "n": 508,
     "sPassRate": 0,
-    "d40q1": 1.1,
-    "d40med": 1.2,
-    "d40q3": 2.6799999999999997
+    "d40q1": 1.13,
+    "d40med": 1.45,
+    "d40q3": 2.6574999999999998
    },
    {
     "value": "1",
-    "n": 23,
+    "n": 462,
     "sPassRate": 0,
-    "d40q1": 1.0899999999999999,
-    "d40med": 1.15,
-    "d40q3": 1.7650000000000001
+    "d40q1": 1.13,
+    "d40med": 1.49,
+    "d40q3": 2.745
    },
    {
     "value": "2",
-    "n": 28,
+    "n": 509,
     "sPassRate": 0,
-    "d40q1": 1.0725,
-    "d40med": 1.31,
-    "d40q3": 2.3625
+    "d40q1": 1.08,
+    "d40med": 1.33,
+    "d40q3": 2.35
    },
    {
     "value": "3",
-    "n": 21,
+    "n": 477,
     "sPassRate": 0,
     "d40q1": 1.08,
-    "d40med": 1.68,
-    "d40q3": 2.3
+    "d40med": 1.33,
+    "d40q3": 2.5
    }
   ],
   "depth": [
    {
     "value": "2",
-    "n": 17,
+    "n": 275,
     "sPassRate": 0,
-    "d40q1": 1.2,
-    "d40med": 1.35,
-    "d40q3": 2.3
+    "d40q1": 1.1,
+    "d40med": 1.33,
+    "d40q3": 2.38
    },
    {
     "value": "3",
-    "n": 17,
+    "n": 305,
     "sPassRate": 0,
-    "d40q1": 1.15,
-    "d40med": 1.23,
-    "d40q3": 3.23
+    "d40q1": 1.1,
+    "d40med": 1.55,
+    "d40q3": 2.73
    },
    {
     "value": "4",
-    "n": 17,
+    "n": 272,
     "sPassRate": 0,
-    "d40q1": 1.08,
+    "d40q1": 1.13,
     "d40med": 1.45,
-    "d40q3": 1.95
+    "d40q3": 3.08
    },
    {
     "value": "5",
-    "n": 18,
+    "n": 277,
     "sPassRate": 0,
-    "d40q1": 1.07,
-    "d40med": 1.7149999999999999,
-    "d40q3": 2.755
+    "d40q1": 1.1,
+    "d40med": 1.43,
+    "d40q3": 2.68
    },
    {
     "value": "6",
-    "n": 14,
+    "n": 230,
     "sPassRate": 0,
     "d40q1": 1.08,
-    "d40med": 1.13,
-    "d40q3": 1.24
+    "d40med": 1.25,
+    "d40q3": 2.2225
    },
    {
     "value": "default",
-    "n": 24,
+    "n": 597,
     "sPassRate": 0,
-    "d40q1": 1.0950000000000002,
-    "d40med": 1.15,
-    "d40q3": 1.535
+    "d40q1": 1.1,
+    "d40med": 1.4,
+    "d40q3": 2.48
    }
   ],
   "layout": [
    {
     "value": "0 arch (80)",
-    "n": 3,
+    "n": 52,
     "sPassRate": 0,
-    "d40q1": 1.8299999999999998,
-    "d40med": 2.53,
-    "d40q3": 4.055
+    "d40q1": 1.13,
+    "d40med": 1.68,
+    "d40q3": 3.4725
    },
    {
     "value": "1 steps (76)",
-    "n": 1,
+    "n": 24,
     "sPassRate": 0,
-    "d40q1": 1.15,
-    "d40med": 1.15,
-    "d40q3": 1.15
+    "d40q1": 1.1175,
+    "d40med": 1.44,
+    "d40q3": 1.8924999999999998
    },
    {
     "value": "2 vase (76)",
-    "n": 2,
+    "n": 25,
     "sPassRate": 0,
-    "d40q1": 1.13,
-    "d40med": 1.13,
-    "d40q3": 1.13
+    "d40q1": 1.05,
+    "d40med": 1.23,
+    "d40q3": 2.25
    },
    {
     "value": "3 ushape (80)",
-    "n": 4,
+    "n": 50,
     "sPassRate": 0,
-    "d40q1": 1.1625,
-    "d40med": 1.915,
-    "d40q3": 2.8175
+    "d40q1": 1.1075,
+    "d40med": 1.25,
+    "d40q3": 1.7875
    },
    {
     "value": "4 twins (84)",
-    "n": 5,
+    "n": 43,
     "sPassRate": 0,
-    "d40q1": 1.35,
-    "d40med": 1.95,
-    "d40q3": 2.83
+    "d40q1": 1.14,
+    "d40med": 1.48,
+    "d40q3": 2.4000000000000004
+   },
+   {
+    "value": "5 moon (88)",
+    "n": 37,
+    "sPassRate": 0,
+    "d40q1": 1.13,
+    "d40med": 1.45,
+    "d40q3": 2.45
    },
    {
     "value": "6 pyramid · tall (84)",
-    "n": 3,
+    "n": 32,
     "sPassRate": 0,
-    "d40q1": 1.5150000000000001,
-    "d40med": 1.95,
-    "d40q3": 2.9749999999999996
+    "d40q1": 1.145,
+    "d40med": 1.75,
+    "d40q3": 2.8425000000000002
    },
    {
     "value": "7 frame (80)",
-    "n": 1,
+    "n": 40,
     "sPassRate": 0,
-    "d40q1": 1,
-    "d40med": 1,
-    "d40q3": 1
+    "d40q1": 1.08,
+    "d40med": 1.3,
+    "d40q3": 2.03
    },
    {
     "value": "8 cross (84)",
-    "n": 1,
+    "n": 48,
     "sPassRate": 0,
-    "d40q1": 1.18,
-    "d40med": 1.18,
-    "d40q3": 1.18
+    "d40q1": 1.145,
+    "d40med": 1.63,
+    "d40q3": 2.525
    },
    {
     "value": "9 heart (76)",
-    "n": 1,
+    "n": 35,
     "sPassRate": 0,
-    "d40q1": 1.08,
-    "d40med": 1.08,
-    "d40q3": 1.08
+    "d40q1": 1.2,
+    "d40med": 2.68,
+    "d40q3": 4.055
    },
    {
     "value": "10 letterH (80)",
-    "n": 1,
+    "n": 48,
     "sPassRate": 0,
-    "d40q1": 1.93,
-    "d40med": 1.93,
-    "d40q3": 1.93
+    "d40q1": 1.1949999999999998,
+    "d40med": 1.5899999999999999,
+    "d40q3": 3.5749999999999997
    },
    {
     "value": "11 vase (76)",
-    "n": 4,
+    "n": 58,
     "sPassRate": 0,
-    "d40q1": 1.1124999999999998,
-    "d40med": 1.21,
-    "d40q3": 1.27
-   },
-   {
-    "value": "12 arch (88)",
-    "n": 3,
-    "sPassRate": 0,
-    "d40q1": 2.135,
-    "d40med": 3.25,
-    "d40q3": 16.975
-   },
-   {
-    "value": "13 house (96)",
-    "n": 1,
-    "sPassRate": 0,
-    "d40q1": 1.23,
-    "d40med": 1.23,
-    "d40q3": 1.23
-   },
-   {
-    "value": "14 hourglass (80)",
-    "n": 1,
-    "sPassRate": 0,
-    "d40q1": 3.23,
-    "d40med": 3.23,
-    "d40q3": 3.23
-   },
-   {
-    "value": "15 pyramid · tall (80)",
-    "n": 1,
-    "sPassRate": 0,
-    "d40q1": 1.2,
-    "d40med": 1.2,
-    "d40q3": 1.2
-   },
-   {
-    "value": "16 moon (74)",
-    "n": 2,
-    "sPassRate": 0,
-    "d40q1": 1.02,
-    "d40med": 1.04,
-    "d40q3": 1.06
-   },
-   {
-    "value": "18 frame (76)",
-    "n": 4,
-    "sPassRate": 0,
-    "d40q1": 1.02,
-    "d40med": 1.085,
-    "d40q3": 1.4825
-   },
-   {
-    "value": "20 castle · two islands (84)",
-    "n": 1,
-    "sPassRate": 0,
-    "d40q1": 9.38,
-    "d40med": 9.38,
-    "d40q3": 9.38
-   },
-   {
-    "value": "22 ushape (76)",
-    "n": 2,
-    "sPassRate": 0,
-    "d40q1": 1.2075,
-    "d40med": 1.415,
-    "d40q3": 1.6225
-   },
-   {
-    "value": "23 hourglass (76)",
-    "n": 2,
-    "sPassRate": 0,
-    "d40q1": 1.0975000000000001,
-    "d40med": 1.115,
-    "d40q3": 1.1324999999999998
-   },
-   {
-    "value": "24 twins (76)",
-    "n": 2,
-    "sPassRate": 0,
-    "d40q1": 1.0375,
-    "d40med": 1.075,
-    "d40q3": 1.1124999999999998
-   },
-   {
-    "value": "25 frame (84)",
-    "n": 5,
-    "sPassRate": 0,
-    "d40q1": 1.02,
-    "d40med": 1.05,
-    "d40q3": 1.08
-   },
-   {
-    "value": "26 letterH (76)",
-    "n": 2,
-    "sPassRate": 0,
-    "d40q1": 1.9075,
-    "d40med": 2.1149999999999998,
-    "d40q3": 2.3225
-   },
-   {
-    "value": "27 steps (96)",
-    "n": 4,
-    "sPassRate": 0,
-    "d40q1": 1.0425,
-    "d40med": 1.0750000000000002,
-    "d40q3": 1.1625
-   },
-   {
-    "value": "28 arch (72)",
-    "n": 3,
-    "sPassRate": 0,
-    "d40q1": 1.215,
-    "d40med": 1.35,
-    "d40q3": 1.415
-   },
-   {
-    "value": "29 hourglass (96)",
-    "n": 4,
-    "sPassRate": 0,
-    "d40q1": 1.13,
-    "d40med": 1.18,
-    "d40q3": 1.505
-   },
-   {
-    "value": "30 diamond (80)",
-    "n": 4,
-    "sPassRate": 0,
-    "d40q1": 2.7125000000000004,
-    "d40med": 6.050000000000001,
-    "d40q3": 15.207500000000001
-   },
-   {
-    "value": "31 oval · two islands (76)",
-    "n": 1,
-    "sPassRate": 0,
-    "d40q1": 1.35,
-    "d40med": 1.35,
-    "d40q3": 1.35
-   },
-   {
-    "value": "32 twins (80)",
-    "n": 2,
-    "sPassRate": 0,
-    "d40q1": 1.46,
-    "d40med": 1.7399999999999998,
-    "d40q3": 2.0199999999999996
-   },
-   {
-    "value": "33 ushape (72)",
-    "n": 2,
-    "sPassRate": 0,
-    "d40q1": 1.22,
-    "d40med": 1.3900000000000001,
-    "d40q3": 1.56
-   },
-   {
-    "value": "34 bowtie (84)",
-    "n": 2,
-    "sPassRate": 0,
-    "d40q1": 1.6,
-    "d40med": 1.85,
-    "d40q3": 2.1
-   },
-   {
-    "value": "35 hourglass (88)",
-    "n": 4,
-    "sPassRate": 0,
-    "d40q1": 1.0725,
-    "d40med": 1.115,
-    "d40q3": 1.2874999999999999
-   },
-   {
-    "value": "36 hourglass (76)",
-    "n": 1,
-    "sPassRate": 0,
-    "d40q1": 1.8,
-    "d40med": 1.8,
-    "d40q3": 1.8
-   },
-   {
-    "value": "37 frame (84)",
-    "n": 1,
-    "sPassRate": 0,
-    "d40q1": 1.68,
-    "d40med": 1.68,
+    "d40q1": 1.085,
+    "d40med": 1.19,
     "d40q3": 1.68
    },
    {
-    "value": "38 frame (88)",
-    "n": 2,
+    "value": "12 arch (88)",
+    "n": 41,
+    "sPassRate": 0,
+    "d40q1": 1.08,
+    "d40med": 1.2,
+    "d40q3": 2.15
+   },
+   {
+    "value": "13 house (96)",
+    "n": 41,
+    "sPassRate": 0,
+    "d40q1": 1.05,
+    "d40med": 1.13,
+    "d40q3": 2.55
+   },
+   {
+    "value": "14 hourglass (80)",
+    "n": 30,
+    "sPassRate": 0,
+    "d40q1": 1.1575,
+    "d40med": 1.4,
+    "d40q3": 2.11
+   },
+   {
+    "value": "15 pyramid · tall (80)",
+    "n": 27,
+    "sPassRate": 0,
+    "d40q1": 1.2349999999999999,
+    "d40med": 1.88,
+    "d40q3": 2.54
+   },
+   {
+    "value": "16 moon (74)",
+    "n": 48,
+    "sPassRate": 0,
+    "d40q1": 1.145,
+    "d40med": 1.475,
+    "d40q3": 3.2325
+   },
+   {
+    "value": "17 bowtie (76)",
+    "n": 32,
+    "sPassRate": 0,
+    "d40q1": 1.2925,
+    "d40med": 2.165,
+    "d40q3": 3.005
+   },
+   {
+    "value": "18 frame (76)",
+    "n": 46,
+    "sPassRate": 0,
+    "d40q1": 1.05,
+    "d40med": 1.14,
+    "d40q3": 1.7225
+   },
+   {
+    "value": "19 hourglass · ridges (76)",
+    "n": 36,
+    "sPassRate": 0,
+    "d40q1": 1.08,
+    "d40med": 1.14,
+    "d40q3": 1.255
+   },
+   {
+    "value": "20 castle · two islands (84)",
+    "n": 37,
+    "sPassRate": 0,
+    "d40q1": 1.13,
+    "d40med": 1.53,
+    "d40q3": 3.28
+   },
+   {
+    "value": "21 star (96)",
+    "n": 29,
+    "sPassRate": 0,
+    "d40q1": 1.25,
+    "d40med": 2.23,
+    "d40q3": 4.97
+   },
+   {
+    "value": "22 ushape (76)",
+    "n": 52,
+    "sPassRate": 0,
+    "d40q1": 1.05,
+    "d40med": 1.23,
+    "d40q3": 3.445
+   },
+   {
+    "value": "23 hourglass (76)",
+    "n": 36,
+    "sPassRate": 0,
+    "d40q1": 1.08,
+    "d40med": 1.13,
+    "d40q3": 1.635
+   },
+   {
+    "value": "24 twins (76)",
+    "n": 49,
+    "sPassRate": 0,
+    "d40q1": 1.15,
+    "d40med": 1.53,
+    "d40q3": 2.7
+   },
+   {
+    "value": "25 frame (84)",
+    "n": 42,
+    "sPassRate": 0,
+    "d40q1": 1.0575,
+    "d40med": 1.2149999999999999,
+    "d40q3": 1.78
+   },
+   {
+    "value": "26 letterH (76)",
+    "n": 46,
+    "sPassRate": 0,
+    "d40q1": 1.08,
+    "d40med": 1.25,
+    "d40q3": 2.185
+   },
+   {
+    "value": "27 steps (96)",
+    "n": 28,
+    "sPassRate": 0,
+    "d40q1": 1.25,
+    "d40med": 1.5150000000000001,
+    "d40q3": 2.155
+   },
+   {
+    "value": "28 arch (72)",
+    "n": 28,
+    "sPassRate": 0,
+    "d40q1": 1.0425,
+    "d40med": 1.225,
+    "d40q3": 2.0475
+   },
+   {
+    "value": "29 hourglass (96)",
+    "n": 38,
+    "sPassRate": 0,
+    "d40q1": 1.15,
+    "d40med": 1.69,
+    "d40q3": 2.4250000000000003
+   },
+   {
+    "value": "30 diamond (80)",
+    "n": 39,
+    "sPassRate": 0,
+    "d40q1": 1.315,
+    "d40med": 1.98,
+    "d40q3": 4.8
+   },
+   {
+    "value": "31 oval · two islands (76)",
+    "n": 25,
+    "sPassRate": 0,
+    "d40q1": 1.05,
+    "d40med": 1.25,
+    "d40q3": 1.5
+   },
+   {
+    "value": "32 twins (80)",
+    "n": 48,
+    "sPassRate": 0,
+    "d40q1": 1.08,
+    "d40med": 1.225,
+    "d40q3": 1.98
+   },
+   {
+    "value": "33 ushape (72)",
+    "n": 46,
+    "sPassRate": 0,
+    "d40q1": 1.27,
+    "d40med": 2.6900000000000004,
+    "d40q3": 3.6625
+   },
+   {
+    "value": "34 bowtie (84)",
+    "n": 41,
+    "sPassRate": 0,
+    "d40q1": 1.08,
+    "d40med": 1.6,
+    "d40q3": 2.5
+   },
+   {
+    "value": "35 hourglass (88)",
+    "n": 40,
+    "sPassRate": 0,
+    "d40q1": 1.0950000000000002,
+    "d40med": 1.605,
+    "d40q3": 3.03
+   },
+   {
+    "value": "36 hourglass (76)",
+    "n": 44,
     "sPassRate": 0,
     "d40q1": 1.1,
-    "d40med": 1.2,
-    "d40q3": 1.2999999999999998
+    "d40med": 1.7149999999999999,
+    "d40q3": 2.5175
+   },
+   {
+    "value": "37 frame (84)",
+    "n": 48,
+    "sPassRate": 0,
+    "d40q1": 1.1,
+    "d40med": 1.375,
+    "d40q3": 2.2824999999999998
+   },
+   {
+    "value": "38 frame (88)",
+    "n": 47,
+    "sPassRate": 0,
+    "d40q1": 1.1,
+    "d40med": 1.3,
+    "d40q3": 1.8399999999999999
+   },
+   {
+    "value": "39 frame (80)",
+    "n": 38,
+    "sPassRate": 0,
+    "d40q1": 1.08,
+    "d40med": 1.5899999999999999,
+    "d40q3": 2.6475
    },
    {
     "value": "40 vase (72)",
-    "n": 3,
+    "n": 40,
     "sPassRate": 0,
-    "d40q1": 1.065,
-    "d40med": 1.13,
-    "d40q3": 1.1549999999999998
+    "d40q1": 1.1225,
+    "d40med": 1.4,
+    "d40q3": 2.995
    },
    {
     "value": "41 hourglass (76)",
-    "n": 2,
+    "n": 42,
     "sPassRate": 0,
-    "d40q1": 1.21,
-    "d40med": 1.29,
-    "d40q3": 1.3699999999999999
+    "d40q1": 1.05,
+    "d40med": 1.115,
+    "d40q3": 1.6975
    },
    {
     "value": "42 hourglass · ridges (76)",
-    "n": 3,
+    "n": 39,
     "sPassRate": 0,
-    "d40q1": 1.1,
-    "d40med": 1.15,
-    "d40q3": 13.940000000000001
+    "d40q1": 1.19,
+    "d40med": 1.85,
+    "d40q3": 3.365
    },
    {
     "value": "43 hourglass (84)",
-    "n": 5,
+    "n": 46,
     "sPassRate": 0,
-    "d40q1": 1.83,
-    "d40med": 3.73,
-    "d40q3": 5.03
+    "d40q1": 1.1,
+    "d40med": 1.64,
+    "d40q3": 3.21
    },
    {
     "value": "44 hourglass (84)",
-    "n": 1,
+    "n": 45,
     "sPassRate": 0,
-    "d40q1": 1.25,
-    "d40med": 1.25,
-    "d40q3": 1.25
+    "d40q1": 1.13,
+    "d40med": 1.58,
+    "d40q3": 3.08
    },
    {
     "value": "45 frame (74)",
-    "n": 6,
+    "n": 64,
     "sPassRate": 0,
-    "d40q1": 1.6125,
-    "d40med": 2.815,
-    "d40q3": 12.379999999999999
+    "d40q1": 1.08,
+    "d40med": 1.3250000000000002,
+    "d40q3": 3.26
    },
    {
     "value": "46 hourglass (74)",
-    "n": 3,
+    "n": 51,
     "sPassRate": 0,
-    "d40q1": 1.915,
-    "d40med": 2.63,
-    "d40q3": 3.29
+    "d40q1": 1.13,
+    "d40med": 1.65,
+    "d40q3": 2.375
    },
    {
     "value": "47 pyramid (96)",
-    "n": 2,
+    "n": 35,
     "sPassRate": 0,
-    "d40q1": 1.0125,
-    "d40med": 1.025,
-    "d40q3": 1.0375
+    "d40q1": 1.065,
+    "d40med": 1.27,
+    "d40q3": 3.065
    }
   ]
  },
@@ -636,12 +694,66 @@
  },
  "banked": [
   {
+   "key": "12da9f9f49d8e6a579401aa7ca84d820febdabb3e196cac5b1ea2f4cc3bc5423",
+   "layout": "46 hourglass",
+   "tiles": 74,
+   "D20": 17.91,
+   "D40": 31.19,
+   "S": 1.05,
+   "band": "below"
+  },
+  {
+   "key": "b1ee7d2ffc06c9d9791c5e15b76dc30ad8004825f869a2d5c71456b466c78dcb",
+   "layout": "8 cross",
+   "tiles": 84,
+   "D20": 19.11,
+   "D40": 38.04,
+   "S": 1,
+   "band": "below"
+  },
+  {
    "key": "4f6bcf4c671a13515be63b69374095cb8927edfaf7379b85e96cd58f3bb1fd06",
    "layout": "30 diamond",
    "tiles": 80,
    "D20": 9.49,
    "D40": 9.75,
    "S": 1.34,
+   "band": "below"
+  },
+  {
+   "key": "91e303e0fabc10c75516bc125709bb6ec53267abdde6f9c67b3e7ae5a42ad946",
+   "layout": "29 hourglass",
+   "tiles": 96,
+   "D20": 20,
+   "D40": 39.92,
+   "S": 1.01,
+   "band": "below"
+  },
+  {
+   "key": "627e4c7676053f166fe83c8e2465a9a4f4ca7d8d21a57223e0471862c2588bce",
+   "layout": "22 ushape",
+   "tiles": 76,
+   "D20": 10.88,
+   "D40": 20.49,
+   "S": 1.04,
+   "band": "below"
+  },
+  {
+   "key": "2c63e69952b30bc868bb5a3376981fff68e40c26eec8bd22b8c8747ca76a1b5d",
+   "layout": "46 hourglass",
+   "tiles": 74,
+   "D20": 19.4,
+   "D40": 38.03,
+   "S": 1.08,
+   "band": "below"
+  },
+  {
+   "key": "6c53f410ad1c1cc2153ef36c77f62578b58c11501d106b13c7fce85fab4b7b90",
+   "layout": "9 heart",
+   "tiles": 76,
+   "D20": 14.56,
+   "D40": 20.09,
+   "S": 1.06,
    "band": "below"
   },
   {
@@ -652,6 +764,42 @@
    "D40": 6.4,
    "S": 4.7,
    "band": "normal"
+  },
+  {
+   "key": "16f918114c547d76c9692b30697ad4131961ae21a27c8ba61902b1dfb2ac7287",
+   "layout": "0 arch",
+   "tiles": 80,
+   "D20": 10.5,
+   "D40": 11.56,
+   "S": 4.95,
+   "band": "normal"
+  },
+  {
+   "key": "91bac4810938940590990f47c89df8b3d08b58f197bbde075639b036ae23e30b",
+   "layout": "43 hourglass",
+   "tiles": 84,
+   "D20": 16.31,
+   "D40": 27.79,
+   "S": 2.35,
+   "band": "fallback"
+  },
+  {
+   "key": "2073ccd93f55cd933588192f114216b0ff2702fdffc3185908640539a8392b41",
+   "layout": "30 diamond",
+   "tiles": 80,
+   "D20": 8.71,
+   "D40": 9.06,
+   "S": 3.29,
+   "band": "normal"
+  },
+  {
+   "key": "163d13c32257befc37108dc915855204673edb7a83175d683e7791356b839985",
+   "layout": "41 hourglass",
+   "tiles": 76,
+   "D20": 11.28,
+   "D40": 13.23,
+   "S": 1.05,
+   "band": "below"
   }
  ]
 }
