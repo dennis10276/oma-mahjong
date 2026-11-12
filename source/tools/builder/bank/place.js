@@ -6,7 +6,8 @@ const fs = require('fs'), path = require('path');
 const ROOT = path.resolve(__dirname, '../../..');
 const DEF_BANK = path.join(ROOT, 'analysis/builder/bank/puzzles');
 
-function targetCurve(l) { return l <= 274 ? 10 + (l - 250) * (2 / 24) : 13 + (l - 275) * (3 / 25); }
+// Dennis 2026-11-12: about 10 at 250, then at least 1 try per 10 levels (on the normal-player scale).
+function targetCurve(l) { return 10 + (l - 250) / 10; }
 function slot(l) { const big = l % 10 === 0; return { big, minTiles: big ? 96 : 72, maxTiles: big ? 96 : 88 }; }
 const tileClass = t => (t >= 96 ? '96' : '72-88');
 
@@ -18,7 +19,7 @@ function loadBank(dir) {
     try {
       const j = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')), c = j.card;
       if (!c || !c.stats) continue;
-      out.push({ key: c.boardKey, body: c.matchingBodyKey, layout: c.layout, tiles: c.tiles, D20: c.stats.D20, D40: c.stats.D40, S: c.stats.S, band: c.stats.band });
+      out.push({ key: c.boardKey, body: c.matchingBodyKey, layout: c.layout, tiles: c.tiles, D20: c.stats.D20, D40: c.stats.D40, S: c.stats.S, band: c.stats.band, B7: c.traceGates && c.traceGates.B7 ? c.traceGates.B7.value : null });
     } catch (e) { /* skip unreadable */ }
   }
   return out;
@@ -58,7 +59,8 @@ function place(bank, o) {
     const L = levels[li], s = slot(L);
     if (b.tiles < s.minTiles || b.tiles > s.maxTiles) return false;
     if (Math.abs(D(b) - tgt[li]) > 1 + 1e-9) return false;
-    if (b.S < (o.sMin != null ? o.sMin : allow.has(L) ? 2 : 2.5) || b.S > 6) return false;
+    if (!(typeof b.B7 === 'number' && b.B7 <= 0.3)) return false; // Dennis 2026-11-12: repeated-blunder share is a requirement
+    if (b.S < (o.sMin != null ? o.sMin : 1.75) || b.S > 6) return false;
     return true;
   };
   const BIG = 1000, NO = 1e7, n = count, m = pool.length;
@@ -129,7 +131,7 @@ function place(bank, o) {
   }
   const holes = rows.filter(r => !r.key).map(r => {
     const s = slot(r.level);
-    return { level: r.level, target: r.target, needD: [+(r.target - 1).toFixed(2), +(r.target + 1).toFixed(2)], tileClass: s.big ? '96' : '72-88', S: allow.has(r.level) ? [2, 6] : [2.5, 6] };
+    return { level: r.level, target: r.target, needD: [+(r.target - 1).toFixed(2), +(r.target + 1).toFixed(2)], tileClass: s.big ? '96' : '72-88', S: [1.75, 6] };
   });
   const supply = {}, demand = {}, bin = d => Math.floor(d);
   for (const b of pool) { const k = tileClass(b.tiles), s = supply[k] = supply[k] || {}; s[bin(D(b))] = (s[bin(D(b))] || 0) + 1; }
@@ -160,7 +162,7 @@ function main() {
   const start = +g('start'), count = +g('count');
   if (!Number.isFinite(start) || !Number.isFinite(count)) { console.error('need --start L --count N'); process.exit(2); }
   const taken = g('taken') ? (() => { const j = JSON.parse(fs.readFileSync(g('taken'), 'utf8')); return Array.isArray(j) ? j : (j.keys || (j.rows || []).map(r => r.key).filter(Boolean)); })() : [];
-  const r = place(loadBank(g('bank', DEF_BANK)), { start, count, stat: g('stat', 'D40'), sMin: g('s-min', null) == null ? null : +g('s-min', null), // --s-min: what-if only; Dennis's band is 2.5
+  const r = place(loadBank(g('bank', DEF_BANK)), { start, count, stat: g('stat', 'D40'), sMin: g('s-min', null) == null ? null : +g('s-min', null), // --s-min: what-if only; Dennis's band is 1.75-6
     allowFallback: (g('allow-fallback', '') || '').split(',').filter(Boolean).map(Number), taken });
   const out = g('out', path.join(ROOT, `analysis/builder/bank/placement_${start}_${count}.json`));
   fs.writeFileSync(out, JSON.stringify(r, null, 1)); fs.writeFileSync(out.replace(/\.json$/, '.md'), markdown(r));

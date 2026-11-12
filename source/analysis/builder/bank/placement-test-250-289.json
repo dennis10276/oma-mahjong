@@ -1,10 +1,10 @@
 {
  "params": {
   "start": 250,
-  "count": 30,
+  "count": 40,
   "stat": "D40",
   "allowFallback": [],
-  "poolSize": 27
+  "poolSize": 9
  },
  "rows": [
   {
@@ -21,7 +21,7 @@
   },
   {
    "level": 251,
-   "target": 10.083,
+   "target": 10.1,
    "key": null,
    "layout": null,
    "tiles": null,
@@ -33,7 +33,7 @@
   },
   {
    "level": 252,
-   "target": 10.167,
+   "target": 10.2,
    "key": null,
    "layout": null,
    "tiles": null,
@@ -45,7 +45,7 @@
   },
   {
    "level": 253,
-   "target": 10.25,
+   "target": 10.3,
    "key": null,
    "layout": null,
    "tiles": null,
@@ -57,19 +57,7 @@
   },
   {
    "level": 254,
-   "target": 10.333,
-   "key": "c6b10b7f8137d02307e82dc2bf63b97b24ac09781e386d9067b85f03efa14a03",
-   "layout": 12,
-   "tiles": 88,
-   "D": 10.34,
-   "S": 3.8,
-   "band": "normal",
-   "dev": 0.007,
-   "bodyKey": "d6cf14ec3b441e1ae8c343adbd31c2671f6fc0c54bc343eb12ef7d638e6bbaef"
-  },
-  {
-   "level": 255,
-   "target": 10.417,
+   "target": 10.4,
    "key": null,
    "layout": null,
    "tiles": null,
@@ -80,7 +68,7 @@
    "bodyKey": null
   },
   {
-   "level": 256,
+   "level": 255,
    "target": 10.5,
    "key": null,
    "layout": null,
@@ -92,8 +80,20 @@
    "bodyKey": null
   },
   {
+   "level": 256,
+   "target": 10.6,
+   "key": null,
+   "layout": null,
+   "tiles": null,
+   "D": null,
+   "S": null,
+   "band": null,
+   "dev": null,
+   "bodyKey": null
+  },
+  {
    "level": 257,
-   "target": 10.583,
+   "target": 10.7,
    "key": null,
    "layout": null,
    "tiles": null,
@@ -105,7 +105,7 @@
   },
   {
    "level": 258,
-   "target": 10.667,
+   "target": 10.8,
    "key": null,
    "layout": null,
    "tiles": null,
@@ -117,7 +117,7 @@
   },
   {
    "level": 259,
-   "target": 10.75,
+   "target": 10.9,
    "key": null,
    "layout": null,
    "tiles": null,
@@ -129,19 +129,19 @@
   },
   {
    "level": 260,
-   "target": 10.833,
+   "target": 11,
    "key": "2b11a1116266150e2306d2332043996c0f2055a1cd4ca14540a493d13bcd36a3",
    "layout": 27,
    "tiles": 96,
    "D": 10.67,
    "S": 3.19,
    "band": "normal",
-   "dev": -0.163,
+   "dev": -0.33,
    "bodyKey": "f68498125ef21d649b69145717b12632fe95b9161bbdf041980733ef86528a0a"
   },
   {
    "level": 261,
-   "target": 10.917,
+   "target": 11.1,
    "key": null,
    "layout": null,
    "tiles": null,
@@ -153,7 +153,7 @@
   },
   {
    "level": 262,
-   "target": 11,
+   "target": 11.2,
    "key": null,
    "layout": null,
    "tiles": null,
@@ -165,7 +165,7 @@
   },
   {
    "level": 263,
-   "target": 11.083,
+   "target": 11.3,
    "key": null,
    "layout": null,
    "tiles": null,
@@ -177,7 +177,7 @@
   },
   {
    "level": 264,
-   "target": 11.167,
+   "target": 11.4,
    "key": null,
    "layout": null,
    "tiles": null,
@@ -189,42 +189,6 @@
   },
   {
    "level": 265,
-   "target": 11.25,
-   "key": null,
-   "layout": null,
-   "tiles": null,
-   "D": null,
-   "S": null,
-   "band": null,
-   "dev": null,
-   "bodyKey": null
-  },
-  {
-   "level": 266,
-   "target": 11.333,
-   "key": null,
-   "layout": null,
-   "tiles": null,
-   "D": null,
-   "S": null,
-   "band": null,
-   "dev": null,
-   "bodyKey": null
-  },
-  {
-   "level": 267,
-   "target": 11.417,
-   "key": null,
-   "layout": null,
-   "tiles": null,
-   "D": null,
-   "S": null,
-   "band": null,
-   "dev": null,
-   "bodyKey": null
-  },
-  {
-   "level": 268,
    "target": 11.5,
    "key": null,
    "layout": null,
@@ -236,67 +200,55 @@
    "bodyKey": null
   },
   {
-   "level": 269,
-   "target": 11.583,
+   "level": 266,
+   "target": 11.6,
    "key": "16f918114c547d76c9692b30697ad4131961ae21a27c8ba61902b1dfb2ac7287",
    "layout": 0,
    "tiles": 80,
    "D": 11.56,
    "S": 4.95,
    "band": "normal",
-   "dev": -0.023,
+   "dev": -0.04,
    "bodyKey": "acd570a086e29dfca2c46e241050a325ece1a47e18160bb298ba3ac00b0663aa"
   },
   {
+   "level": 267,
+   "target": 11.7,
+   "key": null,
+   "layout": null,
+   "tiles": null,
+   "D": null,
+   "S": null,
+   "band": null,
+   "dev": null,
+   "bodyKey": null
+  },
+  {
+   "level": 268,
+   "target": 11.8,
+   "key": null,
+   "layout": null,
+   "tiles": null,
+   "D": null,
+   "S": null,
+   "band": null,
+   "dev": null,
+   "bodyKey": null
+  },
+  {
+   "level": 269,
+   "target": 11.9,
+   "key": null,
+   "layout": null,
+   "tiles": null,
+   "D": null,
+   "S": null,
+   "band": null,
+   "dev": null,
+   "bodyKey": null
+  },
+  {
    "level": 270,
-   "target": 11.667,
-   "key": null,
-   "layout": null,
-   "tiles": null,
-   "D": null,
-   "S": null,
-   "band": null,
-   "dev": null,
-   "bodyKey": null
-  },
-  {
-   "level": 271,
-   "target": 11.75,
-   "key": null,
-   "layout": null,
-   "tiles": null,
-   "D": null,
-   "S": null,
-   "band": null,
-   "dev": null,
-   "bodyKey": null
-  },
-  {
-   "level": 272,
-   "target": 11.833,
-   "key": null,
-   "layout": null,
-   "tiles": null,
-   "D": null,
-   "S": null,
-   "band": null,
-   "dev": null,
-   "bodyKey": null
-  },
-  {
-   "level": 273,
-   "target": 11.917,
-   "key": null,
-   "layout": null,
-   "tiles": null,
-   "D": null,
-   "S": null,
-   "band": null,
-   "dev": null,
-   "bodyKey": null
-  },
-  {
-   "level": 274,
    "target": 12,
    "key": null,
    "layout": null,
@@ -308,8 +260,56 @@
    "bodyKey": null
   },
   {
+   "level": 271,
+   "target": 12.1,
+   "key": null,
+   "layout": null,
+   "tiles": null,
+   "D": null,
+   "S": null,
+   "band": null,
+   "dev": null,
+   "bodyKey": null
+  },
+  {
+   "level": 272,
+   "target": 12.2,
+   "key": null,
+   "layout": null,
+   "tiles": null,
+   "D": null,
+   "S": null,
+   "band": null,
+   "dev": null,
+   "bodyKey": null
+  },
+  {
+   "level": 273,
+   "target": 12.3,
+   "key": null,
+   "layout": null,
+   "tiles": null,
+   "D": null,
+   "S": null,
+   "band": null,
+   "dev": null,
+   "bodyKey": null
+  },
+  {
+   "level": 274,
+   "target": 12.4,
+   "key": null,
+   "layout": null,
+   "tiles": null,
+   "D": null,
+   "S": null,
+   "band": null,
+   "dev": null,
+   "bodyKey": null
+  },
+  {
    "level": 275,
-   "target": 13,
+   "target": 12.5,
    "key": null,
    "layout": null,
    "tiles": null,
@@ -321,7 +321,7 @@
   },
   {
    "level": 276,
-   "target": 13.12,
+   "target": 12.6,
    "key": null,
    "layout": null,
    "tiles": null,
@@ -333,7 +333,7 @@
   },
   {
    "level": 277,
-   "target": 13.24,
+   "target": 12.7,
    "key": null,
    "layout": null,
    "tiles": null,
@@ -345,7 +345,7 @@
   },
   {
    "level": 278,
-   "target": 13.36,
+   "target": 12.8,
    "key": null,
    "layout": null,
    "tiles": null,
@@ -357,7 +357,127 @@
   },
   {
    "level": 279,
-   "target": 13.48,
+   "target": 12.9,
+   "key": null,
+   "layout": null,
+   "tiles": null,
+   "D": null,
+   "S": null,
+   "band": null,
+   "dev": null,
+   "bodyKey": null
+  },
+  {
+   "level": 280,
+   "target": 13,
+   "key": "e70f2226be74e5f42acfad92525e7ddbf7a8ca4b472321c1adc00b1a2363bed1",
+   "layout": 27,
+   "tiles": 96,
+   "D": 13.51,
+   "S": 4.9,
+   "band": "normal",
+   "dev": 0.51,
+   "bodyKey": "2ef53f9114078eac448e41da781c749027b24b4cac46930fa27c361c2aa529dd"
+  },
+  {
+   "level": 281,
+   "target": 13.1,
+   "key": null,
+   "layout": null,
+   "tiles": null,
+   "D": null,
+   "S": null,
+   "band": null,
+   "dev": null,
+   "bodyKey": null
+  },
+  {
+   "level": 282,
+   "target": 13.2,
+   "key": null,
+   "layout": null,
+   "tiles": null,
+   "D": null,
+   "S": null,
+   "band": null,
+   "dev": null,
+   "bodyKey": null
+  },
+  {
+   "level": 283,
+   "target": 13.3,
+   "key": null,
+   "layout": null,
+   "tiles": null,
+   "D": null,
+   "S": null,
+   "band": null,
+   "dev": null,
+   "bodyKey": null
+  },
+  {
+   "level": 284,
+   "target": 13.4,
+   "key": null,
+   "layout": null,
+   "tiles": null,
+   "D": null,
+   "S": null,
+   "band": null,
+   "dev": null,
+   "bodyKey": null
+  },
+  {
+   "level": 285,
+   "target": 13.5,
+   "key": null,
+   "layout": null,
+   "tiles": null,
+   "D": null,
+   "S": null,
+   "band": null,
+   "dev": null,
+   "bodyKey": null
+  },
+  {
+   "level": 286,
+   "target": 13.6,
+   "key": null,
+   "layout": null,
+   "tiles": null,
+   "D": null,
+   "S": null,
+   "band": null,
+   "dev": null,
+   "bodyKey": null
+  },
+  {
+   "level": 287,
+   "target": 13.7,
+   "key": null,
+   "layout": null,
+   "tiles": null,
+   "D": null,
+   "S": null,
+   "band": null,
+   "dev": null,
+   "bodyKey": null
+  },
+  {
+   "level": 288,
+   "target": 13.8,
+   "key": null,
+   "layout": null,
+   "tiles": null,
+   "D": null,
+   "S": null,
+   "band": null,
+   "dev": null,
+   "bodyKey": null
+  },
+  {
+   "level": 289,
+   "target": 13.9,
    "key": null,
    "layout": null,
    "tiles": null,
@@ -498,17 +618,67 @@
    "from": 275,
    "to": 279,
    "skipped": "hole"
+  },
+  {
+   "from": 276,
+   "to": 280,
+   "skipped": "hole"
+  },
+  {
+   "from": 277,
+   "to": 281,
+   "skipped": "hole"
+  },
+  {
+   "from": 278,
+   "to": 282,
+   "skipped": "hole"
+  },
+  {
+   "from": 279,
+   "to": 283,
+   "skipped": "hole"
+  },
+  {
+   "from": 280,
+   "to": 284,
+   "skipped": "hole"
+  },
+  {
+   "from": 281,
+   "to": 285,
+   "skipped": "hole"
+  },
+  {
+   "from": 282,
+   "to": 286,
+   "skipped": "hole"
+  },
+  {
+   "from": 283,
+   "to": 287,
+   "skipped": "hole"
+  },
+  {
+   "from": 284,
+   "to": 288,
+   "skipped": "hole"
+  },
+  {
+   "from": 285,
+   "to": 289,
+   "skipped": "hole"
   }
  ],
  "uncheckedWindows": [
   "246..250 (crosses start)",
-  "276..280 (crosses end)",
+  "286..290 (crosses end)",
   "247..251 (crosses start)",
-  "277..281 (crosses end)",
+  "287..291 (crosses end)",
   "248..252 (crosses start)",
-  "278..282 (crosses end)",
+  "288..292 (crosses end)",
   "249..253 (crosses start)",
-  "279..283 (crosses end)"
+  "289..293 (crosses end)"
  ],
  "holes": [
   {
@@ -520,64 +690,64 @@
    ],
    "tileClass": "96",
    "S": [
-    2.5,
+    1.75,
     6
    ]
   },
   {
    "level": 251,
-   "target": 10.083,
+   "target": 10.1,
    "needD": [
-    9.08,
-    11.08
+    9.1,
+    11.1
    ],
    "tileClass": "72-88",
    "S": [
-    2.5,
+    1.75,
     6
    ]
   },
   {
    "level": 252,
-   "target": 10.167,
+   "target": 10.2,
    "needD": [
-    9.17,
-    11.17
+    9.2,
+    11.2
    ],
    "tileClass": "72-88",
    "S": [
-    2.5,
+    1.75,
     6
    ]
   },
   {
    "level": 253,
-   "target": 10.25,
+   "target": 10.3,
    "needD": [
-    9.25,
-    11.25
+    9.3,
+    11.3
    ],
    "tileClass": "72-88",
    "S": [
-    2.5,
+    1.75,
+    6
+   ]
+  },
+  {
+   "level": 254,
+   "target": 10.4,
+   "needD": [
+    9.4,
+    11.4
+   ],
+   "tileClass": "72-88",
+   "S": [
+    1.75,
     6
    ]
   },
   {
    "level": 255,
-   "target": 10.417,
-   "needD": [
-    9.42,
-    11.42
-   ],
-   "tileClass": "72-88",
-   "S": [
-    2.5,
-    6
-   ]
-  },
-  {
-   "level": 256,
    "target": 10.5,
    "needD": [
     9.5,
@@ -585,142 +755,116 @@
    ],
    "tileClass": "72-88",
    "S": [
-    2.5,
+    1.75,
+    6
+   ]
+  },
+  {
+   "level": 256,
+   "target": 10.6,
+   "needD": [
+    9.6,
+    11.6
+   ],
+   "tileClass": "72-88",
+   "S": [
+    1.75,
     6
    ]
   },
   {
    "level": 257,
-   "target": 10.583,
+   "target": 10.7,
    "needD": [
-    9.58,
-    11.58
+    9.7,
+    11.7
    ],
    "tileClass": "72-88",
    "S": [
-    2.5,
+    1.75,
     6
    ]
   },
   {
    "level": 258,
-   "target": 10.667,
+   "target": 10.8,
    "needD": [
-    9.67,
-    11.67
+    9.8,
+    11.8
    ],
    "tileClass": "72-88",
    "S": [
-    2.5,
+    1.75,
     6
    ]
   },
   {
    "level": 259,
-   "target": 10.75,
+   "target": 10.9,
    "needD": [
-    9.75,
-    11.75
+    9.9,
+    11.9
    ],
    "tileClass": "72-88",
    "S": [
-    2.5,
+    1.75,
     6
    ]
   },
   {
    "level": 261,
-   "target": 10.917,
+   "target": 11.1,
    "needD": [
-    9.92,
-    11.92
+    10.1,
+    12.1
    ],
    "tileClass": "72-88",
    "S": [
-    2.5,
+    1.75,
     6
    ]
   },
   {
    "level": 262,
-   "target": 11,
+   "target": 11.2,
    "needD": [
-    10,
-    12
+    10.2,
+    12.2
    ],
    "tileClass": "72-88",
    "S": [
-    2.5,
+    1.75,
     6
    ]
   },
   {
    "level": 263,
-   "target": 11.083,
+   "target": 11.3,
    "needD": [
-    10.08,
-    12.08
+    10.3,
+    12.3
    ],
    "tileClass": "72-88",
    "S": [
-    2.5,
+    1.75,
     6
    ]
   },
   {
    "level": 264,
-   "target": 11.167,
+   "target": 11.4,
    "needD": [
-    10.17,
-    12.17
+    10.4,
+    12.4
    ],
    "tileClass": "72-88",
    "S": [
-    2.5,
+    1.75,
     6
    ]
   },
   {
    "level": 265,
-   "target": 11.25,
-   "needD": [
-    10.25,
-    12.25
-   ],
-   "tileClass": "72-88",
-   "S": [
-    2.5,
-    6
-   ]
-  },
-  {
-   "level": 266,
-   "target": 11.333,
-   "needD": [
-    10.33,
-    12.33
-   ],
-   "tileClass": "72-88",
-   "S": [
-    2.5,
-    6
-   ]
-  },
-  {
-   "level": 267,
-   "target": 11.417,
-   "needD": [
-    10.42,
-    12.42
-   ],
-   "tileClass": "72-88",
-   "S": [
-    2.5,
-    6
-   ]
-  },
-  {
-   "level": 268,
    "target": 11.5,
    "needD": [
     10.5,
@@ -728,137 +872,293 @@
    ],
    "tileClass": "72-88",
    "S": [
-    2.5,
+    1.75,
+    6
+   ]
+  },
+  {
+   "level": 267,
+   "target": 11.7,
+   "needD": [
+    10.7,
+    12.7
+   ],
+   "tileClass": "72-88",
+   "S": [
+    1.75,
+    6
+   ]
+  },
+  {
+   "level": 268,
+   "target": 11.8,
+   "needD": [
+    10.8,
+    12.8
+   ],
+   "tileClass": "72-88",
+   "S": [
+    1.75,
+    6
+   ]
+  },
+  {
+   "level": 269,
+   "target": 11.9,
+   "needD": [
+    10.9,
+    12.9
+   ],
+   "tileClass": "72-88",
+   "S": [
+    1.75,
     6
    ]
   },
   {
    "level": 270,
-   "target": 11.667,
-   "needD": [
-    10.67,
-    12.67
-   ],
-   "tileClass": "96",
-   "S": [
-    2.5,
-    6
-   ]
-  },
-  {
-   "level": 271,
-   "target": 11.75,
-   "needD": [
-    10.75,
-    12.75
-   ],
-   "tileClass": "72-88",
-   "S": [
-    2.5,
-    6
-   ]
-  },
-  {
-   "level": 272,
-   "target": 11.833,
-   "needD": [
-    10.83,
-    12.83
-   ],
-   "tileClass": "72-88",
-   "S": [
-    2.5,
-    6
-   ]
-  },
-  {
-   "level": 273,
-   "target": 11.917,
-   "needD": [
-    10.92,
-    12.92
-   ],
-   "tileClass": "72-88",
-   "S": [
-    2.5,
-    6
-   ]
-  },
-  {
-   "level": 274,
    "target": 12,
    "needD": [
     11,
     13
    ],
+   "tileClass": "96",
+   "S": [
+    1.75,
+    6
+   ]
+  },
+  {
+   "level": 271,
+   "target": 12.1,
+   "needD": [
+    11.1,
+    13.1
+   ],
    "tileClass": "72-88",
    "S": [
-    2.5,
+    1.75,
+    6
+   ]
+  },
+  {
+   "level": 272,
+   "target": 12.2,
+   "needD": [
+    11.2,
+    13.2
+   ],
+   "tileClass": "72-88",
+   "S": [
+    1.75,
+    6
+   ]
+  },
+  {
+   "level": 273,
+   "target": 12.3,
+   "needD": [
+    11.3,
+    13.3
+   ],
+   "tileClass": "72-88",
+   "S": [
+    1.75,
+    6
+   ]
+  },
+  {
+   "level": 274,
+   "target": 12.4,
+   "needD": [
+    11.4,
+    13.4
+   ],
+   "tileClass": "72-88",
+   "S": [
+    1.75,
     6
    ]
   },
   {
    "level": 275,
-   "target": 13,
+   "target": 12.5,
    "needD": [
-    12,
-    14
+    11.5,
+    13.5
    ],
    "tileClass": "72-88",
    "S": [
-    2.5,
+    1.75,
     6
    ]
   },
   {
    "level": 276,
-   "target": 13.12,
+   "target": 12.6,
    "needD": [
-    12.12,
-    14.12
+    11.6,
+    13.6
    ],
    "tileClass": "72-88",
    "S": [
-    2.5,
+    1.75,
     6
    ]
   },
   {
    "level": 277,
-   "target": 13.24,
+   "target": 12.7,
    "needD": [
-    12.24,
-    14.24
+    11.7,
+    13.7
    ],
    "tileClass": "72-88",
    "S": [
-    2.5,
+    1.75,
     6
    ]
   },
   {
    "level": 278,
-   "target": 13.36,
+   "target": 12.8,
    "needD": [
-    12.36,
-    14.36
+    11.8,
+    13.8
    ],
    "tileClass": "72-88",
    "S": [
-    2.5,
+    1.75,
     6
    ]
   },
   {
    "level": 279,
-   "target": 13.48,
+   "target": 12.9,
    "needD": [
-    12.48,
-    14.48
+    11.9,
+    13.9
    ],
    "tileClass": "72-88",
    "S": [
-    2.5,
+    1.75,
+    6
+   ]
+  },
+  {
+   "level": 281,
+   "target": 13.1,
+   "needD": [
+    12.1,
+    14.1
+   ],
+   "tileClass": "72-88",
+   "S": [
+    1.75,
+    6
+   ]
+  },
+  {
+   "level": 282,
+   "target": 13.2,
+   "needD": [
+    12.2,
+    14.2
+   ],
+   "tileClass": "72-88",
+   "S": [
+    1.75,
+    6
+   ]
+  },
+  {
+   "level": 283,
+   "target": 13.3,
+   "needD": [
+    12.3,
+    14.3
+   ],
+   "tileClass": "72-88",
+   "S": [
+    1.75,
+    6
+   ]
+  },
+  {
+   "level": 284,
+   "target": 13.4,
+   "needD": [
+    12.4,
+    14.4
+   ],
+   "tileClass": "72-88",
+   "S": [
+    1.75,
+    6
+   ]
+  },
+  {
+   "level": 285,
+   "target": 13.5,
+   "needD": [
+    12.5,
+    14.5
+   ],
+   "tileClass": "72-88",
+   "S": [
+    1.75,
+    6
+   ]
+  },
+  {
+   "level": 286,
+   "target": 13.6,
+   "needD": [
+    12.6,
+    14.6
+   ],
+   "tileClass": "72-88",
+   "S": [
+    1.75,
+    6
+   ]
+  },
+  {
+   "level": 287,
+   "target": 13.7,
+   "needD": [
+    12.7,
+    14.7
+   ],
+   "tileClass": "72-88",
+   "S": [
+    1.75,
+    6
+   ]
+  },
+  {
+   "level": 288,
+   "target": 13.8,
+   "needD": [
+    12.8,
+    14.8
+   ],
+   "tileClass": "72-88",
+   "S": [
+    1.75,
+    6
+   ]
+  },
+  {
+   "level": 289,
+   "target": 13.9,
+   "needD": [
+    12.9,
+    14.9
+   ],
+   "tileClass": "72-88",
+   "S": [
+    1.75,
     6
    ]
   }
@@ -867,42 +1167,31 @@
   "96": {
    "10": 1,
    "13": 1,
-   "19": 1,
-   "39": 1
+   "19": 1
   },
   "72-88": {
    "5": 1,
    "6": 1,
    "7": 1,
    "9": 2,
-   "10": 1,
-   "11": 1,
-   "13": 1,
-   "20": 2,
-   "22": 1,
-   "27": 1,
-   "31": 2,
-   "34": 1,
-   "35": 1,
-   "37": 2,
-   "38": 2,
-   "39": 2,
-   "40": 1
+   "11": 1
   }
  },
  "demand": {
   "96": {
-   "10": 2,
-   "11": 1
+   "10": 1,
+   "11": 1,
+   "12": 1,
+   "13": 1
   },
   "72-88": {
-   "10": 10,
-   "11": 11,
-   "12": 1,
-   "13": 5
+   "10": 9,
+   "11": 9,
+   "12": 9,
+   "13": 9
   }
  },
  "filled": 3,
- "totalAbsDev": 0.193,
+ "totalAbsDev": 0.88,
  "violationsLeft": 0
 }

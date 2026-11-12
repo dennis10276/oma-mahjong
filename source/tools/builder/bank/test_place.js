@@ -1,9 +1,9 @@
 'use strict';
 const assert = require('assert'), { place, targetCurve } = require('./place.js');
-assert.strictEqual(targetCurve(250), 10); assert.ok(Math.abs(targetCurve(274) - 12) < 1e-9);
-assert.strictEqual(targetCurve(275), 13); assert.ok(Math.abs(targetCurve(300) - 16) < 1e-9); assert.ok(Math.abs(targetCurve(325) - 19) < 1e-9);
+assert.strictEqual(targetCurve(250), 10); assert.ok(Math.abs(targetCurve(260) - 11) < 1e-9);
+assert.ok(Math.abs(targetCurve(300) - 15) < 1e-9);
 let id = 0;
-const mk = (D, tiles, layout, o = {}) => ({ key: 'k' + (++id), body: 'b' + id, layout, tiles, D40: D, D20: D, S: 3, band: 'normal', ...o });
+const mk = (D, tiles, layout, o = {}) => ({ key: 'k' + (++id), body: 'b' + id, layout, tiles, D40: D, D20: D, S: 3, band: 'normal', B7: 0.1, ...o });
 const bank = [];
 for (let l = 250; l < 260; l++) bank.push(mk(targetCurve(l) + 0.2, l % 10 === 0 ? 96 : 80, l % 5));
 let r = place(bank, { start: 250, count: 10 });
@@ -12,10 +12,12 @@ assert.strictEqual(r.rows[0].tiles, 96);
 // 96 never on a non-big level; hole reported
 r = place([mk(10.8, 96, 1)], { start: 251, count: 1 });
 assert.strictEqual(r.filled, 0); assert.strictEqual(r.holes[0].tileClass, '72-88');
-// fallback S only when allowed
-const fb = [mk(10.1, 96, 1, { S: 2.2, band: 'fallback' })];
-assert.strictEqual(place(fb, { start: 250, count: 1 }).filled, 0);
-assert.strictEqual(place(fb, { start: 250, count: 1, allowFallback: [250] }).filled, 1);
+// skilled minimum 1.75, maximum 6; repeated-blunder share at most 0.3 (Dennis 2026-11-12)
+assert.strictEqual(place([mk(10.1, 96, 1, { S: 1.7 })], { start: 250, count: 1 }).filled, 0);
+assert.strictEqual(place([mk(10.1, 96, 1, { S: 1.8 })], { start: 250, count: 1 }).filled, 1);
+assert.strictEqual(place([mk(10.1, 96, 1, { S: 6.1 })], { start: 250, count: 1 }).filled, 0);
+assert.strictEqual(place([mk(10.1, 96, 1, { B7: 0.31 })], { start: 250, count: 1 }).filled, 0);
+assert.strictEqual(place([mk(10.1, 96, 1, { B7: null })], { start: 250, count: 1 }).filled, 0);
 // deviation > 1 rejected; taken excluded; body dup
 assert.strictEqual(place([mk(11.5, 80, 1)], { start: 251, count: 1 }).filled, 0);
 const t = mk(10.1, 80, 1); assert.strictEqual(place([t], { start: 251, count: 1, taken: [t.key] }).filled, 0);

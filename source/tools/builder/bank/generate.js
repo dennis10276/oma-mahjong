@@ -17,7 +17,7 @@ const MS = require('./measure.js');
 
 const CENSUS_DIR = path.join(ROOT, 'source/build/bank');
 const PUZZLE_DIR = path.join(ROOT, 'source/analysis/builder/bank/puzzles');
-const THR = { D_SCREEN_MIN: 7, STABLE_RATIO: 0.55, BAND: [2.5, 6], FALLBACK_MIN: 2 };
+const THR = { D_SCREEN_MIN: 7, STABLE_RATIO: 0.55, BAND: [1.75, 6], FALLBACK_MIN: 1.75, B7_MAX: 0.3 };
 // fixed measurement seeds; screen and full seeds are disjoint, and none is a CURVE/ACCEPT seed.
 const SEEDS = { S_SCREEN: 90001, D_SCREEN: 90002, S_FULL: [91001, 91002], D_FULL: [92001, 92002, 92003, 92004] };
 
@@ -129,6 +129,7 @@ function main() {
           gates: Object.fromEntries(['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7'].map(k => [k, tr[k]])), counts: tr.counts, errorKinds: tr.errorKinds, lossKinds: tr.lossKinds, examples: tr.examples };
         if (tr.valid !== true) { fail('trace', 'trace_invalid'); break run; }
         if (tr.pass !== true) { fail('trace', ['B1', 'B2', 'B3', 'B4', 'B5', 'B6'].filter(k => tr[k]?.pass !== true).map(k => k + (tr[k]?.pass == null ? '?' : '')).join('+') || 'pass_not_true'); break run; }
+        if (!(tr.B7 && typeof tr.B7.value === 'number' && tr.B7.value <= THR.B7_MAX)) { fail('trace', 'B7'); break run; } // Dennis 2026-11-12
         rec.banked = true;
       }
     } catch (e) {
