@@ -19,7 +19,7 @@ function loadBank(dir) {
     try {
       const j = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')), c = j.card;
       if (!c || !c.stats) continue;
-      out.push({ key: c.boardKey, body: c.matchingBodyKey, layout: c.layout, tiles: c.tiles, D20: c.stats.D20, D40: c.stats.D40, S: c.stats.S, band: c.stats.band, B7: c.traceGates && c.traceGates.B7 ? c.traceGates.B7.value : null });
+      out.push({ key: c.boardKey, body: c.matchingBodyKey, layout: c.layout, tiles: c.tiles, D20: c.stats.D20, D40: c.stats.D40, S: c.stats.S, band: c.stats.band, B7: c.traceGates && c.traceGates.B7 ? c.traceGates.B7.value : null, late: c.traceGates && c.traceGates.B6 ? c.traceGates.B6.value : null });
     } catch (e) { /* skip unreadable */ }
   }
   return out;
@@ -60,6 +60,9 @@ function place(bank, o) {
     if (b.tiles < s.minTiles || b.tiles > s.maxTiles) return false;
     if (Math.abs(D(b) - tgt[li]) > 1 + 1e-9) return false;
     if (!(typeof b.B7 === 'number' && b.B7 <= 0.3)) return false; // Dennis 2026-11-12: a high repeated-blunder share means "steer first" (steer.js), so it is not placed as it is
+    // Dennis on test puzzle 254 (2026-11-12): "the rest of the level is quite easy" - its share of lost tries after the clock was 0.13.
+    // Small steering edits could not raise that share, so placement asks for a second act: at least 0.25 (when measured).
+    if (typeof b.late === 'number' && b.late < (o.minLate != null ? o.minLate : 0.25)) return false;
     if (b.S < (o.sMin != null ? o.sMin : 1.75) || b.S > 6) return false;
     return true;
   };
@@ -162,7 +165,7 @@ function main() {
   const start = +g('start'), count = +g('count');
   if (!Number.isFinite(start) || !Number.isFinite(count)) { console.error('need --start L --count N'); process.exit(2); }
   const taken = g('taken') ? (() => { const j = JSON.parse(fs.readFileSync(g('taken'), 'utf8')); return Array.isArray(j) ? j : (j.keys || (j.rows || []).map(r => r.key).filter(Boolean)); })() : [];
-  const r = place(loadBank(g('bank', DEF_BANK)), { start, count, stat: g('stat', 'D40'), sMin: g('s-min', null) == null ? null : +g('s-min', null), // --s-min: what-if only; Dennis's band is 1.75-6
+  const r = place(loadBank(g('bank', DEF_BANK)), { start, count, stat: g('stat', 'D40'), sMin: g('s-min', null) == null ? null : +g('s-min', null), minLate: g('min-late', null) == null ? null : +g('min-late', null), // --s-min: what-if only; Dennis's band is 1.75-6
     allowFallback: (g('allow-fallback', '') || '').split(',').filter(Boolean).map(Number), taken });
   const out = g('out', path.join(ROOT, `analysis/builder/bank/placement_${start}_${count}.json`));
   fs.writeFileSync(out, JSON.stringify(r, null, 1)); fs.writeFileSync(out.replace(/\.json$/, '.md'), markdown(r));
