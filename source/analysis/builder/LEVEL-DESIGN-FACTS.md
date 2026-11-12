@@ -47,6 +47,16 @@ add new decisions with a date.
   - **Repeated pictures must matter** (2026-11-12): steering may open all four copies together after the trap so
     that pairing the wrong two costs, move repeats around, add face-down tiles after the trap, and add a second
     obstacle if it works.
+  - **Focus on the traps** (2026-11-12, after lab 3): "you have to focus on making the traps more thought about with
+    ice, keys and clock positions. There is the fun. You kinda have to see it." Traps must be better connected and
+    thought out. All-face-up levels are okay but must be harder if they are there; face-down is fine.
+  - **The bots may be overruled for cool levels** (2026-11-12): "Drop the bots if you think you made some cool levels
+    the bot didn't like", once the traps are better connected and thought out.
+  - **Never reuse levels** (2026-11-12, "very important"): three different boards on the same layout with the same
+    kind of trap felt like levels he had already played. A level must not feel like an earlier one: vary layout and
+    trap together.
+  - **Use the earlier Claude builder findings** (2026-11-12): look at the previous Claude attempts at the level
+    builder and take those findings as well.
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
   - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
     played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is

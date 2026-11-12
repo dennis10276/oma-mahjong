@@ -1,0 +1,149 @@
+{
+ "savedAt": "2026-11-12T22:26:22.130Z",
+ "source": "Dennis, local level lab 3 (port 8256)",
+ "ratings": {
+  "271": {
+   "boardKey": "5623afed9aa2e0326dae85b49ed1dd0d3e27213b61a23061e4d488f96d97a268",
+   "smartMade": false,
+   "stars": 3,
+   "verdict": null,
+   "note": "I played this level before...",
+   "tries": 2,
+   "wins": 1,
+   "results": [
+    "stuck, 70 left",
+    "win, 0 left"
+   ],
+   "board": {
+    "shape": "hourglass",
+    "layout": 23,
+    "tiles": 76,
+    "story": "deepClock",
+    "faceDown": 8,
+    "clock": {
+     "n": 10,
+     "k": 8,
+     "spare": 2,
+     "tile": 28
+    },
+    "D40": 5.86,
+    "S": 1.86,
+    "lateLossShare": 0.488
+   }
+  },
+  "272": {
+   "boardKey": "02257721565efcb5fc4a468a28efc821fb2257e291e27a3b38807b461dfc8789",
+   "smartMade": false,
+   "stars": 2,
+   "verdict": null,
+   "note": "I also feel I played this before. Fine",
+   "tries": 2,
+   "wins": 1,
+   "results": [
+    "stuck, 68 left",
+    "win, 0 left"
+   ],
+   "board": {
+    "shape": "diamond",
+    "layout": 30,
+    "tiles": 80,
+    "story": "deepClock",
+    "faceDown": 8,
+    "clock": {
+     "n": 12,
+     "k": 9,
+     "spare": 3,
+     "tile": 18
+    },
+    "D40": 5.92,
+    "S": 1.89,
+    "lateLossShare": 0.57
+   }
+  },
+  "273": {
+   "boardKey": "daf285e590a2bd4432f89c3b8bf39c97fc9a6ff91143ed93f8867b9c0c78649e",
+   "smartMade": true,
+   "stars": 4,
+   "verdict": "right",
+   "note": "I liked this",
+   "tries": 1,
+   "wins": 1,
+   "results": [
+    "win, 0 left"
+   ],
+   "board": {
+    "shape": "moon",
+    "layout": 16,
+    "tiles": 74,
+    "story": "deepClock",
+    "faceDown": 22,
+    "clock": {
+     "n": 11,
+     "k": 8,
+     "spare": 3,
+     "tile": 37
+    },
+    "D40": 5.03,
+    "S": 3.46,
+    "lateLossShare": 0.561
+   }
+  },
+  "275": {
+   "boardKey": "3bf50015715352d664fc40653e17965af4c34089da6c17d8766957953713fefe",
+   "smartMade": true,
+   "stars": 0,
+   "verdict": null,
+   "note": "I played this before. Dont reuse levels! very important. Look at previous attempts by claude for the level builder and take his findings as well.",
+   "tries": 2,
+   "wins": 0,
+   "results": [
+    "stuck, 64 left",
+    "restart, 77 left"
+   ],
+   "board": {
+    "shape": "diamond",
+    "layout": 30,
+    "tiles": 80,
+    "story": "keysFarSide",
+    "faceDown": 1,
+    "clock": {
+     "n": 16,
+     "k": 14,
+     "spare": 2,
+     "tile": 48
+    },
+    "D40": 4.96,
+    "S": 2.24,
+    "lateLossShare": 0.382
+   }
+  },
+  "276": {
+   "boardKey": "901dcc655edb3934a6302fdb6635543bd3b300103235a95f911238aa6368e156",
+   "smartMade": true,
+   "stars": 2,
+   "verdict": "easy",
+   "note": "Its okay these all face up levels but they need to be harder if they are there. But face down is fine you have to focus on making the traps more thought about with ice keys and clock positions. There is the fun. You kinda have to see it. Drop the bots if you think you made some cool levels the bot didnt like after you did this focus on making traps better connected and thought out",
+   "tries": 1,
+   "wins": 1,
+   "results": [
+    "win, 0 left"
+   ],
+   "board": {
+    "shape": "pyramid · tall",
+    "layout": 15,
+    "tiles": 80,
+    "story": "deepClock",
+    "faceDown": 0,
+    "clock": {
+     "n": 8,
+     "k": 5,
+     "spare": 3,
+     "tile": 14
+    },
+    "D40": 6.13,
+    "S": 1.27,
+    "lateLossShare": 0.575
+   }
+  }
+ }
+}
