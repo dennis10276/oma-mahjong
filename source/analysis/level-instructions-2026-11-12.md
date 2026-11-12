@@ -22,3 +22,6 @@ Validation completed:
 - `git diff --check` passed. Visual inspection confirmed Dutch/English small-phone layouts.
 
 No real-player data was written. Tests used FakeDB. Nothing was released.
+
+
+Release authorization: Dennis approved publication with "release" on 2026-11-12. Preparing version 1.68 from current main; final release checks and verification follow below.
