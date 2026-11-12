@@ -29,7 +29,10 @@ function eligibleLayouts({ big = false } = {}) {
 // spec i of stream `seed`: independent of every other index (resumable).
 function specAt(seed, i, opts = {}) {
   const rng = mulberry32(mix(seed, i)), pick = a => a[Math.floor(rng() * a.length)];
-  const L = pick(eligibleLayouts(opts));
+  // --small (Dennis 2026-11-12): favour 72-80 tiles on non-big levels; the game has 36 pictures, so every tile pair
+  // above 72 repeats a picture. 82-88 stay at a low weight, 96 only for the big slots (--big).
+  const el = eligibleLayouts(opts);
+  const L = pick(opts.small && !opts.big ? el.flatMap(l => l.tiles <= 80 ? [l, l, l, l] : l.tiles <= 88 ? [l] : []) : el);
   const spare = pick([1, 2, 3]);
   return {
     id: `${seed}-${i}`, index: i,

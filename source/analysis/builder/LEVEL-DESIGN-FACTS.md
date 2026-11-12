@@ -41,6 +41,12 @@ add new decisions with a date.
   - **Start: 6 tries on the family bot's scale at 250, then +1 try every 15 levels** (7 at 265, 8 at 280, 10 at
     310). Final decision of 2026-11-12, after seeing that the bot rates the hardest live levels (132, 150) at
     about 7 while normal players need 20+ tries there. It supersedes "about 10 at 250" from earlier that day.
+  - **Favour 72–80 tiles on non-big levels** (2026-11-12). The game has 36 pictures, so every pair above 72 tiles
+    repeats a picture; Dennis noticed "a lot of the same pairs" on the 88-tile test puzzle. 96 tiles stay on every
+    tenth level.
+  - **Repeated pictures must matter** (2026-11-12): steering may open all four copies together after the trap so
+    that pairing the wrong two costs, move repeats around, add face-down tiles after the trap, and add a second
+    obstacle if it works.
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
   - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
     played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is
