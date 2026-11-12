@@ -40,10 +40,10 @@ function loadCensus() {
 const cpuMs = u => (u.user + u.system) / 1000;
 
 function main() {
-  const seed = +arg('seed', 1), maxC = +arg('max-candidates', 1e9), wallMs = +arg('wall-min', 1e9) * 60000, big = flag('big');
+  const seed = +arg('seed', 1), maxC = +arg('max-candidates', 1e9), wallMs = +arg('wall-min', 1e9) * 60000, big = flag('big'), focus = flag('focus');
   const started = Date.now();
   fs.mkdirSync(CENSUS_DIR, { recursive: true }); fs.mkdirSync(PUZZLE_DIR, { recursive: true });
-  const censusFile = path.join(CENSUS_DIR, `census-${seed}${big ? '-big' : ''}.jsonl`);
+  const censusFile = path.join(CENSUS_DIR, `census-${seed}${big ? '-big' : ''}${focus ? '-focus' : ''}.jsonl`);
   const all = loadCensus();
   const done = new Set(all.filter(r => r.file === path.basename(censusFile)).map(r => r.index));
   const boardKeys = new Set(all.map(r => r.boardKey).filter(Boolean)), bodyKeys = new Set(all.map(r => r.matchingBodyKey).filter(Boolean));
@@ -57,7 +57,7 @@ function main() {
   for (let i = 0; n < maxC && Date.now() - started < wallMs; i++) {
     if (done.has(i)) continue;
     n++;
-    const spec = S.specAt(seed, i, { big });
+    const spec = S.specAt(seed, i, { big, focus });
     const rec = { id: spec.id, index: i, seed, spec, knobs: { spare: spec.spare, depth: spec.depth, traps: spec.traps, maxDown: spec.maxDown, hiddenOnWay: spec.hiddenOnWay, trayRoom: spec.trayRoom, tailPairWidth: spec.tailPairWidth, buildSeed: spec.buildSeed, story: spec.story, stage: spec.stage, layout: spec.layout, shape: spec.shape, tiles: spec.tiles, big: spec.big },
       cpuMs: {}, stages: [], at: new Date().toISOString() };
     let design = null, stageName = null, c0 = null;

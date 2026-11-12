@@ -4,7 +4,7 @@
   "count": 30,
   "stat": "D40",
   "allowFallback": [],
-  "poolSize": 12
+  "poolSize": 27
  },
  "rows": [
   {
@@ -58,14 +58,14 @@
   {
    "level": 254,
    "target": 10.333,
-   "key": null,
-   "layout": null,
-   "tiles": null,
-   "D": null,
-   "S": null,
-   "band": null,
-   "dev": null,
-   "bodyKey": null
+   "key": "c6b10b7f8137d02307e82dc2bf63b97b24ac09781e386d9067b85f03efa14a03",
+   "layout": 12,
+   "tiles": 88,
+   "D": 10.34,
+   "S": 3.8,
+   "band": "normal",
+   "dev": 0.007,
+   "bodyKey": "d6cf14ec3b441e1ae8c343adbd31c2671f6fc0c54bc343eb12ef7d638e6bbaef"
   },
   {
    "level": 255,
@@ -130,14 +130,14 @@
   {
    "level": 260,
    "target": 10.833,
-   "key": null,
-   "layout": null,
-   "tiles": null,
-   "D": null,
-   "S": null,
-   "band": null,
-   "dev": null,
-   "bodyKey": null
+   "key": "2b11a1116266150e2306d2332043996c0f2055a1cd4ca14540a493d13bcd36a3",
+   "layout": 27,
+   "tiles": 96,
+   "D": 10.67,
+   "S": 3.19,
+   "band": "normal",
+   "dev": -0.163,
+   "bodyKey": "f68498125ef21d649b69145717b12632fe95b9161bbdf041980733ef86528a0a"
   },
   {
    "level": 261,
@@ -564,19 +564,6 @@
    ]
   },
   {
-   "level": 254,
-   "target": 10.333,
-   "needD": [
-    9.33,
-    11.33
-   ],
-   "tileClass": "72-88",
-   "S": [
-    2.5,
-    6
-   ]
-  },
-  {
    "level": 255,
    "target": 10.417,
    "needD": [
@@ -636,19 +623,6 @@
     11.75
    ],
    "tileClass": "72-88",
-   "S": [
-    2.5,
-    6
-   ]
-  },
-  {
-   "level": 260,
-   "target": 10.833,
-   "needD": [
-    9.83,
-    11.83
-   ],
-   "tileClass": "96",
    "S": [
     2.5,
     6
@@ -891,17 +865,29 @@
  ],
  "supply": {
   "96": {
+   "10": 1,
+   "13": 1,
+   "19": 1,
    "39": 1
   },
   "72-88": {
+   "5": 1,
    "6": 1,
+   "7": 1,
    "9": 2,
+   "10": 1,
    "11": 1,
    "13": 1,
    "20": 2,
+   "22": 1,
    "27": 1,
-   "31": 1,
-   "38": 2
+   "31": 2,
+   "34": 1,
+   "35": 1,
+   "37": 2,
+   "38": 2,
+   "39": 2,
+   "40": 1
   }
  },
  "demand": {
@@ -916,7 +902,7 @@
    "13": 5
   }
  },
- "filled": 1,
- "totalAbsDev": 0.023,
+ "filled": 3,
+ "totalAbsDev": 0.193,
  "violationsLeft": 0
 }

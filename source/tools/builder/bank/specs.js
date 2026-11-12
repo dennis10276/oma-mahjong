@@ -3,6 +3,8 @@
 const C = require('../../builder-next/components.js');
 
 const STORIES = ['keysFarSide', 'keysOnIsland', 'clockInSight', 'iceLockClock', 'lockBeside', 'roomInTrayLocked', 'roomInTrayFrozen', 'deepClock'];
+// --focus (run 1, 1,956 measured boards): tray room 0 gives 20% at D>=7 against 2% at tray room 2; the room-in-tray stories under 1%.
+const FOCUS_STORIES = ['keysFarSide', 'keysOnIsland', 'clockInSight', 'iceLockClock', 'iceLockClock', 'lockBeside', 'deepClock'];
 const STAGES = ['edge', 'top'];
 
 function mulberry32(a) {
@@ -32,13 +34,13 @@ function specAt(seed, i, opts = {}) {
   return {
     id: `${seed}-${i}`, index: i,
     layout: L.layout, shape: L.shape, tiles: L.tiles, big: L.big,
-    story: pick(STORIES), stage: pick(STAGES),
+    story: pick(opts.focus ? FOCUS_STORIES : STORIES), stage: pick(STAGES),
     spare,
     depth: pick([null, null, 2, 3, 4, 5, 6]),
     traps: pick([0, 1, 2, 3]),
     maxDown: pick([0, 0.1, 0.2, 0.3, 0.4, 0.5]),
     hiddenOnWay: pick([0, 1]),
-    trayRoom: pick([0, 1, 2]),
+    trayRoom: pick(opts.focus ? [0, 0, 0, 0, 1] : [0, 1, 2]),
     tailPairWidth: pick([null, 1, 2, 3]),
     buildSeed: 1 + Math.floor(rng() * 9999)
   };

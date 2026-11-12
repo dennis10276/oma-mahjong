@@ -1,6 +1,6 @@
 # Placement proposal
 
-levels 250..279, stat D40, pool 12, filled 1/30, total |dev| 0.023, violations left 0
+levels 250..279, stat D40, pool 27, filled 3/30, total |dev| 0.193, violations left 0
 
 | level | target | puzzle | layout | tiles | D | S | band | dev |
 |---|---|---|---|---|---|---|---|---|
@@ -8,13 +8,13 @@ levels 250..279, stat D40, pool 12, filled 1/30, total |dev| 0.023, violations l
 | 251 | 10.083 | HOLE | | | | | | |
 | 252 | 10.167 | HOLE | | | | | | |
 | 253 | 10.25 | HOLE | | | | | | |
-| 254 | 10.333 | HOLE | | | | | | |
+| 254 | 10.333 | c6b10b7f8137d02307e82dc2bf63b97b24ac09781e386d9067b85f03efa14a03 | 12 | 88 | 10.34 | 3.8 | normal | 0.007 |
 | 255 | 10.417 | HOLE | | | | | | |
 | 256 | 10.5 | HOLE | | | | | | |
 | 257 | 10.583 | HOLE | | | | | | |
 | 258 | 10.667 | HOLE | | | | | | |
 | 259 | 10.75 | HOLE | | | | | | |
-| 260 | 10.833 | HOLE | | | | | | |
+| 260 | 10.833 | 2b11a1116266150e2306d2332043996c0f2055a1cd4ca14540a493d13bcd36a3 | 27 | 96 | 10.67 | 3.19 | normal | -0.163 |
 | 261 | 10.917 | HOLE | | | | | | |
 | 262 | 11 | HOLE | | | | | | |
 | 263 | 11.083 | HOLE | | | | | | |
@@ -72,13 +72,11 @@ Unchecked (cross plan edge): 246..250 (crosses start); 276..280 (crosses end); 2
 - L251: D in [9.08, 11.08], tiles 72-88, S 2.5-6
 - L252: D in [9.17, 11.17], tiles 72-88, S 2.5-6
 - L253: D in [9.25, 11.25], tiles 72-88, S 2.5-6
-- L254: D in [9.33, 11.33], tiles 72-88, S 2.5-6
 - L255: D in [9.42, 11.42], tiles 72-88, S 2.5-6
 - L256: D in [9.5, 11.5], tiles 72-88, S 2.5-6
 - L257: D in [9.58, 11.58], tiles 72-88, S 2.5-6
 - L258: D in [9.67, 11.67], tiles 72-88, S 2.5-6
 - L259: D in [9.75, 11.75], tiles 72-88, S 2.5-6
-- L260: D in [9.83, 11.83], tiles 96, S 2.5-6
 - L261: D in [9.92, 11.92], tiles 72-88, S 2.5-6
 - L262: D in [10, 12], tiles 72-88, S 2.5-6
 - L263: D in [10.08, 12.08], tiles 72-88, S 2.5-6
@@ -100,7 +98,7 @@ Unchecked (cross plan edge): 246..250 (crosses start); 276..280 (crosses end); 2
 
 ## Supply vs demand by 1-try D bin (floor(D))
 
-72-88 tiles: D6: supply 1 / demand 0; D9: supply 2 / demand 0; D10: supply 0 / demand 10; D11: supply 1 / demand 11; D12: supply 0 / demand 1; D13: supply 1 / demand 5; D20: supply 2 / demand 0; D27: supply 1 / demand 0; D31: supply 1 / demand 0; D38: supply 2 / demand 0
+72-88 tiles: D5: supply 1 / demand 0; D6: supply 1 / demand 0; D7: supply 1 / demand 0; D9: supply 2 / demand 0; D10: supply 1 / demand 10; D11: supply 1 / demand 11; D12: supply 0 / demand 1; D13: supply 1 / demand 5; D20: supply 2 / demand 0; D22: supply 1 / demand 0; D27: supply 1 / demand 0; D31: supply 2 / demand 0; D34: supply 1 / demand 0; D35: supply 1 / demand 0; D37: supply 2 / demand 0; D38: supply 2 / demand 0; D39: supply 2 / demand 0; D40: supply 1 / demand 0
 
-96 tiles: D10: supply 0 / demand 2; D11: supply 0 / demand 1; D39: supply 1 / demand 0
+96 tiles: D10: supply 1 / demand 2; D11: supply 0 / demand 1; D13: supply 1 / demand 0; D19: supply 1 / demand 0; D39: supply 1 / demand 0
 
