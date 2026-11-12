@@ -1,0 +1,3407 @@
+{
+ "generated": "2026-11-12T15:24:10.378Z",
+ "params": {
+  "normal": [
+   "Gerda",
+   "MrsD",
+   "D4V3",
+   "Loulou"
+  ],
+  "tryCap": 20,
+  "censoredRule": "value = tries so far + 1 (lower bound of tries to first win); cap 20",
+  "levelsRange": [
+   70,
+   269
+  ],
+  "boardRule": "real_ledger.js (app version >= release of present board, tile count and clock moves match); levels 70-84 additionally need app >= 1.52 (75-105 are 1.52 boards); levels < 70 not in the hard table and not read; a player who won on an older board is dropped from that level"
+ },
+ "players": [
+  {
+   "pid": "pmuxw2uqkzcnbgx",
+   "name": "Dennis",
+   "who": "Dennis",
+   "skipped": "test account"
+  },
+  {
+   "pid": "pmuy4wmdp17hbws",
+   "name": "OmaHanny",
+   "who": "OmaHanny",
+   "skipped": "own care track"
+  },
+  {
+   "pid": "pmuy78xu6tsths9",
+   "name": "Dennisisdebeste",
+   "who": "Dennis",
+   "furthestStarted": 250,
+   "furthestWon": 249,
+   "levelsPlayed": 234,
+   "levelsWon": 233,
+   "first": "2026-10-07",
+   "last": "2026-11-11",
+   "records": 1998
+  },
+  {
+   "pid": "pmuyb43b5wesg5x",
+   "name": "Rashmiisookdebeste",
+   "who": "Rashmiisookdebeste",
+   "furthestStarted": 66,
+   "furthestWon": 65,
+   "levelsPlayed": 66,
+   "levelsWon": 65,
+   "first": "2026-10-07",
+   "last": "2026-11-09",
+   "records": 297
+  },
+  {
+   "pid": "pmv13884fc9vndv",
+   "name": "Mama",
+   "who": "Mama",
+   "furthestStarted": 44,
+   "furthestWon": 44,
+   "levelsPlayed": 44,
+   "levelsWon": 44,
+   "first": "2026-10-09",
+   "last": "2026-10-12",
+   "records": 201
+  },
+  {
+   "pid": "pmv16kj3jr35750",
+   "name": "Mrs. Doubtfire",
+   "who": "MrsD",
+   "furthestStarted": 183,
+   "furthestWon": 182,
+   "levelsPlayed": 183,
+   "levelsWon": 182,
+   "first": "2026-10-09",
+   "last": "2026-11-12",
+   "records": 2234
+  },
+  {
+   "pid": "pmv2gaa0g00eq3q",
+   "name": "PUK",
+   "who": "PUK",
+   "furthestStarted": 82,
+   "furthestWon": 81,
+   "levelsPlayed": 82,
+   "levelsWon": 81,
+   "first": "2026-10-10",
+   "last": "2026-11-08",
+   "records": 714
+  },
+  {
+   "pid": "pmv6yhzz3x9oxs8",
+   "name": "Gerda",
+   "who": "Gerda",
+   "furthestStarted": 210,
+   "furthestWon": 209,
+   "levelsPlayed": 210,
+   "levelsWon": 209,
+   "first": "2026-10-13",
+   "last": "2026-11-11",
+   "records": 5617
+  },
+  {
+   "pid": "pmvh1fi1y8d1rod",
+   "name": "Marcel!!",
+   "who": "Marcel!!",
+   "furthestStarted": 16,
+   "furthestWon": 16,
+   "levelsPlayed": 16,
+   "levelsWon": 16,
+   "first": "2026-10-20",
+   "last": "2026-10-23",
+   "records": 71
+  },
+  {
+   "pid": "pmw8iz937i96edi",
+   "name": "D4V3",
+   "who": "D4V3",
+   "furthestStarted": 132,
+   "furthestWon": 131,
+   "levelsPlayed": 132,
+   "levelsWon": 131,
+   "first": "2026-11-09",
+   "last": "2026-11-12",
+   "records": 1263
+  },
+  {
+   "pid": "pmw9dntchxxgc3u",
+   "name": "Loulou",
+   "who": "Loulou",
+   "furthestStarted": 77,
+   "furthestWon": 77,
+   "levelsPlayed": 77,
+   "levelsWon": 77,
+   "first": "2026-11-09",
+   "last": "2026-11-11",
+   "records": 329
+  }
+ ],
+ "perPlayer": {
+  "Gerda": {
+   "levels": 141,
+   "minLv": 70,
+   "maxLv": 210,
+   "meanTries": 6.52,
+   "medianTries": 4,
+   "censored": 1,
+   "firstTryWin": 0.18
+  },
+  "MrsD": {
+   "levels": 98,
+   "minLv": 85,
+   "maxLv": 182,
+   "meanTries": 3.93,
+   "medianTries": 2,
+   "censored": 0,
+   "firstTryWin": 0.3
+  },
+  "D4V3": {
+   "levels": 63,
+   "minLv": 70,
+   "maxLv": 132,
+   "meanTries": 4.14,
+   "medianTries": 3,
+   "censored": 1,
+   "firstTryWin": 0.27
+  },
+  "Loulou": {
+   "levels": 8,
+   "minLv": 70,
+   "maxLv": 77,
+   "meanTries": 1,
+   "medianTries": 1,
+   "censored": 0,
+   "firstTryWin": 1
+  }
+ },
+ "otherPlayersInLedger": {
+  "Dennis": {
+   "levels": 149,
+   "maxLv": 249
+  },
+  "PUK": {
+   "levels": 13,
+   "maxLv": 82
+  }
+ },
+ "ledgerSkipped": {
+  "replayAfterOldWin": 9,
+  "noCurrentBoardTry": 37
+ },
+ "levelsWithPlayers": 141,
+ "playersPerLevel": {
+  "1": 28,
+  "2": 57,
+  "3": 56,
+  "4": 0
+ },
+ "censTotals": {
+  "sequences": 310,
+  "censored": 2,
+  "open": 2,
+  "capHit": 17
+ },
+ "playerEffect": {
+  "model": "log(tries) = level + player on levels with >=2 normal players; factors relative, geometric mean 1",
+  "levelsInFit": 113,
+  "effects": {
+   "Gerda": {
+    "levelsInFit": 113,
+    "factor": 1.51,
+    "lo90": 1.37,
+    "hi90": 1.68
+   },
+   "MrsD": {
+    "levelsInFit": 98,
+    "factor": 0.91,
+    "lo90": 0.83,
+    "hi90": 1.01
+   },
+   "D4V3": {
+    "levelsInFit": 63,
+    "factor": 1.11,
+    "lo90": 0.98,
+    "hi90": 1.24
+   },
+   "Loulou": {
+    "levelsInFit": 8,
+    "factor": 0.66,
+    "lo90": 0.55,
+    "hi90": 0.78
+   }
+  },
+  "pairwise": [
+   {
+    "a": "Gerda",
+    "b": "MrsD",
+    "shared": 98,
+    "meanA": 6.85,
+    "meanB": 3.93,
+    "geoRatioAoverB": 1.75
+   },
+   {
+    "a": "Gerda",
+    "b": "D4V3",
+    "shared": 63,
+    "meanA": 6.9,
+    "meanB": 4.14,
+    "geoRatioAoverB": 1.49
+   },
+   {
+    "a": "Gerda",
+    "b": "Loulou",
+    "shared": 8,
+    "meanA": 1.5,
+    "meanB": 1,
+    "geoRatioAoverB": 1.36
+   },
+   {
+    "a": "MrsD",
+    "b": "D4V3",
+    "shared": 48,
+    "meanA": 3.38,
+    "meanB": 3.98,
+    "geoRatioAoverB": 0.83
+   },
+   {
+    "a": "D4V3",
+    "b": "Loulou",
+    "shared": 8,
+    "meanA": 3.63,
+    "meanB": 1,
+    "geoRatioAoverB": 2.85
+   }
+  ]
+ },
+ "topStats": {
+  "2plus.N.top5.mean": 16.7,
+  "2plus.N.top10.mean": 14.85,
+  "2plus.N.top15.mean": 13.58,
+  "2plus.Nadj.top5.mean": 14.45,
+  "2plus.Nadj.top10.mean": 12.18,
+  "2plus.Nadj.top15.mean": 10.85,
+  "2plus.Nuncapped.top5.mean": 43.3,
+  "2plus.Nuncapped.top10.mean": 29.43,
+  "2plus.Nuncapped.top15.mean": 23.62,
+  "all.N.top5.mean": 19.73,
+  "all.N.top10.mean": 17.55,
+  "all.N.top15.mean": 16.03,
+  "all.Nadj.top5.mean": 15.28,
+  "all.Nadj.top10.mean": 13.77,
+  "all.Nadj.top15.mean": 12.38,
+  "all.Nuncapped.top5.mean": 47.7,
+  "all.Nuncapped.top10.mean": 38.25,
+  "all.Nuncapped.top15.mean": 30.16
+ },
+ "quant": {
+  "N": {
+   "p50": 3.5,
+   "p75": 6,
+   "p90": 11.5,
+   "p95": 13.5,
+   "max": 20,
+   "n": 113
+  },
+  "Nadj": {
+   "p50": 2.52,
+   "p75": 3.98,
+   "p90": 8.36,
+   "p95": 11.27,
+   "max": 17.82,
+   "n": 113
+  }
+ },
+ "correlation": {
+  "N_all": {
+   "n": 141,
+   "rho": 0.42,
+   "lo90": 0.29,
+   "hi90": 0.54
+  },
+  "Nadj_all": {
+   "n": 141,
+   "rho": 0.42,
+   "lo90": 0.29,
+   "hi90": 0.54
+  },
+  "N_2plus": {
+   "n": 113,
+   "rho": 0.47,
+   "lo90": 0.33,
+   "hi90": 0.6
+  },
+  "N_lv85plus": {
+   "n": 126,
+   "rho": 0.36,
+   "lo90": 0.22,
+   "hi90": 0.5
+  },
+  "N_lv70_84": {
+   "n": 15,
+   "rho": 0.74,
+   "lo90": 0.48,
+   "hi90": 0.86
+  },
+  "N_lv85_149": {
+   "n": 65,
+   "rho": 0.35,
+   "lo90": 0.13,
+   "hi90": 0.55
+  },
+  "N_lv150plus": {
+   "n": 61,
+   "rho": 0.37,
+   "lo90": 0.18,
+   "hi90": 0.54
+  },
+  "N_median": {
+   "n": 141,
+   "rho": 0.47,
+   "lo90": 0.34,
+   "hi90": 0.58
+  }
+ },
+ "binsByD": [
+  {
+   "D": "0-1.5",
+   "n": 35,
+   "meanD": 1.26,
+   "N_mean": 3.05,
+   "N_median": 2,
+   "N_p25": 1.67,
+   "N_p75": 3.67,
+   "Nadj_mean": 2.25,
+   "ratioNoverD": 2.42
+  },
+  {
+   "D": "1.5-2",
+   "n": 20,
+   "meanD": 1.67,
+   "N_mean": 4.22,
+   "N_median": 3.5,
+   "N_p25": 2.67,
+   "N_p75": 5,
+   "Nadj_mean": 2.94,
+   "ratioNoverD": 2.53
+  },
+  {
+   "D": "2-3",
+   "n": 33,
+   "meanD": 2.39,
+   "N_mean": 4.12,
+   "N_median": 3.5,
+   "N_p25": 2.5,
+   "N_p75": 5.5,
+   "Nadj_mean": 2.94,
+   "ratioNoverD": 1.72
+  },
+  {
+   "D": "3-4",
+   "n": 15,
+   "meanD": 3.34,
+   "N_mean": 6.7,
+   "N_median": 5,
+   "N_p25": 2,
+   "N_p75": 12,
+   "Nadj_mean": 5,
+   "ratioNoverD": 2.01
+  },
+  {
+   "D": "4-5",
+   "n": 15,
+   "meanD": 4.45,
+   "N_mean": 8.8,
+   "N_median": 8,
+   "N_p25": 4,
+   "N_p75": 13.5,
+   "Nadj_mean": 6.41,
+   "ratioNoverD": 1.98
+  },
+  {
+   "D": "5-7",
+   "n": 11,
+   "meanD": 5.71,
+   "N_mean": 5.95,
+   "N_median": 3,
+   "N_p25": 2,
+   "N_p75": 10,
+   "Nadj_mean": 4.64,
+   "ratioNoverD": 1.04
+  },
+  {
+   "D": "7-10",
+   "n": 7,
+   "meanD": 8.33,
+   "N_mean": 10.71,
+   "N_median": 13,
+   "N_p25": 5,
+   "N_p75": 13.5,
+   "Nadj_mean": 8.4,
+   "ratioNoverD": 1.29
+  },
+  {
+   "D": "10-100",
+   "n": 5,
+   "meanD": 19.94,
+   "N_mean": 10.07,
+   "N_median": 10.33,
+   "N_p25": 5,
+   "N_p75": 12,
+   "Nadj_mean": 7.14,
+   "ratioNoverD": 0.5
+  }
+ ],
+ "isotonicDtoN": [
+  {
+   "D": 1,
+   "N": 1.33,
+   "Nadj": 1.27
+  },
+  {
+   "D": 1.5,
+   "N": 3.37,
+   "Nadj": 2.44
+  },
+  {
+   "D": 2,
+   "N": 4.33,
+   "Nadj": 3.05
+  },
+  {
+   "D": 3,
+   "N": 4.42,
+   "Nadj": 3.44
+  },
+  {
+   "D": 4,
+   "N": 7.14,
+   "Nadj": 5.23
+  },
+  {
+   "D": 5,
+   "N": 7.25,
+   "Nadj": 5.33
+  },
+  {
+   "D": 6,
+   "N": 7.25,
+   "Nadj": 5.33
+  },
+  {
+   "D": 7,
+   "N": 10.14,
+   "Nadj": 7.88
+  },
+  {
+   "D": 8,
+   "N": 10.14,
+   "Nadj": 7.88
+  },
+  {
+   "D": 10,
+   "N": 10.14,
+   "Nadj": 7.88
+  },
+  {
+   "D": 12,
+   "N": 10.14,
+   "Nadj": 7.88
+  },
+  {
+   "D": 15,
+   "N": 10.14,
+   "Nadj": 7.88
+  }
+ ],
+ "reverse": {
+  "10": {
+   "isotonic_D_reaches": 6.7,
+   "powerlaw_D": 18.79,
+   "linearFactor_D": 6.68
+  },
+  "11": {
+   "isotonic_D_reaches": 24.25,
+   "powerlaw_D": 22.97,
+   "linearFactor_D": 7.35
+  },
+  "12": {
+   "isotonic_D_reaches": 24.25,
+   "powerlaw_D": 27.58,
+   "linearFactor_D": 8.01
+  },
+  "13": {
+   "isotonic_D_reaches": 24.25,
+   "powerlaw_D": 32.65,
+   "linearFactor_D": 8.68
+  }
+ },
+ "factor": {
+  "c_ratioOfMeans": 1.52,
+  "c_median": 1.63,
+  "c_geo": 1.5,
+  "ratioP10": 0.5,
+  "ratioP90": 3.53,
+  "loglogSlope": 0.48,
+  "loglogIntercept": 0.91,
+  "loglogSlopeAdj": 0.46,
+  "residSD_log": 0.7,
+  "slopeBoot90": [
+   0.33,
+   0.62
+  ],
+  "byRange": [
+   {
+    "range": "70-99",
+    "n": 30,
+    "meanN": 4.56,
+    "meanD": 2.31,
+    "ratio": 1.97
+   },
+   {
+    "range": "100-139",
+    "n": 40,
+    "meanN": 4.94,
+    "meanD": 3.13,
+    "ratio": 1.58
+   },
+   {
+    "range": "140-179",
+    "n": 40,
+    "meanN": 5.54,
+    "meanD": 3.4,
+    "ratio": 1.63
+   },
+   {
+    "range": "180-219",
+    "n": 31,
+    "meanN": 6.27,
+    "meanD": 5.27,
+    "ratio": 1.19
+   }
+  ]
+ },
+ "hazard": {
+  "real": [
+   {
+    "k": 1,
+    "atRisk": 310,
+    "h": 0.255
+   },
+   {
+    "k": 2,
+    "atRisk": 231,
+    "h": 0.26
+   },
+   {
+    "k": 3,
+    "atRisk": 170,
+    "h": 0.176
+   },
+   {
+    "k": 4,
+    "atRisk": 140,
+    "h": 0.193
+   },
+   {
+    "k": 5,
+    "atRisk": 113,
+    "h": 0.212
+   },
+   {
+    "k": 6,
+    "atRisk": 89,
+    "h": 0.18
+   },
+   {
+    "k": 7,
+    "atRisk": 73,
+    "h": 0.178
+   },
+   {
+    "k": 8,
+    "atRisk": 60,
+    "h": 0.117
+   }
+  ],
+  "bot": [
+   {
+    "k": 1,
+    "atRisk": 5640,
+    "h": 0.423
+   },
+   {
+    "k": 2,
+    "atRisk": 3255,
+    "h": 0.361
+   },
+   {
+    "k": 3,
+    "atRisk": 2079,
+    "h": 0.296
+   },
+   {
+    "k": 4,
+    "atRisk": 1463,
+    "h": 0.301
+   },
+   {
+    "k": 5,
+    "atRisk": 1022,
+    "h": 0.255
+   },
+   {
+    "k": 6,
+    "atRisk": 761,
+    "h": 0.185
+   },
+   {
+    "k": 7,
+    "atRisk": 620,
+    "h": 0.194
+   },
+   {
+    "k": 8,
+    "atRisk": 500,
+    "h": 0.192
+   }
+  ],
+  "firstTryReal": 0.235,
+  "firstTryBot": 0.423,
+  "firstTrySpearman": 0.29
+ },
+ "bands": [
+  {
+   "band": "70-79",
+   "levels": 10,
+   "N_mean": 2.03,
+   "N_median": 1.83,
+   "N_max": 3.67,
+   "Nadj_mean": 1.64,
+   "n2plus": 10,
+   "D40_mean": 1.42
+  },
+  {
+   "band": "80-89",
+   "levels": 10,
+   "N_mean": 6.75,
+   "N_median": 5.25,
+   "N_max": 14.5,
+   "Nadj_mean": 5.01,
+   "n2plus": 10,
+   "D40_mean": 3.52
+  },
+  {
+   "band": "90-99",
+   "levels": 10,
+   "N_mean": 4.9,
+   "N_median": 3.5,
+   "N_max": 18.67,
+   "Nadj_mean": 3.93,
+   "n2plus": 10,
+   "D40_mean": 1.98
+  },
+  {
+   "band": "100-109",
+   "levels": 10,
+   "N_mean": 3.1,
+   "N_median": 3,
+   "N_max": 6.67,
+   "Nadj_mean": 2.36,
+   "n2plus": 10,
+   "D40_mean": 2.57
+  },
+  {
+   "band": "110-119",
+   "levels": 10,
+   "N_mean": 4.57,
+   "N_median": 4.67,
+   "N_max": 8,
+   "Nadj_mean": 2.6,
+   "n2plus": 10,
+   "D40_mean": 2.74
+  },
+  {
+   "band": "120-129",
+   "levels": 10,
+   "N_mean": 6.77,
+   "N_median": 6.67,
+   "N_max": 13,
+   "Nadj_mean": 4.55,
+   "n2plus": 10,
+   "D40_mean": 4.5
+  },
+  {
+   "band": "130-139",
+   "levels": 10,
+   "N_mean": 5.32,
+   "N_median": 3.33,
+   "N_max": 16.33,
+   "Nadj_mean": 4.22,
+   "n2plus": 10,
+   "D40_mean": 2.73
+  },
+  {
+   "band": "140-149",
+   "levels": 10,
+   "N_mean": 6.1,
+   "N_median": 4,
+   "N_max": 13,
+   "Nadj_mean": 4.38,
+   "n2plus": 10,
+   "D40_mean": 3.87
+  },
+  {
+   "band": "150-159",
+   "levels": 10,
+   "N_mean": 6.25,
+   "N_median": 4.75,
+   "N_max": 20,
+   "Nadj_mean": 4.91,
+   "n2plus": 10,
+   "D40_mean": 3.49
+  },
+  {
+   "band": "160-169",
+   "levels": 10,
+   "N_mean": 4.65,
+   "N_median": 3.25,
+   "N_max": 14,
+   "Nadj_mean": 3.5,
+   "n2plus": 10,
+   "D40_mean": 2.8
+  },
+  {
+   "band": "170-179",
+   "levels": 10,
+   "N_mean": 5.15,
+   "N_median": 4,
+   "N_max": 13.5,
+   "Nadj_mean": 4.39,
+   "n2plus": 10,
+   "D40_mean": 3.44
+  },
+  {
+   "band": "180-189",
+   "levels": 10,
+   "N_mean": 5.65,
+   "N_median": 3.25,
+   "N_max": 20,
+   "Nadj_mean": 4.02,
+   "n2plus": 3,
+   "D40_mean": 3.24
+  },
+  {
+   "band": "190-199",
+   "levels": 10,
+   "N_mean": 6.3,
+   "N_median": 3.5,
+   "N_max": 20,
+   "Nadj_mean": 4.37,
+   "n2plus": 0,
+   "D40_mean": 8.42
+  },
+  {
+   "band": "200-209",
+   "levels": 10,
+   "N_mean": 7.2,
+   "N_median": 5,
+   "N_max": 20,
+   "Nadj_mean": 5,
+   "n2plus": 0,
+   "D40_mean": 2.64
+  },
+  {
+   "band": "210-219",
+   "levels": 1,
+   "N_mean": 3,
+   "N_median": 3,
+   "N_max": 3,
+   "Nadj_mean": 2.08,
+   "n2plus": 0,
+   "D40_mean": 20.27
+  }
+ ],
+ "bandsBot": [
+  {
+   "band": "70-79",
+   "D40_mean": 1.42,
+   "D40_max": 2.62,
+   "n": 10
+  },
+  {
+   "band": "80-89",
+   "D40_mean": 3.52,
+   "D40_max": 9.59,
+   "n": 10
+  },
+  {
+   "band": "90-99",
+   "D40_mean": 1.98,
+   "D40_max": 4.41,
+   "n": 10
+  },
+  {
+   "band": "100-109",
+   "D40_mean": 2.57,
+   "D40_max": 4.77,
+   "n": 10
+  },
+  {
+   "band": "110-119",
+   "D40_mean": 2.74,
+   "D40_max": 5.28,
+   "n": 10
+  },
+  {
+   "band": "120-129",
+   "D40_mean": 4.5,
+   "D40_max": 20.55,
+   "n": 10
+  },
+  {
+   "band": "130-139",
+   "D40_mean": 2.73,
+   "D40_max": 6.69,
+   "n": 10
+  },
+  {
+   "band": "140-149",
+   "D40_mean": 3.87,
+   "D40_max": 7.46,
+   "n": 10
+  },
+  {
+   "band": "150-159",
+   "D40_mean": 3.49,
+   "D40_max": 7.87,
+   "n": 10
+  },
+  {
+   "band": "160-169",
+   "D40_mean": 2.8,
+   "D40_max": 5.24,
+   "n": 10
+  },
+  {
+   "band": "170-179",
+   "D40_mean": 3.44,
+   "D40_max": 8.29,
+   "n": 10
+  },
+  {
+   "band": "180-189",
+   "D40_mean": 3.24,
+   "D40_max": 9.54,
+   "n": 10
+  },
+  {
+   "band": "190-199",
+   "D40_mean": 8.42,
+   "D40_max": 24.23,
+   "n": 10
+  },
+  {
+   "band": "200-209",
+   "D40_mean": 2.64,
+   "D40_max": 6.15,
+   "n": 10
+  },
+  {
+   "band": "210-219",
+   "D40_mean": 6.37,
+   "D40_max": 21,
+   "n": 10
+  },
+  {
+   "band": "220-229",
+   "D40_mean": 12.32,
+   "D40_max": 39.19,
+   "n": 10
+  },
+  {
+   "band": "230-239",
+   "D40_mean": 5.74,
+   "D40_max": 30.41,
+   "n": 10
+  }
+ ],
+ "top15": [
+  {
+   "lv": 150,
+   "nPlayers": 2,
+   "N": 20,
+   "Nuncapped": 51,
+   "Nmedian": 20,
+   "Nadj": 17.82,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 21,
+    "Gerda": 81
+   },
+   "D40": 7.2
+  },
+  {
+   "lv": 188,
+   "nPlayers": 1,
+   "N": 20,
+   "Nuncapped": 37,
+   "Nmedian": 20,
+   "Nadj": 13.88,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 37
+   },
+   "D40": 4.34
+  },
+  {
+   "lv": 196,
+   "nPlayers": 1,
+   "N": 20,
+   "Nuncapped": 32,
+   "Nmedian": 20,
+   "Nadj": 13.88,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 32
+   },
+   "D40": 24.23
+  },
+  {
+   "lv": 209,
+   "nPlayers": 1,
+   "N": 20,
+   "Nuncapped": 57,
+   "Nmedian": 20,
+   "Nadj": 13.88,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 57
+   },
+   "D40": 3.34
+  },
+  {
+   "lv": 91,
+   "nPlayers": 3,
+   "N": 18.67,
+   "Nuncapped": 35,
+   "Nmedian": 20,
+   "Nadj": 16.87,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 21,
+    "Gerda": 68,
+    "D4V3": 16
+   },
+   "D40": 4.41
+  },
+  {
+   "lv": 205,
+   "nPlayers": 1,
+   "N": 18,
+   "Nuncapped": 18,
+   "Nmedian": 18,
+   "Nadj": 12.49,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 18
+   },
+   "D40": 1.63
+  },
+  {
+   "lv": 132,
+   "nPlayers": 3,
+   "N": 16.33,
+   "Nuncapped": 37,
+   "Nmedian": 20,
+   "Nadj": 13.93,
+   "anyCensored": true,
+   "perPlayer": {
+    "MrsD": 31,
+    "Gerda": 71,
+    "D4V3": ">=9"
+   },
+   "D40": 6.69
+  },
+  {
+   "lv": 80,
+   "nPlayers": 2,
+   "N": 14.5,
+   "Nuncapped": 14.5,
+   "Nmedian": 14.5,
+   "Nadj": 11.68,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 16,
+    "D4V3": 13
+   },
+   "D40": 3.13
+  },
+  {
+   "lv": 161,
+   "nPlayers": 2,
+   "N": 14,
+   "Nuncapped": 14.5,
+   "Nmedian": 14,
+   "Nadj": 11.27,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 8,
+    "Gerda": 21
+   },
+   "D40": 5.24
+  },
+  {
+   "lv": 197,
+   "nPlayers": 1,
+   "N": 14,
+   "Nuncapped": 14,
+   "Nmedian": 14,
+   "Nadj": 9.72,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 14
+   },
+   "D40": 4.12
+  },
+  {
+   "lv": 82,
+   "nPlayers": 2,
+   "N": 13.5,
+   "Nuncapped": 54.5,
+   "Nmedian": 13.5,
+   "Nadj": 9.58,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 102,
+    "D4V3": 7
+   },
+   "D40": 4.3
+  },
+  {
+   "lv": 176,
+   "nPlayers": 2,
+   "N": 13.5,
+   "Nuncapped": 13.5,
+   "Nmedian": 13.5,
+   "Nadj": 11.95,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 12,
+    "Gerda": 15
+   },
+   "D40": 8.29
+  },
+  {
+   "lv": 121,
+   "nPlayers": 3,
+   "N": 13,
+   "Nuncapped": 13.33,
+   "Nmedian": 17,
+   "Nadj": 7.99,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 2,
+    "Gerda": 21,
+    "D4V3": 17
+   },
+   "D40": 8.35
+  },
+  {
+   "lv": 144,
+   "nPlayers": 2,
+   "N": 13,
+   "Nuncapped": 22,
+   "Nmedian": 13,
+   "Nadj": 9.76,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 38,
+    "Gerda": 6
+   },
+   "D40": 7.46
+  },
+  {
+   "lv": 135,
+   "nPlayers": 2,
+   "N": 12,
+   "Nuncapped": 12,
+   "Nmedian": 12,
+   "Nadj": 9.26,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 6,
+    "Gerda": 18
+   },
+   "D40": 3.05
+  }
+ ],
+ "top15two": [
+  {
+   "lv": 150,
+   "nPlayers": 2,
+   "N": 20,
+   "Nuncapped": 51,
+   "Nmedian": 20,
+   "Nadj": 17.82,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 21,
+    "Gerda": 81
+   },
+   "D40": 7.2
+  },
+  {
+   "lv": 91,
+   "nPlayers": 3,
+   "N": 18.67,
+   "Nuncapped": 35,
+   "Nmedian": 20,
+   "Nadj": 16.87,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 21,
+    "Gerda": 68,
+    "D4V3": 16
+   },
+   "D40": 4.41
+  },
+  {
+   "lv": 132,
+   "nPlayers": 3,
+   "N": 16.33,
+   "Nuncapped": 37,
+   "Nmedian": 20,
+   "Nadj": 13.93,
+   "anyCensored": true,
+   "perPlayer": {
+    "MrsD": 31,
+    "Gerda": 71,
+    "D4V3": ">=9"
+   },
+   "D40": 6.69
+  },
+  {
+   "lv": 80,
+   "nPlayers": 2,
+   "N": 14.5,
+   "Nuncapped": 14.5,
+   "Nmedian": 14.5,
+   "Nadj": 11.68,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 16,
+    "D4V3": 13
+   },
+   "D40": 3.13
+  },
+  {
+   "lv": 161,
+   "nPlayers": 2,
+   "N": 14,
+   "Nuncapped": 14.5,
+   "Nmedian": 14,
+   "Nadj": 11.27,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 8,
+    "Gerda": 21
+   },
+   "D40": 5.24
+  },
+  {
+   "lv": 82,
+   "nPlayers": 2,
+   "N": 13.5,
+   "Nuncapped": 54.5,
+   "Nmedian": 13.5,
+   "Nadj": 9.58,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 102,
+    "D4V3": 7
+   },
+   "D40": 4.3
+  },
+  {
+   "lv": 176,
+   "nPlayers": 2,
+   "N": 13.5,
+   "Nuncapped": 13.5,
+   "Nmedian": 13.5,
+   "Nadj": 11.95,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 12,
+    "Gerda": 15
+   },
+   "D40": 8.29
+  },
+  {
+   "lv": 121,
+   "nPlayers": 3,
+   "N": 13,
+   "Nuncapped": 13.33,
+   "Nmedian": 17,
+   "Nadj": 7.99,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 2,
+    "Gerda": 21,
+    "D4V3": 17
+   },
+   "D40": 8.35
+  },
+  {
+   "lv": 144,
+   "nPlayers": 2,
+   "N": 13,
+   "Nuncapped": 22,
+   "Nmedian": 13,
+   "Nadj": 9.76,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 38,
+    "Gerda": 6
+   },
+   "D40": 7.46
+  },
+  {
+   "lv": 135,
+   "nPlayers": 2,
+   "N": 12,
+   "Nuncapped": 12,
+   "Nmedian": 12,
+   "Nadj": 9.26,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 6,
+    "Gerda": 18
+   },
+   "D40": 3.05
+  },
+  {
+   "lv": 143,
+   "nPlayers": 2,
+   "N": 12,
+   "Nuncapped": 12,
+   "Nmedian": 12,
+   "Nadj": 9.72,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 7,
+    "Gerda": 17
+   },
+   "D40": 4.16
+  },
+  {
+   "lv": 149,
+   "nPlayers": 2,
+   "N": 11.5,
+   "Nuncapped": 39,
+   "Nmedian": 11.5,
+   "Nadj": 6.9,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 3,
+    "Gerda": 75
+   },
+   "D40": 4.58
+  },
+  {
+   "lv": 122,
+   "nPlayers": 3,
+   "N": 11,
+   "Nuncapped": 12.67,
+   "Nmedian": 8,
+   "Nadj": 8.43,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 5,
+    "Gerda": 25,
+    "D4V3": 8
+   },
+   "D40": 1.19
+  },
+  {
+   "lv": 89,
+   "nPlayers": 3,
+   "N": 10.33,
+   "Nuncapped": 10.33,
+   "Nmedian": 13,
+   "Nadj": 8.17,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 13,
+    "Gerda": 14,
+    "D4V3": 4
+   },
+   "D40": 3.68
+  },
+  {
+   "lv": 124,
+   "nPlayers": 3,
+   "N": 10.33,
+   "Nuncapped": 10.33,
+   "Nmedian": 7,
+   "Nadj": 7.93,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 5,
+    "Gerda": 7,
+    "D4V3": 19
+   },
+   "D40": 20.55
+  }
+ ],
+ "topBot": [
+  {
+   "lv": 223,
+   "D40": 39.19
+  },
+  {
+   "lv": 226,
+   "D40": 31.71
+  },
+  {
+   "lv": 235,
+   "D40": 30.41
+  },
+  {
+   "lv": 227,
+   "D40": 24.68
+  },
+  {
+   "lv": 196,
+   "D40": 24.23
+  },
+  {
+   "lv": 192,
+   "D40": 22.28
+  },
+  {
+   "lv": 215,
+   "D40": 21
+  },
+  {
+   "lv": 124,
+   "D40": 20.55
+  },
+  {
+   "lv": 210,
+   "D40": 20.27
+  },
+  {
+   "lv": 190,
+   "D40": 12.39
+  }
+ ],
+ "sensitivityWonOnly": {
+  "levels": 140,
+  "meanN": 5.36
+ },
+ "rows": [
+  {
+   "lv": 70,
+   "nPlayers": 3,
+   "N": 2.33,
+   "Nuncapped": 2.33,
+   "Nmedian": 2,
+   "Nadj": 2.03,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 2,
+    "D4V3": 4,
+    "Loulou": 1
+   },
+   "D40": 1.23
+  },
+  {
+   "lv": 71,
+   "nPlayers": 3,
+   "N": 1.33,
+   "Nuncapped": 1.33,
+   "Nmedian": 1,
+   "Nadj": 1.28,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 1,
+    "D4V3": 2,
+    "Loulou": 1
+   },
+   "D40": 1.06
+  },
+  {
+   "lv": 72,
+   "nPlayers": 3,
+   "N": 1.67,
+   "Nuncapped": 1.67,
+   "Nmedian": 1,
+   "Nadj": 1.46,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 1,
+    "D4V3": 3,
+    "Loulou": 1
+   },
+   "D40": 1.92
+  },
+  {
+   "lv": 73,
+   "nPlayers": 3,
+   "N": 1.33,
+   "Nuncapped": 1.33,
+   "Nmedian": 1,
+   "Nadj": 1.28,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 2,
+    "D4V3": 1,
+    "Loulou": 1
+   },
+   "D40": 1.02
+  },
+  {
+   "lv": 74,
+   "nPlayers": 3,
+   "N": 3,
+   "Nuncapped": 3,
+   "Nmedian": 3,
+   "Nadj": 2.5,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 3,
+    "D4V3": 5,
+    "Loulou": 1
+   },
+   "D40": 1.78
+  },
+  {
+   "lv": 75,
+   "nPlayers": 3,
+   "N": 2,
+   "Nuncapped": 2,
+   "Nmedian": 1,
+   "Nadj": 1.61,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 1,
+    "D4V3": 4,
+    "Loulou": 1
+   },
+   "D40": 1.09
+  },
+  {
+   "lv": 76,
+   "nPlayers": 3,
+   "N": 3.67,
+   "Nuncapped": 3.67,
+   "Nmedian": 1,
+   "Nadj": 2.11,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 1,
+    "D4V3": 9,
+    "Loulou": 1
+   },
+   "D40": 1.2
+  },
+  {
+   "lv": 77,
+   "nPlayers": 3,
+   "N": 1,
+   "Nuncapped": 1,
+   "Nmedian": 1,
+   "Nadj": 1.02,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 1,
+    "D4V3": 1,
+    "Loulou": 1
+   },
+   "D40": 1.15
+  },
+  {
+   "lv": 78,
+   "nPlayers": 2,
+   "N": 1,
+   "Nuncapped": 1,
+   "Nmedian": 1,
+   "Nadj": 0.81,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 1,
+    "D4V3": 1
+   },
+   "D40": 1.17
+  },
+  {
+   "lv": 79,
+   "nPlayers": 2,
+   "N": 3,
+   "Nuncapped": 3,
+   "Nmedian": 3,
+   "Nadj": 2.29,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 2,
+    "D4V3": 4
+   },
+   "D40": 2.62
+  },
+  {
+   "lv": 80,
+   "nPlayers": 2,
+   "N": 14.5,
+   "Nuncapped": 14.5,
+   "Nmedian": 14.5,
+   "Nadj": 11.68,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 16,
+    "D4V3": 13
+   },
+   "D40": 3.13
+  },
+  {
+   "lv": 81,
+   "nPlayers": 2,
+   "N": 2,
+   "Nuncapped": 2,
+   "Nmedian": 2,
+   "Nadj": 1.4,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 1,
+    "D4V3": 3
+   },
+   "D40": 1.14
+  },
+  {
+   "lv": 82,
+   "nPlayers": 2,
+   "N": 13.5,
+   "Nuncapped": 54.5,
+   "Nmedian": 13.5,
+   "Nadj": 9.58,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 102,
+    "D4V3": 7
+   },
+   "D40": 4.3
+  },
+  {
+   "lv": 83,
+   "nPlayers": 2,
+   "N": 7,
+   "Nuncapped": 7,
+   "Nmedian": 7,
+   "Nadj": 5.61,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 8,
+    "D4V3": 6
+   },
+   "D40": 1.35
+  },
+  {
+   "lv": 84,
+   "nPlayers": 2,
+   "N": 4.5,
+   "Nuncapped": 4.5,
+   "Nmedian": 4.5,
+   "Nadj": 3.03,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 2,
+    "D4V3": 7
+   },
+   "D40": 9.59
+  },
+  {
+   "lv": 85,
+   "nPlayers": 3,
+   "N": 4,
+   "Nuncapped": 4,
+   "Nmedian": 5,
+   "Nadj": 2.82,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 5,
+    "Gerda": 6,
+    "D4V3": 1
+   },
+   "D40": 4.13
+  },
+  {
+   "lv": 86,
+   "nPlayers": 3,
+   "N": 3,
+   "Nuncapped": 3,
+   "Nmedian": 2,
+   "Nadj": 2.08,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 1,
+    "Gerda": 6,
+    "D4V3": 2
+   },
+   "D40": 5.17
+  },
+  {
+   "lv": 87,
+   "nPlayers": 3,
+   "N": 2.67,
+   "Nuncapped": 2.67,
+   "Nmedian": 2,
+   "Nadj": 1.96,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 5,
+    "Gerda": 2,
+    "D4V3": 1
+   },
+   "D40": 1.63
+  },
+  {
+   "lv": 88,
+   "nPlayers": 3,
+   "N": 6,
+   "Nuncapped": 6,
+   "Nmedian": 8,
+   "Nadj": 3.78,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 1,
+    "Gerda": 8,
+    "D4V3": 9
+   },
+   "D40": 1.09
+  },
+  {
+   "lv": 89,
+   "nPlayers": 3,
+   "N": 10.33,
+   "Nuncapped": 10.33,
+   "Nmedian": 13,
+   "Nadj": 8.17,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 13,
+    "Gerda": 14,
+    "D4V3": 4
+   },
+   "D40": 3.68
+  },
+  {
+   "lv": 90,
+   "nPlayers": 3,
+   "N": 3.33,
+   "Nuncapped": 3.33,
+   "Nmedian": 3,
+   "Nadj": 2.38,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 1,
+    "Gerda": 6,
+    "D4V3": 3
+   },
+   "D40": 1.52
+  },
+  {
+   "lv": 91,
+   "nPlayers": 3,
+   "N": 18.67,
+   "Nuncapped": 35,
+   "Nmedian": 20,
+   "Nadj": 16.87,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 21,
+    "Gerda": 68,
+    "D4V3": 16
+   },
+   "D40": 4.41
+  },
+  {
+   "lv": 92,
+   "nPlayers": 3,
+   "N": 1.67,
+   "Nuncapped": 1.67,
+   "Nmedian": 2,
+   "Nadj": 1.44,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 2,
+    "Gerda": 1,
+    "D4V3": 2
+   },
+   "D40": 1.2
+  },
+  {
+   "lv": 93,
+   "nPlayers": 3,
+   "N": 3.67,
+   "Nuncapped": 3.67,
+   "Nmedian": 3,
+   "Nadj": 3,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 2,
+    "Gerda": 6,
+    "D4V3": 3
+   },
+   "D40": 1.08
+  },
+  {
+   "lv": 94,
+   "nPlayers": 3,
+   "N": 3,
+   "Nuncapped": 3,
+   "Nmedian": 3,
+   "Nadj": 2.24,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 5,
+    "Gerda": 3,
+    "D4V3": 1
+   },
+   "D40": 1.33
+  },
+  {
+   "lv": 95,
+   "nPlayers": 3,
+   "N": 4,
+   "Nuncapped": 4,
+   "Nmedian": 2,
+   "Nadj": 2.38,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 2,
+    "Gerda": 9,
+    "D4V3": 1
+   },
+   "D40": 1.61
+  },
+  {
+   "lv": 96,
+   "nPlayers": 3,
+   "N": 3.67,
+   "Nuncapped": 3.67,
+   "Nmedian": 5,
+   "Nadj": 2.66,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 5,
+    "Gerda": 1,
+    "D4V3": 5
+   },
+   "D40": 2.98
+  },
+  {
+   "lv": 97,
+   "nPlayers": 3,
+   "N": 3,
+   "Nuncapped": 3,
+   "Nmedian": 1,
+   "Nadj": 1.74,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 1,
+    "Gerda": 7,
+    "D4V3": 1
+   },
+   "D40": 1.08
+  },
+  {
+   "lv": 98,
+   "nPlayers": 3,
+   "N": 3,
+   "Nuncapped": 3,
+   "Nmedian": 2,
+   "Nadj": 2.08,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 2,
+    "Gerda": 1,
+    "D4V3": 6
+   },
+   "D40": 1.58
+  },
+  {
+   "lv": 99,
+   "nPlayers": 3,
+   "N": 5,
+   "Nuncapped": 5,
+   "Nmedian": 5,
+   "Nadj": 4.54,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 5,
+    "Gerda": 5,
+    "D4V3": 5
+   },
+   "D40": 3.05
+  },
+  {
+   "lv": 100,
+   "nPlayers": 3,
+   "N": 6.67,
+   "Nuncapped": 6.67,
+   "Nmedian": 5,
+   "Nadj": 3.74,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 1,
+    "Gerda": 14,
+    "D4V3": 5
+   },
+   "D40": 4.56
+  },
+  {
+   "lv": 101,
+   "nPlayers": 3,
+   "N": 3,
+   "Nuncapped": 3,
+   "Nmedian": 3,
+   "Nadj": 2.24,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 5,
+    "Gerda": 3,
+    "D4V3": 1
+   },
+   "D40": 1.27
+  },
+  {
+   "lv": 102,
+   "nPlayers": 3,
+   "N": 1.33,
+   "Nuncapped": 1.33,
+   "Nmedian": 1,
+   "Nadj": 1.14,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 1,
+    "Gerda": 1,
+    "D4V3": 2
+   },
+   "D40": 1.35
+  },
+  {
+   "lv": 103,
+   "nPlayers": 3,
+   "N": 1.67,
+   "Nuncapped": 1.67,
+   "Nmedian": 1,
+   "Nadj": 1.31,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 1,
+    "Gerda": 3,
+    "D4V3": 1
+   },
+   "D40": 1.45
+  },
+  {
+   "lv": 104,
+   "nPlayers": 3,
+   "N": 3,
+   "Nuncapped": 3,
+   "Nmedian": 3,
+   "Nadj": 2.24,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 1,
+    "Gerda": 3,
+    "D4V3": 5
+   },
+   "D40": 3.15
+  },
+  {
+   "lv": 105,
+   "nPlayers": 3,
+   "N": 3.33,
+   "Nuncapped": 3.33,
+   "Nmedian": 2,
+   "Nadj": 2.62,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 2,
+    "Gerda": 6,
+    "D4V3": 2
+   },
+   "D40": 1.27
+  },
+  {
+   "lv": 106,
+   "nPlayers": 3,
+   "N": 1.67,
+   "Nuncapped": 1.67,
+   "Nmedian": 2,
+   "Nadj": 1.44,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 2,
+    "Gerda": 2,
+    "D4V3": 1
+   },
+   "D40": 4.77
+  },
+  {
+   "lv": 107,
+   "nPlayers": 3,
+   "N": 5,
+   "Nuncapped": 5,
+   "Nmedian": 5,
+   "Nadj": 4.29,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 3,
+    "Gerda": 7,
+    "D4V3": 5
+   },
+   "D40": 3.59
+  },
+  {
+   "lv": 108,
+   "nPlayers": 3,
+   "N": 1.67,
+   "Nuncapped": 1.67,
+   "Nmedian": 2,
+   "Nadj": 1.44,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 1,
+    "Gerda": 2,
+    "D4V3": 2
+   },
+   "D40": 2.02
+  },
+  {
+   "lv": 109,
+   "nPlayers": 3,
+   "N": 3.67,
+   "Nuncapped": 3.67,
+   "Nmedian": 4,
+   "Nadj": 3.11,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 2,
+    "Gerda": 5,
+    "D4V3": 4
+   },
+   "D40": 2.25
+  },
+  {
+   "lv": 110,
+   "nPlayers": 3,
+   "N": 8,
+   "Nuncapped": 8,
+   "Nmedian": 4,
+   "Nadj": 4.76,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 2,
+    "Gerda": 18,
+    "D4V3": 4
+   },
+   "D40": 1.33
+  },
+  {
+   "lv": 111,
+   "nPlayers": 3,
+   "N": 4.67,
+   "Nuncapped": 4.67,
+   "Nmedian": 1,
+   "Nadj": 2.08,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 1,
+    "Gerda": 12,
+    "D4V3": 1
+   },
+   "D40": 3.29
+  },
+  {
+   "lv": 112,
+   "nPlayers": 3,
+   "N": 3.67,
+   "Nuncapped": 3.67,
+   "Nmedian": 4,
+   "Nadj": 3.3,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 4,
+    "Gerda": 4,
+    "D4V3": 3
+   },
+   "D40": 5.03
+  },
+  {
+   "lv": 113,
+   "nPlayers": 3,
+   "N": 5,
+   "Nuncapped": 5,
+   "Nmedian": 1,
+   "Nadj": 2.14,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 1,
+    "Gerda": 13,
+    "D4V3": 1
+   },
+   "D40": 1.94
+  },
+  {
+   "lv": 114,
+   "nPlayers": 3,
+   "N": 2,
+   "Nuncapped": 2,
+   "Nmedian": 1,
+   "Nadj": 1.44,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 4,
+    "Gerda": 1,
+    "D4V3": 1
+   },
+   "D40": 1.99
+  },
+  {
+   "lv": 115,
+   "nPlayers": 3,
+   "N": 2,
+   "Nuncapped": 2,
+   "Nmedian": 1,
+   "Nadj": 1.44,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 1,
+    "Gerda": 1,
+    "D4V3": 4
+   },
+   "D40": 5.28
+  },
+  {
+   "lv": 116,
+   "nPlayers": 3,
+   "N": 8,
+   "Nuncapped": 8,
+   "Nmedian": 3,
+   "Nadj": 3.56,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 1,
+    "Gerda": 20,
+    "D4V3": 3
+   },
+   "D40": 4.3
+  },
+  {
+   "lv": 117,
+   "nPlayers": 3,
+   "N": 2,
+   "Nuncapped": 2,
+   "Nmedian": 1,
+   "Nadj": 1.44,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 1,
+    "Gerda": 4,
+    "D4V3": 1
+   },
+   "D40": 1.17
+  },
+  {
+   "lv": 118,
+   "nPlayers": 3,
+   "N": 4.67,
+   "Nuncapped": 4.67,
+   "Nmedian": 2,
+   "Nadj": 3.11,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 2,
+    "Gerda": 2,
+    "D4V3": 10
+   },
+   "D40": 1.36
+  },
+  {
+   "lv": 119,
+   "nPlayers": 3,
+   "N": 5.67,
+   "Nuncapped": 5.67,
+   "Nmedian": 2,
+   "Nadj": 2.76,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 1,
+    "Gerda": 14,
+    "D4V3": 2
+   },
+   "D40": 1.7
+  },
+  {
+   "lv": 120,
+   "nPlayers": 3,
+   "N": 3.33,
+   "Nuncapped": 3.33,
+   "Nmedian": 4,
+   "Nadj": 2.88,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 4,
+    "Gerda": 4,
+    "D4V3": 2
+   },
+   "D40": 2.1
+  },
+  {
+   "lv": 121,
+   "nPlayers": 3,
+   "N": 13,
+   "Nuncapped": 13.33,
+   "Nmedian": 17,
+   "Nadj": 7.99,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 2,
+    "Gerda": 21,
+    "D4V3": 17
+   },
+   "D40": 8.35
+  },
+  {
+   "lv": 122,
+   "nPlayers": 3,
+   "N": 11,
+   "Nuncapped": 12.67,
+   "Nmedian": 8,
+   "Nadj": 8.43,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 5,
+    "Gerda": 25,
+    "D4V3": 8
+   },
+   "D40": 1.19
+  },
+  {
+   "lv": 123,
+   "nPlayers": 3,
+   "N": 7.67,
+   "Nuncapped": 13,
+   "Nmedian": 2,
+   "Nadj": 3.11,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 1,
+    "Gerda": 36,
+    "D4V3": 2
+   },
+   "D40": 2.42
+  },
+  {
+   "lv": 124,
+   "nPlayers": 3,
+   "N": 10.33,
+   "Nuncapped": 10.33,
+   "Nmedian": 7,
+   "Nadj": 7.93,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 5,
+    "Gerda": 7,
+    "D4V3": 19
+   },
+   "D40": 20.55
+  },
+  {
+   "lv": 125,
+   "nPlayers": 3,
+   "N": 8,
+   "Nuncapped": 8,
+   "Nmedian": 4,
+   "Nadj": 3.85,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 1,
+    "Gerda": 19,
+    "D4V3": 4
+   },
+   "D40": 2.03
+  },
+  {
+   "lv": 126,
+   "nPlayers": 3,
+   "N": 4.33,
+   "Nuncapped": 4.33,
+   "Nmedian": 4,
+   "Nadj": 3.78,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 6,
+    "Gerda": 4,
+    "D4V3": 3
+   },
+   "D40": 1.73
+  },
+  {
+   "lv": 127,
+   "nPlayers": 3,
+   "N": 2.33,
+   "Nuncapped": 2.33,
+   "Nmedian": 2,
+   "Nadj": 1.82,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 2,
+    "Gerda": 4,
+    "D4V3": 1
+   },
+   "D40": 2.42
+  },
+  {
+   "lv": 128,
+   "nPlayers": 3,
+   "N": 5.67,
+   "Nuncapped": 5.67,
+   "Nmedian": 4,
+   "Nadj": 4.04,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 4,
+    "Gerda": 11,
+    "D4V3": 2
+   },
+   "D40": 2.73
+  },
+  {
+   "lv": 129,
+   "nPlayers": 3,
+   "N": 2,
+   "Nuncapped": 2,
+   "Nmedian": 2,
+   "Nadj": 1.65,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 2,
+    "Gerda": 3,
+    "D4V3": 1
+   },
+   "D40": 1.45
+  },
+  {
+   "lv": 130,
+   "nPlayers": 3,
+   "N": 3.67,
+   "Nuncapped": 3.67,
+   "Nmedian": 3,
+   "Nadj": 3,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 2,
+    "Gerda": 6,
+    "D4V3": 3
+   },
+   "D40": 1.64
+  },
+  {
+   "lv": 131,
+   "nPlayers": 3,
+   "N": 2.67,
+   "Nuncapped": 2.67,
+   "Nmedian": 2,
+   "Nadj": 1.96,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 1,
+    "Gerda": 5,
+    "D4V3": 2
+   },
+   "D40": 1.46
+  },
+  {
+   "lv": 132,
+   "nPlayers": 3,
+   "N": 16.33,
+   "Nuncapped": 37,
+   "Nmedian": 20,
+   "Nadj": 13.93,
+   "anyCensored": true,
+   "perPlayer": {
+    "MrsD": 31,
+    "Gerda": 71,
+    "D4V3": ">=9"
+   },
+   "D40": 6.69
+  },
+  {
+   "lv": 133,
+   "nPlayers": 2,
+   "N": 1,
+   "Nuncapped": 1,
+   "Nmedian": 1,
+   "Nadj": 0.89,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 1,
+    "Gerda": 1
+   },
+   "D40": 4.84
+  },
+  {
+   "lv": 134,
+   "nPlayers": 2,
+   "N": 1.5,
+   "Nuncapped": 1.5,
+   "Nmedian": 1.5,
+   "Nadj": 1.26,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 1,
+    "Gerda": 2
+   },
+   "D40": 1.07
+  },
+  {
+   "lv": 135,
+   "nPlayers": 2,
+   "N": 12,
+   "Nuncapped": 12,
+   "Nmedian": 12,
+   "Nadj": 9.26,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 6,
+    "Gerda": 18
+   },
+   "D40": 3.05
+  },
+  {
+   "lv": 136,
+   "nPlayers": 2,
+   "N": 3,
+   "Nuncapped": 3,
+   "Nmedian": 3,
+   "Nadj": 2.52,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 2,
+    "Gerda": 4
+   },
+   "D40": 3.04
+  },
+  {
+   "lv": 137,
+   "nPlayers": 2,
+   "N": 3,
+   "Nuncapped": 3,
+   "Nmedian": 3,
+   "Nadj": 2.67,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 3,
+    "Gerda": 3
+   },
+   "D40": 2.27
+  },
+  {
+   "lv": 138,
+   "nPlayers": 2,
+   "N": 5,
+   "Nuncapped": 5,
+   "Nmedian": 5,
+   "Nadj": 2.67,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 1,
+    "Gerda": 9
+   },
+   "D40": 1.56
+  },
+  {
+   "lv": 139,
+   "nPlayers": 2,
+   "N": 5,
+   "Nuncapped": 5,
+   "Nmedian": 5,
+   "Nadj": 4.08,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 3,
+    "Gerda": 7
+   },
+   "D40": 1.64
+  },
+  {
+   "lv": 140,
+   "nPlayers": 2,
+   "N": 2.5,
+   "Nuncapped": 2.5,
+   "Nmedian": 2.5,
+   "Nadj": 1.78,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 4,
+    "Gerda": 1
+   },
+   "D40": 2.76
+  },
+  {
+   "lv": 141,
+   "nPlayers": 2,
+   "N": 7.5,
+   "Nuncapped": 7.5,
+   "Nmedian": 7.5,
+   "Nadj": 5.35,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 3,
+    "Gerda": 12
+   },
+   "D40": 5.63
+  },
+  {
+   "lv": 142,
+   "nPlayers": 2,
+   "N": 4.5,
+   "Nuncapped": 4.5,
+   "Nmedian": 4.5,
+   "Nadj": 2.52,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 8,
+    "Gerda": 1
+   },
+   "D40": 2.67
+  },
+  {
+   "lv": 143,
+   "nPlayers": 2,
+   "N": 12,
+   "Nuncapped": 12,
+   "Nmedian": 12,
+   "Nadj": 9.72,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 7,
+    "Gerda": 17
+   },
+   "D40": 4.16
+  },
+  {
+   "lv": 144,
+   "nPlayers": 2,
+   "N": 13,
+   "Nuncapped": 22,
+   "Nmedian": 13,
+   "Nadj": 9.76,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 38,
+    "Gerda": 6
+   },
+   "D40": 7.46
+  },
+  {
+   "lv": 145,
+   "nPlayers": 2,
+   "N": 2.5,
+   "Nuncapped": 2.5,
+   "Nmedian": 2.5,
+   "Nadj": 2.18,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 3,
+    "Gerda": 2
+   },
+   "D40": 1.5
+  },
+  {
+   "lv": 146,
+   "nPlayers": 2,
+   "N": 3.5,
+   "Nuncapped": 3.5,
+   "Nmedian": 3.5,
+   "Nadj": 2.18,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 1,
+    "Gerda": 6
+   },
+   "D40": 1.5
+  },
+  {
+   "lv": 147,
+   "nPlayers": 2,
+   "N": 2.5,
+   "Nuncapped": 2.5,
+   "Nmedian": 2.5,
+   "Nadj": 2.18,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 2,
+    "Gerda": 3
+   },
+   "D40": 6.35
+  },
+  {
+   "lv": 148,
+   "nPlayers": 2,
+   "N": 1.5,
+   "Nuncapped": 1.5,
+   "Nmedian": 1.5,
+   "Nadj": 1.26,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 1,
+    "Gerda": 2
+   },
+   "D40": 2.09
+  },
+  {
+   "lv": 149,
+   "nPlayers": 2,
+   "N": 11.5,
+   "Nuncapped": 39,
+   "Nmedian": 11.5,
+   "Nadj": 6.9,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 3,
+    "Gerda": 75
+   },
+   "D40": 4.58
+  },
+  {
+   "lv": 150,
+   "nPlayers": 2,
+   "N": 20,
+   "Nuncapped": 51,
+   "Nmedian": 20,
+   "Nadj": 17.82,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 21,
+    "Gerda": 81
+   },
+   "D40": 7.2
+  },
+  {
+   "lv": 151,
+   "nPlayers": 2,
+   "N": 4.5,
+   "Nuncapped": 4.5,
+   "Nmedian": 4.5,
+   "Nadj": 3.98,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 4,
+    "Gerda": 5
+   },
+   "D40": 4.22
+  },
+  {
+   "lv": 152,
+   "nPlayers": 2,
+   "N": 3,
+   "Nuncapped": 3,
+   "Nmedian": 3,
+   "Nadj": 2.52,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 2,
+    "Gerda": 4
+   },
+   "D40": 2.69
+  },
+  {
+   "lv": 153,
+   "nPlayers": 2,
+   "N": 5.5,
+   "Nuncapped": 5.5,
+   "Nmedian": 5.5,
+   "Nadj": 3.78,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 2,
+    "Gerda": 9
+   },
+   "D40": 2
+  },
+  {
+   "lv": 154,
+   "nPlayers": 2,
+   "N": 6,
+   "Nuncapped": 6,
+   "Nmedian": 6,
+   "Nadj": 2.95,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 1,
+    "Gerda": 11
+   },
+   "D40": 2
+  },
+  {
+   "lv": 155,
+   "nPlayers": 2,
+   "N": 5,
+   "Nuncapped": 5,
+   "Nmedian": 5,
+   "Nadj": 4.08,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 7,
+    "Gerda": 3
+   },
+   "D40": 7.87
+  },
+  {
+   "lv": 156,
+   "nPlayers": 2,
+   "N": 9.5,
+   "Nuncapped": 9.5,
+   "Nmedian": 9.5,
+   "Nadj": 6.9,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 15,
+    "Gerda": 4
+   },
+   "D40": 2.05
+  },
+  {
+   "lv": 157,
+   "nPlayers": 2,
+   "N": 3.5,
+   "Nuncapped": 3.5,
+   "Nmedian": 3.5,
+   "Nadj": 3.09,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 3,
+    "Gerda": 4
+   },
+   "D40": 2.79
+  },
+  {
+   "lv": 158,
+   "nPlayers": 2,
+   "N": 2,
+   "Nuncapped": 2,
+   "Nmedian": 2,
+   "Nadj": 1.78,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 2,
+    "Gerda": 2
+   },
+   "D40": 1.39
+  },
+  {
+   "lv": 159,
+   "nPlayers": 2,
+   "N": 3.5,
+   "Nuncapped": 3.5,
+   "Nmedian": 3.5,
+   "Nadj": 2.18,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 6,
+    "Gerda": 1
+   },
+   "D40": 2.69
+  },
+  {
+   "lv": 160,
+   "nPlayers": 2,
+   "N": 5,
+   "Nuncapped": 5,
+   "Nmedian": 5,
+   "Nadj": 3.56,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 2,
+    "Gerda": 8
+   },
+   "D40": 2.22
+  },
+  {
+   "lv": 161,
+   "nPlayers": 2,
+   "N": 14,
+   "Nuncapped": 14.5,
+   "Nmedian": 14,
+   "Nadj": 11.27,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 8,
+    "Gerda": 21
+   },
+   "D40": 5.24
+  },
+  {
+   "lv": 162,
+   "nPlayers": 2,
+   "N": 6,
+   "Nuncapped": 6,
+   "Nmedian": 6,
+   "Nadj": 3.98,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 10,
+    "Gerda": 2
+   },
+   "D40": 4.89
+  },
+  {
+   "lv": 163,
+   "nPlayers": 2,
+   "N": 6.5,
+   "Nuncapped": 6.5,
+   "Nmedian": 6.5,
+   "Nadj": 4.88,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 3,
+    "Gerda": 10
+   },
+   "D40": 2.33
+  },
+  {
+   "lv": 164,
+   "nPlayers": 2,
+   "N": 2.5,
+   "Nuncapped": 2.5,
+   "Nmedian": 2.5,
+   "Nadj": 2.18,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 2,
+    "Gerda": 3
+   },
+   "D40": 2
+  },
+  {
+   "lv": 165,
+   "nPlayers": 2,
+   "N": 2,
+   "Nuncapped": 2,
+   "Nmedian": 2,
+   "Nadj": 1.54,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 1,
+    "Gerda": 3
+   },
+   "D40": 1.52
+  },
+  {
+   "lv": 166,
+   "nPlayers": 2,
+   "N": 4,
+   "Nuncapped": 4,
+   "Nmedian": 4,
+   "Nadj": 2.36,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 1,
+    "Gerda": 7
+   },
+   "D40": 2.94
+  },
+  {
+   "lv": 167,
+   "nPlayers": 2,
+   "N": 1.5,
+   "Nuncapped": 1.5,
+   "Nmedian": 1.5,
+   "Nadj": 1.26,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 1,
+    "Gerda": 2
+   },
+   "D40": 2.11
+  },
+  {
+   "lv": 168,
+   "nPlayers": 2,
+   "N": 2.5,
+   "Nuncapped": 2.5,
+   "Nmedian": 2.5,
+   "Nadj": 1.78,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 1,
+    "Gerda": 4
+   },
+   "D40": 2.5
+  },
+  {
+   "lv": 169,
+   "nPlayers": 2,
+   "N": 2.5,
+   "Nuncapped": 2.5,
+   "Nmedian": 2.5,
+   "Nadj": 2.18,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 3,
+    "Gerda": 2
+   },
+   "D40": 2.27
+  },
+  {
+   "lv": 170,
+   "nPlayers": 2,
+   "N": 2,
+   "Nuncapped": 2,
+   "Nmedian": 2,
+   "Nadj": 1.78,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 2,
+    "Gerda": 2
+   },
+   "D40": 3.49
+  },
+  {
+   "lv": 171,
+   "nPlayers": 2,
+   "N": 9.5,
+   "Nuncapped": 9.5,
+   "Nmedian": 9.5,
+   "Nadj": 8.36,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 8,
+    "Gerda": 11
+   },
+   "D40": 4.79
+  },
+  {
+   "lv": 172,
+   "nPlayers": 2,
+   "N": 1.5,
+   "Nuncapped": 1.5,
+   "Nmedian": 1.5,
+   "Nadj": 1.26,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 2,
+    "Gerda": 1
+   },
+   "D40": 1.49
+  },
+  {
+   "lv": 173,
+   "nPlayers": 2,
+   "N": 4.5,
+   "Nuncapped": 4.5,
+   "Nmedian": 4.5,
+   "Nadj": 3.33,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 7,
+    "Gerda": 2
+   },
+   "D40": 1.59
+  },
+  {
+   "lv": 174,
+   "nPlayers": 2,
+   "N": 2,
+   "Nuncapped": 2,
+   "Nmedian": 2,
+   "Nadj": 1.54,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 3,
+    "Gerda": 1
+   },
+   "D40": 1.56
+  },
+  {
+   "lv": 175,
+   "nPlayers": 2,
+   "N": 3.5,
+   "Nuncapped": 3.5,
+   "Nmedian": 3.5,
+   "Nadj": 2.82,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 2,
+    "Gerda": 5
+   },
+   "D40": 1.85
+  },
+  {
+   "lv": 176,
+   "nPlayers": 2,
+   "N": 13.5,
+   "Nuncapped": 13.5,
+   "Nmedian": 13.5,
+   "Nadj": 11.95,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 12,
+    "Gerda": 15
+   },
+   "D40": 8.29
+  },
+  {
+   "lv": 177,
+   "nPlayers": 2,
+   "N": 7,
+   "Nuncapped": 7,
+   "Nmedian": 7,
+   "Nadj": 6.24,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 7,
+    "Gerda": 7
+   },
+   "D40": 2.83
+  },
+  {
+   "lv": 178,
+   "nPlayers": 2,
+   "N": 2.5,
+   "Nuncapped": 2.5,
+   "Nmedian": 2.5,
+   "Nadj": 1.78,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 4,
+    "Gerda": 1
+   },
+   "D40": 6.13
+  },
+  {
+   "lv": 179,
+   "nPlayers": 2,
+   "N": 5.5,
+   "Nuncapped": 5.5,
+   "Nmedian": 5.5,
+   "Nadj": 4.88,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 5,
+    "Gerda": 6
+   },
+   "D40": 2.39
+  },
+  {
+   "lv": 180,
+   "nPlayers": 2,
+   "N": 2,
+   "Nuncapped": 2,
+   "Nmedian": 2,
+   "Nadj": 1.54,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 1,
+    "Gerda": 3
+   },
+   "D40": 2.31
+  },
+  {
+   "lv": 181,
+   "nPlayers": 2,
+   "N": 3,
+   "Nuncapped": 3,
+   "Nmedian": 3,
+   "Nadj": 2.52,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 2,
+    "Gerda": 4
+   },
+   "D40": 1.49
+  },
+  {
+   "lv": 182,
+   "nPlayers": 2,
+   "N": 3.5,
+   "Nuncapped": 3.5,
+   "Nmedian": 3.5,
+   "Nadj": 2.82,
+   "anyCensored": false,
+   "perPlayer": {
+    "MrsD": 5,
+    "Gerda": 2
+   },
+   "D40": 2.08
+  },
+  {
+   "lv": 183,
+   "nPlayers": 1,
+   "N": 6,
+   "Nuncapped": 6,
+   "Nmedian": 6,
+   "Nadj": 4.16,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 6
+   },
+   "D40": 9.54
+  },
+  {
+   "lv": 184,
+   "nPlayers": 1,
+   "N": 2,
+   "Nuncapped": 2,
+   "Nmedian": 2,
+   "Nadj": 1.39,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 2
+   },
+   "D40": 3.08
+  },
+  {
+   "lv": 185,
+   "nPlayers": 1,
+   "N": 5,
+   "Nuncapped": 5,
+   "Nmedian": 5,
+   "Nadj": 3.47,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 5
+   },
+   "D40": 1.3
+  },
+  {
+   "lv": 186,
+   "nPlayers": 1,
+   "N": 1,
+   "Nuncapped": 1,
+   "Nmedian": 1,
+   "Nadj": 0.69,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 1
+   },
+   "D40": 3.67
+  },
+  {
+   "lv": 187,
+   "nPlayers": 1,
+   "N": 12,
+   "Nuncapped": 12,
+   "Nmedian": 12,
+   "Nadj": 8.33,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 12
+   },
+   "D40": 3.4
+  },
+  {
+   "lv": 188,
+   "nPlayers": 1,
+   "N": 20,
+   "Nuncapped": 37,
+   "Nmedian": 20,
+   "Nadj": 13.88,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 37
+   },
+   "D40": 4.34
+  },
+  {
+   "lv": 189,
+   "nPlayers": 1,
+   "N": 2,
+   "Nuncapped": 2,
+   "Nmedian": 2,
+   "Nadj": 1.39,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 2
+   },
+   "D40": 1.23
+  },
+  {
+   "lv": 190,
+   "nPlayers": 1,
+   "N": 12,
+   "Nuncapped": 12,
+   "Nmedian": 12,
+   "Nadj": 8.33,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 12
+   },
+   "D40": 12.39
+  },
+  {
+   "lv": 191,
+   "nPlayers": 1,
+   "N": 2,
+   "Nuncapped": 2,
+   "Nmedian": 2,
+   "Nadj": 1.39,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 2
+   },
+   "D40": 6.08
+  },
+  {
+   "lv": 192,
+   "nPlayers": 1,
+   "N": 5,
+   "Nuncapped": 5,
+   "Nmedian": 5,
+   "Nadj": 3.47,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 5
+   },
+   "D40": 22.28
+  },
+  {
+   "lv": 193,
+   "nPlayers": 1,
+   "N": 1,
+   "Nuncapped": 1,
+   "Nmedian": 1,
+   "Nadj": 0.69,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 1
+   },
+   "D40": 3.69
+  },
+  {
+   "lv": 194,
+   "nPlayers": 1,
+   "N": 2,
+   "Nuncapped": 2,
+   "Nmedian": 2,
+   "Nadj": 1.39,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 2
+   },
+   "D40": 1.13
+  },
+  {
+   "lv": 195,
+   "nPlayers": 1,
+   "N": 1,
+   "Nuncapped": 1,
+   "Nmedian": 1,
+   "Nadj": 0.69,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 1
+   },
+   "D40": 2.59
+  },
+  {
+   "lv": 196,
+   "nPlayers": 1,
+   "N": 20,
+   "Nuncapped": 32,
+   "Nmedian": 20,
+   "Nadj": 13.88,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 32
+   },
+   "D40": 24.23
+  },
+  {
+   "lv": 197,
+   "nPlayers": 1,
+   "N": 14,
+   "Nuncapped": 14,
+   "Nmedian": 14,
+   "Nadj": 9.72,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 14
+   },
+   "D40": 4.12
+  },
+  {
+   "lv": 198,
+   "nPlayers": 1,
+   "N": 1,
+   "Nuncapped": 1,
+   "Nmedian": 1,
+   "Nadj": 0.69,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 1
+   },
+   "D40": 4.32
+  },
+  {
+   "lv": 199,
+   "nPlayers": 1,
+   "N": 5,
+   "Nuncapped": 5,
+   "Nmedian": 5,
+   "Nadj": 3.47,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 5
+   },
+   "D40": 3.38
+  },
+  {
+   "lv": 200,
+   "nPlayers": 1,
+   "N": 10,
+   "Nuncapped": 10,
+   "Nmedian": 10,
+   "Nadj": 6.94,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 10
+   },
+   "D40": 5.03
+  },
+  {
+   "lv": 201,
+   "nPlayers": 1,
+   "N": 7,
+   "Nuncapped": 7,
+   "Nmedian": 7,
+   "Nadj": 4.86,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 7
+   },
+   "D40": 2.66
+  },
+  {
+   "lv": 202,
+   "nPlayers": 1,
+   "N": 1,
+   "Nuncapped": 1,
+   "Nmedian": 1,
+   "Nadj": 0.69,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 1
+   },
+   "D40": 1.36
+  },
+  {
+   "lv": 203,
+   "nPlayers": 1,
+   "N": 6,
+   "Nuncapped": 6,
+   "Nmedian": 6,
+   "Nadj": 4.16,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 6
+   },
+   "D40": 1.39
+  },
+  {
+   "lv": 204,
+   "nPlayers": 1,
+   "N": 2,
+   "Nuncapped": 2,
+   "Nmedian": 2,
+   "Nadj": 1.39,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 2
+   },
+   "D40": 1.24
+  },
+  {
+   "lv": 205,
+   "nPlayers": 1,
+   "N": 18,
+   "Nuncapped": 18,
+   "Nmedian": 18,
+   "Nadj": 12.49,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 18
+   },
+   "D40": 1.63
+  },
+  {
+   "lv": 206,
+   "nPlayers": 1,
+   "N": 2,
+   "Nuncapped": 2,
+   "Nmedian": 2,
+   "Nadj": 1.39,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 2
+   },
+   "D40": 6.15
+  },
+  {
+   "lv": 207,
+   "nPlayers": 1,
+   "N": 2,
+   "Nuncapped": 2,
+   "Nmedian": 2,
+   "Nadj": 1.39,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 2
+   },
+   "D40": 1.48
+  },
+  {
+   "lv": 208,
+   "nPlayers": 1,
+   "N": 4,
+   "Nuncapped": 4,
+   "Nmedian": 4,
+   "Nadj": 2.78,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 4
+   },
+   "D40": 2.15
+  },
+  {
+   "lv": 209,
+   "nPlayers": 1,
+   "N": 20,
+   "Nuncapped": 57,
+   "Nmedian": 20,
+   "Nadj": 13.88,
+   "anyCensored": false,
+   "perPlayer": {
+    "Gerda": 57
+   },
+   "D40": 3.34
+  },
+  {
+   "lv": 210,
+   "nPlayers": 1,
+   "N": 3,
+   "Nuncapped": 3,
+   "Nmedian": 3,
+   "Nadj": 2.08,
+   "anyCensored": true,
+   "perPlayer": {
+    "Gerda": ">=3"
+   },
+   "D40": 20.27
+  }
+ ]
+}
