@@ -197,12 +197,14 @@ tst('trap builds are deterministic and unknown trap names fail cleanly', () => {
 
 // ---------- chain traps (compositional generator) ----------
 // shape index -> a layout that hosts it (found by trap_chain_sweep.js); the test builds each of these from scratch
-const CHAIN_AT = require('./trap_chain_hosts.json');
+// shapes 16+ were found by trap_chain_sweep.js --dial 5,3 (the tray-pressure dial on), 2026-11-13; the old table (shapes 0-15) is trap_chain_hosts.json
+const NEW_AT = { 19: [5], 22: [39, 36, 4, 0, 42, 43], 30: [36, 46, 27, 23], 33: [18, 36, 31, 13], 35: [43, 35, 36, 6], 38: [36] };
+const CHAIN_AT = { ...require('./trap_chain_hosts.json'), ...NEW_AT };
 const chainCache = {};
 function chainBoard(si) {
   if (chainCache[si]) return chainCache[si];
   const sig = T.CHAIN_SHAPES[si];
-  for (const layout of CHAIN_AT[si]) { const r = T.build('chain', { chain: sig, layout, seed: 1, stage: 'edge' }, { tries: 30 }); if (r.design) return (chainCache[si] = { r, layout, sig }); }
+  for (const layout of CHAIN_AT[si]) { const r = T.build('chain', { chain: sig, layout, seed: 1, stage: 'edge', ...(si >= 16 ? { pressure: { run2: 5, at3: 3 } } : {}) }, { tries: 30 }); if (r.design) return (chainCache[si] = { r, layout, sig }); }
   return null;
 }
 tst('chain: grammar - distinct signatures of length 2-4 covering frozen clock, frozen lock/locked tile, frozen key cover, frozen way tiles, lock on the clock, on a clock cover, on a thaw-neighbour', () => {
@@ -215,14 +217,18 @@ tst('chain: grammar - distinct signatures of length 2-4 covering frozen clock, f
 });
 tst('chain: at least 10 different shapes build with their own proof; every special matters and is connected; baits are proven above the control', { timeout: 1500000 }, () => {
   const built = Object.keys(CHAIN_AT).map(Number).map(si => ({ si, b: chainBoard(si) })).filter(x => x.b);
-  assert.ok(built.length >= 10, 'shapes built: ' + built.length);
+  assert.ok(built.length >= 12, 'shapes built: ' + built.length);
+  const richBuilt = built.filter(x => T.CHAIN[x.b.sig].length >= 3); assert.ok(richBuilt.length >= 12, '3+ link shapes built: ' + richBuilt.length + ' (' + richBuilt.map(x => x.si).join(',') + ')');
+  assert.ok(built.some(x => T.CHAIN[x.b.sig].frozenKey), 'a frozen-key shape builds'); assert.ok(built.some(x => T.CHAIN[x.b.sig].lockedFrozen), 'a frozen locked tile shape builds');
   for (const { si, b } of built) {
     const { r, sig } = b, d = r.design, tc = r.card.trap, spare = r.card.clock.spare, k = r.card.clock.fewestMoves, ob = d.obst, c = B.context(d.tiles);
     assert.equal(r.card.trapType, 'chain:' + sig); assert.equal(tc.shape, sig); assert.equal(tc.type, 'chain'); assert.equal(tc.trapType, 'chain:' + sig);
     assert.ok(E.replay(d, d.solution).ok); assert.equal(d.clock.n - k, spare); assert.ok(tc.see.length > 30 && !tc.see.includes('\n'));
-    // one overlay per tile: no tile is frozen and a key / locked / the clock's lock at once (the game would show only the ice)
-    const ice = Object.keys(ob.ice).map(Number), roleList = [...ice, ...ob.locks, ...ob.keys];
-    assert.equal(new Set(roleList).size, roleList.length, sig + ': a tile carries two roles'); assert.ok(ice.every(t => !ob.keys.includes(t)), 'no frozen key tile');
+    // one overlay per tile today: a tile that is frozen AND a key / locked would show only the ice - those shapes are marked needsUi 'frozen-key-marker' (display fix by another agent); all others carry one role per tile
+    const ice = Object.keys(ob.ice).map(Number), roleList = [...new Set([...ice, ...ob.locks, ...ob.keys])], both = ice.filter(t => ob.keys.includes(t) || ob.locks.includes(t));
+    if (both.length) { assert.equal(tc.needsUi, 'frozen-key-marker', sig + ': needsUi'); assert.equal(T.CHAIN[sig].needsUi, 'frozen-key-marker'); } else assert.equal(tc.needsUi, null, sig + ': no needsUi');
+    assert.equal(both.length > 0, !!(T.CHAIN[sig].frozenKey || T.CHAIN[sig].lockedFrozen), sig + ': frozen key / locked tile flags');
+    assert.equal(tc.links, T.CHAIN[sig].length); assert.equal(tc.easy, T.CHAIN[sig].length <= 2); assert.ok(tc.pressure.run2 >= 1 && tc.pressure.peak <= 3);
     // all role tiles in sight at move 0 and face-up
     const g = E.game(d), vr = O.visibleRoles(g, E.start(g)), down = new Set(d.down);
     for (const t of roleList) { assert.ok(vr[t], sig + ': overlay of ' + t + ' in sight'); assert.ok(!down.has(t)); }
@@ -235,21 +241,75 @@ tst('chain: at least 10 different shapes build with their own proof; every speci
       assert.equal(p.exact, true); assert.ok(p.result === 'lose' || p.cost >= spare + 1, sig + ' ' + bt.name + ' costs ' + p.result + ' ' + p.cost); assert.ok(bt.value > tc.control.value, sig + ' bait ' + bt.name + ' above control');
     }
     // every lock and every ice matters (recomputed here): the proven shortest clock route gets shorter without it, or the bait turns harmless
-    assert.equal(tc.idle.length, ob.locks.length + ice.length);
+    assert.equal(tc.idle.length, (ob.locks.length > 1 ? 1 : ob.locks.length) + ice.length);   // several locks, one key pair: the lock set is tested as a group
     const kOf = mod => E.clockShortest(E.game(JSON.parse(JSON.stringify({ ...d, obst: { ...ob, ...mod }, clock: { ...d.clock, n: 99 } }))), { nodes: 300000, ms: Infinity, finishNodes: 100000, finishMs: Infinity }).k;
-    for (const l of ob.locks) { const row = tc.idle.find(x => x.kind === 'lock' && x.tile === l); assert.ok(kOf({ locks: ob.locks.filter(x => x !== l) }) < k || row.harmlessBait, sig + ': lock ' + l + ' idle'); }
+    if (ob.locks.length > 1) { const row = tc.idle.find(x => x.kind === 'lockGroup'); assert.ok(row && kOf({ locks: [], keys: [] }) < k, sig + ': lock group idle'); }
+    else for (const l of ob.locks) { const row = tc.idle.find(x => x.kind === 'lock' && x.tile === l); assert.ok(kOf({ locks: ob.locks.filter(x => x !== l) }) < k || row.harmlessBait, sig + ': lock ' + l + ' idle'); }
     for (const f of ice) { const i2 = { ...ob.ice }; delete i2[f]; const row = tc.idle.find(x => x.kind === 'ice' && x.tile === f); assert.ok(kOf({ ice: i2 }) < k || row.harmlessBait, sig + ': ice ' + f + ' idle'); }
     // connected: every special reaches the clock over the recorded links
-    assert.equal(tc.connected, true); const adj = {}; for (const [x, y] of tc.links) { (adj[x] = adj[x] || []).push(y); (adj[y] = adj[y] || []).push(x); }
+    assert.equal(tc.connected, true); const adj = {}; for (const [x, y] of tc.linkPairs) { (adj[x] = adj[x] || []).push(y); (adj[y] = adj[y] || []).push(x); }
     const seen = new Set([d.clock.i]), st = [d.clock.i]; while (st.length) for (const j of adj[st.pop()] || []) if (!seen.has(j)) { seen.add(j); st.push(j); }
     for (const t of roleList) assert.ok(seen.has(t), sig + ': special ' + t + ' not connected');
     // the gates (traps-v1) hold and shapes with a frozen clock really freeze the clock, shapes with a locked clock lock it
-    const sg = GP.applyStatic(SG.staticGates(d, { story: 'chain' }), GP.loadProfile('traps-v1'), { storyProof: { ok: true } }); assert.ok(sg.pass, sig + ' static gates');
+    const sg = T.withFrozenRoles(!!T.CHAIN[sig].needsUi, () => GP.applyStatic(SG.staticGates(d, { story: 'chain' }), GP.loadProfile('traps-v1'), { storyProof: { ok: true } })); assert.ok(sg.pass, sig + ' static gates');
     const def = T.CHAIN[sig]; if (def.ck === 'ice') assert.ok(ob.ice[d.clock.i] > 0); if (def.ck === 'lock') assert.ok(ob.locks.includes(d.clock.i)); if (def.cover) assert.ok(c.above[d.clock.i].size >= 1);
     // the bait tiles are role tiles, covers, neighbours or twins (structural), as in the other stories
     for (const t of r.roles.bait.tiles) assert.ok(isStructural(c, d, t) || r.roles.bait.twins.includes(t), 'bait tile structural');
   }
 });
+// ---------- lab-5 follow-up: richer chains, tray pressure, readable stacking, tail hardness ----------
+tst('chain: 12+ distinct shapes with 3-4 links, including a frozen key and a frozen locked tile (needsUi frozen-key-marker); 2-link shapes stay and are flagged easy', () => {
+  const rich = T.CHAIN_RICH; assert.ok(rich.length >= 12, 'rich shapes defined: ' + rich.length); assert.equal(new Set(rich.map(i => T.CHAIN_SHAPES[i])).size, rich.length);
+  assert.ok(rich.every(i => T.CHAIN_DEFS[i].length >= 3 && T.CHAIN_DEFS[i].length <= 4)); assert.ok(T.CHAIN_EASY.length >= 6 && T.CHAIN_EASY.every(i => T.CHAIN_DEFS[i].length === 2));
+  assert.ok(T.CHAIN_DEFS.some(d => d.keyA === 'frozen' || d.keyB === 'frozen')); assert.ok(T.CHAIN_DEFS.some(d => d.ck === 'lockIce' || d.cover === 'lockIce' || d.nb === 'lockIce'));
+  for (const d of T.CHAIN_DEFS) assert.equal(d.needsUi, d.frozenKey || d.lockedFrozen ? 'frozen-key-marker' : null);
+  assert.ok(T.CHAIN_RICH.indexOf(14) < T.CHAIN_RICH.indexOf(8), 'longest chains first');
+});
+tst('chain: the engine accepts ice on a key tile and on a locked tile (a frozen key needs its thaw-neighbours first, a frozen locked tile needs both the thaw and the keys)', () => {
+  // six tiles in a column (all free, neighbours one above the other): tile 2 is frozen (h 1: tile 1 or 3 must go first) AND a key; tile 5 is locked by the key pair 2 + 4
+  const tiles = [0, 2, 4, 6, 8, 10].map(y => ({ x: 0, y, z: 0 })), faces = [1, 1, 2, 3, 2, 3];
+  const d = { tiles, faces, down: [], gold: [], obst: { ice: { 2: 1 }, locks: [5], keys: [2, 4] }, clock: { i: 5, n: 99 }, solution: [0, 1, 3, 2, 4, 5] };
+  assert.ok(E.replay(d, d.solution, { strict: true }).ok, 'thaw (3 gone), the frozen key goes, then the other key, then the locked tile');
+  assert.equal(E.replay(d, [2, 0, 1, 3, 4, 5], { strict: true }).why, 'notTakeable', 'a frozen key cannot go before its thaw-neighbour');
+  assert.equal(E.replay(d, [0, 1, 3, 5, 2, 4], { strict: true }).why, 'notTakeable', 'a locked tile cannot go before both keys');
+  const g = E.game(d, { strict: true }); assert.ok(g.rules && g.rules.ice[2] === 1 && g.rules.keys.includes(2) && g.rules.locks.has(5));
+  // a tile frozen AND locked: iced tile 3 (h 1: tile 2 or 4 gone) that is also locked by the key pair 0 + 1 (faces equal): both must hold
+  const d2 = { ...d, faces: [1, 1, 2, 3, 2, 3], obst: { ice: { 3: 1 }, locks: [3], keys: [0, 1] }, solution: [0, 1, 2, 4, 3, 5] };
+  assert.ok(E.replay(d2, d2.solution, { strict: true }).ok); assert.equal(E.replay(d2, [2, 3, 0, 1, 4, 5], { strict: true }).why, 'notTakeable', 'thawed by 2 but still locked');
+  assert.equal(E.replay(d2, [0, 1, 3, 2, 4, 5], { strict: true }).why, 'notTakeable', 'unlocked but still frozen');
+});
+tst('readable layouts: 48 ranked, deterministic, the layout Dennis liked (8, cross) is in the top third and what sets it apart is readable stacking, not height', () => {
+  const R = T.readableLayouts(), R2 = T.readableLayouts();
+  assert.deepEqual(R.top, R2.top); assert.equal(R.ranked.length, 48); assert.equal(R.top.length, 16); assert.equal(new Set(R.ranked.map(r => r.layout)).size, 48);
+  assert.ok(R.reference.rank <= 16, 'layout 8 rank ' + R.reference.rank); for (let i = 1; i < R.ranked.length; i++) assert.ok(R.ranked[i - 1].score >= R.ranked[i].score);
+  const r8 = R.ranked.find(r => r.layout === 8), avg = R.ranked.reduce((a, r) => a + r.coveredReadable, 0) / 48;
+  assert.ok(r8.coveredShare > 0.85 && r8.coveredReadable > avg + 0.1, 'deep but readable'); assert.ok(R.ranked.find(r => r.layout === 21).rank > 30, 'deep and unreadable layouts rank low');
+});
+tst('pressure: pressureOf reads the stored route; pressureFacts proves the least tray the board needs and counts the winning first moves', { timeout: 300000 }, () => {
+  const r = T.build('chain', { chain: T.CHAIN_SHAPES[11], layout: 46, seed: 1, stage: 'edge', pressure: { run2: 5, at3: 3 } }, { tries: 30 });
+  assert.ok(r.design, 'built'); const p = T.pressureOf(r.design), f = T.pressureFacts(r.design), tc = r.card.trap;
+  assert.equal(p.k, r.card.clock.fewestMoves); assert.ok(p.peak <= 3 && p.run2 >= 5 && p.at3 >= 3, 'dial held'); assert.equal(tc.pressure.run2, p.run2); assert.equal(tc.links, 3); assert.equal(tc.easy, false); assert.deepEqual(tc.pressureDial, { run2: 5, at3: 3 });
+  assert.ok(f.capProof.cap1 === 'lose' || f.capProof.cap1 === 'win' || f.capProof.cap1 === 'unknown'); if (f.needsWaitingProven && f.needsWaiting === 3) assert.equal(f.capProof.cap2, 'lose');
+  assert.ok(f.firstMoves.legal >= f.firstMoves.winning && f.firstMoves.winning >= 1);
+  const hard = T.build('chain', { chain: T.CHAIN_SHAPES[11], layout: 46, seed: 1, stage: 'edge', pressure: { run2: 40, at3: 3 } }, { tries: 8 }); assert.ok(!hard.design, 'an impossible dial builds nothing');
+  assert.ok(Object.keys(hard.fails || {}).some(k => /pressureLow/.test(k)), JSON.stringify(hard.fails));
+});
+
+tst('examples3 (lab-6 candidates): every written board re-checks - strict win, clock k, twins apart (no visible close twin), tail band, pressure dial, 3+ links, needsUi, baits above the control', { timeout: 900000 }, () => {
+  const dir3 = path.resolve(__dirname, '../../build/traps/examples3'); if (!fs.existsSync(dir3)) return;
+  const Tl = require('./bank/tail.js'), files = fs.readdirSync(dir3).filter(f => /^\d+-\d+\.json$/.test(f));
+  for (const f of files) {
+    const j = JSON.parse(fs.readFileSync(path.join(dir3, f), 'utf8')), d = j.design, k = j.clock.fewestMoves;
+    assert.ok(j.links >= 3, f + ' links'); assert.equal(j.card.links, j.links); assert.equal(j.needsUi, T.CHAIN[j.shape].needsUi); assert.equal(j.card.needsUi, j.needsUi);
+    assert.ok(E.replay(d, d.solution, { strict: true }).ok, f + ' strict replay'); assert.equal(d.clock.n - k, j.clock.spare); assert.equal(SEP.closeTwins(d).visible, 0, f + ' visible close twins');
+    assert.equal(E.clockShortest(E.game(JSON.parse(JSON.stringify(d))), { nodes: 300000, ms: Infinity, finishNodes: 100000, finishMs: Infinity }).k, k);
+    assert.ok(j.baits.length >= 1 && j.baits.every(b => b.value > b.controlValue)); assert.ok(j.pressure.run2 >= j.pressureDial.run2 && j.pressure.at3 >= j.pressureDial.at3 && j.pressure.peak <= 3);
+    const m = Tl.measure(d, { seed: 31337, playouts: 600 }).tailGreedyWin; assert.ok(Math.abs(m - j.tail.after.tailGreedyWin) < 0.12, f + ' tail ' + m + ' vs ' + j.tail.after.tailGreedyWin);
+    if (j.tail.inBand) assert.ok(m > 0.1 && m < 0.46, f + ' tail near band ' + m);
+    assert.ok(j.faceDownShare <= 0.3); assert.ok(j.firstMoves.legal >= j.firstMoves.winning && j.firstMoves.winning >= 1);
+  }
+});
+
 tst('chain: deterministic from the seed', () => {
   const si = +Object.keys(CHAIN_AT)[0], sig = T.CHAIN_SHAPES[si], l = CHAIN_AT[si][0];
   const a = T.build('chain', { chain: sig, layout: l, seed: 1, stage: 'edge' }, { tries: 30 }), b = T.build('chain', { chain: sig, layout: l, seed: 1, stage: 'edge' }, { tries: 30 });

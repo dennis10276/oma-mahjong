@@ -79,6 +79,18 @@ add new decisions with a date.
     see things better" (296, the cross layout).
   - **UI wishes** (2026-11-13): show both markers on a frozen key or frozen lock (approved); tapping a frozen tile
     should also light up the tiles that thaw it when those are not free yet.
+  - **The bot ratings are dropped** (2026-11-13, after Codex's Task 12: the family bot rates nearly every chain trap
+    at its cap of 40 and the skilled bot at about 1, the same for Dennis's 5-star and 2-star boards). "These levels
+    are much better but the bots rate them weird. Drop the bot ratings." This supersedes the bot-scale curve, the
+    skilled band and the bot checks for new levels.
+  - **The lead decides the difficulty** (2026-11-13): "You decide how difficult they are based on some minor input I
+    already gave and your own brain." Input so far: two-link chains are too easy to see; three- and four-link
+    chains are right (291: 3 tries, 5 stars); the part after the trap must be harder; more tray pressure makes a
+    trap harder; many face-down tiles feel like luck.
+  - **What to build** (2026-11-13): "fun and challenging in all kinds of varieties with variety ways of clock lock
+    ice combinations like the levels I liked and much more new ones."
+  - **Placement** (2026-11-13): "Place them on the 250+ levels after they are fully done." Releasing stays a
+    separate step that needs Dennis's explicit OK.
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
   - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
     played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is
