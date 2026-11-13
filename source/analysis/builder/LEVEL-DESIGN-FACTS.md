@@ -57,6 +57,12 @@ add new decisions with a date.
     trap together.
   - **Use the earlier Claude builder findings** (2026-11-12): look at the previous Claude attempts at the level
     builder and take those findings as well.
+  - **Twins must not sit together** (2026-11-13, lab 4, levels 281 and 282): "Pairs are too much together. Too
+    obvious." Two tiles of the same picture must not lie next to or on each other as a rule.
+  - **Frozen clock combined with locks is the most fun** (2026-11-13): "make levels that combine freeze clock and
+    locks, those are most fun."
+  - **The clock must really show** (2026-11-13): on 281 the clock lay almost fully under the key tile, only its
+    counter stuck out (screenshot "clock not fully showing.png"). In sight means most of the tile is visible.
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
   - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
     played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is
