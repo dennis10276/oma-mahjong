@@ -3,6 +3,7 @@
 // Placement half of "bank and place": assigns banked puzzles to levels. Proposal only; light CPU; writes nothing to the game.
 // Usage: node place.js --start 250 --count 50 [--stat D40|D20] [--bank dir] [--out file.json] [--allow-fallback 260,270] [--taken file]
 const fs = require('fs'), path = require('path');
+const LED = require('./ledger.js');
 const ROOT = path.resolve(__dirname, '../../..');
 const DEF_BANK = path.join(ROOT, 'analysis/builder/bank/puzzles');
 
@@ -19,7 +20,7 @@ function loadBank(dir) {
     try {
       const j = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')), c = j.card;
       if (!c || !c.stats) continue;
-      out.push({ key: c.boardKey, body: c.matchingBodyKey, layout: c.layout, tiles: c.tiles, D20: c.stats.D20, D40: c.stats.D40, S: c.stats.S, band: c.stats.band, B7: c.traceGates && c.traceGates.B7 ? c.traceGates.B7.value : null, late: c.traceGates && c.traceGates.B6 ? c.traceGates.B6.value : null });
+      out.push({ sig: LED.signature(j.design, c), trap: c.trapType || c.story, key: c.boardKey, body: c.matchingBodyKey, layout: c.layout, tiles: c.tiles, D20: c.stats.D20, D40: c.stats.D40, S: c.stats.S, band: c.stats.band, B7: c.traceGates && c.traceGates.B7 ? c.traceGates.B7.value : null, late: c.traceGates && c.traceGates.B6 ? c.traceGates.B6.value : null });
     } catch (e) { /* skip unreadable */ }
   }
   return out;
@@ -79,13 +80,26 @@ function place(bank, o) {
 
   // ---- constraint violations and swap/replace repair
   const win = 5;
+  // variety rule (ledger.js) along the level order: entries = rated boards + the levels placed before this one.
+  const rated = o.rated || (o.rated === undefined ? LED.loadRated() : []), simMemo = new Map();
+  const sigOf = b => b.sig || { layout: b.layout, trap: b.trap || b.story || null, clock: b.clockCell, key: b.keyCell, ice: b.iceCell };
+  const sim = (x, y) => {
+    if (x.layout != null && x.layout === y.layout) return true;
+    if (!x.cells || !y.cells) return false;
+    const k = x.layout + '|' + y.layout; if (!simMemo.has(k)) simMemo.set(k, LED.overlap(x, y) > LED.RULES.overlap);
+    return simMemo.get(k);
+  };
+  const ledgerHits = (a, i) => {
+    const prev = rated.slice(); for (let k = 0; k < i; k++) if (a[k] >= 0) prev.push(sigOf(pool[a[k]]));
+    return LED.check(sigOf(pool[a[i]]), prev, { sameLayout: sim }).reasons.length;
+  };
   function violations(a) {
     let v = 0;
     const seen = new Set();
     for (let i = 0; i < n; i++) if (a[i] >= 0) {
       const b = pool[a[i]];
       if (b.body != null) { if (seen.has(b.body)) v++; seen.add(b.body); }
-      for (let k = Math.max(0, i - 3); k < i; k++) if (a[k] >= 0 && pool[a[k]].layout === b.layout) v++;
+      v += ledgerHits(a, i);
     }
     for (let i = 0; i + win <= n; i++) {
       let ok = true, s = 0, t = 0;

@@ -207,7 +207,8 @@ function placePicturesVC(c, roles, P, hold, brief, rng, N, variant = 0) {
   if (!Q) return { fail: 'restOrder' };
 
   // Place visible tempting pair(s)
-  const traps = findTemptingPairs(c, roles, P, wanted, Q, brief, rng);
+  // Trap stories (builder/trap_stories.js) author their bait: roles.bait.pairs are fixed pairs outside the dig.
+  const traps = roles.bait ? (roles.bait.pairs || []).map(p => p.slice()) : findTemptingPairs(c, roles, P, wanted, Q, brief, rng);
   function canMoveAfter(arr, moveTile, targetTile) {
     const from = arr.indexOf(moveTile), to = arr.indexOf(targetTile);
     if (from === -1 || to === -1) return false;
@@ -223,7 +224,16 @@ function placePicturesVC(c, roles, P, hold, brief, rng, N, variant = 0) {
     return true;
   }
 
-  for (let [x, y] of traps) {
+  // Authored bait (trap stories): put the two tiles next to each other wherever the whole order stays legal (rules included).
+  const legalSeq = seq => { const al = new Uint8Array(c.n).fill(1), all = al.slice(), rules = rulesOf(c, roles);
+    for (const t of seq) { if (!(rules ? L.takeable(t, al, c.nb, rules, all) : L.isFree(t, al, c.nb))) return false; al[t] = 0; } return true; };
+  if (roles.bait) for (const [x, y] of traps) {
+    const withY = Q.filter(t => t !== y), withX = Q.filter(t => t !== x);
+    const a1 = withY.slice(); a1.splice(a1.indexOf(x) + 1, 0, y); const a2 = withX.slice(); a2.splice(a2.indexOf(y), 0, x);
+    const ok = [a1, a2].find(q => legalSeq(P.concat(q)));
+    if (ok) Q = ok;
+  }
+  else for (let [x, y] of traps) {
     if (!canMoveAfter(Q, y, x)) {
       if (canMoveAfter(Q, x, y)) {
         [x, y] = [y, x];
@@ -345,7 +355,7 @@ function placeDownVC(c, roles, P, plan, brief, rng) {
   const onDig = Math.min(3, Math.max(onWay, brief.targets?.hiddenOnWay ?? 0));
 
   const special = new Set([roles.clock, ...roles.keys, ...roles.locks, ...Object.keys(roles.ice).map(Number)]);
-  const avoid = new Set([...special, plan.clockTwin, ...plan.traps.flat(), ...(plan.weaveVisible || [])]);
+  const avoid = new Set([...special, plan.clockTwin, ...plan.traps.flat(), ...(plan.weaveVisible || []), ...(roles.bait?.keepUp || [])]);
   const inP = new Set(P);
 
   const alive = new Uint8Array(c.n).fill(1), luckSteps = [], atLuck = new Set();
@@ -403,7 +413,7 @@ function build(briefIn, opts = {}) {
     hiddenOnWay: Math.min(3, brief.targets.hiddenOnWay ?? 0),
     traps: Math.max(1, brief.targets.traps ?? 2),
   };
-  const story = B.STORIES[brief.story];
+  const story = B.STORIES[brief.story] || (require('../builder/trap_stories.js'), B.STORIES[brief.story]);
   if (!story) return { fail: 'unknownStory', detail: brief.story, ms: 0 };
   if (story.spec.keys && brief.targets.keysShown != null && brief.targets.keysShown !== 2) return {fail:'incompatibleBrief',detail:'visibleChoice requires both keys shown at the start',ms:0};
   if (story.spec.keys) {
@@ -430,11 +440,11 @@ function build(briefIn, opts = {}) {
     if(timedOut()) return wallFailure();
     const rng = rngOf((brief.seed ?? 1) * 7919 + attempt * 104729);
 
-    const roles = B.placeRoles(c, story, brief, rng);
+    const roles = story.place ? story.place(c, brief, rng) : B.placeRoles(c, story, brief, rng);
     if (roles.fail) { fails[roles.fail] = (fails[roles.fail] || 0) + 1; continue; }
 
     // Enforce top-Z clock on mountain / tall layouts when stage is 'top'
-    if (brief.stage === 'top' && roles.clock != null) {
+    if (brief.stage === 'top' && roles.clock != null && !story.place) {
       const depth = brief.frame?.depth != null ? [brief.frame.depth, brief.frame.depth] : (story.spec.clockDepth || [0, 2]);
       const inRange = (v, [a, b]) => v >= a && v <= b;
       let cands = [];
@@ -448,7 +458,7 @@ function build(briefIn, opts = {}) {
       }
     }
 
-    const P = B.planDig(c, roles, rng);
+    const P = story.place && roles.dig ? roles.dig.slice() : B.planDig(c, roles, rng);
     if (!P) { fails['dig'] = (fails['dig'] || 0) + 1; continue; }
     if (brief.frame?.way != null && Math.abs(P.length - brief.frame.way) > 2) {
       fails['wayLength'] = (fails['wayLength'] || 0) + 1; continue;
@@ -504,14 +514,22 @@ function build(briefIn, opts = {}) {
       }
     }
 
-    const sg = GP.applyStatic(SG.staticGates(design, { story: brief.story }), GP.loadProfile('e5-v1'));
+    // Trap stories carry their own engine proof of the authored bait (prove runs first: it is cheap and fails fast).
+    let trap = null;
+    if (story.prove) {
+      trap = story.prove(design, roles, { c, brief, P, plan, spare, k });
+      if (!trap || trap.ok !== true) { const why = 'trapProof:' + (trap && trap.why || 'failed'); fails[why] = (fails[why] || 0) + 1; continue; }
+    }
+    const sg = GP.applyStatic(SG.staticGates(design, { story: brief.story }), GP.loadProfile(story.profile || 'e5-v1'), trap ? { storyProof: trap } : undefined);
     if(timedOut() || sg.warnings?.some(w=>/^wallClock/.test(w))) return wallFailure();
     if (!sg.pass) {
       fails['staticGates'] = (fails['staticGates'] || 0) + 1;
       continue;
     }
+    // a trap board must be honest at the spare it ships with (A4 holds there), not only at a looser one
+    if (trap && !(sg.shipSpares || []).includes(spare)) { fails['trapSpareNotShippable'] = (fails['trapSpareNotShippable'] || 0) + 1; continue; }
 
-    const proofs = choiceProofs(sg,plan.traps), hasPricedOrFork = proofs.length > 0;
+    const proofs = choiceProofs(sg,plan.traps), hasPricedOrFork = trap ? true : proofs.length > 0;
     if (!hasPricedOrFork) {
       fails['noPricedTrap'] = (fails['noPricedTrap'] || 0) + 1;
       continue;
@@ -531,13 +549,15 @@ function build(briefIn, opts = {}) {
       tail: witnessTail(design),
       tailPlan: plan.tailPlan,
       attempt,
+      ...(trap ? { trap: trap.card } : {}),
     };
 
     const intents = [
       { name: 'witness valid', proven: true },
       { name: 'honest clock: fewest moves ' + sg.k + ' + spare ' + spare, proven: true },
       { name: 'readable intent: clock, keys and locks in sight', proven: true },
-      { name: 'consequential visible choice: priced detour or fair lose fork', proven: hasPricedOrFork }
+      { name: 'consequential visible choice: priced detour or fair lose fork', proven: hasPricedOrFork },
+      ...(trap ? [{ name: 'authored trap proven by the story: ' + trap.card.type, proven: true }] : []),
     ];
 
     return {
@@ -545,6 +565,7 @@ function build(briefIn, opts = {}) {
       card,
       intents,
       roles,
+      ...(trap ? { trap } : {}),
       keep: {
         geometry: JSON.stringify(c.tiles),
         story: brief.story,

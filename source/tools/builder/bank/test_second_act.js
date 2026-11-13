@@ -1,0 +1,10 @@
+'use strict';
+const assert = require('assert'), fs = require('fs'), path = require('path'), SA = require('./second_act.js');
+const dir = path.join(__dirname, '../../../analysis/builder/bank/puzzles');
+const f = fs.readdirSync(dir).find(x => x.startsWith('eadb34f1'));
+const p = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
+const r = SA.secondAct(p.design, { spec: p.spec, cpuSec: 1, seed: 1 });
+for (const k of ['fork', 'forkRelaxed', 'forkFair', 'repeatOverlap', 'faceDown', 'gamble', 'obvious', 'forkVisible']) assert.strictEqual(typeof r.checks[k], 'boolean', k);
+assert.ok(r.design && r.design.tiles.length === p.design.tiles.length && r.search && typeof r.ok === 'boolean');
+assert.ok(!r.ok || (r.fork && r.fork.tiles.length >= 2), 'a pass needs a recorded fork');
+console.log('test_second_act OK');
