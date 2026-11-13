@@ -94,6 +94,10 @@ add new decisions with a date.
   - **Go beyond 289 and mix** (2026-11-13, later): "Place these levels at 250+ and mix them with the already done
     levels", and make "much more levels also beyond 289. More variety and mixes in traps is great. as long as its
     solvable". So: solvable is the one hard requirement; variety and mixed traps come before strict uniformity.
+    Clarified: "keep the levels I like from the older process and interleave them with the new ones." The liked
+    older boards are the ones Dennis rated 4 or 5 stars in the lab that are not already live below 250 (the ten in
+    `process-v1/e5-boards.json`, plus bank boards 262 and 273); they are kept as they are and placed by how many
+    tries he needed.
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
   - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
     played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is
