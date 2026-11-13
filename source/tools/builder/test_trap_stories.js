@@ -9,9 +9,10 @@ const fs = require('fs'), path = require('path');
 const T = require('./trap_stories.js'), B = require('./builder.js'), E = require('./engine.js'), D = require('./loop/detour.js'), O = require('./loop/obvious.js');
 const SG = require('./loop/static_gates.js'), GP = require('./loop/gate_profile.js'), M = require('../factory/meter.js');
 const VC = require('../builder-next/construct.js');
+const { shownAll } = require('./shown.js'), SEP = require('./bank/separate.js');
 
 // layouts to try first per trap (found by the yield sweep); the search goes on over all 48 when fewer than 3 build
-const FIRST = { keyOnClock: [7, 15, 20, 31, 2, 6], shortThaw: [0, 20, 24], wrongMelt: [0, 3, 5, 20, 21, 24] };
+const FIRST = { keyOnClock: [7, 15, 20, 6, 31, 2], wrongMelt: [0, 5, 21, 24, 3, 20], lockedMelt: [46, 36, 31], guardedKey: [4, 9, 13, 17, 12, 47] };
 const WANT = 3;
 const CLI = require.main === module && (process.argv.includes('--sweep') || process.argv.includes('--examples'));
 const tst = CLI ? () => {} : test;   // the CLI modes (sweep, examples) do not run the tests
@@ -63,6 +64,12 @@ function checkBoard(name, b) {
   const take = bait.single || bait.pairs[0], p = D.priceMove(C, E.start(C.at(d.clock.n)), { take }, { base: k, nShipMax, nodes: 200000, w: D.work(8e6) });
   assert.equal(p.exact, true); assert.notEqual(p.result, 'unknown');
   assert.ok(p.result === 'lose' || p.cost >= spare + 1, `bait costs: ${p.result} ${p.cost}`);
+  // no placement rule on the uncovered share or the position of the clock (Dennis 2026-11-13: "the tile itself is fine to be covered more"); shares are information only
+  assert.equal(r.card.trap.shown.clock, shownAll(d.tiles)[d.clock.i]);
+  // the control comparison: every bait costs strictly more than the dearest unrelated free move (lose counts as the loosest spare + 1)
+  const tcc = r.card.trap; assert.ok(tcc.control && Number.isFinite(tcc.control.value) && !tcc.control.unknown, 'control recorded');
+  assert.ok(tcc.baits.length >= 1);
+  for (const b of tcc.baits) { assert.ok(b.value > tcc.control.value, 'bait ' + b.name + ' ' + b.value + ' above control ' + tcc.control.value); assert.ok(b.result === 'lose' || b.cost >= spare + 1); }
   // the card data
   const tc = r.card.trap;
   assert.ok(tc.bait.tiles.length >= 1 && tc.cost.exact === true && tc.see.length > 20 && !tc.see.includes('\n'));
@@ -88,14 +95,42 @@ tst('keyOnClock: the stored route takes the keys consecutively, after a dig; the
     assert.deepEqual(d.obst.locks, [d.clock.i]);
   }
 });
-tst('shortThaw: frozen clock, a locked neighbour, a plain one, a decoy under a free pair; keys visible', () => {
-  for (const b of boards('shortThaw')) {
-    const d = b.r.design, bait = b.r.roles.bait, c = B.context(d.tiles);
-    assert.equal(d.obst.ice[d.clock.i], 2); assert.ok(d.obst.locks.length >= 1);
-    assert.ok(nbOf(c, d.clock.i).includes(bait.decoy) && c.above[bait.decoy].has(bait.pairs[0][0]), 'X lies on the decoy neighbour');
-    assert.ok(c.free0[bait.pairs[0][0]] && c.free0[bait.pairs[0][1]], 'the pair is free at the start');
-    assert.ok(bait.margin >= 2 && bait.margin <= 5);
-    assert.equal(b.r.card.trap.type, 'shortThaw');
+tst('shortThaw is retired: not in the buildable name list, its code stays', () => {
+  assert.ok(!T.NAMES.includes('shortThaw')); assert.deepEqual(T.RETIRED, ['shortThaw']); assert.ok(T.STORIES.shortThaw.place && T.STORIES.shortThaw.prove);
+});
+tst('no clock placement rule: shares are information only, a fully covered or top-row clock is not rejected by the stories', () => {
+  assert.ok(shownAll([[10, 10, 0], [10, 10, 1]])[0] < 0.3, 'a tile straight on it hides most of the face - allowed');
+  const src = fs.readFileSync(path.join(__dirname, 'trap_stories.js'), 'utf8'); assert.ok(!/timerFacts|timerShown|timerCut/.test(src), 'no timer/position rule in the stories');
+  assert.ok(!fs.existsSync(path.join(__dirname, 'shown.js')) || !/timerFacts/.test(fs.readFileSync(path.join(__dirname, 'shown.js'), 'utf8')));
+  for (const name of T.NAMES) { const sh = boards(name)[0].r.card.trap.shown; assert.ok(sh.clock >= 0 && sh.clock <= 1 && sh.minRole >= 0 && sh.minRole <= 1 && sh.roles); }
+});
+tst('keyOnClock: the free key lies on the clock (original recipe)', () => {
+  for (const b of boards('keyOnClock')) {
+    const bait = b.r.roles.bait, d = b.r.design, c = B.context(d.tiles);
+    assert.ok(c.above[d.clock.i].has(bait.keyB) && c.free0[bait.keyB]);
+  }
+});
+tst('lockedMelt: frozen clock, locked neighbours, a lonely free neighbour with a buried twin, a near key and a far key; both baits proven; lock and ice not idle', () => {
+  for (const b of boards('lockedMelt')) {
+    const d = b.r.design, bait = b.r.roles.bait, c = B.context(d.tiles), tc = b.r.card.trap;
+    assert.equal(d.obst.ice[d.clock.i], 2); assert.ok(d.obst.locks.length >= 1); assert.equal(d.obst.keys.length, 2);
+    for (const l of bait.locked) assert.ok(nbOf(c, d.clock.i).includes(l) && d.obst.locks.includes(l), 'a locked thaw-neighbour');
+    for (const f of bait.wrong) assert.ok(nbOf(c, d.clock.i).includes(f) && c.free0[f] && !d.obst.locks.includes(f), 'the lonely neighbour is free');
+    assert.ok(c.above[bait.twins[0]].size >= 2 && d.faces[bait.twins[0]] === d.faces[bait.wrong[0]], 'its twin is buried');
+    assert.ok(c.free0[bait.keyNear] && c.above[bait.keyFar].size >= 1 && c.above[bait.keyFar].size <= 3, 'near key free, far key under 1-3');
+    assert.deepEqual(tc.baits.map(x => x.name).sort(), [...bait.wrong.map(() => 'lonelyNeighbour'), 'nearKeyFirst'].sort());
+    assert.ok(tc.idle.kNoLock < tc.idle.k && tc.idle.kNoIce < tc.idle.k, 'lock and ice are not idle');
+    assert.ok(d.solution.indexOf(bait.locked[0]) < d.solution.indexOf(d.clock.i), 'the stored route melts with the locked neighbour');
+  }
+});
+tst('guardedKey: locked clock, key A under exactly one frozen cover g, free key B; the bait is B first; ice and lock not idle', () => {
+  for (const b of boards('guardedKey')) {
+    const d = b.r.design, bait = b.r.roles.bait, c = B.context(d.tiles), tc = b.r.card.trap;
+    assert.deepEqual(d.obst.locks, [d.clock.i]); assert.equal(d.obst.ice[bait.guard], 2); assert.equal(Object.keys(d.obst.ice).length, 1);
+    assert.equal(c.above[bait.keyA].size, 1); assert.ok(c.above[bait.keyA].has(bait.guard)); assert.ok(c.free0[bait.keyB] && c.free0[bait.guard]);
+    const vr = O.visibleRoles(E.game(d), E.start(E.game(d))); assert.ok(vr[bait.keyA] && vr[bait.guard], 'A shows with g present');
+    assert.ok(tc.idle.kNoIce <= tc.idle.k - 1 && tc.idle.kNoLock < tc.idle.k);
+    assert.ok(d.solution.indexOf(bait.guard) < d.solution.indexOf(bait.keyA));
   }
 });
 tst('wrongMelt: frozen clock, no keys, a free neighbour whose twin is buried', () => {
@@ -157,6 +192,102 @@ tst('trap builds are deterministic and unknown trap names fail cleanly', () => {
   const a = T.build('keyOnClock', { layout: 10, seed: 1, stage: 'edge' }, { tries: 30 }), b = T.build('keyOnClock', { layout: 10, seed: 1, stage: 'edge' }, { tries: 30 });
   assert.ok(a.design); assert.equal(M.boardKey(a.design), M.boardKey(b.design));
   assert.equal(T.build('nope', {}).fail, 'unknownTrapStory');
+});
+
+
+// ---------- chain traps (compositional generator) ----------
+// shape index -> a layout that hosts it (found by trap_chain_sweep.js); the test builds each of these from scratch
+const CHAIN_AT = require('./trap_chain_hosts.json');
+const chainCache = {};
+function chainBoard(si) {
+  if (chainCache[si]) return chainCache[si];
+  const sig = T.CHAIN_SHAPES[si];
+  for (const layout of CHAIN_AT[si]) { const r = T.build('chain', { chain: sig, layout, seed: 1, stage: 'edge' }, { tries: 30 }); if (r.design) return (chainCache[si] = { r, layout, sig }); }
+  return null;
+}
+tst('chain: grammar - distinct signatures of length 2-4 covering frozen clock, frozen lock/locked tile, frozen key cover, frozen way tiles, lock on the clock, on a clock cover, on a thaw-neighbour', () => {
+  assert.equal(new Set(T.CHAIN_SHAPES).size, T.CHAIN_SHAPES.length); assert.ok(T.CHAIN_SHAPES.length >= 10);
+  for (const d of T.CHAIN_DEFS) assert.ok(d.length >= 2 && d.length <= 4, d.sig + ' length ' + d.length);
+  const has = f => T.CHAIN_DEFS.some(f);
+  assert.ok(has(d => d.ck === 'ice') && has(d => d.ck === 'lock') && has(d => d.cover === 'ice') && has(d => d.cover === 'lock') && has(d => d.nb === 'lock') && has(d => d.nb === 'ice') && has(d => d.keyA === 'cover') && has(d => d.keyA === 'way') && has(d => d.keyB === 'cover'));
+  assert.equal(T.build('chain', { chain: 'nope', layout: 4 }).fail, 'unknownChainShape');
+  assert.ok(/overlay per tile/.test(T.CHAIN_UI_NOTE));
+});
+tst('chain: at least 10 different shapes build with their own proof; every special matters and is connected; baits are proven above the control', { timeout: 1500000 }, () => {
+  const built = Object.keys(CHAIN_AT).map(Number).map(si => ({ si, b: chainBoard(si) })).filter(x => x.b);
+  assert.ok(built.length >= 10, 'shapes built: ' + built.length);
+  for (const { si, b } of built) {
+    const { r, sig } = b, d = r.design, tc = r.card.trap, spare = r.card.clock.spare, k = r.card.clock.fewestMoves, ob = d.obst, c = B.context(d.tiles);
+    assert.equal(r.card.trapType, 'chain:' + sig); assert.equal(tc.shape, sig); assert.equal(tc.type, 'chain'); assert.equal(tc.trapType, 'chain:' + sig);
+    assert.ok(E.replay(d, d.solution).ok); assert.equal(d.clock.n - k, spare); assert.ok(tc.see.length > 30 && !tc.see.includes('\n'));
+    // one overlay per tile: no tile is frozen and a key / locked / the clock's lock at once (the game would show only the ice)
+    const ice = Object.keys(ob.ice).map(Number), roleList = [...ice, ...ob.locks, ...ob.keys];
+    assert.equal(new Set(roleList).size, roleList.length, sig + ': a tile carries two roles'); assert.ok(ice.every(t => !ob.keys.includes(t)), 'no frozen key tile');
+    // all role tiles in sight at move 0 and face-up
+    const g = E.game(d), vr = O.visibleRoles(g, E.start(g)), down = new Set(d.down);
+    for (const t of roleList) { assert.ok(vr[t], sig + ': overlay of ' + t + ' in sight'); assert.ok(!down.has(t)); }
+    for (const t of r.roles.bait.keepUp) assert.ok(!down.has(t), 'mechanism tile face-up');
+    // baits: 1-2, proven exactly, strictly dearer than the control
+    assert.ok(tc.baits.length >= 1 && tc.baits.length <= 2); assert.ok(Number.isFinite(tc.control.value));
+    const C = D.clockGames(d), s0 = E.start(C.at(d.clock.n)), nShipMax = Math.min(19, k + 3);
+    for (const bt of tc.baits) {
+      const p = D.priceMove(C, s0, { kind: bt.tiles.length > 1 ? 'pair' : 'single', take: bt.tiles }, { base: k, nShipMax, nodes: 200000, w: D.work(8e6) });
+      assert.equal(p.exact, true); assert.ok(p.result === 'lose' || p.cost >= spare + 1, sig + ' ' + bt.name + ' costs ' + p.result + ' ' + p.cost); assert.ok(bt.value > tc.control.value, sig + ' bait ' + bt.name + ' above control');
+    }
+    // every lock and every ice matters (recomputed here): the proven shortest clock route gets shorter without it, or the bait turns harmless
+    assert.equal(tc.idle.length, ob.locks.length + ice.length);
+    const kOf = mod => E.clockShortest(E.game(JSON.parse(JSON.stringify({ ...d, obst: { ...ob, ...mod }, clock: { ...d.clock, n: 99 } }))), { nodes: 300000, ms: Infinity, finishNodes: 100000, finishMs: Infinity }).k;
+    for (const l of ob.locks) { const row = tc.idle.find(x => x.kind === 'lock' && x.tile === l); assert.ok(kOf({ locks: ob.locks.filter(x => x !== l) }) < k || row.harmlessBait, sig + ': lock ' + l + ' idle'); }
+    for (const f of ice) { const i2 = { ...ob.ice }; delete i2[f]; const row = tc.idle.find(x => x.kind === 'ice' && x.tile === f); assert.ok(kOf({ ice: i2 }) < k || row.harmlessBait, sig + ': ice ' + f + ' idle'); }
+    // connected: every special reaches the clock over the recorded links
+    assert.equal(tc.connected, true); const adj = {}; for (const [x, y] of tc.links) { (adj[x] = adj[x] || []).push(y); (adj[y] = adj[y] || []).push(x); }
+    const seen = new Set([d.clock.i]), st = [d.clock.i]; while (st.length) for (const j of adj[st.pop()] || []) if (!seen.has(j)) { seen.add(j); st.push(j); }
+    for (const t of roleList) assert.ok(seen.has(t), sig + ': special ' + t + ' not connected');
+    // the gates (traps-v1) hold and shapes with a frozen clock really freeze the clock, shapes with a locked clock lock it
+    const sg = GP.applyStatic(SG.staticGates(d, { story: 'chain' }), GP.loadProfile('traps-v1'), { storyProof: { ok: true } }); assert.ok(sg.pass, sig + ' static gates');
+    const def = T.CHAIN[sig]; if (def.ck === 'ice') assert.ok(ob.ice[d.clock.i] > 0); if (def.ck === 'lock') assert.ok(ob.locks.includes(d.clock.i)); if (def.cover) assert.ok(c.above[d.clock.i].size >= 1);
+    // the bait tiles are role tiles, covers, neighbours or twins (structural), as in the other stories
+    for (const t of r.roles.bait.tiles) assert.ok(isStructural(c, d, t) || r.roles.bait.twins.includes(t), 'bait tile structural');
+  }
+});
+tst('chain: deterministic from the seed', () => {
+  const si = +Object.keys(CHAIN_AT)[0], sig = T.CHAIN_SHAPES[si], l = CHAIN_AT[si][0];
+  const a = T.build('chain', { chain: sig, layout: l, seed: 1, stage: 'edge' }, { tries: 30 }), b = T.build('chain', { chain: sig, layout: l, seed: 1, stage: 'edge' }, { tries: 30 });
+  assert.equal(M.boardKey(a.design), M.boardKey(b.design));
+});
+tst('separate: a chain board keeps its proof, k and roles when its twins are moved apart', { timeout: 900000 }, () => {
+  const si = +Object.keys(CHAIN_AT)[0], b = chainBoard(si), before = SEP.closeTwins(b.r.design), o = T.separateBoard('chain', b.r, { wallMs: 30000 });
+  assert.ok(o.proofOk && o.validated, 'chain proof after separation ' + o.proofWhy); assert.ok(o.after.count < before.count); assert.deepEqual(o.design.obst, b.r.design.obst); assert.deepEqual(o.design.tiles, b.r.design.tiles);
+  assert.ok(E.replay(o.design, o.design.solution, { strict: true }).ok);
+});
+
+// ---------- twins apart (bank/separate.js) ----------
+tst('closeTwins: touching, diagonal, stacked and same-row-nothing-between twins are close; a tile in between or far apart is not', () => {
+  const cnt = tiles => SEP.closeTwins({ tiles, faces: tiles.map((_, i) => i < 2 ? 0 : i), down: [] }).count;
+  assert.equal(cnt([[0, 0, 0], [2, 0, 0]]), 1, 'side by side'); assert.equal(cnt([[0, 0, 0], [2, 2, 0]]), 1, 'diagonal');
+  assert.equal(cnt([[0, 0, 0], [1, 1, 1]]), 1, 'stacked'); assert.equal(cnt([[0, 0, 0], [4, 0, 0]]), 1, 'one tile of space, nothing between');
+  assert.equal(cnt([[0, 0, 0], [4, 0, 0], [2, 0, 0]]), 0, 'a tile between'); assert.equal(cnt([[0, 0, 0], [6, 0, 0]]), 0, 'two tiles apart'); assert.equal(cnt([[0, 0, 0], [0, 6, 0]]), 0, 'far in the column');
+});
+tst('separate: one built trap board per kind loses its close twins, keeps replay, k, readability and the story proof', { timeout: 900000 }, () => {
+  for (const name of T.NAMES) {
+    const b = boards(name, 1)[0], r = b.r, before = SEP.closeTwins(r.design);
+    const o = T.separateBoard(name, r, { wallMs: 30000 });
+    assert.ok(o.proofOk, name + ' proof after separation: ' + o.proofWhy); assert.ok(o.validated);
+    assert.ok(E.replay(o.design, o.design.solution, { strict: true }).ok);
+    assert.equal(E.clockShortest(E.game(JSON.parse(JSON.stringify(o.design)))).k, r.card.clock.fewestMoves, 'clock k unchanged');
+    assert.ok(o.after.count < before.count && o.after.visible <= before.visible, name + ': close ' + before.count + ' -> ' + o.after.count);
+    assert.ok(o.after.share <= 0.2, name + ' close share after ' + o.after.share);
+    // tiles, specials, clock are untouched; only pictures moved; the bait pairs are still twins
+    assert.deepEqual(o.design.tiles, r.design.tiles); assert.deepEqual(o.design.obst, r.design.obst); assert.deepEqual(o.design.down, r.design.down); assert.equal(o.design.clock.i, r.design.clock.i);
+    for (const [x, y] of r.roles.bait.pairs) assert.equal(o.design.faces[x], o.design.faces[y], 'bait pair still twins');
+  }
+});
+test('separate is deterministic from its seed (synthetic 4x4 board)', () => {
+  const tiles = []; for (let y = 0; y < 4; y++) for (let x = 0; x < 4; x++) tiles.push([x * 2, y * 2, 0]);
+  const faces = tiles.map((_, i) => i >> 1), d = { tiles, faces, down: [], gold: [], obst: { ice: {}, locks: [], keys: [] }, clock: { i: 0, n: 99 }, solution: [...tiles.keys()] };
+  const val = dd => ({ ok: E.replay(dd, dd.solution, { strict: true }).ok });
+  const r1 = SEP.separate(d, { seed: 3, wallMs: 4000, validate: val }), r2 = SEP.separate(d, { seed: 3, wallMs: 4000, validate: val });
+  assert.deepEqual(r1.design.faces, r2.design.faces); assert.ok(r1.ms < 6000); assert.ok(r1.after.count <= r1.before.count);
 });
 
 // ---------- CLI: yield sweep and example boards ----------

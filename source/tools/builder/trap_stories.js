@@ -11,7 +11,7 @@
      story.prove(design, roles, ctx) -> { ok, why?, card, ... }   (replaces the generic choiceProofs requirement)
      story.profile = 'traps-v1'                                     (gate profile; see builder/loop/gate_profile.js)
 
-   Stories: keyOnClock, shortThaw, wrongMelt. Spare 1 by default; every role tile (clock, lock, keys, ice) is face-up
+   Stories: keyOnClock, wrongMelt, lockedMelt, guardedKey (shortThaw is retired, see RETIRED). Spare 1 by default; every role tile (clock, lock, keys, ice) is face-up
    and its overlay is in sight at move 0; no face-down tile lies inside the mechanism (roles, covers, thaw-neighbours,
    bait, twins). Proofs use the exact engine only (D.priceMove / E.winnable / B.canReachWithin / fairFork) and treat
    'unknown' as a failure.
@@ -19,7 +19,7 @@
      const T = require('./trap_stories.js');
      T.build('keyOnClock', { layout: 5, seed: 3, frame: { spare: 1 }, targets: { trayRoom: 0, maxDown: 0.2 } }, { tries: 40 })
          -> VC.build result: { design, card (card.trap = the trap card), trap, roles, ... } | { fail, fails }
-     T.NAMES = ['keyOnClock', 'shortThaw', 'wrongMelt']
+     T.NAMES = ['keyOnClock', 'wrongMelt', 'lockedMelt', 'guardedKey']
    Brief dials (all optional): frame.spare 1-2, frame.depth, targets.trayRoom (0 = 3 waiting at the cap, the usual for
    traps 1 and 3), targets.keyCover [lo,hi] (default [1,3]), targets.clockCover [lo,hi] (trap 1), targets.margin [lo,hi]
    (trap 2: how much dearer the decoy go-round is than the keys), targets.wrongMelts 1-3 (trap 3).            */
@@ -32,8 +32,13 @@ const O = require('./loop/obvious.js');
 const Pk = require('./loop/publicfork.js');
 const SG = require('./loop/static_gates.js');
 const { tileVisibility } = require('../sim/refit/human_board_visibility.js');
+const { shownAll } = require('./shown.js');
 
-const NAMES = ['keyOnClock', 'shortThaw', 'wrongMelt'];
+// shortThaw is RETIRED (kept below, not buildable): its bait costs the same as any unrelated free pair (see the control comparison)
+const NAMES = ['keyOnClock', 'wrongMelt', 'lockedMelt', 'guardedKey'], RETIRED = ['shortThaw'];
+// Dennis 2026-11-13 (level 281): the cut-off timer was a UI bug (fixed in the game); "the tile itself is fine to be covered more". There is NO placement
+// rule on the clock's or any role's uncovered share or position (top row is fine). Roles only need the "shown at move 0" semantics (c.roleShown0).
+// The uncovered shares (shown.js) are recorded in the card for information only.
 const shuffle = (rng, a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const capOf = brief => Math.max(1, Math.min(3, 3 - (brief.targets?.trayRoom ?? 1)));
 const PROOF_NODES = 4e6, PER_CALL = 150000;
@@ -77,7 +82,8 @@ const emptyRoles = ck => ({ clock: ck, locks: new Set(), keys: [], ice: {}, hold
 
 // ---------- trap 1: key on the clock ----------
 // Picture: a locked clock; key B lies free on top of the clock stack, key A is far, under 1-3 tiles. Bait: tap B - it waits in the
-// tray through A's whole dig (the keys go together: dig A, then A+B).
+// tray through A's whole dig (the keys go together: dig A, then A+B). B may cover the clock almost completely (Dennis 2026-11-13: "the tile itself
+// is fine to be covered more"); the clock may lie anywhere, also in the top row.
 function placeKeyOnClock(c, brief, rng) {
   // Lethal bait needs the tray at its cap BEFORE A is taken: 2 orphans + a pair that opens and closes = 4 dig tiles before A
   // (cover + side), an even number (4 or 6). A under 1-3 covers alone is never lethal (measured: cost 0 on every build).
@@ -192,10 +198,123 @@ function placeWrongMelt(c, brief, rng) {
   return { fail: 'noWrongMelt' };
 }
 
+// ---------- trap 5: locked melt (frozen clock + locks) ----------
+// Picture: the clock is frozen (ice 2) and lies under 2-3 tiles (as wrongMelt: the cover dig carries the tray pressure); exactly ONE of
+// those covers touches it (a thaw-neighbour that leaves on the dig), so ONE more neighbour must go. The other neighbours: 1-3 LOCKED ones and
+// 1-2 free "lonely" ones F whose twin is buried deep (the wrong-melt bait); no plain free neighbour, so only the locked neighbour melts the
+// clock without a stranded tile. Two keys, both in sight: one free NEAR the clock (K1), one FAR under 1-3 tiles (K2). Right idea: fetch the
+// keys (together), then melt with the locked neighbour together with the cover that leaves in the dig. Wrong ideas: melt with the lonely
+// neighbour F (it waits in the tray for its buried twin), or grab the near key first (it waits in the tray through the dig).
+// Dials: spare 1-2, targets.keyCover (K2), targets.wrongMelts 1-2 (lonely neighbours), targets.locks 1-3 (locked neighbours),
+// targets.digBefore (dig tiles before the keys), frame.depth (covers on the clock, default 2-3).
+function placeLockedMelt(c, brief, rng) {
+  const tg = brief.targets || {}, nWrong = Math.max(1, Math.min(2, tg.wrongMelts || 1)), kc = tg.keyCover || [1, 3], pre = tg.digBefore || [4, 6], v = vis0Of(c);
+  const depth = brief.frame?.depth != null ? [brief.frame.depth, brief.frame.depth] : [0, 0];
+  const clocks = shuffle(rng, [...Array(c.n).keys()].filter(i => c.above[i].size >= depth[0] && c.above[i].size <= depth[1] && c.roleShown0[i]));
+  let tried = 0;
+  for (const ck of clocks) {
+    const covIn = c.inb[ck].filter(j => c.above[ck].has(j)).length, need = 2 - covIn;   // neighbours still to melt after the cover is gone
+    if ((need < 1 || need > 2) && no('lm:coverThaws')) continue;
+    const nbs = thawNbs(c, ck), free = nbs.filter(j => c.free0[j]);
+    if ((nbs.length < nWrong + 1 || nbs.length > 5) && no('lm:nbCount')) continue;
+    if ((free.length < nWrong) && no('lm:fewFreeNbs')) continue;
+    const wrong = shuffle(rng, free).slice(0, nWrong), rest = nbs.filter(j => !wrong.includes(j)).sort((a, b) => digCost(c, a) - digCost(c, b) || a - b);
+    // every neighbour that is not a lonely one is LOCKED (its overlay in sight, 0.5 of its face): any way to melt the clock needs the keys, a plain
+    // neighbour would be a key-free way round. The right route melts with two locked neighbours (or one locked + the cover that thaws).
+    const lockable = j => c.roleShown0[j] && v[j].role && c.above[j].size <= 2;
+    const locked = rest.slice(), right = locked.slice(0, need), plain = [];
+    if ((locked.length < need || locked.length > (tg.locks || 3)) && no('lm:lockCount')) continue;
+    if (locked.some(j => !lockable(j)) && no('lm:lockHidden')) continue;
+    const mechNb = new Set([ck, ...nbs, ...nbs.flatMap(j => [...c.above[j]]), ...c.above[ck]]);
+    const near = [...Array(c.n).keys()].filter(i => !mechNb.has(i) && c.free0[i] && c.above[i].size === 0 && c.roleShown0[i] && v[i].role && c.dist(i, ck) <= 12 && c.dist(i, ck) >= 3)
+      .sort((a, b) => c.dist(a, ck) - c.dist(b, ck)).slice(0, 5);
+    if (!near.length && no('lm:noNearKey')) continue;
+    for (const K1 of shuffle(rng, near).slice(0, 3)) {
+      const used = new Set([...mechNb, K1]);
+      const fars = keyCands(c, ck, used, kc, pre).filter(a => (digCost(c, a) - 1) % 2 === 0 && !c.above[a].has(K1) && !c.above[K1].has(a)).sort((a, b) => c.dist(b, ck) - c.dist(a, ck)).slice(0, 8);
+      if (!fars.length && no('lm:noFarKey')) continue;
+      for (const K2 of shuffle(rng, fars).slice(0, 4)) {
+        if (++tried > 60) return { fail: 'noLockedMelt' };
+        const roles = emptyRoles(ck); roles.ice[ck] = 2; for (const j of locked) roles.locks.add(j); roles.keys = [K2, K1];
+        const P = digWithout(c, roles, new Set([...wrong, ...plain]), rng);
+        if ((!P) && no('lm:noDig')) continue;
+        if (wrong.some(l => P.includes(l)) && no('lm:dig')) continue;
+        const pk = Math.min(P.indexOf(K1), P.indexOf(K2)); if (process.env.DBG) console.log('lm P', P.length, 'pk', pk, 'K1', P.indexOf(K1), 'K2', P.indexOf(K2), 'clock', P.indexOf(ck), 'locked', locked.map(j => P.indexOf(j)), 'cov', c.above[ck].size);
+        if ((pk < pre[0] || pk > pre[1] || (tg.evenPre !== false && pk % 2)) && no('lm:digBefore')) continue;
+        if (!locked.some(j => P.includes(j)) && no('lm:lockNotUsed')) continue;
+        if (P.length < (tg.minWay ?? 6) && no('lm:short')) continue;
+        // the twins of the lonely neighbours: visible, buried (2+ covers), outside the dig and the mechanism
+        const mech = new Set([...mechNb, K1, K2, ...c.above[K2], ...P]), twins = [], taken = new Set([...mech, ...wrong]);
+        for (const l of wrong) {
+          const cand = [...Array(c.n).keys()].filter(t => !taken.has(t) && !twins.includes(t) && c.above[t].size >= 2 && v[t].picture && !c.above[t].has(l) && !c.above[l].has(t)
+            && [...c.above[t]].every(j => !mech.has(j) && !wrong.includes(j) && !P.includes(j)));
+          if (!cand.length) { twins.length = 0; break; }
+          twins.push(shuffle(rng, cand.sort((a, b) => c.above[b].size - c.above[a].size).slice(0, 6))[0]);
+        }
+        if (twins.length < wrong.length && no('lm:noTwin')) continue;
+        roles.dig = P;
+        const keep = uniq([ck, ...nbs, K1, K2, ...c.above[K2], ...twins, ...twins.flatMap(t => [...c.above[t]]), ...nbs.flatMap(j => [...c.above[j]]), ...wrong]);
+        roles.bait = { type: 'lockedMelt', tiles: wrong.concat(twins, [K1]), single: [wrong[0]], pairs: wrong.map((l, i) => [l, twins[i]]), keepUp: keep,
+          wrong: wrong.slice(), twins: twins.slice(), keyNear: K1, keyFar: K2, locked: locked.slice(), right: right.slice() };
+        return roles;
+      }
+    }
+  }
+  return { fail: 'noLockedMelt' };
+}
+
+// ---------- trap 4: the guarded key ----------
+// Picture: the clock is locked. Key A is in sight under exactly ONE frozen cover tile g (ice 2) that melts only when two of its
+// neighbours (one of them on the way, plus one more) are gone; key B is free elsewhere. Bait: take B first - it waits in the tray
+// through A's dig (the neighbours of g, g, then A). Dials: spare, targets.digBefore (dig tiles before the first key), clockCover.
+function placeGuardedKey(c, brief, rng) {
+  const tg = brief.targets || {}, cc = tg.clockCover || [0, 2], pre = tg.digBefore || [4, 7], v = vis0Of(c);
+  const clocks = shuffle(rng, [...Array(c.n).keys()].filter(i => c.above[i].size >= cc[0] && c.above[i].size <= cc[1] && c.roleShown0[i]));
+  const gs = [...Array(c.n).keys()].filter(i => c.free0[i] && c.above[i].size === 0 && c.roleShown0[i] && v[i].role);
+  let tried = 0;
+  for (const ck of clocks) {
+    const cov = new Set([ck, ...c.above[ck]]);
+    const pairs = [];
+    for (const g of gs) {
+      if (cov.has(g)) continue;
+      const nbs = thawNbs(c, g); if (nbs.length < 2 || nbs.length > 5) continue;
+      for (const A of [...Array(c.n).keys()]) {
+        if (cov.has(A) || c.above[A].size !== 1 || !c.above[A].has(g) || !c.roleShown0[A] || !v[A].role) continue;
+        if (c.above[ck].has(A) || c.above[A].has(ck)) continue;
+        pairs.push([g, A]);
+      }
+    }
+    if (!pairs.length) { no('gk:noPair'); continue; }
+    for (const [g, A] of shuffle(rng, pairs).slice(0, 4)) {
+      const nbsG = thawNbs(c, g), used = new Set([...cov, g, A, ...nbsG, ...nbsG.flatMap(j => [...c.above[j]])]);
+      const Bs = [...Array(c.n).keys()].filter(i => !used.has(i) && c.free0[i] && c.above[i].size === 0 && c.roleShown0[i] && v[i].role && c.dist(i, g) >= 4)
+        .sort((a, b) => c.dist(b, g) - c.dist(a, g)).slice(0, 6);
+      if (!Bs.length) { no('gk:noB'); continue; }
+      for (const Bk of shuffle(rng, Bs).slice(0, 2)) {
+        if (++tried > 60) return { fail: 'noGuardedKey' };
+        const roles = emptyRoles(ck); roles.locks.add(ck); roles.ice[g] = 2; roles.keys = [A, Bk];
+        const P = B.planDig(c, roles, rng);
+        if ((!P) && no('gk:noDig')) continue;
+        if ((!P.includes(g) || !P.includes(A)) && no('gk:gNotOnWay')) continue;
+        const pk = Math.min(P.indexOf(A), P.indexOf(Bk));
+        if ((pk < pre[0] || pk > pre[1]) && no('gk:digBefore')) continue;
+        if ((P.indexOf(g) > P.indexOf(A)) && no('gk:order')) continue;
+        roles.dig = P;
+        const keep = uniq([ck, A, Bk, g, ...c.above[ck], ...nbsG, ...nbsG.flatMap(j => [...c.above[j]])]);
+        roles.bait = { type: 'guardedKey', tiles: [Bk], single: [Bk], pairs: [], keepUp: keep, keyA: A, keyB: Bk, guard: g, guardNbs: nbsG.slice() };
+        return roles;
+      }
+    }
+  }
+  return { fail: 'noGuardedKey' };
+}
+
 // ---------- proofs ----------
 const SEE = {
   keyOnClock: 'The free key on top of the clock is the one to leave alone: dig out the far key first, then take both keys together, or the early key sits in the tray until the tray is full.',
   shortThaw: 'The tempting pair beside the buried neighbour is a detour: the cheap way to melt the clock is through the keys, so the pair costs the moves you do not have.',
+  lockedMelt: 'To melt the frozen clock take both keys (the far one needs a dig, the near one must not go first), then melt with the locked neighbour and its partner: the lonely free neighbour would wait in the tray for its buried twin.',
+  guardedKey: 'The key lies under a frozen tile: thaw that tile first (its neighbours go, then it), then take both keys together; grabbing the free key first leaves it waiting in the tray through the whole dig.',
   wrongMelt: 'Not every free neighbour is a good one to melt the clock with: the neighbour whose twin is buried deep would wait in the tray, so use the neighbours that go as a pair.',
 };
 function visibleAtStart(design, roles, g, s0) {
@@ -209,6 +328,61 @@ function priceBait(C, s, t, base, nShipMax, w) { return D.priceMove(C, s, t, { b
 // is the priced bait a proven trap at this spare? lose (exact) or a cost of at least spare+1 (exact)
 const provenCost = (p, spare) => p.exact && (p.result === 'lose' || (p.result === 'win' && p.cost != null && p.cost >= spare + 1));
 
+// ---------- shown, control, idle (Dennis 2026-11-13) ----------
+// The uncovered share of the clock and role tiles is recorded for information only (no minimum: the tile itself may be covered).
+function shownFacts(design) {
+  const sh = shownAll(design.tiles), ob = design.obst || {}, ice = Object.keys(ob.ice || {}).map(Number), role = [...new Set([...(ob.locks || []), ...(ob.keys || []), ...ice])];
+  const clock = sh[design.clock.i], minRole = role.length ? Math.min(...role.map(i => sh[i])) : 1;
+  return { ok: true, clock, minRole, roles: Object.fromEntries(role.map(i => [i, sh[i]])) };
+}
+// the cost of a priced move as a number (a lost move counts as one more than the loosest shippable spare)
+const num = (p, cap) => p.result === 'lose' ? cap + 1 : p.cost;
+// tiles that belong to the mechanism (not "unrelated"): roles, thaw-neighbours, covers of those, the bait
+function mechSet(c, design, roles) {
+  const ob = design.obst || {}, ice = Object.keys(ob.ice || {}).map(Number), base = new Set([design.clock.i, ...(ob.locks || []), ...(ob.keys || []), ...ice, ...roles.bait.tiles, ...roles.bait.keepUp]);
+  for (const i of [...base]) { for (const j of c.above[i]) base.add(j); }
+  for (const f of ice) for (const j of c.inb[f]) { base.add(j); for (const a of c.above[j]) base.add(a); }
+  return base;
+}
+// the control: the dearest UNRELATED free pair / single-with-twin-in-sight at move 0 (capped sample, exact prices).
+// A bait must cost strictly more, else it is just "any free pair costs two moves" (the flaw that retired shortThaw).
+function controlOf(design, roles, ctx, P) {
+  const { k } = ctx, { w, C, g, s0, nShipMax } = P.work, c = ctx.c, cap = nShipMax - k, mech = mechSet(c, design, roles);
+  const all = D.temptingMoves(g, s0, { singles: true }).filter(m => !m.peek && m.take.every(i => !mech.has(i)));
+  const pairs = all.filter(m => m.kind === 'pair'), singles = all.filter(m => m.kind !== 'pair');
+  const pick = pairs.slice(0, 12).concat(singles.slice(0, 12)), rows = [];
+  let value = 0, unknown = false, dearest = null;
+  for (const m of pick) {
+    const t = m.kind === 'pair' ? { kind: 'pair', take: m.take } : { kind: 'single', take: m.take };
+    const p = priceBait(C, s0, t, k, nShipMax, w);
+    if (!p.exact || p.result === 'unknown') { unknown = true; rows.push({ take: m.take, unknown: true }); continue; }
+    const v = num(p, cap); rows.push({ take: m.take, kind: m.kind, result: p.result, cost: p.cost });
+    if (!dearest || v > value) { value = v; dearest = { take: m.take, kind: m.kind, result: p.result, cost: p.cost }; }
+  }
+  return { value, unknown, dearest, moves: pick.length, of: all.length, cap };
+}
+// bait list -> proven prices; each must be lose or cost >= spare+1 (exact) AND strictly dearer than the control
+function priceAll(design, roles, ctx, P, list) {
+  const { k, spare } = ctx, { w, C, s0, nShipMax } = P.work, cap = nShipMax - k, out = { baits: [], control: null, why: null };
+  out.control = controlOf(design, roles, ctx, P);
+  if (out.control.unknown) { out.why = 'controlUnknown'; return out; }
+  for (const b of list) {
+    const t = { kind: b.take.length > 1 ? 'pair' : 'single', take: b.take }, price = priceBait(C, s0, t, k, nShipMax, w);
+    if (!provenCost(price, spare)) { if (process.env.DBG2) { const g = P.work.g; let s = E.start(g); const tr = []; for (const m of design.solution) { s = E.step(g, s, m); if (!s) break; tr.push(s.tray.length); } console.log('NOTCOSTLY', b.name, 'sol', design.solution.slice(0, 20).join(','), 'tray', tr.slice(0, 22).join(''), 'bait', b.take, 'keys', design.obst.keys, 'locks', design.obst.locks, 'ice', JSON.stringify(design.obst.ice), 'k', k); } out.why = `${b.name}:notCostly:${price.result}:${price.cost}${price.exact ? '' : ':inexact'}`; return out; }
+    const val = num(price, cap);
+    if (!(val > out.control.value)) { out.why = `${b.name}:notAboveControl:${val}<=${out.control.value}`; return out; }
+    out.baits.push({ name: b.name, tiles: b.take.slice(), result: price.result, cost: price.cost, value: val, exact: price.exact, price, t });
+  }
+  return out;
+}
+// clock minimum k with a modification of the obstacles (ice removed / locks removed); null when unproven
+function kWith(design, mod) {
+  const d = JSON.parse(JSON.stringify({ ...design, obst: { ...design.obst, ...mod }, clock: { ...design.clock, n: 99 } }));
+  const cs = E.clockShortest(E.game(d), { nodes: 300000, ms: Infinity, finishNodes: 100000, finishMs: Infinity });
+  return cs && !cs.unsure && cs.k ? cs.k : null;
+}
+const bt = b => ({ name: b.name, tiles: b.tiles, result: b.result, cost: b.cost, value: b.value });
+
 function baseProof(design, roles, ctx, name) {
   const { k, spare, c, brief } = ctx, bait = roles.bait, w = D.work(PROOF_NODES);
   const nShipMax = Math.min(19, k + 3), C = D.clockGames(design), g = C.at(design.clock.n), s0 = E.start(g);
@@ -217,6 +391,7 @@ function baseProof(design, roles, ctx, name) {
   for (const [x, y] of bait.pairs) if (design.faces[x] !== design.faces[y]) { out.why = 'baitNotPaired'; return out; }
   const vis = visibleAtStart(design, roles, g, s0); out.visible = vis;
   if (!vis.ok) { out.why = 'mechanismNotVisible'; return out; }
+  out.shown = shownFacts(design);
   // the witness states up to the clock (as A5 walks them)
   const Wt = SG.actionsOf(g, design.solution);
   if (!Wt.ok) { out.why = 'noWitness'; return out; }
@@ -247,7 +422,7 @@ function finish(design, roles, ctx, P, t, price, extra) {
   const spent = Math.round(P.work.w.used);
   const card = { type: bait.type, bait: { tiles: bait.tiles.slice(), pairs: bait.pairs.map(p => p.slice()), single: bait.single ? bait.single.slice() : null },
     cost: { result: price.result, cost: price.cost, exact: price.exact, spare, needsAtLeast: spare + 1 },
-    decisive: dec, see: SEE[bait.type], k, spare, clock: design.clock.i, ...extra.card, engineNodes: spent };
+    decisive: dec, see: bait.see || SEE[bait.type], k, spare, clock: design.clock.i, shown: { clock: P.shown.clock, minRole: P.shown.minRole, roles: P.shown.roles }, ...extra.card, engineNodes: spent };
   return { ok: true, card, price, decisive: dec, ...extra.facts };
 }
 
@@ -258,10 +433,10 @@ function proveKeyOnClock(design, roles, ctx) {
   const sol = design.solution, ia = sol.indexOf(A), ib = sol.indexOf(Bk), ic = sol.indexOf(design.clock.i);
   if (ia < 0 || ib < 0 || Math.abs(ia - ib) !== 1 || Math.max(ia, ib) > ic) { P.why = 'keysNotConsecutive'; return P; }
   if (Math.min(ia, ib) === 0) { P.why = 'keysFirst'; return P; }
-  const t = { kind: 'single', take: [Bk] }, price = priceBait(C, s0, t, k, nShipMax, w);
-  if (!provenCost(price, spare)) { P.why = 'baitNotCostly:' + price.result + ':' + price.cost + (price.exact ? '' : ':inexact'); return P; }
+  const pr = priceAll(design, roles, ctx, P, [{ name: 'keyBFirst', take: [Bk] }]); if (pr.why) { P.why = 'bait:' + pr.why; return P; }
+  const t = pr.baits[0].t, price = pr.baits[0].price;
   const fork = fairness(C, s0, t, design, P, ctx);
-  return finish(design, roles, ctx, P, t, price, { card: { keysTakenAt: [Math.min(ia, ib) + 1, Math.max(ia, ib) + 1], fair: fork.fair, fairWhy: fork.why }, facts: { fork } });
+  return finish(design, roles, ctx, P, t, price, { card: { keysTakenAt: [Math.min(ia, ib) + 1, Math.max(ia, ib) + 1], fair: fork.fair, fairWhy: fork.why, baits: pr.baits.map(bt), control: pr.control, keyOn: bait.keyOn }, facts: { fork, control: pr.control } });
 }
 function proveShortThaw(design, roles, ctx) {
   const P = baseProof(design, roles, ctx, 'shortThaw'); if (P.why) return P;
@@ -279,8 +454,8 @@ function proveShortThaw(design, roles, ctx) {
 function proveWrongMelt(design, roles, ctx) {
   const P = baseProof(design, roles, ctx, 'wrongMelt'); if (P.why) return P;
   const { k, spare, brief } = ctx, { w, C, s0, nShipMax } = P.work, bait = roles.bait, L1 = bait.single[0];
-  const t = { kind: 'single', take: [L1] }, price = priceBait(C, s0, t, k, nShipMax, w);
-  if (!provenCost(price, spare)) { P.why = 'baitNotLost:' + price.result + ':' + price.cost + (price.exact ? '' : ':inexact'); return P; }
+  const pr = priceAll(design, roles, ctx, P, [{ name: 'wrongNeighbour', take: [L1] }]); if (pr.why) { P.why = 'bait:' + pr.why; return P; }
+  const t = pr.baits[0].t, price = pr.baits[0].price;
   // fairFork judges a move that loses at EVERY shippable spare; a bait that only costs spare+1 or more (lost at the shipped clock,
   // won at k+3) is proven by its price alone: fair stays null then
   const fork = price.result === 'lose' ? fairness(C, s0, t, design, P, ctx) : { fair: null, why: [], skipped: 'bait wins at the loosest spare' };
@@ -288,7 +463,45 @@ function proveWrongMelt(design, roles, ctx) {
   const cap = capOf(brief);
   let forced = 'skip';
   if (cap > 1) { forced = B.canReachWithin({ ...design, clock: { ...design.clock, n: design.clock.n } }, cap - 1, 200000); if (forced !== 'no') { P.why = 'trayNotForced:' + forced; return P; } }
-  return finish(design, roles, ctx, P, t, price, { card: { fair: fork.fair, forcedPressure: forced, cap, wrongNeighbours: bait.wrong.slice(), twins: bait.twins.slice(), rightPair: bait.right.slice() }, facts: { fork, forced } });
+  return finish(design, roles, ctx, P, t, price, { card: { fair: fork.fair, baits: pr.baits.map(bt), control: pr.control, forcedPressure: forced, cap, wrongNeighbours: bait.wrong.slice(), twins: bait.twins.slice(), rightPair: bait.right.slice() }, facts: { fork, forced } });
+}
+function proveLockedMelt(design, roles, ctx) {
+  const P = baseProof(design, roles, ctx, 'lockedMelt'); if (P.why) return P;
+  const { k, spare, brief } = ctx, { w, C, s0, nShipMax } = P.work, bait = roles.bait, sol = design.solution, ci = sol.indexOf(design.clock.i);
+  // the stored route is the right idea: both keys, then a locked neighbour (and the plain one) before the clock
+  const lockedIn = bait.locked.map(l => sol.indexOf(l)).filter(p => p >= 0 && p < ci), kp = [bait.keyNear, bait.keyFar].map(x => sol.indexOf(x));
+  if (!lockedIn.length) { if (process.env.DBG) console.log('AVOID sol', sol.slice(0, ci + 1).join(','), 'ice', JSON.stringify(design.obst.ice), 'locks', design.obst.locks, 'keys', design.obst.keys, 'wrong', bait.wrong, 'right', bait.right, 'covers', [...ctx.c.above[design.clock.i]], 'nbs', ctx.c.inb[design.clock.i].join(','), 'k', k); P.why = 'routeAvoidsLock'; return P; }
+  if (kp.some(p => p < 0 || p > ci) || Math.max(...kp) > Math.min(...lockedIn)) { P.why = 'keysNotBeforeLocked'; return P; }
+  const list = bait.wrong.map(f => ({ name: 'lonelyNeighbour', take: [f] })).concat([{ name: 'nearKeyFirst', take: [bait.keyNear] }]);
+  const pr = priceAll(design, roles, ctx, P, list); if (pr.why) { P.why = pr.why; return P; }
+  // fairness of the lonely-neighbour bait when it loses outright (as wrongMelt): a guess is not a trap
+  const lone = pr.baits[0], t = lone.t;
+  const fork = lone.result === 'lose' ? fairness(C, s0, t, design, P, ctx) : { fair: null, why: [], skipped: 'bait wins at the loosest spare' };
+  // fair is recorded, not required (the task asks for an exact price: lose or cost >= spare+1, above the control)
+  // the lock and the ice are not idle: without either, the proven clock route is shorter
+  const kNoLock = kWith(design, { locks: [] }), kNoIce = kWith(design, { ice: {} });
+  if (kNoLock == null || kNoIce == null) { P.why = 'idleUnproven'; return P; }
+  if (!(kNoLock < k)) { P.why = 'lockIdle:' + kNoLock + '>=' + k; return P; }
+  if (!(kNoIce < k)) { P.why = 'iceIdle:' + kNoIce + '>=' + k; return P; }
+  return finish(design, roles, ctx, P, t, lone.price, { card: { fair: fork.fair, baits: pr.baits.map(bt), control: pr.control, idle: { kNoLock, kNoIce, k }, rightIdea: { keys: [bait.keyFar, bait.keyNear], locked: bait.locked },
+    lonelyNeighbours: bait.wrong.slice(), twins: bait.twins.slice(), nearKey: bait.keyNear, farKey: bait.keyFar }, facts: { fork, control: pr.control } });
+}
+function proveGuardedKey(design, roles, ctx) {
+  const P = baseProof(design, roles, ctx, 'guardedKey'); if (P.why) return P;
+  const { k, spare, c } = ctx, { w, C, g, s0, nShipMax } = P.work, bait = roles.bait, sol = design.solution, ci = sol.indexOf(design.clock.i), gi = sol.indexOf(bait.guard), ia = sol.indexOf(bait.keyA), ib = sol.indexOf(bait.keyB);
+  // A shows with g on it: A's only cover is g, A's overlay and picture-side are in sight (visibleAtStart checked the role overlay), g is frozen
+  if (!(c.above[bait.keyA].size === 1 && c.above[bait.keyA].has(bait.guard))) { P.why = 'keyNotUnderGuardOnly'; return P; }
+  if (design.obst.ice[bait.guard] !== 2) { P.why = 'guardNotFrozen'; return P; }
+  if (!(gi >= 0 && ia > gi && ia < ci && ib >= 0 && ib < ci)) { P.why = 'routeOrder'; return P; }
+  if (Math.min(ia, ib) === 0) { P.why = 'keysFirst'; return P; }
+  const pr = priceAll(design, roles, ctx, P, [{ name: 'keyBFirst', take: [bait.keyB] }]); if (pr.why) { P.why = pr.why; return P; }
+  const kNoIce = kWith(design, { ice: {} }), kNoLock = kWith(design, { locks: [] });
+  if (kNoIce == null || kNoLock == null) { P.why = 'idleUnproven'; return P; }
+  if (!(kNoIce <= k - 1)) { P.why = 'iceIdle:' + kNoIce + '>=' + k; return P; }
+  if (!(kNoLock < k)) { P.why = 'lockIdle:' + kNoLock + '>=' + k; return P; }
+  const b0 = pr.baits[0], fork = b0.result === 'lose' ? fairness(C, s0, b0.t, design, P, ctx) : { fair: null, why: [], skipped: 'bait wins at the loosest spare' };
+  return finish(design, roles, ctx, P, b0.t, b0.price, { card: { fair: fork.fair, fairWhy: fork.why, baits: pr.baits.map(bt), control: pr.control, idle: { kNoIce, kNoLock, k }, keyUnderGuard: bait.keyA, guard: bait.guard, freeKey: bait.keyB,
+    keysTakenAt: [Math.min(ia, ib) + 1, Math.max(ia, ib) + 1] }, facts: { fork, control: pr.control } });
 }
 // fairFork at the opening (all 100% of the tiles left); face-down tiles that are not free are unseen
 function fairness(C, s, t, design, P, ctx) {
@@ -298,29 +511,327 @@ function fairness(C, s, t, design, P, ctx) {
   return { fair: f.fair, unfair: f.unfair, unknown: f.unknown, why: f.why, checks: f.checks };
 }
 
+// ---------- chain traps: a small compositional generator (Dennis 2026-11-13: "make levels that combine freeze clock and locks, those are
+// most fun" / "the clock doesn't necessarily have to be frozen. The locks or keys can too, or the way to the clock or lock. Make it smarter and more versatile") ----------
+// The goal is the clock. A chain shape says WHERE the obstacles sit; each obstacle needs another thing to go first:
+//   clock<lock           the clock is locked: both keys must go first           clock<ice          the clock is frozen: 2 of its neighbours go first
+//   clock<cover:ice|lock a tile lying on the clock is frozen / locked           thaw<lock|ice      one neighbour that can melt the frozen tile (the clock, or its frozen
+//                                                                                 cover) is itself locked / frozen (a frozen or locked tile on the way)
+//   keyA<cover:ice       key A lies under exactly one frozen tile               keyA<way:ice       key A lies under 2+ tiles, the one next to it is frozen
+//   keyB<cover:ice       the second key too                                    (a frozen KEY TILE is not built: the game shows ice instead of the key - one overlay per tile, see UI note)
+// Obstacle kinds: lock (opens when both keys are gone), ice (h = 2 neighbours gone), cover (tiles on top / blocking a side).
+// A shape is a flag set (CHAIN_DEFS); its signature string is the story's shape name. Baits come from the chain and are proven by the engine:
+//   keyEarly          the free key B taken early waits in the tray through the dig        lonelyNeighbour   melting with a free neighbour whose twin is buried
+// Every special must matter (removing any one lock or ice shortens the proven clock route, or the bait turns harmless) and be connected to the chain.
+const CHAIN_DEFS = [
+  { ck: 'lock', keyA: 'cover' },                                         // 2  lock on the clock + frozen key cover
+  { ck: 'lock', keyA: 'way' },                                           // 2  lock on the clock + frozen way tile to a key
+  { ck: 'lock', cover: 'ice' },                                          // 2  lock on the clock + a frozen cover of the clock
+  { ck: 'ice', nb: 'lock' },                                             // 2  frozen clock, one thaw-neighbour locked
+  { ck: 'ice', nb: 'ice' },                                              // 2  frozen clock, one thaw-neighbour frozen (frozen way tile to the clock)
+  { ck: 'plain', cover: 'ice', nb: 'lock' },                             // 2  clock under a frozen cover, whose thaw-neighbour is locked
+  { ck: 'plain', cover: 'ice', nb: 'ice' },                              // 2  clock under a frozen cover, whose thaw-neighbour is frozen
+  { ck: 'plain', cover: 'lock', keyA: 'cover' },                         // 2  lock on a clock cover + frozen key cover
+  { ck: 'lock', keyA: 'cover', keyB: 'cover' },                          // 3  lock on the clock, both keys under frozen covers
+  { ck: 'lock', cover: 'ice', keyA: 'cover' },                           // 3
+  { ck: 'lock', cover: 'ice', nb: 'ice' },                               // 3  lock on the clock, frozen cover, frozen thaw-neighbour
+  { ck: 'ice', nb: 'lock', keyA: 'cover' },                              // 3  frozen clock, locked thaw-neighbour, frozen key cover
+  { ck: 'ice', nb: 'lock', keyA: 'way' },                                // 3
+  { ck: 'plain', cover: 'ice', nb: 'lock', keyA: 'cover' },              // 3  frozen clock cover, locked thaw-neighbour, frozen key cover
+  { ck: 'ice', nb: 'lock', keyA: 'cover', keyB: 'cover' },               // 4
+  { ck: 'lock', cover: 'ice', nb: 'ice', keyA: 'cover' },                // 4
+];
+const chainSig = d => [
+  d.ck === 'lock' ? 'clock<lock' : d.ck === 'ice' ? 'clock<ice' : null,
+  d.cover ? 'clock<cover:' + d.cover : null,
+  d.nb ? (d.ck === 'ice' ? 'thaw<' : 'coverThaw<') + d.nb : null,
+  d.keyA ? 'keyA<' + d.keyA + ':ice' : null,
+  d.keyB ? 'keyB<' + d.keyB + ':ice' : null].filter(Boolean).join('; ');
+const CHAIN = {}; for (const d of CHAIN_DEFS) { d.sig = chainSig(d); d.length = (d.ck === 'lock' || d.ck === 'ice' ? 1 : 0) + (d.cover ? 1 : 0) + (d.nb ? 1 : 0) + (d.keyA ? 1 : 0) + (d.keyB ? 1 : 0); CHAIN[d.sig] = d; }
+const CHAIN_SHAPES = CHAIN_DEFS.map(d => d.sig);
+// a UI limitation, checked in www/js/board.js + specials.js (obKind): one overlay per tile, ice before lock before key: a FROZEN KEY shows only the ice,
+// a frozen LOCKED tile shows only the ice. So no tile carries two roles: frozen keys / frozen locked tiles are expressed through their covers and neighbours.
+const CHAIN_UI_NOTE = 'obKind() shows one overlay per tile (ice, else lock, else key): a tile that is both frozen and a key (or locked) would hide the key (or lock) badge, so it is never built; the chain freezes the key COVER, a way tile or a thaw-neighbour instead.';
+
+const cost1 = (c, j) => digCost(c, j);
+function digDrop(c, roles, drops, rng) {   // drops: Map frozen tile -> Set of its neighbours that the plan must not count on
+  if (!drops.size) return B.planDig(c, roles, rng);
+  const inb = c.inb.map((a, i) => drops.has(i) ? a.filter(j => !drops.get(i).has(j)) : a);
+  return B.planDig({ ...c, inb }, roles, rng);
+}
+// twins for the lonely neighbours: visible, buried (2+ covers), outside the dig and the mechanism
+function pickTwins(c, v, rng, wrong, mech, P) {
+  const twins = [], taken = new Set([...mech, ...wrong, ...P]);
+  for (const l of wrong) {
+    const cand = [...Array(c.n).keys()].filter(t => !taken.has(t) && !twins.includes(t) && c.above[t].size >= 2 && v[t].picture && !c.above[t].has(l) && !c.above[l].has(t)
+      && [...c.above[t]].every(j => !mech.has(j) && !wrong.includes(j) && !P.includes(j)));
+    if (!cand.length) return null;
+    twins.push(shuffle(rng, cand.sort((a, b) => c.above[b].size - c.above[a].size).slice(0, 6))[0]);
+  }
+  return twins;
+}
+// a frozen tile g (ice 2) that can sit on key `A` as its only cover (mode 'cover') or as the cover next to it under another cover (mode 'way')
+function keyGuard(c, v, rng, mode, used, avoidKey) {
+  const out = [];
+  for (let A = 0; A < c.n; A++) {
+    if (used.has(A) || avoidKey.has(A) || !c.roleShown0[A] || !v[A].role) continue;
+    const cov = [...c.above[A]]; if ([...cov].some(j => used.has(j))) continue;
+    if (mode === 'cover') { if (cov.length !== 1) continue; const g = cov[0]; if (!c.free0[g] || c.above[g].size || !c.roleShown0[g] || !v[g].role) continue; const nb = thawNbs(c, g); if (nb.length < 2 || nb.length > 5) continue; out.push([A, g]); }
+    else { if (cov.length < 2 || cov.length > 3) continue; for (const w of cov) if (c.above[w].size >= 1 && cov.some(x => c.above[w].has(x)) && c.roleShown0[w] && v[w].role) { const nb = thawNbs(c, w); if (nb.length >= 2 && nb.length <= 5) out.push([A, w]); } }
+  }
+  return shuffle(rng, out);
+}
+function placeChain(c, brief, rng) {
+  const d = CHAIN[brief.chain]; if (!d) return { fail: 'unknownChainShape' };
+  const tg = brief.targets || {}, v = vis0Of(c), pre = tg.digBefore || [4, 7], kc = tg.keyCover || [1, 3], nWrongMax = tg.wrongMelts ?? 1;
+  const usesLock = d.ck === 'lock' || d.cover === 'lock' || d.nb === 'lock';
+  const depth = brief.frame?.depth != null ? [brief.frame.depth, brief.frame.depth] : d.cover ? [1, 2] : [0, 2];
+  const clocks = shuffle(rng, [...Array(c.n).keys()].filter(i => c.above[i].size >= depth[0] && c.above[i].size <= depth[1] && c.roleShown0[i]));
+  let tried = 0;
+  for (const ck of clocks) {
+    if (++tried > 90) return { fail: 'noChain' };
+    const roles = emptyRoles(ck), links = [], used = new Set([ck, ...c.above[ck]]);
+    let F = null, g = null;
+    if (d.ck === 'lock') roles.locks.add(ck); if (d.ck === 'ice') { roles.ice[ck] = 2; F = ck; }
+    if (d.cover) {
+      const gs = [...c.above[ck]].filter(j => c.free0[j] && !c.above[j].size && c.roleShown0[j] && v[j].role);
+      if (!gs.length) { no('ch:noCover'); continue; }
+      g = gs[Math.floor(rng() * gs.length)]; links.push([ck, g]); used.add(g);
+      if (d.cover === 'ice') { roles.ice[g] = 2; if (F == null) F = g; } else roles.locks.add(g);
+    }
+    // the neighbours that can melt F: lonely free ones (the bait), the special one (locked / frozen), the plain ones that go with it
+    let wrong = [], right = [], others = [], special = null, nbs = []; const drops = new Map(), hostOf = new Map();
+    if (F != null) {
+      nbs = thawNbs(c, F).filter(j => !used.has(j));
+      const covIn = c.inb[F].filter(j => c.above[F].has(j)).length, need = 2 - covIn;
+      if ((need < 1 || need > 2) && no('ch:need')) continue;
+      if ((nbs.length < need || nbs.length > 8) && no('ch:nbCount')) continue;
+      const free = nbs.filter(j => c.free0[j] && !c.above[j].size);
+      wrong = shuffle(rng, free).slice(0, Math.min(nWrongMax, free.length));
+      const rest = nbs.filter(j => !wrong.includes(j)).sort((a, b) => cost1(c, a) - cost1(c, b) || a - b);
+      if (d.nb) {
+        const sp = rest.filter(j => c.roleShown0[j] && v[j].role && c.above[j].size <= 2 && (d.nb !== 'ice' || thawNbs(c, j).filter(x => x !== F && !used.has(x)).length >= 2));
+        if (!sp.length && no('ch:noSpecial')) continue;
+        special = shuffle(rng, sp.slice(0, 3))[0];
+      }
+      const plain = rest.filter(j => j !== special);
+      right = (special != null ? [special] : []).concat(plain.slice(0, need - (special != null ? 1 : 0)));
+      if ((right.length < need || (right.length > (special != null ? 1 : 0) && cost1(c, right[right.length - 1]) > (tg.rightCost || 6))) && no('ch:rightDear')) continue;
+      others = rest.filter(j => !right.includes(j));
+      if (others.some(j => c.free0[j] && !c.above[j].size) && no('ch:freeAlt')) continue;   // a free neighbour that is neither lonely nor right = a cheap way round
+      if (special != null) { if (d.nb === 'lock') roles.locks.add(special); else roles.ice[special] = 2; links.push([F, special]); }
+      for (const j of right) if (j !== special) links.push([F, j]);
+      for (const j of wrong) { links.push([F, j]); hostOf.set(j, F); }
+      drops.set(F, new Set([...wrong, ...others]));
+    }
+    const thawArea = new Set([ck, ...c.above[ck], ...(F != null ? [F, ...c.above[F], ...nbs, ...nbs.flatMap(j => [...c.above[j]])] : [])]);
+    // the keys
+    let keyEarly = null;
+    if (usesLock) {
+      const modeA = d.keyA || 'far', modeB = d.keyB || 'free', picked = new Set(thawArea);
+      let A = null, B2 = null, guards = {};
+      if (modeA === 'far') {
+        const fars = keyCands(c, ck, picked, kc, [pre[0] - 1, pre[1] + 1]).sort((a, b) => c.dist(b, ck) - c.dist(a, ck)).slice(0, 8);
+        if (!fars.length) { no('ch:noFarKey'); continue; } A = shuffle(rng, fars.slice(0, 4))[0];
+      } else {
+        const gl = keyGuard(c, v, rng, modeA, picked, new Set()); if (!gl.length) { no('ch:noKeyGuard'); continue; }
+        [A, guards.A] = gl[0]; roles.ice[guards.A] = 2; links.push([A, guards.A]);
+      }
+      for (const j of [A, ...(guards.A != null ? [guards.A, ...c.above[A], ...thawNbs(c, guards.A)] : c.above[A])]) picked.add(j);
+      if (modeB === 'free') {
+        const Bs = [...Array(c.n).keys()].filter(i => !picked.has(i) && c.free0[i] && !c.above[i].size && c.roleShown0[i] && v[i].role && c.dist(i, F ?? ck) >= 4 && c.dist(i, A) >= 3)
+          .sort((a, b) => c.dist(b, F ?? ck) - c.dist(a, F ?? ck)).slice(0, 6);
+        if (!Bs.length) { no('ch:noFreeB'); continue; } B2 = shuffle(rng, Bs.slice(0, 3))[0]; keyEarly = B2;
+      } else {
+        const gl = keyGuard(c, v, rng, modeB, picked, new Set([A])); if (!gl.length) { no('ch:noKeyGuardB'); continue; }
+        [B2, guards.B] = gl[0]; roles.ice[guards.B] = 2; links.push([B2, guards.B]);
+      }
+      roles.keys = [A, B2];
+      // no free key and no lonely neighbour yet: a lonely free neighbour of a frozen key cover is the bait
+      if (keyEarly == null && !wrong.length) for (const gh of [guards.A, guards.B]) {
+        if (gh == null || wrong.length) continue;
+        const fr = thawNbs(c, gh).filter(j => c.free0[j] && !c.above[j].size && !picked.has(j) && !roles.keys.includes(j) && !roles.locks.has(j) && !roles.ice[j]);
+        if (fr.length >= 1 && thawNbs(c, gh).length - 1 >= 2) { const l = shuffle(rng, fr)[0]; wrong.push(l); links.push([gh, l]); drops.set(gh, new Set([l])); hostOf.set(l, gh); }
+      }
+      for (const L of roles.locks) { links.push([L, A], [L, B2]); }
+    }
+    // the dig: the cheapest legal way to the clock WITHOUT the lonely neighbours and the plain-but-not-right ones (more neighbours only thaw sooner)
+    const P = digDrop(c, roles, drops, rng);
+    if ((!P || P.length < (tg.minWay ?? 5)) && no('ch:noDig')) continue;
+    if (wrong.some(l => P.includes(l)) && no('ch:wrongInDig')) continue;
+    const specialsT = [...roles.locks, ...Object.keys(roles.ice).map(Number)];
+    if (specialsT.some(t => !P.includes(t)) && no('ch:specialOffWay')) continue;
+    if (keyEarly != null) { const pk = Math.min(P.indexOf(roles.keys[0]), P.indexOf(roles.keys[1])); if ((pk < pre[0] || pk > pre[1]) && no('ch:digBefore')) continue; }
+    const hostNbs = [...drops.keys()].flatMap(h => thawNbs(c, h).flatMap(j => [j, ...c.above[j]]));
+    const mech = new Set([...thawArea, ...hostNbs, ...roles.keys, ...roles.keys.flatMap(k => [...c.above[k]]), ...P, ...specialsT]);
+    const twins = wrong.length ? pickTwins(c, v, rng, wrong, mech, P) : [];
+    if (!twins && no('ch:noTwin')) continue;
+    if (!wrong.length && keyEarly == null && no('ch:noBait')) continue;
+    roles.dig = P;
+    const keep = uniq([ck, ...(g != null ? [g] : []), ...c.above[ck], ...specialsT, ...roles.keys, ...roles.keys.flatMap(k => [...c.above[k]]), ...nbs, ...nbs.flatMap(j => [...c.above[j]]), ...hostNbs, ...twins, ...twins.flatMap(t => [...c.above[t]]), ...wrong,
+      ...(F != null ? [F] : []), ...(keyEarly != null ? [keyEarly] : [])]);
+    const tiles = (keyEarly != null ? [keyEarly] : []).concat(wrong, twins);
+    roles.bait = { type: 'chain', chain: d.sig, def: d, tiles, single: [keyEarly != null ? keyEarly : wrong[0]], pairs: wrong.map((l, i) => [l, twins[i]]), keepUp: keep, keyEarly, wrong: wrong.slice(), twins: twins.slice(),
+      links, frozen: F, special, right: right.slice(), clockCover: g };
+    return roles;
+  }
+  return { fail: 'noChain' };
+}
+
+// the one-sentence "what the player has to see", from the shape
+function chainSee(d, bait) {
+  const p = [];
+  if (d.ck === 'lock') p.push('the clock is locked, so both keys must go first');
+  if (d.ck === 'ice') p.push('the clock is frozen, so two of its neighbours must go first');
+  if (d.cover) p.push(`the tile lying on the clock is ${d.cover === 'ice' ? 'frozen and must be thawed first' : 'locked, so both keys must go first'}`);
+  if (d.nb) p.push(`one of the neighbours that can melt it is ${d.nb === 'lock' ? 'locked (it needs the keys)' : 'frozen itself (it needs its own neighbours)'}`);
+  if (d.keyA === 'cover') p.push('a key lies under a frozen tile, so thaw that tile first');
+  if (d.keyA === 'way') p.push('the way to a key runs past a frozen tile, so thaw that tile first');
+  if (d.keyB === 'cover') p.push('the other key also lies under a frozen tile');
+  const t = [];
+  if (bait.keyEarly != null) t.push('do not take the free key early: it would sit in the tray through the whole dig');
+  if (bait.wrong.length) t.push('do not melt with the free neighbour whose twin is buried: it would wait in the tray');
+  const s = p.join('; ') + (t.length ? ': ' + t.join(', and ') : '');
+  return s.charAt(0).toUpperCase() + s.slice(1) + '.';
+}
+// graph of "needs" links: every special (clock, locks, keys, ice) is in the clock's component
+function chainConnected(design, roles) {
+  const adj = new Map(), add = (a, b) => { (adj.get(a) || adj.set(a, new Set()).get(a)).add(b); (adj.get(b) || adj.set(b, new Set()).get(b)).add(a); };
+  for (const [a, b] of roles.bait.links) add(a, b);
+  const ob = design.obst, sp = [...(ob.locks || []), ...(ob.keys || []), ...Object.keys(ob.ice || {}).map(Number)], seen = new Set([design.clock.i]), st = [design.clock.i];
+  while (st.length) for (const j of adj.get(st.pop()) || []) if (!seen.has(j)) { seen.add(j); st.push(j); }
+  const lost = sp.filter(t => !seen.has(t));
+  return { ok: !lost.length, disconnected: lost };
+}
+// does removing special `t` (a lock tile or an ice tile) matter: the proven clock route gets shorter, or the primary bait turns harmless
+function chainIdle(design, roles, ctx, P, baitsKept) {
+  const { k, spare } = ctx, ob = design.obst, rows = [];
+  const harmless = mod => {
+    const d2 = JSON.parse(JSON.stringify({ ...design, obst: { ...design.obst, ...mod } })); let C2, g2, s2;
+    try { C2 = D.clockGames(d2); g2 = C2.at(d2.clock.n); s2 = E.start(g2); } catch (e) { return false; }
+    const legal = new Set(E.legal(g2, s2).filter(a => typeof a === 'number'));
+    for (const b of baitsKept) {
+      if (!b.tiles.every(i => legal.has(i))) continue;
+      const w2 = D.work(1.5e6), p = priceBait(C2, s2, b.t, k, P.work.nShipMax, w2);
+      if (!p.exact || p.result === 'unknown') return false;
+      if (provenCost(p, spare)) return false;
+    }
+    return true;
+  };
+  for (const t of ob.locks || []) {
+    const locks = ob.locks.filter(x => x !== t), kk = kWith(design, { locks });
+    if (kk == null) return { ok: false, why: 'idleUnproven:lock' + t, rows };
+    const row = { kind: 'lock', tile: t, kWithout: kk, k }; rows.push(row);
+    if (!(kk < k)) { if (harmless({ locks })) row.harmlessBait = true; else return { ok: false, why: 'lockIdle:' + t + ':' + kk + '>=' + k, rows }; }
+  }
+  for (const t of Object.keys(ob.ice || {}).map(Number)) {
+    const ice = { ...ob.ice }; delete ice[t]; const kk = kWith(design, { ice });
+    if (kk == null) return { ok: false, why: 'idleUnproven:ice' + t, rows };
+    const row = { kind: 'ice', tile: t, kWithout: kk, k }; rows.push(row);
+    if (!(kk < k)) { if (harmless({ ice })) row.harmlessBait = true; else return { ok: false, why: 'iceIdle:' + t + ':' + kk + '>=' + k, rows }; }
+  }
+  return { ok: true, rows };
+}
+function proveChain(design, roles, ctx) {
+  const P = baseProof(design, roles, ctx, 'chain'); if (P.why) return P;
+  const { k, spare, c } = ctx, { C, s0, nShipMax, w } = P.work, bait = roles.bait, d = bait.def, sol = design.solution, ci = sol.indexOf(design.clock.i);
+  if (ci + 1 !== k) { P.why = 'storedRouteNotShortest'; return P; }
+  const con = chainConnected(design, roles); if (!con.ok) { P.why = 'notConnected:' + con.disconnected.join(','); return P; }
+  // the stored (right) route uses every lock and ice tile before the clock
+  const specials = [...(design.obst.locks || []), ...Object.keys(design.obst.ice || {}).map(Number)];
+  if (specials.some(t => sol.indexOf(t) < 0 || sol.indexOf(t) > ci)) { P.why = 'routeAvoidsSpecial'; return P; }
+  const list = []; if (bait.keyEarly != null) list.push({ name: 'keyEarly', take: [bait.keyEarly] }); for (const l of bait.wrong) list.push({ name: 'lonelyNeighbour', take: [l] });
+  // price each designated bait (cheap, fails fast); the control (24 more prices) only for boards that have a costly bait and no idle special
+  const cand = [], dropped = [];
+  for (const b of list) {
+    const t = { kind: b.take.length > 1 ? 'pair' : 'single', take: b.take }, price = priceBait(C, s0, t, k, nShipMax, w);
+    if (provenCost(price, spare)) cand.push({ name: b.name, tiles: b.take.slice(), result: price.result, cost: price.cost, exact: price.exact, price, t });
+    else dropped.push({ name: b.name, result: price.result, cost: price.cost, exact: price.exact, why: 'notCostly' });
+  }
+  if (!cand.length) { P.why = 'noProvenBait:' + dropped.map(x => x.name + ':' + x.result + ':' + x.cost).join('|'); return P; }
+  const idle = chainIdle(design, roles, ctx, P, cand); if (!idle.ok) { P.why = idle.why; return P; }
+  const control = controlOf(design, roles, ctx, P); if (control.unknown) { P.why = 'controlUnknown'; return P; }
+  const kept = [];
+  for (const b of cand) { b.value = num(b.price, control.cap); if (b.value > control.value && kept.length < 2) kept.push(b); else dropped.push({ name: b.name, result: b.result, cost: b.cost, exact: b.exact, why: 'notAboveControl' }); }
+  if (!kept.length) { P.why = 'noBaitAboveControl:' + dropped.map(x => x.name + ':' + x.result + ':' + x.cost + ':' + x.why).join('|') + ':ctrl' + control.value; return P; }
+  const b0 = kept[0], fork = b0.result === 'lose' ? fairness(C, s0, b0.t, design, P, ctx) : { fair: null, why: [], skipped: 'bait wins at the loosest spare' };
+  const see = chainSee(d, { keyEarly: kept.some(b => b.name === 'keyEarly') ? bait.keyEarly : null, wrong: kept.filter(b => b.name === 'lonelyNeighbour').map(b => b.tiles[0]) });   // only the baits that are proven
+  // the card's bait is the proven ones only
+  roles.bait.tiles = uniq(kept.flatMap(b => b.name === 'lonelyNeighbour' ? [b.tiles[0], bait.twins[bait.wrong.indexOf(b.tiles[0])]] : b.tiles)); roles.bait.see = see;
+  return finish(design, roles, ctx, P, b0.t, b0.price, { card: { shape: d.sig, trapType: 'chain:' + d.sig, chainLength: d.length, fair: fork.fair, fairWhy: fork.why, baits: kept.map(bt), droppedBaits: dropped, control, idle: idle.rows, links: bait.links.map(l => l.slice()),
+    connected: con.ok, specials: { locks: design.obst.locks.slice(), keys: design.obst.keys.slice(), ice: { ...design.obst.ice } }, uiNote: CHAIN_UI_NOTE }, facts: { fork, control } });
+}
+
 // ---------- the stories ----------
 const STORIES = {
-  keyOnClock: { title: 'Key on the clock', sentence: 'A locked clock; one key lies free on top of it, the other is buried far away. Taking the near key first strands it in the tray.',
+  lockedMelt: { title: 'Locked melt', sentence: 'A frozen clock whose neighbours are locked, plain or lonely: the keys open the lock, the lonely neighbour and the near key are traps.',
+    spec: { keys: 'far', trap: 5 }, place: placeLockedMelt, prove: proveLockedMelt, profile: 'traps-v1' },
+  guardedKey: { title: 'Guarded key', sentence: 'A locked clock; one key lies under a frozen tile that must be thawed first, the other key is free and tempting to take at once.',
+    spec: { keys: 'far', trap: 4 }, place: placeGuardedKey, prove: proveGuardedKey, profile: 'traps-v1' },
+  keyOnClock: { title: 'Key on the clock', sentence: 'A locked clock; one key lies free at it (half on it or on a neighbour), the other is buried far away. Taking the near key first strands it in the tray.',
     spec: { keys: 'far', trap: 1 }, place: placeKeyOnClock, prove: proveKeyOnClock, profile: 'traps-v1' },
   shortThaw: { title: 'The short thaw', sentence: 'A frozen clock: one neighbour is locked, one is cheap, one lies under a free pair. The pair looks like a short melt but costs more than the keys.',
     spec: { keys: 'far', trap: 2 }, place: placeShortThaw, prove: proveShortThaw, profile: 'traps-v1' },
   wrongMelt: { title: 'The wrong melt', sentence: 'A frozen clock with several free neighbours; the one whose twin is buried deep is a trap, the pair that goes together melts it.',
     spec: { trap: 3 }, place: placeWrongMelt, prove: proveWrongMelt, profile: 'traps-v1' },
 };
+STORIES.chain = { title: 'Chain trap', sentence: 'A chain of obstacles in front of the clock (locks, ice, covers): each needs another one to go first.', spec: { keys: 'far', trap: 6 }, place: placeChain, prove: proveChain, profile: 'traps-v1' };
 for (const [k, v] of Object.entries(STORIES)) B.STORIES[k] = v;
 
 // spare 1 by default; when the brief names no spare and no board is honest at spare 1 (A4 needs two winning openings at the shipped
 // spare, and a lethal bait leaves few), the build is retried at spare 2 (the spec's dial 1-2). frame.spare fixes it.
 function build(name, brief = {}, opts = {}) {
   if (!STORIES[name]) return { fail: 'unknownTrapStory', detail: name };
+  if (name === 'chain') {   // the chain shape signature (brief.chain, or brief.shape when it is one); brief.shape would otherwise name the layout shape
+    const sig = brief.chain || (CHAIN[brief.shape] ? brief.shape : null); if (!CHAIN[sig]) return { fail: 'unknownChainShape', detail: sig };
+    const b2 = { ...brief, chain: sig }; if (CHAIN[b2.shape]) delete b2.shape; brief = b2;
+  }
   const VC = require('../builder-next/construct.js'), fixed = brief.frame?.spare != null, spares = fixed ? [brief.frame.spare] : [1, 2];
   let last = null;
   for (const spare of spares) {
-    const r = VC.build({ ...brief, frame: { ...(brief.frame || {}), spare }, targets: { trayRoom: 0, maxDown: 0.2, hiddenOnWay: 0, ...(brief.targets || {}) }, story: name }, { tries: 40, ...opts });
-    if (r.design) return r;
+    const used = { ...brief, frame: { ...(brief.frame || {}), spare }, targets: { trayRoom: 0, maxDown: 0.2, hiddenOnWay: 0, ...(brief.targets || {}) }, story: name };
+    const r = VC.build(used, { tries: 40, ...opts });
+    if (r.design) { r.brief = used; r.card.trapType = name === 'chain' ? 'chain:' + brief.chain : name; return r; }
     last = last ? { ...r, fails: { ...Object.fromEntries(Object.entries(last.fails || {}).map(([k, v]) => ['s' + spares[0] + ':' + k, v])), ...r.fails } } : r;
   }
   return last;
 }
 
-module.exports = { WHY, STORIES, NAMES, build, capOf, vis0Of, thawNbs, digCost };
+// ---------- re-proof and twin separation of a built board ----------
+// the story proof + static gates (traps-v1, A5 met by the story proof) re-run on a design that kept the same tiles and roles (e.g. after bank/separate.js)
+function reprove(name, design, roles, brief, spare, k) {
+  const proof = STORIES[name].prove(design, roles, { c: B.context(design.tiles), brief, spare, k });
+  if (!proof || proof.ok !== true) return { ok: false, why: 'trapProof:' + (proof && proof.why) };
+  const SGm = SG, GP = require('./loop/gate_profile.js'), sg = GP.applyStatic(SGm.staticGates(design, { story: name }), GP.loadProfile('traps-v1'), { storyProof: proof });
+  if (!sg.pass) return { ok: false, why: 'staticGates' };
+  if (!(sg.shipSpares || []).includes(spare)) return { ok: false, why: 'trapSpareNotShippable' };
+  return { ok: true, proof, shipSpares: sg.shipSpares };
+}
+// re-pair pictures so that twins do not lie together (bank/separate.js), keeping the trap: every kept state replays strictly, keeps the clock minimum k,
+// is readable, passes the story proof and the static gates. r = a T.build result. opts: { seed, wallMs, freeze (default: the bait tiles) }
+function separateBoard(name, r, opts = {}) {
+  const SEP = require('./bank/separate.js'), PS = require('../factory/placement_score.js'), k = r.card.clock.fewestMoves, spare = r.card.clock.spare;
+  let last = null;
+  const validate = d => {
+    if (!E.replay(d, d.solution, { strict: true }).ok) return { ok: false, why: 'replay' };
+    const cs = E.clockShortest(E.game(JSON.parse(JSON.stringify(d))), { nodes: 300000, ms: Infinity, finishNodes: 100000, finishMs: Infinity });
+    if (!cs || cs.unsure || cs.k !== k) return { ok: false, why: 'k ' + (cs && cs.k) };
+    let rd = false; try { rd = PS.readable(d); } catch (e) { /* unreadable */ }
+    if (!rd) return { ok: false, why: 'unreadable' };
+    const rp = reprove(name, d, r.roles, r.brief, spare, k); last = rp;
+    return rp.ok ? { ok: true } : { ok: false, why: rp.why };
+  };
+  // stages: first the bait tiles (and every tile with their pictures) stay untouched; if twins remain, the bait pictures may move too (the story proof decides)
+  const wall = opts.wallMs ?? 60000, t0 = Date.now(), stages = [{ freeze: r.roles.bait.tiles }, { freeze: [] }];
+  const before = SEP.closeTwins(r.design); let cur = r.design, edits = [], notes = [], validations = 0, best = null, proposals = 0;
+  for (let i = 0; i < stages.length && Date.now() - t0 < wall; i++) {
+    const left = wall - (Date.now() - t0), out = SEP.separate(cur, { ...opts, seed: (opts.seed || 1) + i, wallMs: Math.max(3000, i === 0 ? left * 0.6 : left), freeze: stages[i].freeze, validate, k });
+    notes.push('stage ' + i + (stages[i].freeze.length ? '' : ' (bait pictures free)') + ': ' + out.before.count + ' -> ' + out.after.count + ' close, ' + out.edits.length + ' swaps'); validations += out.validations; proposals += out.proposals; notes.push(...out.notes.map(x => '   ' + x));
+    if (out.validated && out.edits.length) { cur = out.design; edits = edits.concat(out.edits); }
+    best = SEP.closeTwins(cur); if (best.meets) break;
+  }
+  const rp = reprove(name, cur, r.roles, r.brief, spare, k);
+  return { design: cur, before, after: best || before, edits, validated: rp.ok, notes, validations, proposals, remaining: (best || before).count, ms: Date.now() - t0, proof: rp.ok ? rp.proof : null, proofOk: rp.ok, proofWhy: rp.why || null };
+}
+
+module.exports = { WHY, STORIES, NAMES, RETIRED, CHAIN, CHAIN_DEFS, CHAIN_SHAPES, CHAIN_UI_NOTE, build, reprove, separateBoard, shownFacts, capOf, vis0Of, thawNbs, digCost };
