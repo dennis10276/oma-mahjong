@@ -72,6 +72,10 @@ function czObKind(s, ob, inb, i) {
   if (!ob) return '';
   const ice = czIceLeft(s, ob, inb, i);
   if (ice) return ice > 1 ? 'ice2' : 'ice';
+  return czObMarker(s, ob, i);
+}
+function czObMarker(s, ob, i) {
+  if (!ob) return '';
   if (czLocked(s, ob, i)) return 'lock';
   if (!ob.unlocked && ob.keys.includes(i) && ob.keys.some(k => s.a[k])) return 'key';
   return '';
@@ -184,9 +188,7 @@ function coachPlay(demo, clip) {
     if (!el) return;
     el.classList.toggle('blocked', !!s.a[i] && !isFree(i));
     if (!ob) return;
-    const k = czObKind(s, ob, inb, i), o = el.querySelector('.ob');
-    if (k && !o) el.insertAdjacentHTML('beforeend', `<div class="ob" data-k="${k}"></div>`);
-    else if (o && !k) o.remove(); else if (o) o.dataset.k = k;
+    paintOb(el, czObKind(s, ob, inb, i), czObMarker(s, ob, i));
   });
   const paintTray = (bad = -1) => slots.forEach((sl, k) => { sl.innerHTML = k < s.tray.length ? `<div class="tmini${k === bad ? ' cz-bad' : ''}">${Tiles.boardFace(S.theme, s.tray[k])}</div>` : ''; });
   const placeMark = (i, cls) => {

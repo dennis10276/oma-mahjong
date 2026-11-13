@@ -121,9 +121,24 @@ const obRules = () => G.ob ? { iceNb: G.inb, ice: G.ob.left, locks: G.ob.unlocke
 function obKind(i) {
   if (!G.ob) return '';
   if (frozen(i)) return G.ob.left[i] > 1 ? 'ice2' : 'ice';
+  return obMarker(i);
+}
+// The key/lock role is still visible while frozen; obKind keeps its ice-first meaning.
+function obMarker(i) {
   if (lockedT(i)) return 'lock';
-  if (!G.ob.unlocked && G.ob.keys.includes(i)) return 'key';
+  if (G.ob && !G.ob.unlocked && G.ob.keys.includes(i)) return 'key';
   return '';
+}
+const obHTML = (kind, marker = '') => kind ? `<div class="ob" data-k="${kind}"${kind.startsWith('ice') && marker ? ` data-marker="${marker}"` : ''}></div>` : '';
+function paintOb(el, kind, marker) {
+  const ov = el.querySelector('.ob');
+  if (!kind) { if (ov) ov.remove(); }
+  else if (!ov) el.insertAdjacentHTML('beforeend', obHTML(kind, marker));
+  else {
+    ov.dataset.k = kind;
+    if (kind.startsWith('ice') && marker) ov.dataset.marker = marker;
+    else delete ov.dataset.marker;
+  }
 }
 function crackFx(i) {
   const el = G.tiles[i].el; if (!el) return;
@@ -168,7 +183,7 @@ function obBlocked(i) {
   Sound.blocked(); buzz(30);
   const ice = frozen(i);
   toast(ice ? tx(G.ob.left[i] > 1 ? 'iceThick' : 'iceThin') : tx('lockedTap'), 2600);
-  if (ice) G.inb[i].filter(j => G.alive[j] && canTake(j)).forEach(j => replay(G.tiles[j].el, 'obhint', 1300));
+  if (ice) G.inb[i].filter(j => G.alive[j]).forEach(j => replay(G.tiles[j].el, 'obhint', 1300));
   else showKeys();
 }
 // the key tiles wiggle: they open the locks (also when the tapped locked tile is still covered;
