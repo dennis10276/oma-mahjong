@@ -6,7 +6,7 @@
 const { spawn } = require('child_process');
 const a = process.argv.slice(2), cut = a.indexOf('--');
 const opt = (n, d) => { const i = a.indexOf('--' + n); return i < 0 || i > cut ? d : a[i + 1]; };
-const workers = Math.min(8, +opt('workers', 8)), seed0 = +opt('seed0', 100), rest = a.slice(cut + 1);
+const workers = Math.min(12, +opt('workers', 8)), seed0 = +opt('seed0', 100), rest = a.slice(cut + 1);
 let left = workers, bad = 0;
 for (let i = 0; i < workers; i++) {
   const p = spawn(process.execPath, [...rest, '--seed', String(seed0 + i), '--shard', `${i}/${workers}`], { stdio: ['ignore', 'pipe', 'pipe'] });

@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 // Run a CPU-heavy command inside the PC's shared core budget.
 //   node source/tools/builder/loop/heavy.js [--label name] [--cores N] -- <command> [args...]
-// Dennis, 2026-11-13: "8 cores can run at once" (the PC has 20 logical cores). So this is no longer a one-job lock:
+// Dennis, 2026-11-13: "8 cores can run at once", then "OMA_CORES 12 and max 80%" (the PC has 20 logical cores). So this is no longer a one-job lock:
 // every heavy job reserves the cores it will use (--cores, default 1; a par.js job reserves its --workers) and
-// starts as soon as reserved + sampled use fits in the budget (8, or env OMA_CORES). Several jobs of different
+// starts as soon as reserved + sampled use fits in the budget (12 cores, or env OMA_CORES) and the job would not
+// push the PC's total CPU load above 80% (env OMA_MAX_LOAD). Several jobs of different
 // agents can run side by side, e.g. an 8-worker run alone, or a 4-worker run next to four single-core jobs.
 // 1. Reservations are files in a folder shared by every worktree: <OmasMahjong>/.heavy-slots/<pid>.json.
 //    A reservation whose process is gone is dropped.
@@ -19,7 +20,8 @@ const HERE = path.resolve(__dirname, '..', '..', '..', '..');
 const ROOT = path.dirname(HERE);
 const SLOTS = path.join(ROOT, '.heavy-slots');
 const MUTEX = path.join(SLOTS, '.mutex');
-const BUDGET = Math.max(1, +process.env.OMA_CORES || 8);
+const BUDGET = Math.max(1, +process.env.OMA_CORES || 12);        // Dennis 2026-11-13: 12 cores
+const MAX_LOAD = Math.max(1, +process.env.OMA_MAX_LOAD || 80);   // and never push the whole PC above 80% CPU
 
 function alive(pid) { try { process.kill(pid, 0); return true; } catch (e) { return e.code === 'EPERM'; } }
 function sleep(ms) { Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms); }
@@ -55,11 +57,11 @@ function withMutex(fn) {
 // cores used by node/python processes that are not part of a reserved job (3 s sample)
 function unreservedCores(resv) {
   let s;
-  try { s = require('./busy.js').sampleProcesses(); } catch (e) { return 0; }
+  try { s = require('./busy.js').sampleProcesses(); } catch (e) { return { stray: 0, load: 0 }; }
   const procs = s.procs || [], byPid = new Map(procs.map(p => [p.pid, p]));
   const reserved = new Set(resv.map(r => r.pid));
   const inReservedJob = p => { for (let q = p, n = 0; q && n < 12; q = byPid.get(q.ppid), n++) if (reserved.has(q.pid)) return true; return false; };
-  return procs.filter(p => p.pid !== process.pid && !inReservedJob(p)).reduce((t, p) => t + (p.cores || 0), 0);
+  return { stray: procs.filter(p => p.pid !== process.pid && !inReservedJob(p)).reduce((t, p) => t + (p.cores || 0), 0), load: +s.load || 0 };
 }
 
 function main() {
@@ -81,8 +83,12 @@ function main() {
     const state = withMutex(() => {
       const resv = reservations(), used = resv.reduce((t, r) => t + r.cores, 0);
       if (used + cores > BUDGET) return { ok: false, why: `${used} of ${BUDGET} cores reserved (${resv.map(r => r.label + ':' + r.cores).join(', ')})` };
-      const stray = unreservedCores(resv);
+      const { stray, load } = unreservedCores(resv);
       if (used + stray + cores > BUDGET + 0.5) return { ok: false, why: `${used} reserved + ${stray.toFixed(1)} used by unreserved node/python jobs` };
+      // the load this job adds, as a share of all logical cores, must keep the PC at or under MAX_LOAD
+      const add = 100 * cores / require('os').cpus().length;
+      if (load + add > MAX_LOAD + 0.5 && load > 100 * (used + stray) / require('os').cpus().length + 10) return { ok: false, why: `CPU load ${load}% (limit ${MAX_LOAD}%)` };
+      if (100 * (used + stray + cores) / require('os').cpus().length > MAX_LOAD + 0.5) return { ok: false, why: `would exceed ${MAX_LOAD}% CPU` };
       fs.writeFileSync(mine, JSON.stringify({ pid: process.pid, cores, label, since: new Date().toISOString(), worktree: path.basename(HERE) }));
       return { ok: true };
     });
@@ -98,4 +104,4 @@ function main() {
 }
 
 if (require.main === module) main();
-module.exports = { reservations, BUDGET, SLOTS };
+module.exports = { reservations, BUDGET, MAX_LOAD, SLOTS };

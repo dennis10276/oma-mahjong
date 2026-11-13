@@ -144,9 +144,9 @@ add new decisions with a date.
   - main is exactly what is live;
   - agents never write to Firebase plays/, scores/ or replays/; reading player data for analysis is fine;
   - the Firebase secret and the APK keystore never go into code;
-  - CPU: 8 cores can run at once on Dennis's PC (2026-11-13; it supersedes "one CPU-heavy job at a time"). Heavy jobs
-    reserve their cores through `source/tools/builder/loop/heavy.js --cores N`; several jobs may run side by side
-    as long as the total stays within 8.
+  - CPU: up to 12 cores and at most 80% CPU load on Dennis's PC (2026-11-13; it supersedes "one CPU-heavy job at a
+    time"). Heavy jobs reserve their cores through `source/tools/builder/loop/heavy.js --cores N`; several jobs may
+    run side by side as long as the total fits.
 - **Who does what:** the lead (now a Claude Code workflow on Dennis's PC, 2026-11-07) oversees Codex
   (`codex-tasks/`) and Gemini (`gemini-tasks/`), reviews and merges their work, and makes the final level changes.
   Codex may fix anything it finds (2026-11-07).
