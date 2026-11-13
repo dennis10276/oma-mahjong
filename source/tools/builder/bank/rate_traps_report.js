@@ -20,6 +20,7 @@ const rows = cards.map(j => {
   assert.deepEqual(j.design, read(path.join(OUT, 'inputs', j.input.file)).original.design);
   assert.equal(c.protocol, 'extended-40-v1');
   assert.equal(m.sFull.ok, true); assert.equal(m.dFull.ok, true); assert.equal(m.trace.valid, true);
+  assert.equal(m.bait?.parityWithFullMeasure, true, 'bait capture parity: ' + j.input.file);
   assert.equal(m.sFull.n, 80); assert.equal(m.dFull.n, 160); assert.equal(m.trace.campaigns, 80);
   assert.deepEqual(m.sFull.calls, SEEDS.S_FULL.map(seed => ({ runs: 40, seed })));
   assert.deepEqual(m.dFull.calls, SEEDS.D_FULL.map(seed => ({ runs: 40, seed })));
