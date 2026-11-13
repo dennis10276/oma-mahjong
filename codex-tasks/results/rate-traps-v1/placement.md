@@ -134,4 +134,3 @@ Unchecked (cross plan edge): 246..250 (crosses start); 286..290 (crosses end); 2
 72-88 tiles: D4: supply 1 / demand 0; D6: supply 0 / demand 13; D7: supply 0 / demand 14; D8: supply 0 / demand 9; D15: supply 1 / demand 0; D35: supply 2 / demand 0; D36: supply 1 / demand 0; D39: supply 6 / demand 0; D40: supply 4 / demand 0
 
 96 tiles: D6: supply 0 / demand 2; D7: supply 0 / demand 1; D8: supply 0 / demand 1
-
