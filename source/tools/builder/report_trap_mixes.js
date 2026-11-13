@@ -8,35 +8,85 @@ const read=f=>JSON.parse(fs.readFileSync(f,'utf8'));
 const esc=x=>String(x).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('"','&quot;');
 function svg(r){
   const d=r.design,T=d.tiles.map(t=>({x:t[0],y:t[1],z:t[2]})),scale=20;
-  const xs=T.map(t=>t.x+.12*t.z),ys=T.map(t=>t.y-.25*t.z),x0=Math.min(...xs)-2,y0=Math.min(...ys)-2;
-  const w=(Math.max(...xs)-x0+4)*scale,h=(Math.max(...ys)-y0+4)*scale;
+  const xs=T.map(t=>t.x-.28*t.z),ys=T.map(t=>t.y*1.24-.28*t.z),x0=Math.min(...xs)-2,y0=Math.min(...ys)-2;
+  const boardW=(Math.max(...xs)-x0+4)*scale,w=Math.max(440,boardW),h=(Math.max(...ys)-y0+4)*scale;
   const bait=new Set(r.card.trap.baits.flatMap(p=>p.tiles)),down=new Set(d.down),keys=new Set(d.obst.keys),locks=new Set(d.obst.locks);
-  const parts=[`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h+115}" viewBox="0 0 ${w} ${h+115}">`,
+  const parts=[`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h+130}" viewBox="0 0 ${w} ${h+130}">`,
     '<rect width="100%" height="100%" fill="#162e35"/>',
     `<text x="12" y="22" fill="white" font-family="sans-serif" font-size="16">${esc(r.card.trap.type)} · layout ${r.card.layout}</text>`,
-    '<text x="12" y="42" fill="#a9c7d0" font-family="sans-serif" font-size="11">Schematic: numbers are pictures; small labels are tile ids. Orange rim = proven bait.</text>'];
+    '<text x="12" y="42" fill="#a9c7d0" font-family="sans-serif" font-size="11">Schematic: picture numbers and small tile ids.</text>',
+    '<text x="12" y="57" fill="#a9c7d0" font-family="sans-serif" font-size="11">Orange rim = proven bait.</text>'];
   for(const i of T.map((_,i)=>i).sort((a,b)=>T[a].z-T[b].z||T[a].y-T[b].y)){
-    const x=(xs[i]-x0)*scale,y=(ys[i]-y0)*scale+55,ice=d.obst.ice[i]||0;
+    const x=(xs[i]-x0)*scale+(w-boardW)/2,y=(ys[i]-y0)*scale+70,ice=d.obst.ice[i]||0;
     const fill=ice?'#bcecff':down.has(i)?'#647787':`hsl(${d.faces[i]*137.5%360} 52% 86%)`;
-    parts.push(`<g><rect x="${x}" y="${y}" width="37" height="37" rx="5" fill="${fill}" stroke="${bait.has(i)?'#ff9b42':'#34525a'}" stroke-width="${bait.has(i)?3:1}"/>`,
-      `<text x="${x+18.5}" y="${y+23}" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#152f38">${down.has(i)?'?':d.faces[i]+1}</text>`,
-      `<text x="${x+3}" y="${y+9}" font-family="sans-serif" font-size="7" fill="#203c46">${i}</text>`);
-    const label=[i===d.clock.i?'C'+d.clock.n:'',keys.has(i)?'K':'',locks.has(i)?'L':'',ice?'I'+ice:''].filter(Boolean).join(' ');
-    if(label)parts.push(`<rect x="${x+1}" y="${y+27}" width="35" height="10" rx="2" fill="#183942"/><text x="${x+18.5}" y="${y+35}" text-anchor="middle" font-family="sans-serif" font-size="8" fill="white">${label}</text>`);
+    parts.push(`<g><rect x="${x}" y="${y}" width="37" height="47" rx="5" fill="${fill}" stroke="${bait.has(i)?'#ff9b42':'#34525a'}" stroke-width="${bait.has(i)?3:1}"/>`,
+      `<text x="${x+18.5}" y="${y+29}" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#152f38">${down.has(i)?'?':d.faces[i]+1}</text>`,
+      `<text x="${x+(keys.has(i)||(ice&&locks.has(i))?27:3)}" y="${y+9}" font-family="sans-serif" font-size="7" fill="#203c46">${i}</text>`);
+    const marker=keys.has(i)?'K':ice&&locks.has(i)?'L':'';
+    if(marker)parts.push(`<rect x="${x+1}" y="${y+1}" width="12" height="11" rx="2" fill="#183942"/><text x="${x+7}" y="${y+9}" text-anchor="middle" font-family="sans-serif" font-size="8" fill="white">${marker}</text>`);
+    const label=[!ice&&locks.has(i)?'L':'',ice?'I'+ice:''].filter(Boolean).join(' ');
+    if(label)parts.push(`<rect x="${x+1}" y="${y+37}" width="35" height="10" rx="2" fill="#183942"/><text x="${x+18.5}" y="${y+45}" text-anchor="middle" font-family="sans-serif" font-size="8" fill="white">${label}</text>`);
     parts.push('</g>');
   }
-  parts.push(`<text x="12" y="${h+76}" fill="white" font-family="sans-serif" font-size="11">C = clock · K = key · L = lock · I2 = two-neighbour ice</text>`,
-    `<text x="12" y="${h+94}" fill="#a9c7d0" font-family="sans-serif" font-size="11">k=${r.card.clock.fewestMoves}, spare=${r.card.clock.spare} · winning starts ${r.card.trap.firstMoves.winning} · tail ${r.card.tail.tailGreedyWin}</text></svg>`);
+  const ci=d.clock.i,cx=(xs[ci]-x0)*scale+(w-boardW)/2,cy=(ys[ci]-y0)*scale+70,bx=Math.max(8,Math.min(w-86,cx-4)),by=Math.max(73,cy-19);
+  parts.push(`<rect x="${bx}" y="${by}" width="80" height="19" rx="8" fill="#ffb46d" stroke="#e58331"/><text x="${bx+40}" y="${by+13}" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="11" fill="#3c2a20">C${d.clock.n} · #${ci}</text>`);
+  parts.push(`<text x="12" y="${h+91}" fill="white" font-family="sans-serif" font-size="11">C = clock · K = key · L = lock · I2 = two-neighbour ice</text>`,
+    `<text x="12" y="${h+109}" fill="#a9c7d0" font-family="sans-serif" font-size="11">k=${r.card.clock.fewestMoves}, spare=${r.card.clock.spare} · winning starts ${r.card.trap.firstMoves.winning} · tail ${r.card.tail.tailGreedyWin}</text></svg>`);
   return parts.join('\n');
+}
+function cardMarkdown(r,file){
+  const c=r.card,t=c.trap,price=p=>p.result==='lose'?`loss through clock ${t.priceHorizon}`:`+${p.cost} clock moves`;
+  const facts=[['Tiles / layout',`${c.tiles} / ${c.layout} (${c.shape})`],['Clock',`tile ${r.design.clock.i}: ${c.clock.fewestMoves} shortest + ${c.clock.spare} spare = ${r.design.clock.n}`],['Winning first moves',`${t.firstMoves.winning} proven; ${t.firstMoves.unknown} unresolved out of ${t.firstMoves.legal}`],['Dearest unrelated temptation',t.control.dearest?`${t.control.dearest.tiles.join('+')}: ${price(t.control.dearest)}`:'No candidates outside the mechanism'],['Tray on stored clock route',`peak ${c.pressure.peak}, run at 2+ = ${c.pressure.run2}, visits to 3 = ${c.pressure.at3}`],['All-route tray bound',c.pressureFacts.needsWaitingProven?`At least ${c.pressureFacts.needsWaiting} waiting; ${JSON.stringify(c.pressureFacts.capProof)}`:`Unresolved: ${JSON.stringify(c.pressureFacts.capProof)}`],['Tail greedy win',`${c.tail.tailGreedyWin}, ${c.tail.wins}/${c.tail.playouts}, seed ${c.tail.seed}`],['Face down',`${(c.faceDownShare*100).toFixed(1)}%`],['Close twins',`${c.twins.visible} visible, ${c.twins.four} within four-copy pictures, ${c.twins.close} overall`],['UI dependency',t.needsUi||'none']];
+  return [`# ${t.type} · layout ${c.layout}`,'',t.see,'',`![Board schematic](${file.replace('.json','.svg')})`,'','| Fact | Value |','|---|---|',...facts.map(([a,b])=>`| ${a} | ${b} |`),'','## Proven bait','',...t.baits.map(p=>`- Tiles ${p.tiles.join('+')}: ${price(p)}; ${p.aboveControl?'dearer than':'no dearer than'} the unrelated control.`),'','## Each special matters','',...t.effects.map(e=>`- ${e.kind} ${e.tile}: ${e.by}; ${JSON.stringify(e)}`),'',`Easier: ${t.dials.easier}. Harder: ${t.dials.harder}.`,'',`[Board, strict solution and complete proof card](${file})`,'','The tray trace describes the stored route. The capacity proof, when resolved, covers all game routes. Tail greedy win is the specified fixed-seed diagnostic, not a human rating.'].join('\n')+'\n';
+}
+function writeReport(examples,families){
+  const auditFile=path.join(OUT,'audit-final.json'),selectionFile=path.join(OUT,'selection.json');
+  const audit=fs.existsSync(auditFile)?read(auditFile):null,selection=fs.existsSync(selectionFile)?read(selectionFile):null;
+  const delivered=families.filter(f=>f.status==='delivered'),ready=examples.length===30&&delivered.length>=12&&audit?.ok&&audit.completed===30&&selection?.unitTests?.ok;
+  const link='../../../source/analysis/builder/bank/variety-v1/';
+  const lines=['# TASK 14 — trap variety','',ready?'**Complete: 30 independently verified boards across 12 new mixed-trap families.**':`**In progress: ${examples.length} finished boards; ${delivered.length} families have at least two. The requested thirty-board delivery is not complete.**`,'',
+    'Branch: `wip/codex-trap-variety`, based on local `wip/cc-builder-loop` at `a9c67e90`. Only new builder helpers, analysis artifacts and this results folder are changed. No game levels, published files, main, Firebase, or game mechanics were changed. No family/skilled ratings were run.','',
+    'Task 13 was already completed separately on `wip/codex-ui-markers` (`1244e794`); its report and screenshots are in that branch. Frozen-key and frozen-lock cards retain `needsUi: TASK-13` because the display change must accompany any later game integration. It is not cherry-picked here, in accordance with this task’s file ownership rule.','',
+    '## Delivered families','',
+    '| Family | What the player has to see | Recipe | Current observed sweep hosts | Raw builds / jobs | Example layouts |','|---|---|---|---|---:|---|'];
+  for(const f of delivered)lines.push(`| ${f.name} | ${f.see} | ${f.recipe} | ${f.hosts.join(', ')} | ${f.built}/${f.jobs} | ${examples.filter(e=>e.r.brief.story===f.name).map(e=>e.r.card.layout).join(', ')} |`);
+  lines.push('','Every family has its own `place()` and `prove()`, unique `mix:<name>` ledger type, see sentence and easier/harder dials. The common easier dial is spare 2; harder is spare 1, additional wrong neighbours where supported, and tail weave width 3. These are construction dials, not guarantees that every setting yields a board.','',
+    'A raw build proves the route, bait, openings and special effects. It is not a finished example: separation and tail tuning can still reject it. Host sets are observed lower bounds from the bounded full-catalogue sweeps; a failure is not a proof that a layout cannot host a family. Each sweep JSON records its seed, spare, attempts, hard wall and failures. Final examples can demonstrate additional hosts.','',
+    '## Thirty examples and their cards','',
+    `See [the example table](${link}examples/CARDS.md), [selection order](${link}selection.json), [family metadata](${link}families.json) and [independent audit](${link}audit-final.json). Each individual Markdown card includes the see sentence, bait prices, dearest unrelated price, winning openings, tray facts, tail measure, face-down share and a labelled schematic. The JSON beside it contains the complete board and strict winning solution.`, '',
+    '| Example card | Family | Layout | Tiles | k + spare | Winning starts | Tail greedy win | Face down |','|---|---|---:|---:|---|---:|---:|---:|');
+  const ordered=selection?.ok?selection.order.map(file=>examples.find(e=>e.file===file)).filter(Boolean):examples;
+  for(const {file,r}of ordered){const c=r.card;lines.push(`| [${file.replace('.json','')}](${link}examples/${file.replace('.json','.md')}) | ${c.trap.type} | ${c.layout} | ${c.tiles} | ${c.clock.fewestMoves} + ${c.clock.spare} | ${c.trap.firstMoves.unknown?'≥':''}${c.trap.firstMoves.winning} | ${c.tail.tailGreedyWin} | ${(c.faceDownShare*100).toFixed(1)}% |`);}
+  const two=examples.filter(e=>e.r.card.trap.firstMoves.winning===2);
+  lines.push('',`Two-opening exceptions: ${two.length}/${examples.length}. They have two proven alternatives and are not single-opening needles; selection prefers three or more as requested. All unresolved opening classifications are explicit and never counted as wins.`, '',
+    '## Proof and independent check','',
+    '- Strict replay uses both `Hard.validSolution` from the game and the builder engine. The stored clock move is k; the independent checker proves the board lost at deadline k−1, including the real peek-pair rules, and checks the strict witness at k. The actual clock is exactly k + spare, at most 19.','- Every ice/lock/key/clock role is face-up with its overlay visible at move zero. Face down is at most 30%. Keys remain a real matching pair. Pictures occur twice or four times.','- Each authored bait is priced against deadlines through min(k+3,19). “Loss” on a card means lost throughout that horizon; it is not silently claimed to be an irreversible loss. Free-clock baits are tested after the clock is taken, so their loss is a genuine completion failure.','- The control is the complete, uncapped set of `detour.temptingMoves` face-up pairs and single-twin candidates outside the mechanism (roles, thaw neighbours and covers). It is not a claim about every arbitrary blind single. Cards explicitly say when a bait is no dearer than that control.','- Each lock and ice has its own ablation: a shorter exact clock route, a bait rescued at the shipped deadline, an exact post-clock losing fork rescued, or a tail greedy gain of at least 0.10. Key participation follows the actual two-key unlock rule and their matching picture; no invalid one-key counterfactual is used.','- A post-clock obstacle is not excused by the old clock-only idle gate: it must pass the tail effect proof. Tail forks include the exact stored prefix and bait. Statistical tail effects store the seed, runs and both measured values.','- Twins use `bank/separate.js`: zero close visible twins, zero close copies within a four-copy group, at most 5% close pairs overall. The tail is tuned with `bank/tail.js` to 0.15–0.40 and reported at seed 977 with 800 playouts.','- `verify_trap_mixes.js` does not import either story module and never calls a story proof, `clockShortest`, or `D.priceMove`. Fresh workers replay and independently re-price every delivered board, check every factual claim and replay the ledger order against the stored 18-entry history. Failed examples are deleted by the audit and recorded with their reasons.','',
+    '## What failed and what is weak','',
+    'The first pilot accidentally fixed the locked-melt clock at depth 2 while the existing placement expects an uncovered clock by default. That adapter restriction was removed. Fixed key/bait twins that are physically close cannot be repaired by changing unrelated pictures, so these placements are now rejected before tuning. Separation may also shorten k or defuse the bait; those proposals are rejected. A frozen obstacle that thaws for free is rejected as idle. Budget exhaustion remains unknown, never loss.','',
+    'The all-four-copies-free post-clock idea is weak: after choosing two copies the other two remain free and can be cleared immediately. The delivered repeated-key recipes instead use an ordinary lookalike and a still-gated actual key; choosing the wrong matching pair has an explicit engine price.','',
+    'My strongest ideas are the free-clock families (the goal tile is itself the wrong first move), the repeated frozen-key choice (matching pictures are not interchangeable roles), and a second-act keyed gate that still matters after the clock. The roof-key variants are weaker for variety: they extend a familiar key-first lesson and should be used sparingly. These are design judgments, not human playtest results.','',
+    '| Experimental recipe outside the selected delivery | Bounded raw yield | Outcome |','|---|---:|---|');
+  for(const f of families.filter(f=>f.status!=='delivered'))lines.push(`| ${f.name} | ${f.built}/${f.jobs} | ${f.built?'Prototype only; not counted among the twelve delivered families':'No proved host in the recorded bounded sweep; not claimed impossible'} |`);
+  const pipe=path.join(OUT,'pipeline-run.json');if(fs.existsSync(pipe)){const fails={};for(const r of read(pipe).rows||[])if(!r.ok)fails[r.fail]=(fails[r.fail]||0)+1;lines.push('',`Pipeline rejection totals: \`${JSON.stringify(fails)}\`. See [pipeline records](${link}pipeline-run.json) and [development pilot](${link}finish-pilot.json) for details.`);}
+  lines.push('','## Other existing specials','',
+    '`specials.js` supports gold tiles and joker face 101. Gold changes score and celebration, not matching, takeability or the clock route, so it cannot support an engine route trap on its own. Jokers can remove a waiting picture together with its partner elsewhere on the board; the current design engine does not model that wildcard action. No joker trap is claimed, and no new mechanic was added. Repeated key pictures use the existing tile-index unlock rule.','',
+    '## Integration and changes needed in Claude’s files','',
+    'No edits were made to `trap_stories.js`, `bank/*` or `builder-next/construct.js`. This companion builder reuses their placement hooks, exported picture/down planners, geometry, separation, tail tuner and ledger. Use `trap_mixes.build()` / the pipeline for these recipes. It does not claim that the unchanged `traps-v1` static gate profile passed: that profile rejects frozen role combinations and post-clock specials. All claims above have their own explicit checks.','',
+    'For integration into the shared constructor, add a scoped way for a proved post-clock effect to satisfy the clock-only idle rule, and update combined-marker visibility once Task 13 is merged. The shared ledger should also include labs 4 and 5: this branch stores their actual played board signatures separately instead of editing Claude’s ledger. Before placement at 290+, the lead must include the final 250–289 batch and its last twelve layouts in the ledger. No placement or release is performed here.','',
+    '## Reproduce and limits','',
+    'All heavy runs use `loop/heavy.js`, four reserved cores per job. At most two of this task’s four-core jobs overlapped; the shared 12-core budget was respected. Worker termination provides an outer wall even for reused helper calls: bounded builds, 65-second combined generation jobs, and 90-second finishing/audit jobs. The pipeline’s 30-minute limit is for collection; the final bounded host sweep and audit follow under the same reservation.','',
+    '```powershell','node source/tools/builder/loop/heavy.js --label trap-variety --cores 4 -- node source/tools/builder/pipeline_trap_mixes.js --workers 4 --minutes 30 --history-checkout ../cc-builder-loop','node source/tools/builder/loop/heavy.js --label trap-variety-audit --cores 4 -- node source/tools/builder/run_trap_mixes.js --mode verify --workers 4 --wall-ms 90000 --tag audit-rerun',"$env:TRAP_MIXES_DELIVERABLES='1'",'node --test source/tools/builder/test_trap_mixes.js','```','',
+    `Final tests: ${selection?.unitTests?.ok?selection.unitTests.tests+'/'+selection.unitTests.tests+' passed':'pending final delivery checks'}; [test log](tests-final.log). Independent final audit: ${audit?.completed||0}/30 completed, ${audit?.rows?.filter(r=>r.ok).length||0} passed. Solvability is an engine proof. The tail measure and my fun judgments are not guarantees about a particular human’s difficulty.`);
+  fs.writeFileSync(path.join(REPORT,'REPORT.md'),lines.join('\n')+'\n');
 }
 function catalogue(){
   const dir=path.join(OUT,'examples');fs.mkdirSync(dir,{recursive:true});fs.mkdirSync(REPORT,{recursive:true});
   const examples=fs.readdirSync(dir).filter(f=>f.endsWith('.json')).map(file=>({file,r:read(path.join(dir,file))}));
-  for(const {file,r}of examples)fs.writeFileSync(path.join(dir,file.replace('.json','.svg')),svg(r)+'\n');
-  const sweeps=fs.readdirSync(OUT).filter(f=>/^sweep.*\.json$/.test(f)).flatMap(f=>(read(path.join(OUT,f)).rows||[]).map(row=>({...row,sweep:f})));
+  for(const {file,r}of examples){fs.writeFileSync(path.join(dir,file.replace('.json','.svg')),svg(r)+'\n');fs.writeFileSync(path.join(dir,file.replace('.json','.md')),cardMarkdown(r,file));}
+  const sweeps=fs.readdirSync(OUT).filter(f=>/^sweep-final-.*\.json$/.test(f)).flatMap(f=>(read(path.join(OUT,f)).rows||[]).map(row=>({...row,sweep:f})));
   const families=Object.values(M.FAMILIES).map(f=>{
     const rows=sweeps.filter(r=>r.name===f.name),ok=rows.filter(r=>r.ok),ex=examples.filter(e=>e.r.brief.story===f.name);
-    return {...f,testedLayouts:[...new Set(rows.map(r=>r.layout))].sort((a,b)=>a-b),hosts:[...new Set(ok.map(r=>r.layout))].sort((a,b)=>a-b),jobs:rows.length,built:ok.length,examples:ex.map(e=>e.file)};
+    return {...f,status:ex.length>=2?'delivered':'experimental',testedLayouts:[...new Set(rows.map(r=>r.layout))].sort((a,b)=>a-b),hosts:[...new Set(ok.map(r=>r.layout))].sort((a,b)=>a-b),jobs:rows.length,built:ok.length,examples:ex.map(e=>e.file)};
   });
   fs.writeFileSync(path.join(OUT,'families.json'),JSON.stringify(families,null,2)+'\n');
   const lines=['# Trap variety example cards','', '| Board | Family | Layout | Tiles | k + spare | Bait price(s) | Dearest unrelated | Winning starts | Tail | Face down |','|---|---|---:|---:|---|---|---|---:|---:|---:|'];
@@ -45,7 +95,8 @@ function catalogue(){
   }
   lines.push('','Each JSON contains the full board, strict winning route, independent verification, special ablations, tray pressure facts, see sentence, and tuning notes. SVGs are schematic review cards, not screenshots of changed game levels.');
   fs.writeFileSync(path.join(dir,'CARDS.md'),lines.join('\n')+'\n');
+  writeReport(examples,families);
   console.log(JSON.stringify({examples:examples.length,familiesWithTwo:families.filter(f=>f.examples.length>=2).length,families:families.map(f=>({name:f.name,built:f.built,hosts:f.hosts,examples:f.examples.length}))},null,2));
 }
 if(require.main===module)catalogue();
-module.exports={svg,catalogue};
+module.exports={svg,cardMarkdown,catalogue,writeReport};

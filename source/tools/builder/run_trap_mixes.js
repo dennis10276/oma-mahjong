@@ -10,8 +10,11 @@ if(!isMainThread){
     const {name,layout,seed,wallMs,tries,mode,file,spare}=workerData;
     let r;
     if(mode==='finish') r=M.finishExample(JSON.parse(fs.readFileSync(file,'utf8')),{seed});
-    else if(mode==='verify') r={verification:require('./verify_trap_mixes.js').verify(JSON.parse(fs.readFileSync(file,'utf8')))};
-    else r=M.build(name,{layout,seed,frame:{spare:spare??1}},{wallMs:wallMs-500,tries,onAttempt:progress=>parentPort.postMessage({progress})});
+    else if(mode==='verify') r={verification:require('./verify_trap_mixes.js').verify(JSON.parse(fs.readFileSync(file,'utf8')),{previous:workerData.previous})};
+    else {
+      r=M.build(name,{layout,seed,frame:{spare:spare??1}},{wallMs:mode==='make'?8000:wallMs-500,tries,onAttempt:progress=>parentPort.postMessage({progress})});
+      if(mode==='make'&&r.design)r=M.finishExample(r,{seed});
+    }
     if(r.design){r.roles.locks=[...r.roles.locks];r.roles.holderSpecials=[...r.roles.holderSpecials];}
     parentPort.postMessage(r);
   } catch(e){parentPort.postMessage({fail:'exception',detail:e.stack});}
@@ -29,11 +32,18 @@ async function main(){
   const names=opt('families',Object.keys(M.FAMILIES).join(',')).split(','),layouts=opt('layouts',[...Array(48).keys()].join(',')).split(',').map(Number);
   const mode=opt('mode','build'),wallMs=+opt('wall-ms',mode==='build'?10000:90000),workers=+opt('workers',4),seed=+opt('seed',1),tries=+opt('tries',40),tag=opt('tag',mode==='build'?'sweep':mode);
   fs.mkdirSync(path.join(OUT,'raw'),{recursive:true});
-  const jobs=mode==='build'?names.flatMap(name=>layouts.map(layout=>({name,layout,seed,wallMs,tries,spare:+opt('spare',1)}))):fs.readdirSync(path.join(OUT,mode==='finish'?'raw':'examples')).filter(f=>f.endsWith('.json')&&names.some(n=>f.startsWith(n+'-'))).map(f=>({name:f.split('-L')[0],layout:+f.split('-L')[1].split('-')[0],file:path.join(OUT,mode==='finish'?'raw':'examples',f),seed,wallMs,mode}));
+  const jobs=['build','make'].includes(mode)?names.flatMap(name=>layouts.map(layout=>({name,layout,seed,wallMs,tries,mode,spare:+opt('spare',1)}))):fs.readdirSync(path.join(OUT,mode==='finish'?'raw':'examples')).filter(f=>f.endsWith('.json')&&names.some(n=>f.startsWith(n+'-'))&&!(mode==='finish'&&args.includes('--resume')&&fs.existsSync(path.join(OUT,'examples',f)))).map(f=>({name:f.split('-L')[0],layout:+f.split('-L')[1].split('-')[0],file:path.join(OUT,mode==='finish'?'raw':'examples',f),seed,wallMs,mode}));
+  if(mode==='verify'&&fs.existsSync(path.join(OUT,'selection.json'))){
+    const sel=JSON.parse(fs.readFileSync(path.join(OUT,'selection.json'),'utf8'));
+    if(sel.ok){jobs.sort((a,b)=>sel.order.indexOf(path.basename(a.file))-sel.order.indexOf(path.basename(b.file)));
+      let previous=JSON.parse(fs.readFileSync(path.join(OUT,'ledger-history.json'),'utf8'));
+      for(const j of jobs){j.previous=previous;const r=JSON.parse(fs.readFileSync(j.file,'utf8'));previous=previous.concat(M.Ledger.signature(r.design,r.card));}
+    }
+  }
   const rows=[];let cursor=0;
   await Promise.all(Array.from({length:Math.min(workers,jobs.length)},async()=>{
     while(cursor<jobs.length){const j=jobs[cursor++],r=await job(j);const row={...j,ok:!!r.design||r.verification?.ok===true,fail:r.fail||null,fails:r.fails||{},ms:r.hardMs,detail:r.detail};
-      if(r.design){const file=mode==='finish'?path.basename(j.file):j.name+'-L'+j.layout+'-s'+j.seed+'-p'+j.spare+'.json',dest=path.join(OUT,mode==='finish'?'examples':'raw');fs.mkdirSync(dest,{recursive:true});fs.writeFileSync(path.join(dest,file),JSON.stringify(r,null,2)+'\n');row.file=file;row.k=r.card.clock.fewestMoves;}
+      if(r.design){const file=mode==='finish'?path.basename(j.file):j.name+'-L'+j.layout+'-s'+j.seed+'-p'+j.spare+'.json',dest=path.join(OUT,['finish','make'].includes(mode)?'examples':'raw');fs.mkdirSync(dest,{recursive:true});fs.writeFileSync(path.join(dest,file),JSON.stringify(r,null,2)+'\n');row.file=file;row.k=r.card.clock.fewestMoves;}
       if(r.verification)row.verification=r.verification;
       if(mode==='verify'&&!row.ok){fs.unlinkSync(j.file);row.deleted=true;}
       if(r.notes && r.fail)row.notes=r.notes;
