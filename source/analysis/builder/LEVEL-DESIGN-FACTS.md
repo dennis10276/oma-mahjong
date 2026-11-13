@@ -91,6 +91,9 @@ add new decisions with a date.
     ice combinations like the levels I liked and much more new ones."
   - **Placement** (2026-11-13): "Place them on the 250+ levels after they are fully done." Releasing stays a
     separate step that needs Dennis's explicit OK.
+  - **Go beyond 289 and mix** (2026-11-13, later): "Place these levels at 250+ and mix them with the already done
+    levels", and make "much more levels also beyond 289. More variety and mixes in traps is great. as long as its
+    solvable". So: solvable is the one hard requirement; variety and mixed traps come before strict uniformity.
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
   - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
     played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is
