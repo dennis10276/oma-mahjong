@@ -60,7 +60,7 @@ for (const metric of ['S', 'D40', 'B1', 'B2', 'postClockLossShare', 'repeatedBlu
     likedAboveEasyPairShare: comparisons.length ? MS.mean(comparisons) : null };
 }
 M.atomicJson(path.join(OUT, 'summary.json'), { validated: cards.length, ledgerEntries: rated.length, agreement, rows });
-const lines = ['| Board | Chain / layout / tiles | Dennis stars / tries | D40 (SE) | S | Stability | Post-clock | Repeat | Trap errors B2 | Curve level |', '|---|---|---|---|---|---|---|---|---|---|'];
-for (const r of rows) lines.push(`| ${r.level || r.file.replace(/\.json$/, '')} | ${r.shape} / L${r.layout} / ${r.tiles} | ${r.dennis ? r.dennis.stars + ' / ' + r.dennis.tries : 'unrated'} | ${r.D40} (${r.D_se}) | ${r.S} | ${r.stability} | ${r.postClockLossShare ?? 'n/a'} | ${r.repeatedBlunderShare ?? 'n/a'} | ${r.B2 ?? 'n/a'} | ${r.curveLevel}${r.D40 < 5 ? ' (below 5)' : r.curveLevel > 289 ? ' (beyond requested range)' : ''} |`);
+const lines = ['| Board | Chain / layout / tiles | Dennis stars / tries | D40 (SE) | S | Stability | Post-clock B6 | Repeat B7 | Trap errors B2 | Where terminal loss occurs | Curve level |', '|---|---|---|---|---|---|---|---|---|---|---|'];
+for (const r of rows) lines.push(`| ${r.level || r.file.replace(/\.json$/, '')} | ${r.shape} / L${r.layout} / ${r.tiles} | ${r.dennis ? r.dennis.stars + ' / ' + r.dennis.tries : 'unrated'} | ${r.D40} (${r.D_se}) | ${r.S} | ${r.stability} | ${r.postClockLossShare ?? 'n/a'} | ${r.repeatedBlunderShare ?? 'n/a'} | ${r.B2 ?? 'n/a'} | ${r.postClockLossShare == null ? 'unresolved' : r.postClockLossShare > 0.5 ? 'mostly after clock' : 'mostly before clock'} | ${r.curveLevel}${r.D40 < 5 ? ' (below 5)' : r.curveLevel > 289 ? ' (beyond requested range)' : ''} |`);
 fs.writeFileSync(path.join(OUT, 'table.md'), lines.join('\n') + '\n');
 console.log(JSON.stringify({ validated: cards.length, ledgerEntries: rated.length, agreement, rows }, null, 1));

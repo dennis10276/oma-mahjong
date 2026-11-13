@@ -99,7 +99,8 @@ function baitEvidence(d, j, rec) {
   const summarize = (bot, setting, seeds, style) => {
     const rows = [];
     for (const seed of seeds) {
-      const r = bot.measureHuman(M.boardOf(d), { setting, plannerStyle: style, seed, seeds: 1, runs: 40, maxAttempts: setting === 'family' ? 40 : 20, capture: true, allResults: true });
+      const r = bot.measureHuman(M.boardOf(d), { setting, plannerStyle: style, seed, seeds: 1, runs: 40, maxAttempts: setting === 'family' ? 40 : 20, capture: true,
+        ...(setting === 'planner' ? { allResults: true } : {}) });
       if (!r.valid || r.results.length !== 40) throw Error('invalid bait capture');
       for (const [campaign, c] of r.results.entries()) {
         const a = c.attempts[0], hits = [];

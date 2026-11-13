@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 'use strict';
 // One bounded heavy job, up to eight workers; interrupted stages resume from cards/cache.
+// With the shared scheduler, reserve the worker count explicitly:
+// node source/tools/builder/loop/heavy.js --cores 4 --label rate-traps -- node source/tools/builder/bank/rate_traps_run.js --workers 4 --phase measure
 const { spawn } = require('child_process');
 const path = require('path');
 const args = process.argv.slice(2), i = args.indexOf('--workers');
