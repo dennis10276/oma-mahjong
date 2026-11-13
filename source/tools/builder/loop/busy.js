@@ -77,9 +77,16 @@ function main() {
   // Claude's heavy-job lock (heavy.js). Seen from another worktree it always means busy.
   const lock = path.join(ROOT, 'cc-builder-loop', 'source', 'build', 'heavy.lock');
   if (path.resolve(HERE) !== path.resolve(ROOT, 'cc-builder-loop') && fs.existsSync(lock)) {
-    let owner = '?';
-    try { owner = JSON.parse(fs.readFileSync(path.join(lock, 'owner.json'), 'utf8')).label; } catch { /* being written */ }
-    reasons.push(`Claude's heavy job is running (${owner})`);
+    let owner = '?', live = true;
+    try {
+      const record = JSON.parse(fs.readFileSync(path.join(lock, 'owner.json'), 'utf8'));
+      owner = record.label;
+      // Read-only stale-lock check: never remove another worktree's lock.
+      if (Number.isInteger(record.pid) && record.pid > 0) {
+        try { process.kill(record.pid, 0); } catch (e) { if (e.code === 'ESRCH') live = false; }
+      }
+    } catch { /* being written: conservatively busy */ }
+    if (live) reasons.push(`Claude's heavy job is running (${owner})`);
   }
   const verdict = { busy: reasons.length > 0, load: s.load, otherCores: +otherCores.toFixed(2), reasons,
     others: others.slice(0, 8).map((p) => ({ pid: p.pid, cores: p.cores, cmd: p.cmd.slice(0, 160) })) };
