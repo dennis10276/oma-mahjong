@@ -59,8 +59,11 @@ add new decisions with a date.
     builder and take those findings as well.
   - **Twins must not sit together** (2026-11-13, lab 4, levels 281 and 282): "Pairs are too much together. Too
     obvious." Two tiles of the same picture must not lie next to or on each other as a rule.
-  - **Frozen clock combined with locks is the most fun** (2026-11-13): "make levels that combine freeze clock and
-    locks, those are most fun."
+  - **Ice, locks and the clock combined are the most fun** (2026-11-13): "make levels that combine freeze clock and
+    locks, those are most fun." Clarified the same day: "The clock doesn't necessarily have to be frozen. The locks
+    or keys can too, or the way to the clock or lock. Make it smarter and more versatile." So traps are composed
+    freely from ice, locks, keys and covers on the clock, a lock, a key or a tile on the way, not from a few fixed
+    recipes. (This allows frozen keys and frozen locks again, as long as the player can see what they are.)
   - **The clock's timer must be fully visible** (2026-11-13): on 281 the counter badge of the clock was cut off.
     The clock tile itself may be covered more; that was not the problem. Cause: a UI bug - the game draws the badge
     16% of a tile above the clock tile, so a clock in the top row pushed it out of the board area. Dennis: "Fix the
