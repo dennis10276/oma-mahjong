@@ -121,8 +121,13 @@ function baitEvidence(d, j, rec) {
       baitTaken: rows.filter(r => r.hits.length).length, provedHarmfulBait: harmful.length,
       harmfulBaitFirstTryWins: harmful.filter(r => r.win).length, rows };
   };
-  return { budget: T.BUDGET, bait: [...bait], skilled: summarize(require('../../../analysis/skilled-bot-b3/candidate_bot.js'), 'planner', SEEDS.S_FULL, rec.sFull.bestStyle),
-    family: summarize(require('../../sim/refit/human_bot_key_memory_v1_fast.js'), 'family', SEEDS.D_FULL), note: 'Actual first-try bait choices, not causal attribution to search versus random choice.' };
+  const skilled = summarize(require('../../../analysis/skilled-bot-b3/candidate_bot.js'), 'planner', SEEDS.S_FULL, rec.sFull.bestStyle);
+  const family = summarize(require('../../sim/refit/human_bot_key_memory_v1_fast.js'), 'family', SEEDS.D_FULL);
+  for (const [sample, full, cap] of [[skilled, rec.sFull, 20], [family, rec.dFull, 40]]) {
+    if (!full || sample.rows.some((r, i) => (r.wonOn ?? cap) !== full.raw[i]?.tries)) throw Error('Bait capture drifted from full measurement');
+  }
+  return { budget: T.BUDGET, bait: [...bait], skilled, family, parityWithFullMeasure: true,
+    note: 'Actual first-try bait choices, not causal attribution to search versus random choice.' };
 }
 if (require.main === module) { if (process.argv.includes('--snapshot')) snapshot(); else measure(); }
 module.exports = { SEEDS, snapshot, measure };
