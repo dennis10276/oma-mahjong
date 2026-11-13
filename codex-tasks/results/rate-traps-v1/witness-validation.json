@@ -1,0 +1,92 @@
+[
+  {
+    "file": "examples--keyOnClock-15.json",
+    "actions": 80,
+    "clockTaken": true,
+    "allTilesRemoved": true
+  },
+  {
+    "file": "examples--keyOnClock-7.json",
+    "actions": 80,
+    "clockTaken": true,
+    "allTilesRemoved": true
+  },
+  {
+    "file": "examples--wrongMelt-0.json",
+    "actions": 80,
+    "clockTaken": true,
+    "allTilesRemoved": true
+  },
+  {
+    "file": "examples--wrongMelt-3.json",
+    "actions": 80,
+    "clockTaken": true,
+    "allTilesRemoved": true
+  },
+  {
+    "file": "examples2--chain-0-1.json",
+    "actions": 76,
+    "clockTaken": true,
+    "allTilesRemoved": true
+  },
+  {
+    "file": "examples2--chain-11-46.json",
+    "actions": 74,
+    "clockTaken": true,
+    "allTilesRemoved": true
+  },
+  {
+    "file": "examples2--chain-15-12.json",
+    "actions": 88,
+    "clockTaken": true,
+    "allTilesRemoved": true
+  },
+  {
+    "file": "examples2--chain-2-6.json",
+    "actions": 84,
+    "clockTaken": true,
+    "allTilesRemoved": true
+  },
+  {
+    "file": "examples2--chain-3-8.json",
+    "actions": 84,
+    "clockTaken": true,
+    "allTilesRemoved": true
+  },
+  {
+    "file": "examples2--chain-5-9.json",
+    "actions": 76,
+    "clockTaken": true,
+    "allTilesRemoved": true
+  },
+  {
+    "file": "examples2--guardedKey-1.json",
+    "actions": 76,
+    "clockTaken": true,
+    "allTilesRemoved": true
+  },
+  {
+    "file": "examples2--keyOnClock-6.json",
+    "actions": 84,
+    "clockTaken": true,
+    "allTilesRemoved": true
+  },
+  {
+    "file": "examples2--keyOnClock-8.json",
+    "actions": 84,
+    "clockTaken": true,
+    "allTilesRemoved": true
+  },
+  {
+    "file": "examples2--lockedMelt-36.json",
+    "actions": 76,
+    "clockTaken": true,
+    "allTilesRemoved": true
+  },
+  {
+    "file": "examples2--wrongMelt-20.json",
+    "actions": 84,
+    "clockTaken": true,
+    "allTilesRemoved": true
+  }
+]
