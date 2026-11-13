@@ -70,6 +70,15 @@ add new decisions with a date.
     UI bug instead" of keeping traps away from the top. Fixed in `www/js/board.js` (clockBadge keeps the badge
     inside the board; test in `tests/t_hard.js`) on wip/cc-builder-loop; it reaches the game with the next release
     Dennis approves. No placement rule for the clock follows from this.
+  - **Chain traps are what we want** (2026-11-13, lab 5): 291 got 5 stars - "Very good. these thought out things
+    is what we want. AHA moment when you get it." 292 and 293 got 4 stars ("Awesome puzzle/trap", "Amazing puzzle
+    again"). The three liked boards have chains of three or four linked specials; the two-link chains (294, 295,
+    296) were "too easy to see the right route".
+  - **The part after the trap must be harder** (2026-11-13, said on 292, 293 and 294): "a bit too easy after".
+  - **Smarter traps or more tray pressure** when a trap is easy; and "I like to see this way of stacking more. You
+    see things better" (296, the cross layout).
+  - **UI wishes** (2026-11-13): show both markers on a frozen key or frozen lock (approved); tapping a frozen tile
+    should also light up the tiles that thaw it when those are not free yet.
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
   - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
     played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is

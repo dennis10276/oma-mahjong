@@ -1,0 +1,106 @@
+{
+ "savedAt": "2026-11-13T15:18:18.832Z",
+ "source": "Dennis, local level lab 5 (port 8258), chain traps (ice, locks and the clock combined)",
+ "ratings": {
+  "291": {
+   "file": "chain-11-46.json",
+   "layout": 46,
+   "chain": "chain:clock<ice; thaw<lock; keyA<cover:ice",
+   "tiles": 74,
+   "faceDown": 15,
+   "clockN": 12,
+   "stars": 5,
+   "verdict": "right",
+   "note": "Very good. these thought out things is what we want. AHA moment when you get it. How does the bot rate it?",
+   "tries": 3,
+   "wins": 1,
+   "results": [
+    "restart, 67 left",
+    "restart, 70 left",
+    "win, 0 left"
+   ]
+  },
+  "292": {
+   "file": "chain-15-12.json",
+   "layout": 12,
+   "chain": "chain:clock<lock; clock<cover:ice; coverThaw<ice; keyA<cover:ice",
+   "tiles": 88,
+   "faceDown": 18,
+   "clockN": 13,
+   "stars": 4,
+   "verdict": "right",
+   "note": "Awesome puzzle/trap. A bit too easy after that though but amazing trap!",
+   "tries": 2,
+   "wins": 1,
+   "results": [
+    "restart, 83 left",
+    "win, 0 left"
+   ]
+  },
+  "293": {
+   "file": "chain-5-9.json",
+   "layout": 9,
+   "chain": "chain:clock<cover:ice; coverThaw<lock",
+   "tiles": 76,
+   "faceDown": 15,
+   "clockN": 12,
+   "stars": 4,
+   "verdict": "right",
+   "note": "Amazing puzzle again. All of these are great. Just the part after is a tiny bit too easy. Also If I click a frozen tile I want the showing the tiles that thaw it to also light on tiles that arent free to take yet.",
+   "tries": 1,
+   "wins": 1,
+   "results": [
+    "win, 0 left"
+   ]
+  },
+  "294": {
+   "file": "chain-0-1.json",
+   "layout": 1,
+   "chain": "chain:clock<lock; keyA<cover:ice",
+   "tiles": 76,
+   "faceDown": 15,
+   "clockN": 10,
+   "stars": 2,
+   "verdict": "easy",
+   "note": "Way too easy to see the right route. Still good ideas. Also after a bit too easy.",
+   "tries": 1,
+   "wins": 1,
+   "results": [
+    "win, 0 left"
+   ]
+  },
+  "295": {
+   "file": "chain-2-6.json",
+   "layout": 6,
+   "chain": "chain:clock<lock; clock<cover:ice",
+   "tiles": 84,
+   "faceDown": 17,
+   "clockN": 12,
+   "stars": 2,
+   "verdict": "easy",
+   "note": "Too easy.",
+   "tries": 1,
+   "wins": 1,
+   "results": [
+    "win, 0 left"
+   ]
+  },
+  "296": {
+   "file": "chain-3-8.json",
+   "layout": 8,
+   "chain": "chain:clock<ice; thaw<lock",
+   "tiles": 84,
+   "faceDown": 17,
+   "clockN": 9,
+   "stars": 2,
+   "verdict": "easy",
+   "note": "I like to see this way of stacking more. You see things better. The trap is too easy you can think about it better and make it smarter or a bit more tray pressure.",
+   "tries": 2,
+   "wins": 1,
+   "results": [
+    "stuck, 80 left",
+    "win, 0 left"
+   ]
+  }
+ }
+}
