@@ -1,0 +1,273 @@
+{
+ "savedAt": "2026-11-13T09:14:28.881Z",
+ "source": "Dennis, local level lab 4 (port 8257), connected traps; screenshot \"clock not fully showing.png\" in the OmasMahjong folder",
+ "ratings": {
+  "281": {
+   "name": "keyOnClock L7",
+   "stars": 2,
+   "note": " clock is not fully showing in level 281. I made a screen to omasmahjong folder. Pairs are to much together. Too obvious. Trap was okay.",
+   "tries": 1,
+   "wins": 1,
+   "results": [
+    "win, 0 left"
+   ]
+  },
+  "282": {
+   "name": "keyOnClock L31",
+   "trap": {
+    "type": "keyOnClock",
+    "bait": {
+     "tiles": [
+      60
+     ],
+     "pairs": [],
+     "single": [
+      60
+     ]
+    },
+    "cost": {
+     "result": "lose",
+     "cost": null,
+     "exact": true,
+     "spare": 1,
+     "needsAtLeast": 2
+    },
+    "decisive": {
+     "offeredAt": 0,
+     "first": 0,
+     "last": 3,
+     "shareFirst": 0,
+     "shareLast": 0.429,
+     "inWindow": true,
+     "window15to60": [
+      2,
+      4
+     ],
+     "states": 5,
+     "lethalStates": 4
+    },
+    "see": "The free key on top of the clock is the one to leave alone: dig out the far key first, then take both keys together, or the early key sits in the tray until the tray is full.",
+    "k": 7,
+    "spare": 1,
+    "clock": 44,
+    "keysTakenAt": [
+     5,
+     6
+    ],
+    "fair": false,
+    "fairWhy": [
+     "the loss shows only after 7+ more removals (> 6)"
+    ],
+    "engineNodes": 49298
+   },
+   "stars": 2,
+   "note": "Pairs are too obvious together. And make levels that combine freeze clock and locks, those are most fun.",
+   "tries": 2,
+   "wins": 1,
+   "results": [
+    "stuck, 68 left",
+    "win, 0 left"
+   ]
+  },
+  "283": {
+   "name": "keyOnClock L2",
+   "trap": {
+    "type": "keyOnClock",
+    "bait": {
+     "tiles": [
+      46
+     ],
+     "pairs": [],
+     "single": [
+      46
+     ]
+    },
+    "cost": {
+     "result": "lose",
+     "cost": null,
+     "exact": true,
+     "spare": 2,
+     "needsAtLeast": 3
+    },
+    "decisive": {
+     "offeredAt": 0,
+     "first": 0,
+     "last": 3,
+     "shareFirst": 0,
+     "shareLast": 0.429,
+     "inWindow": true,
+     "window15to60": [
+      2,
+      4
+     ],
+     "states": 6,
+     "lethalStates": 4
+    },
+    "see": "The free key on top of the clock is the one to leave alone: dig out the far key first, then take both keys together, or the early key sits in the tray until the tray is full.",
+    "k": 7,
+    "spare": 2,
+    "clock": 28,
+    "keysTakenAt": [
+     5,
+     6
+    ],
+    "fair": false,
+    "fairWhy": [
+     "the loss shows only after 7+ more removals (> 6)",
+     "the only winning moves are not goal-directed (obvious.js) under some deal",
+     "the tempting move wins under another deal of the hidden pictures (a guess, not a readable fork)"
+    ],
+    "engineNodes": 25285
+   },
+   "stars": 0,
+   "note": "",
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "284": {
+   "name": "wrongMelt L21",
+   "trap": {
+    "type": "wrongMelt",
+    "bait": {
+     "tiles": [
+      1,
+      46
+     ],
+     "pairs": [
+      [
+       1,
+       46
+      ]
+     ],
+     "single": [
+      1
+     ]
+    },
+    "cost": {
+     "result": "win",
+     "cost": 3,
+     "exact": true,
+     "spare": 2,
+     "needsAtLeast": 3
+    },
+    "decisive": {
+     "offeredAt": 0,
+     "first": 0,
+     "last": 4,
+     "shareFirst": 0,
+     "shareLast": 0.8,
+     "inWindow": true,
+     "window15to60": [
+      1,
+      3
+     ],
+     "states": 5,
+     "lethalStates": 5
+    },
+    "see": "Not every free neighbour is a good one to melt the clock with: the neighbour whose twin is buried deep would wait in the tray, so use the neighbours that go as a pair.",
+    "k": 5,
+    "spare": 2,
+    "clock": 4,
+    "fair": null,
+    "forcedPressure": "no",
+    "cap": 3,
+    "wrongNeighbours": [
+     1
+    ],
+    "twins": [
+     46
+    ],
+    "rightPair": [
+     7
+    ],
+    "engineNodes": 2207
+   },
+   "stars": 0,
+   "note": "",
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "285": {
+   "name": "wrongMelt L5",
+   "trap": {
+    "type": "wrongMelt",
+    "bait": {
+     "tiles": [
+      5,
+      37
+     ],
+     "pairs": [
+      [
+       5,
+       37
+      ]
+     ],
+     "single": [
+      5
+     ]
+    },
+    "cost": {
+     "result": "win",
+     "cost": 3,
+     "exact": true,
+     "spare": 2,
+     "needsAtLeast": 3
+    },
+    "decisive": {
+     "offeredAt": 0,
+     "first": 0,
+     "last": 5,
+     "shareFirst": 0,
+     "shareLast": 0.833,
+     "inWindow": true,
+     "window15to60": [
+      1,
+      3
+     ],
+     "states": 6,
+     "lethalStates": 6
+    },
+    "see": "Not every free neighbour is a good one to melt the clock with: the neighbour whose twin is buried deep would wait in the tray, so use the neighbours that go as a pair.",
+    "k": 6,
+    "spare": 2,
+    "clock": 11,
+    "fair": null,
+    "forcedPressure": "no",
+    "cap": 3,
+    "wrongNeighbours": [
+     5
+    ],
+    "twins": [
+     37
+    ],
+    "rightPair": [
+     17
+    ],
+    "engineNodes": 16911
+   },
+   "stars": 0,
+   "note": "",
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "286": {
+   "name": "wrongMelt L0",
+   "stars": 0,
+   "note": "",
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "287": {
+   "name": "wrongMelt L3",
+   "stars": 0,
+   "note": "",
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  }
+ }
+}

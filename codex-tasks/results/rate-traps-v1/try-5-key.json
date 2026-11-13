@@ -1,0 +1,56 @@
+[
+ {
+  "level": 291,
+  "file": "chain-11-46.json",
+  "layout": 46,
+  "see": "The clock is frozen, so two of its neighbours must go first; one of the neighbours that can melt it is locked (it needs the keys); a key lies under a frozen tile, so thaw that tile first: do not take the free key early: it would sit in the tray through the whole dig.",
+  "tiles": 74,
+  "down": 15,
+  "clockN": 12
+ },
+ {
+  "level": 292,
+  "file": "chain-15-12.json",
+  "layout": 12,
+  "see": "The clock is locked, so both keys must go first; the tile lying on the clock is frozen and must be thawed first; one of the neighbours that can melt it is frozen itself (it needs its own neighbours); a key lies under a frozen tile, so thaw that tile first: do not melt with the free neighbour whose twin is buried: it would wait in the tray.",
+  "tiles": 88,
+  "down": 18,
+  "clockN": 13
+ },
+ {
+  "level": 293,
+  "file": "chain-5-9.json",
+  "layout": 9,
+  "see": "The tile lying on the clock is frozen and must be thawed first; one of the neighbours that can melt it is locked (it needs the keys): do not melt with the free neighbour whose twin is buried: it would wait in the tray.",
+  "tiles": 76,
+  "down": 15,
+  "clockN": 12
+ },
+ {
+  "level": 294,
+  "file": "chain-0-1.json",
+  "layout": 1,
+  "see": "The clock is locked, so both keys must go first; a key lies under a frozen tile, so thaw that tile first: do not take the free key early: it would sit in the tray through the whole dig.",
+  "tiles": 76,
+  "down": 15,
+  "clockN": 10
+ },
+ {
+  "level": 295,
+  "file": "chain-2-6.json",
+  "layout": 6,
+  "see": "The clock is locked, so both keys must go first; the tile lying on the clock is frozen and must be thawed first: do not take the free key early: it would sit in the tray through the whole dig.",
+  "tiles": 84,
+  "down": 17,
+  "clockN": 12
+ },
+ {
+  "level": 296,
+  "file": "chain-3-8.json",
+  "layout": 8,
+  "see": "The clock is frozen, so two of its neighbours must go first; one of the neighbours that can melt it is locked (it needs the keys): do not take the free key early: it would sit in the tray through the whole dig.",
+  "tiles": 84,
+  "down": 17,
+  "clockN": 9
+ }
+]
