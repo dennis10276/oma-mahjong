@@ -99,6 +99,8 @@ add new decisions with a date.
     `process-v1/e5-boards.json`, plus bank boards 262 and 273); they are kept as they are and placed by how many
     tries he needed.
     217 gets its clock tightened by one move when placed (Dennis: yes, 2026-11-13), provided it stays winnable.
+  - **New game mechanics are allowed, jokers are not** (2026-11-13): "We can add new game mechanics but no
+    jokers." New mechanics are proposed and prototyped first; Dennis chooses which go into the game.
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
   - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
     played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is
