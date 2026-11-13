@@ -184,8 +184,13 @@ function clockBadge() {
   // one move used: the number gives a little hop, so you see every tile counts (1.58)
   if (+ck.dataset.n > left) try { ck.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.4)', offset: .35 }, { transform: 'scale(1)' }], { duration: 380, easing: 'ease-out' }); } catch (e) { }
   ck.dataset.n = left;
-  ck.style.left = (r.l + r.w * 0.55).toFixed(1) + 'px'; ck.style.top = (r.t - r.h * 0.16).toFixed(1) + 'px';
   ck.style.fontSize = (G.tw * 0.24).toFixed(1) + 'px';
+  // the timer stays whole: a clock in the top row or at the right edge used to push it out of the board, where it was cut off
+  const bd = $('#board'), bw = bd.clientWidth, bh = bd.clientHeight, cw = ck.offsetWidth, ch = ck.offsetHeight;
+  let x = r.l + r.w * 0.55, y = r.t - r.h * 0.16;
+  if (bw && cw) x = Math.max(2, Math.min(x, bw - cw - 2));
+  if (bh && ch) y = Math.max(2, Math.min(y, bh - ch - 2));
+  ck.style.left = x.toFixed(1) + 'px'; ck.style.top = y.toFixed(1) + 'px';
   ck.classList.toggle('urgent', left <= 5);
 }
 const setFace = i => { G.tiles[i].el.querySelector('.face').innerHTML = Tiles.boardFace(S.theme, faceOf(i)); decorate(i); };

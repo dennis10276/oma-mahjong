@@ -63,6 +63,19 @@ module.exports = [
       await startLevel(p, 82);
       const st = await p.evaluate(() => ({ made: !!__mj.G.o.spec.made, clock: __mj.G.clock, badge: (document.querySelector('#clockBadge') || {}).textContent }));
       t.ok(st.made && st.clock && st.badge === '⏰' + st.clock.n, 'designed level with a clock badge showing the moves', st);
+      // the timer stays whole wherever the clock lies: put the clock on every tile in turn (top row, right edge, ...)
+      const cut = await p.evaluate(() => {
+        const G = __mj.G, keep = G.clock.i, w = document.querySelector('#boardWrap').getBoundingClientRect(), bad = [];
+        for (let i = 0; i < G.tiles.length; i++) {
+          if (!G.tiles[i].r || !G.tiles[i].el) continue;
+          G.clock.i = i; clockBadge();
+          const b = document.querySelector('#clockBadge').getBoundingClientRect();
+          if (b.top < w.top - 0.5 || b.left < w.left - 0.5 || b.right > w.right + 0.5 || b.bottom > w.bottom + 0.5) bad.push(i);
+        }
+        G.clock.i = keep; clockBadge();
+        return bad;
+      });
+      t.eq(cut, [], 'the clock timer is never cut off by the edge of the board');
       // take a pair that is not the clock: the number goes down by 2
       const pair = await p.evaluate(() => { const G = __mj.G, Lx = __mj.Layouts; const fr = G.tiles.map((t, i) => i).filter(i => i !== G.clock.i && G.alive[i] && !G.down[i] && canTake(i)); for (const a of fr) for (const b of fr) if (a < b && G.tiles[a].face === G.tiles[b].face) return [a, b]; return null; });
       if (t.ok(pair, 'a free pair')) {

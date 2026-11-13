@@ -61,10 +61,12 @@ add new decisions with a date.
     obvious." Two tiles of the same picture must not lie next to or on each other as a rule.
   - **Frozen clock combined with locks is the most fun** (2026-11-13): "make levels that combine freeze clock and
     locks, those are most fun."
-  - **The clock's timer must be fully visible** (2026-11-13, corrected by Dennis the same day): on 281 the counter
-    badge of the clock was cut off. The clock tile itself may be covered more; that was not the problem. Cause: the
-    game draws the badge 16% of a tile above the clock tile, so a clock in the top row of a layout pushes it out
-    of the board area. Builder rule: no clock in the top row (the badge must lie inside the board).
+  - **The clock's timer must be fully visible** (2026-11-13): on 281 the counter badge of the clock was cut off.
+    The clock tile itself may be covered more; that was not the problem. Cause: a UI bug - the game draws the badge
+    16% of a tile above the clock tile, so a clock in the top row pushed it out of the board area. Dennis: "Fix the
+    UI bug instead" of keeping traps away from the top. Fixed in `www/js/board.js` (clockBadge keeps the badge
+    inside the board; test in `tests/t_hard.js`) on wip/cc-builder-loop; it reaches the game with the next release
+    Dennis approves. No placement rule for the clock follows from this.
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
   - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
     played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is
