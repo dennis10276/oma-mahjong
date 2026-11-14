@@ -1,0 +1,24 @@
+✔ editing a design invalidates cached physics and proofs for every rules mode (3.3414ms)
+✔ free and blocked: a row frees its ends, a tile on top blocks both below it (0.9192ms)
+✔ ice h=1 and h=2 count neighbours gone since the start (0.6519ms)
+✔ a lock opens when both keys are gone (0.3362ms)
+✔ a 4th waiting tile loses; matches always fit (0.3921ms)
+✔ clock deadline: the clock must be taken at a move index < n (1.6015ms)
+✔ peek pair: a face-down tile and its free twin go together, without a tray slot (1.1167ms)
+✔ winnable, clockShortest, replay and classify agree with a brute force on 600 random small boards (3647.1597ms)
+✔ every qualified board: step() agrees with validSolution, winnable from the start and along its solution (1493.6265ms)
+✔ step() and validSolution agree on random play-outs (strict rules) (4.3545ms)
+✔ replay(strict) = validSolution on the qualified and the 1,989 training designs; replay(game) accepts them too (1927.2742ms)
+✔ replay reads a peek pair only when the single would be a 4th tile (0.7178ms)
+✔ a last-action peeked clock is a winning choice, not a decision trap (0.5314ms)
+✔ clockShortest: strict = exact.js, game rules never longer, its flat path replays (6580.3893ms)
+✔ an explicit strict clock work budget includes finishing proofs, even without reserve cuts (0.7277ms)
+✔ traps along the clock prefix: the stored solution never loses, losing moves carry kinds and depth (4261.0891ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18183.0764

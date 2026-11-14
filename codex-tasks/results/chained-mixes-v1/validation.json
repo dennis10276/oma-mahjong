@@ -1,0 +1,37 @@
+{
+  "engine": {
+    "ok": true,
+    "status": 0,
+    "log": "engine-regression.log"
+  },
+  "mixes": {
+    "ok": true,
+    "status": 0,
+    "log": "trap-mix-regression.log"
+  },
+  "chained": {
+    "ok": true,
+    "status": 0,
+    "log": "chained-tests.log"
+  },
+  "markers": {
+    "ok": true,
+    "status": 0,
+    "log": "task13-markers.log"
+  },
+  "hard": {
+    "ok": true,
+    "status": 0,
+    "log": "hard-regression.log"
+  },
+  "previews": {
+    "ok": true,
+    "status": 0,
+    "log": "game-previews.log"
+  },
+  "ok": true,
+  "package": {
+    "ok": true,
+    "log": "delivery-package.log"
+  }
+}

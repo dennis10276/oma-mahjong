@@ -1,0 +1,1847 @@
+{
+  "counts": {
+    "waitLookalikeRoof": 1,
+    "waitLookalikeWay": 0,
+    "waitLookalikeThaw": 0,
+    "waitLookalikeCoverThaw": 0,
+    "waitLookalikeCoverLock": 0,
+    "waitThawKey": 1,
+    "waitCoverKey": 0,
+    "waitCoverWay": 0,
+    "waitNested": 3,
+    "roofCoverKey": 0,
+    "roofThawKey": 0,
+    "roofCoverWay": 0,
+    "lookalikeThaw": 3,
+    "lookalikeCover": 2,
+    "lookalikeNested": 0,
+    "nestedThawKey": 0,
+    "nestedCoverKey": 1,
+    "lookalikeWay": 4,
+    "roofNested": 0,
+    "waitThawWay": 3,
+    "waitLockCover": 1,
+    "waitKeyRoofs": 0,
+    "roofThawWay": 0,
+    "roofCoverThaw": 0,
+    "lookalikeThawWay": 0,
+    "lookalikeCoverThaw": 1
+  },
+  "rows": [
+    {
+      "name": "waitLookalikeRoof",
+      "layout": 25,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 191
+    },
+    {
+      "name": "waitLookalikeRoof",
+      "layout": 28,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 70
+      },
+      "ms": 284
+    },
+    {
+      "name": "waitLookalikeRoof",
+      "layout": 19,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 421
+    },
+    {
+      "name": "waitLookalikeRoof",
+      "layout": 18,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noClockPartnerHolders": 4,
+        "noRepeatedKeyPair": 7,
+        "obvious:freeRoutePair": 1
+      },
+      "ms": 1743,
+      "file": "waitLookalikeRoof-L18-s5-p1.json"
+    },
+    {
+      "name": "waitLookalikeRoof",
+      "layout": 23,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 38,
+        "noRepeatedKeyPair": 15,
+        "fixedTwinsClose": 7,
+        "clockTwinNotGate": 9,
+        "clockNotBait": 1
+      },
+      "ms": 274
+    },
+    {
+      "name": "waitLookalikeRoof",
+      "layout": 1,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "fixedTwinsClose": 7,
+        "noClockPartnerHolders": 24,
+        "clockTwinNotGate": 34,
+        "noRepeatedKeyPair": 5
+      },
+      "ms": 287
+    },
+    {
+      "name": "waitLookalikeRoof",
+      "layout": 31,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "obvious:freeRoutePair": 1,
+        "fixedTwinsClose": 4,
+        "noClockPartnerHolders": 17,
+        "noRepeatedKeyPair": 18
+      },
+      "ms": 1797,
+      "file": "waitLookalikeRoof-L31-s5-p1.json"
+    },
+    {
+      "name": "waitLookalikeRoof",
+      "layout": 14,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noClockPartnerHolders": 25,
+        "clockShortest": 1,
+        "fixedTwinsClose": 4,
+        "clockNotBait": 5,
+        "noRepeatedKeyPair": 7
+      },
+      "ms": 5089,
+      "file": "waitLookalikeRoof-L14-s5-p1.json"
+    },
+    {
+      "name": "waitLookalikeRoof",
+      "layout": 12,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noClockPartnerHolders": 31,
+        "fixedTwinsClose": 4,
+        "noRepeatedKeyPair": 12,
+        "clockShortest": 7,
+        "clockTwinNotGate": 4
+      },
+      "ms": 9009
+    },
+    {
+      "name": "waitLookalikeRoof",
+      "layout": 17,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "clockShortest": 6,
+        "noRepeatedKeyPair": 14,
+        "noClockPartnerHolders": 28,
+        "clockNotBait": 1,
+        "fixedTwinsClose": 4
+      },
+      "ms": 9012
+    },
+    {
+      "name": "waitLookalikeWay",
+      "layout": 28,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRepeatedKeyPair": 36,
+        "noClockPartnerHolders": 33,
+        "fixedTwinsClose": 1
+      },
+      "ms": 286
+    },
+    {
+      "name": "waitLookalikeRoof",
+      "layout": 13,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noClockPartnerHolders": 14,
+        "clockShortest": 7,
+        "clockNotBait": 1,
+        "noRepeatedKeyPair": 8,
+        "fixedTwinsClose": 1
+      },
+      "ms": 9013
+    },
+    {
+      "name": "waitLookalikeWay",
+      "layout": 25,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "clockNotBait": 3,
+        "noClockPartnerHolders": 12,
+        "idle:ice:73": 1,
+        "fixedTwinsClose": 1,
+        "idle:ice:65": 1
+      },
+      "ms": 9018
+    },
+    {
+      "name": "waitLookalikeWay",
+      "layout": 18,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noClockPartnerHolders": 18,
+        "clockTwinNotGate": 1,
+        "fixedTwinsClose": 3,
+        "noRepeatedKeyPair": 19,
+        "clockShortest": 2
+      },
+      "ms": 5166,
+      "file": "waitLookalikeWay-L18-s5-p1.json"
+    },
+    {
+      "name": "waitLookalikeWay",
+      "layout": 14,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noClockPartnerHolders": 24,
+        "noRepeatedKeyPair": 11,
+        "clockTwinNotGate": 2,
+        "clockShortest": 1,
+        "fixedTwinsClose": 1
+      },
+      "ms": 1882,
+      "file": "waitLookalikeWay-L14-s5-p1.json"
+    },
+    {
+      "name": "waitLookalikeWay",
+      "layout": 17,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 47,
+        "noRepeatedKeyPair": 16,
+        "fixedTwinsClose": 1,
+        "clockTwinNotGate": 6
+      },
+      "ms": 253
+    },
+    {
+      "name": "waitLookalikeWay",
+      "layout": 1,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 188
+    },
+    {
+      "name": "waitLookalikeWay",
+      "layout": 19,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 34,
+        "obvious:freeRoutePair": 5,
+        "idle:ice:60": 2,
+        "noRepeatedKeyPair": 23,
+        "idle:ice:61": 2,
+        "fixedTwinsClose": 4
+      },
+      "ms": 6134
+    },
+    {
+      "name": "waitLookalikeWay",
+      "layout": 12,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 43,
+        "noRepeatedKeyPair": 15,
+        "clockNotBait": 7,
+        "clockShortest": 1,
+        "fixedTwinsClose": 4
+      },
+      "ms": 1934
+    },
+    {
+      "name": "waitLookalikeThaw",
+      "layout": 25,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "clockTwinNotGate": 67,
+        "trayOverflow": 3
+      },
+      "ms": 265
+    },
+    {
+      "name": "waitLookalikeThaw",
+      "layout": 19,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 37,
+        "noRepeatedKeyPair": 14,
+        "clockTwinNotGate": 16,
+        "trayOverflow": 3
+      },
+      "ms": 213
+    },
+    {
+      "name": "waitLookalikeWay",
+      "layout": 23,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 27,
+        "noRepeatedKeyPair": 31,
+        "fixedTwinsClose": 8,
+        "clockTwinNotGate": 1,
+        "clockNotBait": 2,
+        "clockShortest": 1
+      },
+      "ms": 1898
+    },
+    {
+      "name": "waitLookalikeThaw",
+      "layout": 28,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "clockTwinNotGate": 24,
+        "noClockPartnerHolders": 31,
+        "noRepeatedKeyPair": 15
+      },
+      "ms": 225
+    },
+    {
+      "name": "waitLookalikeThaw",
+      "layout": 14,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 39,
+        "clockTwinNotGate": 29,
+        "noRepeatedKeyPair": 1,
+        "fixedTwinsClose": 1
+      },
+      "ms": 211
+    },
+    {
+      "name": "waitLookalikeThaw",
+      "layout": 18,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 250
+    },
+    {
+      "name": "waitLookalikeWay",
+      "layout": 31,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noClockPartnerHolders": 7,
+        "noRepeatedKeyPair": 8,
+        "fixedTwinsClose": 1
+      },
+      "ms": 2074,
+      "file": "waitLookalikeWay-L31-s5-p1.json"
+    },
+    {
+      "name": "waitLookalikeThaw",
+      "layout": 17,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRepeatedKeyPair": 6,
+        "noClockPartnerHolders": 54,
+        "clockTwinNotGate": 7,
+        "clockNotBait": 2,
+        "fixedTwinsClose": 1
+      },
+      "ms": 254
+    },
+    {
+      "name": "waitLookalikeThaw",
+      "layout": 12,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 46,
+        "clockNotBait": 3,
+        "clockTwinNotGate": 15,
+        "noRepeatedKeyPair": 5,
+        "trayOverflow": 1
+      },
+      "ms": 291
+    },
+    {
+      "name": "waitLookalikeThaw",
+      "layout": 1,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 59,
+        "noRepeatedKeyPair": 10,
+        "trayOverflow": 1
+      },
+      "ms": 193
+    },
+    {
+      "name": "waitLookalikeThaw",
+      "layout": 31,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 35,
+        "noRepeatedKeyPair": 15,
+        "clockTwinNotGate": 15,
+        "trayOverflow": 4,
+        "fixedTwinsClose": 1
+      },
+      "ms": 218
+    },
+    {
+      "name": "waitLookalikeThaw",
+      "layout": 23,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 265
+    },
+    {
+      "name": "waitLookalikeCoverThaw",
+      "layout": 25,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 138
+    },
+    {
+      "name": "waitLookalikeCoverThaw",
+      "layout": 19,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 69,
+        "noChain": 1
+      },
+      "ms": 164
+    },
+    {
+      "name": "waitLookalikeCoverThaw",
+      "layout": 28,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 70
+      },
+      "ms": 165
+    },
+    {
+      "name": "waitLookalikeCoverThaw",
+      "layout": 18,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 172
+    },
+    {
+      "name": "waitLookalikeCoverThaw",
+      "layout": 14,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 209
+    },
+    {
+      "name": "waitLookalikeCoverThaw",
+      "layout": 12,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 70
+      },
+      "ms": 177
+    },
+    {
+      "name": "waitLookalikeCoverThaw",
+      "layout": 17,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 67,
+        "noChain": 3
+      },
+      "ms": 164
+    },
+    {
+      "name": "waitLookalikeCoverThaw",
+      "layout": 23,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 177
+    },
+    {
+      "name": "waitLookalikeThaw",
+      "layout": 13,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "clockNotBait": 8,
+        "clockTwinNotGate": 25,
+        "fixedTwinsClose": 2,
+        "noRepeatedKeyPair": 5,
+        "noClockPartnerHolders": 30
+      },
+      "ms": 851
+    },
+    {
+      "name": "waitLookalikeCoverThaw",
+      "layout": 1,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 70
+      },
+      "ms": 170
+    },
+    {
+      "name": "waitLookalikeCoverThaw",
+      "layout": 31,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "fixedTwinsClose": 3,
+        "noClockPartnerHolders": 37,
+        "clockTwinNotGate": 30
+      },
+      "ms": 204
+    },
+    {
+      "name": "waitLookalikeCoverLock",
+      "layout": 25,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 175
+    },
+    {
+      "name": "waitLookalikeCoverThaw",
+      "layout": 13,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "clockTwinNotGate": 30,
+        "noClockPartnerHolders": 33,
+        "noChain": 7
+      },
+      "ms": 254
+    },
+    {
+      "name": "waitLookalikeCoverLock",
+      "layout": 19,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 286
+    },
+    {
+      "name": "waitLookalikeCoverLock",
+      "layout": 18,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "fixedTwinsClose": 5,
+        "noClockPartnerHolders": 46,
+        "noRepeatedKeyPair": 19
+      },
+      "ms": 186
+    },
+    {
+      "name": "waitLookalikeCoverLock",
+      "layout": 28,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 217
+    },
+    {
+      "name": "waitLookalikeCoverLock",
+      "layout": 14,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 239
+    },
+    {
+      "name": "waitLookalikeCoverLock",
+      "layout": 23,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 43,
+        "clockNotBait": 2,
+        "noRepeatedKeyPair": 18,
+        "fixedTwinsClose": 5,
+        "noProvenBait": 1,
+        "clockShortest": 1
+      },
+      "ms": 4196
+    },
+    {
+      "name": "waitLookalikeCoverLock",
+      "layout": 1,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 14,
+        "noClockPartnerHolders": 49,
+        "noRepeatedKeyPair": 6,
+        "fixedTwinsClose": 1
+      },
+      "ms": 267
+    },
+    {
+      "name": "waitLookalikeWay",
+      "layout": 13,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noRepeatedKeyPair": 12,
+        "clockShortest": 7,
+        "noClockPartnerHolders": 16,
+        "clockTwinNotGate": 1,
+        "fixedTwinsClose": 1
+      },
+      "ms": 9006
+    },
+    {
+      "name": "waitLookalikeCoverLock",
+      "layout": 31,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noClockPartnerHolders": 14,
+        "noRepeatedKeyPair": 8
+      },
+      "ms": 1340,
+      "file": "waitLookalikeCoverLock-L31-s5-p1.json"
+    },
+    {
+      "name": "waitLookalikeCoverLock",
+      "layout": 12,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRepeatedKeyPair": 1,
+        "noClockPartnerHolders": 8,
+        "clockShortest": 1,
+        "clockNotBait": 1
+      },
+      "ms": 8875
+    },
+    {
+      "name": "waitLookalikeCoverLock",
+      "layout": 17,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "clockShortest": 1,
+        "noClockPartnerHolders": 4,
+        "noRepeatedKeyPair": 1
+      },
+      "ms": 9013
+    },
+    {
+      "name": "waitLookalikeCoverLock",
+      "layout": 13,
+      "seed": 5,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noClockPartnerHolders": 8,
+        "noRepeatedKeyPair": 4,
+        "clockShortest": 8,
+        "fixedTwinsClose": 1
+      },
+      "ms": 9005
+    },
+    {
+      "name": "waitLookalikeRoof",
+      "layout": 18,
+      "seed": 5,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\waitLookalikeRoof-L18-s5-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 12825
+    },
+    {
+      "name": "waitLookalikeRoof",
+      "layout": 31,
+      "seed": 5,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\waitLookalikeRoof-L31-s5-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 14416
+    },
+    {
+      "name": "waitLookalikeWay",
+      "layout": 18,
+      "seed": 5,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\waitLookalikeWay-L18-s5-p1.json",
+      "ok": false,
+      "fail": "strictMinimum",
+      "ms": 10803
+    },
+    {
+      "name": "waitLookalikeRoof",
+      "layout": 14,
+      "seed": 5,
+      "spare": 1,
+      "mode": "finish",
+      "file": "waitLookalikeRoof-L14-s5-p1.json",
+      "ok": true,
+      "verification": [],
+      "ms": 25414
+    },
+    {
+      "name": "waitLookalikeCoverLock",
+      "layout": 31,
+      "seed": 5,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\waitLookalikeCoverLock-L31-s5-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 44094
+    },
+    {
+      "name": "waitLookalikeWay",
+      "layout": 14,
+      "seed": 5,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\waitLookalikeWay-L14-s5-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 35395
+    },
+    {
+      "name": "waitLookalikeWay",
+      "layout": 31,
+      "seed": 5,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\waitLookalikeWay-L31-s5-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 31675
+    },
+    {
+      "name": "waitLookalikeRoof",
+      "layout": 25,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 150
+    },
+    {
+      "name": "waitLookalikeRoof",
+      "layout": 28,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 70
+      },
+      "ms": 216
+    },
+    {
+      "name": "waitLookalikeRoof",
+      "layout": 19,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 326
+    },
+    {
+      "name": "waitLookalikeRoof",
+      "layout": 23,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noRepeatedKeyPair": 8,
+        "clockTwinNotGate": 4,
+        "noClockPartnerHolders": 8,
+        "fixedTwinsClose": 3
+      },
+      "ms": 1794,
+      "file": "waitLookalikeRoof-L23-s6-p1.json"
+    },
+    {
+      "name": "waitLookalikeRoof",
+      "layout": 1,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "fixedTwinsClose": 9,
+        "clockTwinNotGate": 33,
+        "noClockPartnerHolders": 23,
+        "noRepeatedKeyPair": 5
+      },
+      "ms": 238
+    },
+    {
+      "name": "waitLookalikeRoof",
+      "layout": 18,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noRepeatedKeyPair": 17,
+        "noClockPartnerHolders": 5,
+        "clockShortest": 1,
+        "clockTwinNotGate": 1,
+        "fixedTwinsClose": 2
+      },
+      "ms": 2855,
+      "file": "waitLookalikeRoof-L18-s6-p1.json"
+    },
+    {
+      "name": "waitLookalikeRoof",
+      "layout": 31,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noClockPartnerHolders": 10,
+        "fixedTwinsClose": 6,
+        "noRepeatedKeyPair": 13,
+        "clockNotBait": 1
+      },
+      "ms": 997,
+      "file": "waitLookalikeRoof-L31-s6-p1.json"
+    },
+    {
+      "name": "waitLookalikeRoof",
+      "layout": 12,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "clockShortest": 7,
+        "noClockPartnerHolders": 35,
+        "clockNotBait": 1,
+        "clockTwinNotGate": 6,
+        "noRepeatedKeyPair": 15,
+        "fixedTwinsClose": 1
+      },
+      "ms": 9013
+    },
+    {
+      "name": "waitLookalikeRoof",
+      "layout": 17,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "clockShortest": 5,
+        "noClockPartnerHolders": 21,
+        "noRepeatedKeyPair": 9,
+        "fixedTwinsClose": 1
+      },
+      "ms": 9005
+    },
+    {
+      "name": "waitLookalikeWay",
+      "layout": 28,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRepeatedKeyPair": 44,
+        "noClockPartnerHolders": 24,
+        "fixedTwinsClose": 2
+      },
+      "ms": 241
+    },
+    {
+      "name": "waitLookalikeRoof",
+      "layout": 13,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 23,
+        "noRepeatedKeyPair": 6,
+        "clockShortest": 8,
+        "clockNotBait": 4,
+        "fixedTwinsClose": 1
+      },
+      "ms": 8995
+    },
+    {
+      "name": "waitLookalikeWay",
+      "layout": 18,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noRepeatedKeyPair": 23,
+        "fixedTwinsClose": 4,
+        "noClockPartnerHolders": 17,
+        "clockTwinNotGate": 1,
+        "clockShortest": 1
+      },
+      "ms": 2431,
+      "file": "waitLookalikeWay-L18-s6-p1.json"
+    },
+    {
+      "name": "waitLookalikeWay",
+      "layout": 25,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "idle:ice:74": 1,
+        "clockShortest": 1,
+        "noClockPartnerHolders": 1
+      },
+      "ms": 9001
+    },
+    {
+      "name": "waitLookalikeWay",
+      "layout": 19,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 26,
+        "noRepeatedKeyPair": 29,
+        "fixedTwinsClose": 5,
+        "obvious:freeRoutePair": 5,
+        "idle:ice:60": 2,
+        "idle:ice:61": 3
+      },
+      "ms": 3652
+    },
+    {
+      "name": "waitLookalikeWay",
+      "layout": 23,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRepeatedKeyPair": 33,
+        "noClockPartnerHolders": 29,
+        "fixedTwinsClose": 6,
+        "clockNotBait": 2
+      },
+      "ms": 254
+    },
+    {
+      "name": "waitLookalikeWay",
+      "layout": 1,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 172
+    },
+    {
+      "name": "waitLookalikeWay",
+      "layout": 17,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 34,
+        "noRepeatedKeyPair": 28,
+        "fixedTwinsClose": 4,
+        "clockTwinNotGate": 3,
+        "clockShortest": 1
+      },
+      "ms": 1142
+    },
+    {
+      "name": "waitLookalikeWay",
+      "layout": 12,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 48,
+        "clockShortest": 4,
+        "fixedTwinsClose": 4,
+        "clockNotBait": 3,
+        "noRepeatedKeyPair": 11
+      },
+      "ms": 4774
+    },
+    {
+      "name": "waitLookalikeWay",
+      "layout": 31,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noRepeatedKeyPair": 4,
+        "noClockPartnerHolders": 4,
+        "fixedTwinsClose": 2
+      },
+      "ms": 3480,
+      "file": "waitLookalikeWay-L31-s6-p1.json"
+    },
+    {
+      "name": "waitLookalikeThaw",
+      "layout": 25,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "clockTwinNotGate": 68,
+        "trayOverflow": 2
+      },
+      "ms": 254
+    },
+    {
+      "name": "waitLookalikeThaw",
+      "layout": 28,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "clockTwinNotGate": 29,
+        "noClockPartnerHolders": 25,
+        "noRepeatedKeyPair": 14,
+        "fixedTwinsClose": 2
+      },
+      "ms": 242
+    },
+    {
+      "name": "waitLookalikeThaw",
+      "layout": 18,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 241
+    },
+    {
+      "name": "waitLookalikeThaw",
+      "layout": 19,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noClockPartnerHolders": 26,
+        "trayOverflow": 3,
+        "noRepeatedKeyPair": 15,
+        "clockTwinNotGate": 10,
+        "obvious:freeRoutePair": 1,
+        "clockNotBait": 1
+      },
+      "ms": 1351,
+      "file": "waitLookalikeThaw-L19-s6-p1.json"
+    },
+    {
+      "name": "waitLookalikeThaw",
+      "layout": 12,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 54,
+        "clockTwinNotGate": 16
+      },
+      "ms": 244
+    },
+    {
+      "name": "waitLookalikeThaw",
+      "layout": 17,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "clockTwinNotGate": 14,
+        "noClockPartnerHolders": 51,
+        "clockNotBait": 2,
+        "fixedTwinsClose": 1,
+        "noRepeatedKeyPair": 2
+      },
+      "ms": 268
+    },
+    {
+      "name": "waitLookalikeThaw",
+      "layout": 14,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 38,
+        "clockTwinNotGate": 30,
+        "clockShortest": 1,
+        "noRepeatedKeyPair": 1
+      },
+      "ms": 1367
+    },
+    {
+      "name": "waitLookalikeThaw",
+      "layout": 23,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 241
+    },
+    {
+      "name": "waitLookalikeThaw",
+      "layout": 1,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 58,
+        "noRepeatedKeyPair": 10,
+        "trayOverflow": 1,
+        "clockTwinNotGate": 1
+      },
+      "ms": 203
+    },
+    {
+      "name": "waitLookalikeThaw",
+      "layout": 31,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "trayOverflow": 3,
+        "noClockPartnerHolders": 19,
+        "clockTwinNotGate": 21,
+        "noRepeatedKeyPair": 19,
+        "fixedTwinsClose": 7,
+        "clockNotBait": 1
+      },
+      "ms": 273
+    },
+    {
+      "name": "waitLookalikeCoverThaw",
+      "layout": 25,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 157
+    },
+    {
+      "name": "waitLookalikeCoverThaw",
+      "layout": 19,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 70
+      },
+      "ms": 170
+    },
+    {
+      "name": "waitLookalikeCoverThaw",
+      "layout": 28,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 70
+      },
+      "ms": 169
+    },
+    {
+      "name": "waitLookalikeCoverThaw",
+      "layout": 18,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 179
+    },
+    {
+      "name": "waitLookalikeCoverThaw",
+      "layout": 14,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 202
+    },
+    {
+      "name": "waitLookalikeCoverThaw",
+      "layout": 12,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 70
+      },
+      "ms": 165
+    },
+    {
+      "name": "waitLookalikeCoverThaw",
+      "layout": 17,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 8,
+        "noClockPartnerHolders": 62
+      },
+      "ms": 186
+    },
+    {
+      "name": "waitLookalikeCoverThaw",
+      "layout": 23,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 187
+    },
+    {
+      "name": "waitLookalikeCoverThaw",
+      "layout": 1,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 70
+      },
+      "ms": 190
+    },
+    {
+      "name": "waitLookalikeWay",
+      "layout": 14,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noRepeatedKeyPair": 21,
+        "clockShortest": 8,
+        "fixedTwinsClose": 3,
+        "noClockPartnerHolders": 20
+      },
+      "ms": 9009
+    },
+    {
+      "name": "waitLookalikeCoverThaw",
+      "layout": 31,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "clockTwinNotGate": 25,
+        "noClockPartnerHolders": 43,
+        "fixedTwinsClose": 2
+      },
+      "ms": 202
+    },
+    {
+      "name": "waitLookalikeCoverThaw",
+      "layout": 13,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "clockTwinNotGate": 29,
+        "noClockPartnerHolders": 32,
+        "fixedTwinsClose": 1,
+        "noChain": 8
+      },
+      "ms": 263
+    },
+    {
+      "name": "waitLookalikeCoverLock",
+      "layout": 25,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 185
+    },
+    {
+      "name": "waitLookalikeCoverLock",
+      "layout": 19,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 288
+    },
+    {
+      "name": "waitLookalikeCoverLock",
+      "layout": 28,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 241
+    },
+    {
+      "name": "waitLookalikeThaw",
+      "layout": 13,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 40,
+        "clockNotBait": 2,
+        "noRepeatedKeyPair": 4,
+        "fixedTwinsClose": 2,
+        "clockTwinNotGate": 20,
+        "clockShortest": 2
+      },
+      "ms": 2519
+    },
+    {
+      "name": "waitLookalikeCoverLock",
+      "layout": 14,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 230
+    },
+    {
+      "name": "waitLookalikeWay",
+      "layout": 13,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 29,
+        "noRepeatedKeyPair": 13,
+        "fixedTwinsClose": 5,
+        "clockShortest": 9,
+        "clockTwinNotGate": 2
+      },
+      "ms": 8950
+    },
+    {
+      "name": "waitLookalikeCoverLock",
+      "layout": 18,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noRepeatedKeyPair": 10,
+        "noClockPartnerHolders": 12
+      },
+      "ms": 1570,
+      "file": "waitLookalikeCoverLock-L18-s6-p1.json"
+    },
+    {
+      "name": "waitLookalikeCoverLock",
+      "layout": 1,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 38,
+        "noChain": 15,
+        "noRepeatedKeyPair": 15,
+        "fixedTwinsClose": 2
+      },
+      "ms": 257
+    },
+    {
+      "name": "waitLookalikeCoverLock",
+      "layout": 31,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "fixedTwinsClose": 3,
+        "noClockPartnerHolders": 11,
+        "noRepeatedKeyPair": 4
+      },
+      "ms": 1001,
+      "file": "waitLookalikeCoverLock-L31-s6-p1.json"
+    },
+    {
+      "name": "waitLookalikeCoverLock",
+      "layout": 23,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 48,
+        "clockNotBait": 2,
+        "noRepeatedKeyPair": 13,
+        "fixedTwinsClose": 7
+      },
+      "ms": 2401
+    },
+    {
+      "name": "waitLookalikeCoverLock",
+      "layout": 12,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 56,
+        "noRepeatedKeyPair": 7,
+        "fixedTwinsClose": 4,
+        "clockShortest": 2,
+        "clockNotBait": 1
+      },
+      "ms": 3758
+    },
+    {
+      "name": "waitLookalikeCoverLock",
+      "layout": 17,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "clockShortest": 2,
+        "noRepeatedKeyPair": 6,
+        "noClockPartnerHolders": 9,
+        "fixedTwinsClose": 1
+      },
+      "ms": 9003
+    },
+    {
+      "name": "waitLookalikeCoverLock",
+      "layout": 13,
+      "seed": 6,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noClockPartnerHolders": 6,
+        "clockShortest": 9,
+        "fixedTwinsClose": 1,
+        "noRepeatedKeyPair": 3
+      },
+      "ms": 9004
+    },
+    {
+      "name": "waitLookalikeRoof",
+      "layout": 23,
+      "seed": 6,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\waitLookalikeRoof-L23-s6-p1.json",
+      "ok": false,
+      "fail": "tailPressure",
+      "ms": 6994
+    },
+    {
+      "name": "waitLookalikeCoverLock",
+      "layout": 18,
+      "seed": 6,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\waitLookalikeCoverLock-L18-s6-p1.json",
+      "ok": false,
+      "fail": "tailPressure",
+      "ms": 7845
+    },
+    {
+      "name": "waitLookalikeThaw",
+      "layout": 19,
+      "seed": 6,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\waitLookalikeThaw-L19-s6-p1.json",
+      "ok": false,
+      "fail": "tailPressure",
+      "ms": 5624
+    },
+    {
+      "name": "waitLookalikeRoof",
+      "layout": 18,
+      "seed": 6,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\waitLookalikeRoof-L18-s6-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 17169
+    },
+    {
+      "name": "waitLookalikeWay",
+      "layout": 18,
+      "seed": 6,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\waitLookalikeWay-L18-s6-p1.json",
+      "ok": false,
+      "fail": "tailPressure",
+      "ms": 10366
+    },
+    {
+      "name": "waitLookalikeCoverLock",
+      "layout": 31,
+      "seed": 6,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\waitLookalikeCoverLock-L31-s6-p1.json",
+      "ok": false,
+      "fail": "tailPressure",
+      "ms": 37393
+    },
+    {
+      "name": "waitLookalikeRoof",
+      "layout": 31,
+      "seed": 6,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\waitLookalikeRoof-L31-s6-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 33342
+    },
+    {
+      "name": "waitLookalikeWay",
+      "layout": 31,
+      "seed": 6,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\waitLookalikeWay-L31-s6-p1.json",
+      "ok": false,
+      "fail": "independentVerification",
+      "verification": [
+        "faceDownTargetOrProtectedTile"
+      ],
+      "ms": 62832
+    }
+  ]
+}

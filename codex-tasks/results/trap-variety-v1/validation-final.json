@@ -1,0 +1,235 @@
+{
+  "ribbon": {
+    "ok": true,
+    "status": 0,
+    "log": "ribbon-tests.log"
+  },
+  "markers": {
+    "ok": true,
+    "status": 0,
+    "log": "marker-dependency-tests.log"
+  },
+  "engine": {
+    "ok": true,
+    "status": 0,
+    "log": "engine-regression-tests.log"
+  },
+  "builder": {
+    "ok": true,
+    "status": 0,
+    "log": "tests-final.log"
+  },
+  "audit": {
+    "ok": true,
+    "completed": 30
+  },
+  "prototypeAudit": {
+    "ok": true,
+    "rows": [
+      {
+        "file": "ribbon-L36.json",
+        "ok": true,
+        "errors": [],
+        "checks": [
+          "strictReplay",
+          "minimumByUnsatisfiableEarlierDeadline",
+          "ribbonVisibility",
+          "ribbonMinimumAblation"
+        ],
+        "k": 11,
+        "spare": 1,
+        "winningFirstMoves": 8,
+        "unknownFirstMoves": 0,
+        "firstMoves": {
+          "winning": 8,
+          "unknown": 0,
+          "legal": 13,
+          "rows": [
+            {
+              "tile": 0,
+              "result": "lose"
+            },
+            {
+              "tile": 6,
+              "result": "win"
+            },
+            {
+              "tile": 25,
+              "result": "win"
+            },
+            {
+              "tile": 30,
+              "result": "lose"
+            },
+            {
+              "tile": 52,
+              "result": "lose"
+            },
+            {
+              "tile": 68,
+              "result": "win"
+            },
+            {
+              "tile": 69,
+              "result": "win"
+            },
+            {
+              "tile": 70,
+              "result": "win"
+            },
+            {
+              "tile": 71,
+              "result": "win"
+            },
+            {
+              "tile": 72,
+              "result": "win"
+            },
+            {
+              "tile": 73,
+              "result": "lose"
+            },
+            {
+              "tile": 74,
+              "result": "lose"
+            },
+            {
+              "tile": 75,
+              "result": "win"
+            }
+          ]
+        },
+        "tailGreedyWin": 0.195,
+        "close": {
+          "close": 1,
+          "share": 0.0263,
+          "visible": 0,
+          "four": 0,
+          "meets": true
+        },
+        "pressure": {
+          "peak": 3,
+          "run2": 8,
+          "at3": 4,
+          "occ": [
+            1,
+            2,
+            1,
+            2,
+            3,
+            2,
+            3,
+            2,
+            3,
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "file": "ribbon-L3.json",
+        "ok": true,
+        "errors": [],
+        "checks": [
+          "strictReplay",
+          "minimumByUnsatisfiableEarlierDeadline",
+          "ribbonVisibility",
+          "ribbonMinimumAblation"
+        ],
+        "k": 9,
+        "spare": 1,
+        "winningFirstMoves": 3,
+        "unknownFirstMoves": 0,
+        "firstMoves": {
+          "winning": 3,
+          "unknown": 0,
+          "legal": 13,
+          "rows": [
+            {
+              "tile": 4,
+              "result": "lose"
+            },
+            {
+              "tile": 5,
+              "result": "win"
+            },
+            {
+              "tile": 10,
+              "result": "lose"
+            },
+            {
+              "tile": 11,
+              "result": "lose"
+            },
+            {
+              "tile": 47,
+              "result": "lose"
+            },
+            {
+              "tile": 48,
+              "result": "win"
+            },
+            {
+              "tile": 53,
+              "result": "lose"
+            },
+            {
+              "tile": 54,
+              "result": "lose"
+            },
+            {
+              "tile": 55,
+              "result": "lose"
+            },
+            {
+              "tile": 56,
+              "result": "lose"
+            },
+            {
+              "tile": 71,
+              "result": "lose"
+            },
+            {
+              "tile": 72,
+              "result": "lose"
+            },
+            {
+              "tile": 78,
+              "result": "win"
+            }
+          ]
+        },
+        "tailGreedyWin": 0.2737,
+        "close": {
+          "close": 0,
+          "share": 0,
+          "visible": 0,
+          "four": 0,
+          "meets": true
+        },
+        "pressure": {
+          "peak": 3,
+          "run2": 8,
+          "at3": 4,
+          "occ": [
+            1,
+            2,
+            3,
+            2,
+            3,
+            2,
+            3,
+            2,
+            3
+          ]
+        }
+      }
+    ]
+  },
+  "render": {
+    "ok": true,
+    "status": 0,
+    "log": "schematic-render.log"
+  },
+  "ok": true
+}

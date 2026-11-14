@@ -1,0 +1,2316 @@
+{
+  "started": 152,
+  "completed": 152,
+  "rows": [
+    {
+      "name": "doubleFalseStart",
+      "layout": 46,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 83
+    },
+    {
+      "name": "doubleFalseStart",
+      "layout": 7,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 84
+    },
+    {
+      "name": "doubleFalseStart",
+      "layout": 9,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 86
+    },
+    {
+      "name": "doubleFalseStart",
+      "layout": 31,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 88
+    },
+    {
+      "name": "doubleFalseStart",
+      "layout": 12,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 80
+    },
+    {
+      "name": "doubleFalseStart",
+      "layout": 36,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 78
+    },
+    {
+      "name": "doubleFalseStart",
+      "layout": 5,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 79
+    },
+    {
+      "name": "doubleFalseStart",
+      "layout": 21,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 82
+    },
+    {
+      "name": "twoLonelyMelts",
+      "layout": 31,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 77
+    },
+    {
+      "name": "twoLonelyMelts",
+      "layout": 46,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 81
+    },
+    {
+      "name": "twoLonelyMelts",
+      "layout": 7,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 78
+    },
+    {
+      "name": "twoLonelyMelts",
+      "layout": 9,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 79
+    },
+    {
+      "name": "twoLonelyMelts",
+      "layout": 12,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 77
+    },
+    {
+      "name": "twoLonelyMelts",
+      "layout": 21,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 77
+    },
+    {
+      "name": "twoLonelyMelts",
+      "layout": 36,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 80
+    },
+    {
+      "name": "twoLonelyMelts",
+      "layout": 5,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 77
+    },
+    {
+      "name": "sharedRoofLocks",
+      "layout": 7,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 20
+      },
+      "ms": 82
+    },
+    {
+      "name": "sharedRoofLocks",
+      "layout": 46,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 6,
+        "noExtraLock": 12,
+        "idle:lock:49": 1,
+        "fewerThan3WinningStarts": 1
+      },
+      "ms": 227
+    },
+    {
+      "name": "sharedRoofLocks",
+      "layout": 9,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 9,
+        "noExtraLock": 11
+      },
+      "ms": 226
+    },
+    {
+      "name": "sharedRoofLocks",
+      "layout": 31,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 6,
+        "noExtraLock": 12,
+        "fewerThan3WinningStarts": 2
+      },
+      "ms": 397
+    },
+    {
+      "name": "sharedRoofLocks",
+      "layout": 36,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 7,
+        "noExtraLock": 13
+      },
+      "ms": 199
+    },
+    {
+      "name": "sharedRoofLocks",
+      "layout": 12,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 4,
+        "noExtraLock": 16
+      },
+      "ms": 389
+    },
+    {
+      "name": "sharedRoofLocks",
+      "layout": 21,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "fewerThan3WinningStarts": 3,
+        "noExtraLock": 17
+      },
+      "ms": 253
+    },
+    {
+      "name": "sharedRoofLocks",
+      "layout": 5,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noExtraLock": 13,
+        "noProvenBait": 7
+      },
+      "ms": 176
+    },
+    {
+      "name": "splitThawLocks",
+      "layout": 46,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noExtraLock": 17,
+        "noProvenBait": 3
+      },
+      "ms": 216
+    },
+    {
+      "name": "splitThawLocks",
+      "layout": 31,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": true,
+      "fail": null,
+      "fails": {
+        "noExtraLock": 14,
+        "idle:lock:27": 1
+      },
+      "ms": 901,
+      "file": "splitThawLocks-L31-s1-p1.json",
+      "k": 11
+    },
+    {
+      "name": "splitThawLocks",
+      "layout": 36,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noExtraLock": 19,
+        "noProvenBait": 1
+      },
+      "ms": 118
+    },
+    {
+      "name": "splitThawLocks",
+      "layout": 12,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noExtraLock": 19,
+        "idle:lock:47": 1
+      },
+      "ms": 987
+    },
+    {
+      "name": "splitThawLocks",
+      "layout": 9,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noExtraLock": 13,
+        "idle:lock:41": 2,
+        "noProvenBait": 4,
+        "idle:lock:12": 1
+      },
+      "ms": 1109
+    },
+    {
+      "name": "frozenExitFork",
+      "layout": 46,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 93
+    },
+    {
+      "name": "frozenExitFork",
+      "layout": 31,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 105
+    },
+    {
+      "name": "frozenExitFork",
+      "layout": 7,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 95
+    },
+    {
+      "name": "frozenExitFork",
+      "layout": 9,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 86
+    },
+    {
+      "name": "splitThawLocks",
+      "layout": 7,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "fewerThan3WinningStarts": 8,
+        "noProvenBait": 6,
+        "idle:lock:48": 2,
+        "strictMinimum": 1,
+        "noExtraLock": 3
+      },
+      "ms": 1634
+    },
+    {
+      "name": "frozenExitFork",
+      "layout": 12,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 92
+    },
+    {
+      "name": "frozenExitFork",
+      "layout": 36,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 88
+    },
+    {
+      "name": "frozenExitFork",
+      "layout": 21,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 87
+    },
+    {
+      "name": "splitThawLocks",
+      "layout": 21,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noExtraLock": 18,
+        "clockShortest": 1,
+        "fewerThan3WinningStarts": 1
+      },
+      "ms": 767
+    },
+    {
+      "name": "frozenExitFork",
+      "layout": 5,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 88
+    },
+    {
+      "name": "nestedMeltFork",
+      "layout": 46,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noWrongMelt": 20
+      },
+      "ms": 80
+    },
+    {
+      "name": "nestedMeltFork",
+      "layout": 31,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noWrongMelt": 20
+      },
+      "ms": 80
+    },
+    {
+      "name": "splitThawLocks",
+      "layout": 5,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noExtraLock": 15,
+        "idle:lock:83": 1,
+        "idle:lock:80": 1,
+        "idle:lock:79": 2,
+        "noProvenBait": 1
+      },
+      "ms": 725
+    },
+    {
+      "name": "nestedMeltFork",
+      "layout": 7,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noWrongMelt": 20
+      },
+      "ms": 83
+    },
+    {
+      "name": "nestedMeltFork",
+      "layout": 9,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noWrongMelt": 20
+      },
+      "ms": 84
+    },
+    {
+      "name": "nestedMeltFork",
+      "layout": 12,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noWrongMelt": 20
+      },
+      "ms": 82
+    },
+    {
+      "name": "nestedMeltFork",
+      "layout": 36,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noWrongMelt": 20
+      },
+      "ms": 85
+    },
+    {
+      "name": "keyRoofMeltFork",
+      "layout": 46,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": true,
+      "fail": null,
+      "fails": {
+        "fewerThan3WinningStarts": 3,
+        "noProvenBait": 3
+      },
+      "ms": 224,
+      "file": "keyRoofMeltFork-L46-s1-p1.json",
+      "k": 9
+    },
+    {
+      "name": "keyRoofMeltFork",
+      "layout": 7,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 20
+      },
+      "ms": 110
+    },
+    {
+      "name": "nestedMeltFork",
+      "layout": 21,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": true,
+      "fail": null,
+      "fails": {
+        "fewerThan3WinningStarts": 9,
+        "idle:ice:6": 1,
+        "noProvenBait": 7,
+        "idle:ice:7": 1
+      },
+      "ms": 590,
+      "file": "nestedMeltFork-L21-s1-p1.json",
+      "k": 6
+    },
+    {
+      "name": "nestedMeltFork",
+      "layout": 5,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "fewerThan3WinningStarts": 4,
+        "noProvenBait": 16
+      },
+      "ms": 672
+    },
+    {
+      "name": "keyRoofMeltFork",
+      "layout": 9,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 19,
+        "mixedDig": 1
+      },
+      "ms": 466
+    },
+    {
+      "name": "keyRoofMeltFork",
+      "layout": 36,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 17,
+        "fewerThan3WinningStarts": 3
+      },
+      "ms": 493
+    },
+    {
+      "name": "keyRoofMeltFork",
+      "layout": 31,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 13,
+        "fewerThan3WinningStarts": 7
+      },
+      "ms": 1199
+    },
+    {
+      "name": "freeClockIce",
+      "layout": 46,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noWrongMelt": 20
+      },
+      "ms": 94
+    },
+    {
+      "name": "freeClockIce",
+      "layout": 31,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noWrongMelt": 20
+      },
+      "ms": 98
+    },
+    {
+      "name": "freeClockIce",
+      "layout": 7,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noWrongMelt": 20
+      },
+      "ms": 130
+    },
+    {
+      "name": "freeClockIce",
+      "layout": 9,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noWrongMelt": 20
+      },
+      "ms": 136
+    },
+    {
+      "name": "freeClockIce",
+      "layout": 12,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noWrongMelt": 20
+      },
+      "ms": 142
+    },
+    {
+      "name": "freeClockIce",
+      "layout": 36,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noWrongMelt": 20
+      },
+      "ms": 110
+    },
+    {
+      "name": "keyRoofMeltFork",
+      "layout": 5,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "fewerThan3WinningStarts": 1,
+        "noProvenBait": 19
+      },
+      "ms": 843
+    },
+    {
+      "name": "freeClockIce",
+      "layout": 5,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 19,
+        "clockShortest": 1
+      },
+      "ms": 668
+    },
+    {
+      "name": "freeClockIce",
+      "layout": 21,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "clockNotBait": 8,
+        "noProvenBait": 12
+      },
+      "ms": 784
+    },
+    {
+      "name": "freeClockKeys",
+      "layout": 46,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "idle:lock:47": 1,
+        "noProvenBait": 3,
+        "clockNotBait": 14,
+        "fewerThan3WinningStarts": 2
+      },
+      "ms": 487
+    },
+    {
+      "name": "freeClockKeys",
+      "layout": 7,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noGuardedKey": 20
+      },
+      "ms": 99
+    },
+    {
+      "name": "freeClockKeys",
+      "layout": 31,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 10,
+        "clockNotBait": 9,
+        "fewerThan3WinningStarts": 1
+      },
+      "ms": 791
+    },
+    {
+      "name": "freeClockKeys",
+      "layout": 9,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "clockNotBait": 12,
+        "noProvenBait": 7,
+        "fewerThan3WinningStarts": 1
+      },
+      "ms": 311
+    },
+    {
+      "name": "freeClockKeys",
+      "layout": 36,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "clockNotBait": 8,
+        "noProvenBait": 9,
+        "fewerThan3WinningStarts": 3
+      },
+      "ms": 596
+    },
+    {
+      "name": "keyRoofMeltFork",
+      "layout": 12,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": true,
+      "fail": null,
+      "fails": {
+        "noProvenBait": 8,
+        "clockShortest": 1,
+        "restOrder": 3,
+        "fewerThan3WinningStarts": 1
+      },
+      "ms": 4361,
+      "file": "keyRoofMeltFork-L12-s1-p1.json",
+      "k": 11
+    },
+    {
+      "name": "freeClockKeys",
+      "layout": 21,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 11,
+        "clockNotBait": 7,
+        "fewerThan3WinningStarts": 1,
+        "clockShortest": 1
+      },
+      "ms": 1904
+    },
+    {
+      "name": "keyRoofMeltFork",
+      "layout": 21,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "fewerThan3WinningStarts": 10,
+        "noProvenBait": 9,
+        "clockShortest": 1
+      },
+      "ms": 5295
+    },
+    {
+      "name": "freeClockShared",
+      "layout": 46,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 111
+    },
+    {
+      "name": "freeClockShared",
+      "layout": 31,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 105
+    },
+    {
+      "name": "freeClockShared",
+      "layout": 7,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 87
+    },
+    {
+      "name": "freeClockShared",
+      "layout": 9,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 84
+    },
+    {
+      "name": "freeClockShared",
+      "layout": 12,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 90
+    },
+    {
+      "name": "freeClockShared",
+      "layout": 36,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 94
+    },
+    {
+      "name": "freeClockShared",
+      "layout": 21,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 91
+    },
+    {
+      "name": "freeClockShared",
+      "layout": 5,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noLockedMelt": 20
+      },
+      "ms": 86
+    },
+    {
+      "name": "frozenKeyShared",
+      "layout": 46,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 8,
+        "noExtraLock": 12
+      },
+      "ms": 129
+    },
+    {
+      "name": "frozenKeyShared",
+      "layout": 7,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 20
+      },
+      "ms": 111
+    },
+    {
+      "name": "freeClockKeys",
+      "layout": 12,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 9,
+        "clockNotBait": 10,
+        "clockShortest": 1
+      },
+      "ms": 3399
+    },
+    {
+      "name": "freeClockKeys",
+      "layout": 5,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 11,
+        "clockNotBait": 9
+      },
+      "ms": 3548
+    },
+    {
+      "name": "frozenKeyShared",
+      "layout": 12,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noExtraLock": 9,
+        "noProvenBait": 7,
+        "idle:lock:46": 1,
+        "fewerThan3WinningStarts": 2,
+        "trayOverflow": 1
+      },
+      "ms": 1940
+    },
+    {
+      "name": "frozenKeyShared",
+      "layout": 21,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 20
+      },
+      "ms": 165
+    },
+    {
+      "name": "frozenKeyShared",
+      "layout": 36,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noExtraLock": 12,
+        "noProvenBait": 6,
+        "idle:lock:48": 1,
+        "fewerThan3WinningStarts": 1
+      },
+      "ms": 769
+    },
+    {
+      "name": "frozenRoofShared",
+      "layout": 46,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "fewerThan3WinningStarts": 14,
+        "noExtraLock": 5,
+        "trayOverflow": 1
+      },
+      "ms": 435
+    },
+    {
+      "name": "frozenKeyShared",
+      "layout": 5,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 4,
+        "noExtraLock": 13,
+        "idle:lock:83": 1,
+        "idle:lock:80": 1,
+        "idle:lock:36": 1
+      },
+      "ms": 1895
+    },
+    {
+      "name": "frozenRoofShared",
+      "layout": 7,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 20
+      },
+      "ms": 114
+    },
+    {
+      "name": "frozenKeyShared",
+      "layout": 9,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": true,
+      "fail": null,
+      "fails": {
+        "noProvenBait": 3,
+        "idle:lock:47": 1,
+        "idle:lock:60": 1,
+        "fewerThan3WinningStarts": 4,
+        "idle:lock:42": 1,
+        "noExtraLock": 1,
+        "idle:lock:63": 1,
+        "idle:lock:49": 1,
+        "idle:lock:2": 1
+      },
+      "ms": 4339,
+      "file": "frozenKeyShared-L9-s1-p1.json",
+      "k": 16
+    },
+    {
+      "name": "frozenRoofShared",
+      "layout": 9,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 20
+      },
+      "ms": 136
+    },
+    {
+      "name": "frozenRoofShared",
+      "layout": 36,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "fewerThan3WinningStarts": 13,
+        "idle:lock:48": 3,
+        "idle:lock:46": 2,
+        "idle:lock:47": 1,
+        "noChain": 1
+      },
+      "ms": 1195
+    },
+    {
+      "name": "frozenKeyShared",
+      "layout": 31,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noExtraLock": 6,
+        "noProvenBait": 12,
+        "idle:lock:32": 1,
+        "idle:lock:48": 1
+      },
+      "ms": 6283
+    },
+    {
+      "name": "frozenRoofShared",
+      "layout": 5,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 9,
+        "noExtraLock": 6,
+        "fewerThan3WinningStarts": 5
+      },
+      "ms": 502
+    },
+    {
+      "name": "secondActIce",
+      "layout": 46,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "idle:ice:67": 1,
+        "noProvenBait": 14,
+        "fewerThan3WinningStarts": 5
+      },
+      "ms": 364
+    },
+    {
+      "name": "frozenRoofShared",
+      "layout": 21,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "fewerThan3WinningStarts": 18,
+        "noProvenBait": 2
+      },
+      "ms": 2084
+    },
+    {
+      "name": "secondActIce",
+      "layout": 7,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noGuardedKey": 20
+      },
+      "ms": 97
+    },
+    {
+      "name": "secondActIce",
+      "layout": 31,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 7,
+        "fewerThan3WinningStarts": 11,
+        "idle:ice:33": 1,
+        "idle:ice:17": 1
+      },
+      "ms": 1193
+    },
+    {
+      "name": "secondActIce",
+      "layout": 9,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 19,
+        "fewerThan3WinningStarts": 1
+      },
+      "ms": 298
+    },
+    {
+      "name": "secondActIce",
+      "layout": 36,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": true,
+      "fail": null,
+      "fails": {
+        "noProvenBait": 11,
+        "fewerThan3WinningStarts": 4
+      },
+      "ms": 308,
+      "file": "secondActIce-L36-s1-p1.json",
+      "k": 7
+    },
+    {
+      "name": "secondActIce",
+      "layout": 12,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 15,
+        "fewerThan3WinningStarts": 4,
+        "idle:ice:69": 1
+      },
+      "ms": 633
+    },
+    {
+      "name": "frozenRoofShared",
+      "layout": 31,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "idle:lock:11": 1,
+        "fewerThan3WinningStarts": 9,
+        "idle:lock:28": 1,
+        "idle:lock:5": 2,
+        "idle:lock:44": 1,
+        "noChain": 1,
+        "idle:lock:43": 1,
+        "idle:lock:52": 1,
+        "noExtraLock": 1,
+        "idle:lock:17": 1,
+        "trayOverflow": 1
+      },
+      "ms": 5861
+    },
+    {
+      "name": "secondActIce",
+      "layout": 21,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "fewerThan3WinningStarts": 11,
+        "noProvenBait": 9
+      },
+      "ms": 435
+    },
+    {
+      "name": "secondActKeys",
+      "layout": 46,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noWrongMelt": 20
+      },
+      "ms": 95
+    },
+    {
+      "name": "secondActKeys",
+      "layout": 31,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noWrongMelt": 20
+      },
+      "ms": 89
+    },
+    {
+      "name": "secondActKeys",
+      "layout": 7,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noWrongMelt": 20
+      },
+      "ms": 84
+    },
+    {
+      "name": "secondActKeys",
+      "layout": 9,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noWrongMelt": 20
+      },
+      "ms": 82
+    },
+    {
+      "name": "secondActKeys",
+      "layout": 12,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noWrongMelt": 20
+      },
+      "ms": 83
+    },
+    {
+      "name": "secondActIce",
+      "layout": 5,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 17,
+        "fewerThan3WinningStarts": 3
+      },
+      "ms": 375
+    },
+    {
+      "name": "secondActKeys",
+      "layout": 36,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noWrongMelt": 20
+      },
+      "ms": 83
+    },
+    {
+      "name": "roofKeyMelt",
+      "layout": 46,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "digPictures": 19,
+        "noRoofKeyCell": 1
+      },
+      "ms": 98
+    },
+    {
+      "name": "secondActKeys",
+      "layout": 21,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": true,
+      "fail": null,
+      "fails": {
+        "noProvenBait": 1,
+        "idle:lock:80": 1
+      },
+      "ms": 262,
+      "file": "secondActKeys-L21-s1-p1.json",
+      "k": 5
+    },
+    {
+      "name": "roofKeyMelt",
+      "layout": 7,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 14,
+        "digPictures": 3,
+        "fewerThan3WinningStarts": 3
+      },
+      "ms": 262
+    },
+    {
+      "name": "secondActKeys",
+      "layout": 5,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": true,
+      "fail": null,
+      "fails": {
+        "fewerThan3WinningStarts": 3,
+        "noProvenBait": 1,
+        "trayOverflow": 1
+      },
+      "ms": 496,
+      "file": "secondActKeys-L5-s1-p1.json",
+      "k": 6
+    },
+    {
+      "name": "roofKeyMelt",
+      "layout": 9,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 11,
+        "digPictures": 9
+      },
+      "ms": 97
+    },
+    {
+      "name": "roofKeyMelt",
+      "layout": 12,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "digPictures": 18,
+        "noRoofKeyCell": 1,
+        "noProvenBait": 1
+      },
+      "ms": 117
+    },
+    {
+      "name": "roofKeyMelt",
+      "layout": 36,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "digPictures": 18,
+        "noRoofKeyCell": 2
+      },
+      "ms": 96
+    },
+    {
+      "name": "roofKeyMelt",
+      "layout": 5,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "digPictures": 11,
+        "noRoofKeyCell": 9
+      },
+      "ms": 102
+    },
+    {
+      "name": "roofKeyGuard",
+      "layout": 46,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 10,
+        "noRoofKeyCell": 4,
+        "fewerThan3WinningStarts": 6
+      },
+      "ms": 305
+    },
+    {
+      "name": "roofKeyGuard",
+      "layout": 31,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 9,
+        "noRoofKeyCell": 7,
+        "fewerThan3WinningStarts": 4
+      },
+      "ms": 311
+    },
+    {
+      "name": "roofKeyGuard",
+      "layout": 7,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 20
+      },
+      "ms": 96
+    },
+    {
+      "name": "roofKeyMelt",
+      "layout": 31,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "digPictures": 8,
+        "noProvenBait": 6,
+        "noRoofKeyCell": 6
+      },
+      "ms": 1454
+    },
+    {
+      "name": "roofKeyGuard",
+      "layout": 9,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 14,
+        "noProvenBait": 6
+      },
+      "ms": 177
+    },
+    {
+      "name": "roofKeyMelt",
+      "layout": 21,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "digPictures": 8,
+        "noProvenBait": 4,
+        "noRoofKeyCell": 7,
+        "clockShortest": 1
+      },
+      "ms": 1412
+    },
+    {
+      "name": "frozenRoofShared",
+      "layout": 12,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noExtraLock": 2,
+        "noProvenBait": 2,
+        "idle:lock:48": 2,
+        "fewerThan3WinningStarts": 4
+      },
+      "ms": 6903
+    },
+    {
+      "name": "roofKeyGuard",
+      "layout": 12,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 10,
+        "fewerThan3WinningStarts": 2,
+        "noProvenBait": 8
+      },
+      "ms": 541
+    },
+    {
+      "name": "roofKeyGuard",
+      "layout": 36,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 14,
+        "fewerThan3WinningStarts": 3,
+        "noRoofKeyCell": 3
+      },
+      "ms": 494
+    },
+    {
+      "name": "roofKeySharedMelt",
+      "layout": 46,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 20
+      },
+      "ms": 125
+    },
+    {
+      "name": "roofKeySharedMelt",
+      "layout": 31,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 20
+      },
+      "ms": 111
+    },
+    {
+      "name": "roofKeySharedMelt",
+      "layout": 7,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 20
+      },
+      "ms": 99
+    },
+    {
+      "name": "roofKeySharedMelt",
+      "layout": 9,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 20
+      },
+      "ms": 100
+    },
+    {
+      "name": "roofKeyGuard",
+      "layout": 5,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 17,
+        "noRoofKeyCell": 3
+      },
+      "ms": 296
+    },
+    {
+      "name": "roofKeySharedMelt",
+      "layout": 12,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 20
+      },
+      "ms": 113
+    },
+    {
+      "name": "roofKeySharedMelt",
+      "layout": 36,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 20
+      },
+      "ms": 96
+    },
+    {
+      "name": "roofKeySharedMelt",
+      "layout": 21,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 20
+      },
+      "ms": 109
+    },
+    {
+      "name": "roofKeyGuard",
+      "layout": 21,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "fewerThan3WinningStarts": 11,
+        "noRoofKeyCell": 9
+      },
+      "ms": 504
+    },
+    {
+      "name": "roofKeySharedMelt",
+      "layout": 5,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 20
+      },
+      "ms": 116
+    },
+    {
+      "name": "repeatedKeyChoice",
+      "layout": 46,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRepeatedKeyPair": 15,
+        "fewerThan3WinningStarts": 5
+      },
+      "ms": 269
+    },
+    {
+      "name": "repeatedKeyChoice",
+      "layout": 9,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRepeatedKeyPair": 16,
+        "fewerThan3WinningStarts": 4
+      },
+      "ms": 206
+    },
+    {
+      "name": "repeatedKeyChoice",
+      "layout": 31,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": true,
+      "fail": null,
+      "fails": {},
+      "ms": 278,
+      "file": "repeatedKeyChoice-L31-s1-p1.json",
+      "k": 8
+    },
+    {
+      "name": "repeatedKeyChoice",
+      "layout": 12,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noKeyOnClock": 20
+      },
+      "ms": 101
+    },
+    {
+      "name": "repeatedKeyChoice",
+      "layout": 7,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "fewerThan3WinningStarts": 15,
+        "noRepeatedKeyPair": 5
+      },
+      "ms": 350
+    },
+    {
+      "name": "repeatedKeyChoice",
+      "layout": 5,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noKeyOnClock": 20
+      },
+      "ms": 104
+    },
+    {
+      "name": "repeatedFrozenKey",
+      "layout": 46,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": true,
+      "fail": null,
+      "fails": {
+        "noChain": 3,
+        "noRepeatedKeyPair": 2,
+        "fewerThan3WinningStarts": 1
+      },
+      "ms": 253,
+      "file": "repeatedFrozenKey-L46-s1-p1.json",
+      "k": 8
+    },
+    {
+      "name": "repeatedKeyChoice",
+      "layout": 21,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "fewerThan3WinningStarts": 11,
+        "noRepeatedKeyPair": 9
+      },
+      "ms": 356
+    },
+    {
+      "name": "repeatedFrozenKey",
+      "layout": 7,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 20
+      },
+      "ms": 103
+    },
+    {
+      "name": "repeatedKeyChoice",
+      "layout": 36,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "fewerThan3WinningStarts": 13,
+        "noRepeatedKeyPair": 7
+      },
+      "ms": 560
+    },
+    {
+      "name": "repeatedFrozenKey",
+      "layout": 36,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": true,
+      "fail": null,
+      "fails": {
+        "noRepeatedKeyPair": 5,
+        "idle:ice:58": 1
+      },
+      "ms": 644,
+      "file": "repeatedFrozenKey-L36-s1-p1.json",
+      "k": 8
+    },
+    {
+      "name": "repeatedFrozenKey",
+      "layout": 21,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 20
+      },
+      "ms": 201
+    },
+    {
+      "name": "repeatedFrozenKey",
+      "layout": 5,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": true,
+      "fail": null,
+      "fails": {
+        "noRepeatedKeyPair": 1
+      },
+      "ms": 474,
+      "file": "repeatedFrozenKey-L5-s1-p1.json",
+      "k": 8
+    },
+    {
+      "name": "repeatedFrozenKey",
+      "layout": 9,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": true,
+      "fail": null,
+      "fails": {
+        "noRepeatedKeyPair": 10,
+        "noProvenBait": 1
+      },
+      "ms": 1687,
+      "file": "repeatedFrozenKey-L9-s1-p1.json",
+      "k": 16
+    },
+    {
+      "name": "repeatedFrozenKey",
+      "layout": 12,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "idle:lock:36": 1,
+        "noRepeatedKeyPair": 14,
+        "idle:ice:37": 2,
+        "fewerThan3WinningStarts": 1,
+        "idle:ice:44": 1,
+        "idle:lock:45": 1
+      },
+      "ms": 3950
+    },
+    {
+      "name": "repeatedFrozenKey",
+      "layout": 31,
+      "seed": 1,
+      "wallMs": 7000,
+      "tries": 20,
+      "spare": 1,
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRepeatedKeyPair": 17,
+        "wrongRepeatedPairNotBait": 1,
+        "idle:lock:32": 1,
+        "noProvenBait": 1
+      },
+      "ms": 5274
+    }
+  ]
+}

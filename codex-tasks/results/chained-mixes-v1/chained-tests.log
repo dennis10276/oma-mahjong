@@ -1,0 +1,14 @@
+✔ obviousness rejects a ready route pair and uses all greedy ties (2.6248ms)
+✔ obviousness separates a deliberate unmatched start from greedy and checks the optional bait dial (0.2964ms)
+✔ recipes have distinct extended signatures and at least three linked requirements (10.0558ms)
+✔ ribbon runtime is removed and the Task 13 special tap priority is retained (5.5435ms)
+✔ worker wall terminates a search without inventing a certificate (7.0047ms)
+✔ twenty-board delivery has ten shapes with two hosts, independently checked facts and limited needles (35.6228ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 168.4601

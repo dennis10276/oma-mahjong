@@ -1,0 +1,170 @@
+{
+  "counts": {
+    "waitThawKey": 0,
+    "waitCoverKey": 0,
+    "waitCoverWay": 0,
+    "waitNested": 0,
+    "roofCoverKey": 0,
+    "roofThawKey": 0,
+    "roofCoverWay": 0,
+    "lookalikeThaw": 0,
+    "lookalikeCover": 0,
+    "lookalikeNested": 0,
+    "nestedThawKey": 0,
+    "nestedCoverKey": 0,
+    "lookalikeWay": 0,
+    "roofNested": 0,
+    "waitThawWay": 0,
+    "waitLockCover": 0,
+    "waitKeyRoofs": 0,
+    "roofThawWay": 0,
+    "roofCoverThaw": 0,
+    "lookalikeThawWay": 0,
+    "lookalikeCoverThaw": 0
+  },
+  "rows": [
+    {
+      "name": "lookalikeCover",
+      "layout": 12,
+      "seed": 1,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\lookalikeCover-L12-s1-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 22094
+    },
+    {
+      "name": "lookalikeCover",
+      "layout": 31,
+      "seed": 1,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\lookalikeCover-L31-s1-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 22642
+    },
+    {
+      "name": "lookalikeThaw",
+      "layout": 31,
+      "seed": 1,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\lookalikeThaw-L31-s1-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 23728
+    },
+    {
+      "name": "lookalikeCover",
+      "layout": 17,
+      "seed": 1,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\lookalikeCover-L17-s1-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 46800
+    },
+    {
+      "name": "lookalikeWay",
+      "layout": 13,
+      "seed": 1,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\lookalikeWay-L13-s1-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 30460
+    },
+    {
+      "name": "lookalikeWay",
+      "layout": 14,
+      "seed": 1,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\lookalikeWay-L14-s1-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 31436
+    },
+    {
+      "name": "lookalikeWay",
+      "layout": 18,
+      "seed": 1,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\lookalikeWay-L18-s1-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 36937
+    },
+    {
+      "name": "lookalikeThaw",
+      "layout": 17,
+      "seed": 1,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\lookalikeThaw-L17-s1-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 87975
+    },
+    {
+      "name": "lookalikeWay",
+      "layout": 31,
+      "seed": 1,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\lookalikeWay-L31-s1-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 41673
+    },
+    {
+      "name": "waitCoverWay",
+      "layout": 31,
+      "seed": 1,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\waitCoverWay-L31-s1-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 18648
+    },
+    {
+      "name": "nestedCoverKey",
+      "layout": 31,
+      "seed": 1,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\nestedCoverKey-L31-s1-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 33079
+    },
+    {
+      "name": "waitThawKey",
+      "layout": 1,
+      "seed": 1,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\waitThawKey-L1-s1-p1.json",
+      "ok": false,
+      "fail": "tailBand",
+      "ms": 26050
+    },
+    {
+      "name": "waitThawKey",
+      "layout": 31,
+      "seed": 1,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\waitThawKey-L31-s1-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 23630
+    }
+  ]
+}

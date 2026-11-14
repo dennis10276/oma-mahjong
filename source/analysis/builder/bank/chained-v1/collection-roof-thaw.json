@@ -1,0 +1,3687 @@
+{
+  "counts": {
+    "waitLookalikeRoof": 2,
+    "waitLookalikeWay": 2,
+    "waitLookalikeThaw": 0,
+    "waitLookalikeCoverThaw": 0,
+    "waitLookalikeCoverLock": 1,
+    "waitThawKey": 2,
+    "waitCoverKey": 0,
+    "waitCoverWay": 0,
+    "waitNested": 3,
+    "roofCoverKey": 0,
+    "roofThawKey": 2,
+    "roofCoverWay": 0,
+    "lookalikeThaw": 2,
+    "lookalikeCover": 2,
+    "lookalikeNested": 0,
+    "nestedThaw": 1,
+    "nestedCoverThaw": 0,
+    "nestedThawKey": 0,
+    "nestedCoverKey": 1,
+    "lookalikeWay": 4,
+    "roofNested": 0,
+    "waitThawWay": 3,
+    "waitLockCover": 1,
+    "waitKeyRoofs": 2,
+    "roofThawWay": 2,
+    "roofCoverThaw": 0,
+    "lookalikeThawWay": 0,
+    "lookalikeCoverThaw": 2
+  },
+  "rows": [
+    {
+      "name": "roofCoverKey",
+      "layout": 28,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 121
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 19,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 131
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 25,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 141
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 18,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 147
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 12,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 24,
+        "noRoofKeyCell": 46
+      },
+      "ms": 149
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 14,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 10,
+        "noChain": 60
+      },
+      "ms": 161
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 1,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 119
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 17,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 67,
+        "noChain": 3
+      },
+      "ms": 147
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 23,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 50,
+        "noChain": 20
+      },
+      "ms": 148
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 7,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 114
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 13,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 70
+      },
+      "ms": 136
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 31,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 66,
+        "noChain": 4
+      },
+      "ms": 153
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 41,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 117
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 24,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 116
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 4,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 119
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 32,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 134
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 37,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 51,
+        "noRoofKeyCell": 19
+      },
+      "ms": 155
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 36,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 70
+      },
+      "ms": 150
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 29,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 70
+      },
+      "ms": 150
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 5,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 70
+      },
+      "ms": 127
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 3,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 20,
+        "noRoofKeyCell": 50
+      },
+      "ms": 154
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 26,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 109
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 10,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 110
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 39,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 116
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 34,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 118
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 8,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 116
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 42,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 12,
+        "noRoofKeyCell": 58
+      },
+      "ms": 133
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 33,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 119
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 43,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 70
+      },
+      "ms": 137
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 35,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 70
+      },
+      "ms": 148
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 46,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 70
+      },
+      "ms": 142
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 30,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 69,
+        "noRoofKeyCell": 1
+      },
+      "ms": 167
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 6,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 69,
+        "noChain": 1
+      },
+      "ms": 155
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 11,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 51,
+        "noChain": 19
+      },
+      "ms": 156
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 0,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 60,
+        "noChain": 10
+      },
+      "ms": 137
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 47,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 70
+      },
+      "ms": 136
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 16,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 51,
+        "noChain": 19
+      },
+      "ms": 136
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 45,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 130
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 22,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 131
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 40,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 124
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 15,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 70
+      },
+      "ms": 150
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 9,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 160
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 20,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 134
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 38,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 138
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 44,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 124
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 2,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 34,
+        "noChain": 36
+      },
+      "ms": 138
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 27,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 42,
+        "noChain": 28
+      },
+      "ms": 128
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 21,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 44,
+        "noRoofKeyCell": 26
+      },
+      "ms": 142
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 25,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 126
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 19,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 189
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 28,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 34,
+        "noProvenBait": 27,
+        "roofKeyNotBait": 9
+      },
+      "ms": 7818
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 14,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "roofKeyNotBait": 2,
+        "obvious:greedyPrefix": 4,
+        "noProvenBait": 14,
+        "twoMeaningfulBaits": 13,
+        "noChain": 2,
+        "fixedTwinsClose": 3,
+        "obvious:freeRoutePair": 1
+      },
+      "ms": 9011
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 12,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noProvenBait": 11,
+        "twoMeaningfulBaits": 3,
+        "clockShortest": 1,
+        "obvious:greedyPrefix": 10,
+        "strictMinimum": 1
+      },
+      "ms": 9009
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 17,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "clockShortest": 1,
+        "noProvenBait": 3,
+        "twoMeaningfulBaits": 1
+      },
+      "ms": 9014
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 23,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noProvenBait": 25,
+        "twoMeaningfulBaits": 13,
+        "obvious:greedyPrefix": 4,
+        "strictMinimum": 1,
+        "obvious:freeRoutePair": 1
+      },
+      "ms": 9005
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 1,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noChain": 9,
+        "noProvenBait": 7,
+        "clockShortest": 2
+      },
+      "ms": 9005
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 7,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 134
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 41,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 108
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 31,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noProvenBait": 22,
+        "twoMeaningfulBaits": 6,
+        "obvious:greedyPrefix": 6,
+        "roofKeyNotBait": 2,
+        "idle:ice:28": 1
+      },
+      "ms": 3726,
+      "file": "roofThawKey-L31-s7-p1.json"
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 13,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noProvenBait": 27,
+        "clockShortest": 2,
+        "twoMeaningfulBaits": 1,
+        "roofKeyNotBait": 1
+      },
+      "ms": 9009
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 24,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noChain": 12,
+        "noProvenBait": 6,
+        "twoMeaningfulBaits": 6,
+        "fixedTwinsClose": 2
+      },
+      "ms": 9007
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 32,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 107
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 4,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 9,
+        "twoMeaningfulBaits": 2,
+        "idle:lock:49": 1,
+        "roofKeyNotBait": 1
+      },
+      "ms": 8935
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 36,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 37,
+        "obvious:greedyPrefix": 21,
+        "twoMeaningfulBaits": 10,
+        "roofKeyNotBait": 1,
+        "fixedTwinsClose": 1
+      },
+      "ms": 2394
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 37,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noProvenBait": 3,
+        "roofKeyNotBait": 1,
+        "twoMeaningfulBaits": 1
+      },
+      "ms": 4532,
+      "file": "roofThawKey-L37-s7-p1.json"
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 29,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "clockShortest": 3,
+        "noProvenBait": 3
+      },
+      "ms": 9016
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 26,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 133
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 10,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 138
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 3,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 57,
+        "noChain": 3,
+        "obvious:freeRoutePair": 1,
+        "roofKeyNotBait": 3
+      },
+      "ms": 8917
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 34,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 129
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 8,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 121
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 42,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 120
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 5,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 23,
+        "roofKeyNotBait": 2
+      },
+      "ms": 8939
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 33,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 70
+      },
+      "ms": 5302
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 39,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 21,
+        "noProvenBait": 30,
+        "twoMeaningfulBaits": 8,
+        "obvious:greedyPrefix": 11
+      },
+      "ms": 8954
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 43,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noProvenBait": 4,
+        "roofKeyNotBait": 1,
+        "twoMeaningfulBaits": 3,
+        "idle:lock:64": 1,
+        "obvious:greedyPrefix": 1
+      },
+      "ms": 9012
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 46,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 41,
+        "twoMeaningfulBaits": 26,
+        "strictMinimum": 1,
+        "roofKeyNotBait": 1,
+        "obvious:greedyPrefix": 1
+      },
+      "ms": 2420
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 6,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "twoMeaningfulBaits": 5,
+        "noProvenBait": 5,
+        "fewerThan2WinningStarts": 1,
+        "roofKeyNotBait": 1,
+        "idle:ice:73": 1
+      },
+      "ms": 1239,
+      "file": "roofThawKey-L6-s7-p1.json"
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 11,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "twoMeaningfulBaits": 25,
+        "fewerThan2WinningStarts": 4,
+        "noProvenBait": 19,
+        "fixedTwinsClose": 9,
+        "obvious:greedyPrefix": 10,
+        "obvious:freeRoutePair": 1,
+        "roofKeyNotBait": 2
+      },
+      "ms": 3389
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 35,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "twoMeaningfulBaits": 8,
+        "noProvenBait": 8,
+        "idle:lock:50": 1,
+        "roofKeyNotBait": 1,
+        "obvious:greedyPrefix": 5,
+        "fewerThan2WinningStarts": 1
+      },
+      "ms": 9001
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 30,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 34,
+        "noChain": 27,
+        "roofKeyNotBait": 7,
+        "strictMinimum": 2
+      },
+      "ms": 7823
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 16,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noChain": 2,
+        "obvious:freeRoutePair": 1,
+        "noProvenBait": 1
+      },
+      "ms": 2447,
+      "file": "roofThawKey-L16-s7-p1.json"
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 45,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 93
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 22,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 88
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 40,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 89
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 0,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "twoMeaningfulBaits": 7,
+        "noProvenBait": 10,
+        "obvious:freeRoutePair": 7
+      },
+      "ms": 5291,
+      "file": "roofThawKey-L0-s7-p1.json"
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 47,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noProvenBait": 9,
+        "fixedTwinsClose": 1,
+        "twoMeaningfulBaits": 3,
+        "clockShortest": 1
+      },
+      "ms": 9007
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 20,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 66,
+        "noProvenBait": 4
+      },
+      "ms": 649
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 38,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 94
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 44,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 108
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 15,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noProvenBait": 17,
+        "idle:lock:45": 3,
+        "twoMeaningfulBaits": 28,
+        "strictMinimum": 1,
+        "fewerThan2WinningStarts": 3,
+        "fixedTwinsClose": 2,
+        "roofKeyNotBait": 3,
+        "idle:lock:44": 1,
+        "obvious:greedyPrefix": 1
+      },
+      "ms": 6659,
+      "file": "roofThawKey-L15-s7-p1.json"
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 9,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 31,
+        "noChain": 23,
+        "twoMeaningfulBaits": 14,
+        "obvious:greedyPrefix": 1,
+        "obvious:freeRoutePair": 1
+      },
+      "ms": 5499
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 2,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "twoMeaningfulBaits": 44,
+        "noChain": 17,
+        "obvious:greedyPrefix": 4,
+        "obvious:freeRoutePair": 1,
+        "noProvenBait": 3,
+        "clockShortest": 1
+      },
+      "ms": 5324
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 27,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 35,
+        "twoMeaningfulBaits": 13,
+        "roofKeyNotBait": 1,
+        "fewerThan2WinningStarts": 10,
+        "noChain": 9,
+        "strictReplay": 1,
+        "strictMinimum": 1
+      },
+      "ms": 4694
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 25,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 70
+      },
+      "ms": 96
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 19,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 32,
+        "obvious:greedyPrefix": 7,
+        "twoMeaningfulBaits": 11,
+        "obvious:freeRoutePair": 12,
+        "mixedDig": 3,
+        "noProvenBait": 5
+      },
+      "ms": 3647
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 18,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 158
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 21,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "fewerThan2WinningStarts": 12,
+        "noProvenBait": 14,
+        "twoMeaningfulBaits": 20,
+        "idle:lock:58": 1,
+        "roofKeyNotBait": 1,
+        "fixedTwinsClose": 3
+      },
+      "ms": 9012
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 12,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 60,
+        "twoMeaningfulBaits": 2,
+        "obvious:greedyPrefix": 2,
+        "mixedDig": 3,
+        "noProvenBait": 1,
+        "digPictures": 2
+      },
+      "ms": 1515
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 14,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 64,
+        "digPictures": 2,
+        "noProvenBait": 1,
+        "clockShortest": 1,
+        "obvious:greedyPrefix": 1,
+        "twoMeaningfulBaits": 1
+      },
+      "ms": 2538
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 17,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noInnerMelt": 2
+      },
+      "ms": 418,
+      "file": "nestedThaw-L17-s7-p1.json"
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 23,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 146
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 31,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 49,
+        "twoMeaningfulBaits": 14,
+        "mixedDig": 4,
+        "noProvenBait": 2,
+        "idle:ice:63": 1
+      },
+      "ms": 1331
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 28,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noProvenBait": 4,
+        "noInnerMelt": 8,
+        "clockShortest": 1,
+        "trayOverflow": 1,
+        "obvious:freeRoutePair": 1,
+        "twoMeaningfulBaits": 3
+      },
+      "ms": 9005
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 7,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "mixedDig": 25,
+        "noInnerMelt": 38,
+        "obvious:freeRoutePair": 7
+      },
+      "ms": 1011
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 41,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 69,
+        "twoMeaningfulBaits": 1
+      },
+      "ms": 112
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 1,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 43,
+        "obvious:freeRoutePair": 4,
+        "noProvenBait": 6,
+        "idle:lock:1": 1,
+        "mixedDig": 11,
+        "trayOverflow": 1,
+        "idle:ice:56": 1,
+        "idle:ice:3": 1,
+        "idle:ice:57": 2
+      },
+      "ms": 6703
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 4,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 70
+      },
+      "ms": 88
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 37,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 67,
+        "twoMeaningfulBaits": 3
+      },
+      "ms": 218
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 32,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 70
+      },
+      "ms": 84
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 36,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noInnerMelt": 16,
+        "obvious:greedyPrefix": 1,
+        "idle:ice:67": 1,
+        "mixedDig": 2,
+        "twoMeaningfulBaits": 2
+      },
+      "ms": 467,
+      "file": "nestedThaw-L36-s7-p1.json"
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 13,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "obvious:freeRoutePair": 3,
+        "noInnerMelt": 41,
+        "noProvenBait": 2,
+        "mixedDig": 7,
+        "twoMeaningfulBaits": 5
+      },
+      "ms": 8600,
+      "file": "nestedThaw-L13-s7-p1.json"
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 24,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noInnerMelt": 13,
+        "trayOverflow": 1,
+        "noProvenBait": 1,
+        "mixedDig": 1,
+        "twoMeaningfulBaits": 1,
+        "clockShortest": 1
+      },
+      "ms": 9002
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 3,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 59,
+        "mixedDig": 1,
+        "twoMeaningfulBaits": 7,
+        "noProvenBait": 3
+      },
+      "ms": 2908
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 26,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 120
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 5,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "idle:ice:68": 1,
+        "twoMeaningfulBaits": 3,
+        "noInnerMelt": 33,
+        "fixedTwinsClose": 1
+      },
+      "ms": 410,
+      "file": "nestedThaw-L5-s7-p1.json"
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 10,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 129
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 34,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 62,
+        "mixedDig": 8
+      },
+      "ms": 101
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 8,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 70
+      },
+      "ms": 86
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 42,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 70
+      },
+      "ms": 83
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 29,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noProvenBait": 1,
+        "clockShortest": 1,
+        "twoMeaningfulBaits": 1,
+        "noInnerMelt": 1
+      },
+      "ms": 9007
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 33,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 70
+      },
+      "ms": 92
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 39,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 60,
+        "mixedDig": 4,
+        "clockShortest": 5,
+        "obvious:freeRoutePair": 1
+      },
+      "ms": 4101
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 46,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 59,
+        "mixedDig": 8,
+        "obvious:freeRoutePair": 2,
+        "noProvenBait": 1
+      },
+      "ms": 220
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 43,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 53,
+        "twoMeaningfulBaits": 5,
+        "mixedDig": 3,
+        "noProvenBait": 8,
+        "obvious:greedyPrefix": 1
+      },
+      "ms": 4572
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 6,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 62,
+        "noProvenBait": 6,
+        "twoMeaningfulBaits": 2
+      },
+      "ms": 490
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 11,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 61,
+        "noProvenBait": 8,
+        "twoMeaningfulBaits": 1
+      },
+      "ms": 329
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 0,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 4,
+        "noInnerMelt": 56,
+        "obvious:greedyPrefix": 1,
+        "mixedDig": 7,
+        "twoMeaningfulBaits": 2
+      },
+      "ms": 727
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 35,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 54,
+        "clockShortest": 1,
+        "noProvenBait": 12,
+        "twoMeaningfulBaits": 2,
+        "mixedDig": 1
+      },
+      "ms": 3344
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 30,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 49,
+        "fewerThan2WinningStarts": 3,
+        "idle:lock:4": 1,
+        "obvious:freeRoutePair": 5,
+        "noProvenBait": 10,
+        "twoMeaningfulBaits": 1,
+        "idle:lock:30": 1
+      },
+      "ms": 5434
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 45,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 70
+      },
+      "ms": 87
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 22,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 70
+      },
+      "ms": 91
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 40,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 70
+      },
+      "ms": 98
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 15,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 54,
+        "noProvenBait": 15,
+        "twoMeaningfulBaits": 1
+      },
+      "ms": 1124
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 9,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 64,
+        "digPictures": 4,
+        "twoMeaningfulBaits": 1,
+        "clockShortest": 1
+      },
+      "ms": 1255
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 20,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 70
+      },
+      "ms": 91
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 38,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 55,
+        "mixedDig": 7,
+        "noChain": 8
+      },
+      "ms": 96
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 44,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 70
+      },
+      "ms": 87
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 2,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 45,
+        "noProvenBait": 20,
+        "clockShortest": 1,
+        "twoMeaningfulBaits": 1,
+        "mixedDig": 3
+      },
+      "ms": 1241
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 27,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 52,
+        "mixedDig": 10,
+        "noProvenBait": 8
+      },
+      "ms": 368
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 47,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noInnerMelt": 38,
+        "twoMeaningfulBaits": 17,
+        "noProvenBait": 1,
+        "trayOverflow": 1
+      },
+      "ms": 9011
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 25,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 85
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 16,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noInnerMelt": 31,
+        "twoMeaningfulBaits": 2,
+        "noProvenBait": 2,
+        "mixedDig": 2,
+        "obvious:freeRoutePair": 1
+      },
+      "ms": 9008
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 21,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 55,
+        "noProvenBait": 13,
+        "obvious:freeRoutePair": 1,
+        "twoMeaningfulBaits": 1
+      },
+      "ms": 2182
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 18,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 97
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 14,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 114
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 12,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 59,
+        "mixedDig": 11
+      },
+      "ms": 100
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 19,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noProvenBait": 37,
+        "obvious:freeRoutePair": 30,
+        "noChain": 2
+      },
+      "ms": 9003
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 23,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 101
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 28,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noProvenBait": 2
+      },
+      "ms": 9014
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 17,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noProvenBait": 2,
+        "strictMinimum": 1
+      },
+      "ms": 9009
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 31,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "twoMeaningfulBaits": 5,
+        "mixedDig": 7,
+        "digPictures": 3,
+        "idle:ice:61": 1,
+        "noInnerMelt": 6,
+        "idle:lock:71": 1,
+        "noProvenBait": 4,
+        "trayOverflow": 2,
+        "fixedTwinsClose": 2,
+        "idle:lock:70": 1,
+        "obvious:freeRoutePair": 1
+      },
+      "ms": 4245,
+      "file": "nestedCoverThaw-L31-s7-p1.json"
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 7,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 80
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 41,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 80
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 1,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "idle:ice:57": 1,
+        "mixedDig": 2,
+        "noProvenBait": 1,
+        "idle:ice:56": 1
+      },
+      "ms": 9007
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 4,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 70
+      },
+      "ms": 93
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 37,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 70
+      },
+      "ms": 94
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 32,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 82
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 13,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "mixedDig": 12,
+        "twoMeaningfulBaits": 5,
+        "obvious:freeRoutePair": 5,
+        "noChain": 5,
+        "trayOverflow": 1,
+        "obvious:greedyPrefix": 1,
+        "clockShortest": 1
+      },
+      "ms": 8949
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 36,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "twoMeaningfulBaits": 29,
+        "obvious:freeRoutePair": 8,
+        "mixedDig": 29,
+        "idle:ice:67": 2,
+        "noProvenBait": 1,
+        "fixedTwinsClose": 1
+      },
+      "ms": 1584
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 24,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noProvenBait": 1,
+        "clockShortest": 2
+      },
+      "ms": 9016
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 29,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "mixedDig": 2,
+        "noInnerMelt": 6,
+        "noProvenBait": 2,
+        "clockShortest": 2,
+        "obvious:freeRoutePair": 1,
+        "twoMeaningfulBaits": 1
+      },
+      "ms": 9010
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 26,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 84
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 10,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 78
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 39,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 82
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 34,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 79
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 8,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 79
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 42,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 92
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 3,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "twoMeaningfulBaits": 5,
+        "noProvenBait": 3,
+        "trayOverflow": 1
+      },
+      "ms": 9012
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 33,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 106
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 5,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "mixedDig": 6,
+        "fewerThan2WinningStarts": 8,
+        "obvious:freeRoutePair": 9,
+        "twoMeaningfulBaits": 13,
+        "trayOverflow": 4,
+        "noProvenBait": 5,
+        "idle:lock:70": 1
+      },
+      "ms": 9010
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 46,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "mixedDig": 18,
+        "obvious:freeRoutePair": 25,
+        "noProvenBait": 25,
+        "twoMeaningfulBaits": 2
+      },
+      "ms": 1773
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 43,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "twoMeaningfulBaits": 9,
+        "noProvenBait": 46
+      },
+      "ms": 8910
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 35,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 60,
+        "twoMeaningfulBaits": 9
+      },
+      "ms": 8931
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 6,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 17,
+        "twoMeaningfulBaits": 14,
+        "obvious:freeRoutePair": 1,
+        "noProvenBait": 38
+      },
+      "ms": 2167
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 0,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "mixedDig": 67,
+        "obvious:freeRoutePair": 2,
+        "twoMeaningfulBaits": 1
+      },
+      "ms": 277
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 11,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 62,
+        "twoMeaningfulBaits": 8
+      },
+      "ms": 2486
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 30,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "obvious:freeRoutePair": 21,
+        "noProvenBait": 19
+      },
+      "ms": 9005
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 45,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 87
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 22,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 88
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 40,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 78
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 15,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 70
+      },
+      "ms": 5400
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 9,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noInnerMelt": 70
+      },
+      "ms": 89
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 20,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 86
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 38,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 79
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 44,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 80
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 47,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "obvious:freeRoutePair": 3,
+        "twoMeaningfulBaits": 3,
+        "noProvenBait": 4
+      },
+      "ms": 9003
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 16,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noProvenBait": 2,
+        "fixedTwinsClose": 2,
+        "mixedDig": 2,
+        "digPictures": 1,
+        "twoMeaningfulBaits": 2
+      },
+      "ms": 9003
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 2,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 70
+      },
+      "ms": 1611
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 25,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 34,
+        "obvious:greedyPrefix": 10,
+        "noProvenBait": 24,
+        "roofKeyNotBait": 1,
+        "trayOverflow": 1
+      },
+      "ms": 778
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 27,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 70
+      },
+      "ms": 3235
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 19,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 35,
+        "twoMeaningfulBaits": 26,
+        "obvious:greedyPrefix": 6,
+        "noProvenBait": 3
+      },
+      "ms": 1717
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 28,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 34,
+        "noProvenBait": 36
+      },
+      "ms": 2668
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 18,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noProvenBait": 19,
+        "obvious:freeRoutePair": 3,
+        "twoMeaningfulBaits": 1,
+        "obvious:greedyPrefix": 4,
+        "strictMinimum": 1
+      },
+      "ms": 3269,
+      "file": "roofThawWay-L18-s7-p1.json"
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 21,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 69,
+        "obvious:freeRoutePair": 1
+      },
+      "ms": 8263
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 14,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "obvious:greedyPrefix": 7,
+        "noProvenBait": 11,
+        "obvious:freeRoutePair": 7,
+        "twoMeaningfulBaits": 7
+      },
+      "ms": 9009
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 12,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noProvenBait": 19,
+        "roofKeyNotBait": 1,
+        "obvious:greedyPrefix": 12,
+        "obvious:freeRoutePair": 4,
+        "strictMinimum": 1
+      },
+      "ms": 9011
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 1,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 92
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 17,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noProvenBait": 3,
+        "obvious:freeRoutePair": 1,
+        "roofKeyNotBait": 1
+      },
+      "ms": 9002
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 23,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "obvious:greedyPrefix": 7,
+        "roofKeyNotBait": 3,
+        "noProvenBait": 46,
+        "twoMeaningfulBaits": 5,
+        "strictMinimum": 3,
+        "obvious:freeRoutePair": 5,
+        "idle:ice:50": 1
+      },
+      "ms": 6830
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 31,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "obvious:freeRoutePair": 4,
+        "noProvenBait": 8,
+        "twoMeaningfulBaits": 9,
+        "obvious:greedyPrefix": 4,
+        "roofKeyNotBait": 3
+      },
+      "ms": 5893,
+      "file": "roofThawWay-L31-s7-p1.json"
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 7,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 103
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 41,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 34,
+        "obvious:greedyPrefix": 15,
+        "twoMeaningfulBaits": 12,
+        "noProvenBait": 8,
+        "obvious:freeRoutePair": 1
+      },
+      "ms": 1046
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 13,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noProvenBait": 4,
+        "clockShortest": 1
+      },
+      "ms": 9004
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 4,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "obvious:greedyPrefix": 26,
+        "obvious:freeRoutePair": 2,
+        "noProvenBait": 35,
+        "strictMinimum": 4,
+        "clockShortest": 1,
+        "fixedTwinsClose": 1,
+        "roofKeyNotBait": 1
+      },
+      "ms": 5581
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 32,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 34,
+        "obvious:greedyPrefix": 20,
+        "noProvenBait": 8,
+        "twoMeaningfulBaits": 7,
+        "obvious:freeRoutePair": 1
+      },
+      "ms": 347
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 24,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "roofKeyNotBait": 4,
+        "twoMeaningfulBaits": 5,
+        "noProvenBait": 14,
+        "fixedTwinsClose": 2,
+        "idle:ice:52": 2,
+        "idle:ice:47": 1,
+        "obvious:greedyPrefix": 1
+      },
+      "ms": 9014
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 37,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "roofKeyNotBait": 7,
+        "noProvenBait": 18,
+        "obvious:freeRoutePair": 2,
+        "noChain": 1,
+        "strictMinimum": 1,
+        "obvious:greedyPrefix": 1
+      },
+      "ms": 8951
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 36,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "obvious:freeRoutePair": 9,
+        "noProvenBait": 25,
+        "obvious:greedyPrefix": 10,
+        "fixedTwinsClose": 1,
+        "roofKeyNotBait": 1,
+        "twoMeaningfulBaits": 6
+      },
+      "ms": 8864
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 26,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 110
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 10,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 116
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 29,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noProvenBait": 16,
+        "roofKeyNotBait": 1,
+        "clockShortest": 5,
+        "obvious:freeRoutePair": 2,
+        "strictMinimum": 2,
+        "trayOverflow": 1
+      },
+      "ms": 9014
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 34,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "roofKeyNotBait": 31,
+        "noProvenBait": 38,
+        "trayOverflow": 1
+      },
+      "ms": 4245
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 5,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noProvenBait": 7,
+        "clockShortest": 1
+      },
+      "ms": 9005
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 42,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 148
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 8,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 34,
+        "twoMeaningfulBaits": 10,
+        "obvious:greedyPrefix": 21,
+        "obvious:freeRoutePair": 3,
+        "clockShortest": 2
+      },
+      "ms": 1491
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 39,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noProvenBait": 48,
+        "obvious:freeRoutePair": 3,
+        "twoMeaningfulBaits": 4,
+        "obvious:greedyPrefix": 8,
+        "strictMinimum": 1
+      },
+      "ms": 9004
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 43,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noProvenBait": 10,
+        "obvious:greedyPrefix": 24,
+        "twoMeaningfulBaits": 1,
+        "fixedTwinsClose": 2
+      },
+      "ms": 5248,
+      "file": "roofThawWay-L43-s7-p1.json"
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 46,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noProvenBait": 3,
+        "fewerThan2WinningStarts": 1
+      },
+      "ms": 359,
+      "file": "roofThawWay-L46-s7-p1.json"
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 33,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noProvenBait": 37,
+        "fewerThan2WinningStarts": 5,
+        "twoMeaningfulBaits": 5,
+        "roofKeyNotBait": 1,
+        "idle:ice:59": 1,
+        "idle:ice:54": 1
+      },
+      "ms": 7530,
+      "file": "roofThawWay-L33-s7-p1.json"
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 35,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "twoMeaningfulBaits": 1,
+        "obvious:greedyPrefix": 34,
+        "noProvenBait": 26,
+        "roofKeyNotBait": 4,
+        "fixedTwinsClose": 2,
+        "strictMinimum": 1,
+        "idle:lock:43": 1,
+        "idle:ice:58": 1
+      },
+      "ms": 8744
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 11,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noProvenBait": 14,
+        "idle:ice:57": 2,
+        "obvious:greedyPrefix": 42,
+        "obvious:freeRoutePair": 2,
+        "twoMeaningfulBaits": 2,
+        "fixedTwinsClose": 7,
+        "roofKeyNotBait": 1
+      },
+      "ms": 3749
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 30,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "twoMeaningfulBaits": 5,
+        "noProvenBait": 11,
+        "clockShortest": 1,
+        "idle:ice:28": 1
+      },
+      "ms": 9005
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 6,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "obvious:greedyPrefix": 36,
+        "roofKeyNotBait": 7,
+        "noProvenBait": 24,
+        "obvious:freeRoutePair": 1,
+        "idle:ice:35": 1,
+        "clockShortest": 1
+      },
+      "ms": 6438
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 47,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noProvenBait": 10,
+        "clockShortest": 1
+      },
+      "ms": 7481,
+      "file": "roofThawWay-L47-s7-p1.json"
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 45,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 139
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 22,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 152
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 40,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 34,
+        "obvious:greedyPrefix": 17,
+        "noProvenBait": 11,
+        "twoMeaningfulBaits": 8
+      },
+      "ms": 625
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 0,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "trayOverflow": 2,
+        "noProvenBait": 7,
+        "twoMeaningfulBaits": 2,
+        "roofKeyNotBait": 1,
+        "clockShortest": 1,
+        "noChain": 1
+      },
+      "ms": 9005
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 15,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noProvenBait": 2,
+        "obvious:greedyPrefix": 1
+      },
+      "ms": 593,
+      "file": "roofThawWay-L15-s7-p1.json"
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 16,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noProvenBait": 5,
+        "noChain": 2,
+        "idle:ice:60": 2,
+        "twoMeaningfulBaits": 1
+      },
+      "ms": 9006
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 38,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 34,
+        "twoMeaningfulBaits": 34,
+        "strictMinimum": 2
+      },
+      "ms": 4076
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 44,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 34,
+        "twoMeaningfulBaits": 16,
+        "obvious:greedyPrefix": 20
+      },
+      "ms": 1539
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 2,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "fixedTwinsClose": 9,
+        "obvious:greedyPrefix": 49,
+        "noProvenBait": 8,
+        "roofKeyNotBait": 1,
+        "strictMinimum": 2,
+        "twoMeaningfulBaits": 1
+      },
+      "ms": 1775
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 9,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "clockShortest": 7,
+        "noProvenBait": 23,
+        "twoMeaningfulBaits": 10,
+        "strictMinimum": 4,
+        "obvious:greedyPrefix": 9
+      },
+      "ms": 8907
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 20,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "roofKeyNotBait": 3,
+        "noProvenBait": 13,
+        "fixedTwinsClose": 2,
+        "clockShortest": 2,
+        "twoMeaningfulBaits": 3,
+        "strictMinimum": 1
+      },
+      "ms": 9011
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 21,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "roofKeyNotBait": 1,
+        "twoMeaningfulBaits": 2,
+        "noProvenBait": 21,
+        "clockShortest": 2,
+        "idle:ice:71": 1,
+        "fewerThan2WinningStarts": 1,
+        "fixedTwinsClose": 1,
+        "strictMinimum": 1
+      },
+      "ms": 4861,
+      "file": "roofThawWay-L21-s7-p1.json"
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 27,
+      "seed": 7,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "twoMeaningfulBaits": 18,
+        "noProvenBait": 19,
+        "roofKeyNotBait": 5,
+        "fixedTwinsClose": 9,
+        "obvious:greedyPrefix": 2,
+        "obvious:freeRoutePair": 4,
+        "fewerThan2WinningStarts": 1,
+        "idle:ice:44": 1
+      },
+      "ms": 8838
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 17,
+      "seed": 7,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\nestedThaw-L17-s7-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 3233
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 13,
+      "seed": 7,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\nestedThaw-L13-s7-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 11051
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 36,
+      "seed": 7,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\nestedThaw-L36-s7-p1.json",
+      "ok": false,
+      "fail": "tailPressure",
+      "ms": 8090
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 5,
+      "seed": 7,
+      "spare": 1,
+      "mode": "finish",
+      "file": "nestedThaw-L5-s7-p1.json",
+      "ok": true,
+      "verification": [],
+      "ms": 4805
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 0,
+      "seed": 7,
+      "spare": 1,
+      "mode": "finish",
+      "file": "roofThawKey-L0-s7-p1.json",
+      "ok": true,
+      "verification": [],
+      "ms": 9505
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 31,
+      "seed": 7,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\nestedCoverThaw-L31-s7-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 21312
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 15,
+      "seed": 7,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\roofThawKey-L15-s7-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 10330
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 15,
+      "seed": 7,
+      "spare": 1,
+      "mode": "finish",
+      "file": "roofThawWay-L15-s7-p2.json",
+      "ok": true,
+      "verification": [],
+      "ms": 8977
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 21,
+      "seed": 7,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\roofThawWay-L21-s7-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 17468
+    },
+    {
+      "name": "roofThawWay",
+      "layout": 18,
+      "seed": 7,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\roofThawWay-L18-s7-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 36277
+    }
+  ]
+}

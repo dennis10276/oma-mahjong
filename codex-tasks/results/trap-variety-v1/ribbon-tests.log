@@ -1,0 +1,6 @@
+✓ ok    ribbon: reference taps, incremental search, peek pairs and strict replay agree  (0.0s)
+✓ ok    ribbon: packed extension round trips and every old level keeps its encoding  (0.0s)
+✓ ok    ribbon: real taps, obstacle refresh, saved state and Grandma isolation  (2.1s)
+✓ ok    ribbon: two full prototype boards render, teach and win in the real game  (16.8s)
+
+4/4 tests passed in 19s (offline; add --online for the real-database tests)

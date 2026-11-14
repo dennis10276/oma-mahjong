@@ -1,0 +1,89 @@
+{
+  "ok": true,
+  "why": null,
+  "order": [
+    "lookalikeCoverThaw-L36-s3-p1.json",
+    "waitLookalikeWay-L14-s5-p1.json",
+    "lookalikeWay-L14-s3-p1.json",
+    "roofThawKey-L18-s4-p1.json",
+    "waitLookalikeRoof-L14-s5-p2.json",
+    "lookalikeThaw-L31-s1-p1.json",
+    "lookalikeCover-L31-s1-p1.json",
+    "waitThawWay-L31-s3-p1.json",
+    "waitThawKey-L14-s2-p2.json",
+    "waitNested-L31-s2-p2.json",
+    "lookalikeCoverThaw-L18-s4-p1.json",
+    "waitLookalikeWay-L31-s5-p1.json",
+    "lookalikeWay-L18-s1-p1.json",
+    "roofThawKey-L0-s7-p1.json",
+    "waitLookalikeRoof-L18-s5-p1.json",
+    "lookalikeThaw-L18-s2-p1.json",
+    "lookalikeCover-L18-s3-p1.json",
+    "waitThawWay-L14-s2-p1.json",
+    "waitThawKey-L18-s4-p1.json",
+    "waitNested-L36-s3-p1.json"
+  ],
+  "shapes": [
+    "lookalikeCoverThaw",
+    "waitLookalikeWay",
+    "lookalikeWay",
+    "roofThawKey",
+    "waitLookalikeRoof",
+    "lookalikeThaw",
+    "lookalikeCover",
+    "waitThawWay",
+    "waitThawKey",
+    "waitNested"
+  ],
+  "needles": 2,
+  "available": [
+    {
+      "name": "waitLookalikeWay",
+      "examples": 3
+    },
+    {
+      "name": "lookalikeWay",
+      "examples": 4
+    },
+    {
+      "name": "waitLookalikeRoof",
+      "examples": 3
+    },
+    {
+      "name": "lookalikeThaw",
+      "examples": 3
+    },
+    {
+      "name": "lookalikeCover",
+      "examples": 2
+    },
+    {
+      "name": "waitThawWay",
+      "examples": 3
+    },
+    {
+      "name": "waitThawKey",
+      "examples": 2
+    },
+    {
+      "name": "roofThawKey",
+      "examples": 2
+    },
+    {
+      "name": "waitNested",
+      "examples": 3
+    },
+    {
+      "name": "waitKeyRoofs",
+      "examples": 2
+    },
+    {
+      "name": "lookalikeCoverThaw",
+      "examples": 2
+    },
+    {
+      "name": "roofThawWay",
+      "examples": 2
+    }
+  ]
+}
