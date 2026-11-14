@@ -175,6 +175,10 @@ add new decisions with a date.
     reference: nine-row boards 52.2 -> 54.1 px, seven-wide boards 53.9 -> 54.5 px.
   - **Release of 250-300 and the tile fixes asked** (2026-11-14): "Can we release 250-300? And all the fixes for tiles we did in a new
     release?" Prepared as 1.69 on `wip/release-levels-250-300`; not released until he says so.
+  - **No copies** (2026-11-14, before the 250-300 release): "No copy of anything we make past 250 with anything before 250 or after."
+    Checked on the release table: no board from 250 on equals any other level, and none uses the pile shape of a level below 250
+    (also not mirrored). Still open: 15 pairs inside 250-300 share a pile shape with a different trap, and levels past the end of
+    the table repeat 150-300 mirrored (the game's old behaviour).
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
   - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
     played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is
