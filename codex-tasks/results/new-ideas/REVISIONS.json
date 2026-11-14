@@ -1,0 +1,66 @@
+[
+  {
+    "id": 218115308,
+    "labLevel": 360,
+    "file": "keysLater_savePair-L31-s93-p1-light.json",
+    "sourceFile": "keysLater_savePair-L31-s93-p1.json",
+    "sourceLabId": null,
+    "kind": "keysLater",
+    "ideas": [
+      "keysLater",
+      "savePair"
+    ],
+    "links": 4,
+    "pressureParks": 0.9,
+    "naturalTailWin": 0.7538,
+    "clearSpecials": true
+  },
+  {
+    "id": 224320312,
+    "labLevel": 361,
+    "file": "lookalikeThaw_clockCount-L30-s113-p1-light.json",
+    "sourceFile": "lookalikeThaw_clockCount-L30-s113-p1.json",
+    "sourceLabId": 190403256,
+    "kind": "clockCount",
+    "ideas": [
+      "clockCount",
+      "lookalikeChoice"
+    ],
+    "links": 5,
+    "pressureParks": 0.9,
+    "naturalTailWin": 0.8925,
+    "clearSpecials": false
+  },
+  {
+    "id": 219608985,
+    "labLevel": 362,
+    "file": "lookalikeThaw_savePair-L14-s85-p1-light.json",
+    "sourceFile": "lookalikeThaw_savePair-L14-s85-p1.json",
+    "sourceLabId": 189772842,
+    "kind": "savePair",
+    "ideas": [
+      "lookalikeChoice",
+      "savePair"
+    ],
+    "links": 5,
+    "pressureParks": 1,
+    "naturalTailWin": 0.8087,
+    "clearSpecials": false
+  },
+  {
+    "id": 221707746,
+    "labLevel": 363,
+    "file": "selfLocked_savePair-L31-s93-p1-light.json",
+    "sourceFile": "selfLocked_savePair-L31-s93-p1.json",
+    "sourceLabId": null,
+    "kind": "selfLocked",
+    "ideas": [
+      "savePair",
+      "selfLocked"
+    ],
+    "links": 4,
+    "pressureParks": 0.8,
+    "naturalTailWin": 0.8488,
+    "clearSpecials": true
+  }
+]

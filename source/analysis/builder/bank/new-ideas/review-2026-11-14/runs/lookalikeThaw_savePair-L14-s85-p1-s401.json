@@ -1,0 +1,16 @@
+{
+  "file": "lookalikeThaw_savePair-L14-s85-p1.json",
+  "labId": 189772842,
+  "reason": "Dennis: Good trap! 320+ too hard after the trap. tune that easier.",
+  "ms": 150000,
+  "seed": 401,
+  "ok": true,
+  "summary": {
+    "file": "lookalikeThaw_savePair-L14-s85-p1.json",
+    "pp": 1,
+    "greedy": 0.8087,
+    "beforePp": 2.4,
+    "beforeGreedy": 0.03,
+    "edits": 7
+  }
+}

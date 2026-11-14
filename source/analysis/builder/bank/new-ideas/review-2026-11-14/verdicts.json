@@ -1,0 +1,4369 @@
+{
+  "schema": "task18-human-verdicts-v1",
+  "savedAt": "2026-11-14T21:28:33.971Z",
+  "scope": "Exact eight original boards only; technical acceptance is not human placement approval.",
+  "status": "revision-required",
+  "bankApproved": false,
+  "records": [
+    {
+      "id": 193895334,
+      "file": "clockCountThaw-L1-s139-p1.json",
+      "kind": "clockCount",
+      "edge": "easier",
+      "labLevel": 350,
+      "layout": 1,
+      "inMainCatalogue": false,
+      "boardHash": "5523475792490b505867474c4e883c648ed49facbef6494e2645d5b8c76fe48d",
+      "ideas": [
+        "clockCount"
+      ],
+      "links": 3,
+      "rating": {
+        "note": "No AHA really need more chains with diferent ideas, Easy to spot",
+        "stars": 2,
+        "verdict": "easy",
+        "starts": 1,
+        "tries": 1,
+        "wins": 0,
+        "results": [
+          {
+            "r": "stuck",
+            "left": 72,
+            "s": 37,
+            "t": 1794689505251
+          }
+        ]
+      },
+      "status": "needs-more-chain",
+      "action": "Replace this single-idea example with a connected multi-idea chain; no 320+ approval.",
+      "readability": {
+        "profile": "clear-specials-v1",
+        "ok": true,
+        "rows": [
+          {
+            "tile": 57,
+            "kind": "ice",
+            "shown": 1,
+            "clear": true
+          },
+          {
+            "tile": 67,
+            "kind": "lock",
+            "shown": 0.9957,
+            "clear": true
+          },
+          {
+            "tile": 5,
+            "kind": "key",
+            "shown": 1,
+            "clear": true
+          },
+          {
+            "tile": 58,
+            "kind": "key",
+            "shown": 1,
+            "clear": true
+          }
+        ]
+      },
+      "replays": [
+        {
+          "aid": "eb4c100b-d734-4849-963f-d4c503114e96",
+          "labId": 193895334,
+          "labLevel": 350,
+          "attempt": 1,
+          "partial": false,
+          "chunks": 3,
+          "continuous": true,
+          "taps": 5,
+          "moves": 4,
+          "reachedClock": false,
+          "end": "stuck"
+        },
+        {
+          "aid": "b9be564c-4260-4cf8-b68f-f4ff7f5f7c4d",
+          "labId": 193895334,
+          "labLevel": 350,
+          "attempt": 2,
+          "partial": false,
+          "chunks": 4,
+          "continuous": true,
+          "taps": 43,
+          "moves": 36,
+          "reachedClock": true,
+          "end": null
+        }
+      ]
+    },
+    {
+      "id": 190403256,
+      "file": "lookalikeThaw_clockCount-L30-s113-p1.json",
+      "kind": "clockCount",
+      "edge": "harder",
+      "labLevel": 351,
+      "layout": 30,
+      "inMainCatalogue": true,
+      "boardHash": "7115629132e35eb7c41a4f3c5d6fa8c3362368a0bf7968206a2b5e8b16435402",
+      "ideas": [
+        "clockCount",
+        "lookalikeChoice"
+      ],
+      "links": 5,
+      "rating": {
+        "note": "Good AHA trap. Part after is too hard.",
+        "stars": 4,
+        "verdict": "right",
+        "starts": 1,
+        "tries": 5,
+        "wins": 0,
+        "results": [
+          {
+            "r": "stuck",
+            "left": 65,
+            "s": 74,
+            "t": 1794689704199,
+            "ck": 1
+          },
+          {
+            "r": "restart",
+            "left": 71,
+            "s": 31,
+            "t": 1794689747378
+          },
+          {
+            "r": "stuck",
+            "left": 66,
+            "s": 49,
+            "t": 1794689796019
+          },
+          {
+            "r": "stuck",
+            "left": 65,
+            "s": 18,
+            "t": 1794689815981,
+            "ck": 1
+          },
+          {
+            "r": "stuck",
+            "left": 38,
+            "s": 83,
+            "t": 1794689900404
+          }
+        ]
+      },
+      "status": "liked-trap-lighten-finish",
+      "action": "Keep the clock-count/lookalike trap; make the finish easier.",
+      "readability": {
+        "profile": "clear-specials-v1",
+        "ok": false,
+        "rows": [
+          {
+            "tile": 3,
+            "kind": "ice",
+            "shown": 0,
+            "clear": false
+          },
+          {
+            "tile": 69,
+            "kind": "ice",
+            "shown": 1,
+            "clear": true
+          },
+          {
+            "tile": 4,
+            "kind": "lock",
+            "shown": 0,
+            "clear": false
+          },
+          {
+            "tile": 59,
+            "kind": "key",
+            "shown": 0.6232,
+            "clear": false
+          },
+          {
+            "tile": 33,
+            "kind": "key",
+            "shown": 1,
+            "clear": true
+          }
+        ]
+      },
+      "replays": [
+        {
+          "aid": "65b5fc9e-6bbe-47ac-9f5c-7cb83010b4a4",
+          "labId": 190403256,
+          "labLevel": 351,
+          "attempt": 1,
+          "partial": false,
+          "chunks": 4,
+          "continuous": true,
+          "taps": 22,
+          "moves": 15,
+          "reachedClock": false,
+          "end": "stuck"
+        },
+        {
+          "aid": "b3e0fbbc-30ff-42f4-b538-131ef6eda8b0",
+          "labId": 190403256,
+          "labLevel": 351,
+          "attempt": 2,
+          "partial": false,
+          "chunks": 3,
+          "continuous": true,
+          "taps": 12,
+          "moves": 9,
+          "reachedClock": false,
+          "end": "restart"
+        },
+        {
+          "aid": "424e9223-e4d5-463c-ae67-25f9c192443f",
+          "labId": 190403256,
+          "labLevel": 351,
+          "attempt": 3,
+          "partial": false,
+          "chunks": 3,
+          "continuous": true,
+          "taps": 19,
+          "moves": 14,
+          "reachedClock": true,
+          "end": "stuck"
+        },
+        {
+          "aid": "04e55aa5-1b2f-40ce-b18d-759c18ddbb28",
+          "labId": 190403256,
+          "labLevel": 351,
+          "attempt": 4,
+          "partial": false,
+          "chunks": 2,
+          "continuous": true,
+          "taps": 15,
+          "moves": 15,
+          "reachedClock": false,
+          "end": "stuck"
+        },
+        {
+          "aid": "11766d19-e9f3-4313-9c56-cac5c7a32bd0",
+          "labId": 190403256,
+          "labLevel": 351,
+          "attempt": 5,
+          "partial": false,
+          "chunks": 6,
+          "continuous": true,
+          "taps": 52,
+          "moves": 42,
+          "reachedClock": true,
+          "end": "stuck"
+        },
+        {
+          "aid": "ea8fdef3-4344-4b4d-ae6e-3e6963f3130a",
+          "labId": 190403256,
+          "labLevel": 351,
+          "attempt": 6,
+          "partial": false,
+          "chunks": 2,
+          "continuous": true,
+          "taps": 0,
+          "moves": 0,
+          "reachedClock": false,
+          "end": null
+        }
+      ]
+    },
+    {
+      "id": 188787899,
+      "file": "selfLocked-L23-s89-p1.json",
+      "kind": "selfLocked",
+      "edge": "easier",
+      "labLevel": 352,
+      "layout": 23,
+      "inMainCatalogue": false,
+      "boardHash": "024d4cbe26cf502f602a219e46cc68416b5ff2d0b02dca6b3b0b8af0589460ec",
+      "ideas": [
+        "selfLocked"
+      ],
+      "links": 3,
+      "rating": {
+        "note": "No AHA too easy needs more chains",
+        "stars": 2,
+        "verdict": null,
+        "starts": 1,
+        "tries": 0,
+        "wins": 0,
+        "results": []
+      },
+      "status": "needs-more-chain",
+      "action": "Replace this obvious single-idea example with a connected multi-idea chain.",
+      "readability": {
+        "profile": "clear-specials-v1",
+        "ok": false,
+        "rows": [
+          {
+            "tile": 66,
+            "kind": "ice",
+            "shown": 1,
+            "clear": true
+          },
+          {
+            "tile": 73,
+            "kind": "lock",
+            "shown": 0.9957,
+            "clear": true
+          },
+          {
+            "tile": 55,
+            "kind": "key",
+            "shown": 0.6232,
+            "clear": false
+          },
+          {
+            "tile": 54,
+            "kind": "key",
+            "shown": 0.9379,
+            "clear": true
+          }
+        ]
+      },
+      "replays": [
+        {
+          "aid": "3abbe3b4-bee2-4bb4-933f-03d213009c3e",
+          "labId": 188787899,
+          "labLevel": 352,
+          "attempt": 1,
+          "partial": false,
+          "chunks": 3,
+          "continuous": true,
+          "taps": 27,
+          "moves": 22,
+          "reachedClock": true,
+          "end": null
+        }
+      ]
+    },
+    {
+      "id": 191365061,
+      "file": "waitNested_selfLocked-L31-s173-p1.json",
+      "kind": "selfLocked",
+      "edge": "harder",
+      "labLevel": 353,
+      "layout": 31,
+      "inMainCatalogue": true,
+      "boardHash": "c17fbec683d5f7f7f7f0a80e4a9545715fd2435620b85215b1c05913de57ce94",
+      "ideas": [
+        "selfLocked",
+        "waitForTwin"
+      ],
+      "links": 5,
+      "rating": {
+        "note": "Very good AHA moment. 320+ ",
+        "stars": 4,
+        "verdict": "right",
+        "starts": 1,
+        "tries": 7,
+        "wins": 1,
+        "results": [
+          {
+            "r": "restart",
+            "left": 65,
+            "s": 102,
+            "t": 1794690090075
+          },
+          {
+            "r": "stuck",
+            "left": 60,
+            "s": 111,
+            "t": 1794690201555
+          },
+          {
+            "r": "stuck",
+            "left": 62,
+            "s": 113,
+            "t": 1794690316323
+          },
+          {
+            "r": "stuck",
+            "left": 66,
+            "s": 38,
+            "t": 1794690355586
+          },
+          {
+            "r": "restart",
+            "left": 63,
+            "s": 97,
+            "t": 1794690471974
+          },
+          {
+            "r": "restart",
+            "left": 61,
+            "s": 26,
+            "t": 1794690498381
+          },
+          {
+            "r": "win",
+            "left": 0,
+            "s": 103,
+            "t": 1794690601751
+          }
+        ]
+      },
+      "status": "liked-320-plus",
+      "action": "Keep this exact five-link self-locked/waiting-clock trap as the positive anchor for 320+.",
+      "readability": {
+        "profile": "clear-specials-v1",
+        "ok": false,
+        "rows": [
+          {
+            "tile": 60,
+            "kind": "ice",
+            "shown": 1,
+            "clear": true
+          },
+          {
+            "tile": 65,
+            "kind": "ice",
+            "shown": 1,
+            "clear": true
+          },
+          {
+            "tile": 44,
+            "kind": "lock",
+            "shown": 0.9957,
+            "clear": true
+          },
+          {
+            "tile": 18,
+            "kind": "key",
+            "shown": 0.6232,
+            "clear": false
+          },
+          {
+            "tile": 73,
+            "kind": "key",
+            "shown": 1,
+            "clear": true
+          }
+        ]
+      },
+      "replays": [
+        {
+          "aid": "c9d099c3-a702-4b4e-ae84-8473bff0d1e5",
+          "labId": 191365061,
+          "labLevel": 353,
+          "attempt": 1,
+          "partial": false,
+          "chunks": 5,
+          "continuous": true,
+          "taps": 15,
+          "moves": 11,
+          "reachedClock": false,
+          "end": "restart"
+        },
+        {
+          "aid": "b53daa08-0996-4012-b409-2a7a134e40a2",
+          "labId": 191365061,
+          "labLevel": 353,
+          "attempt": 2,
+          "partial": false,
+          "chunks": 4,
+          "continuous": true,
+          "taps": 18,
+          "moves": 16,
+          "reachedClock": true,
+          "end": "stuck"
+        },
+        {
+          "aid": "5d70665b-2bf5-4aae-a7df-524521a7294e",
+          "labId": 191365061,
+          "labLevel": 353,
+          "attempt": 3,
+          "partial": false,
+          "chunks": 4,
+          "continuous": true,
+          "taps": 15,
+          "moves": 14,
+          "reachedClock": false,
+          "end": "stuck"
+        },
+        {
+          "aid": "e627ef4b-2a42-4239-8fe3-576cc18aa121",
+          "labId": 191365061,
+          "labLevel": 353,
+          "attempt": 4,
+          "partial": false,
+          "chunks": 3,
+          "continuous": true,
+          "taps": 10,
+          "moves": 10,
+          "reachedClock": true,
+          "end": "stuck"
+        },
+        {
+          "aid": "1017cee7-9163-473e-9180-bf4658f87b32",
+          "labId": 191365061,
+          "labLevel": 353,
+          "attempt": 5,
+          "partial": false,
+          "chunks": 4,
+          "continuous": true,
+          "taps": 16,
+          "moves": 13,
+          "reachedClock": true,
+          "end": "restart"
+        },
+        {
+          "aid": "422dc5ec-0be1-4a32-9c56-356981764b22",
+          "labId": 191365061,
+          "labLevel": 353,
+          "attempt": 6,
+          "partial": false,
+          "chunks": 2,
+          "continuous": true,
+          "taps": 15,
+          "moves": 15,
+          "reachedClock": true,
+          "end": "restart"
+        },
+        {
+          "aid": "7995f969-98d1-491c-85a7-53b862af5621",
+          "labId": 191365061,
+          "labLevel": 353,
+          "attempt": 7,
+          "partial": false,
+          "chunks": 6,
+          "continuous": true,
+          "taps": 97,
+          "moves": 76,
+          "reachedClock": true,
+          "end": "win"
+        }
+      ]
+    },
+    {
+      "id": 194256584,
+      "file": "keysLater_savePair-L18-s97-p1.json",
+      "kind": "savePair",
+      "edge": "easier",
+      "labLevel": 354,
+      "layout": 18,
+      "inMainCatalogue": true,
+      "boardHash": "c6e9955f91888f0db23b32387e3f17da4b8213107cb110e58059822ac12b43f2",
+      "ideas": [
+        "keysLater",
+        "savePair"
+      ],
+      "links": 4,
+      "rating": {
+        "note": "The lock is not clearly shown so it doesnt feel rewarding to get the keys yet untill its too late. The locks should show.",
+        "stars": 0,
+        "verdict": null,
+        "starts": 1,
+        "tries": 7,
+        "wins": 0,
+        "results": [
+          {
+            "r": "restart",
+            "left": 71,
+            "s": 34,
+            "t": 1794690673434
+          },
+          {
+            "r": "stuck",
+            "left": 70,
+            "s": 75,
+            "t": 1794690748403
+          },
+          {
+            "r": "restart",
+            "left": 53,
+            "s": 51,
+            "t": 1794690803178
+          },
+          {
+            "r": "restart",
+            "left": 70,
+            "s": 20,
+            "t": 1794690828842
+          },
+          {
+            "r": "restart",
+            "left": 71,
+            "s": 21,
+            "t": 1794690855107
+          },
+          {
+            "r": "restart",
+            "left": 72,
+            "s": 6,
+            "t": 1794690879904
+          },
+          {
+            "r": "restart",
+            "left": 69,
+            "s": 30,
+            "t": 1794690910744
+          }
+        ]
+      },
+      "status": "hold-hidden-lock",
+      "action": "Hold: the key-delay lock badge is completely hidden. Rebuild on readable geometry.",
+      "readability": {
+        "profile": "clear-specials-v1",
+        "ok": false,
+        "rows": [
+          {
+            "tile": 65,
+            "kind": "ice",
+            "shown": 1,
+            "clear": true
+          },
+          {
+            "tile": 66,
+            "kind": "ice",
+            "shown": 1,
+            "clear": true
+          },
+          {
+            "tile": 15,
+            "kind": "lock",
+            "shown": 0,
+            "clear": false
+          },
+          {
+            "tile": 72,
+            "kind": "key",
+            "shown": 1,
+            "clear": true
+          },
+          {
+            "tile": 45,
+            "kind": "key",
+            "shown": 1,
+            "clear": true
+          }
+        ]
+      },
+      "replays": [
+        {
+          "aid": "cdb1a6a5-3a30-4558-bd1e-a0ec9574748f",
+          "labId": 194256584,
+          "labLevel": 354,
+          "attempt": 1,
+          "partial": false,
+          "chunks": 3,
+          "continuous": true,
+          "taps": 7,
+          "moves": 5,
+          "reachedClock": true,
+          "end": "restart"
+        },
+        {
+          "aid": "1417b425-ba3e-4c5e-bbf4-fa72a7603148",
+          "labId": 194256584,
+          "labLevel": 354,
+          "attempt": 2,
+          "partial": false,
+          "chunks": 4,
+          "continuous": true,
+          "taps": 7,
+          "moves": 6,
+          "reachedClock": true,
+          "end": "stuck"
+        },
+        {
+          "aid": "a52e484c-4926-4c38-a97d-491ed950bf60",
+          "labId": 194256584,
+          "labLevel": 354,
+          "attempt": 3,
+          "partial": false,
+          "chunks": 3,
+          "continuous": true,
+          "taps": 24,
+          "moves": 23,
+          "reachedClock": true,
+          "end": "restart"
+        },
+        {
+          "aid": "3476a3c1-c93b-4f19-a708-ae851d7658af",
+          "labId": 194256584,
+          "labLevel": 354,
+          "attempt": 4,
+          "partial": false,
+          "chunks": 2,
+          "continuous": true,
+          "taps": 7,
+          "moves": 6,
+          "reachedClock": true,
+          "end": "restart"
+        },
+        {
+          "aid": "5da1cd45-a559-40ea-a6b5-93d575435e1a",
+          "labId": 194256584,
+          "labLevel": 354,
+          "attempt": 5,
+          "partial": false,
+          "chunks": 2,
+          "continuous": true,
+          "taps": 6,
+          "moves": 5,
+          "reachedClock": false,
+          "end": "restart"
+        },
+        {
+          "aid": "350f02a1-0dd5-4cfb-9917-552f69ce9e60",
+          "labId": 194256584,
+          "labLevel": 354,
+          "attempt": 6,
+          "partial": false,
+          "chunks": 2,
+          "continuous": true,
+          "taps": 4,
+          "moves": 4,
+          "reachedClock": false,
+          "end": "restart"
+        },
+        {
+          "aid": "2b9f69b5-8cfd-45bd-bf70-bd139081ad22",
+          "labId": 194256584,
+          "labLevel": 354,
+          "attempt": 7,
+          "partial": false,
+          "chunks": 3,
+          "continuous": true,
+          "taps": 9,
+          "moves": 7,
+          "reachedClock": true,
+          "end": "restart"
+        },
+        {
+          "aid": "d0180046-eb59-4a6c-804a-f708b2bc03de",
+          "labId": 194256584,
+          "labLevel": 354,
+          "attempt": 8,
+          "partial": false,
+          "chunks": 2,
+          "continuous": true,
+          "taps": 0,
+          "moves": 0,
+          "reachedClock": false,
+          "end": null
+        }
+      ]
+    },
+    {
+      "id": 189772842,
+      "file": "lookalikeThaw_savePair-L14-s85-p1.json",
+      "kind": "savePair",
+      "edge": "harder",
+      "labLevel": 355,
+      "layout": 14,
+      "inMainCatalogue": false,
+      "boardHash": "0cdfff1d3b2af51d6bb74a65c91f14c5c5bd8f83136b1c8bda5ec94180ebd3fd",
+      "ideas": [
+        "lookalikeChoice",
+        "savePair"
+      ],
+      "links": 5,
+      "rating": {
+        "note": "Good trap! 320+  too hard after the trap. tune that easier. its more about the traps now.",
+        "stars": 0,
+        "verdict": null,
+        "starts": 1,
+        "tries": 1,
+        "wins": 1,
+        "results": [
+          {
+            "r": "win",
+            "left": 0,
+            "s": 300,
+            "t": 1794691275127
+          }
+        ]
+      },
+      "status": "liked-trap-lighten-finish",
+      "action": "Keep the three-of-a-kind/lookalike trap for 320+; make the finish easier.",
+      "readability": {
+        "profile": "clear-specials-v1",
+        "ok": false,
+        "rows": [
+          {
+            "tile": 6,
+            "kind": "ice",
+            "shown": 1,
+            "clear": true
+          },
+          {
+            "tile": 68,
+            "kind": "ice",
+            "shown": 1,
+            "clear": true
+          },
+          {
+            "tile": 12,
+            "kind": "lock",
+            "shown": 0.9957,
+            "clear": true
+          },
+          {
+            "tile": 43,
+            "kind": "key",
+            "shown": 0,
+            "clear": false
+          },
+          {
+            "tile": 0,
+            "kind": "key",
+            "shown": 1,
+            "clear": true
+          }
+        ]
+      },
+      "replays": [
+        {
+          "aid": "0472b314-0d6a-405d-a942-35ea47429f17",
+          "labId": 189772842,
+          "labLevel": 355,
+          "attempt": 1,
+          "partial": false,
+          "chunks": 11,
+          "continuous": true,
+          "taps": 123,
+          "moves": 80,
+          "reachedClock": true,
+          "end": "win"
+        }
+      ]
+    },
+    {
+      "id": 192163876,
+      "file": "keysLater-L31-s89-p1.json",
+      "kind": "keysLater",
+      "edge": "easier",
+      "labLevel": 356,
+      "layout": 31,
+      "inMainCatalogue": false,
+      "boardHash": "f0322fe45cda9913105b0e038ac6112a9513273e09bc1728c42eaa34223482d3",
+      "ideas": [
+        "keysLater"
+      ],
+      "links": 3,
+      "rating": {
+        "note": "Trap is fine but a bit too easy. Make 1 more chain in it. After its too hard tune it easier.",
+        "stars": 0,
+        "verdict": null,
+        "starts": 1,
+        "tries": 1,
+        "wins": 0,
+        "results": [
+          {
+            "r": "stuck",
+            "left": 44,
+            "s": 143,
+            "t": 1794691474275
+          }
+        ]
+      },
+      "status": "more-chain-lighten-finish",
+      "action": "Add a meaningful linked idea and make the finish easier.",
+      "readability": {
+        "profile": "clear-specials-v1",
+        "ok": false,
+        "rows": [
+          {
+            "tile": 70,
+            "kind": "ice",
+            "shown": 1,
+            "clear": true
+          },
+          {
+            "tile": 71,
+            "kind": "ice",
+            "shown": 1,
+            "clear": true
+          },
+          {
+            "tile": 38,
+            "kind": "lock",
+            "shown": 0.592,
+            "clear": false
+          },
+          {
+            "tile": 34,
+            "kind": "key",
+            "shown": 0.6232,
+            "clear": false
+          },
+          {
+            "tile": 31,
+            "kind": "key",
+            "shown": 0.6232,
+            "clear": false
+          }
+        ]
+      },
+      "replays": [
+        {
+          "aid": "5fa35b7d-b256-4a7a-be65-85d28acf22f8",
+          "labId": 192163876,
+          "labLevel": 356,
+          "attempt": 1,
+          "partial": false,
+          "chunks": 6,
+          "continuous": true,
+          "taps": 53,
+          "moves": 32,
+          "reachedClock": true,
+          "end": "stuck"
+        },
+        {
+          "aid": "187cb06e-d61c-44ed-ac5c-5dcbfdc5dc35",
+          "labId": 192163876,
+          "labLevel": 356,
+          "attempt": 2,
+          "partial": false,
+          "chunks": 2,
+          "continuous": true,
+          "taps": 0,
+          "moves": 0,
+          "reachedClock": false,
+          "end": null
+        }
+      ]
+    },
+    {
+      "id": 196526931,
+      "file": "keysLater_clockCount-L18-s197-p1.json",
+      "kind": "keysLater",
+      "edge": "harder",
+      "labLevel": 357,
+      "layout": 18,
+      "inMainCatalogue": true,
+      "boardHash": "7483570354bf9b4ea845b1d729be2f607c08bb2c78eeb19d4cd07c8c6a892960",
+      "ideas": [
+        "clockCount",
+        "keysLater"
+      ],
+      "links": 4,
+      "rating": {
+        "note": "This is very stupid. You cant see the honey under the tiles so you kind find the solution. Also the keys are just laying there. Not chained at all.",
+        "stars": 0,
+        "verdict": null,
+        "starts": 1,
+        "tries": 3,
+        "wins": 0,
+        "results": [
+          {
+            "r": "stuck",
+            "left": 62,
+            "s": 92,
+            "t": 1794691598196
+          },
+          {
+            "r": "restart",
+            "left": 67,
+            "s": 43,
+            "t": 1794691650627
+          },
+          {
+            "r": "restart",
+            "left": 64,
+            "s": 20,
+            "t": 1794691670751
+          }
+        ]
+      },
+      "status": "hold-hidden-ice-and-lock",
+      "action": "Hold: hidden ice and lock make the reason unreadable; loose keys do not establish a rewarding chain.",
+      "readability": {
+        "profile": "clear-specials-v1",
+        "ok": false,
+        "rows": [
+          {
+            "tile": 45,
+            "kind": "ice",
+            "shown": 0.5133,
+            "clear": false
+          },
+          {
+            "tile": 51,
+            "kind": "ice",
+            "shown": 1,
+            "clear": true
+          },
+          {
+            "tile": 15,
+            "kind": "lock",
+            "shown": 0,
+            "clear": false
+          },
+          {
+            "tile": 52,
+            "kind": "key",
+            "shown": 1,
+            "clear": true
+          },
+          {
+            "tile": 74,
+            "kind": "key",
+            "shown": 1,
+            "clear": true
+          }
+        ]
+      },
+      "replays": [
+        {
+          "aid": "a202e39a-83d9-4149-8f43-e460f05b1f45",
+          "labId": 196526931,
+          "labLevel": 357,
+          "attempt": 1,
+          "partial": false,
+          "chunks": 3,
+          "continuous": true,
+          "taps": 20,
+          "moves": 14,
+          "reachedClock": true,
+          "end": "stuck"
+        },
+        {
+          "aid": "5f185e81-4673-4a49-aba7-c971f0076e5f",
+          "labId": 196526931,
+          "labLevel": 357,
+          "attempt": 2,
+          "partial": false,
+          "chunks": 3,
+          "continuous": true,
+          "taps": 12,
+          "moves": 9,
+          "reachedClock": false,
+          "end": "restart"
+        },
+        {
+          "aid": "55693a06-4845-43c4-a5a7-0a3365b09fec",
+          "labId": 196526931,
+          "labLevel": 357,
+          "attempt": 3,
+          "partial": false,
+          "chunks": 2,
+          "continuous": true,
+          "taps": 12,
+          "moves": 12,
+          "reachedClock": true,
+          "end": "restart"
+        },
+        {
+          "aid": "75219bfa-a017-4dbd-bb6f-ccd56a56f9ac",
+          "labId": 196526931,
+          "labLevel": 357,
+          "attempt": 4,
+          "partial": false,
+          "chunks": 4,
+          "continuous": true,
+          "taps": 0,
+          "moves": 0,
+          "reachedClock": false,
+          "end": null
+        }
+      ]
+    }
+  ],
+  "geometryAudit": [
+    {
+      "file": "clockCount-L0-s113-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 72,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 22,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 58,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 28,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        }
+      ]
+    },
+    {
+      "file": "clockCount-L1-s139-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 46,
+          "kind": "ice",
+          "shown": 0.5133,
+          "clear": false
+        },
+        {
+          "tile": 13,
+          "kind": "lock",
+          "shown": 0.567,
+          "clear": false
+        },
+        {
+          "tile": 10,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        },
+        {
+          "tile": 54,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "clockCount-L12-s139-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 64,
+          "kind": "ice",
+          "shown": 0.5133,
+          "clear": false
+        },
+        {
+          "tile": 20,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 7,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        },
+        {
+          "tile": 78,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "clockCount-L37-s113-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 80,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 65,
+          "kind": "lock",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 67,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 55,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "clockCount-L5-s113-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 72,
+          "kind": "ice",
+          "shown": 0.5133,
+          "clear": false
+        },
+        {
+          "tile": 42,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 43,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 1,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "clockCountThaw-L1-s139-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": true,
+      "rows": [
+        {
+          "tile": 57,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 67,
+          "kind": "lock",
+          "shown": 0.9957,
+          "clear": true
+        },
+        {
+          "tile": 5,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 58,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "clockCountThaw-L18-s139-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 20,
+          "kind": "ice",
+          "shown": 0.5133,
+          "clear": false
+        },
+        {
+          "tile": 19,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 7,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        },
+        {
+          "tile": 68,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "clockCountThaw_savePair-L27-s211-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 74,
+          "kind": "ice",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 79,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 67,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 0,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "clockCountThaw_savePair-L8-s211-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 60,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 59,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 23,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 83,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "clockCountThaw_savePair-L9-s211-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 49,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 42,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 26,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        },
+        {
+          "tile": 60,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "clockCount_savePair-L0-s197-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 72,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 46,
+          "kind": "lock",
+          "shown": 0.9957,
+          "clear": true
+        },
+        {
+          "tile": 58,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 29,
+          "kind": "key",
+          "shown": 0.9379,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "clockCount_savePair-L5-s197-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 74,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 57,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 51,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 3,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "keysLater-L12-s157-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 56,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 63,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 43,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 71,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 83,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "keysLater-L18-s89-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 44,
+          "kind": "ice",
+          "shown": 0.5133,
+          "clear": false
+        },
+        {
+          "tile": 50,
+          "kind": "ice",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 21,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 69,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 75,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "keysLater-L28-s89-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": true,
+      "rows": [
+        {
+          "tile": 40,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 44,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 37,
+          "kind": "lock",
+          "shown": 0.9091,
+          "clear": true
+        },
+        {
+          "tile": 49,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 68,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "keysLater-L31-s223-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 61,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 64,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 37,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 66,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 57,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "keysLater-L31-s89-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 70,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 71,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 38,
+          "kind": "lock",
+          "shown": 0.592,
+          "clear": false
+        },
+        {
+          "tile": 34,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        },
+        {
+          "tile": 31,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        }
+      ]
+    },
+    {
+      "file": "keysLater_clockCount-L18-s197-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 45,
+          "kind": "ice",
+          "shown": 0.5133,
+          "clear": false
+        },
+        {
+          "tile": 51,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 15,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 52,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 74,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "keysLater_savePair-L18-s97-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 65,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 66,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 15,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 72,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 45,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "keysLater_savePair-L24-s97-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 2,
+          "kind": "ice",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 6,
+          "kind": "ice",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 63,
+          "kind": "lock",
+          "shown": 0.9022,
+          "clear": true
+        },
+        {
+          "tile": 45,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        },
+        {
+          "tile": 5,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "keysLater_savePair-L3-s97-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 76,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 79,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 52,
+          "kind": "lock",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 4,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        },
+        {
+          "tile": 11,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        }
+      ]
+    },
+    {
+      "file": "keysLater_savePair-L31-s93-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": true,
+      "rows": [
+        {
+          "tile": 61,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 67,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 30,
+          "kind": "lock",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 59,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 65,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "keysLater_savePair-L31-s97-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 61,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 67,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 17,
+          "kind": "lock",
+          "shown": 0.9957,
+          "clear": true
+        },
+        {
+          "tile": 53,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        },
+        {
+          "tile": 59,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "keysLater_savePair-L5-s127-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 75,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 76,
+          "kind": "ice",
+          "shown": 0.8617,
+          "clear": true
+        },
+        {
+          "tile": 70,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 1,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 73,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        }
+      ]
+    },
+    {
+      "file": "keysLater_selfLocked-L36-s97-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 56,
+          "kind": "ice",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 64,
+          "kind": "ice",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 65,
+          "kind": "lock",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 6,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 71,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "lookalikeThaw_clockCount-L1-s113-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 0,
+          "kind": "ice",
+          "shown": 0.8617,
+          "clear": true
+        },
+        {
+          "tile": 47,
+          "kind": "ice",
+          "shown": 0.5133,
+          "clear": false
+        },
+        {
+          "tile": 1,
+          "kind": "lock",
+          "shown": 0.5115,
+          "clear": false
+        },
+        {
+          "tile": 13,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 68,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "lookalikeThaw_clockCount-L11-s113-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 37,
+          "kind": "ice",
+          "shown": 0.5133,
+          "clear": false
+        },
+        {
+          "tile": 63,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 60,
+          "kind": "lock",
+          "shown": 0.9957,
+          "clear": true
+        },
+        {
+          "tile": 7,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        },
+        {
+          "tile": 72,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "lookalikeThaw_clockCount-L30-s113-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 3,
+          "kind": "ice",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 69,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 4,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 59,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        },
+        {
+          "tile": 33,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "lookalikeThaw_clockCount-L33-s113-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 11,
+          "kind": "ice",
+          "shown": 0.5133,
+          "clear": false
+        },
+        {
+          "tile": 68,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 8,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 62,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 49,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "lookalikeThaw_clockCount-L6-s113-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 58,
+          "kind": "ice",
+          "shown": 0.5133,
+          "clear": false
+        },
+        {
+          "tile": 70,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 67,
+          "kind": "lock",
+          "shown": 0.9957,
+          "clear": true
+        },
+        {
+          "tile": 34,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 66,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "lookalikeThaw_savePair-L14-s85-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 6,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 68,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 12,
+          "kind": "lock",
+          "shown": 0.9957,
+          "clear": true
+        },
+        {
+          "tile": 43,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 0,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "lookalikeThaw_savePair-L19-s85-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 37,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 52,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 30,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 14,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 53,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "lookalikeThaw_savePair-L23-s85-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 5,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 66,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 10,
+          "kind": "lock",
+          "shown": 0.9957,
+          "clear": true
+        },
+        {
+          "tile": 43,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 60,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "lookalikeThaw_savePair-L27-s97-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 64,
+          "kind": "ice",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 89,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 65,
+          "kind": "lock",
+          "shown": 0.1703,
+          "clear": false
+        },
+        {
+          "tile": 79,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 90,
+          "kind": "key",
+          "shown": 0.9379,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "lookalikeThaw_savePair-L30-s97-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 58,
+          "kind": "ice",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 69,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 63,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 56,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 0,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "lookalikeThaw_savePair-L33-s97-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 4,
+          "kind": "ice",
+          "shown": 0.5133,
+          "clear": false
+        },
+        {
+          "tile": 68,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 0,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 62,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 11,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        }
+      ]
+    },
+    {
+      "file": "lookalikeThaw_savePair-L36-s97-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 52,
+          "kind": "ice",
+          "shown": 0.5133,
+          "clear": false
+        },
+        {
+          "tile": 75,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 56,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 66,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        },
+        {
+          "tile": 25,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "lookalikeThaw_savePair-L43-s97-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 49,
+          "kind": "ice",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 80,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 61,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 67,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 34,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        }
+      ]
+    },
+    {
+      "file": "lookalikeThaw_savePair-L46-s97-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 66,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 71,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 68,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 63,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 25,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "lookalikeThaw_savePair-L6-s97-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 53,
+          "kind": "ice",
+          "shown": 0.5133,
+          "clear": false
+        },
+        {
+          "tile": 58,
+          "kind": "ice",
+          "shown": 0.5133,
+          "clear": false
+        },
+        {
+          "tile": 48,
+          "kind": "lock",
+          "shown": 0.592,
+          "clear": false
+        },
+        {
+          "tile": 34,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 80,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        }
+      ]
+    },
+    {
+      "file": "roofThawKey_clockCount-L1-s139-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 33,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 46,
+          "kind": "ice",
+          "shown": 0.5133,
+          "clear": false
+        },
+        {
+          "tile": 26,
+          "kind": "lock",
+          "shown": 0.592,
+          "clear": false
+        },
+        {
+          "tile": 10,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        },
+        {
+          "tile": 67,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "roofThawKey_savePair-L0-s97-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 49,
+          "kind": "ice",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 71,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 43,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 62,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 77,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "roofThawKey_savePair-L14-s85-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 31,
+          "kind": "ice",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 63,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 25,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 38,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 76,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "roofThawKey_savePair-L19-s85-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": true,
+      "rows": [
+        {
+          "tile": 36,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 52,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 43,
+          "kind": "lock",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 14,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 65,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "roofThawKey_savePair-L23-s85-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 0,
+          "kind": "ice",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 73,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 6,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 52,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 62,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "roofThawKey_savePair-L43-s97-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 69,
+          "kind": "ice",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 79,
+          "kind": "ice",
+          "shown": 0.8617,
+          "clear": true
+        },
+        {
+          "tile": 70,
+          "kind": "lock",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 68,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 82,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "roofThawKey_selfLocked-L35-s97-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 67,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 86,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 68,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 77,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 79,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "roofThawKey_selfLocked-L6-s97-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 56,
+          "kind": "ice",
+          "shown": 0.5133,
+          "clear": false
+        },
+        {
+          "tile": 79,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 62,
+          "kind": "lock",
+          "shown": 0.592,
+          "clear": false
+        },
+        {
+          "tile": 70,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 72,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "savePair-L12-s83-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": true,
+      "rows": [
+        {
+          "tile": 63,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 56,
+          "kind": "lock",
+          "shown": 0.9957,
+          "clear": true
+        },
+        {
+          "tile": 0,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 84,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "savePair-L14-s83-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 2,
+          "kind": "ice",
+          "shown": 0.5133,
+          "clear": false
+        },
+        {
+          "tile": 1,
+          "kind": "lock",
+          "shown": 0.2029,
+          "clear": false
+        },
+        {
+          "tile": 30,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 65,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "savePair-L17-s83-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 59,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 48,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 6,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 0,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "savePair-L18-s83-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 44,
+          "kind": "ice",
+          "shown": 0.5133,
+          "clear": false
+        },
+        {
+          "tile": 50,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 16,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 69,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "savePair-L25-s83-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": true,
+      "rows": [
+        {
+          "tile": 75,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 63,
+          "kind": "lock",
+          "shown": 0.9091,
+          "clear": true
+        },
+        {
+          "tile": 70,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 54,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "savePair-L28-s81-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": true,
+      "rows": [
+        {
+          "tile": 43,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 47,
+          "kind": "lock",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 11,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 70,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "savePair-L31-s81-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 53,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 47,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 30,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 65,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "selfLocked-L19-s85-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 59,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 67,
+          "kind": "lock",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 38,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 75,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "selfLocked-L23-s89-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 66,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 73,
+          "kind": "lock",
+          "shown": 0.9957,
+          "clear": true
+        },
+        {
+          "tile": 55,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        },
+        {
+          "tile": 54,
+          "kind": "key",
+          "shown": 0.9379,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "selfLocked-L25-s85-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 62,
+          "kind": "ice",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 58,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 11,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 51,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "selfLocked-L25-s89-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": true,
+      "rows": [
+        {
+          "tile": 63,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 75,
+          "kind": "lock",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 6,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 50,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "selfLocked-L31-s85-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 53,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 47,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 10,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 74,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "selfLocked-L31-s89-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": true,
+      "rows": [
+        {
+          "tile": 54,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 48,
+          "kind": "lock",
+          "shown": 0.9091,
+          "clear": true
+        },
+        {
+          "tile": 24,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 73,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "selfLocked_savePair-L11-s127-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 69,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 70,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 0,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 37,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        }
+      ]
+    },
+    {
+      "file": "selfLocked_savePair-L17-s93-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 62,
+          "kind": "ice",
+          "shown": 0.5133,
+          "clear": false
+        },
+        {
+          "tile": 46,
+          "kind": "lock",
+          "shown": 0.592,
+          "clear": false
+        },
+        {
+          "tile": 25,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        },
+        {
+          "tile": 42,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "selfLocked_savePair-L25-s93-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 64,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 72,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 41,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 49,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "selfLocked_savePair-L27-s127-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 92,
+          "kind": "ice",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 93,
+          "kind": "lock",
+          "shown": 0.9957,
+          "clear": true
+        },
+        {
+          "tile": 54,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 0,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "selfLocked_savePair-L31-s127-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 60,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 66,
+          "kind": "lock",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 18,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        },
+        {
+          "tile": 64,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "selfLocked_savePair-L31-s93-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": true,
+      "rows": [
+        {
+          "tile": 54,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 48,
+          "kind": "lock",
+          "shown": 0.9091,
+          "clear": true
+        },
+        {
+          "tile": 24,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 64,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "selfLocked_savePair-L36-s127-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 74,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 75,
+          "kind": "lock",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 12,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 0,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "selfLocked_savePair-L42-s127-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 46,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 47,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 44,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 73,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "selfLocked_savePair-L6-s127-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 60,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 58,
+          "kind": "lock",
+          "shown": 0.592,
+          "clear": false
+        },
+        {
+          "tile": 31,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 82,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "waitCoverKey_selfLocked-L47-s173-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 86,
+          "kind": "ice",
+          "shown": 0.5133,
+          "clear": false
+        },
+        {
+          "tile": 89,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 84,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 66,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 0,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "waitInnerIce_keysLater-L24-s277-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 41,
+          "kind": "ice",
+          "shown": 0.5133,
+          "clear": false
+        },
+        {
+          "tile": 52,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 31,
+          "kind": "lock",
+          "shown": 0.9957,
+          "clear": true
+        },
+        {
+          "tile": 5,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 45,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        }
+      ]
+    },
+    {
+      "file": "waitInnerIce_keysLater-L3-s277-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 72,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 76,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 67,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 10,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        },
+        {
+          "tile": 4,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        }
+      ]
+    },
+    {
+      "file": "waitInnerIce_keysLater-L31-s93-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 61,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 67,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 43,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 34,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        },
+        {
+          "tile": 73,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "waitInnerIce_keysLater-L47-s277-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 83,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 86,
+          "kind": "ice",
+          "shown": 0.5133,
+          "clear": false
+        },
+        {
+          "tile": 66,
+          "kind": "lock",
+          "shown": 0.592,
+          "clear": false
+        },
+        {
+          "tile": 82,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 91,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "waitLockCover_selfLocked-L6-s173-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 72,
+          "kind": "ice",
+          "shown": 0.5133,
+          "clear": false
+        },
+        {
+          "tile": 79,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 70,
+          "kind": "lock",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 57,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 75,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "waitNested_savePair-L16-s227-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 70,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 73,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 48,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 59,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 0,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "waitNested_savePair-L18-s107-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 68,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 72,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 50,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 12,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 45,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "waitNested_savePair-L18-s227-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 67,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 71,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 51,
+          "kind": "lock",
+          "shown": 0.9957,
+          "clear": true
+        },
+        {
+          "tile": 7,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        },
+        {
+          "tile": 59,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "waitNested_savePair-L3-s107-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 76,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 79,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 67,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 51,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        },
+        {
+          "tile": 55,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "waitNested_savePair-L3-s227-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 76,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 79,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 67,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 51,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        },
+        {
+          "tile": 48,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "waitNested_savePair-L31-s97-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 61,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 64,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 43,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 17,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 34,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        }
+      ]
+    },
+    {
+      "file": "waitNested_savePair-L33-s227-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 68,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 70,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 52,
+          "kind": "lock",
+          "shown": 0.592,
+          "clear": false
+        },
+        {
+          "tile": 54,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 32,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "waitNested_selfLocked-L31-s173-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 60,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 65,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 44,
+          "kind": "lock",
+          "shown": 0.9957,
+          "clear": true
+        },
+        {
+          "tile": 18,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        },
+        {
+          "tile": 73,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "waitThawKey_savePair-L18-s107-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 45,
+          "kind": "ice",
+          "shown": 0.5133,
+          "clear": false
+        },
+        {
+          "tile": 66,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 70,
+          "kind": "lock",
+          "shown": 0.9022,
+          "clear": true
+        },
+        {
+          "tile": 19,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 72,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "waitThawKey_savePair-L21-s227-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 52,
+          "kind": "ice",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 60,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 57,
+          "kind": "lock",
+          "shown": 0.898,
+          "clear": true
+        },
+        {
+          "tile": 6,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        },
+        {
+          "tile": 0,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "waitThawKey_savePair-L35-s97-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 38,
+          "kind": "ice",
+          "shown": 0.5133,
+          "clear": false
+        },
+        {
+          "tile": 86,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 82,
+          "kind": "lock",
+          "shown": 0.9022,
+          "clear": true
+        },
+        {
+          "tile": 18,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        },
+        {
+          "tile": 5,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "waitThawKey_savePair-L36-s97-p1.json",
+      "inMainCatalogue": false,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 44,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 70,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 46,
+          "kind": "lock",
+          "shown": 0.592,
+          "clear": false
+        },
+        {
+          "tile": 59,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 0,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "waitThawWay_clockCount-L0-s113-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 43,
+          "kind": "ice",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 50,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 44,
+          "kind": "lock",
+          "shown": 0.592,
+          "clear": false
+        },
+        {
+          "tile": 7,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        },
+        {
+          "tile": 29,
+          "kind": "key",
+          "shown": 0.9379,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "waitThawWay_clockCount-L21-s113-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 52,
+          "kind": "ice",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 71,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 53,
+          "kind": "lock",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 48,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 74,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "file": "waitThawWay_clockCount-L33-s113-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 59,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 61,
+          "kind": "ice",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 54,
+          "kind": "lock",
+          "shown": 0.9957,
+          "clear": true
+        },
+        {
+          "tile": 34,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 4,
+          "kind": "key",
+          "shown": 0.6232,
+          "clear": false
+        }
+      ]
+    },
+    {
+      "file": "waitThawWay_savePair-L7-s251-p1.json",
+      "inMainCatalogue": true,
+      "profile": "clear-specials-v1",
+      "ok": false,
+      "rows": [
+        {
+          "tile": 63,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 69,
+          "kind": "ice",
+          "shown": 1,
+          "clear": true
+        },
+        {
+          "tile": 67,
+          "kind": "lock",
+          "shown": 0.0666,
+          "clear": false
+        },
+        {
+          "tile": 43,
+          "kind": "key",
+          "shown": 0,
+          "clear": false
+        },
+        {
+          "tile": 76,
+          "kind": "key",
+          "shown": 1,
+          "clear": true
+        }
+      ]
+    }
+  ],
+  "replayIntegrity": {
+    "invalidChunks": [],
+    "excludedQaIds": [
+      "1e4e6b00-cc3d-4b07-a9ad-8a535eac1511",
+      "20e1c82d-5951-4541-945c-22bbb5919253"
+    ]
+  }
+}

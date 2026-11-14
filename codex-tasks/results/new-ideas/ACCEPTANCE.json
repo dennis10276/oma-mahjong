@@ -1,5 +1,5 @@
 {
-  "made": "2026-11-14T19:28:57.216Z",
+  "made": "2026-11-14T21:59:12.704Z",
   "independentlyAccepted": 92,
   "mainTarget": 40,
   "mainAccepted": 40,
@@ -112,5 +112,12 @@
     "passed": 34,
     "skipped": 2,
     "legacyStorySweep": "stopped after 437 seconds"
+  },
+  "humanReview": {
+    "status": "revision-required",
+    "approvedFor320Plus": false,
+    "findings": "VERDICTS.json",
+    "revisions": "REVISIONS.json",
+    "note": "Counts above are the initial technical delivery under its historical checks, not placement approval or the new badge-readability profile."
   }
 }

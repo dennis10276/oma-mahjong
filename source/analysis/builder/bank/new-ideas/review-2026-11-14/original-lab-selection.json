@@ -1,0 +1,66 @@
+[
+  {
+    "id": 193895334,
+    "file": "clockCountThaw-L1-s139-p1.json",
+    "kind": "clockCount",
+    "edge": "easier",
+    "labLevel": 350,
+    "layout": 1
+  },
+  {
+    "id": 190403256,
+    "file": "lookalikeThaw_clockCount-L30-s113-p1.json",
+    "kind": "clockCount",
+    "edge": "harder",
+    "labLevel": 351,
+    "layout": 30
+  },
+  {
+    "id": 188787899,
+    "file": "selfLocked-L23-s89-p1.json",
+    "kind": "selfLocked",
+    "edge": "easier",
+    "labLevel": 352,
+    "layout": 23
+  },
+  {
+    "id": 191365061,
+    "file": "waitNested_selfLocked-L31-s173-p1.json",
+    "kind": "selfLocked",
+    "edge": "harder",
+    "labLevel": 353,
+    "layout": 31
+  },
+  {
+    "id": 194256584,
+    "file": "keysLater_savePair-L18-s97-p1.json",
+    "kind": "savePair",
+    "edge": "easier",
+    "labLevel": 354,
+    "layout": 18
+  },
+  {
+    "id": 189772842,
+    "file": "lookalikeThaw_savePair-L14-s85-p1.json",
+    "kind": "savePair",
+    "edge": "harder",
+    "labLevel": 355,
+    "layout": 14
+  },
+  {
+    "id": 192163876,
+    "file": "keysLater-L31-s89-p1.json",
+    "kind": "keysLater",
+    "edge": "easier",
+    "labLevel": 356,
+    "layout": 31
+  },
+  {
+    "id": 196526931,
+    "file": "keysLater_clockCount-L18-s197-p1.json",
+    "kind": "keysLater",
+    "edge": "harder",
+    "labLevel": 357,
+    "layout": 18
+  }
+]

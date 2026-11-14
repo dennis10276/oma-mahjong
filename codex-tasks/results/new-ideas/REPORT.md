@@ -1,5 +1,10 @@
 # Task 18 — Six constructor link kinds
 
+## Human review supersedes the initial ranking
+
+**Revision required; the bank is not approved as a 320+ run.** Dennis liked the traps at original lab 351, 353 and 355. The first and third need easier finishes. The simple examples need more meaningful chaining. Both key-delay examples exposed unreadable specials. See [the exact verdicts](VERDICTS.md) and [the four revised examples](REVISIONS.md). The original boards and results are preserved. The counts below describe the earlier technical delivery, not human placement approval.
+
+
 Branch: `wip/codex-new-ideas`; base: `c582db46` from the newest local `wip/cc-builder-loop`. Updated task, including the forty-board combination target, is the scope.
 
 Current independent acceptance: **92 boards**. Main 320+ catalogue: **40/40** two-idea chains, with at most four boards per primary idea pair. 28 layouts. Only `checked/` boards are accepted; raw and unfinished examples are research evidence.
@@ -190,20 +195,20 @@ Focused suite: 34 passing checks, two opt-in historical delivery checks skipped,
 
 Largest rejected-attempt counters (diagnostic logs span development revisions; acceptance uses the current proof):
 
-- noChain: 217376
-- place18:selfLocked:geometry: 106453
-- place18:clockCount:geometry: 62067
-- noClockPartnerHolders: 39520
+- noChain: 218629
+- place18:selfLocked:geometry: 106645
+- place18:clockCount:geometry: 65993
+- noClockPartnerHolders: 40734
 - noRoofKeyCell: 34494
 - place18:freeMelt:geometry: 27746
-- trayOverflow: 20758
-- savePairSchedule: 12652
+- trayOverflow: 20783
+- savePairSchedule: 12731
 - place18:keysLater:geometry: 11677
+- place18:savePair:geometry: 9019
 - clockTwinNotGate: 8527
-- place18:savePair:geometry: 8513
 - nested:unusedGate: 5577
 - noRepeatedKeyPair: 4579
-- obvious:freeRoutePair: 4409
+- obvious:freeRoutePair: 4432
 - place18:doubleMelt:geometry: 3819
 - nested:noIcyNeighbour: 3522
 - fixedTwinsClose: 2755
