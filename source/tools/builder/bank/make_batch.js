@@ -5,6 +5,10 @@
      node source/tools/builder/loop/heavy.js --label batch --cores 8 -- node source/tools/builder/bank/make_batch.js --stage pool  [--wave 1] [--workers 8]
      node source/tools/builder/bank/make_batch.js --stage assign          choose + order the boards, write source/analysis/builder/bank/batch-250-289/ (level-<n>.json, spares/, batch.md, batch.json)
      node source/tools/builder/bank/make_batch.js --stage status          what the pool holds (per shape, per layout, per score band)
+     node source/tools/builder/loop/heavy.js --label retune --cores 8 -- node source/tools/builder/bank/make_batch.js --stage retune --workers 8 --pool <dirs> --earlier <placed folders> --retuned <dir>
+                                                                          the part AFTER the trap harder for every finished board of a free host (bank/retune.js, Dennis 2026-11-14): more face-down tiles after the clock, tail band 0.06-0.28, one tile waiting
+   BATCH 2 (levels 303-342): node source/tools/builder/bank/make_batch.js --stage assign --first 303 --last 342 --pool source/build/traps/batch-pool,source/build/traps/batch-pool-2 --earlier source/analysis/builder/bank/placed-250,source/analysis/builder/bank/batch-250-289
+        --retuned source/build/traps/batch-retune --ramp 7,8.5 --breather 5 --two-link-to 0 --hardest-from 303 --needle-gap 2 --needle-max 8 --shape-max 4 --prefer-links 4 --stop-at-hole      (then --stage verify with the same options)
    Pool options: --shapes 8,9,11  --layouts 41,18  --seeds 1,2  --dial 5,3  --workers N  --tiers std,hard  --wave N (a preset job list, see WAVES)  --sepwall ms  --tailwall ms
    Resumable: a job whose file exists in source/build/traps/batch-pool/ is skipped (failures leave a small marker with the reason); delete the file to retry.
 
@@ -46,13 +50,16 @@ const JOBRE = /^(\d+)-(\d+)-(\d+)-d(\d+)_(\d+)(?:-v(\w+))?(?:-rp)?\.json$/;
 //   --shape-max N             a chain shape at most N times in the batch (default 3)
 //   --layout-window N         the layout (or one sharing > 75% of its positions) is not used again within N levels (default 12)
 //   --dip D                   largest allowed score dip against the level before (default 0.5)
+//   --retuned <dir>           use the retuned boards (stage retune: the part after the trap harder, tail 0.06-0.28, more face-down tiles, one tile waiting; bank/retune.js) instead of the pool's own tails (default none = batch 1)
+//   --needle-max N           at most N needle boards in the batch (default unlimited); with --needle-gap 2 never two in a row
+//   --prefer-links N         a board with fewer than N links costs 0.35 in the ramp fit (default 0)
 //   --stop-at-hole            the batch is consecutive levels from --first: a hole costs more the earlier it lies, and the boards after the first hole are not written as levels (spares/after-hole-<n>.json)
 function config(o = {}) {
   const g = (n, d) => o[n] != null ? o[n] : arg(n, d), rd = x => path.resolve(ROOT, x);
   const first = +g('first', 250), last = +g('last', 289), NL = last - first + 1, ramp = String(g('ramp', '3,7.5')).split(',').map(Number);
   const hardestFrom = +g('hardest-from', first + Math.floor(NL * 2 / 3)), breather = +g('breather', 0);
   return { first, last, NL, out: rd(g('out', 'source/analysis/builder/bank/batch-' + first + '-' + last)), pools: String(g('pool', 'source/build/traps/batch-pool')).split(',').map(rd),
-    earlier: g('earlier', '') ? String(g('earlier', '')).split(',').map(rd) : [], ramp, breather, twoLinkTo: +g('two-link-to', 255), hardestFrom, needleGap: +g('needle-gap', 0), shapeMax: +g('shape-max', 3), layoutWin: +g('layout-window', 12), dip: +g('dip', 0.5), stopAtHole: !!(o['stop-at-hole'] || has('stop-at-hole')),
+    earlier: g('earlier', '') ? String(g('earlier', '')).split(',').map(rd) : [], ramp, breather, twoLinkTo: +g('two-link-to', 255), hardestFrom, needleGap: +g('needle-gap', 0), shapeMax: +g('shape-max', 3), retuned: g('retuned', '') ? rd(g('retuned', '')) : null, needleMax: +g('needle-max', 999), preferLinks: +g('prefer-links', 0), layoutWin: +g('layout-window', 12), dip: +g('dip', 0.5), stopAtHole: !!(o['stop-at-hole'] || has('stop-at-hole')),
     isBig: lv => lv % 10 === 0, isBreather: lv => breather > 0 && (lv - first) % breather === breather - 2,
     target: lv => { const t = ramp[0] + (lv - first) * (ramp[1] - ramp[0]) / (last - first); return breather > 0 && (lv - first) % breather === breather - 2 ? t - 1.25 : t; } };
 }
@@ -182,6 +189,10 @@ function wave(n) {
       for (const si of sh3) for (let layout = 0; layout < 48; layout++) { const h = info.get(si + '/' + layout); if (h && h.ok) continue; for (const seed of [1, 2]) jobs.push({ si, layout, seed, dial: [8, 4], v: 'A', targets: tg, repair: true, tiers: hard, buildWall: 25000, tries: 24, ...quick }); }
     }
   }
+  else if (n === 30 || n === 31) {   // (batch 2) the weaker pressure dial on every shape x layout that never built: of 24 sampled failures, a third died in 'pressureLow' (the right route could not be made to keep 2+ tiles waiting for run2 moves), a third were structural (noChain)
+    const info = hostInfo(), dial = n === 30 ? [3, 2] : [2, 1], quick = { passes: 2, sepWall: 20000 };
+    for (const si of shapes3) for (let layout = 0; layout < 48; layout++) { const h = info.get(si + '/' + layout); if (h && h.ok) continue; jobs.push({ si, layout, seed: 1, dial, repair: true, tiers: ['hard', 'deep'], buildWall: 12000, tries: 16, ...quick }); }
+  }
   return jobs;
 }
 // one row per host (shape/layout) over every pool folder: did a board come out, the fewest visible close twins of a twins failure, a search that ran out of time
@@ -223,17 +234,23 @@ function worker() {
 
 // ---------------------------------------------------------------- the pool, filtered
 function loadPool() {
-  const Df = require('./difficulty.js');
+  const Df = require('./difficulty.js'), RT = CFG.retuned;
   const cands = [], fails = {};
   let jobs = 0;
   for (const pf of poolFiles()) {
     const f = pf.f; jobs++;
     const j = readJob(pf);
     if (!j.ok) { const why = String(j.why).replace(/[:0-9].*$/, ''); fails[why] = (fails[why] || 0) + 1; continue; }
-    for (const v of j.variants) {
+    for (const v0 of j.variants) {
+      let v = v0;
+      if (RT && v0.ok) {   // the retuned board replaces the pool's own tail (stage retune)
+        const rf = path.join(RT, f.replace('.json', '') + '-' + v0.tier + '.json'); if (!fs.existsSync(rf)) { fails['notRetuned'] = (fails['notRetuned'] || 0) + 1; continue; }
+        const rr = JSON.parse(fs.readFileSync(rf, 'utf8')); if (!rr.ok) { const w = 'retuneFailed:' + String(rr.why).replace(/[:0-9 ].*$/, ''); fails[w] = (fails[w] || 0) + 1; continue; }
+        v = { ...v0, design: rr.design, card: rr.card, tail: rr.tail, inBand: rr.inBand, score: rr.score, needle: rr.needle };
+      }
       if (!v.ok) { const why = 'variant:' + String(v.why).replace(/[:0-9].*$/, ''); fails[why] = (fails[why] || 0) + 1; continue; }
-      const t = v.tail, ok = t >= 0.08 && t <= 0.40 && v.inBand;
-      if (ok) { const ds = Df.score(v.design, v.card, { facts: v.card.difficulty.facts }); v.card.difficulty = { score: ds.score, parts: ds.parts, needle: ds.needle, facts: ds.facts, weights: ds.weights }; v.score = ds.score; }   // always the current weights
+      const t = v.tail, ok = RT ? (t >= 0.06 && t <= 0.28 && v.inBand) : (t >= 0.08 && t <= 0.40 && v.inBand);
+      if (ok && !RT) { const ds = Df.score(v.design, v.card, { facts: v.card.difficulty.facts }); v.card.difficulty = { score: ds.score, parts: ds.parts, needle: ds.needle, facts: ds.facts, weights: ds.weights }; v.score = ds.score; }   // always the current weights
       if (!ok) { fails['tailOutOfBand'] = (fails['tailOutOfBand'] || 0) + 1; continue; }
       cands.push({ id: f.replace('.json', '') + '-' + v.tier, file: f, tier: v.tier, shapeIndex: j.job.si, shape: j.shape, links: j.links, layout: j.job.layout, seed: j.job.seed, tiles: v.card.tiles, score: v.card.difficulty.score,
         needle: v.card.difficulty.needle, tail: t, spare: v.card.spare, down: v.card.faceDownShare, rec: v });
@@ -290,17 +307,19 @@ function assign(opts = {}) {
     if (!unary(FIRST + i, c)) return false;
     const drop = opts.drop || [];   // diagnosis only: which rule to leave out to see what binds (never used for the real batch)
     if (!drop.includes('dip')) { if (i > 0 && A[i - 1] && !dipAllowed(FIRST + i, A[i - 1].score, c.score)) return false; if (i < NL - 1 && A[i + 1] && !dipAllowed(FIRST + i + 1, c.score, A[i + 1].score)) return false; }
-    let shapeCount = 0;
+    let shapeCount = 0, needleCount = 0;
     for (let j = 0; j < NL; j++) {
       const x = A[j]; if (!x || j === i) continue; if (x === c || x.id === c.id) return false;
       const p = pair(c, x), dist = Math.abs(i - j); if (!drop.includes('pairLS') && p.sameLS) return false; if (!drop.includes('ledger') && p.diff < L.RULES.minDiff) return false;
       if (!drop.includes('layoutWindow') && dist <= C.layoutWin && p.sameLay) return false; if (!drop.includes('shapeWindow') && dist <= 2 && p.sameShape) return false; if (p.sameShape) shapeCount++;
       if (C.needleGap && c.needle && x.needle && dist < C.needleGap) return false;
+      if (x.needle) needleCount++;
     }
+    if (c.needle && needleCount >= C.needleMax) return false;
     return drop.includes('shapeMax') || shapeCount < C.shapeMax;
   };
   let softW = 1; const costAt = (i, c, A) => {
-    let x = (c.score - target(FIRST + i)) ** 2;
+    let x = (c.score - target(FIRST + i)) ** 2; if (C.preferLinks && c.links < C.preferLinks) x += 0.35;
     if (c.tiles > 80 && c.tiles < 96) x += 0.15; if (rank[c.layout] > 24) x += 0.25; if (PLAYED3.includes(c.layout)) x += 0.1;
     for (let d = -3; d <= 3; d++) { const p = A[i + d]; if (d && p && p.sig.clock === c.sig.clock) x += 0.3 / 2; }
     const prev = A[i - 1]; if (prev && c.score < prev.score && !C.isBreather(FIRST + i)) x += 0.5 * (prev.score - c.score);
@@ -403,7 +422,7 @@ function write(A) {
     const level = lvl(i); if (!c) { rows.push({ level, hole: true }); return; }
     fs.writeFileSync(path.join(OUT, `level-${level}.json`), JSON.stringify(wrap(c, level), null, 1));
     const cd = c.rec.card, df = cd.difficulty;
-    rows.push({ level, layout: c.layout, layoutName: cd.layoutName, tiles: c.tiles, shapeIndex: c.shapeIndex, chain: c.shape, links: c.links, score: df.score, win: cd.firstMoves.winning + '/' + cd.firstMoves.legal, needle: df.needle, tail: c.tail, spare: c.rec.card.spare, down: cd.faceDownShare, run2: cd.pressure.run2, at3: cd.pressure.at3, baits: cd.baits.length, id: c.id, see: cd.see });
+    rows.push({ level, layout: c.layout, layoutName: cd.layoutName, tiles: c.tiles, shapeIndex: c.shapeIndex, chain: c.shape, links: c.links, score: df.score, win: cd.firstMoves.winning + '/' + cd.firstMoves.legal, needle: df.needle, tail: c.tail, spare: c.rec.card.spare, down: cd.faceDownShare, wait: cd.tailPressure ? cd.tailPressure.share.join('/') + ' (run ' + cd.tailPressure.longest2plus + ')' : '', run2: cd.pressure.run2, at3: cd.pressure.at3, baits: cd.baits.length, id: c.id, see: cd.see });
   });
   const filledRows = rows.filter(r => !r.hole), bandOf = (a, b) => { const x = filledRows.filter(r => r.level >= a && r.level <= b); return x.length ? `${a}-${b}: ${x.length} levels, score ${Math.min(...x.map(r => r.score))} to ${Math.max(...x.map(r => r.score))}, mean ${(x.reduce((s2, r) => s2 + r.score, 0) / x.length).toFixed(2)}, links ${[...new Set(x.map(r => r.links))].join('/')}` : `${a}-${b}: none`; };
   const countBy = k => { const m = {}; for (const r of filledRows) m[r[k]] = (m[r[k]] || 0) + 1; return m; };
@@ -416,8 +435,8 @@ function write(A) {
   fs.writeFileSync(path.join(OUT, 'batch.json'), JSON.stringify({ made: new Date().toISOString().slice(0, 10), config: { first: C.first, last: C.last, filledTo: LASTW, ramp: C.ramp, breather: C.breather, twoLinkTo: C.twoLinkTo, hardestFrom: C.hardestFrom, needleGap: C.needleGap, shapeMax: C.shapeMax, dip: C.dip, earlier: C.earlier.map(x => path.relative(ROOT, x)), pools: C.pools.map(x => path.relative(ROOT, x)) }, excludedFromPool: A.excluded, earlierLevelsUsedAsLookBack: A.earlierLevels, levels: rows, spares: spareRows, waitingForDisplayFix: waiting, summary, holes: A.holes, poolJobs: A.jobs, poolCandidates: A.cands.length, poolFails: A.fails, cost: A.cost }, null, 1));
   const f = x => x == null ? '' : x;
   const md = [`# Batch for levels ${FIRST}-${LAST} (chain traps, bot-free)`, '', `Pool: ${A.jobs} jobs, ${A.cands.length} finished boards (after leaving out ${A.excluded ? A.excluded.boards : 0} boards and ${A.excluded ? A.excluded.hosts : 0} boards of hosts used in earlier placed levels). Levels filled: ${rows.filter(r => !r.hole).length} of ${rows.length}${LASTW < LAST ? ` (the batch stops at ${LASTW}: the boards after the first hole are in spares/after-hole-*.json)` : ''}. Score ramp target ${C.ramp[0]} -> ${C.ramp[1]} (difficulty.js)${C.breather ? `, a breather 1.25 below the line every ${C.breather}th level (levels ${rows.filter(r => C.isBreather(r.level)).map(r => r.level).join(', ')})` : ''}.`, '',
-    '| level | layout | tiles | chain (shape index) | links | score | winning first moves | tailGreedyWin | clock spare | face-down | needle |', '|---|---|---|---|---|---|---|---|---|---|---|',
-    ...rows.map(r => r.hole ? `| ${r.level} | HOLE | | | | | | | | | |` : `| ${r.level} | ${r.layout} ${r.layoutName} | ${r.tiles} | ${r.shapeIndex}: ${r.chain} | ${r.links} | ${r.score} | ${r.win} | ${r.tail} | ${r.spare} | ${r.down} | ${r.needle ? 'needle' : ''} |`), '',
+    '| level | layout | tiles | chain (shape index) | links | score | winning first moves | tailGreedyWin | clock spare | face-down | tail waiting 0/1/2/3 | needle |', '|---|---|---|---|---|---|---|---|---|---|---|---|',
+    ...rows.map(r => r.hole ? `| ${r.level} | HOLE | | | | | | | | | | |` : `| ${r.level} | ${r.layout} ${r.layoutName} | ${r.tiles} | ${r.shapeIndex}: ${r.chain} | ${r.links} | ${r.score} | ${r.win} | ${r.tail} | ${r.spare} | ${r.down} | ${r.wait || ''} | ${r.needle ? 'needle' : ''} |`), '',
     '## Spares', '', '| spare | layout | tiles | chain | links | score | winning first moves | tailGreedyWin | clock spare |', '|---|---|---|---|---|---|---|---|---|', ...spareRows.map(r => `| ${r.spare} | ${r.layout} | ${r.tiles} | ${r.chain} | ${r.links} | ${r.score} | ${r.win} | ${r.tail} | ${r.spareClock} |`), '',
     '## Summary', '', ...summary.bands.map(x => '- ' + x), `- shapes used (index: levels): ${Object.entries(summary.shapes).map(([k, v]) => k + ': ' + v).join(', ')}`, `- layouts used (id: levels): ${Object.entries(summary.layouts).map(([k, v]) => k + ': ' + v).join(', ')}`, `- needle boards (fewer than 3 winning first moves), allowed from level ${C.hardestFrom}${C.needleGap ? ' and at least ' + C.needleGap + ' levels apart' : ''}: ${summary.needleLevels.join(', ') || 'none'}`, `- largest score dip between neighbouring levels: ${summary.maxDip}`, '',
     `## Holes (a hole is a level for which no board in the pool fits next to the others without breaking a hard rule; nothing was relaxed)${LASTW < LAST ? ' - the first one, level ' + (LASTW + 1) + ', is where the batch stops' : ''}`, '', ...(A.holes.length ? A.holes.map(h => `- level ${h.level}: ${h.boardsThatFitTheLevel} boards fit the level's tile count / link / needle rules (${h.layoutsAmongThem} layouts, ${h.shapesAmongThem} shapes); blocked by: ${Object.entries(h.blockedBy).filter(([, v]) => v).map(([k, v]) => k + ' ' + v).join(', ') || 'nothing'}; fit without any conflict: ${h.fitWithoutConflict}`) : ['- none']), '',
@@ -438,9 +457,10 @@ function verify() {
     if (!cs || cs.unsure || cs.k !== c.clock.k || d.clock.n !== cs.k + c.spare) why.push('clock k ' + (cs && cs.k) + ' n ' + d.clock.n + ' spare ' + c.spare);
     const ct = SEP.closeTwins(d); if (ct.visible !== 0 || ct.share > 0.05) why.push('twins ' + ct.visible + '/' + ct.share);
     if ((d.down || []).length / d.tiles.length > 0.30) why.push('faceDown');
-    const tl = Tl.measure(d, { seed: 977, playouts: 800 }).tailGreedyWin; if (tl < 0.08 || tl > 0.40) why.push('tail ' + tl); if (tl < 0.15 && lv < C.hardestFrom) why.push('low tail before ' + C.hardestFrom);
+    const tl = Tl.measure(d, { seed: 977, playouts: 800 }).tailGreedyWin, tb = C.retuned ? [0.06, 0.28] : [0.08, 0.40]; if (tl < tb[0] || tl > tb[1]) why.push('tail ' + tl);
+    if (C.retuned) { const oc = Tl.occupancy(d); if (oc.share[3] > 0.10) why.push('3 waiting in ' + oc.share[3] + ' of the tail steps'); if (oc.share[1] < 0.25) why.push('1 waiting in only ' + oc.share[1]); const ds = (d.down || []).length / d.tiles.length; if (ds < 0.19) why.push('face-down share ' + ds.toFixed(3) + ' (the retune adds some)'); } if (tl < 0.15 && lv < C.hardestFrom) why.push('low tail before ' + C.hardestFrom);
     if (c.firstMoves.winning < 3 && lv < C.hardestFrom) why.push('needle before ' + C.hardestFrom);
-    if (c.firstMoves.winning < 3) { if (C.needleGap && needleAt.some(x => lv - x < C.needleGap)) why.push('needle boards closer than ' + C.needleGap + ' levels'); needleAt.push(lv); }
+    if (c.firstMoves.winning < 3) { if (needleAt.length >= C.needleMax) why.push('more than ' + C.needleMax + ' needle boards'); if (C.needleGap && needleAt.some(x => lv - x < C.needleGap)) why.push('needle boards closer than ' + C.needleGap + ' levels'); needleAt.push(lv); }
     if (c.needsUi) why.push('needsUi'); if (lv > C.twoLinkTo && c.links < 3) why.push('links');
     if ((d.tiles.length === 96) !== C.isBig(lv)) why.push('tiles ' + d.tiles.length);
     if (hostsEarlier.has(c.layoutId + '/' + c.shapeIndex)) why.push('host ' + c.layoutId + '/' + c.shapeIndex + ' used in an earlier placed level'); if (boardsEarlier.has(designKey(d))) why.push('board used in an earlier placed level');
@@ -451,6 +471,32 @@ function verify() {
     sigs.push(sig); console.log(lv, why.length ? 'FAIL ' + why.join(' | ') : 'ok k ' + cs.k + ' tail ' + tl + ' score ' + j.difficulty.score); if (why.length) bad.push(lv);
   }
   console.log(bad.length ? 'FAILED: ' + bad.join(',') : 'all level files verified'); return bad;
+}
+// ---------------------------------------------------------------- stage retune: the part after the trap harder (bank/retune.js), for every finished board of a host that is still free
+//   node source/tools/builder/loop/heavy.js --label retune --cores 8 -- node source/tools/builder/bank/make_batch.js --stage retune --pool <dirs> --earlier <placed folders> --retuned <dir> [--workers 8] [--min-score 4.8] [--tiers std,hard]
+function retuneList() {
+  const R = CFG.retuned; if (!R) throw new Error('--retuned <dir> needed'); fs.mkdirSync(R, { recursive: true });
+  const earlier = CFG.earlier.length ? loadEarlier(CFG) : { hosts: new Set() }, minScore = +arg('min-score', 4.8), tiers = String(arg('tiers', 'std,hard,deep,easy')).split(','), list = [];
+  for (const pf of poolFiles()) {
+    const m = JOBRE.exec(pf.f); if (!m) continue; const j = readJob(pf); if (!j.ok || j.links < 3) continue; if (earlier.hosts.has(j.job.layout + '/' + j.job.si)) continue;
+    for (const v of j.variants) if (v.ok && tiers.includes(v.tier) && (v.score == null || v.score >= minScore) && !fs.existsSync(path.join(R, pf.f.replace('.json', '') + '-' + v.tier + '.json'))) list.push({ dir: pf.dir, f: pf.f, tier: v.tier, score: v.score });
+  }
+  return list.sort((a, b) => (b.score || 0) - (a.score || 0));
+}
+function retuneParent() {
+  const todo = retuneList(); if (has('list')) { const by = {}; for (const x of todo) by[x.tier] = (by[x.tier] || 0) + 1; console.log('retune list:', todo.length, JSON.stringify(by)); return; }
+  const W = Math.max(1, +arg('workers', 8)), jf = path.join(CFG.retuned, '_retune-' + process.pid + '.json'); fs.writeFileSync(jf, JSON.stringify(todo));
+  console.log('retune: ' + todo.length + ' boards, ' + W + ' workers'); let running = 0, t0 = Date.now();
+  for (let w = 0; w < W; w++) { const c = cp.spawn(process.execPath, [__filename, ...process.argv.slice(2), '--retune-worker', String(w), '--of', String(W), '--jobs', jf], { stdio: ['ignore', 'inherit', 'inherit'] }); running++; c.on('exit', () => { running--; if (!running) { fs.rmSync(jf, { force: true }); console.log('retune done in', Math.round((Date.now() - t0) / 1000), 's'); } }); }
+}
+function retuneWorker() {
+  const R = require('./retune.js'), w = +arg('retune-worker', 0), W = +arg('of', 1), todo = JSON.parse(fs.readFileSync(arg('jobs'), 'utf8')).filter((x, i) => i % W === w);
+  for (const x of todo) {
+    const out = path.join(CFG.retuned, x.f.replace('.json', '') + '-' + x.tier + '.json'); if (fs.existsSync(out)) continue;
+    let res; try { const j = readJob(x), v = j.variants.find(q => q.ok && q.tier === x.tier); res = R.retuneRecord(j.job, v, { tier: x.tier, seed: 1 }); } catch (e) { res = { ok: false, why: 'crash: ' + String(e && e.stack || e).slice(0, 300) }; }
+    fs.writeFileSync(out, JSON.stringify({ file: x.f, tier: x.tier, ...res }));
+    console.log(path.basename(out), res.ok ? 'ok tail ' + res.tail + ' score ' + res.score + (res.needle ? ' needle' : '') : String(res.why).slice(0, 120), res.retune ? (res.retune.ms / 1000 | 0) + 's' : '');
+  }
 }
 function status() {
   const { cands, fails, jobs } = loadPool(), by = (k) => cands.reduce((m, c) => { m[c[k]] = (m[c[k]] || 0) + 1; return m; }, {});
@@ -465,6 +511,8 @@ if (require.main === module) {
   const st = arg('stage', null);
   if (has('worker')) worker();
   else if (st === 'pool') parent();
+  else if (has('retune-worker')) retuneWorker();
+  else if (st === 'retune') retuneParent();
   else if (st === 'assign') { const A = assign({ beam: +arg('beam', 300), saMs: +arg('sams', 60000), dfsMs: +arg('dfsms', 20000), rounds: +arg('rounds', 6), seed: +arg('seed', 12345), verbose: true, ...(arg('init', null) ? { init: JSON.parse(fs.readFileSync(arg('init'), 'utf8')).ids } : {}) }), rows = write(A); for (const r of rows) console.log(r.hole ? r.level + ' HOLE' : [r.level, r.layout, r.tiles, r.shapeIndex, r.links, r.score, r.win, r.tail, r.spare, r.needle ? 'needle' : ''].join('\t')); console.log('filled', rows.filter(r => !r.hole).length + '/' + rows.length); }
   else if (st === 'status') status();
   else if (st === 'verify') verify();

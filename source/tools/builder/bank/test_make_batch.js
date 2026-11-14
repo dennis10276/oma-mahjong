@@ -85,11 +85,19 @@ test('jobName: a targets variant and a repair job get their own marker names', (
 // ---- the last-twin repair (trap_stories.js repairTwins, job.repair): shape 12 on layout 36 (seed 1) ends the separation with ONE visible close twin; the repair swaps a role-free picture, takes a new proven route
 test('runJob with repair: a board that ends with one visible close twin comes out with none, replays strictly, keeps its clock minimum and story proof', { timeout: 900000 }, () => {
   const E = require('../engine.js'), SEP = require('./separate.js'), T = require('../trap_stories.js');
-  const out = MB.runJob({ si: 12, layout: 36, seed: 1, dial: [5, 3], repair: true, tiers: ['hard'] });
+  const out = MB.runJob({ si: 12, layout: 36, seed: 1, dial: [5, 3], repair: true, tiers: ['hard'], sepWall: 90000 });   // a long separation wall: under a loaded machine the default one leaves 2 twins
   assert.ok(out.repair && out.repair.before >= 1, 'this host needs the repair: ' + JSON.stringify(out.repair) + ' ' + out.why);
   assert.ok(out.ok, 'the repair clears the last visible twin: ' + out.why); assert.equal(out.repair.after, 0); assert.ok(out.repair.swaps >= 1);
   const v = out.variants.find(x => x.ok); assert.ok(v, 'a tail tier came out'); const d = v.design;
   assert.equal(SEP.closeTwins(d).visible, 0); assert.ok(E.replay(d, d.solution, { strict: true }).ok);
   assert.equal(E.clockShortest(E.game(JSON.parse(JSON.stringify(d))), { nodes: 300000, ms: Infinity, finishNodes: 100000, finishMs: Infinity }).k, v.card.clock.k);
   assert.equal(d.clock.n, v.card.clock.k + v.card.clock.spare); assert.ok(v.card.trap && v.card.baits.length >= 1, 'the proven baits are still in the card');
+});
+
+test('assign: --needle-max and --needle-gap cap the needle boards of a batch, --retuned is a config path, --prefer-links costs a 3-link board in the fit', () => {
+  const c = MB.config({ ...CFG2, 'needle-max': 3, 'needle-gap': 2, 'prefer-links': 4, retuned: 'source/build/traps/batch-retune' });
+  assert.equal(c.needleMax, 3); assert.equal(c.needleGap, 2); assert.equal(c.preferLinks, 4); assert.ok(/batch-retune$/.test(c.retuned)); assert.equal(MB.config(CFG2).retuned, null); assert.equal(MB.config({}).needleMax, 999);
+  const p = pool(1200, 21); for (const x of p.cands) { x.links = Math.max(x.links, 3); x.tail = Math.max(x.tail, 0.1); x.needle = x.needle || x.score > 7.5; }
+  const A = MB.assign({ pool: p, cfg: { ...CFG2, 'needle-max': 3, 'needle-gap': 2 }, earlier: { hosts: new Set(), boards: new Set(), pre: [] }, dfsMs: 2000, saMs: 8000, rounds: 2 }), needles = A.seq.map((x, i) => x && x.needle ? 303 + i : null).filter(Boolean);
+  assert.ok(needles.length <= 3, 'needle boards ' + needles); for (let i = 1; i < needles.length; i++) assert.ok(needles[i] - needles[i - 1] >= 2, 'never two in a row: ' + needles);
 });

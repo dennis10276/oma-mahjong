@@ -113,6 +113,8 @@ add new decisions with a date.
     then 1 trap but it should be meaningfull. This was just 2 easy traps." A trap is too obvious when the tiles of
     the right route are already waiting in the tray. He likes three layers ("easier to see") and boards read from
     above rather than from the side.
+  - **Two traps on one board** (2026-11-14, correction): "Preferably depend on eachother but they can also be 1 hard and
+    1 medium trap." Two easy, unrelated traps are what he does not want.
   - **No ribbon mechanic** (2026-11-14): "In essence its the same as lock and key cause you can only take lock after key."
   - **Tapping a frozen or locked tile that cannot be taken shows what it needs** (the tiles that thaw it, or the keys),
     not the tiles lying on it (2026-11-14). Done on the work branch.

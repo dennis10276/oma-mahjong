@@ -126,7 +126,7 @@ function tuneOnce(design, opts = {}) {
   const frozen = new Set((opts.freeze || []).map(t => design.faces[t]));
   const pairOf = new Map(), tray = []; P.sol.forEach(t => { const q = tray.findIndex(x => design.faces[x] === design.faces[t]); if (q >= 0) { pairOf.set(t, tray[q]); pairOf.set(tray[q], t); tray.splice(q, 1); } else tray.push(t); });
   const movable = P.tail.filter(t => P.inTail[pairOf.get(t)] && !frozen.has(design.faces[t]));
-  let faces = design.faces.slice(), cur = tuneScore(P, faces, seed, playouts, aim), edits = [];
+  let faces = design.faces.slice(), cur = tuneScore(P, faces, seed, playouts, aim), edits = [], pending = 0, snap = { faces: faces.slice(), n: 0, cur };
   const closeCost = f => { const d2 = { ...design, faces: f }; const c = SEP.closeTwins(d2, geo); return [c.visible, c.four, c.count]; };
   const c0 = closeCost(faces), noWorse = c => c[0] <= c0[0] && c[1] <= c0[1] && c[2] <= Math.max(c0[2], 0);
   const noGamble = f => { const g1 = gambleFacts({ ...design, faces: f }); return g1.gamble <= g0.gamble && g1.blindOnly <= g0.blindOnly; };
@@ -138,9 +138,19 @@ function tuneOnce(design, opts = {}) {
     if (u === v || faces[u] === faces[v] || pairOf.get(u) === v) continue;
     const fu = faces[u], fv = faces[v]; faces[u] = fv; faces[v] = fu;
     let keep = false;
-    if (tailReplays(P, faces) && noWorse(closeCost(faces)) && noGamble(faces)) {
+    if (tailReplays(P, faces)) {   // cheapest test first; the twins and gamble checks only for a swap that helps
       const s = tuneScore(P, faces, seed, playouts, aim);
-      if (s.d < cur.d) { cur = s; edits.push([u, v]); keep = true; }
+      if (s.d < cur.d && noWorse(closeCost(faces)) && noGamble(faces)) {
+        if (opts.validateEach) {   // proven in chunks of validateEvery accepted swaps (a proof costs seconds on a big board); a failing chunk is dropped as a whole
+          cur = s; edits.push([u, v]); keep = true; pending++;
+          if (pending >= (opts.validateEvery ?? 3)) {
+            const dv = clone(design); dv.faces = faces.slice(); const rv = validate(dv);
+            if ((rv === true || rv.ok) && (!opts.accept || opts.accept(dv))) { snap = { faces: faces.slice(), n: edits.length, cur }; pending = 0; }
+            else { notes.push('swaps refused: ' + (rv.why || 'accept')); faces = snap.faces.slice(); edits.length = snap.n; cur = snap.cur; pending = 0; keep = true; }
+          }
+        }
+        else { cur = s; edits.push([u, v]); keep = true; }
+      }
     }
     if (!keep) { faces[u] = fu; faces[v] = fv; }
   }
@@ -170,4 +180,78 @@ function tune(design, opts = {}) {
 }
 function tuneScore(P, faces, seed, playouts, band) { const w = greedyWin(P, faces, seed, playouts) / playouts; return { w: +w.toFixed(3), d: +dist(w, band).toFixed(4) }; }
 
-module.exports = { measure, tune, gambleFacts, storedFacts, prepare, tailReplays, BAND };
+
+// ---------- tray pressure of the stored tail (Dennis 2026-11-14: "after the trap tray pressure may increase ... Dont overdo on tray pressure. 1 in tray is enough after a hard trap") ----------
+// occupancy = tiles waiting in the tray BEFORE each tail step of the stored route. Every tap changes it by one, so about half of the steps sit on odd values; the aim is: 1 waiting common, 2 occasional, 3 rare or absent.
+function occupancy(design) {
+  const P = prepare(design), F = design.faces, tray = [], cnt = [0, 0, 0, 0]; let steps = 0, run = 0, longest = 0, sum = 0;
+  P.sol.forEach((t, i) => {
+    if (i > P.ci) { cnt[Math.min(tray.length, 3)]++; steps++; sum += tray.length; if (tray.length >= 2) { run++; longest = Math.max(longest, run); } else run = 0; }
+    const q = tray.findIndex(x => F[x] === F[t]); if (q >= 0) tray.splice(q, 1); else tray.push(t);
+  });
+  return { steps, counts: cnt, share: cnt.map(c => steps ? +(c / steps).toFixed(3) : 0), longest2plus: longest, mean: steps ? +(sum / steps).toFixed(3) : 0 };
+}
+// the wish as a number (0 = as wished): too many 3s, too many 2s, too few 1s, long stretches with 2 or more waiting, a free run of ready pairs (0 waiting)
+function pressureMiss(o, gentle) {
+  const sh = o.share, want1 = gentle ? 0.35 : 0.42;
+  return +(Math.max(0, want1 - sh[1]) * 2 + Math.max(0, sh[2] - 0.20) * 2 + Math.max(0, sh[3] - 0.03) * 6 + Math.max(0, o.longest2plus - 4) * 0.05 + Math.max(0, sh[0] - 0.42)).toFixed(4);
+}
+// a new stored order for the tail (the part up to and including the clock stays): a beam search over the tail moves (strict rules: ice, locks, 4 slots) that holds the tray near one waiting tile.
+// Cost per step by waiting tiles (0, 1, 2, 3); a blind gamble (as gambleFacts counts it) costs a lot, and the result is kept only when it adds none. Same pictures, same face-down set: tailGreedyWin does not change.
+function reroute(design, opts = {}) {
+  const t0 = Date.now(), wall = opts.wallMs ?? 20000, W = opts.width ?? 200, gentle = !!opts.gentle, pen = opts.pen || [6, 60], cap0 = gentle ? 0.40 : 0.36, cap2 = gentle ? 0.12 : 0.17;   // running shares above the caps cost more: 1 waiting is free, 0 (ready pairs) and 2 only up to their cap, 3 and blind gambles always dear
+  const P = prepare(design), F = design.faces, n = P.n, rand = rngOf((opts.seed ?? 1) * 7919 + 3), g0 = gambleFacts(design), o0 = occupancy(design), tray0 = trayAfter(P, F, P.ci + 1);
+  if (!tray0) return { ok: false, why: 'storedTrayLost' };
+  let beam = [{ alive: P.alive.slice(), tray: tray0.slice(), cost: 0, node: null, cnt: [0, 0, 0, 0], run: 0 }];
+  for (let step = 0; step < P.tail.length; step++) {
+    if (Date.now() - t0 > wall) return { ok: false, why: 'wall' };
+    const next = new Map();
+    for (const s of beam) {
+      const free = []; for (let i = 0; i < n; i++) if (takeable(P, s.alive, i)) free.push(i);
+      const vis = free.filter(i => !P.down[i]), trayF = new Set(s.tray.map(x => F[x]));
+      const safe = vis.some(i => trayF.has(F[i])) || (s.tray.length <= 2 && vis.some((i, a) => vis.some((j, b) => b > a && F[i] === F[j])));
+      for (const t of free) {
+        const q = s.tray.findIndex(x => F[x] === F[t]); let tray;
+        if (q >= 0) { tray = s.tray.slice(); tray.splice(q, 1); } else { if (s.tray.length >= SLOTS - 1) continue; tray = s.tray.concat([t]); }
+        const o = Math.min(s.tray.length, 3), cnt = s.cnt.slice(); cnt[o]++; let c = s.cost;
+        if (o === 0) c += cnt[0] / (step + 1) > cap0 ? 1.0 : 0.3; else if (o === 2) c += cnt[2] / (step + 1) > cap2 ? 1.2 : 0.3; else if (o === 3) c += pen[0];
+        const run = o >= 2 ? s.run + 1 : 0; if (run > 3) c += 0.6;
+        if (s.tray.length >= 2 && !safe && P.down[t]) c += pen[1];
+        if (s.tray.length >= 2 && vis.length === 0) c += pen[1];
+        const al = s.alive.slice(); al[t] = 0;
+        const key = Buffer.from(al).toString('latin1') + '|' + tray.map(x => F[x]).sort((a, b) => a - b).join(','), old = next.get(key);
+        if (!old || c < old.cost) next.set(key, { alive: al, tray, cost: c, node: { t, prev: s.node }, r: rand(), cnt, run });
+      }
+    }
+    if (!next.size) return { ok: false, why: 'beamDied at step ' + step };
+    beam = [...next.values()].sort((a, b) => (a.cost - b.cost) || (a.r - b.r)).slice(0, W);
+  }
+  const best = beam.find(s => s.tray.length === 0); if (!best) return { ok: false, why: 'trayNotEmpty' };
+  const path = []; for (let nd = best.node; nd; nd = nd.prev) path.push(nd.t); path.reverse();
+  const d2 = clone(design); d2.solution = P.sol.slice(0, P.ci + 1).concat(path);
+  const o1 = occupancy(d2), g1 = gambleFacts(d2);
+  if (g1.gamble > g0.gamble || g1.blindOnly > g0.blindOnly) return { ok: false, why: 'gamble ' + g1.gamble + '/' + g1.blindOnly };
+  if (!E.replay(d2, d2.solution, { strict: true }).ok) return { ok: false, why: 'replay' };
+  return { ok: true, design: d2, before: o0, after: o1, missBefore: pressureMiss(o0, gentle), missAfter: pressureMiss(o1, gentle), cost: best.cost, ms: Date.now() - t0 };
+}
+// more face-down tiles in the part after the trap only: tail tiles that are not protected (the caller names clock, locks, keys, ice, baits and their neighbourhood), up to the target share of the board (cap 0.30),
+// at most one tile of a picture pair, none that adds a blind gamble. Returns the design and the tiles in the order they were added (the caller may keep a prefix).
+function addFaceDown(design, opts = {}) {
+  const P = prepare(design), rand = rngOf((opts.seed ?? 1) * 104729 + 9), protect = opts.protect || new Set(), cap = opts.cap ?? 0.30, n = P.n, have = (design.down || []).length;
+  const want = Math.max(0, Math.min(Math.floor(cap * n), Math.ceil((opts.target ?? 0.265) * n)) - have), maxOut = opts.max ?? want, g0 = gambleFacts(design), F = design.faces;
+  const pairOf = new Map(), tray = []; P.sol.forEach(t => { const q = tray.findIndex(x => F[x] === F[t]); if (q >= 0) { pairOf.set(t, tray[q]); pairOf.set(tray[q], t); tray.splice(q, 1); } else tray.push(t); });
+  const geo = SEP.geometry(design), cands = P.tail.filter(t => !P.down[t] && !protect.has(t) && t !== design.clock.i);
+  for (let i = cands.length - 1; i > 0; i--) { const j = Math.floor(rand() * (i + 1)); [cands[i], cands[j]] = [cands[j], cands[i]]; }
+  cands.sort((a, b) => (geo.vis[a] ? 1 : 0) - (geo.vis[b] ? 1 : 0));   // covered tiles first (a face-down tile that lies open from the start reads as luck)
+  const added = [], hiddenPair = new Set(); let cur = clone(design); cur.down = (design.down || []).slice();
+  for (const t of cands) {
+    if (added.length >= maxOut) break; const p = pairOf.get(t); if (p != null && (hiddenPair.has(p) || P.down[p])) continue;
+    cur.down.push(t); const g1 = gambleFacts(cur);
+    if (g1.gamble > g0.gamble || g1.blindOnly > g0.blindOnly) { cur.down.pop(); continue; }
+    added.push(t); hiddenPair.add(t);
+  }
+  cur.down.sort((a, b) => a - b);
+  return { design: cur, added, want };
+}
+
+module.exports = { measure, tune, gambleFacts, storedFacts, prepare, tailReplays, BAND, occupancy, pressureMiss, reroute, addFaceDown };
