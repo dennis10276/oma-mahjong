@@ -4,7 +4,7 @@
 const test = require('node:test'), assert = require('node:assert/strict');
 const fs = require('fs'), path = require('path');
 const Tl = require('./tail.js'), E = require('../engine.js'), SEP = require('./separate.js');
-const dir = path.resolve(__dirname, '../../../build/traps/examples2');
+const dir = path.join(__dirname, 'fixtures/lab5');
 const load = f => JSON.parse(fs.readFileSync(path.join(dir, f + '.json'), 'utf8')).design;
 const clone = x => JSON.parse(JSON.stringify(x));
 

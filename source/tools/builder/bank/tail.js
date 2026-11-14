@@ -254,4 +254,6 @@ function addFaceDown(design, opts = {}) {
   return { design: cur, added, want };
 }
 
-module.exports = { measure, tune, gambleFacts, storedFacts, prepare, tailReplays, BAND, occupancy, pressureMiss, reroute, addFaceDown };
+// Exact, budgeted alternatives to occupancy (which describes only one route).
+const { capped: cappedTail, forced: forcedPressure } = require('./tail_search.js');
+module.exports = { measure, tune, gambleFacts, storedFacts, prepare, tailReplays, BAND, occupancy, pressureMiss, reroute, addFaceDown, cappedTail, forcedPressure };

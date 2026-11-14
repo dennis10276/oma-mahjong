@@ -3,9 +3,9 @@
 const test = require('node:test'), assert = require('node:assert/strict');
 const fs = require('fs'), path = require('path');
 const Df = require('./difficulty.js');
-const root = path.resolve(__dirname, '../../../build');
-const key = JSON.parse(fs.readFileSync(path.join(root, 'bank/try-5-key.json'), 'utf8'));
-const load = f => JSON.parse(fs.readFileSync(path.join(root, 'traps/examples2', f), 'utf8'));
+const root = path.join(__dirname, 'fixtures/lab5');
+const key = JSON.parse(fs.readFileSync(path.join(root, 'key.json'), 'utf8'));
+const load = f => JSON.parse(fs.readFileSync(path.join(root, f), 'utf8'));
 const base = () => ({ links: 3, baits: 1, firstMoves: { winning: 6, legal: 12, share: 0.5 }, pressure: { share2plus: 0.7, run2: 6, at3: 3, k: 12 }, lateness: { share: 0.4 }, spare: 1, tailGreedyWin: 0.25, tiles: 76, faceDownShare: 0.2 });
 const sc = f => { const p = Df.partsOf(f), t = Object.values(Df.WEIGHTS).reduce((a, b) => a + b, 0); return 1 + 9 * Object.keys(Df.WEIGHTS).reduce((s, k) => s + Df.WEIGHTS[k] * p[k], 0) / t; };
 

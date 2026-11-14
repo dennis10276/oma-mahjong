@@ -1,0 +1,906 @@
+{
+ "trap": "chain",
+ "shape": "clock<cover:ice; coverThaw<lock",
+ "trapType": "chain:clock<cover:ice; coverThaw<lock",
+ "layout": 9,
+ "layoutShape": "heart",
+ "seed": 1,
+ "tiles": 76,
+ "boardKey": "4aae55b35ba84d5820b6ae7344b271a12ad5db42aac4b6d027603325494ff7a1",
+ "playedLayout": false,
+ "closeTwins": {
+  "before": {
+   "close": 26,
+   "share": 0.6842,
+   "visible": 9,
+   "four": 6,
+   "meets": false
+  },
+  "after": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "pairsBefore": [
+   [
+    0,
+    1
+   ],
+   [
+    2,
+    3
+   ],
+   [
+    4,
+    5
+   ],
+   [
+    7,
+    8
+   ],
+   [
+    9,
+    10
+   ],
+   [
+    11,
+    12
+   ],
+   [
+    14,
+    15
+   ],
+   [
+    18,
+    34
+   ],
+   [
+    19,
+    37
+   ],
+   [
+    39,
+    67
+   ],
+   [
+    20,
+    21
+   ],
+   [
+    20,
+    31
+   ],
+   [
+    21,
+    31
+   ],
+   [
+    21,
+    61
+   ],
+   [
+    23,
+    24
+   ],
+   [
+    29,
+    45
+   ],
+   [
+    32,
+    40
+   ],
+   [
+    35,
+    43
+   ],
+   [
+    42,
+    49
+   ],
+   [
+    46,
+    47
+   ],
+   [
+    51,
+    57
+   ],
+   [
+    53,
+    63
+   ],
+   [
+    54,
+    55
+   ],
+   [
+    64,
+    68
+   ],
+   [
+    65,
+    73
+   ],
+   [
+    66,
+    72
+   ]
+  ],
+  "pairsAfter": [],
+  "swaps": 8,
+  "notes": [
+   "stage 0: 26 -> 0 close, 8 swaps",
+   "   prefix candidate rejected: trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0",
+   "   prefix candidate rejected: k 10",
+   "   prefix candidate rejected: trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0",
+   "   prefix candidate rejected: k 10",
+   "   prefix candidate rejected: trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0",
+   "   prefix candidate rejected: trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0",
+   "   prefix candidate rejected: trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0",
+   "   prefix candidate rejected: trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0",
+   "   prefix candidate rejected: staticGates",
+   "   prefix candidate rejected: trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0",
+   "   prefix candidate rejected: trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0",
+   "   prefix candidate rejected: trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0",
+   "   prefix candidate rejected: trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0",
+   "   prefix candidate rejected: trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0",
+   "   prefix candidate rejected: trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0",
+   "   prefix candidate rejected: trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0",
+   "   prefix candidate rejected: trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:1",
+   "   prefix candidate rejected: trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0",
+   "   prefix candidate rejected: trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0",
+   "   prefix candidate rejected: trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0",
+   "   tail rebuilt (31 pairs, 0 forced close): close weight 127 -> 20",
+   "   after prefix/tail: 2 close (visible 2, four 0)",
+   "   round 0: 4 swaps rejected (trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:1), kept 0",
+   "   round 1: 4 swaps rejected (trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0), kept 0",
+   "   round 2: 3 swaps rejected (staticGates), kept 0",
+   "   round 3: 4 swaps rejected (trapProof:lockIdle:70:11>=11), kept 3",
+   "   round 4: 1 swaps rejected (trapProof:lockIdle:70:11>=11), kept 0",
+   "   round 5: 3 swaps rejected (trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0), kept 1",
+   "   round 6: 3 swaps validated"
+  ]
+ },
+ "shown": {
+  "clock": 0.5835,
+  "minRole": 0.4481,
+  "roles": {
+   "41": 0.4481,
+   "44": 1,
+   "70": 0.6806,
+   "72": 0.9029
+  }
+ },
+ "bait": [
+  71,
+  28
+ ],
+ "card": {
+  "type": "chain",
+  "bait": {
+   "tiles": [
+    71,
+    28
+   ],
+   "pairs": [
+    [
+     71,
+     28
+    ]
+   ],
+   "single": [
+    44
+   ]
+  },
+  "cost": {
+   "result": "lose",
+   "cost": null,
+   "exact": true,
+   "spare": 1,
+   "needsAtLeast": 2
+  },
+  "decisive": {
+   "offeredAt": 0,
+   "first": 0,
+   "last": 10,
+   "shareFirst": 0,
+   "shareLast": 0.909,
+   "inWindow": true,
+   "window15to60": [
+    2,
+    6
+   ],
+   "states": 11,
+   "lethalStates": 11
+  },
+  "see": "The tile lying on the clock is frozen and must be thawed first; one of the neighbours that can melt it is locked (it needs the keys): do not melt with the free neighbour whose twin is buried: it would wait in the tray.",
+  "k": 11,
+  "spare": 1,
+  "clock": 52,
+  "shown": {
+   "clock": 0.5835,
+   "minRole": 0.4481,
+   "roles": {
+    "41": 0.4481,
+    "44": 1,
+    "70": 0.6806,
+    "72": 0.9029
+   }
+  },
+  "shape": "clock<cover:ice; coverThaw<lock",
+  "trapType": "chain:clock<cover:ice; coverThaw<lock",
+  "chainLength": 2,
+  "fair": false,
+  "fairWhy": [
+   "the loss shows only after 7+ more removals (> 6)"
+  ],
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     71
+    ],
+    "result": "lose",
+    "cost": null,
+    "value": 4
+   }
+  ],
+  "droppedBaits": [
+   {
+    "name": "keyEarly",
+    "result": "win",
+    "cost": 0,
+    "exact": true,
+    "why": "notCostly"
+   }
+  ],
+  "control": {
+   "value": 0,
+   "unknown": false,
+   "dearest": null,
+   "moves": 0,
+   "of": 0,
+   "cap": 3
+  },
+  "idle": [
+   {
+    "kind": "lock",
+    "tile": 70,
+    "kWithout": 9,
+    "k": 11
+   },
+   {
+    "kind": "ice",
+    "tile": 72,
+    "kWithout": 3,
+    "k": 11
+   }
+  ],
+  "links": [
+   [
+    52,
+    72
+   ],
+   [
+    72,
+    70
+   ],
+   [
+    72,
+    73
+   ],
+   [
+    72,
+    71
+   ],
+   [
+    70,
+    41
+   ],
+   [
+    70,
+    44
+   ]
+  ],
+  "connected": true,
+  "specials": {
+   "locks": [
+    70
+   ],
+   "keys": [
+    41,
+    44
+   ],
+   "ice": {
+    "72": 2
+   }
+  },
+  "uiNote": "obKind() shows one overlay per tile (ice, else lock, else key): a tile that is both frozen and a key (or locked) would hide the key (or lock) badge, so it is never built; the chain freezes the key COVER, a way tile or a thaw-neighbour instead.",
+  "engineNodes": 36692
+ },
+ "clock": {
+  "tile": 52,
+  "fewestMoves": 11,
+  "spare": 1,
+  "n": 12
+ },
+ "story": "Chain trap",
+ "sentence": "The tile lying on the clock is frozen and must be thawed first; one of the neighbours that can melt it is locked (it needs the keys): do not melt with the free neighbour whose twin is buried: it would wait in the tray.",
+ "design": {
+  "tiles": [
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    3,
+    0,
+    0
+   ],
+   [
+    5,
+    0,
+    0
+   ],
+   [
+    7,
+    0,
+    0
+   ],
+   [
+    9,
+    0,
+    0
+   ],
+   [
+    11,
+    0,
+    0
+   ],
+   [
+    0,
+    2,
+    0
+   ],
+   [
+    2,
+    2,
+    0
+   ],
+   [
+    4,
+    2,
+    0
+   ],
+   [
+    6,
+    2,
+    0
+   ],
+   [
+    8,
+    2,
+    0
+   ],
+   [
+    10,
+    2,
+    0
+   ],
+   [
+    12,
+    2,
+    0
+   ],
+   [
+    1,
+    4,
+    0
+   ],
+   [
+    3,
+    4,
+    0
+   ],
+   [
+    5,
+    4,
+    0
+   ],
+   [
+    7,
+    4,
+    0
+   ],
+   [
+    9,
+    4,
+    0
+   ],
+   [
+    11,
+    4,
+    0
+   ],
+   [
+    0,
+    6,
+    0
+   ],
+   [
+    2,
+    6,
+    0
+   ],
+   [
+    4,
+    6,
+    0
+   ],
+   [
+    6,
+    6,
+    0
+   ],
+   [
+    8,
+    6,
+    0
+   ],
+   [
+    10,
+    6,
+    0
+   ],
+   [
+    12,
+    6,
+    0
+   ],
+   [
+    3,
+    8,
+    0
+   ],
+   [
+    5,
+    8,
+    0
+   ],
+   [
+    7,
+    8,
+    0
+   ],
+   [
+    9,
+    8,
+    0
+   ],
+   [
+    6,
+    10,
+    0
+   ],
+   [
+    3,
+    6,
+    1
+   ],
+   [
+    9,
+    6,
+    1
+   ],
+   [
+    2,
+    4,
+    1
+   ],
+   [
+    10,
+    4,
+    1
+   ],
+   [
+    4,
+    4,
+    1
+   ],
+   [
+    8,
+    4,
+    1
+   ],
+   [
+    1,
+    6,
+    1
+   ],
+   [
+    11,
+    6,
+    1
+   ],
+   [
+    5,
+    6,
+    1
+   ],
+   [
+    7,
+    6,
+    1
+   ],
+   [
+    3,
+    2,
+    1
+   ],
+   [
+    9,
+    2,
+    1
+   ],
+   [
+    6,
+    4,
+    1
+   ],
+   [
+    4,
+    8,
+    1
+   ],
+   [
+    8,
+    8,
+    1
+   ],
+   [
+    5,
+    2,
+    1
+   ],
+   [
+    7,
+    2,
+    1
+   ],
+   [
+    1,
+    2,
+    1
+   ],
+   [
+    11,
+    2,
+    1
+   ],
+   [
+    6,
+    8,
+    1
+   ],
+   [
+    3,
+    4,
+    2
+   ],
+   [
+    9,
+    4,
+    2
+   ],
+   [
+    10,
+    6,
+    2
+   ],
+   [
+    2,
+    6,
+    2
+   ],
+   [
+    4,
+    6,
+    2
+   ],
+   [
+    8,
+    6,
+    2
+   ],
+   [
+    5,
+    4,
+    2
+   ],
+   [
+    7,
+    4,
+    2
+   ],
+   [
+    10,
+    2,
+    2
+   ],
+   [
+    2,
+    2,
+    2
+   ],
+   [
+    6,
+    6,
+    2
+   ],
+   [
+    3,
+    6,
+    3
+   ],
+   [
+    9,
+    6,
+    3
+   ],
+   [
+    4,
+    4,
+    3
+   ],
+   [
+    8,
+    4,
+    3
+   ],
+   [
+    5,
+    6,
+    3
+   ],
+   [
+    7,
+    6,
+    3
+   ],
+   [
+    6,
+    4,
+    3
+   ],
+   [
+    4,
+    6,
+    4
+   ],
+   [
+    8,
+    6,
+    4
+   ],
+   [
+    5,
+    4,
+    4
+   ],
+   [
+    7,
+    4,
+    4
+   ],
+   [
+    6,
+    6,
+    4
+   ],
+   [
+    5,
+    6,
+    5
+   ],
+   [
+    7,
+    6,
+    5
+   ]
+  ],
+  "faces": [
+   17,
+   18,
+   14,
+   16,
+   33,
+   34,
+   25,
+   23,
+   35,
+   27,
+   30,
+   11,
+   13,
+   5,
+   6,
+   11,
+   19,
+   14,
+   35,
+   34,
+   13,
+   4,
+   7,
+   6,
+   19,
+   7,
+   32,
+   21,
+   2,
+   13,
+   24,
+   16,
+   5,
+   31,
+   24,
+   0,
+   9,
+   9,
+   4,
+   13,
+   0,
+   29,
+   26,
+   33,
+   29,
+   10,
+   21,
+   25,
+   12,
+   1,
+   20,
+   26,
+   15,
+   3,
+   27,
+   18,
+   31,
+   3,
+   24,
+   32,
+   22,
+   30,
+   8,
+   20,
+   24,
+   28,
+   10,
+   23,
+   17,
+   15,
+   8,
+   2,
+   1,
+   22,
+   28,
+   12
+  ],
+  "down": [
+   32,
+   15,
+   24,
+   17,
+   53,
+   12,
+   56,
+   6,
+   14,
+   22,
+   42,
+   19,
+   1,
+   26,
+   10
+  ],
+  "gold": [],
+  "obst": {
+   "ice": {
+    "72": 2
+   },
+   "locks": [
+    70
+   ],
+   "keys": [
+    41,
+    44
+   ]
+  },
+  "clock": {
+   "i": 52,
+   "n": 12
+  },
+  "solution": [
+   75,
+   74,
+   60,
+   48,
+   41,
+   44,
+   70,
+   73,
+   72,
+   65,
+   52,
+   69,
+   62,
+   66,
+   63,
+   50,
+   59,
+   26,
+   30,
+   34,
+   49,
+   45,
+   12,
+   29,
+   28,
+   71,
+   46,
+   27,
+   47,
+   6,
+   7,
+   67,
+   18,
+   8,
+   68,
+   0,
+   9,
+   54,
+   55,
+   1,
+   58,
+   64,
+   42,
+   51,
+   36,
+   37,
+   10,
+   61,
+   17,
+   2,
+   33,
+   56,
+   5,
+   19,
+   31,
+   3,
+   53,
+   57,
+   39,
+   20,
+   35,
+   40,
+   38,
+   21,
+   4,
+   43,
+   32,
+   13,
+   22,
+   25,
+   23,
+   14,
+   11,
+   15,
+   24,
+   16
+  ]
+ }
+}

@@ -283,7 +283,7 @@ function loadEarlier(C) {
 // ---------------------------------------------------------------- assignment
 let A_SA = null, A_DFS = null;
 function assign(opts = {}) {
-  const L = require('./ledger.js'), T = require('../trap_stories.js'), R = JSON.parse(fs.readFileSync(path.join(ROOT, 'source/build/traps/readable-layouts.json'), 'utf8')), rank = {};
+  const L = require('./ledger.js'), T = require('../trap_stories.js'), R = T.readableLayouts(), rank = {};
   R.ranked.forEach(r => { rank[r.layout] = r.rank; });
   const C = opts.cfg ? config(opts.cfg) : CFG, FIRST = C.first, LAST = C.last, NL = C.NL, target = C.target;
   const pool0 = opts.pool || loadPool(), fails = pool0.fails, jobs = pool0.jobs;
