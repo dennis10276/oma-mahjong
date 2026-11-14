@@ -1,0 +1,343 @@
+{
+  "schema": "task17-human-findings-v1",
+  "source": "source/build/chained-v2-lab-findings.json",
+  "savedAt": "2026-11-14T14:19:52.260Z",
+  "scope": "Exact original played boards; lab numbers are review labels, not placed game levels",
+  "status": "mixed-requires-revision",
+  "approvedFor332Plus": false,
+  "reviewedPrimaryFiles": [
+    "clearLockRoof-L16-s21-p1.json",
+    "lookalikeCover-L17-s12-p2.json",
+    "roofThawKey-L23-s12-p2.json",
+    "lookalikeWay-L13-s12-p2.json",
+    "waitThawKey-L4-s11-p1.json"
+  ],
+  "unanalysedNotes": 0,
+  "records": [
+    {
+      "id": 170332,
+      "labLevel": 332,
+      "file": "outsideIn-L1-s21-p1.json",
+      "layout": 1,
+      "shape": "outsideIn",
+      "inPrimaryBank": false,
+      "rating": {
+        "note": "No AHA. Finish fine but no hard chain.",
+        "stars": 0,
+        "verdict": null,
+        "starts": 2,
+        "tries": 0,
+        "wins": 0,
+        "results": []
+      },
+      "analysis": {
+        "status": "insufficient-aha",
+        "action": "Strengthen the trap before later-level use. The finish was explicitly fine.",
+        "suggestedRange": null
+      }
+    },
+    {
+      "id": 170333,
+      "labLevel": 333,
+      "file": "clearLockRoof-L16-s21-p1.json",
+      "layout": 16,
+      "shape": "clearLockRoof",
+      "inPrimaryBank": true,
+      "rating": {
+        "note": "A bit better nut nog hard enough to spot like the other chains.",
+        "stars": 0,
+        "verdict": null,
+        "starts": 1,
+        "tries": 2,
+        "wins": 1,
+        "results": [
+          {
+            "r": "stuck",
+            "left": 64,
+            "s": 30,
+            "t": 1794663102395,
+            "ck": 1
+          },
+          {
+            "r": "win",
+            "left": 0,
+            "s": 114,
+            "t": 1794663217554
+          }
+        ]
+      },
+      "analysis": {
+        "status": "insufficient-aha",
+        "action": "Needs a less obvious, stronger chain before later-level use.",
+        "suggestedRange": null
+      }
+    },
+    {
+      "id": 170334,
+      "labLevel": 334,
+      "file": "lookalikeCoverThaw-L12-s12-p2.json",
+      "layout": 12,
+      "shape": "lookalikeCoverThaw",
+      "inPrimaryBank": false,
+      "rating": {
+        "note": "This is an AHA yes!. 290-310 level.",
+        "stars": 4,
+        "verdict": null,
+        "starts": 1,
+        "tries": 5,
+        "wins": 1,
+        "results": [
+          {
+            "r": "restart",
+            "left": 69,
+            "s": 118,
+            "t": 1794663378739
+          },
+          {
+            "r": "stuck",
+            "left": 76,
+            "s": 60,
+            "t": 1794663438951,
+            "ck": 1
+          },
+          {
+            "r": "restart",
+            "left": 71,
+            "s": 46,
+            "t": 1794663499296
+          },
+          {
+            "r": "restart",
+            "left": 75,
+            "s": 38,
+            "t": 1794663545549
+          },
+          {
+            "r": "win",
+            "left": 0,
+            "s": 156,
+            "t": 1794663701424
+          }
+        ]
+      },
+      "analysis": {
+        "status": "positive-earlier-range",
+        "action": "Positive AHA anchor for approximately 290–310; not approval for 332+. The two clearer variants are different boards and remain untested.",
+        "suggestedRange": "290–310"
+      }
+    },
+    {
+      "id": 170335,
+      "labLevel": 335,
+      "file": "lookalikeCover-L17-s12-p2.json",
+      "layout": 17,
+      "shape": "lookalikeCover",
+      "inPrimaryBank": true,
+      "rating": {
+        "note": "Its an AHA but early introducing chains. Its an easy one.",
+        "stars": 4,
+        "verdict": "easy",
+        "starts": 3,
+        "tries": 2,
+        "wins": 1,
+        "results": [
+          {
+            "r": "win",
+            "left": 0,
+            "s": 134,
+            "t": 1794663895809
+          },
+          {
+            "r": "stuck",
+            "left": 72,
+            "s": 19,
+            "t": 1794663920556
+          }
+        ]
+      },
+      "analysis": {
+        "status": "early-introduction",
+        "action": "Use as an early chain introduction or strengthen it before later placement.",
+        "suggestedRange": "early chain introduction"
+      }
+    },
+    {
+      "id": 170336,
+      "labLevel": 336,
+      "file": "roofThawKey-L23-s12-p2.json",
+      "layout": 23,
+      "shape": "roofThawKey",
+      "inPrimaryBank": true,
+      "rating": {
+        "note": "Yes AHA moment :). 300+ level.",
+        "stars": 4,
+        "verdict": "right",
+        "starts": 3,
+        "tries": 4,
+        "wins": 0,
+        "results": [
+          {
+            "r": "stuck",
+            "left": 68,
+            "s": 93,
+            "t": 1794664052588
+          },
+          {
+            "r": "stuck",
+            "left": 68,
+            "s": 23,
+            "t": 1794664077116
+          },
+          {
+            "r": "restart",
+            "left": 71,
+            "s": 55,
+            "t": 1794664151938
+          },
+          {
+            "r": "restart",
+            "left": 69,
+            "s": 134,
+            "t": 1794664384837
+          }
+        ]
+      },
+      "analysis": {
+        "status": "positive-300-plus",
+        "action": "Positive AHA anchor for 300+. Four completed attempts and no win are recorded; do not describe this as a four-try solve.",
+        "suggestedRange": "300+"
+      }
+    },
+    {
+      "id": 170337,
+      "labLevel": 337,
+      "file": "lookalikeWay-L13-s12-p2.json",
+      "layout": 13,
+      "shape": "lookalikeWay",
+      "inPrimaryBank": true,
+      "rating": {
+        "note": "Got an AHA but got stuck with it. Is that intended? I dont see it otherwise.",
+        "stars": 0,
+        "verdict": "hard",
+        "starts": 3,
+        "tries": 6,
+        "wins": 0,
+        "results": [
+          {
+            "r": "stuck",
+            "left": 84,
+            "s": 118,
+            "t": 1794664808605
+          },
+          {
+            "r": "stuck",
+            "left": 81,
+            "s": 42,
+            "t": 1794664852278,
+            "ck": 1
+          },
+          {
+            "r": "stuck",
+            "left": 92,
+            "s": 19,
+            "t": 1794664872940
+          },
+          {
+            "r": "stuck",
+            "left": 90,
+            "s": 31,
+            "t": 1794664905532
+          },
+          {
+            "r": "restart",
+            "left": 77,
+            "s": 73,
+            "t": 1794665019615
+          },
+          {
+            "r": "stuck",
+            "left": 81,
+            "s": 60,
+            "t": 1794665080028,
+            "ck": 1
+          }
+        ]
+      },
+      "analysis": {
+        "status": "hold-for-clarity-review",
+        "action": "Hold for route and clue review. An engine win exists, but the intended continuation was not clear to Dennis. Six completed attempts and no win are recorded.",
+        "suggestedRange": null
+      }
+    },
+    {
+      "id": 170338,
+      "labLevel": 338,
+      "file": "waitLookalikeWay-L7-s11-p1.json",
+      "layout": 7,
+      "shape": "waitLookalikeWay",
+      "inPrimaryBank": false,
+      "rating": {
+        "note": "Easy to see the trap. too easy.. not even an AHA",
+        "stars": 2,
+        "verdict": "easy",
+        "starts": 1,
+        "tries": 1,
+        "wins": 1,
+        "results": [
+          {
+            "r": "win",
+            "left": 0,
+            "s": 126,
+            "t": 1794665339184
+          }
+        ]
+      },
+      "analysis": {
+        "status": "insufficient-aha",
+        "action": "This exact board is too obvious for the intended later AHA role. Its delivered sibling has a different seed and spare and is not reviewed by this note.",
+        "suggestedRange": null
+      }
+    },
+    {
+      "id": 170339,
+      "labLevel": 339,
+      "file": "waitThawKey-L4-s11-p1.json",
+      "layout": 4,
+      "shape": "waitThawKey",
+      "inPrimaryBank": true,
+      "rating": {
+        "note": "Just about an AHA could be place around 275 or more chained to place later.",
+        "stars": 3,
+        "verdict": "easy",
+        "starts": 2,
+        "tries": 3,
+        "wins": 1,
+        "results": [
+          {
+            "r": "restart",
+            "left": 81,
+            "s": 14,
+            "t": 1794665425190
+          },
+          {
+            "r": "restart",
+            "left": 76,
+            "s": 63,
+            "t": 1794665500195
+          },
+          {
+            "r": "win",
+            "left": 0,
+            "s": 134,
+            "t": 1794665634497
+          }
+        ]
+      },
+      "analysis": {
+        "status": "marginal-earlier-range",
+        "action": "Approximately 275 as-is; add more meaningful chaining for later use.",
+        "suggestedRange": "around 275 as-is"
+      }
+    }
+  ]
+}

@@ -17,6 +17,12 @@ const clone = x => JSON.parse(JSON.stringify(x));
 const uniq = a => [...new Set(a)];
 const rngOf = seed => { let s = seed >>> 0; return () => ((s = (Math.imul(s, 1664525) + 1013904223) >>> 0) / 4294967296); };
 const shuffled = (a, rng) => a.map(v => [rng(), v]).sort((a,b) => a[0]-b[0]).map(x=>x[1]);
+function clockHolders(c,P,clock,bait,flex=false,exposed=null){
+  const available=[...Array(c.n).keys()].filter(i=>!P.includes(i)&&!bait.tiles.includes(i)&&!c.above[i].has(exposed));
+  const direct=available.filter(i=>c.above[i].has(clock));if(direct.length>=2||!flex)return direct;
+  const late=new Set(P.slice(Math.max(2,Math.floor(P.length*.45))).filter(i=>i!==exposed));
+  return available.filter(i=>[...c.above[i]].some(j=>late.has(j))).sort((a,b)=>Math.max(...[...c.above[b]].map(i=>P.indexOf(i)))-Math.max(...[...c.above[a]].map(i=>P.indexOf(i))));
+}
 function keysFirst(c,r,P,rng){
   const Bkey=r.bait.keyEarly??r.bait.keyNear??r.bait.keyB,A=r.keys.find(i=>i!==Bkey);
   if(A==null||Bkey==null||!r.keys.every(i=>P.includes(i)))return P;
@@ -61,10 +67,16 @@ Object.assign(FAMILIES, require('./chained_shapes.js').SHAPES);
 function place(name, c, brief, rng) {
   const f = FAMILIES[name]; if (!f) return { fail: 'unknownMix' };
   const b = { ...brief, targets: { ...brief.targets }, ...(f.chain != null ? { chain: T.CHAIN_SHAPES[f.chain] } : {}) };
+  if(f.chained&&f.mode==='earlyClock')b.pressure=brief.pressure||{};
   if(f.chained&&f.mode==='roofKey')b.frame={...b.frame,depth:T.CHAIN_DEFS[f.chain].cover?2:(rng()<.5?1:2)};
   if (f.base === 'lockedMelt') {b.targets.locks=4;b.targets.digBefore??=[2,8];b.targets.keyCover??=[1,4];}
   if(f.mode==='freezeTwoRight'){b.frame={...b.frame,depth:0};b.targets.minWay=3;}
-  const r = T.STORIES[f.base].place(c, b, rng); if (r.fail) return r;
+  const r = f.name==='waitNested'&&brief.targets?.nestedKeyOnInner?require('./chained_nested_hosts.js').innerKey(c,b,rng,T):f.name==='waitNested'&&brief.targets?.nestedDirect?require('./chained_nested_hosts.js').direct(c,b,rng,T):f.name==='waitNested'&&brief.targets?.nestedFallback?require('./chained_nested_hosts.js').place(c,b,rng,T):T.STORIES[f.base].place(c, b, rng); if (r.fail) return r;
+  if(f.name==='lookalikeCoverThaw'){
+    const q=require('./chained_readability.js').keyRoof({tiles:c.tiles,obst:{keys:r.keys,ice:r.ice}});
+    if(q.keyShown<(brief.targets?.keyRoofShownMin??0)||q.roofShown<(brief.targets?.keyRoofTopMin??0))return {fail:'keyRoofReadability'};
+    r.bait.keyRoofShownMin=brief.targets?.keyRoofShownMin??0;r.bait.keyRoofTopMin=brief.targets?.keyRoofTopMin??0;
+  }
   let P = r.dig || B.planDig(c, r, rng); if (!P) return { fail: 'baseDig' };
   const bait = r.bait, originalClock = r.clock;
   // A lock below another lock opened by the same keys is provably redundant.
@@ -73,7 +85,15 @@ function place(name, c, brief, rng) {
   const protectedTiles = new Set([r.clock, ...r.keys, ...r.locks, ...Object.keys(r.ice).map(Number), ...bait.tiles]);
   const visible = i => c.roleShown0[i] && T.vis0Of(c)[i].role;
   let added = null,addedTiles=[],setup=null;
-  if (f.mode === 'roofKey') {
+  if(f.newIdea==='sharedThawDetour'){
+    const hosts=Object.keys(r.ice).map(Number);
+    const cand=shuffled(P.filter(i=>!protectedTiles.has(i)&&visible(i)&&c.inb[i].length>=2).flatMap(i=>hosts.flatMap(h=>T.thawNbs(c,h).filter(j=>c.free0[j]&&c.inb[i].includes(j)&&!protectedTiles.has(j)&&!P.includes(j)).map(lone=>({host:i,lone})))),rng);
+    if(!cand.length)return {fail:'noSharedThawHost'};
+    const pick=cand[0],twins=shuffled([...Array(c.n).keys()].filter(i=>!P.includes(i)&&i!==pick.lone&&!protectedTiles.has(i)&&T.vis0Of(c)[i].picture&&c.above[i].size>=2&&!c.above[i].has(pick.host)&&!c.above[i].has(pick.lone)),rng);
+    if(!twins.length)return {fail:'noSharedThawTwin'};
+    added=pick.host;r.ice[added]=2;
+    bait.wrong.push(pick.lone);bait.twins.push(twins[0]);bait.pairs.push([pick.lone,twins[0]]);bait.tiles.push(pick.lone,twins[0]);bait.keepUp.push(pick.lone,twins[0],...c.above[twins[0]]);P=null;
+  } else if (f.mode === 'roofKey') {
     const oldKey=bait.keyEarly;
     if(oldKey==null)return {fail:'noFreeRoofKeyRole'};
     const cand=shuffled([...c.above[r.clock]].filter(i=>visible(i)&&c.free0[i]&&!r.ice[i]&&!r.locks.has(i)&&!r.keys.includes(i)&&!bait.pairs.some(p=>p.includes(i))),rng);
@@ -108,7 +128,7 @@ function place(name, c, brief, rng) {
     bait.wrong.push(lone);bait.twins.push(twin);bait.pairs.push([lone,twin]);bait.tiles.push(lone,twin);bait.keepUp.push(lone,twin,...c.above[twin]);
     P=null;
   } else if (f.mode === 'earlyClock') {
-    if([...Array(c.n).keys()].filter(i=>!P.includes(i)&&c.above[i].has(originalClock)).length<2)return {fail:'noClockPartnerHolders'};
+    if(clockHolders(c,P,originalClock,bait,!!brief.targets?.flexClockHolders).length<2)return {fail:'noClockPartnerHolders'};
     const cand = shuffled([...Array(c.n).keys()].filter(i => c.free0[i] && visible(i) && !r.keys.includes(i) && !r.locks.has(i) && !r.ice[i] && !P.includes(i) && !bait.pairs.some(p => p.includes(i))), rng);
     // Prefer a new clock over a bait tile: retain the authored lonely-picture pair.
     if (!cand.length) return { fail: 'noFreeClock' };
@@ -140,7 +160,7 @@ function place(name, c, brief, rng) {
   const mechanism = uniq([...specials, ...specials.flatMap(i => [...c.above[i]]), ...Object.keys(r.ice).map(Number).flatMap(i => c.inb[i])]);
   r.bait = { ...bait, type: name, keepUp: uniq([...bait.keepUp, ...mechanism]),
     tiles: uniq([...bait.tiles, ...(f.mode === 'earlyClock' ? [r.clock] : [])]),
-    mix: { originalClock, added, addedTiles, setup, mode: f.mode }, see: f.see };
+    mix: { originalClock, added, addedTiles, setup, mode: f.mode,...(brief.targets?.flexClockHolders?{flexClockHolders:true}:{}) }, see: f.see };
   return r;
 }
 
@@ -154,7 +174,7 @@ function price(d, take, k, opts = {}) {
   const C = opts.C || D.clockGames(d), w = opts.w || D.work(1e6, opts.wallMs ?? 12000);
   const g = C.at(d.clock.n), legal = E.legal(g,E.start(g));
   if (!take.every(i=>legal.includes(i))) return null;
-  const p = D.priceMove(C, E.start(g), { take }, { base:k, nShipMax: Math.min(19,k+3), nodes:opts.nodes ?? 180000, w });
+  let p;try{p = D.priceMove(C, E.start(g), { take }, { base:k, nShipMax: Math.min(19,k+3), nodes:opts.nodes ?? 180000, w });}catch{return null;}
   return { tiles: take.slice(), result:p.result, cost:p.cost, exact:p.exact, need:p.need ?? null };
 }
 const costly = (p, spare) => p && p.exact && (p.result === 'lose' || (p.result === 'win' && p.cost > spare));
@@ -174,13 +194,14 @@ function opening(d, opts = {}) {
 function repeatedKeys(c,r,plan,rng){
   const face=plan.faces[r.keys[0]],freeKey=r.keys.find(i=>c.free0[i]&&!r.ice[i]);if(freeKey==null)return false;
   const groups=new Map();plan.faces.forEach((f,i)=>groups.set(f,(groups.get(f)||[]).concat(i)));
+  if(groups.get(face)?.length!==2)return false;
   const open=new Map(),pairs=[];
   for(const i of plan.W){const f=plan.faces[i];if(open.has(f)){pairs.push([open.get(f),i]);open.delete(f);}else open.set(f,i);}
   const inP=new Set(r.dig),v=T.vis0Of(c);
   const geo=c._mixGeo||(c._mixGeo=SEP.geometry({tiles:c.tiles,down:[]}));
   const candidates=shuffled(pairs.filter(([a,b])=>{
     const copies=[...r.keys,a,b];if(copies.some((i,k)=>copies.slice(k+1).some(j=>geo.close[i][j])))return false;
-    const f=plan.faces[a],g=groups.get(f);return f!==face&&g.length===4&&g.every(i=>!inP.has(i)&&!r.bait.tiles.includes(i))&&((c.free0[a]&&c.above[b].size>=2&&v[b].picture)||(c.free0[b]&&c.above[a].size>=2&&v[a].picture));
+    const f=plan.faces[a],g=groups.get(f);return f!==face&&[2,4].includes(g.length)&&g.every(i=>!inP.has(i)&&!r.bait.tiles.includes(i))&&((c.free0[a]&&c.above[b].size>=2&&v[b].picture)||(c.free0[b]&&c.above[a].size>=2&&v[a].picture));
   }),rng);
   if(!candidates.length)return false;
   const pair=candidates[0],near=pair.find(i=>c.free0[i]),far=pair.find(i=>i!==near);
@@ -232,6 +253,8 @@ function prove(name, d, roles, ctx, opts = {}) {
   if(roles.bait.pairs.some(([a,b])=>d.faces[a]!==d.faces[b]))return {ok:false,why:'baitPairChanged'};
   if((f.mode==='repeatKeys'||f.repeat)&&(!roles.bait.repeat||roles.bait.repeat.copies.some(i=>d.faces[i]!==roles.bait.repeat.face)||d.faces.filter(f=>f===roles.bait.repeat.face).length!==4))return {ok:false,why:'repeatChoiceChanged'};
   if ((d.down || []).length / d.tiles.length > .3) return {ok:false,why:'faceDownShare'};
+  const keyRoof=f.name==='lookalikeCoverThaw'?require('./chained_readability.js').keyRoof(d):null;
+  if(keyRoof&&(keyRoof.keyShown<(roles.bait.keyRoofShownMin??0)||keyRoof.roofShown<(roles.bait.keyRoofTopMin??0)))return {ok:false,why:'keyRoofReadability'};
   const g = E.game(d), s0 = E.start(g), vis = tileVisibility(g.tiles,{...s0,down:g.down,openPeek:-1},null).tiles;
   const special = uniq([d.clock.i,...(f.mode==='earlyClock'?[roles.bait.mix.originalClock]:[]),...d.obst.keys,...d.obst.locks,...Object.keys(d.obst.ice).map(Number)]);
   if (special.some(i=>g.down[i] || !vis[i].role)) return {ok:false,why:'hiddenSpecial'};
@@ -245,6 +268,14 @@ function prove(name, d, roles, ctx, opts = {}) {
   const C = D.clockGames(d), w = D.work(3e6,opts.wallMs ?? 18000);
   const baits = candidates.map(a=>price(d,a,k,{C,w})).filter(p=>costly(p,spare));
   if (!baits.length) return {ok:false,why:'noProvenBait'};
+  let newLink=null;
+  if(f.newIdea){
+    const offers=require('./chained_new_ideas.js').candidates(f.newIdea,d);
+    const offer=offers.find(q=>baits.some(p=>JSON.stringify(p.tiles)===JSON.stringify(q.take))&&(f.newIdea!=='splitPreparation'||q.take.every(i=>{const p=price(d,[i],k,{C,w});return p?.exact&&p.result==='win'&&p.cost<=spare;})));
+    if(!offer)return {ok:false,why:'newIdeaNotBait'};
+    newLink={kind:f.newIdea,sentence:f.see,...offer};
+    if(f.newIdea==='splitPreparation')newLink.individuals=offer.take.map(i=>price(d,[i],k,{C,w}));
+  }
   if (f.mode==='earlyClock' && !baits.some(p=>p.tiles.includes(d.clock.i))) return {ok:false,why:'clockNotBait'};
   if (f.mode==='roofKey' && !baits.some(p=>p.tiles.includes(roles.bait.keyEarly))) return {ok:false,why:'roofKeyNotBait'};
   if ((f.mode==='repeatKeys'||f.repeat) && !baits.some(p=>JSON.stringify(p.tiles)===JSON.stringify(roles.bait.repeat?.wrongPair))) return {ok:false,why:'wrongRepeatedPairNotBait'};
@@ -286,7 +317,7 @@ function prove(name, d, roles, ctx, opts = {}) {
   }
   const card={type:name,trapType:f.trapType,see:f.see,recipe:f.recipe,dials:f.dials,k,spare,priceHorizon:Math.min(19,k+3),baits,control,effects,firstMoves:first,mechanism:{...roles.bait.mix,repeat:roles.bait.repeat||null,relay:roles.bait.relay||null},
     ...(f.chained?{signature:f.signature,baseSignature:f.baseSignature,links:f.links,obviousness:subtle,twoTraps:{kind:'hardChainAndMediumBait',hardLinks:f.links,mediumLinks:2,mediumEvidence:require('./chained_facts.js').mediumEvidence(d,roles,baits),baits:baits.map(p=>p.tiles),note:'Two separately priced bad decisions on one connected chain; no claim of additive sequential costs.'}}:{}),
-    combinedBadges:combined,needsUi:combined.length?'TASK-13':null};
+    ...(newLink?{newLink}:{}),...(keyRoof?{keyRoofReadability:{...keyRoof,minimum:roles.bait.keyRoofShownMin??0,roofMinimum:roles.bait.keyRoofTopMin??0}}:{}),combinedBadges:combined,needsUi:combined.length?'TASK-13':null};
   return {ok:true,card};
 }
 
@@ -314,7 +345,7 @@ function build(name, brief = {}, opts = {}) {
     const P=r.dig,hold=B.chooseHolders(c,r,P,{},rng),N=f.mode==='earlyClock'?B.necessary(c,{...r,clock:r.bait.mix.originalClock},P.filter(i=>i!==r.clock)):B.necessary(c,r,P);
     if(f.mode==='earlyClock'){
       N.add(r.clock);
-      hold.holders=new Set([...Array(c.n).keys()].filter(i=>!P.includes(i)&&c.above[i].has(r.bait.mix.originalClock)&&!r.bait.tiles.includes(i)));
+      hold.holders=new Set(clockHolders(c,P,r.bait.mix.originalClock,r.bait,!!used.targets.flexClockHolders,r.clock));
       if(hold.holders.size<2){fails.noClockPartnerHolders=(fails.noClockPartnerHolders||0)+1;continue;}
     }
     if(f.mode==='tailIce'||f.mode==='tailLock'){
@@ -328,17 +359,34 @@ function build(name, brief = {}, opts = {}) {
     if((f.mode==='repeatKeys'||f.repeat)&&!repeatedKeys(c,r,plan,rng)){fails.noRepeatedKeyPair=(fails.noRepeatedKeyPair||0)+1;continue;}
     const pd=VC.placeDownVC(c,r,P,plan,used,rng);
     const d={tiles:c.tiles.map(t=>[t.x,t.y,t.z]),faces:plan.faces,down:pd.down,gold:[],obst:{ice:{...r.ice},locks:[...r.locks],keys:r.keys.slice()},clock:{i:r.clock,n:99},solution:plan.W};
+    if(f.newIdea){
+      require('./chained_new_ideas.js').arrange(f.newIdea,d,r,rng);
+      const offers=require('./chained_new_ideas.js').candidates(f.newIdea,d);
+      if(!offers.length){fails.noNewIdeaGeometry=(fails.noNewIdeaGeometry||0)+1;continue;}
+      r.bait.extraMoves=offers.slice(0,6).map(q=>q.take);
+      r.bait.tiles=uniq([...r.bait.tiles,...r.bait.extraMoves.flat()]);
+      // Keep both the offer and its visible destination readable.
+      const up=uniq(offers.flatMap(q=>Object.values(q.evidence).flat()).filter(Number.isInteger));
+      d.down=d.down.filter(i=>!r.bait.tiles.includes(i)&&!up.includes(i));
+      r.bait.keepUp=uniq([...r.bait.keepUp,...up,...r.bait.tiles]);
+    }
     const cs=shortest(d); if(!cs || cs.k>18){fails.clockShortest=(fails.clockShortest||0)+1;continue;}
-    const k=cs.k,spare=used.frame.spare;d.clock.n=k+spare;
+    let k=cs.k;const spare=used.frame.spare;d.clock.n=k+spare;
     if(d.clock.n>19){fails.clockNumber=(fails.clockNumber||0)+1;continue;}
-    if(d.solution.indexOf(d.clock.i)+1!==k){
+    if(d.solution.indexOf(d.clock.i)+1!==k||!E.replay(d,d.solution,{strict:true}).ok){
       const strict=shortest({...d,clock:{...d.clock,n:99}},{strict:true});
       if(!strict||strict.k!==k){fails.strictMinimum=(fails.strictMinimum||0)+1;continue;}
       d.solution=E.flatten(strict.path);
     }
     if(!E.replay(d,d.solution,{strict:true}).ok){fails.strictReplay=(fails.strictReplay||0)+1;continue;}
-    if(f.chained){const ob=require('./chained_obviousness.js').measure(d);if(!ob.ok){const why=ob.rightFreePairs?'obvious:freeRoutePair':'obvious:greedyPrefix';fails[why]=(fails[why]||0)+1;continue;}}
-    const p=prove(name,d,r,{k,spare,obviousnessDial:used.obviousnessDial},opts.proof || {});
+    if(f.chained){const ob=require('./chained_obviousness.js').measure(d,{dial:used.obviousnessDial});if(!ob.ok){const why=ob.rightFreePairs?'obvious:freeRoutePair':'obvious:greedyPrefix';fails[why]=(fails[why]||0)+1;continue;}}
+    let p=prove(name,d,r,{k,spare,obviousnessDial:used.obviousnessDial},opts.proof || {});
+    if(name==='waitNested'&&used.targets.nestedBranch)for(let prune=0;prune<6&&!p.ok;prune++){
+      const m=/^idle:lock:(\d+)$/.exec(p.why||'');if(!m||!r.bait.parallelLocks?.includes(+m[1]))break;
+      const tile=+m[1];r.locks.delete(tile);d.obst.locks=d.obst.locks.filter(i=>i!==tile);r.bait.parallelLocks=r.bait.parallelLocks.filter(i=>i!==tile);
+      const rt=retime(d,spare);if(!rt.ok)break;Object.assign(d,rt.design);k=rt.k;
+      p=prove(name,d,r,{k,spare,obviousnessDial:used.obviousnessDial},opts.proof || {});
+    }
     if(!p.ok){fails[p.why]=(fails[p.why]||0)+1;continue;}
     const card={layout,shape:lay.shape,tiles:c.n,trapType:f.trapType,clock:{fewestMoves:k,spare,n:d.clock.n,tile:d.clock.i},trap:p.card,attempt};
     return {design:d,roles:r,brief:used,card,fails,ms:Date.now()-t0};

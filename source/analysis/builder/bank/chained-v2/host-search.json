@@ -1,0 +1,8348 @@
+{
+  "lookalikeWay": {
+    "1": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1400,
+        "job:noProvenMix": 6
+      }
+    },
+    "2": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 914,
+        "noChain": 175,
+        "twoMeaningfulBaits": 250,
+        "job:noProvenMix": 6,
+        "noProvenBait": 61
+      }
+    },
+    "3": {
+      "jobs": 6,
+      "raw": 3,
+      "failures": {
+        "fixedTwinsClose": 11,
+        "noRepeatedKeyPair": 20,
+        "obvious:freeRoutePair": 3,
+        "job:hardWall": 3,
+        "twoMeaningfulBaits": 1,
+        "idle:ice:49": 1,
+        "trayOverflow": 1
+      }
+    },
+    "4": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 3,
+        "noChain": 284,
+        "noRepeatedKeyPair": 56,
+        "twoMeaningfulBaits": 38,
+        "job:noProvenMix": 3
+      }
+    },
+    "5": {
+      "jobs": 4,
+      "raw": 2,
+      "failures": {
+        "idle:ice:72": 1,
+        "trayOverflow": 5,
+        "idle:ice:50": 1,
+        "fixedTwinsClose": 1,
+        "idle:ice:51": 1,
+        "noRepeatedKeyPair": 12,
+        "idle:ice:74": 1,
+        "obvious:freeRoutePair": 1,
+        "idle:ice:69": 1,
+        "job:noProvenMix": 2,
+        "idle:ice:73": 2,
+        "idle:ice:60": 1,
+        "noChain": 250
+      }
+    },
+    "6": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 827,
+        "twoMeaningfulBaits": 203,
+        "obvious:freeRoutePair": 50,
+        "trayOverflow": 53,
+        "job:noProvenMix": 6,
+        "noProvenBait": 28,
+        "noChain": 38,
+        "idle:ice:74": 4,
+        "idle:ice:73": 4,
+        "idle:ice:79": 1
+      }
+    },
+    "7": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1400,
+        "job:noProvenMix": 6
+      }
+    },
+    "8": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1400,
+        "job:noProvenMix": 6
+      }
+    },
+    "9": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1150,
+        "job:noProvenMix": 6,
+        "trayOverflow": 121,
+        "noRepeatedKeyPair": 124,
+        "clockNumber": 4,
+        "idle:ice:71": 1
+      }
+    },
+    "10": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1400,
+        "job:noProvenMix": 6
+      }
+    },
+    "11": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 1002,
+        "twoMeaningfulBaits": 110,
+        "job:noProvenMix": 6,
+        "noProvenBait": 40,
+        "noChain": 96,
+        "obvious:freeRoutePair": 4
+      }
+    },
+    "12": {
+      "jobs": 3,
+      "raw": 3,
+      "failures": {
+        "noProvenBait": 4,
+        "noRepeatedKeyPair": 67,
+        "noChain": 15,
+        "trayOverflow": 16,
+        "idle:ice:48": 1,
+        "wrongRepeatedPairNotBait": 1
+      }
+    },
+    "13": {
+      "jobs": 3,
+      "raw": 2,
+      "failures": {
+        "job:hardWall": 1,
+        "obvious:freeRoutePair": 1,
+        "noRepeatedKeyPair": 28,
+        "trayOverflow": 15,
+        "idle:ice:68": 1,
+        "noProvenBait": 2
+      }
+    },
+    "15": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 592,
+        "twoMeaningfulBaits": 230,
+        "job:noProvenMix": 5,
+        "noProvenBait": 21,
+        "job:hardWall": 1,
+        "obvious:freeRoutePair": 2
+      }
+    },
+    "16": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 372,
+        "fixedTwinsClose": 63,
+        "idle:ice:59": 1,
+        "job:noProvenMix": 4,
+        "trayOverflow": 77,
+        "idle:lock:63": 1,
+        "idle:ice:66": 1,
+        "twoMeaningfulBaits": 5,
+        "noChain": 79,
+        "idle:ice:67": 1,
+        "job:hardWall": 2
+      }
+    },
+    "17": {
+      "jobs": 6,
+      "raw": 2,
+      "failures": {
+        "noRepeatedKeyPair": 562,
+        "noChain": 309,
+        "wrongRepeatedPairNotBait": 3,
+        "idle:ice:59": 1,
+        "trayOverflow": 82,
+        "idle:ice:61": 2,
+        "job:noProvenMix": 4,
+        "idle:ice:50": 2,
+        "idle:ice:49": 1,
+        "noProvenBait": 2,
+        "idle:ice:62": 2,
+        "obvious:freeRoutePair": 3
+      }
+    },
+    "19": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 580,
+        "obvious:freeRoutePair": 130,
+        "job:noProvenMix": 5,
+        "noProvenBait": 2,
+        "twoMeaningfulBaits": 6,
+        "noChain": 250,
+        "job:hardWall": 1
+      }
+    },
+    "20": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1400,
+        "job:noProvenMix": 6
+      }
+    },
+    "21": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 771,
+        "twoMeaningfulBaits": 287,
+        "job:noProvenMix": 6,
+        "noProvenBait": 44,
+        "noChain": 76
+      }
+    },
+    "22": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1400,
+        "job:noProvenMix": 6
+      }
+    },
+    "23": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 287,
+        "obvious:freeRoutePair": 6,
+        "noChain": 259,
+        "trayOverflow": 31,
+        "twoMeaningfulBaits": 15,
+        "noProvenBait": 2,
+        "job:noProvenMix": 4,
+        "job:hardWall": 2
+      }
+    },
+    "24": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 3,
+        "twoMeaningfulBaits": 13,
+        "obvious:freeRoutePair": 35,
+        "noRepeatedKeyPair": 221,
+        "noProvenBait": 2,
+        "job:noProvenMix": 3,
+        "noChain": 250,
+        "wrongRepeatedPairNotBait": 1
+      }
+    },
+    "25": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1400,
+        "job:noProvenMix": 6
+      }
+    },
+    "26": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1400,
+        "job:noProvenMix": 6
+      }
+    },
+    "27": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "twoMeaningfulBaits": 399,
+        "noRepeatedKeyPair": 581,
+        "noChain": 20,
+        "clockShortest": 37,
+        "noProvenBait": 35,
+        "job:noProvenMix": 6
+      }
+    },
+    "28": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1400,
+        "job:noProvenMix": 6
+      }
+    },
+    "29": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 4,
+        "idle:ice:83": 2,
+        "noChain": 114,
+        "noRepeatedKeyPair": 55,
+        "obvious:freeRoutePair": 60,
+        "trayOverflow": 15,
+        "fixedTwinsClose": 14,
+        "idle:ice:91": 2,
+        "idle:ice:82": 4,
+        "wrongRepeatedPairNotBait": 2,
+        "noProvenBait": 8,
+        "job:noProvenMix": 2,
+        "twoMeaningfulBaits": 13
+      }
+    },
+    "30": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 651,
+        "obvious:freeRoutePair": 447,
+        "noChain": 52,
+        "job:noProvenMix": 5,
+        "job:hardWall": 1
+      }
+    },
+    "32": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1400,
+        "job:noProvenMix": 6
+      }
+    },
+    "33": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1400,
+        "job:noProvenMix": 6
+      }
+    },
+    "34": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1400,
+        "job:noProvenMix": 6
+      }
+    },
+    "35": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2,
+        "noRepeatedKeyPair": 159,
+        "twoMeaningfulBaits": 149,
+        "noProvenBait": 13,
+        "job:noProvenMix": 4
+      }
+    },
+    "37": {
+      "jobs": 3,
+      "raw": 2,
+      "failures": {
+        "noChain": 9,
+        "noRepeatedKeyPair": 2,
+        "job:hardWall": 1
+      }
+    },
+    "38": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1400,
+        "job:noProvenMix": 6
+      }
+    },
+    "39": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1400,
+        "job:noProvenMix": 6
+      }
+    },
+    "40": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1400,
+        "job:noProvenMix": 6
+      }
+    },
+    "41": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1400,
+        "job:noProvenMix": 6
+      }
+    },
+    "42": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1400,
+        "job:noProvenMix": 6
+      }
+    },
+    "43": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 474,
+        "twoMeaningfulBaits": 243,
+        "noChain": 256,
+        "noProvenBait": 35,
+        "job:noProvenMix": 6
+      }
+    },
+    "44": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1400,
+        "job:noProvenMix": 6
+      }
+    },
+    "45": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1400,
+        "job:noProvenMix": 6
+      }
+    },
+    "46": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 917,
+        "twoMeaningfulBaits": 154,
+        "noChain": 10,
+        "trayOverflow": 67,
+        "job:noProvenMix": 6,
+        "noProvenBait": 17,
+        "obvious:freeRoutePair": 39
+      }
+    },
+    "47": {
+      "jobs": 6,
+      "raw": 1,
+      "failures": {
+        "job:hardWall": 3,
+        "noProvenBait": 7,
+        "noRepeatedKeyPair": 16,
+        "idle:ice:84": 2,
+        "idle:ice:74": 1,
+        "twoMeaningfulBaits": 7,
+        "job:noProvenMix": 2,
+        "idle:ice:85": 2,
+        "trayOverflow": 1,
+        "idle:ice:83": 2,
+        "idle:ice:73": 1,
+        "idle:ice:66": 1
+      }
+    }
+  },
+  "waitNested": {
+    "0": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 4200,
+        "job:noProvenMix": 3
+      }
+    },
+    "1": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "noClockPartnerHolders": 312,
+        "job:noProvenMix": 15,
+        "noChain": 1760,
+        "fixedTwinsClose": 11,
+        "clockNotBait": 7,
+        "noProvenBait": 8,
+        "trayOverflow": 2,
+        "job:hardWall": 1,
+        "nested:noDirectGeometry": 2400,
+        "nested:noInnerKeyGeometry": 1500
+      }
+    },
+    "2": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "fixedTwinsClose": 274,
+        "noClockPartnerHolders": 318,
+        "obvious:greedyPrefix": 231,
+        "twoMeaningfulBaits": 159,
+        "job:noProvenMix": 15,
+        "noChain": 1243,
+        "nested:noIcyNeighbour": 304,
+        "idle:ice:54": 132,
+        "idle:ice:53": 100,
+        "fewerThan2WinningStarts": 1,
+        "nested:noDirectGeometry": 127,
+        "job:hardWall": 1,
+        "nested:noInnerKeyGeometry": 1500,
+        "noProvenBait": 86
+      }
+    },
+    "3": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "job:hardWall": 2
+      }
+    },
+    "4": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "noClockPartnerHolders": 695,
+        "job:noProvenMix": 15,
+        "noChain": 1009,
+        "job:hardWall": 1,
+        "nested:noDirectGeometry": 2400,
+        "nested:noInnerKeyGeometry": 1500,
+        "noProvenBait": 379,
+        "obvious:greedyPrefix": 17
+      }
+    },
+    "5": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 6,
+        "nested:unusedGate": 237,
+        "nested:noIcyNeighbour": 113,
+        "job:noProvenMix": 10,
+        "nested:noDirectGeometry": 2400,
+        "noProvenBait": 22,
+        "clockNotBait": 10,
+        "clockShortest": 24,
+        "nested:noInnerKeyGeometry": 1,
+        "noChain": 1000,
+        "obvious:greedyPrefix": 1
+      }
+    },
+    "6": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 6,
+        "twoMeaningfulBaits": 22,
+        "noClockPartnerHolders": 408,
+        "fixedTwinsClose": 12,
+        "obvious:greedyPrefix": 42,
+        "clockNotBait": 13,
+        "job:noProvenMix": 10,
+        "clockShortest": 22,
+        "idle:ice:72": 4,
+        "fewerThan2WinningStarts": 6,
+        "nested:noDirectGeometry": 2,
+        "obvious:freeRoutePair": 5,
+        "noProvenBait": 7,
+        "idle:ice:61": 1,
+        "idle:lock:61": 1,
+        "combinedBadgeCovered:79": 646,
+        "combinedBadgeCovered:80": 642,
+        "clockTwinNotGate": 53,
+        "nested:noInnerKeyGeometry": 32,
+        "noChain": 631
+      }
+    },
+    "7": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "noChain": 2100,
+        "job:noProvenMix": 16,
+        "nested:noIcyNeighbour": 350,
+        "nested:noDirectGeometry": 2400,
+        "nested:noInnerKeyGeometry": 1500
+      }
+    },
+    "8": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "noChain": 2100,
+        "job:noProvenMix": 16,
+        "nested:noIcyNeighbour": 350,
+        "nested:noDirectGeometry": 2400,
+        "nested:noInnerKeyGeometry": 1500
+      }
+    },
+    "9": {
+      "jobs": 5,
+      "raw": 1,
+      "failures": {
+        "noChain": 700,
+        "job:noProvenMix": 4,
+        "nested:noIcyNeighbour": 50,
+        "fixedTwinsClose": 2,
+        "nested:unusedGate": 41,
+        "noClockPartnerHolders": 3,
+        "clockTwinNotGate": 1,
+        "idle:ice:71": 4,
+        "idle:ice:72": 1
+      }
+    },
+    "10": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "noChain": 2100,
+        "job:noProvenMix": 16,
+        "nested:noIcyNeighbour": 350,
+        "nested:noDirectGeometry": 2400,
+        "nested:noInnerKeyGeometry": 1500
+      }
+    },
+    "11": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "obvious:greedyPrefix": 173,
+        "noClockPartnerHolders": 370,
+        "twoMeaningfulBaits": 148,
+        "fixedTwinsClose": 52,
+        "job:noProvenMix": 12,
+        "job:hardWall": 4,
+        "idle:ice:60": 14,
+        "fewerThan2WinningStarts": 4,
+        "idle:ice:70": 9,
+        "idle:ice:61": 6,
+        "idle:ice:69": 10,
+        "nested:noDirectGeometry": 2,
+        "nested:noInnerKeyGeometry": 1500,
+        "noChain": 804,
+        "noProvenBait": 56
+      }
+    },
+    "12": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "noClockPartnerHolders": 255,
+        "job:noProvenMix": 10,
+        "job:hardWall": 6,
+        "clockShortest": 14,
+        "noChain": 1005,
+        "nested:noDirectGeometry": 2400
+      }
+    },
+    "13": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 3,
+        "noClockPartnerHolders": 51,
+        "noProvenBait": 41,
+        "clockNotBait": 13,
+        "fixedTwinsClose": 183,
+        "noChain": 1007,
+        "job:noProvenMix": 13,
+        "clockShortest": 31,
+        "nested:unusedGate": 28,
+        "nested:noIcyNeighbour": 2,
+        "nested:noDirectGeometry": 2400,
+        "clockTwinNotGate": 1324
+      }
+    },
+    "14": {
+      "jobs": 3,
+      "raw": 3,
+      "failures": {
+        "noChain": 8,
+        "clockShortest": 14,
+        "noClockPartnerHolders": 30,
+        "idle:ice:71": 3,
+        "idle:ice:78": 4,
+        "obvious:greedyPrefix": 6,
+        "clockNotBait": 2,
+        "controlUnknown": 2,
+        "idle:ice:65": 2,
+        "obvious:freeRoutePair": 2,
+        "idle:ice:70": 2,
+        "idle:ice:77": 2,
+        "noProvenBait": 6
+      }
+    },
+    "15": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "twoMeaningfulBaits": 24,
+        "noClockPartnerHolders": 384,
+        "fixedTwinsClose": 2,
+        "clockTwinNotGate": 8,
+        "obvious:greedyPrefix": 3,
+        "job:noProvenMix": 6,
+        "job:hardWall": 10,
+        "noChain": 135,
+        "noProvenBait": 1,
+        "nested:noInnerKeyGeometry": 1500
+      }
+    },
+    "16": {
+      "jobs": 3,
+      "raw": 2,
+      "failures": {
+        "noClockPartnerHolders": 20,
+        "fixedTwinsClose": 11,
+        "noChain": 2,
+        "idle:ice:71": 6,
+        "job:noProvenMix": 1,
+        "clockNotBait": 3,
+        "idle:ice:69": 1
+      }
+    },
+    "17": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "noClockPartnerHolders": 578,
+        "noChain": 1240,
+        "job:noProvenMix": 15,
+        "job:hardWall": 1,
+        "nested:noDirectGeometry": 2400,
+        "nested:noInnerKeyGeometry": 1500,
+        "noProvenBait": 263,
+        "fixedTwinsClose": 19
+      }
+    },
+    "18": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "noClockPartnerHolders": 2954,
+        "noChain": 47,
+        "job:noProvenMix": 2,
+        "noProvenBait": 44,
+        "obvious:greedyPrefix": 2,
+        "fixedTwinsClose": 14,
+        "clockNotBait": 13,
+        "obvious:freeRoutePair": 3,
+        "idle:lock:18": 1,
+        "clockShortest": 3,
+        "twoMeaningfulBaits": 1,
+        "idle:lock:20": 1,
+        "idle:lock:17": 1
+      }
+    },
+    "19": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "noClockPartnerHolders": 547,
+        "job:noProvenMix": 16,
+        "noChain": 1432,
+        "nested:noIcyNeighbour": 222,
+        "nested:unusedGate": 77,
+        "nested:noDirectGeometry": 2400,
+        "nested:noInnerKeyGeometry": 1500,
+        "noProvenBait": 163,
+        "clockNotBait": 9
+      }
+    },
+    "20": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "noChain": 2100,
+        "job:noProvenMix": 16,
+        "nested:noIcyNeighbour": 211,
+        "nested:unusedGate": 124,
+        "noClockPartnerHolders": 15,
+        "nested:noDirectGeometry": 2400,
+        "nested:noInnerKeyGeometry": 1500
+      }
+    },
+    "21": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 9,
+        "fixedTwinsClose": 12,
+        "noClockPartnerHolders": 376,
+        "clockShortest": 57,
+        "twoMeaningfulBaits": 4,
+        "job:noProvenMix": 7,
+        "idle:ice:89": 1,
+        "clockNotBait": 1,
+        "obvious:greedyPrefix": 1,
+        "nested:noInnerKeyGeometry": 1500,
+        "noChain": 147
+      }
+    },
+    "22": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "noChain": 2100,
+        "job:noProvenMix": 16,
+        "nested:noIcyNeighbour": 350,
+        "nested:noDirectGeometry": 2400,
+        "nested:noInnerKeyGeometry": 1500
+      }
+    },
+    "23": {
+      "jobs": 16,
+      "raw": 1,
+      "failures": {
+        "noChain": 1218,
+        "job:noProvenMix": 14,
+        "noProvenBait": 88,
+        "clockShortest": 5,
+        "fixedTwinsClose": 7,
+        "noClockPartnerHolders": 446,
+        "trayOverflow": 7,
+        "clockNotBait": 33,
+        "obvious:freeRoutePair": 4,
+        "job:hardWall": 1,
+        "nested:noDirectGeometry": 2400,
+        "nested:noInnerKeyGeometry": 1500
+      }
+    },
+    "24": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "noClockPartnerHolders": 715,
+        "noChain": 1046,
+        "job:noProvenMix": 16,
+        "nested:unusedGate": 88,
+        "nested:noIcyNeighbour": 220,
+        "nested:noDirectGeometry": 2400,
+        "nested:noInnerKeyGeometry": 1500,
+        "noProvenBait": 375,
+        "fixedTwinsClose": 4,
+        "obvious:greedyPrefix": 2
+      }
+    },
+    "25": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "noChain": 2100,
+        "job:noProvenMix": 16,
+        "noClockPartnerHolders": 146,
+        "nested:noIcyNeighbour": 204,
+        "nested:noDirectGeometry": 2400,
+        "nested:noInnerKeyGeometry": 1500
+      }
+    },
+    "26": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "noChain": 2100,
+        "job:noProvenMix": 16,
+        "nested:noIcyNeighbour": 350,
+        "nested:noDirectGeometry": 2400,
+        "nested:noInnerKeyGeometry": 1500
+      }
+    },
+    "27": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 8,
+        "idle:ice:86": 8,
+        "twoMeaningfulBaits": 14,
+        "clockShortest": 12,
+        "idle:ice:87": 8,
+        "job:noProvenMix": 8,
+        "nested:noIcyNeighbour": 53,
+        "clockNotBait": 2,
+        "noClockPartnerHolders": 216,
+        "nested:unusedGate": 5,
+        "obvious:freeRoutePair": 2,
+        "idle:ice:90": 3,
+        "idle:ice:91": 6,
+        "fewerThan2WinningStarts": 1,
+        "combinedBadgeCovered:91": 552,
+        "obvious:greedyPrefix": 10,
+        "nested:noInnerKeyGeometry": 2,
+        "noChain": 306,
+        "controlUnknown": 1,
+        "idle:ice:89": 1
+      }
+    },
+    "28": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "noClockPartnerHolders": 427,
+        "job:noProvenMix": 16,
+        "noChain": 1750,
+        "nested:noIcyNeighbour": 143,
+        "nested:unusedGate": 130,
+        "nested:noDirectGeometry": 2400,
+        "nested:noInnerKeyGeometry": 1500
+      }
+    },
+    "29": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "clockShortest": 95,
+        "clockTwinNotGate": 1,
+        "noClockPartnerHolders": 168,
+        "fixedTwinsClose": 23,
+        "noProvenBait": 32,
+        "job:noProvenMix": 12,
+        "job:hardWall": 4,
+        "nested:noDirectGeometry": 2400,
+        "nested:noInnerKeyGeometry": 1,
+        "controlUnknown": 1,
+        "noChain": 837,
+        "clockNotBait": 4
+      }
+    },
+    "30": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "noChain": 2100,
+        "job:noProvenMix": 16,
+        "nested:noIcyNeighbour": 350,
+        "nested:noDirectGeometry": 2400,
+        "nested:noInnerKeyGeometry": 1500
+      }
+    },
+    "32": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "noChain": 2100,
+        "job:noProvenMix": 16,
+        "nested:noIcyNeighbour": 350,
+        "nested:noDirectGeometry": 2400,
+        "nested:noInnerKeyGeometry": 1500
+      }
+    },
+    "33": {
+      "jobs": 6,
+      "raw": 1,
+      "failures": {
+        "noChain": 700,
+        "job:noProvenMix": 5,
+        "nested:unusedGate": 1,
+        "nested:noIcyNeighbour": 3,
+        "noClockPartnerHolders": 1,
+        "obvious:greedyPrefix": 9,
+        "idle:ice:69": 27,
+        "idle:ice:70": 29,
+        "fixedTwinsClose": 4
+      }
+    },
+    "34": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "noChain": 2100,
+        "job:noProvenMix": 16,
+        "nested:unusedGate": 284,
+        "nested:noIcyNeighbour": 66,
+        "nested:noDirectGeometry": 2400,
+        "nested:noInnerKeyGeometry": 1500
+      }
+    },
+    "35": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 8,
+        "fewerThan2WinningStarts": 2,
+        "nested:noDirectGeometry": 2,
+        "idle:ice:82": 4,
+        "clockShortest": 59,
+        "fixedTwinsClose": 13,
+        "clockNotBait": 1,
+        "controlUnknown": 1,
+        "obvious:greedyPrefix": 5,
+        "job:noProvenMix": 8,
+        "combinedBadgeCovered:82": 133,
+        "nested:noInnerKeyGeometry": 1,
+        "idle:ice:78": 2,
+        "idle:ice:81": 1,
+        "noChain": 678,
+        "noClockPartnerHolders": 322,
+        "noProvenBait": 7
+      }
+    },
+    "37": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "noChain": 2100,
+        "job:noProvenMix": 8,
+        "job:hardWall": 8,
+        "clockShortest": 17,
+        "fixedTwinsClose": 2,
+        "nested:noDirectGeometry": 1
+      }
+    },
+    "38": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "noChain": 2100,
+        "job:noProvenMix": 16,
+        "nested:noIcyNeighbour": 350,
+        "nested:noDirectGeometry": 2400,
+        "nested:noInnerKeyGeometry": 1500
+      }
+    },
+    "39": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "noChain": 2100,
+        "job:noProvenMix": 16,
+        "nested:noIcyNeighbour": 350,
+        "nested:noDirectGeometry": 2400,
+        "nested:noInnerKeyGeometry": 1500
+      }
+    },
+    "40": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "noChain": 2100,
+        "job:noProvenMix": 16,
+        "nested:noIcyNeighbour": 350,
+        "nested:noDirectGeometry": 2400,
+        "nested:noInnerKeyGeometry": 1500
+      }
+    },
+    "41": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "noChain": 2100,
+        "job:noProvenMix": 16,
+        "nested:noIcyNeighbour": 252,
+        "nested:unusedGate": 98,
+        "nested:noDirectGeometry": 2400,
+        "nested:noInnerKeyGeometry": 1500
+      }
+    },
+    "42": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "noChain": 2100,
+        "job:noProvenMix": 16,
+        "nested:noIcyNeighbour": 306,
+        "nested:unusedGate": 44,
+        "nested:noDirectGeometry": 1586,
+        "obvious:greedyPrefix": 58,
+        "idle:lock:48": 66,
+        "fixedTwinsClose": 45,
+        "idle:lock:47": 31,
+        "idle:lock:26": 8,
+        "obvious:freeRoutePair": 46,
+        "idle:lock:25": 5,
+        "fewerThan2WinningStarts": 3,
+        "idle:ice:48": 6,
+        "idle:ice:45": 27,
+        "idle:ice:49": 3,
+        "nested:noInnerKeyGeometry": 1500
+      }
+    },
+    "43": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "twoMeaningfulBaits": 56,
+        "noClockPartnerHolders": 367,
+        "job:noProvenMix": 7,
+        "job:hardWall": 9,
+        "nested:noDirectGeometry": 10,
+        "idle:ice:81": 9,
+        "idle:ice:77": 7,
+        "fixedTwinsClose": 14,
+        "clockShortest": 16,
+        "idle:ice:78": 2,
+        "clockNotBait": 1,
+        "obvious:greedyPrefix": 6,
+        "noProvenBait": 16,
+        "noChain": 634,
+        "obvious:freeRoutePair": 1
+      }
+    },
+    "44": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "noChain": 2100,
+        "job:noProvenMix": 16,
+        "nested:unusedGate": 185,
+        "nested:noIcyNeighbour": 165,
+        "nested:noDirectGeometry": 2400,
+        "nested:noInnerKeyGeometry": 1500
+      }
+    },
+    "45": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "noChain": 2100,
+        "job:noProvenMix": 16,
+        "nested:noIcyNeighbour": 350,
+        "nested:noDirectGeometry": 2400,
+        "nested:noInnerKeyGeometry": 1500
+      }
+    },
+    "46": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "noChain": 519,
+        "twoMeaningfulBaits": 88,
+        "obvious:greedyPrefix": 49,
+        "fixedTwinsClose": 46,
+        "job:noProvenMix": 12,
+        "job:hardWall": 4,
+        "idle:ice:66": 44,
+        "obvious:freeRoutePair": 66,
+        "idle:ice:69": 23,
+        "idle:ice:68": 22,
+        "idle:ice:67": 19,
+        "idle:ice:70": 24,
+        "clockShortest": 3,
+        "clockNotBait": 1,
+        "fewerThan2WinningStarts": 13,
+        "nested:noInnerKeyGeometry": 1500,
+        "noClockPartnerHolders": 491
+      }
+    },
+    "47": {
+      "jobs": 16,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 10,
+        "nested:noDirectGeometry": 6,
+        "clockShortest": 79,
+        "fixedTwinsClose": 31,
+        "idle:ice:86": 1,
+        "controlUnknown": 1,
+        "idle:ice:85": 1,
+        "job:noProvenMix": 6,
+        "combinedBadgeCovered:93": 96,
+        "clockTwinNotGate": 4,
+        "nested:noInnerKeyGeometry": 2,
+        "noClockPartnerHolders": 471,
+        "noChain": 529
+      }
+    }
+  },
+  "waitThawWay": {
+    "1": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "2": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noClockPartnerHolders": 140,
+        "obvious:greedyPrefix": 38,
+        "noProvenBait": 34,
+        "clockTwinNotGate": 86,
+        "fixedTwinsClose": 35,
+        "twoMeaningfulBaits": 14,
+        "job:noProvenMix": 3,
+        "idle:ice:72": 2,
+        "idle:ice:33": 1
+      }
+    },
+    "3": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "clockTwinNotGate": 3,
+        "noClockPartnerHolders": 5,
+        "clockNotBait": 2
+      }
+    },
+    "4": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2,
+        "clockTwinNotGate": 32,
+        "noClockPartnerHolders": 21,
+        "clockShortest": 7,
+        "noProvenBait": 3,
+        "twoMeaningfulBaits": 3,
+        "fixedTwinsClose": 3,
+        "job:noProvenMix": 1
+      }
+    },
+    "5": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noProvenBait": 59,
+        "clockTwinNotGate": 154,
+        "noClockPartnerHolders": 85,
+        "clockNotBait": 29,
+        "clockShortest": 7,
+        "fixedTwinsClose": 15,
+        "job:noProvenMix": 3,
+        "trayOverflow": 1
+      }
+    },
+    "6": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "clockTwinNotGate": 158,
+        "noClockPartnerHolders": 44,
+        "noProvenBait": 55,
+        "fixedTwinsClose": 44,
+        "idle:ice:61": 1,
+        "obvious:greedyPrefix": 20,
+        "twoMeaningfulBaits": 17,
+        "clockNotBait": 6,
+        "job:noProvenMix": 3,
+        "clockShortest": 1,
+        "idle:ice:78": 1,
+        "idle:ice:71": 1,
+        "idle:ice:73": 1,
+        "idle:ice:70": 1
+      }
+    },
+    "7": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noChain": 16
+      }
+    },
+    "8": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "obvious:greedyPrefix": 109,
+        "idle:lock:60": 6,
+        "clockTwinNotGate": 111,
+        "twoMeaningfulBaits": 82,
+        "idle:lock:59": 6,
+        "noFreeClock": 36,
+        "job:noProvenMix": 3
+      }
+    },
+    "9": {
+      "jobs": 3,
+      "raw": 3,
+      "failures": {
+        "fixedTwinsClose": 14,
+        "clockTwinNotGate": 34,
+        "noClockPartnerHolders": 24,
+        "obvious:greedyPrefix": 1,
+        "clockNotBait": 2,
+        "strictMinimum": 1,
+        "obvious:freeRoutePair": 2,
+        "noProvenBait": 1
+      }
+    },
+    "10": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "11": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "fixedTwinsClose": 22,
+        "noClockPartnerHolders": 26,
+        "obvious:greedyPrefix": 8,
+        "clockTwinNotGate": 45,
+        "noProvenBait": 17,
+        "twoMeaningfulBaits": 5
+      }
+    },
+    "12": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noClockPartnerHolders": 199,
+        "clockTwinNotGate": 60,
+        "clockShortest": 4,
+        "noProvenBait": 32,
+        "clockNotBait": 16,
+        "trayOverflow": 5,
+        "controlUnknown": 1,
+        "job:noProvenMix": 3,
+        "obvious:greedyPrefix": 2,
+        "idle:ice:55": 1,
+        "idle:ice:56": 1,
+        "fixedTwinsClose": 3
+      }
+    },
+    "13": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noProvenBait": 44,
+        "clockTwinNotGate": 126,
+        "fixedTwinsClose": 14,
+        "noClockPartnerHolders": 144,
+        "clockShortest": 12,
+        "clockNotBait": 10,
+        "job:noProvenMix": 3
+      }
+    },
+    "15": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "noProvenBait": 63,
+        "idle:ice:61": 2,
+        "clockTwinNotGate": 78,
+        "noClockPartnerHolders": 56,
+        "obvious:greedyPrefix": 9,
+        "fixedTwinsClose": 51,
+        "idle:ice:65": 7,
+        "twoMeaningfulBaits": 13,
+        "idle:ice:74": 3,
+        "clockNotBait": 5,
+        "idle:ice:77": 2,
+        "idle:ice:64": 3,
+        "job:noProvenMix": 2,
+        "idle:ice:73": 2,
+        "idle:ice:60": 1
+      }
+    },
+    "16": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2,
+        "noClockPartnerHolders": 51,
+        "obvious:freeRoutePair": 8,
+        "clockTwinNotGate": 25,
+        "clockNotBait": 10,
+        "fixedTwinsClose": 4,
+        "twoMeaningfulBaits": 1,
+        "noProvenBait": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "17": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noClockPartnerHolders": 146,
+        "fixedTwinsClose": 3,
+        "clockTwinNotGate": 30,
+        "clockShortest": 7,
+        "noProvenBait": 6,
+        "trayOverflow": 2,
+        "clockNotBait": 6,
+        "job:noProvenMix": 2,
+        "job:hardWall": 1
+      }
+    },
+    "19": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "clockNotBait": 14,
+        "obvious:freeRoutePair": 76,
+        "noClockPartnerHolders": 191,
+        "obvious:greedyPrefix": 11,
+        "clockTwinNotGate": 14,
+        "twoMeaningfulBaits": 15,
+        "noChain": 2,
+        "fixedTwinsClose": 6,
+        "noProvenBait": 8,
+        "trayOverflow": 13,
+        "job:noProvenMix": 3
+      }
+    },
+    "20": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2,
+        "fixedTwinsClose": 11,
+        "clockTwinNotGate": 54,
+        "noProvenBait": 13,
+        "obvious:greedyPrefix": 1,
+        "clockShortest": 7,
+        "noClockPartnerHolders": 12,
+        "clockNotBait": 2,
+        "job:noProvenMix": 1
+      }
+    },
+    "21": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "job:hardWall": 2,
+        "noProvenBait": 9,
+        "clockTwinNotGate": 15,
+        "noClockPartnerHolders": 15,
+        "twoMeaningfulBaits": 1,
+        "fixedTwinsClose": 4,
+        "trayOverflow": 2,
+        "clockNotBait": 1,
+        "obvious:greedyPrefix": 1
+      }
+    },
+    "22": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "23": {
+      "jobs": 3,
+      "raw": 2,
+      "failures": {
+        "job:hardWall": 1,
+        "fixedTwinsClose": 2,
+        "noClockPartnerHolders": 15,
+        "clockTwinNotGate": 8,
+        "noProvenBait": 2,
+        "clockNotBait": 4,
+        "twoMeaningfulBaits": 1,
+        "clockShortest": 2
+      }
+    },
+    "24": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noClockPartnerHolders": 43,
+        "clockTwinNotGate": 1,
+        "fixedTwinsClose": 1,
+        "clockNotBait": 4,
+        "controlUnknown": 1,
+        "clockShortest": 1,
+        "job:noProvenMix": 1,
+        "job:hardWall": 2
+      }
+    },
+    "25": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "clockTwinNotGate": 124,
+        "trayOverflow": 3,
+        "twoMeaningfulBaits": 13,
+        "obvious:greedyPrefix": 1,
+        "job:noProvenMix": 2,
+        "job:hardWall": 1
+      }
+    },
+    "26": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "27": {
+      "jobs": 3,
+      "raw": 3,
+      "failures": {
+        "obvious:greedyPrefix": 22,
+        "clockTwinNotGate": 41,
+        "noProvenBait": 16,
+        "noClockPartnerHolders": 62,
+        "clockNotBait": 12,
+        "twoMeaningfulBaits": 8,
+        "idle:ice:45": 3,
+        "fixedTwinsClose": 10,
+        "trayOverflow": 4,
+        "idle:ice:92": 1,
+        "obvious:freeRoutePair": 1,
+        "idle:ice:93": 1,
+        "clockShortest": 3,
+        "idle:ice:65": 1,
+        "idle:ice:44": 1
+      }
+    },
+    "28": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 3
+      }
+    },
+    "29": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 3
+      }
+    },
+    "30": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noProvenBait": 38,
+        "noClockPartnerHolders": 228,
+        "twoMeaningfulBaits": 14,
+        "clockTwinNotGate": 49,
+        "fixedTwinsClose": 10,
+        "obvious:freeRoutePair": 11,
+        "job:noProvenMix": 3
+      }
+    },
+    "32": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "clockTwinNotGate": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "33": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "clockTwinNotGate": 76,
+        "noClockPartnerHolders": 231,
+        "noProvenBait": 33,
+        "fixedTwinsClose": 7,
+        "job:noProvenMix": 3,
+        "obvious:greedyPrefix": 3
+      }
+    },
+    "34": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "twoMeaningfulBaits": 10,
+        "clockTwinNotGate": 86,
+        "noClockPartnerHolders": 55,
+        "clockNotBait": 10,
+        "fixedTwinsClose": 4,
+        "obvious:greedyPrefix": 8,
+        "trayOverflow": 9,
+        "noProvenBait": 1,
+        "job:noProvenMix": 2,
+        "job:hardWall": 1
+      }
+    },
+    "35": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2,
+        "clockTwinNotGate": 13,
+        "noProvenBait": 5,
+        "twoMeaningfulBaits": 3,
+        "obvious:greedyPrefix": 2,
+        "fixedTwinsClose": 2,
+        "clockShortest": 2,
+        "noClockPartnerHolders": 7,
+        "idle:ice:59": 1,
+        "clockNotBait": 2,
+        "idle:ice:67": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "37": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noClockPartnerHolders": 232,
+        "clockTwinNotGate": 97,
+        "clockNotBait": 10,
+        "job:noProvenMix": 3,
+        "fixedTwinsClose": 2,
+        "clockShortest": 5,
+        "noProvenBait": 3,
+        "trayOverflow": 1
+      }
+    },
+    "38": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2,
+        "idle:ice:60": 10,
+        "clockTwinNotGate": 5,
+        "idle:ice:61": 11,
+        "fixedTwinsClose": 2,
+        "clockShortest": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "39": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "clockTwinNotGate": 69,
+        "noClockPartnerHolders": 281,
+        "job:noProvenMix": 3
+      }
+    },
+    "40": {
+      "jobs": 3,
+      "raw": 3,
+      "failures": {
+        "obvious:greedyPrefix": 78,
+        "twoMeaningfulBaits": 47,
+        "idle:ice:41": 3,
+        "idle:ice:40": 1
+      }
+    },
+    "41": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "clockTwinNotGate": 213,
+        "noClockPartnerHolders": 137,
+        "job:noProvenMix": 3
+      }
+    },
+    "42": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "43": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "job:hardWall": 1,
+        "clockTwinNotGate": 37,
+        "controlUnknown": 1,
+        "idle:ice:68": 1,
+        "noClockPartnerHolders": 36,
+        "noProvenBait": 10,
+        "clockShortest": 1,
+        "job:noProvenMix": 1,
+        "obvious:greedyPrefix": 6,
+        "twoMeaningfulBaits": 10,
+        "idle:ice:70": 1,
+        "fixedTwinsClose": 8,
+        "strictMinimum": 1
+      }
+    },
+    "44": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "noClockPartnerHolders": 108,
+        "clockTwinNotGate": 46,
+        "twoMeaningfulBaits": 12,
+        "idle:ice:55": 7,
+        "obvious:greedyPrefix": 18,
+        "idle:ice:54": 2,
+        "idle:ice:53": 6,
+        "idle:ice:56": 7,
+        "job:noProvenMix": 2
+      }
+    },
+    "45": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "46": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "clockTwinNotGate": 160,
+        "twoMeaningfulBaits": 11,
+        "clockNotBait": 16,
+        "fixedTwinsClose": 36,
+        "noProvenBait": 59,
+        "obvious:greedyPrefix": 26,
+        "idle:ice:33": 1,
+        "idle:ice:51": 1,
+        "job:noProvenMix": 2,
+        "idle:ice:54": 1,
+        "idle:ice:34": 1
+      }
+    },
+    "47": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "clockTwinNotGate": 198,
+        "noClockPartnerHolders": 82,
+        "noProvenBait": 54,
+        "fixedTwinsClose": 13,
+        "clockShortest": 2,
+        "job:noProvenMix": 3,
+        "clockNotBait": 1
+      }
+    }
+  },
+  "waitLookalikeRoof": {
+    "1": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "clockTwinNotGate": 126,
+        "fixedTwinsClose": 23,
+        "noRepeatedKeyPair": 40,
+        "noClockPartnerHolders": 160,
+        "noChain": 1,
+        "job:noProvenMix": 3
+      }
+    },
+    "2": {
+      "jobs": 3,
+      "raw": 2,
+      "failures": {
+        "noClockPartnerHolders": 113,
+        "fixedTwinsClose": 23,
+        "noRepeatedKeyPair": 88,
+        "fewerThan2WinningStarts": 5,
+        "obvious:freeRoutePair": 1,
+        "job:noProvenMix": 1,
+        "wrongRepeatedPairNotBait": 4
+      }
+    },
+    "3": {
+      "jobs": 3,
+      "raw": 2,
+      "failures": {
+        "noRepeatedKeyPair": 33,
+        "fixedTwinsClose": 4,
+        "clockNotBait": 2,
+        "noProvenBait": 1,
+        "noChain": 2,
+        "clockShortest": 1,
+        "job:hardWall": 1
+      }
+    },
+    "4": {
+      "jobs": 3,
+      "raw": 2,
+      "failures": {
+        "noClockPartnerHolders": 72,
+        "noRepeatedKeyPair": 37,
+        "clockShortest": 13,
+        "clockTwinNotGate": 23,
+        "fixedTwinsClose": 14,
+        "clockNotBait": 1,
+        "job:noProvenMix": 1,
+        "noProvenBait": 10
+      }
+    },
+    "5": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2,
+        "clockTwinNotGate": 20,
+        "noRepeatedKeyPair": 21,
+        "clockShortest": 6,
+        "noClockPartnerHolders": 45,
+        "fixedTwinsClose": 11,
+        "noProvenBait": 12,
+        "job:noProvenMix": 1
+      }
+    },
+    "6": {
+      "jobs": 3,
+      "raw": 3,
+      "failures": {
+        "clockTwinNotGate": 11,
+        "noClockPartnerHolders": 11,
+        "noRepeatedKeyPair": 21,
+        "fixedTwinsClose": 11,
+        "obvious:freeRoutePair": 2,
+        "fewerThan2WinningStarts": 1,
+        "idle:ice:58": 2
+      }
+    },
+    "7": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "8": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "9": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noClockPartnerHolders": 24,
+        "noRepeatedKeyPair": 29,
+        "fixedTwinsClose": 6,
+        "clockTwinNotGate": 3
+      }
+    },
+    "10": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "11": {
+      "jobs": 3,
+      "raw": 2,
+      "failures": {
+        "fixedTwinsClose": 49,
+        "noClockPartnerHolders": 57,
+        "clockNotBait": 2,
+        "noRepeatedKeyPair": 92,
+        "fewerThan2WinningStarts": 2,
+        "clockTwinNotGate": 20,
+        "idle:ice:37": 1,
+        "obvious:freeRoutePair": 1,
+        "wrongRepeatedPairNotBait": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "12": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noClockPartnerHolders": 73,
+        "clockTwinNotGate": 14,
+        "fixedTwinsClose": 11,
+        "noRepeatedKeyPair": 40,
+        "clockShortest": 18,
+        "noProvenBait": 2,
+        "strictMinimum": 1,
+        "job:noProvenMix": 2,
+        "job:hardWall": 1
+      }
+    },
+    "13": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 3
+      }
+    },
+    "15": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noRepeatedKeyPair": 7,
+        "fixedTwinsClose": 1,
+        "noClockPartnerHolders": 6,
+        "obvious:freeRoutePair": 1
+      }
+    },
+    "16": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noRepeatedKeyPair": 81,
+        "noClockPartnerHolders": 82,
+        "clockTwinNotGate": 17,
+        "fixedTwinsClose": 4,
+        "job:noProvenMix": 1
+      }
+    },
+    "17": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2,
+        "noRepeatedKeyPair": 40,
+        "noClockPartnerHolders": 44,
+        "fixedTwinsClose": 4,
+        "noProvenBait": 2,
+        "clockShortest": 10,
+        "job:noProvenMix": 1
+      }
+    },
+    "19": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "noChain": 200,
+        "job:noProvenMix": 2,
+        "noRepeatedKeyPair": 11,
+        "noProvenBait": 2,
+        "clockTwinNotGate": 3,
+        "noClockPartnerHolders": 25,
+        "clockNotBait": 2
+      }
+    },
+    "20": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "noClockPartnerHolders": 121,
+        "clockTwinNotGate": 63,
+        "fixedTwinsClose": 15,
+        "noChain": 2,
+        "job:noProvenMix": 2
+      }
+    },
+    "21": {
+      "jobs": 3,
+      "raw": 3,
+      "failures": {
+        "noRepeatedKeyPair": 2,
+        "fixedTwinsClose": 2,
+        "fewerThan2WinningStarts": 1,
+        "clockTwinNotGate": 1,
+        "noClockPartnerHolders": 1
+      }
+    },
+    "22": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "23": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 90,
+        "clockTwinNotGate": 84,
+        "noClockPartnerHolders": 131,
+        "fixedTwinsClose": 40,
+        "clockNotBait": 2,
+        "job:noProvenMix": 3,
+        "obvious:freeRoutePair": 1,
+        "noProvenBait": 1,
+        "clockShortest": 1
+      }
+    },
+    "24": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "fixedTwinsClose": 22,
+        "clockTwinNotGate": 75,
+        "noClockPartnerHolders": 72,
+        "noRepeatedKeyPair": 6,
+        "clockShortest": 1,
+        "noProvenBait": 1,
+        "job:noProvenMix": 1,
+        "job:hardWall": 1
+      }
+    },
+    "25": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "26": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "27": {
+      "jobs": 3,
+      "raw": 3,
+      "failures": {
+        "noClockPartnerHolders": 2,
+        "fewerThan2WinningStarts": 1
+      }
+    },
+    "28": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noClockPartnerHolders": 297,
+        "job:noProvenMix": 3,
+        "noRepeatedKeyPair": 53
+      }
+    },
+    "29": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2,
+        "clockTwinNotGate": 12,
+        "noClockPartnerHolders": 20,
+        "clockShortest": 7,
+        "fixedTwinsClose": 5,
+        "noRepeatedKeyPair": 6,
+        "noProvenBait": 5,
+        "job:noProvenMix": 1
+      }
+    },
+    "30": {
+      "jobs": 3,
+      "raw": 3,
+      "failures": {
+        "clockTwinNotGate": 37,
+        "noClockPartnerHolders": 71,
+        "noRepeatedKeyPair": 17,
+        "fixedTwinsClose": 16,
+        "noProvenBait": 3,
+        "clockShortest": 1
+      }
+    },
+    "32": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "33": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 213,
+        "fixedTwinsClose": 15,
+        "noChain": 3,
+        "job:noProvenMix": 3,
+        "noClockPartnerHolders": 71,
+        "clockTwinNotGate": 48
+      }
+    },
+    "34": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "35": {
+      "jobs": 3,
+      "raw": 3,
+      "failures": {
+        "noRepeatedKeyPair": 3,
+        "clockTwinNotGate": 1,
+        "fixedTwinsClose": 2,
+        "noClockPartnerHolders": 2
+      }
+    },
+    "37": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2,
+        "noClockPartnerHolders": 52,
+        "clockShortest": 17,
+        "noRepeatedKeyPair": 26,
+        "fixedTwinsClose": 3,
+        "noProvenBait": 1,
+        "clockTwinNotGate": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "38": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "39": {
+      "jobs": 3,
+      "raw": 3,
+      "failures": {
+        "noRepeatedKeyPair": 13,
+        "noClockPartnerHolders": 22,
+        "fixedTwinsClose": 2,
+        "noProvenBait": 1,
+        "clockShortest": 1,
+        "clockTwinNotGate": 2
+      }
+    },
+    "40": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "41": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "42": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 136,
+        "noClockPartnerHolders": 33,
+        "fixedTwinsClose": 95,
+        "clockTwinNotGate": 80,
+        "clockNotBait": 3,
+        "job:noProvenMix": 3,
+        "obvious:freeRoutePair": 1,
+        "idle:ice:45": 1,
+        "fewerThan2WinningStarts": 1
+      }
+    },
+    "43": {
+      "jobs": 3,
+      "raw": 3,
+      "failures": {
+        "noClockPartnerHolders": 48,
+        "noRepeatedKeyPair": 32,
+        "fewerThan2WinningStarts": 1,
+        "fixedTwinsClose": 13,
+        "clockTwinNotGate": 6,
+        "clockNotBait": 2,
+        "obvious:freeRoutePair": 3,
+        "clockShortest": 3,
+        "noProvenBait": 2
+      }
+    },
+    "44": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "45": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "46": {
+      "jobs": 3,
+      "raw": 3,
+      "failures": {
+        "clockNotBait": 1,
+        "noClockPartnerHolders": 6,
+        "noRepeatedKeyPair": 22,
+        "fixedTwinsClose": 4,
+        "obvious:freeRoutePair": 2,
+        "clockTwinNotGate": 2
+      }
+    },
+    "47": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 1,
+        "clockShortest": 22,
+        "fixedTwinsClose": 8,
+        "noProvenBait": 5,
+        "noClockPartnerHolders": 31,
+        "noRepeatedKeyPair": 30,
+        "clockNotBait": 2,
+        "clockTwinNotGate": 11,
+        "obvious:freeRoutePair": 1,
+        "job:noProvenMix": 2
+      }
+    }
+  },
+  "waitLookalikeWay": {
+    "1": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "2": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 125,
+        "noClockPartnerHolders": 118,
+        "fixedTwinsClose": 53,
+        "obvious:freeRoutePair": 5,
+        "clockTwinNotGate": 46,
+        "idle:ice:72": 1,
+        "job:noProvenMix": 3,
+        "idle:ice:73": 2
+      }
+    },
+    "3": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 41,
+        "noClockPartnerHolders": 33,
+        "fixedTwinsClose": 9,
+        "clockShortest": 7,
+        "clockTwinNotGate": 9,
+        "obvious:freeRoutePair": 1,
+        "job:noProvenMix": 1,
+        "job:hardWall": 2
+      }
+    },
+    "4": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2,
+        "noProvenBait": 8,
+        "noRepeatedKeyPair": 34,
+        "fixedTwinsClose": 8,
+        "clockShortest": 8,
+        "noClockPartnerHolders": 32,
+        "clockTwinNotGate": 10,
+        "job:noProvenMix": 1
+      }
+    },
+    "5": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noClockPartnerHolders": 10,
+        "clockShortest": 11,
+        "clockTwinNotGate": 5,
+        "noRepeatedKeyPair": 2,
+        "fixedTwinsClose": 3,
+        "job:noProvenMix": 1,
+        "job:hardWall": 2
+      }
+    },
+    "6": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2,
+        "noRepeatedKeyPair": 35,
+        "clockTwinNotGate": 14,
+        "noClockPartnerHolders": 16,
+        "fixedTwinsClose": 24,
+        "noProvenBait": 2,
+        "idle:ice:61": 1,
+        "clockShortest": 2,
+        "idle:ice:73": 1,
+        "obvious:freeRoutePair": 2,
+        "clockNotBait": 2,
+        "idle:ice:77": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "7": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noRepeatedKeyPair": 4,
+        "noChain": 7
+      }
+    },
+    "8": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "obvious:freeRoutePair": 17,
+        "noRepeatedKeyPair": 147,
+        "clockNotBait": 24,
+        "noClockPartnerHolders": 46,
+        "idle:ice:56": 8,
+        "idle:ice:57": 8,
+        "idle:ice:58": 7,
+        "fixedTwinsClose": 23,
+        "idle:ice:59": 3,
+        "fewerThan2WinningStarts": 8,
+        "idle:ice:55": 9,
+        "job:noProvenMix": 3,
+        "noProvenBait": 14,
+        "wrongRepeatedPairNotBait": 2,
+        "idle:ice:60": 1,
+        "clockTwinNotGate": 33
+      }
+    },
+    "9": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 130,
+        "noClockPartnerHolders": 128,
+        "clockTwinNotGate": 43,
+        "fixedTwinsClose": 45,
+        "idle:ice:69": 1,
+        "job:noProvenMix": 3,
+        "wrongRepeatedPairNotBait": 1,
+        "idle:ice:52": 1,
+        "noProvenBait": 1
+      }
+    },
+    "10": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "11": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noRepeatedKeyPair": 73,
+        "noClockPartnerHolders": 36,
+        "fixedTwinsClose": 42,
+        "clockTwinNotGate": 5,
+        "clockNotBait": 3,
+        "obvious:freeRoutePair": 2,
+        "idle:ice:46": 1,
+        "noProvenBait": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "12": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noClockPartnerHolders": 210,
+        "noRepeatedKeyPair": 76,
+        "clockNotBait": 4,
+        "fixedTwinsClose": 14,
+        "clockShortest": 9,
+        "job:noProvenMix": 3,
+        "noProvenBait": 9,
+        "clockTwinNotGate": 28
+      }
+    },
+    "13": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noClockPartnerHolders": 98,
+        "noRepeatedKeyPair": 67,
+        "clockShortest": 42,
+        "clockTwinNotGate": 16,
+        "fixedTwinsClose": 9,
+        "job:noProvenMix": 3
+      }
+    },
+    "15": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "noRepeatedKeyPair": 8,
+        "noClockPartnerHolders": 14,
+        "fixedTwinsClose": 4,
+        "idle:ice:76": 1,
+        "wrongRepeatedPairNotBait": 3,
+        "idle:ice:44": 1,
+        "job:noProvenMix": 1,
+        "job:hardWall": 1,
+        "noProvenBait": 1,
+        "clockTwinNotGate": 2,
+        "idle:ice:73": 1
+      }
+    },
+    "16": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noClockPartnerHolders": 150,
+        "fixedTwinsClose": 22,
+        "noRepeatedKeyPair": 123,
+        "clockTwinNotGate": 54,
+        "job:noProvenMix": 3,
+        "obvious:freeRoutePair": 1
+      }
+    },
+    "17": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noClockPartnerHolders": 197,
+        "noRepeatedKeyPair": 110,
+        "fixedTwinsClose": 14,
+        "clockShortest": 5,
+        "clockTwinNotGate": 21,
+        "job:noProvenMix": 3,
+        "noProvenBait": 3
+      }
+    },
+    "19": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 1,
+        "noRepeatedKeyPair": 97,
+        "noClockPartnerHolders": 113,
+        "obvious:freeRoutePair": 22,
+        "idle:ice:60": 4,
+        "fixedTwinsClose": 10,
+        "idle:ice:61": 2,
+        "job:noProvenMix": 2,
+        "clockTwinNotGate": 1,
+        "clockShortest": 1
+      }
+    },
+    "20": {
+      "jobs": 3,
+      "raw": 2,
+      "failures": {
+        "clockTwinNotGate": 2,
+        "noClockPartnerHolders": 11,
+        "noRepeatedKeyPair": 2,
+        "clockShortest": 3,
+        "clockNotBait": 1,
+        "fixedTwinsClose": 3,
+        "job:hardWall": 1
+      }
+    },
+    "21": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 12,
+        "clockTwinNotGate": 7,
+        "clockShortest": 5,
+        "noProvenBait": 1,
+        "noClockPartnerHolders": 13,
+        "fixedTwinsClose": 3,
+        "clockNotBait": 1,
+        "fewerThan2WinningStarts": 1,
+        "obvious:freeRoutePair": 1,
+        "job:noProvenMix": 1,
+        "job:hardWall": 2
+      }
+    },
+    "22": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "23": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noClockPartnerHolders": 140,
+        "noRepeatedKeyPair": 132,
+        "fixedTwinsClose": 36,
+        "clockShortest": 5,
+        "clockNotBait": 2,
+        "job:noProvenMix": 3,
+        "noProvenBait": 4,
+        "clockTwinNotGate": 31
+      }
+    },
+    "24": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2,
+        "noRepeatedKeyPair": 39,
+        "clockShortest": 4,
+        "noClockPartnerHolders": 47,
+        "idle:ice:52": 1,
+        "fixedTwinsClose": 7,
+        "obvious:freeRoutePair": 2,
+        "job:noProvenMix": 1
+      }
+    },
+    "25": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2,
+        "clockNotBait": 1,
+        "noClockPartnerHolders": 3,
+        "noRepeatedKeyPair": 1,
+        "idle:ice:62": 1,
+        "idle:ice:63": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "26": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "27": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 3
+      }
+    },
+    "28": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 128,
+        "noClockPartnerHolders": 167,
+        "fixedTwinsClose": 16,
+        "job:noProvenMix": 3,
+        "clockTwinNotGate": 39
+      }
+    },
+    "29": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 3
+      }
+    },
+    "30": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 3
+      }
+    },
+    "32": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 293,
+        "clockTwinNotGate": 22,
+        "fewerThan2WinningStarts": 8,
+        "idle:ice:70": 2,
+        "fixedTwinsClose": 18,
+        "idle:ice:71": 2,
+        "job:noProvenMix": 3,
+        "wrongRepeatedPairNotBait": 2,
+        "idle:ice:59": 1,
+        "idle:ice:58": 1,
+        "idle:ice:73": 1
+      }
+    },
+    "33": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 132,
+        "fixedTwinsClose": 22,
+        "noClockPartnerHolders": 158,
+        "clockTwinNotGate": 38,
+        "job:noProvenMix": 3
+      }
+    },
+    "34": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 1,
+        "clockNotBait": 18,
+        "noClockPartnerHolders": 58,
+        "idle:ice:65": 1,
+        "idle:ice:47": 1,
+        "noProvenBait": 7,
+        "noRepeatedKeyPair": 25,
+        "idle:ice:48": 2,
+        "idle:ice:55": 3,
+        "job:noProvenMix": 2,
+        "clockTwinNotGate": 22,
+        "fixedTwinsClose": 6,
+        "clockShortest": 2,
+        "idle:ice:61": 1
+      }
+    },
+    "35": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "job:hardWall": 2,
+        "clockTwinNotGate": 1,
+        "idle:ice:80": 1
+      }
+    },
+    "37": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2,
+        "noClockPartnerHolders": 59,
+        "noRepeatedKeyPair": 18,
+        "clockShortest": 8,
+        "clockTwinNotGate": 10,
+        "fixedTwinsClose": 2,
+        "noProvenBait": 3,
+        "job:noProvenMix": 1
+      }
+    },
+    "38": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2,
+        "idle:ice:61": 1,
+        "noClockPartnerHolders": 8,
+        "idle:ice:60": 2,
+        "fixedTwinsClose": 1,
+        "clockShortest": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "39": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2,
+        "noClockPartnerHolders": 36,
+        "clockTwinNotGate": 10,
+        "noRepeatedKeyPair": 10,
+        "clockShortest": 2,
+        "fixedTwinsClose": 1,
+        "obvious:freeRoutePair": 1,
+        "clockNotBait": 2,
+        "noProvenBait": 1,
+        "idle:ice:60": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "40": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noClockPartnerHolders": 121,
+        "noRepeatedKeyPair": 185,
+        "fixedTwinsClose": 19,
+        "job:noProvenMix": 3,
+        "clockTwinNotGate": 25
+      }
+    },
+    "41": {
+      "jobs": 3,
+      "raw": 2,
+      "failures": {
+        "noRepeatedKeyPair": 115,
+        "noClockPartnerHolders": 53,
+        "idle:ice:72": 1,
+        "fixedTwinsClose": 6,
+        "obvious:freeRoutePair": 4,
+        "clockTwinNotGate": 16,
+        "fewerThan2WinningStarts": 2,
+        "job:noProvenMix": 1,
+        "clockNotBait": 3,
+        "wrongRepeatedPairNotBait": 1,
+        "idle:ice:46": 1,
+        "idle:ice:66": 1
+      }
+    },
+    "42": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 219,
+        "noClockPartnerHolders": 26,
+        "clockTwinNotGate": 44,
+        "fixedTwinsClose": 56,
+        "idle:ice:26": 1,
+        "idle:ice:25": 1,
+        "job:noProvenMix": 3,
+        "idle:ice:29": 1,
+        "noProvenBait": 1,
+        "clockNotBait": 1
+      }
+    },
+    "43": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 3
+      }
+    },
+    "44": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "job:hardWall": 1,
+        "idle:ice:54": 4,
+        "noClockPartnerHolders": 53,
+        "idle:ice:55": 1,
+        "idle:ice:56": 5,
+        "fixedTwinsClose": 13,
+        "obvious:freeRoutePair": 12,
+        "noRepeatedKeyPair": 37,
+        "clockShortest": 2,
+        "idle:ice:53": 4,
+        "job:noProvenMix": 1
+      }
+    },
+    "45": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "46": {
+      "jobs": 3,
+      "raw": 2,
+      "failures": {
+        "noRepeatedKeyPair": 110,
+        "clockTwinNotGate": 39,
+        "noClockPartnerHolders": 37,
+        "fixedTwinsClose": 44,
+        "idle:ice:41": 1,
+        "clockNotBait": 13,
+        "obvious:freeRoutePair": 8,
+        "idle:ice:51": 1,
+        "noProvenBait": 1,
+        "wrongRepeatedPairNotBait": 8,
+        "idle:ice:62": 1,
+        "idle:ice:53": 2,
+        "idle:ice:68": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "47": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "clockShortest": 18,
+        "noClockPartnerHolders": 12,
+        "clockNotBait": 4,
+        "noRepeatedKeyPair": 14,
+        "fixedTwinsClose": 6,
+        "clockTwinNotGate": 7,
+        "job:noProvenMix": 2,
+        "noProvenBait": 3,
+        "job:hardWall": 1
+      }
+    }
+  },
+  "lookalikeCoverThaw": {
+    "1": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 337,
+        "noChain": 125,
+        "trayOverflow": 264,
+        "job:noProvenMix": 6,
+        "fixedTwinsClose": 20,
+        "keyRoofReadability": 548,
+        "noProvenBait": 5,
+        "clockShortest": 1
+      }
+    },
+    "2": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 73,
+        "noRepeatedKeyPair": 512,
+        "twoMeaningfulBaits": 82,
+        "job:noProvenMix": 6,
+        "noProvenBait": 2,
+        "keyRoofReadability": 631
+      }
+    },
+    "3": {
+      "jobs": 5,
+      "raw": 2,
+      "failures": {
+        "noRepeatedKeyPair": 103,
+        "noChain": 17,
+        "fixedTwinsClose": 88,
+        "wrongRepeatedPairNotBait": 1,
+        "trayOverflow": 30,
+        "idle:ice:71": 1,
+        "idle:ice:79": 3,
+        "job:noProvenMix": 2,
+        "job:hardWall": 1,
+        "keyRoofReadability": 219,
+        "idle:ice:76": 1,
+        "noProvenBait": 1,
+        "idle:ice:78": 6,
+        "twoMeaningfulBaits": 2,
+        "idle:lock:72": 1
+      }
+    },
+    "4": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 6
+      }
+    },
+    "5": {
+      "jobs": 3,
+      "raw": 3,
+      "failures": {
+        "noRepeatedKeyPair": 29,
+        "fixedTwinsClose": 3,
+        "trayOverflow": 12,
+        "noProvenBait": 2,
+        "idle:ice:71": 1,
+        "wrongRepeatedPairNotBait": 1
+      }
+    },
+    "6": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 400,
+        "obvious:freeRoutePair": 14,
+        "twoMeaningfulBaits": 60,
+        "idle:ice:53": 3,
+        "job:noProvenMix": 6,
+        "wrongRepeatedPairNotBait": 2,
+        "trayOverflow": 18,
+        "idle:ice:58": 1,
+        "noProvenBait": 17,
+        "idle:ice:81": 1,
+        "keyRoofReadability": 784
+      }
+    },
+    "7": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1300,
+        "job:noProvenMix": 6
+      }
+    },
+    "8": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1300,
+        "job:noProvenMix": 6
+      }
+    },
+    "9": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1300,
+        "job:noProvenMix": 6
+      }
+    },
+    "10": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1300,
+        "job:noProvenMix": 6
+      }
+    },
+    "11": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 605,
+        "twoMeaningfulBaits": 57,
+        "noProvenBait": 11,
+        "job:noProvenMix": 6,
+        "keyRoofReadability": 626,
+        "obvious:freeRoutePair": 1
+      }
+    },
+    "12": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noRepeatedKeyPair": 63,
+        "trayOverflow": 7,
+        "twoMeaningfulBaits": 1,
+        "obvious:freeRoutePair": 3,
+        "noProvenBait": 3,
+        "wrongRepeatedPairNotBait": 1
+      }
+    },
+    "13": {
+      "jobs": 6,
+      "raw": 2,
+      "failures": {
+        "job:hardWall": 4,
+        "noRepeatedKeyPair": 15,
+        "trayOverflow": 4,
+        "noProvenBait": 1
+      }
+    },
+    "15": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 388,
+        "twoMeaningfulBaits": 92,
+        "job:noProvenMix": 6,
+        "clockShortest": 52,
+        "noProvenBait": 2,
+        "clockNumber": 14,
+        "keyRoofReadability": 665
+      }
+    },
+    "16": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 348,
+        "noChain": 105,
+        "twoMeaningfulBaits": 3,
+        "job:noProvenMix": 5,
+        "keyRoofReadability": 563,
+        "clockNumber": 28,
+        "noProvenBait": 3,
+        "job:hardWall": 1
+      }
+    },
+    "17": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 79,
+        "clockShortest": 1,
+        "noProvenBait": 3,
+        "job:noProvenMix": 2,
+        "trayOverflow": 29,
+        "obvious:freeRoutePair": 1,
+        "job:hardWall": 4
+      }
+    },
+    "19": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1300,
+        "job:noProvenMix": 6
+      }
+    },
+    "20": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1300,
+        "job:noProvenMix": 6
+      }
+    },
+    "21": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 257,
+        "twoMeaningfulBaits": 175,
+        "fixedTwinsClose": 7,
+        "job:noProvenMix": 6,
+        "noProvenBait": 38,
+        "keyRoofReadability": 460,
+        "clockShortest": 2
+      }
+    },
+    "22": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1300,
+        "job:noProvenMix": 6
+      }
+    },
+    "23": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 4,
+        "noRepeatedKeyPair": 189,
+        "trayOverflow": 36,
+        "clockShortest": 1,
+        "noProvenBait": 8,
+        "twoMeaningfulBaits": 1,
+        "job:noProvenMix": 2,
+        "keyRoofReadability": 146,
+        "obvious:freeRoutePair": 5
+      }
+    },
+    "24": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 200,
+        "job:noProvenMix": 2,
+        "job:hardWall": 4
+      }
+    },
+    "25": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1300,
+        "job:noProvenMix": 6
+      }
+    },
+    "26": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1300,
+        "job:noProvenMix": 6
+      }
+    },
+    "27": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 263,
+        "noChain": 51,
+        "clockShortest": 41,
+        "job:noProvenMix": 6,
+        "clockNumber": 6,
+        "keyRoofReadability": 939
+      }
+    },
+    "28": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1300,
+        "job:noProvenMix": 6
+      }
+    },
+    "29": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 6
+      }
+    },
+    "30": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 164,
+        "noRepeatedKeyPair": 67,
+        "twoMeaningfulBaits": 33,
+        "noProvenBait": 8,
+        "job:noProvenMix": 4,
+        "job:hardWall": 2,
+        "keyRoofReadability": 235,
+        "clockShortest": 7
+      }
+    },
+    "32": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1300,
+        "job:noProvenMix": 6
+      }
+    },
+    "33": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1300,
+        "job:noProvenMix": 6
+      }
+    },
+    "34": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1300,
+        "job:noProvenMix": 6
+      }
+    },
+    "35": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 148,
+        "twoMeaningfulBaits": 184,
+        "job:noProvenMix": 4,
+        "job:hardWall": 2,
+        "keyRoofReadability": 577,
+        "noProvenBait": 25,
+        "obvious:freeRoutePair": 3
+      }
+    },
+    "37": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 5,
+        "keyRoofReadability": 73,
+        "obvious:freeRoutePair": 11,
+        "noProvenBait": 2,
+        "clockShortest": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "38": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1300,
+        "job:noProvenMix": 6
+      }
+    },
+    "39": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1300,
+        "job:noProvenMix": 6
+      }
+    },
+    "40": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1300,
+        "job:noProvenMix": 6
+      }
+    },
+    "41": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1300,
+        "job:noProvenMix": 6
+      }
+    },
+    "42": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1300,
+        "job:noProvenMix": 6
+      }
+    },
+    "43": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2,
+        "noRepeatedKeyPair": 173,
+        "twoMeaningfulBaits": 95,
+        "job:noProvenMix": 4,
+        "keyRoofReadability": 608,
+        "noProvenBait": 11
+      }
+    },
+    "44": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1300,
+        "job:noProvenMix": 6
+      }
+    },
+    "45": {
+      "jobs": 6,
+      "raw": 0,
+      "failures": {
+        "noChain": 1300,
+        "job:noProvenMix": 6
+      }
+    },
+    "46": {
+      "jobs": 6,
+      "raw": 3,
+      "failures": {
+        "noRepeatedKeyPair": 395,
+        "trayOverflow": 21,
+        "twoMeaningfulBaits": 39,
+        "job:noProvenMix": 3,
+        "idle:ice:66": 7,
+        "idle:lock:71": 1,
+        "idle:lock:69": 1,
+        "obvious:freeRoutePair": 15,
+        "idle:ice:72": 1,
+        "fewerThan2WinningStarts": 1,
+        "keyRoofReadability": 429,
+        "idle:lock:70": 1,
+        "noProvenBait": 2
+      }
+    },
+    "47": {
+      "jobs": 4,
+      "raw": 2,
+      "failures": {
+        "job:hardWall": 1,
+        "noRepeatedKeyPair": 29,
+        "obvious:freeRoutePair": 3,
+        "wrongRepeatedPairNotBait": 4,
+        "noProvenBait": 4,
+        "twoMeaningfulBaits": 3,
+        "idle:ice:86": 2,
+        "job:noProvenMix": 1,
+        "keyRoofReadability": 123,
+        "trayOverflow": 4,
+        "idle:ice:90": 1
+      }
+    }
+  },
+  "waitThawKey": {
+    "1": {
+      "jobs": 3,
+      "raw": 2,
+      "failures": {
+        "noClockPartnerHolders": 172,
+        "noChain": 1,
+        "fixedTwinsClose": 4,
+        "noProvenBait": 9,
+        "clockNotBait": 10,
+        "clockTwinNotGate": 11,
+        "trayOverflow": 2,
+        "clockShortest": 3,
+        "job:noProvenMix": 1
+      }
+    },
+    "2": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noClockPartnerHolders": 11,
+        "noProvenBait": 1,
+        "fixedTwinsClose": 2,
+        "obvious:greedyPrefix": 1,
+        "clockTwinNotGate": 1
+      }
+    },
+    "3": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "clockTwinNotGate": 90,
+        "noProvenBait": 108,
+        "clockNotBait": 53,
+        "fixedTwinsClose": 20,
+        "noClockPartnerHolders": 61,
+        "trayOverflow": 2,
+        "job:noProvenMix": 3,
+        "obvious:greedyPrefix": 5
+      }
+    },
+    "4": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noClockPartnerHolders": 6,
+        "fixedTwinsClose": 2,
+        "clockTwinNotGate": 4
+      }
+    },
+    "5": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "clockTwinNotGate": 82,
+        "noProvenBait": 43,
+        "noClockPartnerHolders": 89,
+        "clockNotBait": 19,
+        "fixedTwinsClose": 12,
+        "job:noProvenMix": 2,
+        "obvious:greedyPrefix": 2,
+        "trayOverflow": 3,
+        "clockShortest": 1
+      }
+    },
+    "6": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "clockTwinNotGate": 27,
+        "noClockPartnerHolders": 7,
+        "twoMeaningfulBaits": 2,
+        "fixedTwinsClose": 3,
+        "fewerThan2WinningStarts": 1,
+        "clockNotBait": 1,
+        "obvious:greedyPrefix": 2,
+        "noProvenBait": 7
+      }
+    },
+    "7": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "8": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "9": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noClockPartnerHolders": 156,
+        "fixedTwinsClose": 43,
+        "twoMeaningfulBaits": 48,
+        "clockTwinNotGate": 82,
+        "noChain": 3,
+        "job:noProvenMix": 3,
+        "idle:lock:65": 4,
+        "clockShortest": 5,
+        "idle:lock:64": 7,
+        "clockNotBait": 2
+      }
+    },
+    "10": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "11": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "fixedTwinsClose": 14,
+        "noClockPartnerHolders": 12,
+        "clockTwinNotGate": 44,
+        "twoMeaningfulBaits": 3,
+        "noProvenBait": 9,
+        "obvious:greedyPrefix": 3
+      }
+    },
+    "12": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 1,
+        "noProvenBait": 26,
+        "noClockPartnerHolders": 134,
+        "clockTwinNotGate": 57,
+        "clockShortest": 9,
+        "clockNotBait": 10,
+        "trayOverflow": 5,
+        "obvious:greedyPrefix": 6,
+        "job:noProvenMix": 2,
+        "fixedTwinsClose": 3
+      }
+    },
+    "13": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noProvenBait": 36,
+        "clockNotBait": 16,
+        "noClockPartnerHolders": 136,
+        "clockTwinNotGate": 125,
+        "fixedTwinsClose": 14,
+        "clockShortest": 20,
+        "trayOverflow": 3,
+        "job:noProvenMix": 3
+      }
+    },
+    "15": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noProvenBait": 3,
+        "fixedTwinsClose": 1,
+        "noClockPartnerHolders": 2
+      }
+    },
+    "16": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noClockPartnerHolders": 15,
+        "twoMeaningfulBaits": 3,
+        "clockTwinNotGate": 10,
+        "clockNotBait": 1
+      }
+    },
+    "17": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2,
+        "clockTwinNotGate": 27,
+        "noClockPartnerHolders": 46,
+        "trayOverflow": 6,
+        "clockNotBait": 4,
+        "noProvenBait": 6,
+        "clockShortest": 9,
+        "fixedTwinsClose": 2,
+        "job:noProvenMix": 1
+      }
+    },
+    "19": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 200,
+        "job:noProvenMix": 3,
+        "noClockPartnerHolders": 97,
+        "clockTwinNotGate": 48,
+        "fixedTwinsClose": 5
+      }
+    },
+    "20": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 181,
+        "noClockPartnerHolders": 52,
+        "job:noProvenMix": 3,
+        "clockTwinNotGate": 56,
+        "fixedTwinsClose": 16,
+        "clockNotBait": 28,
+        "idle:ice:45": 3,
+        "twoMeaningfulBaits": 3,
+        "noProvenBait": 9,
+        "idle:ice:46": 2
+      }
+    },
+    "21": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "fixedTwinsClose": 3,
+        "noClockPartnerHolders": 9,
+        "clockShortest": 2,
+        "clockTwinNotGate": 8,
+        "noProvenBait": 2,
+        "fewerThan2WinningStarts": 2,
+        "obvious:greedyPrefix": 1
+      }
+    },
+    "22": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "23": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "job:hardWall": 2,
+        "fixedTwinsClose": 2,
+        "clockTwinNotGate": 2,
+        "noClockPartnerHolders": 7,
+        "twoMeaningfulBaits": 1,
+        "obvious:greedyPrefix": 1,
+        "clockNotBait": 1,
+        "controlUnknown": 1,
+        "obvious:freeRoutePair": 1
+      }
+    },
+    "24": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "noClockPartnerHolders": 278,
+        "noChain": 1,
+        "trayOverflow": 7,
+        "clockTwinNotGate": 7,
+        "job:noProvenMix": 2,
+        "clockNotBait": 26,
+        "clockShortest": 1,
+        "noProvenBait": 4
+      }
+    },
+    "25": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "26": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "27": {
+      "jobs": 3,
+      "raw": 2,
+      "failures": {
+        "noClockPartnerHolders": 59,
+        "clockTwinNotGate": 17,
+        "fewerThan2WinningStarts": 15,
+        "clockNotBait": 7,
+        "obvious:greedyPrefix": 7,
+        "fixedTwinsClose": 3,
+        "clockShortest": 12,
+        "noProvenBait": 7,
+        "job:noProvenMix": 1
+      }
+    },
+    "28": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noClockPartnerHolders": 200,
+        "job:noProvenMix": 2,
+        "job:hardWall": 1
+      }
+    },
+    "29": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2,
+        "clockShortest": 11,
+        "noClockPartnerHolders": 8,
+        "noProvenBait": 5,
+        "clockNotBait": 2,
+        "clockTwinNotGate": 10,
+        "fixedTwinsClose": 2,
+        "job:noProvenMix": 1
+      }
+    },
+    "30": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noClockPartnerHolders": 307,
+        "twoMeaningfulBaits": 6,
+        "fixedTwinsClose": 3,
+        "clockTwinNotGate": 20,
+        "noProvenBait": 14,
+        "job:noProvenMix": 3
+      }
+    },
+    "32": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "33": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "clockNotBait": 43,
+        "clockTwinNotGate": 67,
+        "noProvenBait": 112,
+        "obvious:greedyPrefix": 15,
+        "twoMeaningfulBaits": 10,
+        "fixedTwinsClose": 8,
+        "job:noProvenMix": 3,
+        "noClockPartnerHolders": 95
+      }
+    },
+    "34": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "35": {
+      "jobs": 3,
+      "raw": 3,
+      "failures": {
+        "clockTwinNotGate": 15,
+        "fixedTwinsClose": 5,
+        "noProvenBait": 10,
+        "noClockPartnerHolders": 12,
+        "obvious:greedyPrefix": 3,
+        "trayOverflow": 1,
+        "controlUnknown": 1,
+        "clockShortest": 1
+      }
+    },
+    "37": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "noClockPartnerHolders": 192,
+        "trayOverflow": 4,
+        "clockTwinNotGate": 81,
+        "clockShortest": 3,
+        "job:noProvenMix": 2,
+        "clockNotBait": 2,
+        "noProvenBait": 4,
+        "fixedTwinsClose": 1
+      }
+    },
+    "38": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "39": {
+      "jobs": 3,
+      "raw": 3,
+      "failures": {
+        "clockTwinNotGate": 14,
+        "noClockPartnerHolders": 44
+      }
+    },
+    "40": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "41": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "42": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "43": {
+      "jobs": 3,
+      "raw": 3,
+      "failures": {
+        "noClockPartnerHolders": 2,
+        "clockTwinNotGate": 6,
+        "fixedTwinsClose": 1,
+        "noProvenBait": 1
+      }
+    },
+    "44": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "45": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "46": {
+      "jobs": 3,
+      "raw": 2,
+      "failures": {
+        "twoMeaningfulBaits": 5,
+        "clockTwinNotGate": 45,
+        "noProvenBait": 29,
+        "obvious:greedyPrefix": 17,
+        "fixedTwinsClose": 16,
+        "obvious:freeRoutePair": 4,
+        "clockNotBait": 10,
+        "fewerThan2WinningStarts": 2,
+        "job:noProvenMix": 1
+      }
+    },
+    "47": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "job:hardWall": 1,
+        "fixedTwinsClose": 6,
+        "clockTwinNotGate": 57,
+        "noProvenBait": 20,
+        "noClockPartnerHolders": 24,
+        "clockShortest": 3,
+        "trayOverflow": 1,
+        "job:noProvenMix": 1
+      }
+    }
+  },
+  "lookalikeCover": {
+    "1": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 1,
+        "noRepeatedKeyPair": 116,
+        "fixedTwinsClose": 17,
+        "trayOverflow": 105,
+        "noChain": 262,
+        "job:noProvenMix": 3
+      }
+    },
+    "2": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 439,
+        "noChain": 76,
+        "twoMeaningfulBaits": 59,
+        "job:noProvenMix": 4,
+        "noProvenBait": 26
+      }
+    },
+    "3": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "fixedTwinsClose": 4,
+        "noRepeatedKeyPair": 17,
+        "idle:ice:79": 2,
+        "noChain": 1,
+        "trayOverflow": 3
+      }
+    },
+    "4": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 3,
+        "noChain": 250,
+        "job:noProvenMix": 1
+      }
+    },
+    "5": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "obvious:freeRoutePair": 19,
+        "noRepeatedKeyPair": 77,
+        "fixedTwinsClose": 10,
+        "trayOverflow": 23,
+        "noProvenBait": 4,
+        "idle:ice:71": 3,
+        "idle:ice:82": 2,
+        "wrongRepeatedPairNotBait": 1,
+        "idle:ice:72": 2,
+        "idle:ice:73": 1
+      }
+    },
+    "6": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 470,
+        "twoMeaningfulBaits": 62,
+        "noProvenBait": 14,
+        "job:noProvenMix": 4,
+        "trayOverflow": 43,
+        "obvious:freeRoutePair": 6,
+        "idle:ice:80": 1,
+        "idle:ice:58": 3,
+        "idle:ice:81": 1
+      }
+    },
+    "7": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 600,
+        "job:noProvenMix": 4
+      }
+    },
+    "8": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 600,
+        "job:noProvenMix": 4
+      }
+    },
+    "9": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 450,
+        "job:noProvenMix": 4,
+        "trayOverflow": 43,
+        "noRepeatedKeyPair": 102,
+        "clockNumber": 2,
+        "idle:ice:71": 3
+      }
+    },
+    "10": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 600,
+        "job:noProvenMix": 4
+      }
+    },
+    "11": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 525,
+        "twoMeaningfulBaits": 39,
+        "noProvenBait": 15,
+        "noChain": 21,
+        "job:noProvenMix": 4
+      }
+    },
+    "12": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noRepeatedKeyPair": 14,
+        "trayOverflow": 3
+      }
+    },
+    "13": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "job:hardWall": 1,
+        "noRepeatedKeyPair": 1
+      }
+    },
+    "15": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 478,
+        "twoMeaningfulBaits": 95,
+        "noProvenBait": 20,
+        "job:noProvenMix": 4,
+        "clockShortest": 1,
+        "clockNumber": 6
+      }
+    },
+    "16": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 348,
+        "twoMeaningfulBaits": 12,
+        "noProvenBait": 1,
+        "noChain": 209,
+        "job:noProvenMix": 4,
+        "trayOverflow": 30
+      }
+    },
+    "17": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noRepeatedKeyPair": 40,
+        "trayOverflow": 12,
+        "wrongRepeatedPairNotBait": 1
+      }
+    },
+    "19": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 600,
+        "job:noProvenMix": 4
+      }
+    },
+    "20": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 600,
+        "job:noProvenMix": 4
+      }
+    },
+    "21": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 236,
+        "twoMeaningfulBaits": 70,
+        "noProvenBait": 8,
+        "job:noProvenMix": 3,
+        "fixedTwinsClose": 13,
+        "job:hardWall": 1
+      }
+    },
+    "22": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 600,
+        "job:noProvenMix": 4
+      }
+    },
+    "23": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 168,
+        "obvious:freeRoutePair": 4,
+        "noProvenBait": 3,
+        "trayOverflow": 24,
+        "job:noProvenMix": 3,
+        "clockShortest": 1,
+        "job:hardWall": 1,
+        "noChain": 250
+      }
+    },
+    "24": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 450,
+        "job:noProvenMix": 3,
+        "job:hardWall": 1
+      }
+    },
+    "25": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 600,
+        "job:noProvenMix": 4
+      }
+    },
+    "26": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 600,
+        "job:noProvenMix": 4
+      }
+    },
+    "27": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 1,
+        "noRepeatedKeyPair": 320,
+        "twoMeaningfulBaits": 130,
+        "noProvenBait": 9,
+        "noChain": 1,
+        "job:noProvenMix": 3,
+        "clockNumber": 7,
+        "clockShortest": 20
+      }
+    },
+    "28": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 600,
+        "job:noProvenMix": 4
+      }
+    },
+    "29": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 3,
+        "idle:ice:91": 1,
+        "noRepeatedKeyPair": 2,
+        "obvious:freeRoutePair": 1,
+        "idle:ice:78": 1,
+        "clockShortest": 1,
+        "twoMeaningfulBaits": 2,
+        "job:noProvenMix": 1
+      }
+    },
+    "30": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 358,
+        "job:noProvenMix": 4,
+        "noRepeatedKeyPair": 74,
+        "twoMeaningfulBaits": 29,
+        "noProvenBait": 8,
+        "clockNumber": 1
+      }
+    },
+    "32": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 600,
+        "job:noProvenMix": 4
+      }
+    },
+    "33": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 600,
+        "job:noProvenMix": 4
+      }
+    },
+    "34": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 600,
+        "job:noProvenMix": 4
+      }
+    },
+    "35": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 1,
+        "noRepeatedKeyPair": 154,
+        "noProvenBait": 27,
+        "twoMeaningfulBaits": 123,
+        "job:noProvenMix": 3
+      }
+    },
+    "37": {
+      "jobs": 4,
+      "raw": 2,
+      "failures": {
+        "job:hardWall": 1,
+        "noProvenBait": 1,
+        "noRepeatedKeyPair": 10,
+        "trayOverflow": 2,
+        "noChain": 250,
+        "job:noProvenMix": 1
+      }
+    },
+    "38": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 600,
+        "job:noProvenMix": 4
+      }
+    },
+    "39": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 600,
+        "job:noProvenMix": 4
+      }
+    },
+    "40": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 600,
+        "job:noProvenMix": 4
+      }
+    },
+    "41": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 600,
+        "job:noProvenMix": 4
+      }
+    },
+    "42": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 551,
+        "twoMeaningfulBaits": 21,
+        "job:noProvenMix": 4,
+        "noProvenBait": 8,
+        "obvious:freeRoutePair": 2,
+        "noChain": 18
+      }
+    },
+    "43": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2,
+        "noRepeatedKeyPair": 133,
+        "twoMeaningfulBaits": 41,
+        "noProvenBait": 12,
+        "job:noProvenMix": 2,
+        "noChain": 1
+      }
+    },
+    "44": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 600,
+        "job:noProvenMix": 4
+      }
+    },
+    "45": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 600,
+        "job:noProvenMix": 4
+      }
+    },
+    "46": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 541,
+        "trayOverflow": 36,
+        "obvious:freeRoutePair": 7,
+        "job:noProvenMix": 4,
+        "twoMeaningfulBaits": 16
+      }
+    },
+    "47": {
+      "jobs": 4,
+      "raw": 1,
+      "failures": {
+        "job:hardWall": 2,
+        "noRepeatedKeyPair": 35,
+        "twoMeaningfulBaits": 18,
+        "trayOverflow": 8,
+        "idle:lock:71": 1,
+        "idle:ice:85": 4,
+        "idle:ice:86": 4,
+        "noProvenBait": 4,
+        "wrongRepeatedPairNotBait": 1,
+        "job:noProvenMix": 1
+      }
+    }
+  },
+  "lookalikeThaw": {
+    "1": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 324,
+        "clockShortest": 1,
+        "noChain": 1,
+        "twoMeaningfulBaits": 2,
+        "obvious:freeRoutePair": 1,
+        "noProvenBait": 2,
+        "fixedTwinsClose": 1,
+        "job:noProvenMix": 3,
+        "trayOverflow": 18
+      }
+    },
+    "2": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 319,
+        "twoMeaningfulBaits": 12,
+        "clockShortest": 6,
+        "job:noProvenMix": 3,
+        "noProvenBait": 9,
+        "obvious:freeRoutePair": 2,
+        "clockNumber": 1,
+        "trayOverflow": 1
+      }
+    },
+    "3": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "obvious:freeRoutePair": 2,
+        "noRepeatedKeyPair": 171,
+        "fixedTwinsClose": 6,
+        "twoMeaningfulBaits": 14,
+        "fewerThan2WinningStarts": 1,
+        "trayOverflow": 4,
+        "noProvenBait": 6,
+        "job:noProvenMix": 2,
+        "wrongRepeatedPairNotBait": 2,
+        "idle:ice:79": 1
+      }
+    },
+    "4": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 3
+      }
+    },
+    "5": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "job:hardWall": 1,
+        "noRepeatedKeyPair": 27,
+        "obvious:freeRoutePair": 11,
+        "noProvenBait": 10,
+        "twoMeaningfulBaits": 5,
+        "trayOverflow": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "6": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "noRepeatedKeyPair": 209,
+        "obvious:freeRoutePair": 9,
+        "twoMeaningfulBaits": 15,
+        "trayOverflow": 12,
+        "noProvenBait": 11,
+        "fixedTwinsClose": 3,
+        "job:noProvenMix": 2,
+        "idle:ice:56": 1
+      }
+    },
+    "7": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "8": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "9": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 313,
+        "twoMeaningfulBaits": 12,
+        "noChain": 3,
+        "obvious:freeRoutePair": 13,
+        "job:noProvenMix": 3,
+        "clockShortest": 4,
+        "clockNumber": 1,
+        "noProvenBait": 4
+      }
+    },
+    "10": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "11": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "twoMeaningfulBaits": 4,
+        "noRepeatedKeyPair": 299,
+        "trayOverflow": 22,
+        "fixedTwinsClose": 13,
+        "obvious:freeRoutePair": 5,
+        "job:noProvenMix": 3,
+        "noProvenBait": 6,
+        "wrongRepeatedPairNotBait": 1
+      }
+    },
+    "12": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "noRepeatedKeyPair": 177,
+        "clockShortest": 1,
+        "noProvenBait": 19,
+        "twoMeaningfulBaits": 15,
+        "obvious:freeRoutePair": 8,
+        "trayOverflow": 6,
+        "job:noProvenMix": 2
+      }
+    },
+    "13": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 3
+      }
+    },
+    "15": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 273,
+        "fixedTwinsClose": 15,
+        "fewerThan2WinningStarts": 2,
+        "twoMeaningfulBaits": 28,
+        "idle:lock:5": 1,
+        "obvious:freeRoutePair": 6,
+        "job:noProvenMix": 3,
+        "wrongRepeatedPairNotBait": 4,
+        "noProvenBait": 14,
+        "idle:lock:52": 1,
+        "idle:ice:69": 1,
+        "trayOverflow": 3,
+        "idle:lock:51": 1,
+        "idle:lock:1": 1
+      }
+    },
+    "16": {
+      "jobs": 3,
+      "raw": 2,
+      "failures": {
+        "noRepeatedKeyPair": 230,
+        "twoMeaningfulBaits": 10,
+        "job:noProvenMix": 1,
+        "noProvenBait": 3,
+        "trayOverflow": 1,
+        "wrongRepeatedPairNotBait": 1
+      }
+    },
+    "17": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "twoMeaningfulBaits": 3,
+        "obvious:freeRoutePair": 3,
+        "noRepeatedKeyPair": 178,
+        "idle:ice:47": 1,
+        "trayOverflow": 8,
+        "wrongRepeatedPairNotBait": 1,
+        "job:noProvenMix": 2,
+        "noProvenBait": 5,
+        "idle:ice:55": 1,
+        "job:hardWall": 1
+      }
+    },
+    "19": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 200,
+        "job:noProvenMix": 3,
+        "noRepeatedKeyPair": 71,
+        "obvious:freeRoutePair": 8,
+        "noProvenBait": 8,
+        "twoMeaningfulBaits": 8
+      }
+    },
+    "20": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 181,
+        "noRepeatedKeyPair": 127,
+        "job:noProvenMix": 3,
+        "noProvenBait": 14,
+        "obvious:freeRoutePair": 9,
+        "clockShortest": 5,
+        "twoMeaningfulBaits": 12
+      }
+    },
+    "21": {
+      "jobs": 3,
+      "raw": 2,
+      "failures": {
+        "job:hardWall": 1,
+        "noRepeatedKeyPair": 40,
+        "noProvenBait": 6,
+        "fixedTwinsClose": 4,
+        "twoMeaningfulBaits": 7,
+        "obvious:freeRoutePair": 1
+      }
+    },
+    "22": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "23": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 183,
+        "trayOverflow": 7,
+        "obvious:freeRoutePair": 6,
+        "twoMeaningfulBaits": 1,
+        "job:noProvenMix": 2,
+        "noProvenBait": 3,
+        "job:hardWall": 1
+      }
+    },
+    "24": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 3
+      }
+    },
+    "25": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "26": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "27": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "obvious:freeRoutePair": 15,
+        "noRepeatedKeyPair": 194,
+        "twoMeaningfulBaits": 43,
+        "idle:ice:8": 2,
+        "fewerThan2WinningStarts": 7,
+        "idle:ice:6": 3,
+        "trayOverflow": 2,
+        "noProvenBait": 21,
+        "wrongRepeatedPairNotBait": 4,
+        "job:noProvenMix": 2,
+        "idle:ice:81": 1,
+        "idle:lock:87": 1,
+        "idle:lock:6": 1
+      }
+    },
+    "28": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "29": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "job:hardWall": 1,
+        "obvious:freeRoutePair": 10,
+        "clockShortest": 3,
+        "noRepeatedKeyPair": 11,
+        "noProvenBait": 9,
+        "trayOverflow": 2,
+        "wrongRepeatedPairNotBait": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "30": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "noRepeatedKeyPair": 101,
+        "twoMeaningfulBaits": 1,
+        "job:noProvenMix": 1,
+        "job:hardWall": 1
+      }
+    },
+    "32": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "33": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noRepeatedKeyPair": 349,
+        "job:noProvenMix": 3,
+        "trayOverflow": 1
+      }
+    },
+    "34": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "35": {
+      "jobs": 3,
+      "raw": 2,
+      "failures": {
+        "job:hardWall": 1,
+        "trayOverflow": 3,
+        "noRepeatedKeyPair": 41,
+        "noProvenBait": 6,
+        "twoMeaningfulBaits": 11,
+        "obvious:freeRoutePair": 6,
+        "wrongRepeatedPairNotBait": 1,
+        "fixedTwinsClose": 1,
+        "fewerThan2WinningStarts": 1
+      }
+    },
+    "37": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 3
+      }
+    },
+    "38": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "39": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "twoMeaningfulBaits": 42,
+        "noRepeatedKeyPair": 108,
+        "obvious:freeRoutePair": 33,
+        "job:noProvenMix": 3,
+        "noProvenBait": 54,
+        "strictMinimum": 2,
+        "clockShortest": 1,
+        "clockNumber": 1
+      }
+    },
+    "40": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "41": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "42": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "43": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2,
+        "noRepeatedKeyPair": 61,
+        "noProvenBait": 17,
+        "twoMeaningfulBaits": 8,
+        "obvious:freeRoutePair": 2,
+        "idle:ice:68": 1,
+        "fixedTwinsClose": 2,
+        "trayOverflow": 7,
+        "clockShortest": 1,
+        "idle:ice:78": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "44": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "45": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "46": {
+      "jobs": 3,
+      "raw": 2,
+      "failures": {
+        "noRepeatedKeyPair": 229,
+        "obvious:freeRoutePair": 3,
+        "noProvenBait": 3,
+        "twoMeaningfulBaits": 8,
+        "trayOverflow": 5,
+        "job:noProvenMix": 1
+      }
+    },
+    "47": {
+      "jobs": 3,
+      "raw": 2,
+      "failures": {
+        "job:hardWall": 1,
+        "fixedTwinsClose": 1,
+        "noRepeatedKeyPair": 14,
+        "twoMeaningfulBaits": 5,
+        "noProvenBait": 2,
+        "strictMinimum": 1
+      }
+    }
+  },
+  "roofThawKey": {
+    "1": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 1,
+        "clockShortest": 4,
+        "noChain": 28,
+        "noProvenBait": 19,
+        "strictMinimum": 1,
+        "fixedTwinsClose": 1,
+        "obvious:freeRoutePair": 4,
+        "twoMeaningfulBaits": 1,
+        "job:noProvenMix": 2,
+        "roofKeyNotBait": 1
+      }
+    },
+    "2": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "twoMeaningfulBaits": 230,
+        "noProvenBait": 29,
+        "noChain": 46,
+        "strictMinimum": 3,
+        "clockShortest": 14,
+        "obvious:freeRoutePair": 3,
+        "obvious:greedyPrefix": 9,
+        "job:noProvenMix": 3,
+        "clockNumber": 16
+      }
+    },
+    "3": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noProvenBait": 87,
+        "strictMinimum": 2,
+        "noChain": 2,
+        "roofKeyNotBait": 11,
+        "trayOverflow": 1,
+        "job:noProvenMix": 2,
+        "job:hardWall": 1,
+        "obvious:freeRoutePair": 1
+      }
+    },
+    "4": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "noProvenBait": 11,
+        "twoMeaningfulBaits": 4,
+        "obvious:greedyPrefix": 4,
+        "strictReplay": 1,
+        "job:noProvenMix": 1,
+        "trayOverflow": 1,
+        "roofKeyNotBait": 1,
+        "job:hardWall": 1
+      }
+    },
+    "5": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noProvenBait": 21,
+        "roofKeyNotBait": 2,
+        "job:noProvenMix": 1,
+        "job:hardWall": 2
+      }
+    },
+    "6": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noProvenBait": 15,
+        "twoMeaningfulBaits": 37,
+        "fewerThan2WinningStarts": 4,
+        "obvious:freeRoutePair": 2,
+        "obvious:greedyPrefix": 8,
+        "idle:lock:63": 1,
+        "trayOverflow": 1,
+        "fixedTwinsClose": 1,
+        "strictMinimum": 1,
+        "idle:lock:41": 1,
+        "roofKeyNotBait": 1
+      }
+    },
+    "7": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "8": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "9": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noProvenBait": 107,
+        "noChain": 93,
+        "twoMeaningfulBaits": 53,
+        "job:noProvenMix": 3,
+        "obvious:greedyPrefix": 16,
+        "clockShortest": 12,
+        "obvious:freeRoutePair": 3
+      }
+    },
+    "10": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "11": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "twoMeaningfulBaits": 37,
+        "noProvenBait": 15,
+        "fewerThan2WinningStarts": 10,
+        "fixedTwinsClose": 5,
+        "obvious:greedyPrefix": 4,
+        "strictMinimum": 1,
+        "idle:lock:50": 1,
+        "trayOverflow": 1
+      }
+    },
+    "12": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 3
+      }
+    },
+    "13": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "obvious:freeRoutePair": 5,
+        "noProvenBait": 67,
+        "twoMeaningfulBaits": 11,
+        "clockShortest": 2,
+        "job:noProvenMix": 3,
+        "obvious:greedyPrefix": 1,
+        "roofKeyNotBait": 1,
+        "controlUnknown": 1
+      }
+    },
+    "15": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "twoMeaningfulBaits": 23,
+        "noProvenBait": 4,
+        "obvious:greedyPrefix": 2,
+        "strictMinimum": 2,
+        "idle:lock:45": 2,
+        "idle:lock:1": 1,
+        "idle:lock:2": 1,
+        "idle:lock:52": 1,
+        "idle:lock:3": 1,
+        "obvious:freeRoutePair": 1,
+        "trayOverflow": 1,
+        "fixedTwinsClose": 1
+      }
+    },
+    "16": {
+      "jobs": 3,
+      "raw": 2,
+      "failures": {
+        "noProvenBait": 36,
+        "twoMeaningfulBaits": 7,
+        "noChain": 10,
+        "obvious:freeRoutePair": 7,
+        "idle:ice:8": 1,
+        "roofKeyNotBait": 1,
+        "job:hardWall": 1
+      }
+    },
+    "17": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 3
+      }
+    },
+    "19": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 259,
+        "job:noProvenMix": 3,
+        "noProvenBait": 53,
+        "obvious:freeRoutePair": 7,
+        "obvious:greedyPrefix": 1
+      }
+    },
+    "20": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 185,
+        "noProvenBait": 14,
+        "job:noProvenMix": 2,
+        "obvious:freeRoutePair": 1,
+        "job:hardWall": 1
+      }
+    },
+    "21": {
+      "jobs": 3,
+      "raw": 2,
+      "failures": {
+        "twoMeaningfulBaits": 27,
+        "fewerThan2WinningStarts": 5,
+        "trayOverflow": 3,
+        "roofKeyNotBait": 5,
+        "noProvenBait": 8,
+        "fixedTwinsClose": 3,
+        "job:noProvenMix": 1,
+        "obvious:freeRoutePair": 2,
+        "strictMinimum": 1
+      }
+    },
+    "22": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "23": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "job:hardWall": 2,
+        "noProvenBait": 7,
+        "obvious:freeRoutePair": 2,
+        "twoMeaningfulBaits": 4,
+        "controlUnknown": 1
+      }
+    },
+    "24": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2,
+        "noProvenBait": 11,
+        "fixedTwinsClose": 3,
+        "roofKeyNotBait": 2,
+        "job:noProvenMix": 1
+      }
+    },
+    "25": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "26": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "27": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noProvenBait": 108,
+        "fewerThan2WinningStarts": 15,
+        "twoMeaningfulBaits": 59,
+        "obvious:freeRoutePair": 11,
+        "noChain": 29,
+        "job:noProvenMix": 3,
+        "idle:lock:7": 4,
+        "roofKeyNotBait": 2,
+        "trayOverflow": 1,
+        "idle:ice:8": 1,
+        "strictReplay": 1,
+        "idle:lock:9": 3,
+        "idle:lock:5": 2,
+        "idle:lock:87": 1,
+        "idle:ice:87": 1,
+        "obvious:greedyPrefix": 1,
+        "idle:ice:6": 1,
+        "clockShortest": 1
+      }
+    },
+    "28": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "noChain": 24,
+        "roofKeyNotBait": 6,
+        "noProvenBait": 14,
+        "job:noProvenMix": 1,
+        "job:hardWall": 1
+      }
+    },
+    "29": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 3
+      }
+    },
+    "30": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2,
+        "noProvenBait": 48,
+        "noChain": 43,
+        "roofKeyNotBait": 6,
+        "strictMinimum": 1,
+        "twoMeaningfulBaits": 1,
+        "clockShortest": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "32": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "33": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noProvenBait": 329,
+        "strictMinimum": 2,
+        "job:noProvenMix": 3,
+        "obvious:greedyPrefix": 4,
+        "roofKeyNotBait": 15
+      }
+    },
+    "34": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "35": {
+      "jobs": 3,
+      "raw": 2,
+      "failures": {
+        "job:hardWall": 1,
+        "noProvenBait": 20,
+        "idle:lock:50": 2,
+        "obvious:greedyPrefix": 10,
+        "twoMeaningfulBaits": 13,
+        "idle:lock:74": 1,
+        "trayOverflow": 2,
+        "obvious:freeRoutePair": 4,
+        "strictMinimum": 2,
+        "idle:lock:75": 1,
+        "roofKeyNotBait": 1,
+        "fixedTwinsClose": 1
+      }
+    },
+    "37": {
+      "jobs": 3,
+      "raw": 3,
+      "failures": {
+        "roofKeyNotBait": 7,
+        "noProvenBait": 18,
+        "obvious:greedyPrefix": 2,
+        "fixedTwinsClose": 1
+      }
+    },
+    "38": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "39": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2,
+        "twoMeaningfulBaits": 10,
+        "noProvenBait": 56,
+        "noChain": 24,
+        "obvious:greedyPrefix": 3,
+        "strictMinimum": 1,
+        "obvious:freeRoutePair": 5,
+        "controlUnknown": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "40": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "41": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "42": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "43": {
+      "jobs": 3,
+      "raw": 2,
+      "failures": {
+        "job:hardWall": 1,
+        "noProvenBait": 9,
+        "obvious:greedyPrefix": 1,
+        "roofKeyNotBait": 1,
+        "twoMeaningfulBaits": 3
+      }
+    },
+    "44": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "45": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 350,
+        "job:noProvenMix": 3
+      }
+    },
+    "46": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noProvenBait": 143,
+        "twoMeaningfulBaits": 163,
+        "obvious:greedyPrefix": 38,
+        "job:noProvenMix": 3,
+        "strictMinimum": 4,
+        "obvious:freeRoutePair": 1,
+        "roofKeyNotBait": 1
+      }
+    },
+    "47": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "job:hardWall": 1,
+        "noProvenBait": 24,
+        "twoMeaningfulBaits": 19,
+        "trayOverflow": 4,
+        "fixedTwinsClose": 3,
+        "obvious:freeRoutePair": 1,
+        "job:noProvenMix": 1
+      }
+    }
+  },
+  "pairedFalseMelt": {
+    "1": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 242,
+        "fixedTwinsClose": 3,
+        "job:noProvenMix": 2,
+        "trayOverflow": 5,
+        "obvious:freeRoutePair": 3,
+        "clockShortest": 1
+      }
+    },
+    "2": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 397,
+        "job:noProvenMix": 3,
+        "noChain": 3
+      }
+    },
+    "3": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 249,
+        "trayOverflow": 1,
+        "job:noProvenMix": 3,
+        "obvious:freeRoutePair": 31,
+        "twoMeaningfulBaits": 9,
+        "fixedTwinsClose": 29,
+        "noProvenBait": 4
+      }
+    },
+    "4": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 246,
+        "fixedTwinsClose": 1,
+        "job:noProvenMix": 2,
+        "trayOverflow": 3,
+        "job:hardWall": 1
+      }
+    },
+    "5": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 240,
+        "trayOverflow": 4,
+        "fixedTwinsClose": 6,
+        "job:noProvenMix": 2,
+        "idle:ice:71": 1,
+        "obvious:freeRoutePair": 5,
+        "twoMeaningfulBaits": 2,
+        "noProvenBait": 3,
+        "idle:ice:73": 1
+      }
+    },
+    "6": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 245,
+        "fixedTwinsClose": 2,
+        "job:noProvenMix": 2,
+        "trayOverflow": 3,
+        "job:hardWall": 1
+      }
+    },
+    "7": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 240,
+        "trayOverflow": 10,
+        "job:noProvenMix": 3,
+        "noChain": 150
+      }
+    },
+    "8": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 250,
+        "job:noProvenMix": 3,
+        "noChain": 150
+      }
+    },
+    "9": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 246,
+        "trayOverflow": 6,
+        "job:noProvenMix": 3,
+        "noProvenBait": 10,
+        "twoMeaningfulBaits": 17,
+        "clockShortest": 5
+      }
+    },
+    "10": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 3,
+        "noNewIdeaGeometry": 150
+      }
+    },
+    "11": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 347,
+        "fixedTwinsClose": 2,
+        "job:noProvenMix": 3,
+        "obvious:freeRoutePair": 28,
+        "noProvenBait": 22,
+        "clockShortest": 1
+      }
+    },
+    "12": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 172,
+        "job:noProvenMix": 3,
+        "obvious:freeRoutePair": 50,
+        "trayOverflow": 5,
+        "noProvenBait": 3,
+        "idle:ice:80": 1,
+        "newIdeaNotBait": 1,
+        "twoMeaningfulBaits": 1
+      }
+    },
+    "13": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 100,
+        "job:noProvenMix": 1,
+        "job:hardWall": 2
+      }
+    },
+    "15": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 397,
+        "fixedTwinsClose": 3,
+        "job:noProvenMix": 3
+      }
+    },
+    "16": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 99,
+        "fixedTwinsClose": 1,
+        "job:noProvenMix": 1,
+        "job:hardWall": 2
+      }
+    },
+    "17": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 242,
+        "job:noProvenMix": 3,
+        "obvious:freeRoutePair": 6,
+        "trayOverflow": 6,
+        "noProvenBait": 1
+      }
+    },
+    "19": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 100,
+        "job:noProvenMix": 3,
+        "noChain": 300
+      }
+    },
+    "20": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 99,
+        "trayOverflow": 1,
+        "job:noProvenMix": 3,
+        "noChain": 300
+      }
+    },
+    "21": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 378,
+        "fixedTwinsClose": 22,
+        "job:noProvenMix": 3
+      }
+    },
+    "22": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 100,
+        "job:noProvenMix": 3,
+        "noChain": 300
+      }
+    },
+    "23": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 100,
+        "job:noProvenMix": 2,
+        "noProvenBait": 1,
+        "noNewIdeaGeometry": 33,
+        "obvious:freeRoutePair": 39,
+        "job:hardWall": 1
+      }
+    },
+    "24": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 363,
+        "trayOverflow": 3,
+        "fixedTwinsClose": 1,
+        "job:noProvenMix": 3,
+        "noChain": 33
+      }
+    },
+    "25": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 99,
+        "trayOverflow": 1,
+        "job:noProvenMix": 3,
+        "noChain": 300
+      }
+    },
+    "26": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noChain": 400,
+        "job:noProvenMix": 3
+      }
+    },
+    "27": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 397,
+        "fixedTwinsClose": 3,
+        "job:noProvenMix": 3
+      }
+    },
+    "28": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 99,
+        "trayOverflow": 1,
+        "job:noProvenMix": 3,
+        "noChain": 300
+      }
+    },
+    "29": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 100,
+        "job:noProvenMix": 1,
+        "job:hardWall": 2
+      }
+    },
+    "30": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 340,
+        "job:noProvenMix": 3,
+        "noChain": 60
+      }
+    },
+    "32": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 100,
+        "job:noProvenMix": 3,
+        "noChain": 300
+      }
+    },
+    "33": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 100,
+        "job:noProvenMix": 3,
+        "noChain": 300
+      }
+    },
+    "34": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 100,
+        "job:noProvenMix": 3,
+        "noChain": 300
+      }
+    },
+    "35": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 339,
+        "fixedTwinsClose": 1,
+        "job:noProvenMix": 3,
+        "obvious:freeRoutePair": 36,
+        "noProvenBait": 23,
+        "twoMeaningfulBaits": 1
+      }
+    },
+    "37": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 206,
+        "job:noProvenMix": 2,
+        "obvious:freeRoutePair": 36,
+        "trayOverflow": 8,
+        "job:hardWall": 1
+      }
+    },
+    "38": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 96,
+        "noChain": 304,
+        "job:noProvenMix": 3
+      }
+    },
+    "39": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 100,
+        "job:noProvenMix": 3,
+        "noChain": 300
+      }
+    },
+    "40": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 100,
+        "job:noProvenMix": 3,
+        "noChain": 300
+      }
+    },
+    "41": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 100,
+        "job:noProvenMix": 3,
+        "noChain": 300
+      }
+    },
+    "42": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 379,
+        "fixedTwinsClose": 18,
+        "trayOverflow": 1,
+        "job:noProvenMix": 3,
+        "noChain": 2
+      }
+    },
+    "43": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 397,
+        "fixedTwinsClose": 3,
+        "job:noProvenMix": 3
+      }
+    },
+    "44": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 100,
+        "job:noProvenMix": 3,
+        "noChain": 300
+      }
+    },
+    "45": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 100,
+        "job:noProvenMix": 3,
+        "noChain": 300
+      }
+    },
+    "46": {
+      "jobs": 3,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 215,
+        "trayOverflow": 4,
+        "job:noProvenMix": 3,
+        "obvious:freeRoutePair": 162,
+        "clockShortest": 4,
+        "noProvenBait": 13,
+        "twoMeaningfulBaits": 1,
+        "newIdeaNotBait": 1
+      }
+    },
+    "47": {
+      "jobs": 3,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 230,
+        "job:noProvenMix": 2,
+        "obvious:freeRoutePair": 19,
+        "trayOverflow": 1
+      }
+    }
+  },
+  "sharedThawDetour": {
+    "1": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 176,
+        "fixedTwinsClose": 15,
+        "trayOverflow": 10,
+        "job:noProvenMix": 3,
+        "noChain": 6,
+        "obvious:freeRoutePair": 50,
+        "twoMeaningfulBaits": 17,
+        "noProvenBait": 1,
+        "job:hardWall": 1,
+        "noSharedThawHost": 248,
+        "mixedDig": 24,
+        "obvious:greedyPrefix": 3
+      }
+    },
+    "2": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 250,
+        "job:noProvenMix": 4,
+        "noSharedThawHost": 450
+      }
+    },
+    "3": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 96,
+        "fixedTwinsClose": 4,
+        "trayOverflow": 3,
+        "job:noProvenMix": 4,
+        "noProvenBait": 117,
+        "obvious:freeRoutePair": 98,
+        "noChain": 3,
+        "twoMeaningfulBaits": 11,
+        "newIdeaNotBait": 25,
+        "noSharedThawHost": 175,
+        "obvious:greedyPrefix": 2,
+        "mixedDig": 3,
+        "strictMinimum": 3
+      }
+    },
+    "4": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 249,
+        "trayOverflow": 1,
+        "job:noProvenMix": 4,
+        "noSharedThawHost": 444,
+        "noProvenBait": 3,
+        "newIdeaNotBait": 3
+      }
+    },
+    "5": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 149,
+        "noProvenBait": 57,
+        "fixedTwinsClose": 8,
+        "job:noProvenMix": 4,
+        "twoMeaningfulBaits": 36,
+        "obvious:freeRoutePair": 61,
+        "noSharedThawHost": 241,
+        "newIdeaNotBait": 13,
+        "mixedDig": 77,
+        "trayOverflow": 1
+      }
+    },
+    "6": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 242,
+        "fixedTwinsClose": 4,
+        "trayOverflow": 4,
+        "job:noProvenMix": 4,
+        "noSharedThawHost": 398,
+        "mixedDig": 47,
+        "obvious:greedyPrefix": 1,
+        "noProvenBait": 1,
+        "idle:ice:77": 1,
+        "twoMeaningfulBaits": 2
+      }
+    },
+    "7": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 700,
+        "job:noProvenMix": 4
+      }
+    },
+    "8": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 700,
+        "job:noProvenMix": 4
+      }
+    },
+    "9": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 97,
+        "noChain": 153,
+        "job:noProvenMix": 4,
+        "noSharedThawHost": 445,
+        "noProvenBait": 4,
+        "newIdeaNotBait": 1
+      }
+    },
+    "10": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 700,
+        "job:noProvenMix": 4
+      }
+    },
+    "11": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "trayOverflow": 6,
+        "noNewIdeaGeometry": 236,
+        "fixedTwinsClose": 8,
+        "job:noProvenMix": 4,
+        "noSharedThawHost": 398,
+        "mixedDig": 50,
+        "obvious:greedyPrefix": 2
+      }
+    },
+    "12": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 158,
+        "trayOverflow": 5,
+        "job:noProvenMix": 4,
+        "obvious:freeRoutePair": 10,
+        "noProvenBait": 22,
+        "newIdeaNotBait": 19,
+        "noSharedThawHost": 354,
+        "mixedDig": 2
+      }
+    },
+    "13": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 100,
+        "job:noProvenMix": 2,
+        "job:hardWall": 2,
+        "obvious:freeRoutePair": 31,
+        "newIdeaNotBait": 55,
+        "noProvenBait": 61,
+        "obvious:greedyPrefix": 2,
+        "noSharedThawHost": 1
+      }
+    },
+    "15": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 245,
+        "trayOverflow": 3,
+        "fixedTwinsClose": 2,
+        "job:noProvenMix": 4,
+        "noSharedThawHost": 450
+      }
+    },
+    "16": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 162,
+        "job:noProvenMix": 4,
+        "fixedTwinsClose": 45,
+        "idle:ice:71": 21,
+        "twoMeaningfulBaits": 25,
+        "idle:ice:69": 1,
+        "obvious:freeRoutePair": 41,
+        "idle:ice:70": 1,
+        "trayOverflow": 1,
+        "noSharedThawHost": 388,
+        "noProvenBait": 12,
+        "newIdeaNotBait": 3
+      }
+    },
+    "17": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 234,
+        "trayOverflow": 7,
+        "job:noProvenMix": 4,
+        "noChain": 9,
+        "newIdeaNotBait": 55,
+        "noProvenBait": 49,
+        "obvious:freeRoutePair": 13,
+        "mixedDig": 74,
+        "noSharedThawHost": 213,
+        "twoMeaningfulBaits": 3
+      }
+    },
+    "19": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 100,
+        "job:noProvenMix": 4,
+        "noNewIdeaGeometry": 150,
+        "noSharedThawHost": 450
+      }
+    },
+    "20": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 239,
+        "noNewIdeaGeometry": 11,
+        "job:noProvenMix": 4,
+        "mixedDig": 34,
+        "noSharedThawHost": 315,
+        "clockShortest": 12,
+        "noProvenBait": 3,
+        "idle:ice:39": 1
+      }
+    },
+    "21": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 241,
+        "fixedTwinsClose": 6,
+        "trayOverflow": 3,
+        "job:noProvenMix": 4,
+        "noSharedThawHost": 450
+      }
+    },
+    "22": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 700,
+        "job:noProvenMix": 4
+      }
+    },
+    "23": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 176,
+        "fixedTwinsClose": 5,
+        "trayOverflow": 3,
+        "job:noProvenMix": 4,
+        "obvious:freeRoutePair": 73,
+        "twoMeaningfulBaits": 5,
+        "noSharedThawHost": 309,
+        "newIdeaNotBait": 29,
+        "noProvenBait": 31,
+        "mixedDig": 4,
+        "obvious:greedyPrefix": 18
+      }
+    },
+    "24": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 250,
+        "job:noProvenMix": 4,
+        "noSharedThawHost": 450
+      }
+    },
+    "25": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 700,
+        "job:noProvenMix": 4
+      }
+    },
+    "26": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 700,
+        "job:noProvenMix": 4
+      }
+    },
+    "27": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 250,
+        "job:noProvenMix": 4,
+        "noSharedThawHost": 450
+      }
+    },
+    "28": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 250,
+        "job:noProvenMix": 4,
+        "noSharedThawHost": 450
+      }
+    },
+    "29": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 239,
+        "job:noProvenMix": 4,
+        "fixedTwinsClose": 5,
+        "newIdeaNotBait": 21,
+        "trayOverflow": 1,
+        "noSharedThawHost": 400,
+        "noProvenBait": 28,
+        "mixedDig": 3,
+        "obvious:freeRoutePair": 3
+      }
+    },
+    "30": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 100,
+        "job:noProvenMix": 4,
+        "noChain": 150,
+        "noSharedThawHost": 450
+      }
+    },
+    "32": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 700,
+        "job:noProvenMix": 4
+      }
+    },
+    "33": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 100,
+        "job:noProvenMix": 4,
+        "noChain": 150,
+        "noProvenBait": 52,
+        "newIdeaNotBait": 69,
+        "obvious:greedyPrefix": 17,
+        "mixedDig": 111,
+        "noSharedThawHost": 201
+      }
+    },
+    "34": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 700,
+        "job:noProvenMix": 4
+      }
+    },
+    "35": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 247,
+        "trayOverflow": 2,
+        "fixedTwinsClose": 1,
+        "job:noProvenMix": 4,
+        "noSharedThawHost": 404,
+        "mixedDig": 45,
+        "obvious:greedyPrefix": 1
+      }
+    },
+    "37": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 98,
+        "fixedTwinsClose": 2,
+        "job:noProvenMix": 4,
+        "noChain": 150,
+        "noSharedThawHost": 433,
+        "newIdeaNotBait": 11,
+        "obvious:greedyPrefix": 3,
+        "noProvenBait": 2,
+        "obvious:freeRoutePair": 1
+      }
+    },
+    "38": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 700,
+        "job:noProvenMix": 4
+      }
+    },
+    "39": {
+      "jobs": 4,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 100,
+        "job:noProvenMix": 3,
+        "noChain": 150,
+        "noSharedThawHost": 301
+      }
+    },
+    "40": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 700,
+        "job:noProvenMix": 4
+      }
+    },
+    "41": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 700,
+        "job:noProvenMix": 4
+      }
+    },
+    "42": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 4,
+        "noSharedThawHost": 450
+      }
+    },
+    "43": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 249,
+        "fixedTwinsClose": 1,
+        "job:noProvenMix": 4,
+        "noSharedThawHost": 450
+      }
+    },
+    "44": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 700,
+        "job:noProvenMix": 4
+      }
+    },
+    "45": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noChain": 700,
+        "job:noProvenMix": 4
+      }
+    },
+    "46": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 250,
+        "job:noProvenMix": 4,
+        "noSharedThawHost": 313,
+        "noProvenBait": 44,
+        "newIdeaNotBait": 28,
+        "mixedDig": 59,
+        "obvious:greedyPrefix": 6
+      }
+    },
+    "47": {
+      "jobs": 4,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 243,
+        "trayOverflow": 7,
+        "job:noProvenMix": 4,
+        "noSharedThawHost": 430,
+        "noProvenBait": 12,
+        "obvious:freeRoutePair": 2,
+        "mixedDig": 6
+      }
+    }
+  },
+  "clearLockRoof": {
+    "1": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "obvious:freeRoutePair": 2,
+        "noNewIdeaGeometry": 97,
+        "fixedTwinsClose": 1,
+        "job:noProvenMix": 1,
+        "job:hardWall": 1
+      }
+    },
+    "2": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 97,
+        "obvious:freeRoutePair": 10,
+        "noProvenBait": 19,
+        "newIdeaNotBait": 5,
+        "job:noProvenMix": 1,
+        "idle:lock:68": 2,
+        "clockShortest": 1
+      }
+    },
+    "3": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 99,
+        "trayOverflow": 1,
+        "job:noProvenMix": 1,
+        "obvious:freeRoutePair": 1,
+        "noProvenBait": 1
+      }
+    },
+    "4": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 99,
+        "fixedTwinsClose": 1,
+        "job:noProvenMix": 1,
+        "job:hardWall": 1
+      }
+    },
+    "5": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 96,
+        "trayOverflow": 3,
+        "fixedTwinsClose": 2,
+        "job:noProvenMix": 1,
+        "newIdeaNotBait": 1,
+        "obvious:freeRoutePair": 3
+      }
+    },
+    "6": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 98,
+        "fixedTwinsClose": 2,
+        "job:noProvenMix": 1
+      }
+    },
+    "7": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 94,
+        "trayOverflow": 6,
+        "job:noProvenMix": 1,
+        "job:hardWall": 1
+      }
+    },
+    "8": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 100,
+        "job:noProvenMix": 2,
+        "noProvenBait": 65,
+        "obvious:freeRoutePair": 46,
+        "newIdeaNotBait": 34,
+        "clockShortest": 4,
+        "strictMinimum": 1
+      }
+    },
+    "9": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "obvious:freeRoutePair": 47,
+        "noNewIdeaGeometry": 67,
+        "newIdeaNotBait": 9,
+        "trayOverflow": 2,
+        "job:noProvenMix": 1,
+        "noProvenBait": 8,
+        "clockShortest": 1,
+        "fewerThan2WinningStarts": 1
+      }
+    },
+    "10": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 100,
+        "job:noProvenMix": 2,
+        "noProvenBait": 40,
+        "obvious:freeRoutePair": 87,
+        "newIdeaNotBait": 23
+      }
+    },
+    "11": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 98,
+        "fixedTwinsClose": 2,
+        "job:noProvenMix": 1
+      }
+    },
+    "12": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "newIdeaNotBait": 31,
+        "noNewIdeaGeometry": 32,
+        "obvious:freeRoutePair": 19,
+        "noProvenBait": 3,
+        "strictMinimum": 1,
+        "job:noProvenMix": 1,
+        "idle:lock:38": 1
+      }
+    },
+    "13": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 78,
+        "obvious:freeRoutePair": 9,
+        "newIdeaNotBait": 5,
+        "noProvenBait": 3,
+        "job:noProvenMix": 1,
+        "idle:ice:62": 1
+      }
+    },
+    "15": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 97,
+        "fixedTwinsClose": 5,
+        "noProvenBait": 5,
+        "job:noProvenMix": 1,
+        "obvious:freeRoutePair": 4,
+        "fewerThan2WinningStarts": 1,
+        "idle:lock:71": 1,
+        "idle:lock:70": 1,
+        "newIdeaNotBait": 3
+      }
+    },
+    "16": {
+      "jobs": 1,
+      "raw": 1,
+      "failures": {
+        "obvious:freeRoutePair": 7,
+        "noNewIdeaGeometry": 56
+      }
+    },
+    "17": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2
+      }
+    },
+    "19": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 89,
+        "newIdeaNotBait": 10,
+        "obvious:freeRoutePair": 27,
+        "idle:lock:55": 1,
+        "job:noProvenMix": 2,
+        "noProvenBait": 20,
+        "clockShortest": 1,
+        "idle:lock:69": 1
+      }
+    },
+    "20": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 79,
+        "obvious:freeRoutePair": 12,
+        "newIdeaNotBait": 9,
+        "trayOverflow": 1,
+        "clockShortest": 1,
+        "job:noProvenMix": 1,
+        "noProvenBait": 1
+      }
+    },
+    "21": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 94,
+        "fixedTwinsClose": 5,
+        "noProvenBait": 3,
+        "newIdeaNotBait": 3,
+        "job:noProvenMix": 1,
+        "fewerThan2WinningStarts": 2,
+        "obvious:freeRoutePair": 3
+      }
+    },
+    "22": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 100,
+        "job:noProvenMix": 1,
+        "obvious:freeRoutePair": 11,
+        "newIdeaNotBait": 13,
+        "noProvenBait": 12,
+        "strictMinimum": 1,
+        "idle:lock:4": 3,
+        "idle:lock:7": 1,
+        "idle:lock:6": 1
+      }
+    },
+    "23": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noChain": 100,
+        "job:noProvenMix": 1
+      }
+    },
+    "24": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 97,
+        "trayOverflow": 3,
+        "fixedTwinsClose": 2,
+        "job:noProvenMix": 1,
+        "noProvenBait": 2,
+        "newIdeaNotBait": 3,
+        "idle:lock:12": 1,
+        "idle:lock:11": 1,
+        "idle:lock:6": 1
+      }
+    },
+    "25": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 99,
+        "trayOverflow": 1,
+        "job:noProvenMix": 1,
+        "job:hardWall": 1
+      }
+    },
+    "26": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 2
+      }
+    },
+    "27": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 99,
+        "obvious:freeRoutePair": 13,
+        "fixedTwinsClose": 4,
+        "newIdeaNotBait": 7,
+        "job:noProvenMix": 1,
+        "noProvenBait": 8,
+        "idle:lock:85": 1,
+        "trayOverflow": 2,
+        "twoMeaningfulBaits": 1,
+        "fewerThan2WinningStarts": 1,
+        "idle:lock:6": 1
+      }
+    },
+    "28": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 100,
+        "trayOverflow": 1,
+        "job:noProvenMix": 1,
+        "newIdeaNotBait": 3,
+        "noProvenBait": 1,
+        "idle:lock:34": 1
+      }
+    },
+    "29": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 99,
+        "newIdeaNotBait": 1,
+        "job:noProvenMix": 1,
+        "job:hardWall": 1
+      }
+    },
+    "30": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 91,
+        "newIdeaNotBait": 10,
+        "obvious:freeRoutePair": 9,
+        "job:noProvenMix": 2,
+        "clockShortest": 1
+      }
+    },
+    "32": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "obvious:freeRoutePair": 48,
+        "noNewIdeaGeometry": 77,
+        "newIdeaNotBait": 45,
+        "job:noProvenMix": 1,
+        "noProvenBait": 10,
+        "idle:lock:69": 1,
+        "fewerThan2WinningStarts": 4,
+        "idle:lock:68": 1,
+        "twoMeaningfulBaits": 1,
+        "obvious:greedyPrefix": 1
+      }
+    },
+    "33": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 100,
+        "job:noProvenMix": 1,
+        "newIdeaNotBait": 2
+      }
+    },
+    "34": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 104,
+        "job:noProvenMix": 2,
+        "obvious:freeRoutePair": 16,
+        "noProvenBait": 31,
+        "newIdeaNotBait": 13,
+        "twoMeaningfulBaits": 1,
+        "idle:lock:81": 2,
+        "idle:lock:80": 1,
+        "trayOverflow": 2
+      }
+    },
+    "35": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 100,
+        "fixedTwinsClose": 1,
+        "job:noProvenMix": 2,
+        "noProvenBait": 2,
+        "clockShortest": 1
+      }
+    },
+    "37": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2
+      }
+    },
+    "38": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 96,
+        "noChain": 4,
+        "job:noProvenMix": 1,
+        "job:hardWall": 1
+      }
+    },
+    "39": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 100,
+        "obvious:freeRoutePair": 2,
+        "job:noProvenMix": 1,
+        "newIdeaNotBait": 2,
+        "idle:lock:20": 2,
+        "idle:lock:14": 1,
+        "noProvenBait": 1
+      }
+    },
+    "40": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 100,
+        "job:noProvenMix": 2,
+        "obvious:freeRoutePair": 45,
+        "noProvenBait": 102,
+        "newIdeaNotBait": 3
+      }
+    },
+    "41": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 100,
+        "job:noProvenMix": 2,
+        "newIdeaNotBait": 68,
+        "noProvenBait": 55,
+        "obvious:freeRoutePair": 26,
+        "strictMinimum": 1
+      }
+    },
+    "42": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 81,
+        "fixedTwinsClose": 26,
+        "trayOverflow": 1,
+        "job:noProvenMix": 1,
+        "obvious:freeRoutePair": 3,
+        "clockShortest": 1,
+        "idle:lock:30": 1,
+        "twoMeaningfulBaits": 1,
+        "newIdeaNotBait": 2
+      }
+    },
+    "43": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 106,
+        "fixedTwinsClose": 4,
+        "job:noProvenMix": 1,
+        "trayOverflow": 2,
+        "noProvenBait": 6,
+        "obvious:freeRoutePair": 11,
+        "newIdeaNotBait": 7,
+        "idle:lock:57": 1,
+        "idle:lock:49": 1,
+        "idle:lock:52": 1
+      }
+    },
+    "44": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "obvious:freeRoutePair": 73,
+        "noNewIdeaGeometry": 73,
+        "job:noProvenMix": 2,
+        "noProvenBait": 76
+      }
+    },
+    "45": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 100,
+        "job:noProvenMix": 2,
+        "obvious:freeRoutePair": 42,
+        "noProvenBait": 103,
+        "clockShortest": 4,
+        "strictMinimum": 1
+      }
+    },
+    "46": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 87,
+        "noProvenBait": 2,
+        "newIdeaNotBait": 8,
+        "trayOverflow": 2,
+        "obvious:freeRoutePair": 7,
+        "clockShortest": 1,
+        "job:noProvenMix": 1,
+        "idle:lock:60": 1,
+        "fewerThan2WinningStarts": 1
+      }
+    },
+    "47": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 102,
+        "job:noProvenMix": 1,
+        "obvious:freeRoutePair": 1,
+        "idle:ice:72": 1
+      }
+    }
+  },
+  "twinChase": {
+    "1": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "obvious:freeRoutePair": 1,
+        "noNewIdeaGeometry": 35,
+        "newIdeaNotBait": 4,
+        "noProvenBait": 3,
+        "twoMeaningfulBaits": 1,
+        "trayOverflow": 1
+      }
+    },
+    "2": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "obvious:freeRoutePair": 1,
+        "obvious:greedyPrefix": 1,
+        "job:exception": 1
+      }
+    },
+    "3": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "job:exception": 1
+      }
+    },
+    "4": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "idle:lock:38": 1,
+        "job:exception": 1
+      }
+    },
+    "5": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noProvenBait": 1,
+        "job:exception": 1
+      }
+    },
+    "6": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "job:exception": 1
+      }
+    },
+    "7": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noNewIdeaGeometry": 1,
+        "noProvenBait": 1
+      }
+    },
+    "8": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "idle:lock:60": 1,
+        "obvious:greedyPrefix": 2,
+        "idle:lock:49": 1,
+        "job:exception": 1
+      }
+    },
+    "9": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "obvious:freeRoutePair": 2,
+        "twoMeaningfulBaits": 2,
+        "noNewIdeaGeometry": 1
+      }
+    },
+    "10": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 100,
+        "job:noProvenMix": 1,
+        "job:exception": 1
+      }
+    },
+    "11": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "job:exception": 1
+      }
+    },
+    "12": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "idle:lock:48": 2,
+        "noNewIdeaGeometry": 81,
+        "twoMeaningfulBaits": 3,
+        "obvious:greedyPrefix": 1,
+        "clockShortest": 1,
+        "idle:ice:52": 1,
+        "trayOverflow": 2,
+        "newIdeaNotBait": 8,
+        "noProvenBait": 4,
+        "obvious:freeRoutePair": 3,
+        "strictMinimum": 1
+      }
+    },
+    "13": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "idle:lock:30": 1,
+        "obvious:freeRoutePair": 4,
+        "twoMeaningfulBaits": 3,
+        "noNewIdeaGeometry": 8,
+        "newIdeaNotBait": 8,
+        "noProvenBait": 2,
+        "job:noProvenMix": 1
+      }
+    },
+    "15": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "job:exception": 1
+      }
+    },
+    "16": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "obvious:freeRoutePair": 3,
+        "noNewIdeaGeometry": 5,
+        "noProvenBait": 1,
+        "twoMeaningfulBaits": 1,
+        "newIdeaNotBait": 1,
+        "fixedTwinsClose": 1
+      }
+    },
+    "17": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noProvenBait": 1,
+        "noNewIdeaGeometry": 9,
+        "obvious:freeRoutePair": 2,
+        "newIdeaNotBait": 2
+      }
+    },
+    "19": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noNewIdeaGeometry": 22,
+        "twoMeaningfulBaits": 8,
+        "obvious:freeRoutePair": 3,
+        "newIdeaNotBait": 3
+      }
+    },
+    "20": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "fewerThan2WinningStarts": 4,
+        "noNewIdeaGeometry": 28,
+        "noProvenBait": 13,
+        "obvious:freeRoutePair": 10,
+        "newIdeaNotBait": 22,
+        "twoMeaningfulBaits": 6,
+        "job:noProvenMix": 1
+      }
+    },
+    "21": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "newIdeaNotBait": 3,
+        "noNewIdeaGeometry": 5,
+        "twoMeaningfulBaits": 4,
+        "noProvenBait": 2,
+        "fixedTwinsClose": 1,
+        "obvious:freeRoutePair": 2,
+        "idle:ice:58": 1
+      }
+    },
+    "22": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "obvious:greedyPrefix": 10,
+        "noNewIdeaGeometry": 78,
+        "newIdeaNotBait": 25,
+        "twoMeaningfulBaits": 15,
+        "fewerThan2WinningStarts": 2,
+        "idle:ice:74": 3,
+        "noProvenBait": 8,
+        "obvious:freeRoutePair": 9,
+        "job:noProvenMix": 1
+      }
+    },
+    "23": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 100,
+        "job:noProvenMix": 2,
+        "obvious:freeRoutePair": 6,
+        "noNewIdeaGeometry": 28,
+        "twoMeaningfulBaits": 7,
+        "newIdeaNotBait": 8,
+        "noProvenBait": 3,
+        "trayOverflow": 1
+      }
+    },
+    "24": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "job:hardWall": 1
+      }
+    },
+    "25": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "fewerThan2WinningStarts": 1,
+        "obvious:freeRoutePair": 3,
+        "noNewIdeaGeometry": 23,
+        "newIdeaNotBait": 4,
+        "twoMeaningfulBaits": 2,
+        "noProvenBait": 1
+      }
+    },
+    "26": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 2
+      }
+    },
+    "27": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "twoMeaningfulBaits": 1,
+        "noNewIdeaGeometry": 8,
+        "newIdeaNotBait": 2,
+        "trayOverflow": 1,
+        "obvious:greedyPrefix": 2,
+        "noProvenBait": 2
+      }
+    },
+    "28": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2
+      }
+    },
+    "29": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "job:hardWall": 1
+      }
+    },
+    "30": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noNewIdeaGeometry": 21,
+        "strictMinimum": 1,
+        "newIdeaNotBait": 20,
+        "obvious:freeRoutePair": 9,
+        "twoMeaningfulBaits": 8,
+        "idle:ice:30": 1,
+        "noProvenBait": 4,
+        "obvious:greedyPrefix": 1
+      }
+    },
+    "32": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "obvious:freeRoutePair": 14,
+        "newIdeaNotBait": 23,
+        "noNewIdeaGeometry": 55,
+        "noProvenBait": 10,
+        "twoMeaningfulBaits": 15,
+        "obvious:greedyPrefix": 17,
+        "fewerThan2WinningStarts": 17,
+        "job:noProvenMix": 1
+      }
+    },
+    "33": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noNewIdeaGeometry": 16,
+        "obvious:freeRoutePair": 2,
+        "twoMeaningfulBaits": 1,
+        "obvious:greedyPrefix": 2,
+        "newIdeaNotBait": 6
+      }
+    },
+    "34": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "idle:lock:81": 1,
+        "noNewIdeaGeometry": 17,
+        "twoMeaningfulBaits": 19,
+        "newIdeaNotBait": 5,
+        "noProvenBait": 4
+      }
+    },
+    "35": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noNewIdeaGeometry": 9,
+        "twoMeaningfulBaits": 5,
+        "newIdeaNotBait": 3,
+        "noProvenBait": 2,
+        "obvious:freeRoutePair": 1,
+        "obvious:greedyPrefix": 1
+      }
+    },
+    "37": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "newIdeaNotBait": 5,
+        "noNewIdeaGeometry": 11,
+        "clockShortest": 2,
+        "obvious:freeRoutePair": 1,
+        "trayOverflow": 1,
+        "twoMeaningfulBaits": 1,
+        "obvious:greedyPrefix": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "38": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 78,
+        "noProvenBait": 16,
+        "idle:ice:69": 1,
+        "twoMeaningfulBaits": 12,
+        "obvious:freeRoutePair": 9,
+        "obvious:greedyPrefix": 2,
+        "fewerThan2WinningStarts": 7,
+        "newIdeaNotBait": 4,
+        "job:noProvenMix": 1
+      }
+    },
+    "39": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 33,
+        "newIdeaNotBait": 15,
+        "obvious:greedyPrefix": 3,
+        "noProvenBait": 2,
+        "obvious:freeRoutePair": 5,
+        "twoMeaningfulBaits": 5,
+        "clockShortest": 2,
+        "job:noProvenMix": 1
+      }
+    },
+    "40": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "twoMeaningfulBaits": 81,
+        "noNewIdeaGeometry": 44,
+        "fewerThan2WinningStarts": 26,
+        "job:noProvenMix": 1
+      }
+    },
+    "41": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "twoMeaningfulBaits": 32,
+        "obvious:greedyPrefix": 15,
+        "noNewIdeaGeometry": 71,
+        "noProvenBait": 23,
+        "newIdeaNotBait": 7,
+        "obvious:freeRoutePair": 3,
+        "job:noProvenMix": 1
+      }
+    },
+    "42": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "newIdeaNotBait": 25,
+        "obvious:greedyPrefix": 14,
+        "noNewIdeaGeometry": 59,
+        "fixedTwinsClose": 33,
+        "trayOverflow": 3,
+        "noProvenBait": 11,
+        "fewerThan2WinningStarts": 6,
+        "twoMeaningfulBaits": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "43": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "twoMeaningfulBaits": 4,
+        "obvious:greedyPrefix": 3,
+        "trayOverflow": 1,
+        "noNewIdeaGeometry": 10,
+        "noProvenBait": 2,
+        "newIdeaNotBait": 5,
+        "obvious:freeRoutePair": 2,
+        "fewerThan2WinningStarts": 1,
+        "idle:ice:70": 1
+      }
+    },
+    "44": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "obvious:freeRoutePair": 1,
+        "noNewIdeaGeometry": 1,
+        "twoMeaningfulBaits": 2
+      }
+    },
+    "45": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "fewerThan2WinningStarts": 15,
+        "noProvenBait": 39,
+        "twoMeaningfulBaits": 20,
+        "noNewIdeaGeometry": 76,
+        "job:noProvenMix": 1
+      }
+    },
+    "46": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "newIdeaNotBait": 1,
+        "twoMeaningfulBaits": 1,
+        "noNewIdeaGeometry": 2
+      }
+    },
+    "47": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "obvious:freeRoutePair": 2,
+        "newIdeaNotBait": 4,
+        "noNewIdeaGeometry": 5,
+        "noProvenBait": 2
+      }
+    }
+  },
+  "roofBeforeSide": {
+    "1": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "obvious:freeRoutePair": 18,
+        "noChain": 1,
+        "obvious:greedyPrefix": 10,
+        "newIdeaNotBait": 7,
+        "noNewIdeaGeometry": 73,
+        "noProvenBait": 37,
+        "job:noProvenMix": 2
+      }
+    },
+    "2": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "newIdeaNotBait": 95,
+        "noNewIdeaGeometry": 111,
+        "fewerThan2WinningStarts": 44,
+        "job:noProvenMix": 2
+      }
+    },
+    "3": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noProvenBait": 164,
+        "obvious:greedyPrefix": 3,
+        "noChain": 4,
+        "job:noProvenMix": 2,
+        "noNewIdeaGeometry": 41,
+        "obvious:freeRoutePair": 38
+      }
+    },
+    "4": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noNewIdeaGeometry": 1,
+        "noProvenBait": 3
+      }
+    },
+    "5": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noProvenBait": 148,
+        "newIdeaNotBait": 14,
+        "noNewIdeaGeometry": 44,
+        "job:noProvenMix": 2,
+        "obvious:freeRoutePair": 44
+      }
+    },
+    "6": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 62,
+        "newIdeaNotBait": 66,
+        "twoMeaningfulBaits": 27,
+        "noProvenBait": 41,
+        "fewerThan2WinningStarts": 33,
+        "job:noProvenMix": 2,
+        "obvious:greedyPrefix": 20,
+        "obvious:freeRoutePair": 1
+      }
+    },
+    "7": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 2
+      }
+    },
+    "8": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 2
+      }
+    },
+    "9": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "twoMeaningfulBaits": 9,
+        "noNewIdeaGeometry": 34,
+        "newIdeaNotBait": 7,
+        "noProvenBait": 17
+      }
+    },
+    "10": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 2
+      }
+    },
+    "11": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "fewerThan2WinningStarts": 38,
+        "newIdeaNotBait": 40,
+        "noNewIdeaGeometry": 52,
+        "noProvenBait": 78,
+        "twoMeaningfulBaits": 10,
+        "job:noProvenMix": 2,
+        "obvious:greedyPrefix": 32
+      }
+    },
+    "12": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "twoMeaningfulBaits": 8,
+        "noNewIdeaGeometry": 18,
+        "newIdeaNotBait": 2,
+        "obvious:freeRoutePair": 6,
+        "noProvenBait": 6,
+        "obvious:greedyPrefix": 4
+      }
+    },
+    "13": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "newIdeaNotBait": 25,
+        "fewerThan2WinningStarts": 20,
+        "noNewIdeaGeometry": 85,
+        "noProvenBait": 65,
+        "obvious:greedyPrefix": 1,
+        "job:noProvenMix": 2,
+        "obvious:freeRoutePair": 17,
+        "clockShortest": 1
+      }
+    },
+    "15": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "fewerThan2WinningStarts": 41,
+        "newIdeaNotBait": 19,
+        "noNewIdeaGeometry": 34,
+        "obvious:freeRoutePair": 6,
+        "job:noProvenMix": 1,
+        "job:hardWall": 1
+      }
+    },
+    "16": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2
+      }
+    },
+    "17": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noNewIdeaGeometry": 13,
+        "noProvenBait": 1,
+        "fewerThan2WinningStarts": 2,
+        "obvious:freeRoutePair": 1
+      }
+    },
+    "19": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 100,
+        "job:noProvenMix": 2,
+        "noProvenBait": 95,
+        "obvious:freeRoutePair": 6,
+        "obvious:greedyPrefix": 1
+      }
+    },
+    "20": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 89,
+        "noProvenBait": 10,
+        "noChain": 1,
+        "job:noProvenMix": 1,
+        "job:hardWall": 1
+      }
+    },
+    "21": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 84,
+        "newIdeaNotBait": 69,
+        "fewerThan2WinningStarts": 74,
+        "noProvenBait": 9,
+        "twoMeaningfulBaits": 7,
+        "fixedTwinsClose": 5,
+        "job:noProvenMix": 2,
+        "controlUnknown": 1,
+        "clockShortest": 1
+      }
+    },
+    "22": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 2
+      }
+    },
+    "23": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noNewIdeaGeometry": 6,
+        "noProvenBait": 2,
+        "twoMeaningfulBaits": 3,
+        "obvious:greedyPrefix": 3,
+        "obvious:freeRoutePair": 2
+      }
+    },
+    "24": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 29,
+        "obvious:freeRoutePair": 13,
+        "noProvenBait": 12,
+        "newIdeaNotBait": 2,
+        "twoMeaningfulBaits": 2,
+        "clockShortest": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "25": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 2
+      }
+    },
+    "26": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 2
+      }
+    },
+    "27": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "newIdeaNotBait": 25,
+        "noNewIdeaGeometry": 48,
+        "noProvenBait": 13,
+        "fewerThan2WinningStarts": 14,
+        "job:noProvenMix": 1,
+        "job:hardWall": 1
+      }
+    },
+    "28": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2
+      }
+    },
+    "29": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 2
+      }
+    },
+    "30": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noProvenBait": 114,
+        "noNewIdeaGeometry": 100,
+        "job:noProvenMix": 2,
+        "newIdeaNotBait": 2
+      }
+    },
+    "32": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 2
+      }
+    },
+    "33": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noProvenBait": 166,
+        "noChain": 1,
+        "job:noProvenMix": 2,
+        "noNewIdeaGeometry": 55,
+        "obvious:greedyPrefix": 5,
+        "obvious:freeRoutePair": 23
+      }
+    },
+    "34": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 2
+      }
+    },
+    "35": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "obvious:greedyPrefix": 36,
+        "noProvenBait": 48,
+        "newIdeaNotBait": 44,
+        "noNewIdeaGeometry": 72,
+        "fewerThan2WinningStarts": 41,
+        "twoMeaningfulBaits": 9,
+        "job:noProvenMix": 2
+      }
+    },
+    "37": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {}
+    },
+    "38": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 2
+      }
+    },
+    "39": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noNewIdeaGeometry": 1,
+        "noProvenBait": 1
+      }
+    },
+    "40": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 2
+      }
+    },
+    "41": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 2
+      }
+    },
+    "42": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noProvenBait": 165,
+        "noNewIdeaGeometry": 35,
+        "twoMeaningfulBaits": 31,
+        "newIdeaNotBait": 14,
+        "obvious:greedyPrefix": 5,
+        "job:noProvenMix": 2
+      }
+    },
+    "43": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 88,
+        "noProvenBait": 67,
+        "fewerThan2WinningStarts": 30,
+        "newIdeaNotBait": 28,
+        "twoMeaningfulBaits": 30,
+        "job:noProvenMix": 2,
+        "obvious:greedyPrefix": 7
+      }
+    },
+    "44": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 2
+      }
+    },
+    "45": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 2
+      }
+    },
+    "46": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "newIdeaNotBait": 46,
+        "obvious:freeRoutePair": 28,
+        "noProvenBait": 69,
+        "fewerThan2WinningStarts": 35,
+        "noNewIdeaGeometry": 68,
+        "job:noProvenMix": 2,
+        "obvious:greedyPrefix": 4
+      }
+    },
+    "47": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noProvenBait": 90,
+        "newIdeaNotBait": 8,
+        "noNewIdeaGeometry": 111,
+        "twoMeaningfulBaits": 34,
+        "fewerThan2WinningStarts": 7,
+        "job:noProvenMix": 2
+      }
+    }
+  },
+  "outsideIn": {
+    "1": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "obvious:freeRoutePair": 2,
+        "noChain": 1,
+        "obvious:greedyPrefix": 7,
+        "noNewIdeaGeometry": 83,
+        "noProvenBait": 25,
+        "twoMeaningfulBaits": 3,
+        "clockShortest": 1
+      }
+    },
+    "2": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noNewIdeaGeometry": 59,
+        "fewerThan2WinningStarts": 6,
+        "idle:ice:65": 1
+      }
+    },
+    "3": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 238,
+        "noChain": 4,
+        "job:noProvenMix": 2,
+        "noProvenBait": 7,
+        "twoMeaningfulBaits": 1
+      }
+    },
+    "4": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noNewIdeaGeometry": 28,
+        "noProvenBait": 3
+      }
+    },
+    "5": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 239,
+        "job:noProvenMix": 2,
+        "noProvenBait": 11
+      }
+    },
+    "6": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "fewerThan2WinningStarts": 17,
+        "noNewIdeaGeometry": 231,
+        "twoMeaningfulBaits": 1,
+        "job:noProvenMix": 2,
+        "obvious:greedyPrefix": 1
+      }
+    },
+    "7": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 2
+      }
+    },
+    "8": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 2
+      }
+    },
+    "9": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 94,
+        "twoMeaningfulBaits": 9,
+        "newIdeaNotBait": 2,
+        "job:noProvenMix": 1,
+        "noProvenBait": 1
+      }
+    },
+    "10": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 2
+      }
+    },
+    "11": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 238,
+        "fewerThan2WinningStarts": 10,
+        "twoMeaningfulBaits": 2,
+        "job:noProvenMix": 2
+      }
+    },
+    "12": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noNewIdeaGeometry": 155,
+        "twoMeaningfulBaits": 8,
+        "newIdeaNotBait": 2,
+        "obvious:greedyPrefix": 2,
+        "noProvenBait": 3
+      }
+    },
+    "13": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noNewIdeaGeometry": 38,
+        "fewerThan2WinningStarts": 2,
+        "noProvenBait": 2
+      }
+    },
+    "15": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 204,
+        "fewerThan2WinningStarts": 13,
+        "noProvenBait": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "16": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noNewIdeaGeometry": 23,
+        "newIdeaNotBait": 1,
+        "obvious:freeRoutePair": 1
+      }
+    },
+    "17": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "fewerThan2WinningStarts": 2,
+        "twoMeaningfulBaits": 5,
+        "noNewIdeaGeometry": 4
+      }
+    },
+    "19": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 100,
+        "job:noProvenMix": 2,
+        "noNewIdeaGeometry": 140,
+        "noProvenBait": 9,
+        "obvious:freeRoutePair": 1
+      }
+    },
+    "20": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noProvenBait": 28,
+        "noNewIdeaGeometry": 114,
+        "noChain": 1,
+        "job:noProvenMix": 1,
+        "idle:ice:46": 1,
+        "idle:ice:45": 1
+      }
+    },
+    "21": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "fewerThan2WinningStarts": 17,
+        "noNewIdeaGeometry": 228,
+        "fixedTwinsClose": 5,
+        "job:noProvenMix": 2
+      }
+    },
+    "22": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 2
+      }
+    },
+    "23": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "job:hardWall": 1
+      }
+    },
+    "24": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noNewIdeaGeometry": 26,
+        "twoMeaningfulBaits": 2,
+        "noProvenBait": 4,
+        "newIdeaNotBait": 2
+      }
+    },
+    "25": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 2
+      }
+    },
+    "26": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 2
+      }
+    },
+    "27": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noNewIdeaGeometry": 68,
+        "obvious:freeRoutePair": 4,
+        "fewerThan2WinningStarts": 10,
+        "obvious:greedyPrefix": 2,
+        "noProvenBait": 1,
+        "twoMeaningfulBaits": 1
+      }
+    },
+    "28": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 104,
+        "job:noProvenMix": 1
+      }
+    },
+    "29": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 198,
+        "fewerThan2WinningStarts": 6,
+        "noProvenBait": 30,
+        "obvious:freeRoutePair": 13,
+        "job:noProvenMix": 2,
+        "twoMeaningfulBaits": 2,
+        "obvious:greedyPrefix": 1
+      }
+    },
+    "30": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 130,
+        "noProvenBait": 4,
+        "job:noProvenMix": 1
+      }
+    },
+    "32": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 2
+      }
+    },
+    "33": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 249,
+        "noChain": 1,
+        "job:noProvenMix": 2
+      }
+    },
+    "34": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 2
+      }
+    },
+    "35": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 229,
+        "fewerThan2WinningStarts": 11,
+        "noProvenBait": 6,
+        "idle:lock:82": 1,
+        "job:noProvenMix": 2,
+        "obvious:greedyPrefix": 3
+      }
+    },
+    "37": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noNewIdeaGeometry": 55,
+        "noProvenBait": 1,
+        "twoMeaningfulBaits": 1,
+        "newIdeaNotBait": 1
+      }
+    },
+    "38": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 2
+      }
+    },
+    "39": {
+      "jobs": 2,
+      "raw": 2,
+      "failures": {
+        "noNewIdeaGeometry": 100,
+        "obvious:greedyPrefix": 3,
+        "fewerThan2WinningStarts": 4,
+        "newIdeaNotBait": 1,
+        "noProvenBait": 5,
+        "obvious:freeRoutePair": 5
+      }
+    },
+    "40": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 2
+      }
+    },
+    "41": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 2
+      }
+    },
+    "42": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 138,
+        "fewerThan2WinningStarts": 1,
+        "job:noProvenMix": 1,
+        "noProvenBait": 1
+      }
+    },
+    "43": {
+      "jobs": 2,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 167,
+        "fewerThan2WinningStarts": 10,
+        "job:noProvenMix": 1
+      }
+    },
+    "44": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 2
+      }
+    },
+    "45": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 2
+      }
+    },
+    "46": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 241,
+        "fewerThan2WinningStarts": 9,
+        "job:noProvenMix": 2
+      }
+    },
+    "47": {
+      "jobs": 2,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 205,
+        "noProvenBait": 20,
+        "twoMeaningfulBaits": 17,
+        "fewerThan2WinningStarts": 8,
+        "job:noProvenMix": 2
+      }
+    }
+  },
+  "splitPreparation": {
+    "1": {
+      "jobs": 1,
+      "raw": 1,
+      "failures": {}
+    },
+    "2": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 250,
+        "job:noProvenMix": 1
+      }
+    },
+    "3": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "newIdeaNotBait": 23,
+        "obvious:freeRoutePair": 9,
+        "noNewIdeaGeometry": 28,
+        "noProvenBait": 28,
+        "twoMeaningfulBaits": 5,
+        "fixedTwinsClose": 3,
+        "obvious:greedyPrefix": 4,
+        "strictMinimum": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "4": {
+      "jobs": 1,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 81,
+        "newIdeaNotBait": 20,
+        "obvious:freeRoutePair": 8,
+        "clockShortest": 1,
+        "obvious:greedyPrefix": 5
+      }
+    },
+    "5": {
+      "jobs": 1,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 21,
+        "newIdeaNotBait": 41,
+        "obvious:freeRoutePair": 3,
+        "noProvenBait": 6,
+        "twoMeaningfulBaits": 2,
+        "fixedTwinsClose": 1
+      }
+    },
+    "6": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "obvious:greedyPrefix": 20,
+        "noNewIdeaGeometry": 197,
+        "newIdeaNotBait": 19,
+        "fixedTwinsClose": 3,
+        "obvious:freeRoutePair": 2,
+        "noProvenBait": 4,
+        "trayOverflow": 5,
+        "job:noProvenMix": 1
+      }
+    },
+    "7": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 1
+      }
+    },
+    "8": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 1
+      }
+    },
+    "9": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 231,
+        "obvious:freeRoutePair": 15,
+        "newIdeaNotBait": 3,
+        "strictMinimum": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "10": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 1
+      }
+    },
+    "11": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 195,
+        "obvious:greedyPrefix": 30,
+        "fixedTwinsClose": 12,
+        "newIdeaNotBait": 5,
+        "trayOverflow": 6,
+        "strictMinimum": 1,
+        "noProvenBait": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "12": {
+      "jobs": 1,
+      "raw": 1,
+      "failures": {
+        "trayOverflow": 2,
+        "newIdeaNotBait": 6,
+        "obvious:freeRoutePair": 2,
+        "clockShortest": 1,
+        "noNewIdeaGeometry": 1,
+        "obvious:greedyPrefix": 2
+      }
+    },
+    "13": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "obvious:freeRoutePair": 5,
+        "noNewIdeaGeometry": 10,
+        "noProvenBait": 8,
+        "newIdeaNotBait": 17,
+        "clockShortest": 1,
+        "strictMinimum": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "15": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 237,
+        "fixedTwinsClose": 12,
+        "trayOverflow": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "16": {
+      "jobs": 1,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 70,
+        "newIdeaNotBait": 24,
+        "noProvenBait": 9,
+        "twoMeaningfulBaits": 4
+      }
+    },
+    "17": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 7,
+        "obvious:freeRoutePair": 3,
+        "newIdeaNotBait": 13,
+        "noProvenBait": 2,
+        "idle:ice:55": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "19": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 250,
+        "job:noProvenMix": 1
+      }
+    },
+    "20": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "obvious:freeRoutePair": 11,
+        "twoMeaningfulBaits": 18,
+        "newIdeaNotBait": 30,
+        "noNewIdeaGeometry": 7,
+        "noProvenBait": 16,
+        "clockShortest": 9,
+        "strictMinimum": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "21": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 219,
+        "fixedTwinsClose": 20,
+        "trayOverflow": 11,
+        "job:noProvenMix": 1
+      }
+    },
+    "22": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 1
+      }
+    },
+    "23": {
+      "jobs": 1,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 22,
+        "obvious:greedyPrefix": 3,
+        "newIdeaNotBait": 3,
+        "trayOverflow": 1,
+        "obvious:freeRoutePair": 3,
+        "noProvenBait": 3,
+        "strictMinimum": 1
+      }
+    },
+    "24": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 241,
+        "fixedTwinsClose": 7,
+        "trayOverflow": 2,
+        "job:noProvenMix": 1
+      }
+    },
+    "25": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 1
+      }
+    },
+    "26": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 1
+      }
+    },
+    "27": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 250,
+        "job:noProvenMix": 1
+      }
+    },
+    "28": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 249,
+        "trayOverflow": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "29": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "noProvenBait": 2,
+        "noNewIdeaGeometry": 224,
+        "obvious:greedyPrefix": 1,
+        "fixedTwinsClose": 6,
+        "newIdeaNotBait": 10,
+        "strictMinimum": 3,
+        "trayOverflow": 1,
+        "obvious:freeRoutePair": 1,
+        "controlUnknown": 1,
+        "twoMeaningfulBaits": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "30": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 250,
+        "job:noProvenMix": 1
+      }
+    },
+    "32": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 1
+      }
+    },
+    "33": {
+      "jobs": 1,
+      "raw": 1,
+      "failures": {
+        "obvious:greedyPrefix": 36,
+        "twoMeaningfulBaits": 27,
+        "noNewIdeaGeometry": 94,
+        "noProvenBait": 31,
+        "newIdeaNotBait": 20
+      }
+    },
+    "34": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 1
+      }
+    },
+    "35": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 210,
+        "obvious:greedyPrefix": 20,
+        "newIdeaNotBait": 10,
+        "strictMinimum": 2,
+        "trayOverflow": 3,
+        "fixedTwinsClose": 5,
+        "job:noProvenMix": 1
+      }
+    },
+    "37": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "job:hardWall": 1
+      }
+    },
+    "38": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 1
+      }
+    },
+    "39": {
+      "jobs": 1,
+      "raw": 1,
+      "failures": {
+        "noNewIdeaGeometry": 1,
+        "newIdeaNotBait": 1
+      }
+    },
+    "40": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 1
+      }
+    },
+    "41": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 1
+      }
+    },
+    "42": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 1
+      }
+    },
+    "43": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 246,
+        "fixedTwinsClose": 3,
+        "trayOverflow": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "44": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 1
+      }
+    },
+    "45": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "noChain": 250,
+        "job:noProvenMix": 1
+      }
+    },
+    "46": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "noNewIdeaGeometry": 195,
+        "newIdeaNotBait": 16,
+        "strictMinimum": 3,
+        "noProvenBait": 32,
+        "obvious:greedyPrefix": 2,
+        "twoMeaningfulBaits": 1,
+        "trayOverflow": 1,
+        "job:noProvenMix": 1
+      }
+    },
+    "47": {
+      "jobs": 1,
+      "raw": 0,
+      "failures": {
+        "clockShortest": 1,
+        "noNewIdeaGeometry": 52,
+        "obvious:freeRoutePair": 8,
+        "strictMinimum": 1,
+        "newIdeaNotBait": 30,
+        "obvious:greedyPrefix": 1,
+        "noProvenBait": 8,
+        "twoMeaningfulBaits": 1,
+        "job:noProvenMix": 1
+      }
+    }
+  }
+}

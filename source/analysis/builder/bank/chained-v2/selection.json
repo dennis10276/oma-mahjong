@@ -1,0 +1,590 @@
+{
+  "complete": true,
+  "order": [
+    "waitNested-L33-s15-p3.json",
+    "waitNested-L18-s35-p2.json",
+    "waitNested-L16-s12-p2.json",
+    "waitThawWay-L7-s12-p2.json",
+    "waitNested-L3-s12-p2.json",
+    "waitThawWay-L21-s12-p2.json",
+    "waitThawWay-L23-s12-p2.json",
+    "waitThawWay-L11-s11-p1.json",
+    "waitNested-L23-s36-p1.json",
+    "waitThawWay-L9-s12-p2.json",
+    "waitThawWay-L3-s11-p1.json",
+    "waitNested-L9-s15-p1.json",
+    "waitThawKey-L39-s12-p2.json",
+    "waitThawKey-L16-s12-p2.json",
+    "waitThawKey-L4-s11-p1.json",
+    "waitThawKey-L5-s11-p1.json",
+    "waitThawKey-L43-s11-p1.json",
+    "waitThawKey-L21-s12-p2.json",
+    "lookalikeThaw-L5-s12-p2.json",
+    "lookalikeThaw-L6-s13-p2.json",
+    "lookalikeThaw-L30-s12-p2.json",
+    "lookalikeThaw-L16-s12-p2.json",
+    "lookalikeThaw-L46-s11-p1.json",
+    "lookalikeThaw-L27-s13-p2.json",
+    "outsideIn-L23-s21-p1.json",
+    "lookalikeCover-L17-s12-p2.json",
+    "lookalikeCover-L12-s12-p2.json",
+    "lookalikeCover-L5-s12-p2.json",
+    "lookalikeCover-L13-s12-p2.json",
+    "lookalikeCover-L3-s12-p2.json",
+    "lookalikeCover-L37-s12-p2.json",
+    "lookalikeWay-L37-s12-p2.json",
+    "lookalikeWay-L13-s12-p2.json",
+    "roofBeforeSide-L4-s22-p1.json",
+    "lookalikeWay-L12-s11-p1.json",
+    "pairedFalseMelt-L1-s23-p1.json",
+    "lookalikeWay-L47-s19-p1.json",
+    "lookalikeWay-L3-s11-p1.json",
+    "lookalikeWay-L5-s11-p1.json",
+    "clearLockRoof-L16-s21-p1.json",
+    "roofThawKey-L23-s12-p2.json",
+    "roofThawKey-L35-s12-p2.json",
+    "roofThawKey-L6-s12-p2.json",
+    "roofThawKey-L15-s12-p2.json",
+    "twinChase-L7-s22-p1.json",
+    "roofThawKey-L4-s12-p2.json",
+    "roofThawKey-L11-s11-p1.json",
+    "waitLookalikeRoof-L3-s12-p2.json",
+    "waitLookalikeRoof-L39-s12-p2.json",
+    "waitLookalikeRoof-L35-s12-p2.json",
+    "waitLookalikeRoof-L6-s12-p2.json",
+    "waitLookalikeRoof-L30-s12-p2.json",
+    "splitPreparation-L39-s25-p1.json",
+    "waitLookalikeRoof-L24-s11-p1.json",
+    "waitLookalikeWay-L7-s12-p2.json",
+    "waitLookalikeWay-L20-s12-p2.json",
+    "waitLookalikeWay-L41-s12-p2.json",
+    "waitLookalikeWay-L46-s12-p2.json",
+    "waitLookalikeWay-L11-s11-p1.json",
+    "waitLookalikeWay-L44-s13-p2.json"
+  ],
+  "clearer": [
+    "lookalikeCoverThaw-L5-s12-p3.json",
+    "lookalikeCoverThaw-L3-s21-p3.json"
+  ],
+  "quotas": {
+    "waitThawWay": [
+      3,
+      7,
+      9,
+      11,
+      21,
+      23
+    ],
+    "waitNested": [
+      3,
+      9,
+      16,
+      18,
+      23,
+      33
+    ],
+    "waitThawKey": [
+      4,
+      5,
+      16,
+      21,
+      39,
+      43
+    ],
+    "lookalikeThaw": [
+      5,
+      6,
+      16,
+      27,
+      30,
+      46
+    ],
+    "lookalikeCover": [
+      3,
+      5,
+      12,
+      13,
+      17,
+      37
+    ],
+    "lookalikeWay": [
+      3,
+      5,
+      12,
+      13,
+      37,
+      47
+    ],
+    "roofThawKey": [
+      4,
+      6,
+      11,
+      15,
+      23,
+      35
+    ],
+    "waitLookalikeRoof": [
+      3,
+      6,
+      24,
+      30,
+      35,
+      39
+    ],
+    "waitLookalikeWay": [
+      7,
+      11,
+      20,
+      41,
+      44,
+      46
+    ]
+  },
+  "newKinds": [
+    "clearLockRoof",
+    "outsideIn",
+    "pairedFalseMelt",
+    "roofBeforeSide",
+    "splitPreparation",
+    "twinChase"
+  ],
+  "prototypeKinds": [
+    "sharedThawDetour"
+  ],
+  "rankRule": "human anchor x10 + links x0.7 + layers x0.25 + k x0.12 - spare x0.7 + 2/winningStarts",
+  "rows": [
+    {
+      "rank": 1,
+      "file": "waitNested-L33-s15-p3.json",
+      "score": 13.43,
+      "shape": "waitNested",
+      "layout": 33
+    },
+    {
+      "rank": 2,
+      "file": "waitNested-L18-s35-p2.json",
+      "score": 13.563,
+      "shape": "waitNested",
+      "layout": 18
+    },
+    {
+      "rank": 3,
+      "file": "waitNested-L16-s12-p2.json",
+      "score": 13.65,
+      "shape": "waitNested",
+      "layout": 16
+    },
+    {
+      "rank": 4,
+      "file": "waitThawWay-L7-s12-p2.json",
+      "score": 14.22,
+      "shape": "waitThawWay",
+      "layout": 7
+    },
+    {
+      "rank": 5,
+      "file": "waitNested-L3-s12-p2.json",
+      "score": 14.246,
+      "shape": "waitNested",
+      "layout": 3
+    },
+    {
+      "rank": 6,
+      "file": "waitThawWay-L21-s12-p2.json",
+      "score": 14.323,
+      "shape": "waitThawWay",
+      "layout": 21
+    },
+    {
+      "rank": 7,
+      "file": "waitThawWay-L23-s12-p2.json",
+      "score": 14.59,
+      "shape": "waitThawWay",
+      "layout": 23
+    },
+    {
+      "rank": 8,
+      "file": "waitThawWay-L11-s11-p1.json",
+      "score": 15.17,
+      "shape": "waitThawWay",
+      "layout": 11
+    },
+    {
+      "rank": 9,
+      "file": "waitNested-L23-s36-p1.json",
+      "score": 15.17,
+      "shape": "waitNested",
+      "layout": 23
+    },
+    {
+      "rank": 10,
+      "file": "waitThawWay-L9-s12-p2.json",
+      "score": 15.34,
+      "shape": "waitThawWay",
+      "layout": 9
+    },
+    {
+      "rank": 11,
+      "file": "waitThawWay-L3-s11-p1.json",
+      "score": 15.567,
+      "shape": "waitThawWay",
+      "layout": 3
+    },
+    {
+      "rank": 12,
+      "file": "waitNested-L9-s15-p1.json",
+      "score": 16.067,
+      "shape": "waitNested",
+      "layout": 9
+    },
+    {
+      "rank": 13,
+      "file": "waitThawKey-L39-s12-p2.json",
+      "score": 18.472,
+      "shape": "waitThawKey",
+      "layout": 39
+    },
+    {
+      "rank": 14,
+      "file": "waitThawKey-L16-s12-p2.json",
+      "score": 19.063,
+      "shape": "waitThawKey",
+      "layout": 16
+    },
+    {
+      "rank": 15,
+      "file": "waitThawKey-L4-s11-p1.json",
+      "score": 19.847,
+      "shape": "waitThawKey",
+      "layout": 4
+    },
+    {
+      "rank": 16,
+      "file": "waitThawKey-L5-s11-p1.json",
+      "score": 19.92,
+      "shape": "waitThawKey",
+      "layout": 5
+    },
+    {
+      "rank": 17,
+      "file": "waitThawKey-L43-s11-p1.json",
+      "score": 20.337,
+      "shape": "waitThawKey",
+      "layout": 43
+    },
+    {
+      "rank": 18,
+      "file": "waitThawKey-L21-s12-p2.json",
+      "score": 20.617,
+      "shape": "waitThawKey",
+      "layout": 21
+    },
+    {
+      "rank": 19,
+      "file": "lookalikeThaw-L5-s12-p2.json",
+      "score": 24.006,
+      "shape": "lookalikeThaw",
+      "layout": 5
+    },
+    {
+      "rank": 20,
+      "file": "lookalikeThaw-L6-s13-p2.json",
+      "score": 24.303,
+      "shape": "lookalikeThaw",
+      "layout": 6
+    },
+    {
+      "rank": 21,
+      "file": "lookalikeThaw-L30-s12-p2.json",
+      "score": 24.423,
+      "shape": "lookalikeThaw",
+      "layout": 30
+    },
+    {
+      "rank": 22,
+      "file": "lookalikeThaw-L16-s12-p2.json",
+      "score": 24.49,
+      "shape": "lookalikeThaw",
+      "layout": 16
+    },
+    {
+      "rank": 23,
+      "file": "lookalikeThaw-L46-s11-p1.json",
+      "score": 24.977,
+      "shape": "lookalikeThaw",
+      "layout": 46
+    },
+    {
+      "rank": 24,
+      "file": "lookalikeThaw-L27-s13-p2.json",
+      "score": 25.21,
+      "shape": "lookalikeThaw",
+      "layout": 27
+    },
+    {
+      "rank": 25,
+      "file": "outsideIn-L23-s21-p1.json",
+      "score": 28.897,
+      "shape": "outsideIn",
+      "layout": 23
+    },
+    {
+      "rank": 26,
+      "file": "lookalikeCover-L17-s12-p2.json",
+      "score": 30.493,
+      "shape": "lookalikeCover",
+      "layout": 17
+    },
+    {
+      "rank": 27,
+      "file": "lookalikeCover-L12-s12-p2.json",
+      "score": 30.636,
+      "shape": "lookalikeCover",
+      "layout": 12
+    },
+    {
+      "rank": 28,
+      "file": "lookalikeCover-L5-s12-p2.json",
+      "score": 30.767,
+      "shape": "lookalikeCover",
+      "layout": 5
+    },
+    {
+      "rank": 29,
+      "file": "lookalikeCover-L13-s12-p2.json",
+      "score": 30.812,
+      "shape": "lookalikeCover",
+      "layout": 13
+    },
+    {
+      "rank": 30,
+      "file": "lookalikeCover-L3-s12-p2.json",
+      "score": 30.98,
+      "shape": "lookalikeCover",
+      "layout": 3
+    },
+    {
+      "rank": 31,
+      "file": "lookalikeCover-L37-s12-p2.json",
+      "score": 31.053,
+      "shape": "lookalikeCover",
+      "layout": 37
+    },
+    {
+      "rank": 32,
+      "file": "lookalikeWay-L37-s12-p2.json",
+      "score": 33.886,
+      "shape": "lookalikeWay",
+      "layout": 37
+    },
+    {
+      "rank": 33,
+      "file": "lookalikeWay-L13-s12-p2.json",
+      "score": 33.892,
+      "shape": "lookalikeWay",
+      "layout": 13
+    },
+    {
+      "rank": 34,
+      "file": "roofBeforeSide-L4-s22-p1.json",
+      "score": 34.387,
+      "shape": "roofBeforeSide",
+      "layout": 4
+    },
+    {
+      "rank": 35,
+      "file": "lookalikeWay-L12-s11-p1.json",
+      "score": 34.91,
+      "shape": "lookalikeWay",
+      "layout": 12
+    },
+    {
+      "rank": 36,
+      "file": "pairedFalseMelt-L1-s23-p1.json",
+      "score": 35.05,
+      "shape": "pairedFalseMelt",
+      "layout": 1
+    },
+    {
+      "rank": 37,
+      "file": "lookalikeWay-L47-s19-p1.json",
+      "score": 35.31,
+      "shape": "lookalikeWay",
+      "layout": 47
+    },
+    {
+      "rank": 38,
+      "file": "lookalikeWay-L3-s11-p1.json",
+      "score": 35.426,
+      "shape": "lookalikeWay",
+      "layout": 3
+    },
+    {
+      "rank": 39,
+      "file": "lookalikeWay-L5-s11-p1.json",
+      "score": 35.52,
+      "shape": "lookalikeWay",
+      "layout": 5
+    },
+    {
+      "rank": 40,
+      "file": "clearLockRoof-L16-s21-p1.json",
+      "score": 39.397,
+      "shape": "clearLockRoof",
+      "layout": 16
+    },
+    {
+      "rank": 41,
+      "file": "roofThawKey-L23-s12-p2.json",
+      "score": 43.683,
+      "shape": "roofThawKey",
+      "layout": 23
+    },
+    {
+      "rank": 42,
+      "file": "roofThawKey-L35-s12-p2.json",
+      "score": 44.183,
+      "shape": "roofThawKey",
+      "layout": 35
+    },
+    {
+      "rank": 43,
+      "file": "roofThawKey-L6-s12-p2.json",
+      "score": 44.35,
+      "shape": "roofThawKey",
+      "layout": 6
+    },
+    {
+      "rank": 44,
+      "file": "roofThawKey-L15-s12-p2.json",
+      "score": 44.74,
+      "shape": "roofThawKey",
+      "layout": 15
+    },
+    {
+      "rank": 45,
+      "file": "twinChase-L7-s22-p1.json",
+      "score": 44.747,
+      "shape": "twinChase",
+      "layout": 7
+    },
+    {
+      "rank": 46,
+      "file": "roofThawKey-L4-s12-p2.json",
+      "score": 44.82,
+      "shape": "roofThawKey",
+      "layout": 4
+    },
+    {
+      "rank": 47,
+      "file": "roofThawKey-L11-s11-p1.json",
+      "score": 45.937,
+      "shape": "roofThawKey",
+      "layout": 11
+    },
+    {
+      "rank": 48,
+      "file": "waitLookalikeRoof-L3-s12-p2.json",
+      "score": 48.766,
+      "shape": "waitLookalikeRoof",
+      "layout": 3
+    },
+    {
+      "rank": 49,
+      "file": "waitLookalikeRoof-L39-s12-p2.json",
+      "score": 49.13,
+      "shape": "waitLookalikeRoof",
+      "layout": 39
+    },
+    {
+      "rank": 50,
+      "file": "waitLookalikeRoof-L35-s12-p2.json",
+      "score": 49.397,
+      "shape": "waitLookalikeRoof",
+      "layout": 35
+    },
+    {
+      "rank": 51,
+      "file": "waitLookalikeRoof-L6-s12-p2.json",
+      "score": 49.397,
+      "shape": "waitLookalikeRoof",
+      "layout": 6
+    },
+    {
+      "rank": 52,
+      "file": "waitLookalikeRoof-L30-s12-p2.json",
+      "score": 49.47,
+      "shape": "waitLookalikeRoof",
+      "layout": 30
+    },
+    {
+      "rank": 53,
+      "file": "splitPreparation-L39-s25-p1.json",
+      "score": 49.69,
+      "shape": "splitPreparation",
+      "layout": 39
+    },
+    {
+      "rank": 54,
+      "file": "waitLookalikeRoof-L24-s11-p1.json",
+      "score": 49.847,
+      "shape": "waitLookalikeRoof",
+      "layout": 24
+    },
+    {
+      "rank": 55,
+      "file": "waitLookalikeWay-L7-s12-p2.json",
+      "score": 53.74,
+      "shape": "waitLookalikeWay",
+      "layout": 7
+    },
+    {
+      "rank": 56,
+      "file": "waitLookalikeWay-L20-s12-p2.json",
+      "score": 53.99,
+      "shape": "waitLookalikeWay",
+      "layout": 20
+    },
+    {
+      "rank": 57,
+      "file": "waitLookalikeWay-L41-s12-p2.json",
+      "score": 54.147,
+      "shape": "waitLookalikeWay",
+      "layout": 41
+    },
+    {
+      "rank": 58,
+      "file": "waitLookalikeWay-L46-s12-p2.json",
+      "score": 54.877,
+      "shape": "waitLookalikeWay",
+      "layout": 46
+    },
+    {
+      "rank": 59,
+      "file": "waitLookalikeWay-L11-s11-p1.json",
+      "score": 54.93,
+      "shape": "waitLookalikeWay",
+      "layout": 11
+    },
+    {
+      "rank": 60,
+      "file": "waitLookalikeWay-L44-s13-p2.json",
+      "score": 55.11,
+      "shape": "waitLookalikeWay",
+      "layout": 44
+    }
+  ],
+  "humanReview": {
+    "status": "mixed-requires-revision",
+    "approvedFor332Plus": false,
+    "findings": "codex-tasks/results/chained-2/lab-findings.json",
+    "reviewedPrimaryFiles": [
+      "clearLockRoof-L16-s21-p1.json",
+      "lookalikeCover-L17-s12-p2.json",
+      "roofThawKey-L23-s12-p2.json",
+      "lookalikeWay-L13-s12-p2.json",
+      "waitThawKey-L4-s11-p1.json"
+    ],
+    "rankingStatus": "pre-feedback design judgment; use exact-board findings before placement"
+  }
+}

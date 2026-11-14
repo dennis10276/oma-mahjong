@@ -40,4 +40,9 @@ const SHAPES = Object.fromEntries(rows.map(([name,chain,mode,baseSignature,see,r
   extension:extension[mode],recipe:(repeat?'Two special gates, a waiting clock and a guarded-key lookalike choice':baseSignature.split('; ').length+' existing gate links plus '+extension[mode]),trapType:'chained:'+name,chained:true,
   dials:{easier:'spare 2; obviousness dial 0',harder:'spare 1; obviousness dial 2 requires a greedy first bait'},
 }]));
+for(const [name,q]of Object.entries(require('./chained_new_ideas.js').DEFINITIONS))SHAPES[name]={
+  name,base:'chain',chain:q.chain,mode:'newIdea',newIdea:name,baseSignature:q.baseSignature,signature:q.baseSignature+'; route<'+name,see:q.sentence,
+  baseLinks:q.baseSignature.split('; ').length,links:q.baseSignature.split('; ').length+1,extension:'route<'+name,recipe:q.sentence,trapType:'chained:'+name,chained:true,
+  dials:{easier:'spare 2',harder:'spare 1'},
+};
 module.exports={SHAPES};
