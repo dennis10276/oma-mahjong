@@ -1,0 +1,997 @@
+{
+ "schema": "bank-puzzle-v1-like",
+ "level": 273,
+ "design": {
+  "tiles": [
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    3,
+    0,
+    0
+   ],
+   [
+    5,
+    0,
+    0
+   ],
+   [
+    7,
+    0,
+    0
+   ],
+   [
+    9,
+    0,
+    0
+   ],
+   [
+    11,
+    0,
+    0
+   ],
+   [
+    0,
+    2,
+    0
+   ],
+   [
+    2,
+    2,
+    0
+   ],
+   [
+    4,
+    2,
+    0
+   ],
+   [
+    6,
+    2,
+    0
+   ],
+   [
+    8,
+    2,
+    0
+   ],
+   [
+    10,
+    2,
+    0
+   ],
+   [
+    12,
+    2,
+    0
+   ],
+   [
+    1,
+    4,
+    0
+   ],
+   [
+    3,
+    4,
+    0
+   ],
+   [
+    5,
+    4,
+    0
+   ],
+   [
+    7,
+    4,
+    0
+   ],
+   [
+    9,
+    4,
+    0
+   ],
+   [
+    11,
+    4,
+    0
+   ],
+   [
+    0,
+    6,
+    0
+   ],
+   [
+    2,
+    6,
+    0
+   ],
+   [
+    4,
+    6,
+    0
+   ],
+   [
+    6,
+    6,
+    0
+   ],
+   [
+    8,
+    6,
+    0
+   ],
+   [
+    10,
+    6,
+    0
+   ],
+   [
+    12,
+    6,
+    0
+   ],
+   [
+    3,
+    8,
+    0
+   ],
+   [
+    5,
+    8,
+    0
+   ],
+   [
+    7,
+    8,
+    0
+   ],
+   [
+    9,
+    8,
+    0
+   ],
+   [
+    6,
+    10,
+    0
+   ],
+   [
+    3,
+    6,
+    1
+   ],
+   [
+    9,
+    6,
+    1
+   ],
+   [
+    2,
+    4,
+    1
+   ],
+   [
+    10,
+    4,
+    1
+   ],
+   [
+    4,
+    4,
+    1
+   ],
+   [
+    8,
+    4,
+    1
+   ],
+   [
+    1,
+    6,
+    1
+   ],
+   [
+    11,
+    6,
+    1
+   ],
+   [
+    5,
+    6,
+    1
+   ],
+   [
+    7,
+    6,
+    1
+   ],
+   [
+    3,
+    2,
+    1
+   ],
+   [
+    9,
+    2,
+    1
+   ],
+   [
+    6,
+    4,
+    1
+   ],
+   [
+    4,
+    8,
+    1
+   ],
+   [
+    8,
+    8,
+    1
+   ],
+   [
+    5,
+    2,
+    1
+   ],
+   [
+    7,
+    2,
+    1
+   ],
+   [
+    1,
+    2,
+    1
+   ],
+   [
+    11,
+    2,
+    1
+   ],
+   [
+    6,
+    8,
+    1
+   ],
+   [
+    3,
+    4,
+    2
+   ],
+   [
+    9,
+    4,
+    2
+   ],
+   [
+    10,
+    6,
+    2
+   ],
+   [
+    2,
+    6,
+    2
+   ],
+   [
+    4,
+    6,
+    2
+   ],
+   [
+    8,
+    6,
+    2
+   ],
+   [
+    5,
+    4,
+    2
+   ],
+   [
+    7,
+    4,
+    2
+   ],
+   [
+    10,
+    2,
+    2
+   ],
+   [
+    2,
+    2,
+    2
+   ],
+   [
+    6,
+    6,
+    2
+   ],
+   [
+    3,
+    6,
+    3
+   ],
+   [
+    9,
+    6,
+    3
+   ],
+   [
+    4,
+    4,
+    3
+   ],
+   [
+    8,
+    4,
+    3
+   ],
+   [
+    5,
+    6,
+    3
+   ],
+   [
+    7,
+    6,
+    3
+   ],
+   [
+    6,
+    4,
+    3
+   ],
+   [
+    4,
+    6,
+    4
+   ],
+   [
+    8,
+    6,
+    4
+   ],
+   [
+    5,
+    4,
+    4
+   ],
+   [
+    7,
+    4,
+    4
+   ],
+   [
+    6,
+    6,
+    4
+   ],
+   [
+    5,
+    6,
+    5
+   ],
+   [
+    7,
+    6,
+    5
+   ]
+  ],
+  "faces": [
+   26,
+   19,
+   20,
+   33,
+   7,
+   8,
+   10,
+   29,
+   4,
+   5,
+   31,
+   26,
+   31,
+   2,
+   6,
+   34,
+   29,
+   25,
+   20,
+   9,
+   18,
+   1,
+   6,
+   18,
+   1,
+   29,
+   12,
+   30,
+   12,
+   0,
+   5,
+   15,
+   34,
+   28,
+   7,
+   2,
+   13,
+   22,
+   35,
+   35,
+   9,
+   21,
+   14,
+   28,
+   27,
+   11,
+   10,
+   16,
+   17,
+   24,
+   29,
+   13,
+   15,
+   27,
+   23,
+   25,
+   33,
+   22,
+   23,
+   3,
+   32,
+   7,
+   7,
+   8,
+   0,
+   21,
+   19,
+   14,
+   11,
+   4,
+   32,
+   30,
+   3,
+   16,
+   17,
+   24
+  ],
+  "down": [
+   58,
+   21,
+   15,
+   9,
+   19,
+   16,
+   46,
+   64,
+   13,
+   10,
+   43,
+   32,
+   51,
+   36,
+   67
+  ],
+  "gold": [],
+  "obst": {
+   "ice": {
+    "5": 2,
+    "72": 2
+   },
+   "locks": [
+    12
+   ],
+   "keys": [
+    41,
+    65
+   ]
+  },
+  "clock": {
+   "i": 5,
+   "n": 18
+  },
+  "solution": [
+   74,
+   60,
+   48,
+   75,
+   70,
+   73,
+   72,
+   59,
+   41,
+   65,
+   49,
+   12,
+   42,
+   47,
+   11,
+   10,
+   5,
+   0,
+   63,
+   67,
+   46,
+   6,
+   44,
+   7,
+   69,
+   8,
+   50,
+   52,
+   66,
+   1,
+   26,
+   53,
+   27,
+   71,
+   45,
+   68,
+   9,
+   30,
+   29,
+   64,
+   34,
+   4,
+   3,
+   56,
+   18,
+   2,
+   61,
+   62,
+   54,
+   58,
+   51,
+   36,
+   57,
+   37,
+   55,
+   17,
+   31,
+   28,
+   43,
+   33,
+   35,
+   13,
+   39,
+   38,
+   16,
+   19,
+   15,
+   32,
+   25,
+   40,
+   20,
+   24,
+   21,
+   23,
+   14,
+   22
+  ]
+ },
+ "card": {
+  "schema": "bank-puzzle-v1-like",
+  "trapType": "chain:clock<ice; thaw<lock; keyB<cover:ice",
+  "shape": "clock<ice; thaw<lock; keyB<cover:ice",
+  "links": 3,
+  "needsUi": null,
+  "layout": 9,
+  "layoutName": "heart",
+  "tiles": 76,
+  "boardKey": "e2f62c170f878fcf47e0a6903b226a77d4cab62a5a74f9d7555b8307e83c819c",
+  "trap": {
+   "type": "chain",
+   "bait": {
+    "tiles": [
+     71,
+     27
+    ],
+    "pairs": [
+     [
+      71,
+      27
+     ]
+    ],
+    "single": [
+     71
+    ]
+   },
+   "cost": {
+    "result": "lose",
+    "cost": null,
+    "exact": true,
+    "spare": 1,
+    "needsAtLeast": 2
+   },
+   "decisive": {
+    "offeredAt": 0,
+    "first": 0,
+    "last": 16,
+    "shareFirst": 0,
+    "shareLast": 0.941,
+    "inWindow": true,
+    "window15to60": [
+     3,
+     10
+    ],
+    "states": 17,
+    "lethalStates": 17
+   },
+   "see": "The clock is frozen, so two of its neighbours must go first; one of the neighbours that can melt it is locked (it needs the keys); the other key also lies under a frozen tile: do not melt with the free neighbour whose twin is buried: it would wait in the tray.",
+   "k": 17,
+   "spare": 1,
+   "clock": 5,
+   "shown": {
+    "clock": 0.8781,
+    "minRole": 0.4481,
+    "roles": {
+     "5": 0.8781,
+     "12": 0.6806,
+     "41": 0.4481,
+     "65": 0.5835,
+     "72": 0.9029
+    }
+   },
+   "shape": "clock<ice; thaw<lock; keyB<cover:ice",
+   "trapType": "chain:clock<ice; thaw<lock; keyB<cover:ice",
+   "chainLength": 3,
+   "fair": false,
+   "fairWhy": [
+    "the loss shows only after 7+ more removals (> 6)"
+   ],
+   "baits": [
+    {
+     "name": "lonelyNeighbour",
+     "tiles": [
+      71
+     ],
+     "result": "lose",
+     "cost": null,
+     "value": 3
+    }
+   ],
+   "droppedBaits": [],
+   "control": {
+    "value": 0,
+    "unknown": false,
+    "dearest": null,
+    "moves": 0,
+    "of": 0,
+    "cap": 2
+   },
+   "idle": [
+    {
+     "kind": "lock",
+     "tile": 12,
+     "kWithout": 15,
+     "k": 17
+    },
+    {
+     "kind": "ice",
+     "tile": 5,
+     "kWithout": 1,
+     "k": 17
+    },
+    {
+     "kind": "ice",
+     "tile": 72,
+     "kWithout": 15,
+     "k": 17
+    }
+   ],
+   "links": 3,
+   "easy": false,
+   "linkPairs": [
+    [
+     5,
+     12
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     65,
+     72
+    ],
+    [
+     72,
+     71
+    ],
+    [
+     12,
+     41
+    ],
+    [
+     12,
+     65
+    ]
+   ],
+   "needsUi": null,
+   "frozenKey": false,
+   "lockedFrozen": false,
+   "pressureDial": {
+    "run2": 5,
+    "at3": 3
+   },
+   "pressure": {
+    "k": 17,
+    "peak": 3,
+    "run2": 6,
+    "run2From": 11,
+    "at3": 5,
+    "moves2plus": 13,
+    "waiters": 4,
+    "twinAfterClock": 3,
+    "occ": "12121232321232323"
+   },
+   "connected": true,
+   "specials": {
+    "locks": [
+     12
+    ],
+    "keys": [
+     41,
+     65
+    ],
+    "ice": {
+     "5": 2,
+     "72": 2
+    }
+   },
+   "uiNote": "obKind() shows one overlay per tile (ice, else lock, else key): a tile that is both frozen and a key (or locked) shows only the ice until the display fix lands (another agent, 2026-11-13). Shapes with a frozen key or a frozen locked tile are built and marked card.trap.needsUi = 'frozen-key-marker'; they are for Dennis only after that fix.",
+   "engineNodes": 53383
+  },
+  "clock": {
+   "tile": 5,
+   "fewestMoves": 17,
+   "spare": 1,
+   "n": 18,
+   "k": 17
+  },
+  "spare": 1,
+  "faceDownShare": 0.197,
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     71
+    ],
+    "provenResult": "lose",
+    "provenCost": null,
+    "value": 3,
+    "controlValue": 0
+   }
+  ],
+  "control": {
+   "value": 0,
+   "unknown": false,
+   "dearest": null,
+   "moves": 0,
+   "of": 0,
+   "cap": 2
+  },
+  "firstMoves": {
+   "winning": 5,
+   "legal": 9,
+   "losingOrUnknownTiles": [
+    30,
+    44,
+    45,
+    71
+   ],
+   "unknown": 0,
+   "atLeast3": true
+  },
+  "pressure": {
+   "k": 17,
+   "occ": "12121232321232323",
+   "peak": 3,
+   "run2": 6,
+   "at3": 5,
+   "moves2plus": 13,
+   "waiters": 4,
+   "twinAfterClock": 3,
+   "capProof": {
+    "cap1": "lose",
+    "cap2": "lose"
+   },
+   "needsWaiting": 3
+  },
+  "tail": {
+   "band": [
+    0.15,
+    0.4
+   ],
+   "tier": "std",
+   "before": {
+    "tailGreedyWin": 1,
+    "wins": 800,
+    "playouts": 800,
+    "seed": 977,
+    "start": {
+     "step": 17,
+     "tray": 3,
+     "left": 59
+    },
+    "stored": {
+     "steps": 59,
+     "peakTray": 3,
+     "meanTray": 0.525,
+     "moves2plus": 2,
+     "tray2Share": 0.034
+    },
+    "tuneSeed": 1
+   },
+   "after": {
+    "tailGreedyWin": 0.2238,
+    "wins": 179,
+    "playouts": 800,
+    "seed": 977,
+    "start": {
+     "step": 17,
+     "tray": 3,
+     "left": 59
+    },
+    "stored": {
+     "steps": 59,
+     "peakTray": 3,
+     "meanTray": 1.746,
+     "moves2plus": 38,
+     "tray2Share": 0.644
+    },
+    "tuneSeed": 0.2167
+   },
+   "inBand": true,
+   "swaps": 7,
+   "gamble": {
+    "gamble": 0,
+    "blindOnly": 0
+   }
+  },
+  "closeTwins": {
+   "before": {
+    "close": 24,
+    "share": 0.6316,
+    "visible": 13,
+    "four": 5,
+    "meets": false
+   },
+   "final": {
+    "close": 0,
+    "share": 0,
+    "visible": 0,
+    "four": 0,
+    "meets": true
+   },
+   "swaps": 6
+  },
+  "see": "The clock is frozen, so two of its neighbours must go first; one of the neighbours that can melt it is locked (it needs the keys); the other key also lies under a frozen tile: do not melt with the free neighbour whose twin is buried: it would wait in the tray.",
+  "difficulty": {
+   "score": 5.78,
+   "parts": {
+    "links": 0.55,
+    "baits": 0,
+    "firstMoves": 0.522,
+    "pressure": 0.699,
+    "lateness": 0.312,
+    "spare": 1,
+    "tail": 0.529,
+    "tiles": 0.167,
+    "faceDown": 0.657
+   },
+   "needle": false,
+   "facts": {
+    "links": 3,
+    "baits": 1,
+    "firstMoves": {
+     "winning": 5,
+     "legal": 9,
+     "unknown": 0,
+     "share": 0.556
+    },
+    "needle": false,
+    "pressure": {
+     "k": 17,
+     "moves2plus": 13,
+     "share2plus": 0.765,
+     "run2": 6,
+     "at3": 5,
+     "peak": 3,
+     "waiters": 4,
+     "occ": "12121232321232323"
+    },
+    "lateness": {
+     "moves": 7,
+     "share": 0.35,
+     "k": 17,
+     "ended": "stuck"
+    },
+    "spare": 1,
+    "tailGreedyWin": 0.2238,
+    "tiles": 76,
+    "faceDownShare": 0.197
+   },
+   "weights": {
+    "links": 0.2,
+    "baits": 0.04,
+    "firstMoves": 0.03,
+    "pressure": 0.2,
+    "lateness": 0.14,
+    "spare": 0.04,
+    "tail": 0.3,
+    "tiles": 0.02,
+    "faceDown": 0.03
+   }
+  },
+  "whatToSee": "The clock is frozen, so two of its neighbours must go first; one of the neighbours that can melt it is locked (it needs the keys); the other key also lies under a frozen tile: do not melt with the free neighbour whose twin is buried: it would wait in the tray.",
+  "layoutId": 9,
+  "shapeIndex": 35,
+  "tier": "std",
+  "poolId": "35-9-1-d5_3-std"
+ },
+ "difficulty": {
+  "score": 5.78,
+  "parts": {
+   "links": 0.55,
+   "baits": 0,
+   "firstMoves": 0.522,
+   "pressure": 0.699,
+   "lateness": 0.312,
+   "spare": 1,
+   "tail": 0.529,
+   "tiles": 0.167,
+   "faceDown": 0.657
+  },
+  "needle": false,
+  "facts": {
+   "links": 3,
+   "baits": 1,
+   "firstMoves": {
+    "winning": 5,
+    "legal": 9,
+    "unknown": 0,
+    "share": 0.556
+   },
+   "needle": false,
+   "pressure": {
+    "k": 17,
+    "moves2plus": 13,
+    "share2plus": 0.765,
+    "run2": 6,
+    "at3": 5,
+    "peak": 3,
+    "waiters": 4,
+    "occ": "12121232321232323"
+   },
+   "lateness": {
+    "moves": 7,
+    "share": 0.35,
+    "k": 17,
+    "ended": "stuck"
+   },
+   "spare": 1,
+   "tailGreedyWin": 0.2238,
+   "tiles": 76,
+   "faceDownShare": 0.197
+  },
+  "weights": {
+   "links": 0.2,
+   "baits": 0.04,
+   "firstMoves": 0.03,
+   "pressure": 0.2,
+   "lateness": 0.14,
+   "spare": 0.04,
+   "tail": 0.3,
+   "tiles": 0.02,
+   "faceDown": 0.03
+  }
+ }
+}
