@@ -27,7 +27,7 @@ for (let n = 303; n <= 313; n++) { const j = rd(path.join(BANK, 'pressure-B-250-
 const first = old.filter(b => b.was < 265);                                   // 250-264 stay
 const rest = old.filter(b => b.was >= 265), keepOlder = rest.filter(b => !b.chain), chains = rest.filter(b => b.chain && b.design.tiles.length !== 96), big = old.filter(b => b.was >= 265 && b.design.tiles.length === 96);
 // 96-tile boards sit on levels ending in 0 and nowhere else (Dennis 2026-11-14: "Can we move the big boards at 10's"); the other big boards stay in reserve
-const TENS = { 270: 'batch 270', 280: 'chained waitThawWay-L21-s12-p2', 290: 'chained lookalikeCover-L13-s12-p2', 300: 'chained lookalikeThaw-L27-s13-p2', 310: 'chained lookalikeWay-L47-s19-p1', 330: 'chained lookalikeWay-L13-s12-p2' };
+const TENS = { 270: 'batch 270', 280: 'chained waitThawWay-L21-s12-p2', 290: 'chained lookalikeCover-L13-s12-p2', 300: 'chained lookalikeThaw-L27-s13-p2', 310: 'chained lookalikeWay-L47-s19-p1', 330: 'chained lookalikeWay-L13-s12-p2', 320: 'two waitThawWay_clockCount-L21-s113-p1', 340: 'two lookalikeThaw_savePair-L27-s97-p1', 350: 'two waitCoverKey_selfLocked-L47-s173-p1' };
 const NEW_BELOW = 17, wantChains = (302 - 265 + 1) - 4 - NEW_BELOW - keepOlder.length - 3;   // four tens in 265-302
 const picked = []; for (let i = 0; i < wantChains; i++) picked.push(chains[Math.round(i * (chains.length - 1) / (wantChains - 1))]);
 first.forEach((b, i) => items.push({ ...b, target: 250 + i, fixed: 250 + i }));
@@ -50,6 +50,22 @@ for (const [dir, alt] of [['chained-v1/examples', 'chained-gentle'], ['chained-v
   const rows = sel.boards || sel.selection || sel, k = rows.findIndex(r => r.file === 'lookalikeCoverThaw-L12-s12-p2.json'), idea = L.ideas[k];
   if (idea) fresh.push({ id: 'lookalikeCoverThaw-L12-s12-p2', src: 'chained lookalikeCoverThaw-L12-s12-p2', design: idea.board, layout: 12, shape: 'lookalikeCoverThaw', tier: 2.5, idea: 'new:lookalikeChoice', spare: 2, pin: PIN['lookalikeCoverThaw-L12-s12-p2'] });
 }
+// ---- chains with TWO wrong ideas (Codex Task 18), for 320 and up. Dennis 2026-11-14: "Very good AHA moment. 320+" (twin under the ice +
+// waiting clock: that exact board is kept as he played it), "Good AHA trap. Part after is too hard", "Good trap! 320+ too hard after the
+// trap. tune that easier. its more about the traps now" -> every other board carries the lighter finish (bank/light_finish.js).
+// Not used: the nine "keys are not for now" boards (no good verdict yet) and single-idea three-link chains ("No AHA ... needs more chains").
+{
+  const NI = path.join(BANK, 'new-ideas'), LIGHT = path.join(BANK, 'new-ideas-light'), REV = path.join(NI, 'review-2026-11-14/revised');
+  const sel = rd(path.join(NI, 'selection.json')).combinations, LIKED = ['selfLocked+waitForTwin', 'lookalikeChoice+savePair', 'clockCount+lookalikeChoice'];
+  const two = (file, j, pair, pin, note) => fresh.push({ id: file.replace('.json', ''), src: 'two ' + file.replace('.json', ''), design: j.design, layout: j.brief.layout ?? j.card.layout, shape: 'two:' + pair, tier: 5, liked: LIKED.includes(pair), idea: 'two:' + pair, spare: j.card.clock.spare, pin: pin || null, note });
+  for (const c of sel) {
+    const pair = c.primary.slice().sort().join('+'); if (/keysLater/.test(pair)) continue;
+    if (c.file === 'waitNested_selfLocked-L31-s173-p1.json') { two(c.file, rd(path.join(NI, 'checked', c.file)), pair, [322, 332], 'as Dennis played it'); continue; }
+    if (c.file === 'lookalikeThaw_clockCount-L30-s113-p1.json') { two(c.file, rd(path.join(REV, 'lookalikeThaw_clockCount-L30-s113-p1-light.json')), pair, [321, 345], 'lighter finish of the board he played'); continue; }
+    const lf = path.join(LIGHT, c.file); if (fs.existsSync(lf)) two(c.file, rd(lf), pair);
+  }
+  const f355 = path.join(REV, 'lookalikeThaw_savePair-L14-s85-p1-light.json'); if (fs.existsSync(f355)) two('lookalikeThaw_savePair-L14-s85-p1.json', rd(f355), 'lookalikeChoice+savePair', [321, 345], 'lighter finish of the board he played');
+}
 // below 303: the pinned ones plus easy ones on other layouts (not two of a shape close together); the other tier-1 boards stay in reserve
 for (const [lv, src] of Object.entries(TENS)) { const b = fresh.find(x => x.src === src); if (b) { b.pin = null; items.push({ ...b, target: +lv, fixed: +lv }); } }
 const bigNew = new Set(fresh.filter(b => b.design.tiles.length === 96).map(b => b.id));
@@ -71,6 +87,12 @@ above.forEach((b, i) => { const base = b.tier === 2 ? 303 + i * 1.6 : b.tier ===
   t3.forEach((b, i) => { b.target = 304 + i * (end - 304) / Math.max(1, t3.length - 1); });
   t4.forEach((b, i) => { b.target = 326 + i * (end - 326) / Math.max(1, t4.length - 1); });
   above.filter(b => b.tier === 2.5).forEach((b, i) => { b.target = 307 + i * 9; });
+  // two-idea chains from 320 on, the pairs he liked first
+  const t5 = above.filter(b => b.tier === 5).sort((a, b) => (b.liked ? 1 : 0) - (a.liked ? 1 : 0));
+  t5.forEach((b, i) => { b.target = 320 + i * 1.55; });
+  const end5 = 320 + t5.length * 1.55;
+  t3.forEach((b, i) => { b.target = 304 + i * (Math.max(end, end5) - 304) / Math.max(1, t3.length - 1) * 0.6; });
+  t4.forEach((b, i) => { b.target = 326 + i * (end5 - 326) / Math.max(1, t4.length - 1); });
   above.forEach(b => { if (b.pin) b.target = Math.min(b.pin[1], Math.max(b.pin[0], b.target)); items.push(b); }); }
 // ---- order: by target, then keep layouts, shapes and kinds of wrong idea apart
 const total = items.length, fixed = new Map(items.filter(b => b.fixed).map(b => [b.fixed, b]));
@@ -91,7 +113,7 @@ seq.forEach((b, i) => {
   const n = 250 + i, d = b.design; if (!E.replay(d, d.solution, { strict: true }).ok) throw new Error('replay ' + b.src);
   const r = expert(d, { playouts: 10, wrong: false });
   fs.writeFileSync(path.join(OUT, `level-${n}.json`), JSON.stringify({ level: n, source: b.src, idea: b.idea, shape: b.shape, layout: b.layout, design: d }));
-  rows.push(`| ${n} | ${b.src} | ${b.layout ?? ''} | ${d.tiles.length} | ${b.idea} | ${(r.parkAt[1] + r.parkAt[2]).toFixed(1)} | ${b.pin ? 'placed where Dennis said' : ''} |`);
+  rows.push(`| ${n} | ${b.src} | ${b.layout ?? ''} | ${d.tiles.length} | ${b.idea} | ${(r.parkAt[1] + r.parkAt[2]).toFixed(1)} | ${b.note || (b.pin ? 'placed where Dennis said' : '')} |`);
 });
 fs.writeFileSync(path.join(OUT, 'placed.md'), `# Levels 250-${249 + total}\n\n| level | source | layout | tiles | wrong idea | pressure parks after the trap | |\n|---|---|---|---|---|---|---|\n${rows.join('\n')}\n\nReserve (not placed): ${fresh.filter(b => !used.has(b.id) && b.tier === 1).map(b => b.id).join(', ')}\n`);
 console.log(rows.join('\n')); console.log('levels', total, 'reserve tier 1:', fresh.filter(b => !used.has(b.id) && b.tier === 1).length);
