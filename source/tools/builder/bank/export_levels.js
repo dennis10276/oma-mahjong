@@ -82,18 +82,22 @@ function exportTable(tableText, designs, opt = {}) {
     if (i < NT.levels.length) NT.levels[i] = row; else { NT.levels.push(row); if (NT.ratingModels) NT.ratingModels.push('strong'); }
   }
   if (!report.ok) return { report };
+  // --designed-version N: saved games on the replaced boards start again (www/hard.js designVersion reads designedFrom / designedVersion)
+  if (opt.designedVersion) { NT.designedFrom = Math.min(NT.designedFrom || nums[0], nums[0]); NT.designedVersion = opt.designedVersion; }
+  // --cut: the table ends at the last level given (rows after it are dropped)
+  if (opt.cut) { const keep = nums[nums.length - 1] - NT.from + 1; NT.levels.length = keep; if (NT.ratingModels) NT.ratingModels.length = keep; }
   const crlf = P.head.includes('\r\n') ? '\r\n' : '\n';
   let head = P.head;
   const note = `/* Levels ${nums[0]}-${nums[nums.length - 1]}: designed boards written by tools/builder/bank/export_levels.js (no bot ratings; packed rate/strong fields are 0). */`;
   if (!head.includes('export_levels.js')) head = head.replace(/(const\s*$)/, '') + note + crlf;
   const text = head + 'const HARD_LEVELS = ' + JSON.stringify(NT) + P.tail;
   report.text = text;
-  Object.assign(report, verify(tableText, text, designs, nums, opt.minPx));
+  Object.assign(report, verify(tableText, text, designs, nums, opt.minPx, opt.cut));
   return { report, text };
 }
 
 // decode the OUTPUT TEXT with the game's decoder and compare
-function verify(oldText, newText, designs, nums, minPx) {
+function verify(oldText, newText, designs, nums, minPx, cut) {
   const out = { ok: true, errors: [], warnings: [], levels: [], checks: {} };
   const err = m => { out.ok = false; out.errors.push(m); };
   const o = loadTable(oldText), n = loadTable(newText);
@@ -103,13 +107,14 @@ function verify(oldText, newText, designs, nums, minPx) {
   // every untouched level decodes exactly as before (and its packed row is identical)
   let untouched = 0;
   for (let lv = o.from; lv <= oLast; lv++) {
-    if (lv >= first && lv <= lastNew) continue;
+    if ((lv >= first && lv <= lastNew) || (cut && lv > lastNew)) continue;
     untouched++;
     if (!same(n.levels[lv - n.from], o.levels[lv - o.from]) || !same(Hard.unpack(lv, n.levels[lv - n.from]), Hard.unpack(lv, o.levels[lv - o.from]))) err(`level ${lv} changed but should not`);
     if (o.ratingModels && n.ratingModels[lv - n.from] !== o.ratingModels[lv - o.from]) err(`ratingModels[${lv}] changed`);
   }
   out.checks.untouchedLevels = untouched;
-  if (nLast !== Math.max(oLast, lastNew)) err(`level count: last level ${nLast}, expected ${Math.max(oLast, lastNew)}`);
+  const wantLast = cut ? lastNew : Math.max(oLast, lastNew);
+  if (nLast !== wantLast) err(`level count: last level ${nLast}, expected ${wantLast}`);
   if (n.ratingModels && n.ratingModels.length !== n.levels.length) err('ratingModels length differs from the level count');
   // each new level decodes to exactly the input, and its stored solution wins under the game's rules
   const minTile = Hard.cfg().minTile, minBig = Hard.cfg().minTileBig;
@@ -162,7 +167,7 @@ function main(argv) {
   const a = {}; for (let i = 0; i < argv.length; i++) if (argv[i].startsWith('--')) { const k = argv[i].slice(2); a[k] = argv[i + 1] && !argv[i + 1].startsWith('--') ? argv[++i] : true; }
   if (!a.in) { console.error('usage: node export_levels.js --in <folder> [--table file] [--out dir] [--write] [--min 250] [--minpx <px, experiments only: lowers the tile-size floor to a warning>]'); process.exit(2); }
   const tablePath = path.resolve(a.table || path.join(SRC, 'www/levels-hard.js'));
-  const { report, text } = exportTable(fs.readFileSync(tablePath, 'utf8'), readDir(path.resolve(a.in)), { min: +a.min || 250, minPx: +a.minpx || 0 });
+  const { report, text } = exportTable(fs.readFileSync(tablePath, 'utf8'), readDir(path.resolve(a.in)), { min: +a.min || 250, minPx: +a.minpx || 0, designedVersion: +a['designed-version'] || 0, cut: !!a.cut });
   const outDir = path.resolve(a.out || path.join(SRC, 'build/export'));
   delete report.text;
   console.log(JSON.stringify({ ok: report.ok, errors: report.errors, warnings: report.warnings, levels: report.levels, checks: report.checks }, null, 1));

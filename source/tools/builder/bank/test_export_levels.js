@@ -2,7 +2,8 @@
 const assert = require('assert'), fs = require('fs'), path = require('path');
 const { exportTable, loadTable } = require('./export_levels.js');
 const SRC = path.resolve(__dirname, '../../..');
-const text = fs.readFileSync(path.join(SRC, 'www/levels-hard.js'), 'utf8');
+// the table as it was live in 1.68 (levels 70-269): the checks below count against that fixed state, not against today's work table
+const text = require('child_process').execFileSync('git', ['show', 'ccd20d0a:source/www/levels-hard.js'], { cwd: SRC, encoding: 'utf8', maxBuffer: 1e8 });
 const dir = path.join(SRC, 'build/traps/examples2');
 const chains = fs.readdirSync(dir).filter(f => /^chain-.*\.json$/.test(f)).sort().map(f => JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')).design);
 assert.ok(chains.length >= 6, 'the lab-5 chain boards are there');

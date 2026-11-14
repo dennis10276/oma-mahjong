@@ -26,11 +26,13 @@ for (let n = 250; n <= 302; n++) {
 for (let n = 303; n <= 313; n++) { const j = rd(path.join(BANK, 'pressure-B-250-313', `level-${n}.json`)), c = rd(path.join(BANK, 'batch-303-342', `level-${n}.json`)).card; old.push({ src: 'batch2 ' + n, design: j.design, was: n, chain: true, layout: c.layout, shape: c.shape, idea: 'known:' + c.trap.baits.map(b => b.name).sort().join('+') }); }
 const first = old.filter(b => b.was < 265);                                   // 250-264 stay
 const rest = old.filter(b => b.was >= 265), keepOlder = rest.filter(b => !b.chain), chains = rest.filter(b => b.chain && b.design.tiles.length !== 96), big = old.filter(b => b.was >= 265 && b.design.tiles.length === 96);
-const NEW_BELOW = 17, slotsOld = (302 - 265 + 1) - NEW_BELOW, wantChains = slotsOld - keepOlder.length - 3 - 3;   // three 96-tile boards on 270, 280, 290
+// 96-tile boards sit on levels ending in 0 and nowhere else (Dennis 2026-11-14: "Can we move the big boards at 10's"); the other big boards stay in reserve
+const TENS = { 270: 'batch 270', 280: 'chained waitThawWay-L21-s12-p2', 290: 'chained lookalikeCover-L13-s12-p2', 300: 'chained lookalikeThaw-L27-s13-p2', 310: 'chained lookalikeWay-L47-s19-p1', 330: 'chained lookalikeWay-L13-s12-p2' };
+const NEW_BELOW = 17, wantChains = (302 - 265 + 1) - 4 - NEW_BELOW - keepOlder.length - 3;   // four tens in 265-302
 const picked = []; for (let i = 0; i < wantChains; i++) picked.push(chains[Math.round(i * (chains.length - 1) / (wantChains - 1))]);
 first.forEach((b, i) => items.push({ ...b, target: 250 + i, fixed: 250 + i }));
 [...keepOlder, ...picked].sort((a, b) => a.was - b.was).forEach((b, i, a) => items.push({ ...b, target: 265 + i * (302 - 265) / (a.length - 1) }));
-big.slice(0, 3).forEach((b, i) => items.push({ ...b, target: 270 + 10 * i, fixed: 270 + 10 * i }));
+big.filter(b => b.src === TENS[270]).forEach(b => items.push({ ...b, target: 270, fixed: 270 }));
 // ---- the new-idea chains (Codex): v1 with the lightened tails where made, v2
 const TIER = { waitThawKey: 1, waitThawWay: 1, waitNested: 1, lookalikeCover: 2, waitLookalikeRoof: 2, lookalikeThaw: 2, lookalikeCoverThaw: 2.5, roofThawKey: 3, lookalikeWay: 3, waitLookalikeWay: 4 };
 const SKIP = new Set(['lookalikeCoverThaw-L18-s4-p1', 'lookalikeCoverThaw-L36-s3-p1', 'waitLookalikeWay-L7-s11-p1', 'waitLookalikeWay-L7-s12-p2']);
@@ -49,6 +51,9 @@ for (const [dir, alt] of [['chained-v1/examples', 'chained-gentle'], ['chained-v
   if (idea) fresh.push({ id: 'lookalikeCoverThaw-L12-s12-p2', src: 'chained lookalikeCoverThaw-L12-s12-p2', design: idea.board, layout: 12, shape: 'lookalikeCoverThaw', tier: 2.5, idea: 'new:lookalikeChoice', spare: 2, pin: PIN['lookalikeCoverThaw-L12-s12-p2'] });
 }
 // below 303: the pinned ones plus easy ones on other layouts (not two of a shape close together); the other tier-1 boards stay in reserve
+for (const [lv, src] of Object.entries(TENS)) { const b = fresh.find(x => x.src === src); if (b) { b.pin = null; items.push({ ...b, target: +lv, fixed: +lv }); } }
+const bigNew = new Set(fresh.filter(b => b.design.tiles.length === 96).map(b => b.id));
+for (let i = fresh.length - 1; i >= 0; i--) if (bigNew.has(fresh[i].id)) fresh.splice(i, 1);   // placed on a ten above, or in reserve
 const below = fresh.filter(b => b.pin && b.pin[1] < 303); const lay = new Set(below.map(b => b.layout));
 const t1 = fresh.filter(b => b.tier === 1 && !b.pin && !lay.has(b.layout)), t2 = fresh.filter(b => b.tier === 2 && !b.pin && !lay.has(b.layout));
 const take = (list, n, shapes) => { const out = []; let s = 0; while (out.length < n && list.length) { const sh = shapes[s++ % shapes.length], i = list.findIndex(b => b.shape === sh && !lay.has(b.layout)); if (i >= 0) { const b = list.splice(i, 1)[0]; lay.add(b.layout); out.push(b); } if (s > 60) break; } return out; };
@@ -73,7 +78,7 @@ let pool = items.filter(b => !b.fixed).sort((a, b) => a.target - b.target); cons
 for (let n = 250; n < 250 + total; n++) {
   if (fixed.has(n)) { seq.push(fixed.get(n)); continue; }
   const prev = seq[seq.length - 1], recent = seq.slice(-8).map(b => b.layout).filter(x => x != null);
-  const ok = b => !(b.layout != null && recent.includes(b.layout)) && !(prev && (prev.shape === b.shape || (prev.idea === b.idea && b.idea !== 'older'))) && !(b.pin && n < b.pin[0]) && !(n % 10 === 0) === !(b.design.tiles.length === 96 && n % 10 === 0);
+  const ok = b => !(b.layout != null && recent.includes(b.layout)) && !(prev && (prev.shape === b.shape || (prev.idea === b.idea && b.idea !== 'older'))) && !(b.pin && n < b.pin[0]);
   let k = pool.findIndex(b => b.pin && n >= b.pin[1]);                       // a pinned board that must go now
   if (k < 0) k = pool.slice(0, 14).findIndex(ok);
   if (k < 0) k = pool.slice(0, 7).findIndex(b => !(b.pin && n < b.pin[0]) && !(prev && prev.shape === b.shape));
