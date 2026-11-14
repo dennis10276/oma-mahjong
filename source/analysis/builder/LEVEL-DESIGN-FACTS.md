@@ -193,6 +193,8 @@ add new decisions with a date.
       Also the keys are just laying there. Not chained at all." No good verdict for this idea yet.
     Lead's reading: after a two-idea trap the rest is about finishing, so a pair-first player should finish most of the time; what
     the trap needs to be read (the lock, the ice) has to be in plain sight.
+  - **1.69 is live** (released and verified 2026-11-14 evening): commit a99b338e on main, 170 of 170 tests, APK 1.69 (code 85) signed with the
+    existing certificate; the website serves version 1.69 and a level table that ends at 300 with designedFrom 250.
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
   - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
     played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is
