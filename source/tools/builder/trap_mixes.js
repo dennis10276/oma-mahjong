@@ -66,12 +66,13 @@ Object.assign(FAMILIES, require('./chained_shapes.js').SHAPES);
 
 function place(name, c, brief, rng) {
   const f = FAMILIES[name]; if (!f) return { fail: 'unknownMix' };
+  const baseName=f.baseName||name;
   const b = { ...brief, targets: { ...brief.targets }, ...(f.chain != null ? { chain: T.CHAIN_SHAPES[f.chain] } : {}) };
   if(f.chained&&f.mode==='earlyClock')b.pressure=brief.pressure||{};
   if(f.chained&&f.mode==='roofKey')b.frame={...b.frame,depth:T.CHAIN_DEFS[f.chain].cover?2:(rng()<.5?1:2)};
   if (f.base === 'lockedMelt') {b.targets.locks=4;b.targets.digBefore??=[2,8];b.targets.keyCover??=[1,4];}
   if(f.mode==='freezeTwoRight'){b.frame={...b.frame,depth:0};b.targets.minWay=3;}
-  const r = f.name==='waitNested'&&brief.targets?.nestedKeyOnInner?require('./chained_nested_hosts.js').innerKey(c,b,rng,T):f.name==='waitNested'&&brief.targets?.nestedDirect?require('./chained_nested_hosts.js').direct(c,b,rng,T):f.name==='waitNested'&&brief.targets?.nestedFallback?require('./chained_nested_hosts.js').place(c,b,rng,T):T.STORIES[f.base].place(c, b, rng); if (r.fail) return r;
+  const r = baseName==='waitNested'&&brief.targets?.nestedKeyOnInner?require('./chained_nested_hosts.js').innerKey(c,b,rng,T):baseName==='waitNested'&&brief.targets?.nestedDirect?require('./chained_nested_hosts.js').direct(c,b,rng,T):baseName==='waitNested'&&brief.targets?.nestedFallback?require('./chained_nested_hosts.js').place(c,b,rng,T):T.STORIES[f.base].place(c, b, rng); if (r.fail) return r;
   if(f.name==='lookalikeCoverThaw'){
     const q=require('./chained_readability.js').keyRoof({tiles:c.tiles,obst:{keys:r.keys,ice:r.ice}});
     if(q.keyShown<(brief.targets?.keyRoofShownMin??0)||q.roofShown<(brief.targets?.keyRoofTopMin??0))return {fail:'keyRoofReadability'};
@@ -156,6 +157,8 @@ function place(name, c, brief, rng) {
     if (!P || [...wrong].some(i => P.includes(i))) return { fail: 'mixedDig' };
   }
   P=keysFirst(c,r,P,rng);r.dig = P;
+  for(const kind of f.sixIdeas||[]){const placed=require('./chained_six_ideas.js').place(kind,c,r,{...brief,sixMode:f.mode,sixOriginalClock:originalClock,sixSetup:setup},rng);if(placed.fail)return placed;P=r.dig;}
+  if(setup!=null&&!P.includes(setup))setup=null;
   const specials = uniq([r.clock, ...r.keys, ...r.locks, ...Object.keys(r.ice).map(Number)]);
   const mechanism = uniq([...specials, ...specials.flatMap(i => [...c.above[i]]), ...Object.keys(r.ice).map(Number).flatMap(i => c.inb[i])]);
   r.bait = { ...bait, type: name, keepUp: uniq([...bait.keepUp, ...mechanism]),
@@ -226,13 +229,14 @@ function lockedRelay(c,r,plan){
   }
   return false;
 }
-function tailFork(d,without,tile){
+function tailFork(d,without,tile,opts={}){
   const g=E.game(d),g2=E.game(without),ci=d.solution.indexOf(d.clock.i),left=d.solution.length-ci-1;
-  let s=E.start(g);const lo=ci+1+Math.floor(left*.15),hi=ci+1+Math.floor(left*.60);
+  let s=E.start(g);const lo=ci+1+(opts.fromClock?0:Math.floor(left*.15)),hi=ci+1+Math.floor(left*.60);
   let checked=0;
   for(let step=0;step<=hi;step++){
-    if(step>=lo&&s.alive[tile])for(const move of D.temptingMoves(g,s,{singles:true}).filter(m=>!m.peek).slice(0,6)){
-      if(++checked>24)return null;
+    const moves=opts.fromClock?E.legal(g,s).filter(Number.isInteger).filter(i=>!g.down[i]).map(i=>({take:[i]})):D.temptingMoves(g,s,{singles:true}).filter(m=>!m.peek).slice(0,6);
+    if(step>=lo&&s.alive[tile])for(const move of moves){
+      if(++checked>(opts.fromClock?80:24))return null;
       const after=D.playMove(g,s,move);if(!after)continue;
       const loss=E.winnable(g,after,{nodes:70000,ms:700});if(loss.result!=='lose')continue;
       const relief=E.winnable(g2,after,{nodes:100000,ms:1000});
@@ -276,6 +280,14 @@ function prove(name, d, roles, ctx, opts = {}) {
     newLink={kind:f.newIdea,sentence:f.see,...offer};
     if(f.newIdea==='splitPreparation')newLink.individuals=offer.take.map(i=>price(d,[i],k,{C,w}));
   }
+  const newLinks=[];
+  for(const kind of f.sixIdeas||[]){
+    const proof=require('./chained_six_ideas.js').LINK_KINDS[kind].prove(d,roles,{k,spare},{C,w});
+    if(!proof.ok)return {ok:false,why:'idea18:'+proof.why};
+    const {link,price:p}=proof;
+    if(!baits.some(b=>JSON.stringify(b.tiles)===JSON.stringify(link.take)))baits.push(p);
+    newLinks.push(link);newLink??=link;
+  }
   if (f.mode==='earlyClock' && !baits.some(p=>p.tiles.includes(d.clock.i))) return {ok:false,why:'clockNotBait'};
   if (f.mode==='roofKey' && !baits.some(p=>p.tiles.includes(roles.bait.keyEarly))) return {ok:false,why:'roofKeyNotBait'};
   if ((f.mode==='repeatKeys'||f.repeat) && !baits.some(p=>JSON.stringify(p.tiles)===JSON.stringify(roles.bait.repeat?.wrongPair))) return {ok:false,why:'wrongRepeatedPairNotBait'};
@@ -293,7 +305,8 @@ function prove(name, d, roles, ctx, opts = {}) {
   if(f.chained){
     subtle=require('./chained_obviousness.js').measure(d,{baits,dial:ctx.obviousnessDial??0});
     if(!subtle.ok)return {ok:false,why:subtle.rightFreePairs?'obvious:freeRoutePair':'obvious:greedyPrefix'};
-    if(baits.length<2 || !baits.some(p=>p.tiles.every(i=>!baits[0].tiles.includes(i))))return {ok:false,why:'twoMeaningfulBaits'};
+    if(f.sixIdea&&!newLinks.some(q=>subtle.preferredBaits.some(p=>JSON.stringify(p)===JSON.stringify(q.take))))return {ok:false,why:'idea18:notGreedy'};
+    if(!f.sixIdea&&(baits.length<2 || !baits.some(p=>p.tiles.every(i=>!baits[0].tiles.includes(i)))))return {ok:false,why:'twoMeaningfulBaits'};
   }
   if(first && first.winning<2) return {ok:false,why:'fewerThan2WinningStarts'};
   const effects=[];
@@ -305,10 +318,10 @@ function prove(name, d, roles, ctx, opts = {}) {
       const p=price(dd,bait.tiles,k,{nodes:250000});
       if(p?.exact && p.result==='win' && p.cost<=spare) { effect={by:'baitDefused',bait:bait.tiles,winsAt:d.clock.n};break; }
     }
-    if(!effect && (f.mode==='tailIce'||f.mode==='tailLock')) {
-      effect=tailFork(d,dd,tile);
+    if(!effect && (f.mode==='tailIce'||f.mode==='tailLock'||f.sixIdeas?.includes('keysLater'))) {
+      effect=tailFork(d,dd,tile,{fromClock:f.sixIdeas?.includes('keysLater')});
     }
-    if(!effect && (f.mode==='tailIce'||f.mode==='tailLock')) {
+    if(!effect && (f.mode==='tailIce'||f.mode==='tailLock'||f.sixIdeas?.includes('keysLater'))) {
       const before=Tail.measure(d,{seed:977,playouts:400}).tailGreedyWin, after=Tail.measure(dd,{seed:977,playouts:400}).tailGreedyWin;
       if(after-before>=.1) effect={by:'tailGreedy',with:before,without:after,delta:+(after-before).toFixed(4),seed:977,playouts:400};
     }
@@ -316,8 +329,8 @@ function prove(name, d, roles, ctx, opts = {}) {
     effects.push({kind,tile,...effect});
   }
   const card={type:name,trapType:f.trapType,see:f.see,recipe:f.recipe,dials:f.dials,k,spare,priceHorizon:Math.min(19,k+3),baits,control,effects,firstMoves:first,mechanism:{...roles.bait.mix,repeat:roles.bait.repeat||null,relay:roles.bait.relay||null},
-    ...(f.chained?{signature:f.signature,baseSignature:f.baseSignature,links:f.links,obviousness:subtle,twoTraps:{kind:'hardChainAndMediumBait',hardLinks:f.links,mediumLinks:2,mediumEvidence:require('./chained_facts.js').mediumEvidence(d,roles,baits),baits:baits.map(p=>p.tiles),note:'Two separately priced bad decisions on one connected chain; no claim of additive sequential costs.'}}:{}),
-    ...(newLink?{newLink}:{}),...(keyRoof?{keyRoofReadability:{...keyRoof,minimum:roles.bait.keyRoofShownMin??0,roofMinimum:roles.bait.keyRoofTopMin??0}}:{}),combinedBadges:combined,needsUi:combined.length?'TASK-13':null};
+    ...(f.chained?{signature:f.signature,baseSignature:f.baseSignature,links:f.links,obviousness:subtle,twoTraps:f.sixIdea?{kind:newLinks.length>1||['earlyClock','repeatKeys','roofKey'].includes(f.mode)?'composedWrongIdeas':'singleHardChain',hardLinks:f.links,ideas:[...newLinks.map(q=>q.kind),...({earlyClock:['waitForTwin'],repeatKeys:['lookalikeChoice'],roofKey:['clockRoof']}[f.mode]||[])],baits:newLinks.map(q=>q.take),note:'Every authored new decision is separately proven lost; no additive sequential-cost claim.'}:{kind:'hardChainAndMediumBait',hardLinks:f.links,mediumLinks:2,mediumEvidence:require('./chained_facts.js').mediumEvidence(d,roles,baits),baits:baits.map(p=>p.tiles),note:'Two separately priced bad decisions on one connected chain; no claim of additive sequential costs.'}}:{}),
+    ...(newLink?{newLink}:{}),...(newLinks.length?{newLinks}:{}),...(keyRoof?{keyRoofReadability:{...keyRoof,minimum:roles.bait.keyRoofShownMin??0,roofMinimum:roles.bait.keyRoofTopMin??0}}:{}),combinedBadges:combined,needsUi:combined.length?'TASK-13':null};
   return {ok:true,card};
 }
 
@@ -326,6 +339,16 @@ const STORIES = Object.fromEntries(Object.values(FAMILIES).map(f=>[f.name,{
 }]));
 // Registration is opt-in on require; no existing story is replaced.
 Object.assign(B.STORIES,STORIES);
+
+function registerChain(name,{base=null,links}){
+  if(FAMILIES[name]||STORIES[name])throw Error('Recipe already registered: '+name);
+  const shapes=require('./chained_shapes.js').SHAPES,old=base&&shapes[base];
+  if(old?.sixIdea)throw Error('Use a base dependency graph and put new link kinds in links');
+  const f=require('./chained_six_specs.js').compose(name,base,links,old);
+  shapes[name]=FAMILIES[name]=f;
+  STORIES[name]={title:name,sentence:f.see,spec:{},place:(c,b,r)=>place(name,c,b,r),prove:(d,r,c)=>prove(name,d,r,c),profile:'traps-v1'};
+  B.STORIES[name]=STORIES[name];return f;
+}
 
 function build(name, brief = {}, opts = {}) {
   if(!FAMILIES[name]) return {fail:'unknownMix'};
@@ -343,6 +366,12 @@ function build(name, brief = {}, opts = {}) {
     const fixedPairs=[...(r.keys.length===2?[r.keys]:[]),...r.bait.pairs,...(f.mode==='earlyClock'?[[r.clock,r.bait.mix.originalClock]]:[])];
     if(fixedPairs.some(([a,b])=>geo.vis[a]&&geo.vis[b]&&geo.close[a][b])){fails.fixedTwinsClose=(fails.fixedTwinsClose||0)+1;continue;}
     const P=r.dig,hold=B.chooseHolders(c,r,P,{},rng),N=f.mode==='earlyClock'?B.necessary(c,{...r,clock:r.bait.mix.originalClock},P.filter(i=>i!==r.clock)):B.necessary(c,r,P);
+    for(const q of r.bait.sixLinks||[])if(q.kind==='doubleMelt')for(const i of q.right)N.delete(i);
+    for(const q of r.bait.sixLinks||[])if(q.kind==='clockCount'){N.clear();for(const i of q.orphans)N.add(i);}
+    if(f.sixIdeas?.includes('keysLater')){
+      const q=r.bait.sixLinks.find(q=>q.kind==='keysLater');
+      hold.holders=new Set([q.lock,...[...Array(c.n).keys()].filter(i=>hold.cov[i]&&!P.includes(i)&&!r.bait.tiles.includes(i)&&i!==q.lock).slice(0,2)]);
+    }
     if(f.mode==='earlyClock'){
       N.add(r.clock);
       hold.holders=new Set(clockHolders(c,P,r.bait.mix.originalClock,r.bait,!!used.targets.flexClockHolders,r.clock));
@@ -354,11 +383,20 @@ function build(name, brief = {}, opts = {}) {
     }
     const plan=VC.placePicturesVC(c,r,P,hold,used,rng,N);
     if(!plan || plan.fail){const why=plan?.fail||'pictures';fails[why]=(fails[why]||0)+1;continue;}
+    let pictureFail=null;for(const kind of f.sixIdeas||[]){pictureFail=require('./chained_six_ideas.js').pictures(kind,c,r,plan);if(pictureFail)break;}
+    if(pictureFail){fails[pictureFail]=(fails[pictureFail]||0)+1;continue;}
     if(f.mode==='earlyClock'&&plan.faces[r.clock]!==plan.faces[r.bait.mix.originalClock]){fails.clockTwinNotGate=(fails.clockTwinNotGate||0)+1;continue;}
     if(name==='splitThawLocks'&&!lockedRelay(c,r,plan)){fails.noLockedRelay=(fails.noLockedRelay||0)+1;continue;}
     if((f.mode==='repeatKeys'||f.repeat)&&!repeatedKeys(c,r,plan,rng)){fails.noRepeatedKeyPair=(fails.noRepeatedKeyPair||0)+1;continue;}
     const pd=VC.placeDownVC(c,r,P,plan,used,rng);
     const d={tiles:c.tiles.map(t=>[t.x,t.y,t.z]),faces:plan.faces,down:pd.down,gold:[],obst:{ice:{...r.ice},locks:[...r.locks],keys:r.keys.slice()},clock:{i:r.clock,n:99},solution:plan.W};
+    if(f.sixIdea){
+      // Construction-time picture spacing, before minimum-clock and bait proof.
+      // The critical pictures are authored constraints; all later acceptance
+      // checks still run on the resulting board.
+      const apart=SEP.separate(d,{seed:(brief.seed??1)+attempt,wallMs:150,freeze:[...r.bait.tiles,...r.keys,...(r.bait.repeat?.copies||[])],validate:x=>({ok:E.replay(x,x.solution,{strict:true}).ok})});
+      if(apart.validated){d.faces=apart.design.faces;d.solution=apart.design.solution;}
+    }
     if(f.newIdea){
       require('./chained_new_ideas.js').arrange(f.newIdea,d,r,rng);
       const offers=require('./chained_new_ideas.js').candidates(f.newIdea,d);
@@ -379,7 +417,9 @@ function build(name, brief = {}, opts = {}) {
       d.solution=E.flatten(strict.path);
     }
     if(!E.replay(d,d.solution,{strict:true}).ok){fails.strictReplay=(fails.strictReplay||0)+1;continue;}
-    if(f.chained){const ob=require('./chained_obviousness.js').measure(d,{dial:used.obviousnessDial});if(!ob.ok){const why=ob.rightFreePairs?'obvious:freeRoutePair':'obvious:greedyPrefix';fails[why]=(fails[why]||0)+1;continue;}}
+    // Baits have not been priced yet. Dial 2's preferred-bait check belongs in
+    // prove(), where the actual priced baits are supplied.
+    if(f.chained){const ob=require('./chained_obviousness.js').measure(d,{dial:Math.min(1,used.obviousnessDial??0)});if(!ob.ok){const why=ob.rightFreePairs?'obvious:freeRoutePair':'obvious:greedyPrefix';fails[why]=(fails[why]||0)+1;continue;}}
     let p=prove(name,d,r,{k,spare,obviousnessDial:used.obviousnessDial},opts.proof || {});
     if(name==='waitNested'&&used.targets.nestedBranch)for(let prune=0;prune<6&&!p.ok;prune++){
       const m=/^idle:lock:(\d+)$/.exec(p.why||'');if(!m||!r.bait.parallelLocks?.includes(+m[1]))break;
@@ -478,4 +518,4 @@ function finishExample(raw,opts={}){
   r.verification=verification;return chained?require('./loosen_chained.js').loosen(r):r;
 }
 
-module.exports={FAMILIES,STORIES,build,place,prove,price,shortest,opening,mechanismOf,rngOf,clone,retime,lockedRelay,finishExample,SEP,Tail,Ledger};
+module.exports={FAMILIES,STORIES,registerChain,build,place,prove,price,shortest,opening,mechanismOf,rngOf,clone,retime,lockedRelay,finishExample,SEP,Tail,Ledger};

@@ -11,12 +11,13 @@ function verify(r,opts={}){
     if(!q||q.kind!==f.newIdea||!offers.some(o=>same(o.take,q.take)&&same(o.evidence,q.evidence))||!t.baits.some(p=>same(p.tiles,q.take)))errors.push('newLinkEvidence');
     if(f.newIdea==='splitPreparation')for(const i of q?.take||[]){const p=V.reprice(d,r.card.clock.fewestMoves,[i],opts);if(!p.exact||p.result!=='win'||p.cost>r.card.clock.spare)errors.push('individualPreparationNotSafe');}
   }
+  if(f?.sixIdea)errors.push(...require('./chained_six_facts.js').audit(r,opts).errors.map(e=>'idea18:'+e));
   if(f?.name==='lookalikeCoverThaw'){
     const q=require('./chained_readability.js').keyRoof(d),stored={...q,minimum:r.roles.bait.keyRoofShownMin??0,roofMinimum:r.roles.bait.keyRoofTopMin??0};
     if(!same(stored,t.keyRoofReadability)||q.keyShown<stored.minimum||q.roofShown<stored.roofMinimum)errors.push('keyRoofReadability');
   }
   const o=O.measure(d,{baits:t.baits,dial:r.brief.obviousnessDial??0});if(!o.ok||!same(o,t.obviousness))errors.push('obviousness');
-  if(!t.baits.some((p,i)=>t.baits.some((q,j)=>i!==j&&p.tiles.every(x=>!q.tiles.includes(x)))))errors.push('twoDisjointLosingDecisions');
+  if(!f?.sixIdea&&!t.baits.some((p,i)=>t.baits.some((q,j)=>i!==j&&p.tiles.every(x=>!q.tiles.includes(x)))))errors.push('twoDisjointLosingDecisions');
   const mech=new Set([...V.mechanism(d),...r.roles.bait.tiles,r.roles.bait.mix.originalClock,...d.solution.slice(0,r.card.clock.fewestMoves)]);
   if(d.down.length/d.tiles.length<.23||d.down.length/d.tiles.length>.28||d.down.some(i=>mech.has(i)))errors.push('faceDown');
   const feel=F.expert(d,{playouts:16,seed:9}),pp=+(feel.parkAt[1]+feel.parkAt[2]).toFixed(1);
@@ -26,6 +27,7 @@ function verify(r,opts={}){
   const kinds=[],b=r.roles.bait,mode=b.mix.mode;
   if(mode==='earlyClock')kinds.push('waitForTwin');if(mode==='roofKey')kinds.push('clockRoof');if(mode==='repeatKeys'||b.repeat)kinds.push('lookalikeChoice');if(mode==='freezeRight')kinds.push('innerIce');
   if(t.newLink)kinds.push(t.newLink.kind);
+  for(const q of t.newLinks||[])kinds.push(q.kind);
   if(b.wrong?.some(i=>t.baits.some(p=>p.tiles.includes(i))))kinds.push('lonelyMelt');
   if(t.baits.some(p=>p.tiles.length===1&&d.obst.keys.includes(p.tiles[0])))kinds.push('earlyKey');
   if(!same([...new Set(kinds)].sort(),r.card.wrongIdea))errors.push('wrongIdeaBaitsMismatch');

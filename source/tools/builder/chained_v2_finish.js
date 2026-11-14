@@ -7,6 +7,7 @@ function ideas(r){
   if(mode==='repeatKeys'||b.repeat)a.push('lookalikeChoice');
   if(mode==='freezeRight')a.push('innerIce');
   if(r.card.trap.newLink)a.push(r.card.trap.newLink.kind);
+  for(const q of r.card.trap.newLinks||[])a.push(q.kind);
   if(b.wrong?.some(i=>r.card.trap.baits.some(p=>p.tiles.includes(i))))a.push('lonelyMelt');
   if(r.card.trap.baits.some(p=>p.tiles.length===1&&r.design.obst.keys.includes(p.tiles[0])))a.push('earlyKey');
   return [...new Set(a)].sort();
@@ -20,6 +21,7 @@ function finish(raw,opts={}){
     roles.bait.tiles=[...new Set([...(roles.bait.keyEarly!=null?[roles.bait.keyEarly]:[]),...(roles.bait.wrong||[]),...(roles.bait.twins||[]),...q.take])];
     roles.bait.extraMoves=[q.take];
   }
+  if(roles.bait.six)roles.bait.keepUp=[...new Set([...roles.bait.keepUp,...roles.bait.six.visible])];
   const validate=x=>{const rt=M.retime(x,spare);if(!rt.ok)return rt;return M.prove(name,rt.design,roles,{k:rt.k,spare},{skipOpening:true});};
   for(let pass=0;pass<3&&!S.closeTwins(d).meets;pass++){
     const s=S.separate(d,{k,seed:(opts.seed??1)+pass*17,wallMs:6000,freeze:[...roles.bait.tiles,...d.obst.keys,...(roles.bait.repeat?.copies||[])],validate});

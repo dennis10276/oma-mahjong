@@ -45,4 +45,42 @@ for(const [name,q]of Object.entries(require('./chained_new_ideas.js').DEFINITION
   baseLinks:q.baseSignature.split('; ').length,links:q.baseSignature.split('; ').length+1,extension:'route<'+name,recipe:q.sentence,trapType:'chained:'+name,chained:true,
   dials:{easier:'spare 2',harder:'spare 1'},
 };
+// Export before loading TASK 18's factory, which also wraps existing shapes.
 module.exports={SHAPES};
+const Six=require('./chained_six_specs.js');
+for(const name of Object.keys(Six.DEFINITIONS)){
+  SHAPES[name]=Six.family(name);
+  for(const base of ['waitForTwin','lookalikeChoice']){
+    const old=name==='keysLater'?null:base==='waitForTwin'?'waitThawWay':'lookalikeThaw';
+    if(old){const f=Six.family(name,old,SHAPES[old]);SHAPES[f.name]=f;}
+  }
+  for(const base of ['waitNested','waitThawKey'])if(name!=='keysLater'){
+    const f=Six.family(name,base,SHAPES[base]);SHAPES[f.name]=f;
+  }
+  if(name!=='keysLater'){const f=Six.family(name,'roofThawKey',SHAPES.roofThawKey);SHAPES[f.name]=f;}
+}
+// Declarative composition: a base dependency graph plus an ordered list of
+// picture/ice link constraints, handled by the same place/pictures/prove stages.
+SHAPES.waitInnerIce={...SHAPES.waitThawWay,name:'waitInnerIce',chain:4,baseSignature:'clock<ice; thaw<ice',signature:'clock<ice; thaw<ice; clock<waitForTwin',links:3,baseLinks:2,repeat:false};
+const COMBINATIONS={
+  waitInnerIce_keysLater:['waitInnerIce',['keysLater']],
+  freeMelt_savePair:[null,['freeMelt','savePair']],
+  selfLocked_savePair:[null,['selfLocked','savePair']],
+  clockCount_savePair:[null,['clockCount','savePair']],
+  freeMelt_selfLocked:[null,['freeMelt','selfLocked']],
+  freeMelt_clockCount:[null,['freeMelt','clockCount']],
+  selfLocked_clockCount:[null,['selfLocked','clockCount']],
+  keysLater_savePair:[null,['keysLater','savePair']],
+  keysLater_selfLocked:[null,['keysLater','selfLocked']],
+  keysLater_clockCount:[null,['keysLater','clockCount']],
+  keysLater_freeMelt:[null,['keysLater','freeMelt']],
+  doubleMelt_savePair:[null,['doubleMelt','savePair']],
+};
+for(const [name,[base,kinds]]of Object.entries(COMBINATIONS))SHAPES[name]=Six.compose(name,base,kinds,SHAPES[base]);
+// The same clock-count link on another dependency graph, not another idea.
+SHAPES.clockCountThaw=Six.compose('clockCountThaw','thawRoute',['clockCount'],{chain:3,mode:'sixIdea',baseSignature:'clock<ice; thaw<lock',signature:'clock<ice; thaw<lock',links:2});
+for(const [kind,bases]of Object.entries({
+  selfLocked:['lookalikeWay','lookalikeNested','lookalikeCover','waitLockCover','waitCoverKey','roofNested','roofCoverKey','roofCoverWay'],
+  clockCount:['roofCoverKey','roofCoverWay','roofNested','roofCoverThaw'],
+}))for(const base of bases){const f=Six.family(kind,base,SHAPES[base]);SHAPES[f.name]=f;}
+module.exports.COMBINATIONS=COMBINATIONS;

@@ -9,7 +9,7 @@ test('new stories register without replacing established stories',()=>{
   const signatures=new Set();
   for(const f of Object.values(M.FAMILIES)){
     assert.equal(B.STORIES[f.name],M.STORIES[f.name]);assert.equal(typeof M.STORIES[f.name].place,'function');assert.equal(typeof M.STORIES[f.name].prove,'function');
-    assert.ok(f.see&&f.dials.easier&&f.dials.harder);signatures.add([f.base,f.chain,f.mode].join('/'));
+    assert.ok(f.see&&f.dials.easier&&f.dials.harder);signatures.add(f.signature||[f.base,f.chain,f.mode].join('/'));
   }
   assert.equal(signatures.size,Object.keys(M.FAMILIES).length,'recipes differ structurally');
 });
