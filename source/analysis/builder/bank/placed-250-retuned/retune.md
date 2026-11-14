@@ -6,7 +6,7 @@ Pressure = share of tail steps of the stored route with 0/1/2/3 tiles waiting in
 
 | level | source | tail before | tail after | face-down before | face-down after | score before | score after | waiting 0/1/2/3 after | note |
 |---|---|---|---|---|---|---|---|---|---|
-| 250 | batch 250 | | | | | | | | not retuned: tail 0.4437 stays outside 0.1-0.28 (windows tried: 0.1-0.28 -> tail 0.4437 miss 0; 0.19-0.28 -> tail 0.4437 miss 0; 0.22-0.28 -> tail 0.4437 miss 0) |
+| 250 | batch 250 | 0.3738 | 0.1725 | 0.198 | 0.271 | 3.38 | 5.13 | 0.341/0.5/0.159/0 (run 1) | windows tried: 0.1-0.28 -> tail 0.3775 miss 0; 0.19-0.28 -> tail 0.1725 miss 0 |
 | 251 | batch 251 | 0.3862 | 0.2037 | 0.200 | 0.275 | 3.32 | 4.87 | 0.348/0.455/0.152/0.045 (run 7) | windows tried: 0.1-0.28 -> tail 0.2037 miss 0.24; 0.19-0.28 -> tail 0.2037 miss 0.24; 0.22-0.28 -> tail 0.2125 miss 0.24 |
 | 252 | batch 252 | 0.3663 | 0.1487 | 0.194 | 0.278 | 3.34 | 5.18 | 0.313/0.469/0.188/0.031 (run 5) | face-down set rejected (staticGates): tiles one by one; windows tried: 0.1-0.28 -> tail 0.1487 miss 0.056; 0.19-0.28 -> tail 0.1888 miss 0.062; 0.22-0.28 -> tail 0.2087 miss 0.252 |
 | 253 | batch 253 | 0.3725 | 0.1837 | 0.200 | 0.275 | 3.41 | 4.96 | 0.314/0.5/0.186/0 (run 1) | face-down set rejected (staticGates): tiles one by one |
@@ -17,16 +17,16 @@ Pressure = share of tail steps of the stored route with 0/1/2/3 tiles waiting in
 | 258 | batch 257 | 0.37 | 0.1325 | 0.205 | 0.273 | 4.26 | 6.3 | 0.346/0.5/0.154/0 (run 1) |  |
 | 259 | chain lab-293 | | | | | | | | older board, copied unchanged |
 | 260 | batch 260 | 0.365 | 0.2175 | 0.198 | 0.271 | 4.4 | 5.63 | 0.329/0.494/0.165/0.012 (run 2) | windows tried: 0.1-0.28 -> tail 0.1938 miss 0.08; 0.19-0.28 -> tail 0.2175 miss 0 |
-| 261 | batch 258 | | | | | | | | not retuned: tail 0.555 stays outside 0.1-0.28 (face-down set rejected (staticGates): tiles one by one | band not reached with 6 extra face-down tiles: trying 3) |
+| 261 | batch 258 | | | | | | | | not retuned: tail 0.3162 stays outside 0.1-0.28 (face-down set rejected (staticGates): tiles one by one | band not reached with 6 extra face-down tiles: trying 3 | band not reached with 3 extra face-down tiles: trying 0 | windows tried: 0.165-0.265 -> tail 0.3162 miss 0.062; 0.19-0.28 -> tail 0.3162 miss 0.062; 0.22-0.28 -> tail 0.3162 miss 0.062) |
 | 262 | older factory4-176 | | | | | | | | older board, copied unchanged |
 | 263 | batch 261 | 0.3787 | 0.2075 | 0.200 | 0.275 | 4.51 | 5.94 | 0.343/0.493/0.149/0.015 (run 2) | swaps refused by the proof: {"trapProof":1}, kept 6 |
 | 264 | bank lab-262 | | | | | | | | older board, copied unchanged |
 | 265 | batch 262 | 0.315 | 0.1737 | 0.200 | 0.275 | 4.74 | 5.95 | 0.324/0.485/0.176/0.015 (run 3) | face-down set rejected (staticGates): tiles one by one |
 | 266 | batch 263 | 0.3912 | 0.1975 | 0.200 | 0.275 | 4.3 | 5.89 | 0.31/0.493/0.183/0.014 (run 2) | swaps refused by the proof: {"trapProof":1}, kept 6 |
 | 267 | chain lab-292 | | | | | | | | older board, copied unchanged |
-| 268 | batch 264 | 0.3088 | 0.2137 | 0.197 | 0.197 | 4.86 | 5.63 | 0.302/0.508/0.19/0 (run 1) | face-down set rejected (staticGates): tiles one by one |
+| 268 | batch 264 | 0.3088 | 0.215 | 0.197 | 0.211 | 4.86 | 5.63 | 0.302/0.508/0.19/0 (run 1) | face-down set rejected (staticGates): tiles one by one; windows tried: 0.148-0.248 -> tail 0.1412 miss 0.12; 0.19-0.28 -> tail 0.215 miss 0 |
 | 269 | batch 265 | 0.2988 | 0.115 | 0.197 | 0.276 | 4.68 | 6.3 | 0.333/0.47/0.167/0.03 (run 5) | windows tried: 0.146-0.246 -> tail 0.115 miss 0.05; 0.19-0.28 -> tail 0.2137 miss 0.05; 0.22-0.28 -> tail 0.2525 miss 0.05 |
-| 270 | batch 270 | 0.3488 | 0.275 | 0.198 | 0.271 | 4.85 | 5.52 | 0.337/0.477/0.163/0.023 (run 5) | windows tried: 0.144-0.244 -> tail 0.275 miss 0.05; 0.19-0.28 -> tail 0.275 miss 0.05; 0.22-0.28 -> tail 0.275 miss 0.05 |
+| 270 | batch 270 | 0.3488 | 0.2313 | 0.198 | 0.271 | 4.85 | 5.85 | 0.267/0.477/0.233/0.023 (run 5) | windows tried: 0.144-0.244 -> tail 0.1825 miss 0.268; 0.19-0.28 -> tail 0.2013 miss 0.294; 0.22-0.28 -> tail 0.2313 miss 0.116 |
 | 271 | older q217-1233c8 | | | | | | | | older board, copied unchanged |
 | 272 | batch 266 | 0.29 | 0.2387 | 0.203 | 0.257 | 5.33 | 5.79 | 0.246/0.508/0.246/0 (run 1) | face-down set rejected (staticGates): tiles one by one; windows tried: 0.139-0.239 -> tail 0.2387 miss 0.092; 0.19-0.28 -> tail 0.2387 miss 0.092; 0.22-0.28 -> tail 0.2387 miss 0.092 |
 | 273 | older factory4-175 | | | | | | | | older board, copied unchanged |

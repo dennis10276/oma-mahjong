@@ -4,7 +4,7 @@
 
 | level | source | tiles | trap | score | Dennis | |
 |---|---|---|---|---|---|---|
-| 250 | batch 250 | 96 | clock<cover:ice; coverThaw<ice | 3.38 |  |  |
+| 250 | batch 250 | 96 | clock<cover:ice; coverThaw<ice | 5.13 |  |  |
 | 251 | batch 251 | 80 | clock<ice; thaw<lock | 4.87 |  |  |
 | 252 | batch 252 | 72 | clock<lock; keyA<way:ice | 5.18 |  |  |
 | 253 | batch 253 | 80 | clock<cover:lock; keyA<cover:ice | 4.96 |  |  |
@@ -24,7 +24,7 @@
 | 267 | chain lab-292 | 88 | clock<lock; clock<cover:ice; coverThaw<ice; keyA<cover:ice | 4.40 | 4★, 2 tries |  |
 | 268 | batch 264 | 76 | clock<lock; keyA<way:ice; keyB<cover:ice | 5.63 |  |  |
 | 269 | batch 265 | 76 | clock<ice; thaw<lock; keyB<cover:ice | 6.3 |  |  |
-| 270 | batch 270 | 96 | clock<ice; thaw<lock; keyA<cover:ice | 5.52 |  |  |
+| 270 | batch 270 | 96 | clock<ice; thaw<lock; keyA<cover:ice | 5.85 |  |  |
 | 271 | older q217-1233c8 | 84 | trayJuggle | 4.80 | 4★, 2 tries |  |
 | 272 | batch 266 | 74 | clock<ice; thaw<lock; keyA<cover:ice; keyB<cover:ice | 5.79 |  |  |
 | 273 | older factory4-175 | 84 | chainReaction | 5.20 | 5★, 3 tries |  |

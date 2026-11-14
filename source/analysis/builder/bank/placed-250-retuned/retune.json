@@ -24,10 +24,65 @@
   },
   "tier": "easy",
   "tried": [
-   "1: tail 0.3775 stays outside 0.1-0.28 (windows tried: 0.1-0.28 ",
-   "2: tail 0.4437 stays outside 0.1-0.28 (windows tried: 0.1-0.28 "
+   "1: ok"
   ],
-  "kept": "not retuned: tail 0.4437 stays outside 0.1-0.28 (windows tried: 0.1-0.28 -> tail 0.4437 miss 0; 0.19-0.28 -> tail 0.4437 miss 0; 0.22-0.28 -> tail 0.4437 miss 0)"
+  "after": {
+   "score": 5.13,
+   "tail": 0.1725,
+   "inBand": true,
+   "down": 26,
+   "occ": {
+    "steps": 88,
+    "counts": [
+     30,
+     44,
+     14,
+     0
+    ],
+    "share": [
+     0.341,
+     0.5,
+     0.159,
+     0
+    ],
+    "longest2plus": 1,
+    "mean": 0.818,
+    "gentle": false,
+    "before": {
+     "steps": 88,
+     "counts": [
+      8,
+      16,
+      36,
+      28
+     ],
+     "share": [
+      0.091,
+      0.182,
+      0.409,
+      0.318
+     ],
+     "longest2plus": 27,
+     "mean": 1.955
+    }
+   },
+   "retune": {
+    "faceDownBefore": 19,
+    "faceDownAfter": 26,
+    "faceDownAdded": 7,
+    "tailBefore": 0.3738,
+    "tailAfter": 0.1725,
+    "rerouted": true,
+    "notes": [
+     "windows tried: 0.1-0.28 -> tail 0.3775 miss 0; 0.19-0.28 -> tail 0.1725 miss 0"
+    ],
+    "scoreBefore": 3.38,
+    "scoreAfter": 5.13,
+    "ms": 86793
+   },
+   "needle": false,
+   "pressureMiss": 0
+  }
  },
  {
   "level": 251,
@@ -640,10 +695,10 @@
   },
   "tier": "std",
   "tried": [
-   "1: tail 0.3625 stays outside 0.1-0.28 (band not reached with 6 ",
-   "2: tail 0.555 stays outside 0.1-0.28 (face-down set rejected (s"
+   "1: tail 0.35 stays outside 0.1-0.28 (band not reached with 6 ex",
+   "2: tail 0.3162 stays outside 0.1-0.28 (face-down set rejected ("
   ],
-  "kept": "not retuned: tail 0.555 stays outside 0.1-0.28 (face-down set rejected (staticGates): tiles one by one | band not reached with 6 extra face-down tiles: trying 3)"
+  "kept": "not retuned: tail 0.3162 stays outside 0.1-0.28 (face-down set rejected (staticGates): tiles one by one | band not reached with 6 extra face-down tiles: trying 3 | band not reached with 3 extra face-down tiles: trying 0 | windows tried: 0.165-0.265 -> tail 0.3162 miss 0.062; 0.19-0.28 -> tail 0.3162 miss 0.062; 0.22-0.28 -> tail 0.3162 miss 0.062)"
  },
  {
   "level": 262,
@@ -937,9 +992,9 @@
   ],
   "after": {
    "score": 5.63,
-   "tail": 0.2137,
+   "tail": 0.215,
    "inBand": true,
-   "down": 15,
+   "down": 16,
    "occ": {
     "steps": 63,
     "counts": [
@@ -977,17 +1032,18 @@
    },
    "retune": {
     "faceDownBefore": 15,
-    "faceDownAfter": 15,
-    "faceDownAdded": 0,
+    "faceDownAfter": 16,
+    "faceDownAdded": 1,
     "tailBefore": 0.3088,
-    "tailAfter": 0.2137,
+    "tailAfter": 0.215,
     "rerouted": true,
     "notes": [
-     "face-down set rejected (staticGates): tiles one by one"
+     "face-down set rejected (staticGates): tiles one by one",
+     "windows tried: 0.148-0.248 -> tail 0.1412 miss 0.12; 0.19-0.28 -> tail 0.215 miss 0"
     ],
     "scoreBefore": 4.86,
     "scoreAfter": 5.63,
-    "ms": 407240
+    "ms": 175187
    },
    "needle": false,
    "pressureMiss": 0
@@ -1104,26 +1160,26 @@
    "1: ok"
   ],
   "after": {
-   "score": 5.52,
-   "tail": 0.275,
+   "score": 5.85,
+   "tail": 0.2313,
    "inBand": true,
    "down": 26,
    "occ": {
     "steps": 86,
     "counts": [
-     29,
+     23,
      41,
-     14,
+     20,
      2
     ],
     "share": [
-     0.337,
+     0.267,
      0.477,
-     0.163,
+     0.233,
      0.023
     ],
     "longest2plus": 5,
-    "mean": 0.872,
+    "mean": 1.012,
     "gentle": false,
     "before": {
      "steps": 86,
@@ -1148,17 +1204,17 @@
     "faceDownAfter": 26,
     "faceDownAdded": 7,
     "tailBefore": 0.3488,
-    "tailAfter": 0.275,
+    "tailAfter": 0.2313,
     "rerouted": true,
     "notes": [
-     "windows tried: 0.144-0.244 -> tail 0.275 miss 0.05; 0.19-0.28 -> tail 0.275 miss 0.05; 0.22-0.28 -> tail 0.275 miss 0.05"
+     "windows tried: 0.144-0.244 -> tail 0.1825 miss 0.268; 0.19-0.28 -> tail 0.2013 miss 0.294; 0.22-0.28 -> tail 0.2313 miss 0.116"
     ],
     "scoreBefore": 4.85,
-    "scoreAfter": 5.52,
-    "ms": 296393
+    "scoreAfter": 5.85,
+    "ms": 145477
    },
    "needle": false,
-   "pressureMiss": 0.05
+   "pressureMiss": 0.116
   }
  },
  {
