@@ -1,0 +1,146 @@
+{
+ "savedAt": "2026-11-14T07:37:05.674Z",
+ "ratings": {
+  "2032250": {
+   "note": "FUN trap. Really that AHA moment. After the trap tray pressure may increase. Its too easy after. Maybe more face down as well after the trap. This was said for the new chain levels as well. Fix it in the builder",
+   "stars": 4,
+   "verdict": "right",
+   "starts": 3,
+   "tries": 5,
+   "wins": 1,
+   "results": [
+    {
+     "r": "restart",
+     "left": 94,
+     "s": 131,
+     "t": 1794641367871
+    },
+    {
+     "r": "stuck",
+     "left": 86,
+     "s": 52,
+     "t": 1794641419806,
+     "ck": 1
+    },
+    {
+     "r": "stuck",
+     "left": 86,
+     "s": 23,
+     "t": 1794641444781,
+     "ck": 1
+    },
+    {
+     "r": "restart",
+     "left": 91,
+     "s": 124,
+     "t": 1794641594963
+    },
+    {
+     "r": "win",
+     "left": 0,
+     "s": 162,
+     "t": 1794641756481
+    }
+   ]
+  },
+  "2032253": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2032258": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2032261": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2032265": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2032272": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2032275": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2032283": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2032287": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2032292": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2032299": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2032302": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  }
+ }
+}

@@ -998,6 +998,49 @@ function separateBoard(name, r, opts = {}) {
   return { design: cur, before, after: best || before, edits, validated: rp.ok, notes, validations, proposals, remaining: (best || before).count, ms: Date.now() - t0, proof: rp.ok ? rp.proof : null, proofOk: rp.ok, proofWhy: rp.why || null };
 }
 
+// last-twin repair (bank/make_batch.js, job.repair): the separation leaves a board with one or two visible close twins when no picture swap keeps the STORED route (a swap changes who pairs with whom in
+// the tray, so the old order usually overflows). Here the route is allowed to change: swap the picture of one tile of a visible close pair with a role-free tile v (hidden at move 0 first), let the
+// engine find a new shortest route to the clock (clock minimum k unchanged) with its strict finish, and keep the swap only when that new route replays strictly and the story proof + static gates
+// hold again (the bait pairs, keys, locks, ice tiles and the clock are never touched, so every proven bait stays what it was). Bounded by wallMs; returns { design, edits, remaining, ... }.
+function repairTwins(name, r, design, opts = {}) {
+  const SEP = require('./bank/separate.js'), k = r.card.clock.fewestMoves, spare = r.card.clock.spare, wall = opts.wallMs ?? 40000, t0 = Date.now(), roles = r.roles;
+  const fixed = new Set([...r.roles.bait.tiles, ...(r.roles.bait.twins || [])]), roleTile = new Set([...roles.keys, ...roles.locks, ...Object.keys(roles.ice).map(Number), roles.clock].filter(x => x != null));   // the bait pairs stay as they are; a role tile may take another picture (the story proof decides), role-free tiles first
+  const csOpts = { nodes: 300000, ms: Infinity, finishNodes: 100000, finishMs: Infinity }, notes = [];
+  let cur = design, edits = [], tested = 0, withK = 0; const bad = new Set(), why = {};
+  for (let round = 0; round < 4 && Date.now() - t0 < wall; round++) {
+    const geo = SEP.geometry(cur), c = SEP.closeTwins(cur, geo); if (c.visible === 0) break;
+    const protectedFaces = new Set([...fixed].map(t => cur.faces[t]));
+    const cands = [];
+    for (const [a, b] of c.closeVisible) for (const u of [a, b]) {
+      if (fixed.has(u) || protectedFaces.has(cur.faces[u])) continue;
+      for (let v = 0; v < cur.tiles.length; v++) {
+        if (v === u || fixed.has(v) || cur.faces[v] === cur.faces[u] || protectedFaces.has(cur.faces[v]) || bad.has(u + ',' + v)) continue;
+        const faces = cur.faces.slice(); faces[u] = cur.faces[v]; faces[v] = cur.faces[u];
+        const d = { ...cur, faces }, c2 = SEP.closeTwins(d, geo);
+        if (c2.visible >= c.visible || c2.share > 0.05 || c2.four > c.four) continue;
+        cands.push({ u, v, d, vis: c2.visible, cnt: c2.count, hidden: geo.vis[v] ? 1 : 0, role: (roleTile.has(u) ? 1 : 0) + (roleTile.has(v) ? 1 : 0) });
+      }
+    }
+    cands.sort((p, q) => p.vis - q.vis || p.role - q.role || p.hidden - q.hidden || p.cnt - q.cnt);
+    let done = false;
+    for (const cd of cands) {
+      if (Date.now() - t0 > wall) break; tested++;
+      const cs = E.clockShortest(E.game(JSON.parse(JSON.stringify(cd.d))), csOpts);
+      if (!cs || cs.unsure || cs.k !== k || !cs.path) { bad.add(cd.u + ',' + cd.v); why.k = (why.k || 0) + 1; continue; }
+      withK++; const sol = E.flatten(cs.path), d2 = { ...cd.d, solution: sol };
+      if (sol.indexOf(d2.clock.i) + 1 !== k || !E.replay(d2, sol, { strict: true }).ok) { bad.add(cd.u + ',' + cd.v); why.replay = (why.replay || 0) + 1; continue; }
+      let rd = false; try { rd = require('../factory/placement_score.js').readable(d2); } catch (e) { /* unreadable */ }
+      if (!rd) { bad.add(cd.u + ',' + cd.v); why.unreadable = (why.unreadable || 0) + 1; continue; }
+      const rp = reprove(name, d2, r.roles, r.brief, spare, k);
+      if (!rp.ok) { bad.add(cd.u + ',' + cd.v); const w = String(rp.why).replace(/[:0-9].*$/, ''); why[w] = (why[w] || 0) + 1; continue; }
+      cur = d2; edits.push([cd.u, cd.v]); done = true; notes.push('swap ' + cd.u + '<->' + cd.v + ': visible ' + c.visible + ' -> ' + cd.vis); break;
+    }
+    if (!done) { notes.push('round ' + round + ': no swap holds (' + cands.length + ' cheap candidates, ' + withK + ' kept k)'); break; }
+  }
+  const after = SEP.closeTwins(cur);
+  return { design: cur, edits, after, tested, withK, why, notes, ms: Date.now() - t0, changed: edits.length > 0 };
+}
+
 // tail hardness (bank/tail.js): re-pair pictures AFTER the clock until the greedy player's win share lies in the band (default 0.15-0.40), every kept state
 // replays strictly, keeps the clock minimum k, is readable, passes the story proof and the static gates; the bait pictures and the pre-clock part are not touched.
 function tuneTail(name, r, design, opts = {}) {
@@ -1013,4 +1056,4 @@ function tuneTail(name, r, design, opts = {}) {
   return Tl.tune(design, { wallMs: 40000, freeze: r.roles.bait.tiles, ...opts, validate });
 }
 
-module.exports = { withFrozenRoles, CHAIN_RICH, CHAIN_EASY, tuneTail, readableLayouts, pressureOf, pressureFacts, winnableWithin, WHY, STORIES, NAMES, RETIRED, CHAIN, CHAIN_DEFS, CHAIN_SHAPES, CHAIN_UI_NOTE, build, reprove, separateBoard, shownFacts, capOf, vis0Of, thawNbs, digCost };
+module.exports = { repairTwins, withFrozenRoles, CHAIN_RICH, CHAIN_EASY, tuneTail, readableLayouts, pressureOf, pressureFacts, winnableWithin, WHY, STORIES, NAMES, RETIRED, CHAIN, CHAIN_DEFS, CHAIN_SHAPES, CHAIN_UI_NOTE, build, reprove, separateBoard, shownFacts, capOf, vis0Of, thawNbs, digCost };
