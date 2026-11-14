@@ -179,6 +179,20 @@ add new decisions with a date.
     Checked on the release table: no board from 250 on equals any other level, and none uses the pile shape of a level below 250
     (also not mirrored). Still open: 15 pairs inside 250-300 share a pile shape with a different trap, and levels past the end of
     the table repeat 150-300 mirrored (the game's old behaviour).
+  - **Release 1.69 approved** (2026-11-14): "pile shape with different trap is fine. No copy for me. Release. Then continue on making 301
+    and up". A pile shape may come back with a different trap; identical boards and repeated layout + trap may not.
+  - **Two wrong ideas in one chain is what 320+ needs; the finish after a hard trap must be easy** (2026-11-14, Codex's Task 18 lab,
+    eight boards; full notes in `codex-tasks/results/new-ideas/VERDICTS.md`):
+    - single new idea, three links: "No AHA really need more chains with diferent ideas, Easy to spot" (count the clock), "No AHA too
+      easy needs more chains" (the melter's twin under the ice);
+    - two ideas, five links: "Very good AHA moment. 320+" (twin under the ice + waiting clock, 4 stars, 7 tries), "Good AHA trap. Part
+      after is too hard." (count the clock + lookalike key), "Good trap! 320+ too hard after the trap. tune that easier. its more
+      about the traps now." (lookalike key + three of a kind);
+    - keys are not for now: "The lock is not clearly shown so it doesnt feel rewarding ... The locks should show", "Trap is fine but a
+      bit too easy. Make 1 more chain in it", and with count the clock: "This is very stupid. You cant see the honey under the tiles ...
+      Also the keys are just laying there. Not chained at all." No good verdict for this idea yet.
+    Lead's reading: after a two-idea trap the rest is about finishing, so a pair-first player should finish most of the time; what
+    the trap needs to be read (the lock, the ice) has to be in plain sight.
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
   - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
     played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is
