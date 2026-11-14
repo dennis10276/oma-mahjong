@@ -164,6 +164,10 @@ add new decisions with a date.
     wrong ideas are written out in `codex-tasks/TASK-18-six-new-wrong-ideas.md` (one pair two melts, the dig melts it for you, count
     the clock, the melter's twin is under the ice, three of a kind, keys are not for now); a new idea must be built into the board,
     not found afterwards on a finished one.
+  - **337 of Codex's lab (lookalikeWay on layout 13) goes to 320+** (2026-11-14, after watching the route): "337 is hard to see but good.
+    make it 320+". It sits on level 330 (a 96-tile board).
+  - **All six new wrong ideas are approved** (same message): "I liked all your ideas so far so after they are done place them in the
+    builder and then make combinations to make 320+ levels with the builder."
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
   - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
     played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is

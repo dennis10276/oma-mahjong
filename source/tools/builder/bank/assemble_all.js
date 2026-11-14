@@ -7,7 +7,7 @@
    - 303 and up: only chains of four with a new wrong idea, from the ones he solved in two or three tries to the ones that took five
      to seven ("300+ approved", "place it 325+"); known-idea chains do not go past 302.
    Boards he judged get the place he named. Left out: lookalikeCoverThaw L18/L36 ("too extreme": far end), waitLookalikeWay-L7 ("too easy,
-   not even an AHA"), lookalikeWay-L13 (he got stuck: held), outsideIn / clearLockRoof ("no AHA", "not hard enough to spot") and the four
+   not even an AHA"), outsideIn / clearLockRoof ("no AHA", "not hard enough to spot") and the four
    new kinds nobody has played yet.
    No repeats: a layout not within 8 levels, never the same shape or the same kind of wrong idea on two levels in a row.
      node source/tools/builder/bank/assemble_all.js  ->  source/analysis/builder/bank/placed-all/level-<n>.json + placed.md */
@@ -33,10 +33,10 @@ first.forEach((b, i) => items.push({ ...b, target: 250 + i, fixed: 250 + i }));
 big.slice(0, 3).forEach((b, i) => items.push({ ...b, target: 270 + 10 * i, fixed: 270 + 10 * i }));
 // ---- the new-idea chains (Codex): v1 with the lightened tails where made, v2
 const TIER = { waitThawKey: 1, waitThawWay: 1, waitNested: 1, lookalikeCover: 2, waitLookalikeRoof: 2, lookalikeThaw: 2, lookalikeCoverThaw: 2.5, roofThawKey: 3, lookalikeWay: 3, waitLookalikeWay: 4 };
-const SKIP = new Set(['lookalikeCoverThaw-L18-s4-p1', 'lookalikeCoverThaw-L36-s3-p1', 'waitLookalikeWay-L7-s11-p1', 'waitLookalikeWay-L7-s12-p2', 'lookalikeWay-L13-s12-p2']);
+const SKIP = new Set(['lookalikeCoverThaw-L18-s4-p1', 'lookalikeCoverThaw-L36-s3-p1', 'waitLookalikeWay-L7-s11-p1', 'waitLookalikeWay-L7-s12-p2']);
 // the place Dennis named for a board he played: [from, to]
 const PIN = { 'waitThawKey-L4-s11-p1': [274, 277], 'lookalikeCover-L17-s12-p2': [279, 283], 'waitThawKey-L14-s2-p2': [284, 288], 'lookalikeCover-L31-s1-p1': [291, 295], 'waitLookalikeRoof-L18-s5-p1': [295, 299],
-  'lookalikeCoverThaw-L12-s12-p2': [299, 302], 'roofThawKey-L18-s4-p1': [303, 320], 'roofThawKey-L23-s12-p2': [303, 320], 'lookalikeWay-L14-s3-p1': [305, 330], 'waitLookalikeRoof-L14-s5-p2': [303, 315], 'waitLookalikeWay-L31-s5-p1': [325, 345] };
+  'lookalikeCoverThaw-L12-s12-p2': [299, 302], 'roofThawKey-L18-s4-p1': [303, 320], 'roofThawKey-L23-s12-p2': [303, 320], 'lookalikeWay-L14-s3-p1': [305, 330], 'waitLookalikeRoof-L14-s5-p2': [303, 315], 'waitLookalikeWay-L31-s5-p1': [325, 345], 'lookalikeWay-L13-s12-p2': [330, 330] };   // 337 in Codex's lab: "hard to see but good. make it 320+"
 const fresh = [], seen = new Set();
 const addNew = (id, j) => { const shape = id.split('-')[0]; if (!(shape in TIER) || SKIP.has(id) || seen.has(id)) return; seen.add(id);
   const ideas = [/^wait/.test(shape) && 'waitForTwin', /ookalike/.test(shape) && 'lookalikeChoice', shape === 'roofThawKey' && 'clockRoof'].filter(Boolean); fresh.push({ id, src: 'chained ' + id, design: j.design, layout: j.brief ? j.brief.layout : j.card.layout, shape, tier: TIER[shape], idea: 'new:' + (ideas.sort().join('+') || shape), spare: j.card.clock.spare, pin: PIN[id] || null }); };
