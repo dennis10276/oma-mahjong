@@ -1,0 +1,231 @@
+{
+ "savedAt": "2026-11-14T09:12:36.197Z",
+ "ratings": {
+  "2037311": {
+   "note": "I could see the trap yes. Its okay but less fun then the chained traps from before.",
+   "stars": 3,
+   "verdict": "easy",
+   "starts": 1,
+   "tries": 3,
+   "wins": 1,
+   "results": [
+    {
+     "r": "restart",
+     "left": 59,
+     "s": 110,
+     "t": 1794644546705
+    },
+    {
+     "r": "stuck",
+     "left": 42,
+     "s": 121,
+     "t": 1794644667829
+    },
+    {
+     "r": "win",
+     "left": 0,
+     "s": 112,
+     "t": 1794644780922
+    }
+   ]
+  },
+  "2037312": {
+   "note": "easy to see but okay idea if combined with others.",
+   "stars": 2,
+   "verdict": "easy",
+   "starts": 2,
+   "tries": 2,
+   "wins": 1,
+   "results": [
+    {
+     "r": "stuck",
+     "left": 44,
+     "s": 121,
+     "t": 1794645035398
+    },
+    {
+     "r": "win",
+     "left": 0,
+     "s": 84,
+     "t": 1794645120409
+    }
+   ]
+  },
+  "2037313": {
+   "note": "These traps feel less of a AHA moment then the chained ones. These are more straightforward",
+   "stars": 2,
+   "verdict": "easy",
+   "starts": 2,
+   "tries": 1,
+   "wins": 1,
+   "results": [
+    {
+     "r": "win",
+     "left": 0,
+     "s": 146,
+     "t": 1794645302555
+    }
+   ]
+  },
+  "2037314": {
+   "note": "Good trap. Still chained is better :) Game change: when I click a special tile that is untakeble (lock/ice) instead of showing the neigbours that it is untakable. I want to see the tiles needed to unthaw or where the keys are with lock.",
+   "stars": 3,
+   "verdict": "easy",
+   "starts": 1,
+   "tries": 3,
+   "wins": 1,
+   "results": [
+    {
+     "r": "stuck",
+     "left": 90,
+     "s": 165,
+     "t": 1794645533317
+    },
+    {
+     "r": "stuck",
+     "left": 88,
+     "s": 19,
+     "t": 1794645553816,
+     "ck": 1
+    },
+    {
+     "r": "win",
+     "left": 0,
+     "s": 152,
+     "t": 1794645710217
+    }
+   ]
+  },
+  "2037315": {
+   "note": "Good idea but make it chained. too easy to spot.",
+   "stars": 3,
+   "verdict": "easy",
+   "starts": 3,
+   "tries": 1,
+   "wins": 1,
+   "results": [
+    {
+     "r": "win",
+     "left": 0,
+     "s": 244,
+     "t": 1794646599513
+    }
+   ]
+  },
+  "2037316": {
+   "note": "3 layers is easier to see, I like that. And viewing from above instead of the side is easier to spot different tiles.\nThe trap is good but too obvious to spot the right way since you have the tiles from the right way in your tray.",
+   "stars": 0,
+   "verdict": null,
+   "starts": 4,
+   "tries": 2,
+   "wins": 1,
+   "results": [
+    {
+     "r": "restart",
+     "left": 37,
+     "s": 118,
+     "t": 1794646866193
+    },
+    {
+     "r": "win",
+     "left": 0,
+     "s": 95,
+     "t": 1794646960842
+    }
+   ]
+  },
+  "2037317": {
+   "note": "Trap too easy to find the right way. But all of these ideas seem fine just make them chained and less obvious.",
+   "stars": 2,
+   "verdict": "easy",
+   "starts": 1,
+   "tries": 1,
+   "wins": 1,
+   "results": [
+    {
+     "r": "win",
+     "left": 0,
+     "s": 130,
+     "t": 1794647210090
+    }
+   ]
+  },
+  "2037318": {
+   "note": "Fine to have more then 1 trap but it should be meaningfull. This was just 2 easy traps.",
+   "stars": 1,
+   "verdict": "easy",
+   "starts": 1,
+   "tries": 2,
+   "wins": 1,
+   "results": [
+    {
+     "r": "stuck",
+     "left": 58,
+     "s": 121,
+     "t": 1794645971126
+    },
+    {
+     "r": "win",
+     "left": 0,
+     "s": 106,
+     "t": 1794646079290
+    }
+   ]
+  },
+  "2037319": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2037320": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2037321": {
+   "note": "After the trap difficulty was okay. Trap was good but chained better. Put in the traps in a chained and thought about way like the last chained traps with AHA moments.",
+   "stars": 3,
+   "verdict": "easy",
+   "starts": 1,
+   "tries": 3,
+   "wins": 1,
+   "results": [
+    {
+     "r": "stuck",
+     "left": 72,
+     "s": 19,
+     "t": 1794647271669
+    },
+    {
+     "r": "stuck",
+     "left": 42,
+     "s": 88,
+     "t": 1794647360998
+    },
+    {
+     "r": "win",
+     "left": 0,
+     "s": 117,
+     "t": 1794647479369
+    }
+   ]
+  },
+  "2037322": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  }
+ }
+}

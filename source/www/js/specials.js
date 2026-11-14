@@ -183,9 +183,10 @@ function obBlocked(i) {
   Sound.blocked(); buzz(30);
   const ice = frozen(i);
   toast(ice ? tx(G.ob.left[i] > 1 ? 'iceThick' : 'iceThin') : tx('lockedTap'), 2600);
-  if (ice) G.inb[i].filter(j => G.alive[j]).forEach(j => replay(G.tiles[j].el, 'obhint', 1300));
+  if (ice) showThaw(i);
   else showKeys();
 }
+function showThaw(i) { G.inb[i].filter(j => G.alive[j]).forEach(j => replay(G.tiles[j].el, 'obhint', 1300)); }
 // the key tiles wiggle: they open the locks (also when the tapped locked tile is still covered;
 // Dennis 2026-10-30: "when you click a locked tile even when buried I want the keys to shake")
 // A key under the pile shows through it: every tile lying on top of it turns see-through for a moment

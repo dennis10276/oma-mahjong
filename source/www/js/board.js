@@ -405,8 +405,9 @@ function tapTile(i) {
   G.st.tp++;
   if (!free(i)) {
     G.st.bt++;
-    replay(el, 'shake'); showBlockers(i);
-    if (lockedT(i)) showKeys();       // a covered locked tile: the keys show too
+    replay(el, 'shake');
+    // a special tile that cannot be taken shows what it needs, not what lies on it (Dennis 2026-11-14): the tiles that thaw it, or the keys
+    if (frozen(i)) showThaw(i); else if (lockedT(i)) showKeys(); else showBlockers(i);
     Sound.blocked(); buzz(30);
     if (++blockedTaps === 3) toast(tx('stillStuck'), 3000);
     return;
