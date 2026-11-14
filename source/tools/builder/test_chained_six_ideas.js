@@ -44,6 +44,12 @@ test('removing a composed link from the card or the roles is rejected',()=>{
   r.roles.bait.sixLinks=r.roles.bait.sixLinks.filter(q=>q.kind!=='savePair');
   assert.ok(Facts.audit(r).errors.includes('missingComposedLink'));
 });
+test('the featured ledger counts authored kinds without double-counting generic bait labels',()=>{
+  const finish=require('./chained_v2_finish.js'),r=load('selfLocked_savePair-L25-s93-p1.json');
+  assert.deepEqual(finish.ideas(r),['savePair','selfLocked']);
+  assert.ok(r.card.trap.baits.length>1);
+  assert.deepEqual(finish.ideas(load('keysLater-L28-s89-p1.json')),['keysLater']);
+});
 test('clock count has a real longer winning approach, not merely a nearby roof',()=>{
   const r=load('clockCount-L0-s113-p1.json'),q=r.roles.bait.sixLinks[0],top=r.card.trap.newLink.top;
   const E=require('./engine.js');

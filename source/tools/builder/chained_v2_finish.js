@@ -8,6 +8,9 @@ function ideas(r){
   if(mode==='freezeRight')a.push('innerIce');
   if(r.card.trap.newLink)a.push(r.card.trap.newLink.kind);
   for(const q of r.card.trap.newLinks||[])a.push(q.kind);
+  // TASK 18 counts authored link kinds. Generic classifications of the same
+  // key/ice moves stay in the priced bait list, not as extra featured ideas.
+  if(M.FAMILIES[r.brief.story]?.sixIdea)return [...new Set(a)].sort();
   if(b.wrong?.some(i=>r.card.trap.baits.some(p=>p.tiles.includes(i))))a.push('lonelyMelt');
   if(r.card.trap.baits.some(p=>p.tiles.length===1&&r.design.obst.keys.includes(p.tiles[0])))a.push('earlyKey');
   return [...new Set(a)].sort();

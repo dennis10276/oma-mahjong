@@ -28,8 +28,8 @@ function verify(r,opts={}){
   if(mode==='earlyClock')kinds.push('waitForTwin');if(mode==='roofKey')kinds.push('clockRoof');if(mode==='repeatKeys'||b.repeat)kinds.push('lookalikeChoice');if(mode==='freezeRight')kinds.push('innerIce');
   if(t.newLink)kinds.push(t.newLink.kind);
   for(const q of t.newLinks||[])kinds.push(q.kind);
-  if(b.wrong?.some(i=>t.baits.some(p=>p.tiles.includes(i))))kinds.push('lonelyMelt');
-  if(t.baits.some(p=>p.tiles.length===1&&d.obst.keys.includes(p.tiles[0])))kinds.push('earlyKey');
+  if(!f?.sixIdea&&b.wrong?.some(i=>t.baits.some(p=>p.tiles.includes(i))))kinds.push('lonelyMelt');
+  if(!f?.sixIdea&&t.baits.some(p=>p.tiles.length===1&&d.obst.keys.includes(p.tiles[0])))kinds.push('earlyKey');
   if(!same([...new Set(kinds)].sort(),r.card.wrongIdea))errors.push('wrongIdeaBaitsMismatch');
   return {...v,ok:!errors.length,errors,feel:{...feel,pp},signature:t.signature};
 }
