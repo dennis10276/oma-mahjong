@@ -36,27 +36,30 @@ function select(pool,baseline,opts={}){
   for(const p of pool){const f=p.r.card.trapType;if(!by.has(f))by.set(f,[]);by.get(f).push(p);}
   const qualified=[...by].filter(([,ps])=>new Set(ps.map(p=>p.r.card.layout)).size>=2).sort((a,b)=>new Set(b[1].map(p=>p.r.card.layout)).size-new Set(a[1].map(p=>p.r.card.layout)).size).map(([f])=>f);
   if(qualified.length<12)return {ok:false,why:'fewerThan12FamiliesWithTwoLayouts',qualified:qualified.length};
-  let visited=0;
-  const required=qualified.slice(0,12),candidates=pool.filter(p=>required.includes(p.r.card.trapType)).map(p=>({...p,sig:Ledger.signature(p.r.design,p.r.card)}));
-  function walk(order,used,counts,sigs){
-    if(Date.now()>deadline)return null;visited++;
+  // Precompute the immutable ledger tests. Repeating geometric overlap scans at
+  // every DFS node made an otherwise small scheduling problem time out.
+  let visited=0,best=0,bestDeficit=24,roundNodes=0,attempt=0;
+  let seed=73;const random=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};
+  const required=qualified.slice(0,12),candidates=pool.filter(p=>required.includes(p.r.card.trapType)).map(p=>({...p,sig:Ledger.signature(p.r.design,p.r.card)})).filter(p=>baseline.every(e=>Ledger.diffCount(p.sig,e)>=Ledger.RULES.minDiff&&!(e.layout===p.sig.layout&&e.trap===p.sig.trap)));
+  const n=candidates.length,compatible=candidates.map((p,i)=>candidates.map((q,j)=>i!==j&&Ledger.diffCount(p.sig,q.sig)>=3&&!(p.sig.layout===q.sig.layout&&p.sig.trap===q.sig.trap))),same=candidates.map(p=>candidates.map(q=>Ledger.sameLayout(p.sig,q.sig))),hist=candidates.map(p=>baseline.map(e=>Ledger.sameLayout(p.sig,e)));
+  function walk(order,available,counts){
+    if(Date.now()>deadline||++roundNodes>10000)return null;visited++;best=Math.max(best,order.length);
     if(order.length===want)return required.every(f=>(counts[f]||0)>=2)?order:null;
-    const deficit=required.reduce((n,f)=>n+Math.max(0,2-(counts[f]||0)),0);if(deficit>want-order.length)return null;
-    const eligible=candidates.filter(p=>!used.has(p.file)&&Ledger.check(p.sig,sigs).ok);
-    for(const f of required)if((counts[f]||0)+candidates.filter(p=>!used.has(p.file)&&p.r.card.trapType===f).length<2)return null;
-    eligible.sort((a,b)=>{
-      const score=p=>100*Math.max(0,2-(counts[p.r.card.trapType]||0))+(p.r.card.trap.firstMoves.winning>=3?30:0)-2*(counts[p.r.card.trapType]||0)+((p.r.card.layout*17+order.length*13)%47)/47;
-      return score(b)-score(a);
-    });
-    for(const p of eligible.slice(0,18)){
-      const f=p.r.card.trapType,next=new Set(used);next.add(p.file);
-      const got=walk(order.concat(p),next,{...counts,[f]:(counts[f]||0)+1},sigs.concat(p.sig));if(got)return got;
-      if(Date.now()>deadline)break;
-    }
+    if(available.length<want-order.length)return null;
+    const deficit=required.reduce((v,f)=>v+Math.max(0,2-(counts[f]||0)),0);if(deficit>want-order.length)return null;
+    const remain={};for(const i of available)(remain[candidates[i].sig.trap]??=[]).push(i);
+    for(const f of required)if((counts[f]||0)+(remain[f]?.length||0)<2)return null;
+    bestDeficit=order.length===want?Math.min(bestDeficit,deficit):bestDeficit;
+    const recent=order.slice(-12),last=order.slice(-2),eligible=available.filter(i=>!recent.some(j=>same[i][j])&&!last.some(j=>candidates[j].sig.trap===candidates[i].sig.trap)&&!hist[i].slice(Math.max(0,baseline.length-12+order.length)).some(Boolean)&&(deficit<want-order.length||(counts[candidates[i].sig.trap]||0)<2));
+    const scores=new Map(eligible.map(i=>{const p=candidates[i],f=p.sig.trap,need=Math.max(0,2-(counts[f]||0));return [i,100*need/(remain[f]?.length||1)+(p.r.card.trap.firstMoves.winning>=3?2:0)-.2*(counts[f]||0)+random()*150];}));
+    eligible.sort((a,b)=>scores.get(b)-scores.get(a));
+    for(const i of eligible){const f=candidates[i].sig.trap,got=walk(order.concat(i),available.filter(j=>compatible[i][j]),{...counts,[f]:(counts[f]||0)+1});if(got)return got;if(Date.now()>deadline)break;}
     return null;
   }
-  const order=walk([],new Set(),{},baseline);
-  return order?{ok:true,visited,required,order:order.map(p=>p.file)}:{ok:false,why:'noOrderWithinWall',visited,required};
+  let order=null;while(!order&&Date.now()<deadline){roundNodes=0;attempt++;order=walk([],candidates.map((_,i)=>i),{});}
+  // Keep the unchanged public ledger as the final authority.
+  if(order){let previous=baseline;for(const i of order){const p=candidates[i],r=Ledger.check(p.sig,previous);if(!r.ok)throw Error('selector disagrees with ledger: '+r.reasons.join(';'));previous=previous.concat(p.sig);}}
+  return order?{ok:true,visited,required,order:order.map(i=>candidates[i].file)}:{ok:false,why:'noOrderWithinWall',visited,best,bestDeficit,attempt,required};
 }
 function main(){
   const args=process.argv.slice(2),i=args.indexOf('--history-checkout'),base=history(i<0?null:args[i+1]),dir=path.join(OUT,'examples');

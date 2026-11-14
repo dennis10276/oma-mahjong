@@ -165,11 +165,10 @@ function decorate(i) {
   const t = G.tiles[i], el = t.el; if (!el) return;
   el.classList.toggle('gold', G.gold.has(i));
   el.classList.toggle('sp-joker', t.face === JOKER);
-  // ice, lock or key: an overlay on the tile
-  const k = obKind(i);
-  let ov = el.querySelector('.ob');
-  if (!k) { if (ov) ov.remove(); }
-  else { if (!ov) { ov = document.createElement('div'); ov.className = 'ob'; el.appendChild(ov); } ov.dataset.k = k; }
+  paintOb(el, obKind(i), obMarker(i));
+  el.querySelectorAll('.ribbon-badge').forEach(b => b.remove());
+  el.style.setProperty('--ribbon-fs', (G.tw*.22).toFixed(1)+'px');
+  el.insertAdjacentHTML('beforeend', ribbonHTML(i));
   if (G.clock && G.clock.i === i) clockBadge();
 }
 // the alarm clock: a badge with the moves left, above everything (so tiles on top never hide it)
@@ -214,7 +213,7 @@ function renderBoard(enter) {
   for (const i of order) {
     const t = G.tiles[i], r = t.r, k = obKind(i);
     const cls = 'tile' + (G.alive[i] ? '' : ' hidden') + (G.down[i] && G.peek !== i ? ' back' : '') + (G.gold.has(i) ? ' gold' : '') + (t.face === JOKER ? ' sp-joker' : '') + (G.alive[i] && !free(i) ? ' blocked' : '');
-    const html = `<div class="${cls}" data-i="${i}" style="left:${r.l}px;top:${r.t}px;width:${r.w.toFixed(1)}px;height:${r.h.toFixed(1)}px;z-index:${r.zi % 10000}"><div class="face">${Tiles.boardFace(S.theme, t.face)}</div>${k ? `<div class="ob" data-k="${k}"></div>` : ''}</div>`;
+    const html = `<div class="${cls}" data-i="${i}" style="left:${r.l}px;top:${r.t}px;width:${r.w.toFixed(1)}px;height:${r.h.toFixed(1)}px;z-index:${r.zi % 10000};--ribbon-fs:${(G.tw*.22).toFixed(1)}px"><div class="face">${Tiles.boardFace(S.theme, t.face)}</div>${obHTML(k, obMarker(i))}${ribbonHTML(i)}</div>`;
     if (!layers.has(t.z)) layers.set(t.z, []);
     layers.get(t.z).push([i, html]);
   }
@@ -399,7 +398,7 @@ function onTap(i, auto = false, point = null) {
     replayMark('ignored', [i, auto ? 1 : 0, point, G.busy ? 'busy' : !G.alive[i] ? 'gone' : 'auto']);
     return;   // (auto-finish: hands off)
   }
-  replayMark('tap', [i, auto ? 1 : 0, !free(i) ? 'covered' : frozen(i) ? 'ice' : lockedT(i) ? 'lock' : '', point]);
+  replayMark('tap', [i, auto ? 1 : 0, !free(i) ? 'covered' : frozen(i) ? 'ice' : lockedT(i) ? 'lock' : ribbonBlocked(i) ? 'ribbon' : '', point]);
   try { return tapTile(i); } finally { replayCapture(); }
 }
 function tapTile(i) {
@@ -414,7 +413,7 @@ function tapTile(i) {
     if (++blockedTaps === 3) toast(tx('stillStuck'), 3000);
     return;
   }
-  if (frozen(i) || lockedT(i)) { G.st.bt++; obBlocked(i); return; }
+  if (frozen(i) || lockedT(i) || ribbonBlocked(i)) { G.st.bt++; obBlocked(i); return; }
   blockedTaps = 0;
   coachNote(i);                     // the game tips' own film of this try (coach.js)
   G.lastMove = performance.now();   // the board moved: the helper waits again
@@ -592,6 +591,7 @@ function autoFinishOK() {
   const A = RULES.autoFinish;
   if (!A || !G || G.done || G.autoFin || G.busy || G.flights || G.overShown || toolLevel(G) < A.fromLevel) return false;
   if (aliveCount() > A.maxTiles || !aliveCount()) return false;
+  if (G.ob && Object.keys(G.ob.after || {}).length) return false; // the proposal is played by hand
   if (clockOn()) return false;                                   // the alarm clock: she plays it herself
   // ice, locks and jokers have their own rules: only when none of them are left
   if (G.tiles.some((t, i) => G.alive[i] && (t.face === JOKER || obKind(i))) || G.tray.some(t => faceOf(t) === JOKER)) return false;

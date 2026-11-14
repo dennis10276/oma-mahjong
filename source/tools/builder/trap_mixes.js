@@ -34,7 +34,7 @@ const DEFINITIONS = [
   ['doubleFalseStart', 'lockedMelt', null, 'freezeLock', 'Fetch the far key before using either the free key or the lonely thaw tile, then thaw the locked exit.', 'Two distinct losing ideas; frozen shared exit.'],
   ['twoLonelyMelts', 'lockedMelt', null, 'dualMelt', 'The clock and a key roof each offer a lonely thaw tile; prepare their paired routes instead of parking either lonely picture.', 'Two thaw fronts, each with its own independently priced decoy.'],
   ['sharedRoofLocks', 'chain', 0, 'addLock', 'One key pair opens two different steps of the roof; clear the key route before parking the easy key.', 'A shared key pair and an extra locked prerequisite.'],
-  ['splitThawLocks', 'chain', 3, 'sharedCoverLock', 'The keys open both a clock cover and a thaw exit; leave room for the pictures that have to pass through both gates.', 'A frozen clock with separate locked cover and thaw-neighbour gates.'],
+  ['splitThawLocks', 'chain', 40, 'earlyClock', 'The locked thaw tile clears a picture carried through the key dig; save the free clock’s tray slot until that relief is ready.', 'The same keys open the clock partner and a locked picture match on its thaw route.'],
   ['frozenExitFork', 'lockedMelt', null, 'freezeTwoLocks', 'Opening the keys is only half the job: choose which of two frozen locked exits to thaw before freeing the clock.', 'Two parallel exits with two conditions each.'],
   ['nestedMeltFork', 'wrongMelt', null, 'freezeTwoRight', 'Prepare both frozen thaw exits and save the lonely outer neighbour for its buried partner.', 'A two-front staged thaw, rather than one serial ice chain.'],
   ['keyRoofMeltFork', 'chain', 0, 'freezeRight', 'Thaw the key roof through its own neighbour before collecting the two keys together.', 'A staged melt on the key side rather than the clock side.'],
@@ -42,7 +42,7 @@ const DEFINITIONS = [
   ['freeClockKeys', 'guardedKey', null, 'earlyClock', 'Leave the exposed clock until the frozen key roof is cleared, or its waiting picture blocks the key dig.', 'A free clock in parallel with a keyed ice gate.'],
   ['freeClockShared', 'lockedMelt', null, 'earlyClock', 'The free clock and the free melting neighbour compete for tray room while the keys open the clock partner route.', 'A clock bait beside a shared-lock thaw fork.'],
   ['frozenKeyShared', 'chain', 18, 'addLock', 'The frozen key opens two separate exits, so thaw its route before spending a slot on the other key.', 'A frozen key feeding a branched lock mechanism.'],
-  ['frozenRoofShared', 'chain', 26, 'addLock', 'The icy locked roof and another locked step open together, but their thaw route still has to be prepared.', 'Three locks sharing keys, with a frozen roof.'],
+  ['frozenRoofShared', 'chain', 26, 'earlyClock', 'The free clock shares its picture with a tile behind a roof that is both frozen and locked; prepare the far key route first.', 'A free clock and its partner beneath a frozen locked roof, linked to an icy key cover.'],
   ['secondActIce', 'guardedKey', null, 'tailIce', 'Saving the clock leaves an icy gate in the remaining picture route; keep space for the tiles that melt it.', 'An independently measured obstacle after the clock.'],
   ['secondActKeys', 'wrongMelt', null, 'tailLock', 'Melt the clock without stranding its neighbour, then gather the remaining keys before opening the tail gate.', 'A keyed second act with a proven tail-fork or tail-pressure effect.'],
   ['roofKeyMelt', 'chain', 3, 'roofKey', 'The key on the clock roof is a lure: prepare the far key before opening the locked thaw exit.', 'Key-on-clock and a locked melt share the same cover.'],
@@ -64,9 +64,12 @@ function place(name, c, brief, rng) {
   const r = T.STORIES[f.base].place(c, b, rng); if (r.fail) return r;
   let P = r.dig || B.planDig(c, r, rng); if (!P) return { fail: 'baseDig' };
   const bait = r.bait, originalClock = r.clock;
+  // A lock below another lock opened by the same keys is provably redundant.
+  // The roof retains its lock; the matching tile below it is an ordinary tile.
+  if(name==='frozenRoofShared')r.locks.delete(originalClock);
   const protectedTiles = new Set([r.clock, ...r.keys, ...r.locks, ...Object.keys(r.ice).map(Number), ...bait.tiles]);
   const visible = i => c.roleShown0[i] && T.vis0Of(c)[i].role;
-  let added = null,addedTiles=[];
+  let added = null,addedTiles=[],setup=null;
   if (f.mode === 'roofKey') {
     const oldKey=bait.keyEarly;
     if(oldKey==null)return {fail:'noFreeRoofKeyRole'};
@@ -102,12 +105,13 @@ function place(name, c, brief, rng) {
     bait.wrong.push(lone);bait.twins.push(twin);bait.pairs.push([lone,twin]);bait.tiles.push(lone,twin);bait.keepUp.push(lone,twin,...c.above[twin]);
     P=null;
   } else if (f.mode === 'earlyClock') {
-    if(P.length%2===0)return {fail:'freeClockParity'};
     if([...Array(c.n).keys()].filter(i=>!P.includes(i)&&c.above[i].has(originalClock)).length<2)return {fail:'noClockPartnerHolders'};
     const cand = shuffled([...Array(c.n).keys()].filter(i => c.free0[i] && visible(i) && !r.keys.includes(i) && !r.locks.has(i) && !r.ice[i] && !P.includes(i) && !bait.pairs.some(p => p.includes(i))), rng);
     // Prefer a new clock over a bait tile: retain the authored lonely-picture pair.
     if (!cand.length) return { fail: 'noFreeClock' };
-    added = cand[0]; r.clock = added; P = P.concat(added);
+    added = cand[0];
+    if(P.length%2===0){if(cand.length<2)return {fail:'noClockSetupTile'};setup=cand[1];P=P.slice(0,-1).concat(setup,P.at(-1));}
+    r.clock = added; P = P.concat(added);
   } else if (f.mode === 'tailIce' || f.mode === 'tailLock') {
     const cov=B.coveredDuringDig(c,P);
     const cand = shuffled([...Array(c.n).keys()].filter(i => cov[i] && !protectedTiles.has(i) && !P.includes(i) && visible(i) && c.inb[i].filter(j => !P.includes(j)).length >= 2), rng);
@@ -133,7 +137,7 @@ function place(name, c, brief, rng) {
   const mechanism = uniq([...specials, ...specials.flatMap(i => [...c.above[i]]), ...Object.keys(r.ice).map(Number).flatMap(i => c.inb[i])]);
   r.bait = { ...bait, type: name, keepUp: uniq([...bait.keepUp, ...mechanism]),
     tiles: uniq([...bait.tiles, ...(f.mode === 'earlyClock' ? [r.clock] : [])]),
-    mix: { originalClock, added, addedTiles, mode: f.mode }, see: f.see };
+    mix: { originalClock, added, addedTiles, setup, mode: f.mode }, see: f.see };
   return r;
 }
 
@@ -182,6 +186,22 @@ function repeatedKeys(c,r,plan,rng){
   r.bait.extraMoves=[[freeKey,near]];r.bait.tiles.push(...pair);r.bait.keepUp.push(...pair,...c.above[far]);
   return true;
 }
+function lockedRelay(c,r,plan){
+  const old=r.bait.mix.originalClock,locked=[...r.locks].find(i=>i!==old),ci=plan.pos[r.clock];
+  if(locked==null||plan.pos[locked]>=ci)return false;
+  const other=plan.pairOf[locked],keyAt=Math.min(...r.keys.map(i=>plan.pos[i])),geo=c._mixGeo||(c._mixGeo=SEP.geometry({tiles:c.tiles,down:[]}));
+  for(const dig of plan.dig.orphans){
+    const twin=plan.pairOf[dig];
+    if(plan.pos[dig]>=keyAt||plan.pos[twin]<=ci||new Set([dig,twin,locked,other]).size!==4||geo.close[dig][locked]||!geo.vis[dig])continue;
+    if(!r.keys.some(k=>B.necessary(c,{...r,clock:k},[dig]).has(dig)))continue;
+    const a=plan.faces[locked],b=plan.faces[twin];plan.faces[locked]=b;plan.faces[twin]=a;
+    const tray=[];let valid=true;for(const i of plan.W){const q=tray.indexOf(plan.faces[i]);if(q>=0)tray.splice(q,1);else tray.push(plan.faces[i]);if(tray.length>=4){valid=false;break;}}
+    if(!valid){plan.faces[locked]=a;plan.faces[twin]=b;continue;}
+    plan.pairOf[dig]=locked;plan.pairOf[locked]=dig;plan.pairOf[other]=twin;plan.pairOf[twin]=other;
+    r.bait.relay={dig,locked};r.bait.tiles.push(dig,locked);r.bait.keepUp.push(dig,locked);return true;
+  }
+  return false;
+}
 function tailFork(d,without,tile){
   const g=E.game(d),g2=E.game(without),ci=d.solution.indexOf(d.clock.i),left=d.solution.length-ci-1;
   let s=E.start(g);const lo=ci+1+Math.floor(left*.15),hi=ci+1+Math.floor(left*.60);
@@ -205,11 +225,12 @@ function prove(name, d, roles, ctx, opts = {}) {
   if(roles.bait.mix.mode!==f.mode)return {ok:false,why:'recipeChanged'};
   if(f.mode==='earlyClock'&&d.faces[d.clock.i]!==d.faces[roles.bait.mix.originalClock])return {ok:false,why:'clockTwinNotGate'};
   if(d.obst.keys.length===2&&d.faces[d.obst.keys[0]]!==d.faces[d.obst.keys[1]])return {ok:false,why:'keysNotPair'};
+  if(name==='splitThawLocks'&&(!roles.bait.relay||d.faces[roles.bait.relay.dig]!==d.faces[roles.bait.relay.locked]))return {ok:false,why:'relayChanged'};
   if(roles.bait.pairs.some(([a,b])=>d.faces[a]!==d.faces[b]))return {ok:false,why:'baitPairChanged'};
   if(f.mode==='repeatKeys'&&(!roles.bait.repeat||roles.bait.repeat.copies.some(i=>d.faces[i]!==roles.bait.repeat.face)||d.faces.filter(f=>f===roles.bait.repeat.face).length!==4))return {ok:false,why:'repeatChoiceChanged'};
   if ((d.down || []).length / d.tiles.length > .3) return {ok:false,why:'faceDownShare'};
   const g = E.game(d), s0 = E.start(g), vis = tileVisibility(g.tiles,{...s0,down:g.down,openPeek:-1},null).tiles;
-  const special = uniq([d.clock.i,...d.obst.keys,...d.obst.locks,...Object.keys(d.obst.ice).map(Number)]);
+  const special = uniq([d.clock.i,...(f.mode==='earlyClock'?[roles.bait.mix.originalClock]:[]),...d.obst.keys,...d.obst.locks,...Object.keys(d.obst.ice).map(Number)]);
   if (special.some(i=>g.down[i] || !vis[i].role)) return {ok:false,why:'hiddenSpecial'};
   const combined=special.filter(i=>d.obst.ice[i]&&(d.obst.keys.includes(i)||d.obst.locks.includes(i))),boxes=visibilityGeometry(g.tiles).boxes;
   for(const i of combined){const b=boxes[i],rect=[b.left-.04,b.top-.075,b.left+.32,b.top+.372];
@@ -254,7 +275,7 @@ function prove(name, d, roles, ctx, opts = {}) {
     if(!effect) return {ok:false,why:'idle:'+kind+':'+tile};
     effects.push({kind,tile,...effect});
   }
-  const card={type:name,trapType:f.trapType,see:f.see,recipe:f.recipe,dials:f.dials,k,spare,priceHorizon:Math.min(19,k+3),baits,control,effects,firstMoves:first,mechanism:{...roles.bait.mix,repeat:roles.bait.repeat||null},
+  const card={type:name,trapType:f.trapType,see:f.see,recipe:f.recipe,dials:f.dials,k,spare,priceHorizon:Math.min(19,k+3),baits,control,effects,firstMoves:first,mechanism:{...roles.bait.mix,repeat:roles.bait.repeat||null,relay:roles.bait.relay||null},
     combinedBadges:combined,needsUi:combined.length?'TASK-13':null};
   return {ok:true,card};
 }
@@ -293,6 +314,7 @@ function build(name, brief = {}, opts = {}) {
     const plan=VC.placePicturesVC(c,r,P,hold,used,rng,N);
     if(!plan || plan.fail){const why=plan?.fail||'pictures';fails[why]=(fails[why]||0)+1;continue;}
     if(f.mode==='earlyClock'&&plan.faces[r.clock]!==plan.faces[r.bait.mix.originalClock]){fails.clockTwinNotGate=(fails.clockTwinNotGate||0)+1;continue;}
+    if(name==='splitThawLocks'&&!lockedRelay(c,r,plan)){fails.noLockedRelay=(fails.noLockedRelay||0)+1;continue;}
     if(f.mode==='repeatKeys'&&!repeatedKeys(c,r,plan,rng)){fails.noRepeatedKeyPair=(fails.noRepeatedKeyPair||0)+1;continue;}
     const pd=VC.placeDownVC(c,r,P,plan,used,rng);
     const d={tiles:c.tiles.map(t=>[t.x,t.y,t.z]),faces:plan.faces,down:pd.down,gold:[],obst:{ice:{...r.ice},locks:[...r.locks],keys:r.keys.slice()},clock:{i:r.clock,n:99},solution:plan.W};
@@ -314,8 +336,17 @@ function build(name, brief = {}, opts = {}) {
   return {fail:'noProvenMix',fails,ms:Date.now()-t0};
 }
 
+function retime(d,spare,opts={}){
+  if(!E.replay(d,d.solution,{strict:true}).ok)return {ok:false,why:'strictReplay'};
+  const free={...d,clock:{...d.clock,n:99}},cs=shortest(free,opts);
+  if(!cs||cs.k+spare>19)return {ok:false,why:'clockUnproven'};
+  let solution=d.solution;
+  if(solution.indexOf(d.clock.i)+1!==cs.k){const strict=shortest(free,{...opts,strict:true});if(!strict||strict.k!==cs.k)return {ok:false,why:'strictMinimum'};solution=E.flatten(strict.path);}
+  const design={...d,clock:{...d.clock,n:cs.k+spare},solution};
+  return E.replay(design,solution,{strict:true}).ok?{ok:true,design,k:cs.k}:{ok:false,why:'retimedWitness'};
+}
 function finishExample(raw,opts={}){
-  const t0=Date.now(),name=raw.brief.story,k=raw.card.clock.fewestMoves,spare=raw.card.clock.spare;
+  const t0=Date.now(),name=raw.brief.story,spare=raw.card.clock.spare;let k=raw.card.clock.fewestMoves;
   const roles={...raw.roles,locks:new Set(raw.roles.locks),holderSpecials:new Set(raw.roles.holderSpecials)},notes=[];
   if(roles.bait.mix.mode!==FAMILIES[name].mode)return {fail:'recipeChanged'};
   let d=clone(raw.design);
@@ -325,28 +356,33 @@ function finishExample(raw,opts={}){
   const copies=roles.bait.repeat?.copies||[];
   if(copies.some((i,k)=>copies.slice(k+1).some(j=>geo.close[i][j])))return {fail:'fixedFourCopiesClose'};
   const validate=dd=>{
-    if(!E.replay(dd,dd.solution,{strict:true}).ok)return {ok:false,why:'strictReplay'};
-    const cs=shortest({...dd,clock:{...dd.clock,n:99}});if(!cs||cs.k!==k)return {ok:false,why:'clockChanged'};
-    return prove(name,dd,roles,{k,spare},{skipOpening:true});
+    const rt=retime(dd,spare);if(!rt.ok)return rt;
+    return prove(name,rt.design,roles,{k:rt.k,spare},{skipOpening:true});
   };
   for(let pass=0;pass<6&&!SEP.closeTwins(d).meets;pass++){
-    const freeze=uniq([...d.obst.keys,...(roles.bait.repeat?.copies||[]),...(pass<2?roles.bait.tiles:[])]);
+    const freeze=uniq([...d.obst.keys,...(roles.bait.repeat?.copies||[]),...roles.bait.tiles]);
     const sep=SEP.separate(d,{k,seed:(opts.seed??1)+pass*7,wallMs:opts.sepMs??7000,freeze,validate});
-    notes.push({stage:'separate',pass,after:SEP.summary(sep.after),notes:sep.notes});if(sep.validated)d=sep.design;
+    notes.push({stage:'separate',pass,after:SEP.summary(sep.after),notes:sep.notes});if(sep.validated){const rt=retime(sep.design,spare);if(rt.ok){if(rt.k!==k)notes.push({stage:'retime',from:k,to:rt.k});d=rt.design;k=rt.k;}}
   }
   if(!SEP.closeTwins(d).meets)return {fail:'separation',notes};
-  const tune=Tail.tune(d,{seed:opts.seed??1,wallMs:opts.tailMs??12000,freeze:roles.bait.tiles,validate});
-  notes.push({stage:'tail',before:tune.before.tailGreedyWin,after:tune.after.tailGreedyWin,notes:tune.notes});
-  if(!tune.inBand||!tune.validated)return {fail:'tailBand',notes};
-  d=tune.design;
+  let tailReady=false;
+  for(let round=0;round<2&&!tailReady;round++){
+    const freeze=uniq([...roles.bait.tiles,...d.obst.keys,...(roles.bait.repeat?.copies||[])]);
+    const tune=Tail.tune(d,{seed:(opts.seed??1)+round*17,wallMs:opts.tailMs??12000,freeze,validate});
+    notes.push({stage:'tail',round,before:tune.before.tailGreedyWin,after:tune.after.tailGreedyWin,notes:tune.notes});
+    if(!tune.validated)return {fail:'tailValidation',notes};
+    const rt=retime(tune.design,spare);if(!rt.ok)return {fail:rt.why,notes};d=rt.design;k=rt.k;
+    const score=Tail.measure(d,{seed:977,playouts:800}).tailGreedyWin;tailReady=score>=.15&&score<=.40;
+  }
+  if(!tailReady)return {fail:'tailBand',notes};
   const p=prove(name,d,roles,{k,spare});if(!p.ok)return {fail:'finalProof:'+p.why,notes};
   const V=require('./verify_trap_mixes.js'),tail=Tail.measure(d,{seed:977,playouts:800});
   const pf=T.pressureFacts(d,{capNodes:60000,firstNodes:1e6}),pressureFacts={capProof:pf.capProof,needsWaiting:pf.needsWaitingProven?pf.needsWaiting:null,needsWaitingProven:pf.needsWaitingProven};
   const r={schema:'trap-variety-v1',design:d,brief:raw.brief,roles:raw.roles,
-    card:{...raw.card,trap:p.card,tail,pressure:V.storedPressure(d),pressureFacts,
+    card:{...raw.card,clock:{fewestMoves:k,spare,n:d.clock.n,tile:d.clock.i},trap:p.card,tail,pressure:V.storedPressure(d),pressureFacts,
       faceDownShare:(d.down||[]).length/d.tiles.length,twins:SEP.summary(SEP.closeTwins(d))},notes,ms:Date.now()-t0};
   const verification=V.verify(r);if(!verification.ok)return {fail:'independentVerification',verification,notes};
   r.verification=verification;return r;
 }
 
-module.exports={FAMILIES,STORIES,build,place,prove,price,shortest,opening,mechanismOf,rngOf,clone,finishExample,SEP,Tail,Ledger};
+module.exports={FAMILIES,STORIES,build,place,prove,price,shortest,opening,mechanismOf,rngOf,clone,retime,lockedRelay,finishExample,SEP,Tail,Ledger};

@@ -16,6 +16,11 @@ if(!isMainThread){
       if(mode==='make'&&r.design)r=M.finishExample(r,{seed});
     }
     if(r.design){r.roles.locks=[...r.roles.locks];r.roles.holderSpecials=[...r.roles.holderSpecials];}
+    if(r.fail){
+      const dir=path.join(OUT,'failures');fs.mkdirSync(dir,{recursive:true});
+      const key=String(name||'unknown').replace(/[^A-Za-z0-9_-]/g,'_')+'-L'+layout+'-s'+seed+'-p'+(spare??1)+'-'+(mode||'build')+'.json';
+      fs.writeFileSync(path.join(dir,key),JSON.stringify({job:workerData,fail:r.fail,fails:r.fails||null,notes:r.notes||null,verification:r.verification||null},null,2)+'\n');
+    }
     parentPort.postMessage(r);
   } catch(e){parentPort.postMessage({fail:'exception',detail:e.stack});}
 } else if(require.main===module){main().catch(e=>{console.error(e);process.exitCode=1;});}

@@ -1,0 +1,1260 @@
+{
+  "schema": "trap-variety-v1",
+  "design": {
+    "tiles": [
+      [
+        4,
+        0,
+        0
+      ],
+      [
+        6,
+        0,
+        0
+      ],
+      [
+        8,
+        0,
+        0
+      ],
+      [
+        5,
+        2,
+        0
+      ],
+      [
+        7,
+        2,
+        0
+      ],
+      [
+        2,
+        4,
+        0
+      ],
+      [
+        4,
+        4,
+        0
+      ],
+      [
+        6,
+        4,
+        0
+      ],
+      [
+        8,
+        4,
+        0
+      ],
+      [
+        10,
+        4,
+        0
+      ],
+      [
+        3,
+        6,
+        0
+      ],
+      [
+        5,
+        6,
+        0
+      ],
+      [
+        7,
+        6,
+        0
+      ],
+      [
+        9,
+        6,
+        0
+      ],
+      [
+        0,
+        8,
+        0
+      ],
+      [
+        2,
+        8,
+        0
+      ],
+      [
+        4,
+        8,
+        0
+      ],
+      [
+        6,
+        8,
+        0
+      ],
+      [
+        8,
+        8,
+        0
+      ],
+      [
+        10,
+        8,
+        0
+      ],
+      [
+        12,
+        8,
+        0
+      ],
+      [
+        1,
+        10,
+        0
+      ],
+      [
+        3,
+        10,
+        0
+      ],
+      [
+        5,
+        10,
+        0
+      ],
+      [
+        7,
+        10,
+        0
+      ],
+      [
+        9,
+        10,
+        0
+      ],
+      [
+        11,
+        10,
+        0
+      ],
+      [
+        0,
+        12,
+        0
+      ],
+      [
+        2,
+        12,
+        0
+      ],
+      [
+        4,
+        12,
+        0
+      ],
+      [
+        6,
+        12,
+        0
+      ],
+      [
+        8,
+        12,
+        0
+      ],
+      [
+        10,
+        12,
+        0
+      ],
+      [
+        12,
+        12,
+        0
+      ],
+      [
+        3,
+        8,
+        1
+      ],
+      [
+        9,
+        8,
+        1
+      ],
+      [
+        2,
+        10,
+        1
+      ],
+      [
+        10,
+        10,
+        1
+      ],
+      [
+        4,
+        10,
+        1
+      ],
+      [
+        8,
+        10,
+        1
+      ],
+      [
+        1,
+        8,
+        1
+      ],
+      [
+        11,
+        8,
+        1
+      ],
+      [
+        5,
+        8,
+        1
+      ],
+      [
+        7,
+        8,
+        1
+      ],
+      [
+        4,
+        6,
+        1
+      ],
+      [
+        8,
+        6,
+        1
+      ],
+      [
+        3,
+        12,
+        1
+      ],
+      [
+        9,
+        12,
+        1
+      ],
+      [
+        6,
+        10,
+        1
+      ],
+      [
+        6,
+        6,
+        1
+      ],
+      [
+        5,
+        12,
+        1
+      ],
+      [
+        7,
+        12,
+        1
+      ],
+      [
+        3,
+        4,
+        1
+      ],
+      [
+        9,
+        4,
+        1
+      ],
+      [
+        1,
+        12,
+        1
+      ],
+      [
+        11,
+        12,
+        1
+      ],
+      [
+        4,
+        8,
+        2
+      ],
+      [
+        8,
+        8,
+        2
+      ],
+      [
+        10,
+        8,
+        2
+      ],
+      [
+        2,
+        8,
+        2
+      ],
+      [
+        3,
+        10,
+        2
+      ],
+      [
+        9,
+        10,
+        2
+      ],
+      [
+        5,
+        10,
+        2
+      ],
+      [
+        7,
+        10,
+        2
+      ],
+      [
+        5,
+        6,
+        2
+      ],
+      [
+        7,
+        6,
+        2
+      ],
+      [
+        6,
+        8,
+        2
+      ],
+      [
+        10,
+        12,
+        2
+      ],
+      [
+        2,
+        12,
+        2
+      ],
+      [
+        4,
+        12,
+        2
+      ],
+      [
+        8,
+        12,
+        2
+      ],
+      [
+        6,
+        12,
+        2
+      ],
+      [
+        9,
+        8,
+        3
+      ],
+      [
+        3,
+        8,
+        3
+      ],
+      [
+        4,
+        10,
+        3
+      ],
+      [
+        8,
+        10,
+        3
+      ],
+      [
+        5,
+        8,
+        3
+      ],
+      [
+        7,
+        8,
+        3
+      ],
+      [
+        6,
+        10,
+        3
+      ],
+      [
+        3,
+        12,
+        3
+      ],
+      [
+        9,
+        12,
+        3
+      ],
+      [
+        6,
+        6,
+        3
+      ],
+      [
+        5,
+        12,
+        3
+      ],
+      [
+        7,
+        12,
+        3
+      ],
+      [
+        4,
+        8,
+        4
+      ],
+      [
+        8,
+        8,
+        4
+      ],
+      [
+        5,
+        10,
+        4
+      ],
+      [
+        7,
+        10,
+        4
+      ],
+      [
+        6,
+        8,
+        4
+      ],
+      [
+        4,
+        12,
+        4
+      ],
+      [
+        8,
+        12,
+        4
+      ],
+      [
+        6,
+        12,
+        4
+      ],
+      [
+        5,
+        8,
+        5
+      ],
+      [
+        7,
+        8,
+        5
+      ],
+      [
+        6,
+        10,
+        5
+      ],
+      [
+        6,
+        8,
+        6
+      ]
+    ],
+    "faces": [
+      11,
+      32,
+      31,
+      2,
+      34,
+      2,
+      13,
+      22,
+      13,
+      35,
+      31,
+      33,
+      10,
+      6,
+      28,
+      34,
+      10,
+      14,
+      24,
+      34,
+      6,
+      33,
+      5,
+      8,
+      19,
+      15,
+      23,
+      16,
+      31,
+      16,
+      26,
+      26,
+      16,
+      9,
+      19,
+      27,
+      17,
+      20,
+      9,
+      32,
+      0,
+      24,
+      7,
+      5,
+      5,
+      33,
+      18,
+      27,
+      27,
+      9,
+      14,
+      33,
+      1,
+      1,
+      9,
+      18,
+      24,
+      18,
+      17,
+      4,
+      12,
+      25,
+      29,
+      20,
+      32,
+      0,
+      16,
+      8,
+      27,
+      6,
+      18,
+      24,
+      29,
+      30,
+      32,
+      3,
+      4,
+      12,
+      25,
+      0,
+      5,
+      34,
+      30,
+      7,
+      0,
+      11,
+      3,
+      21,
+      6,
+      21,
+      28,
+      35,
+      15,
+      31,
+      22,
+      23
+    ],
+    "down": [
+      43,
+      34,
+      30,
+      56,
+      66,
+      29,
+      69,
+      68,
+      1,
+      15,
+      18,
+      27,
+      46,
+      54,
+      17,
+      16,
+      35,
+      50,
+      28
+    ],
+    "gold": [],
+    "obst": {
+      "ice": {
+        "5": 2,
+        "91": 2
+      },
+      "locks": [
+        89,
+        94
+      ],
+      "keys": [
+        5,
+        3
+      ]
+    },
+    "clock": {
+      "i": 91,
+      "n": 13
+    },
+    "solution": [
+      52,
+      53,
+      9,
+      8,
+      7,
+      6,
+      5,
+      3,
+      94,
+      86,
+      89,
+      91,
+      87,
+      75,
+      61,
+      78,
+      37,
+      63,
+      95,
+      26,
+      93,
+      2,
+      39,
+      1,
+      85,
+      0,
+      81,
+      4,
+      74,
+      64,
+      92,
+      25,
+      88,
+      60,
+      84,
+      79,
+      73,
+      82,
+      59,
+      76,
+      72,
+      62,
+      48,
+      68,
+      36,
+      58,
+      54,
+      38,
+      77,
+      69,
+      57,
+      46,
+      66,
+      27,
+      56,
+      41,
+      40,
+      65,
+      14,
+      90,
+      21,
+      45,
+      83,
+      13,
+      22,
+      44,
+      24,
+      34,
+      42,
+      20,
+      43,
+      80,
+      10,
+      28,
+      23,
+      67,
+      55,
+      70,
+      35,
+      47,
+      15,
+      19,
+      18,
+      71,
+      50,
+      17,
+      49,
+      33,
+      16,
+      12,
+      51,
+      11,
+      32,
+      29,
+      30,
+      31
+    ]
+  },
+  "brief": {
+    "layout": 27,
+    "seed": 2,
+    "frame": {
+      "spare": 1
+    },
+    "story": "frozenKeyShared",
+    "targets": {
+      "trayRoom": 0,
+      "maxDown": 0.2,
+      "hiddenOnWay": 0,
+      "tailPairWidth": 2
+    }
+  },
+  "roles": {
+    "clock": 91,
+    "locks": [
+      89,
+      94
+    ],
+    "keys": [
+      5,
+      3
+    ],
+    "ice": {
+      "5": 2,
+      "91": 2
+    },
+    "holderSpecials": [],
+    "dig": [
+      52,
+      53,
+      9,
+      8,
+      7,
+      6,
+      5,
+      3,
+      94,
+      86,
+      89,
+      91
+    ],
+    "bait": {
+      "type": "frozenKeyShared",
+      "chain": "clock<ice; thaw<lock; keyA<frozen",
+      "def": {
+        "ck": "ice",
+        "nb": "lock",
+        "keyA": "frozen",
+        "sig": "clock<ice; thaw<lock; keyA<frozen",
+        "length": 3,
+        "frozenKey": true,
+        "lockedFrozen": false,
+        "needsUi": "frozen-key-marker"
+      },
+      "tiles": [
+        3,
+        90,
+        14
+      ],
+      "single": [
+        3
+      ],
+      "pairs": [
+        [
+          90,
+          14
+        ]
+      ],
+      "keepUp": [
+        91,
+        89,
+        5,
+        3,
+        52,
+        86,
+        87,
+        90,
+        94,
+        6,
+        10,
+        44,
+        64,
+        81,
+        14,
+        40,
+        59,
+        73,
+        84,
+        92,
+        95,
+        82,
+        83
+      ],
+      "keyEarly": 3,
+      "wrong": [
+        90
+      ],
+      "twins": [
+        14
+      ],
+      "links": [
+        [
+          91,
+          89
+        ],
+        [
+          91,
+          86
+        ],
+        [
+          91,
+          90
+        ],
+        [
+          89,
+          5
+        ],
+        [
+          89,
+          3
+        ]
+      ],
+      "frozen": 91,
+      "special": 89,
+      "right": [
+        89,
+        86
+      ],
+      "clockCover": null,
+      "mix": {
+        "originalClock": 91,
+        "added": 94,
+        "addedTiles": [],
+        "mode": "addLock"
+      },
+      "see": "The frozen key opens two separate exits, so thaw its route before spending a slot on the other key."
+    }
+  },
+  "card": {
+    "layout": 27,
+    "shape": "steps",
+    "tiles": 96,
+    "trapType": "mix:frozenKeyShared",
+    "clock": {
+      "fewestMoves": 12,
+      "spare": 1,
+      "n": 13,
+      "tile": 91
+    },
+    "trap": {
+      "type": "frozenKeyShared",
+      "trapType": "mix:frozenKeyShared",
+      "see": "The frozen key opens two separate exits, so thaw its route before spending a slot on the other key.",
+      "recipe": "A frozen key feeding a branched lock mechanism.",
+      "dials": {
+        "easier": "spare 2; one wrong neighbour; shorter key dig",
+        "harder": "spare 1; two wrong neighbours; tail width 3"
+      },
+      "k": 12,
+      "spare": 1,
+      "priceHorizon": 15,
+      "baits": [
+        {
+          "tiles": [
+            90
+          ],
+          "result": "win",
+          "cost": 3,
+          "exact": true,
+          "need": 15,
+          "aboveControl": true
+        },
+        {
+          "tiles": [
+            3
+          ],
+          "result": "win",
+          "cost": 3,
+          "exact": true,
+          "need": 15,
+          "aboveControl": true
+        }
+      ],
+      "control": {
+        "moves": 0,
+        "dearest": null,
+        "value": 0
+      },
+      "effects": [
+        {
+          "kind": "lock",
+          "tile": 89,
+          "by": "baitDefused",
+          "bait": [
+            90
+          ],
+          "winsAt": 13
+        },
+        {
+          "kind": "lock",
+          "tile": 94,
+          "by": "clockRoute",
+          "kWithout": 10
+        },
+        {
+          "kind": "ice",
+          "tile": 5,
+          "by": "clockRoute",
+          "kWithout": 7
+        },
+        {
+          "kind": "ice",
+          "tile": 91,
+          "by": "clockRoute",
+          "kWithout": 2
+        }
+      ],
+      "firstMoves": {
+        "winning": 2,
+        "unknown": 0,
+        "legal": 9,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 2,
+            "result": "lose"
+          },
+          {
+            "tile": 3,
+            "result": "lose"
+          },
+          {
+            "tile": 4,
+            "result": "lose"
+          },
+          {
+            "tile": 52,
+            "result": "win"
+          },
+          {
+            "tile": 53,
+            "result": "win"
+          },
+          {
+            "tile": 81,
+            "result": "lose"
+          },
+          {
+            "tile": 90,
+            "result": "lose"
+          },
+          {
+            "tile": 95,
+            "result": "lose"
+          }
+        ]
+      },
+      "mechanism": {
+        "originalClock": 91,
+        "added": 94,
+        "addedTiles": [],
+        "mode": "addLock",
+        "repeat": null
+      },
+      "combinedBadges": [
+        5
+      ],
+      "needsUi": "TASK-13"
+    },
+    "attempt": 11,
+    "tail": {
+      "tailGreedyWin": 0.2938,
+      "wins": 235,
+      "playouts": 800,
+      "seed": 977,
+      "start": {
+        "step": 12,
+        "tray": 2,
+        "left": 84
+      },
+      "stored": {
+        "steps": 84,
+        "peakTray": 3,
+        "meanTray": 0.976,
+        "moves2plus": 21,
+        "tray2Share": 0.25
+      }
+    },
+    "pressure": {
+      "peak": 3,
+      "run2": 5,
+      "at3": 3,
+      "occ": [
+        1,
+        0,
+        1,
+        2,
+        3,
+        2,
+        3,
+        2,
+        1,
+        2,
+        3,
+        2
+      ]
+    },
+    "pressureFacts": {
+      "capProof": {
+        "cap1": "lose",
+        "cap2": "lose"
+      },
+      "needsWaiting": 3,
+      "needsWaitingProven": true
+    },
+    "faceDownShare": 0.19791666666666666,
+    "twins": {
+      "close": 1,
+      "share": 0.0208,
+      "visible": 0,
+      "four": 0,
+      "meets": true
+    }
+  },
+  "notes": [
+    {
+      "stage": "separate",
+      "pass": 0,
+      "after": {
+        "close": 28,
+        "share": 0.5833,
+        "visible": 9,
+        "four": 14,
+        "meets": false
+      },
+      "notes": [
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "tail rejected: idle:lock:89",
+        "tail rejected: idle:lock:89",
+        "tail rejected: idle:lock:89",
+        "after prefix/tail: 28 close (visible 9, four 14)"
+      ]
+    },
+    {
+      "stage": "separate",
+      "pass": 1,
+      "after": {
+        "close": 6,
+        "share": 0.125,
+        "visible": 4,
+        "four": 0,
+        "meets": false
+      },
+      "notes": [
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "tail rejected: idle:lock:89",
+        "tail rebuilt (39 pairs, 1 forced close): close weight 145 -> 42",
+        "after prefix/tail: 6 close (visible 4, four 0)"
+      ]
+    },
+    {
+      "stage": "separate",
+      "pass": 2,
+      "after": {
+        "close": 1,
+        "share": 0.0208,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "notes": [
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix candidate rejected: idle:lock:89",
+        "prefix (18 tiles, relaxed tray profile): close weight 41 -> 0",
+        "tail rejected: baitPairChanged",
+        "tail rejected: baitPairChanged",
+        "tail rejected: baitPairChanged",
+        "tail rejected: baitPairChanged",
+        "tail rejected: baitPairChanged",
+        "tail rejected: baitPairChanged",
+        "tail rejected: baitPairChanged",
+        "tail rejected: baitPairChanged",
+        "tail rejected: baitPairChanged",
+        "tail rejected: baitPairChanged",
+        "after prefix/tail: 1 close (visible 0, four 0)"
+      ]
+    },
+    {
+      "stage": "tail",
+      "before": 0.2112,
+      "after": 0.2938,
+      "notes": [
+        "r0: start: tailGreedyWin 0.2112 (fresh seed), 0.19 (tune seed), band 0.15-0.4, 80 movable tail tiles",
+        "r0: 36 proposals, 2 swaps kept, tune-seed win 0.22"
+      ]
+    }
+  ],
+  "ms": 17435,
+  "verification": {
+    "ok": true,
+    "errors": [],
+    "checks": [
+      "strictReplay",
+      "minimumByUnsatisfiableEarlierDeadline"
+    ],
+    "k": 12,
+    "spare": 1,
+    "winningFirstMoves": 2,
+    "unknownFirstMoves": 0,
+    "firstMoves": {
+      "winning": 2,
+      "unknown": 0,
+      "legal": 9,
+      "rows": [
+        {
+          "tile": 0,
+          "result": "lose"
+        },
+        {
+          "tile": 2,
+          "result": "lose"
+        },
+        {
+          "tile": 3,
+          "result": "lose"
+        },
+        {
+          "tile": 4,
+          "result": "lose"
+        },
+        {
+          "tile": 52,
+          "result": "win"
+        },
+        {
+          "tile": 53,
+          "result": "win"
+        },
+        {
+          "tile": 81,
+          "result": "lose"
+        },
+        {
+          "tile": 90,
+          "result": "lose"
+        },
+        {
+          "tile": 95,
+          "result": "lose"
+        }
+      ]
+    },
+    "tailGreedyWin": 0.2938,
+    "close": {
+      "close": 1,
+      "share": 0.0208,
+      "visible": 0,
+      "four": 0,
+      "meets": true
+    },
+    "pressure": {
+      "peak": 3,
+      "run2": 5,
+      "at3": 3,
+      "occ": [
+        1,
+        0,
+        1,
+        2,
+        3,
+        2,
+        3,
+        2,
+        1,
+        2,
+        3,
+        2
+      ]
+    }
+  },
+  "hardMs": 17727
+}

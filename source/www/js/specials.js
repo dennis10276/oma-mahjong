@@ -109,21 +109,45 @@ function addObstacles(o, spec) {
 function setObstacles(ob) {
   G.ob = null; G.inb = null;
   const need = ob && (ob.need || ob.ice);
-  if (!ob || (!Object.keys(need || {}).length && !(ob.keys || []).length)) return;
-  G.ob = { need: { ...need }, left: { ...(ob.left || need) }, locks: new Set(ob.locks || []), keys: ob.keys || [], unlocked: !!ob.unlocked || !(ob.keys || []).length };
+  // Proposal only: never applied to generated boards or Grandma's care track.
+  const after = G.o.prototype === 'ribbon-v1' && G.o.track !== 'care' ? Layouts.afterLinks(ob && ob.after, G.tiles.length) : {};
+  if (!ob || (!Object.keys(need || {}).length && !(ob.keys || []).length && !Object.keys(after).length)) return;
+  G.ob = { after, need: { ...need }, left: { ...(ob.left || need) }, locks: new Set(ob.locks || []), keys: ob.keys || [], unlocked: !!ob.unlocked || !(ob.keys || []).length };
   G.inb = Layouts.iceNeighbors(G.tiles);
 }
-const obState = () => G.ob ? { need: G.ob.need, left: G.ob.left, locks: [...G.ob.locks], keys: G.ob.keys, unlocked: G.ob.unlocked } : null;
+const obState = () => G.ob ? { ...(Object.keys(G.ob.after || {}).length ? { after: G.ob.after } : {}), need: G.ob.need, left: G.ob.left, locks: [...G.ob.locks], keys: G.ob.keys, unlocked: G.ob.unlocked } : null;
 const frozen = i => !!(G.ob && G.ob.left[i] > 0);
 const lockedT = i => !!(G.ob && !G.ob.unlocked && G.ob.locks.has(i));
-const canTake = i => free(i) && !frozen(i) && !lockedT(i);
-const obRules = () => G.ob ? { iceNb: G.inb, ice: G.ob.left, locks: G.ob.unlocked ? null : G.ob.locks, keys: G.ob.keys } : null;
+const ribbonBlocked = i => !!(G.ob && G.ob.after?.[i] != null && G.alive[G.ob.after[i]]);
+const canTake = i => free(i) && !frozen(i) && !lockedT(i) && !ribbonBlocked(i);
+function ribbonHTML(i) {
+  if (!G.ob) return '';
+  const links = Object.entries(G.ob.after || {}), target = links.findIndex(([j]) => +j === i), source = links.findIndex(([,j]) => j === i);
+  if (target >= 0) return `<span class="ribbon-badge ribbon-target${ribbonBlocked(i) ? '' : ' ribbon-open'}" aria-label="${tx('ribbonAfter',target+1)}">${target+1}→</span>`;
+  if (source >= 0) return `<span class="ribbon-badge ribbon-source" aria-label="${tx('ribbonFirst',source+1)}">${source+1}</span>`;
+  return '';
+}
+const obRules = () => G.ob ? { iceNb: G.inb, ice: G.ob.left, after: G.ob.after, locks: G.ob.unlocked ? null : G.ob.locks, keys: G.ob.keys } : null;
 function obKind(i) {
   if (!G.ob) return '';
   if (frozen(i)) return G.ob.left[i] > 1 ? 'ice2' : 'ice';
+  return obMarker(i);
+}
+function obMarker(i) {
   if (lockedT(i)) return 'lock';
-  if (!G.ob.unlocked && G.ob.keys.includes(i)) return 'key';
+  if (G.ob && !G.ob.unlocked && G.ob.keys.includes(i)) return 'key';
   return '';
+}
+const obHTML = (kind, marker = '') => kind ? `<div class="ob" data-k="${kind}"${kind.startsWith('ice') && marker ? ` data-marker="${marker}"` : ''}></div>` : '';
+function paintOb(el, kind, marker) {
+  const ov = el.querySelector('.ob');
+  if (!kind) { if (ov) ov.remove(); }
+  else if (!ov) el.insertAdjacentHTML('beforeend', obHTML(kind, marker));
+  else {
+    ov.dataset.k = kind;
+    if (kind.startsWith('ice') && marker) ov.dataset.marker = marker;
+    else delete ov.dataset.marker;
+  }
 }
 function crackFx(i) {
   const el = G.tiles[i].el; if (!el) return;
@@ -160,15 +184,20 @@ function updateObstacles() {
       if (!left) praise(tx('iceMelted')); else toast(tx('iceCrack'), 1600);
     }
   }
+  for (const i of Object.keys(ob.after || {})) decorate(+i);
   if (!ob.unlocked && ob.keys.length && ob.keys.every(k => !G.alive[k])) unlockAll();
 }
 // a tap on a frozen or locked tile: say what to do, and show it
 function obBlocked(i) {
   replay(G.tiles[i].el, 'shake');
   Sound.blocked(); buzz(30);
+  if (ribbonBlocked(i)) {
+    const j = G.ob.after[i], label = Object.keys(G.ob.after || {}).indexOf(String(i)) + 1;
+    toast(tx('ribbonFirst',label), 2600); glow(j, 'nudge', true); setTimeout(() => { if (G && G.tiles[j]) glow(j, 'nudge', false); }, 1300); return;
+  }
   const ice = frozen(i);
   toast(ice ? tx(G.ob.left[i] > 1 ? 'iceThick' : 'iceThin') : tx('lockedTap'), 2600);
-  if (ice) G.inb[i].filter(j => G.alive[j] && canTake(j)).forEach(j => replay(G.tiles[j].el, 'obhint', 1300));
+  if (ice) G.inb[i].filter(j => G.alive[j]).forEach(j => replay(G.tiles[j].el, 'obhint', 1300));
   else showKeys();
 }
 // the key tiles wiggle: they open the locks (also when the tapped locked tile is still covered;
@@ -224,6 +253,7 @@ function stopLessonDemo() { clearInterval(lessonTimer); lessonTimer = null; less
 const LZ_STEP_MS = 2400;
 const LESSON_SCENES = {
   // [id, face, kind of tile]
+  ribbon: { tiles: [['a', 4, 'ribbonSource'], ['b', 31, 'ribbonTarget']], tray: [] },
   ice: { tiles: [['a', 4], ['ice', 31, 'ice2'], ['b', 8]], board: 'lesson-ice-board' },
   lock: { tiles: [['k1', 4, 'key'], ['l1', 31, 'lock'], ['k2', 4, 'key'], ['l2', 8, 'lock']], tray: [] },
   clock: { tiles: [['ck', 31, 'clock'], ['a', 4], ['d', 8, 'down']], tray: [] },
@@ -231,7 +261,7 @@ const LESSON_SCENES = {
 };
 // in the player's own tiles (the theme from the settings)
 const lzTile = (id, face, kind = '') => `<span class="lesson-tile${kind === 'down' ? ' lesson-back' : kind ? ' lz-' + kind : ''}" data-id="${id}"><span class="lesson-face">${Tiles.faceHTML(S.theme, face)}</span>` +
-  (kind === 'key' ? '<b class="lz-badge lz-keyb">🔑</b>' : kind === 'lock' ? '<b class="lz-badge lz-lockb">🔒</b>' : kind === 'ice2' ? '<b class="lz-badge lz-iceb">❄️❄️</b>' : kind === 'clock' ? '<b class="lz-ck">⏰<i>3</i></b>' : '') + '</span>';
+  (kind === 'ribbonSource' ? '<b class="ribbon-badge ribbon-source">1</b>' : kind === 'ribbonTarget' ? '<b class="ribbon-badge ribbon-target">1→</b>' : kind === 'key' ? '<b class="lz-badge lz-keyb">🔑</b>' : kind === 'lock' ? '<b class="lz-badge lz-lockb">🔒</b>' : kind === 'ice2' ? '<b class="lz-badge lz-iceb">❄️❄️</b>' : kind === 'clock' ? '<b class="lz-ck">⏰<i>3</i></b>' : '') + '</span>';
 const lzTray = faces => `<div class="lesson-tray">${[0, 1, 2, 3].map(i => `<span class="lesson-slot">${i < faces.length ? lzTile('s' + i, faces[i]) : ''}</span>`).join('')}</div>`;
 function lessonSceneHTML(kind) {
   const sc = LESSON_SCENES[kind], tray = sc.tray ? lzTray(sc.tray) : '';
@@ -323,6 +353,12 @@ function lessonActor(scene) {
 }
 // the story of each lesson: what happens at the start of step 1, 2 and 3 (step 0 is the starting picture)
 const LESSON_STEPS = {
+  ribbon: [
+    A => A.el('a').classList.add('lz-glow'),
+    A => A.tap('b', null, false),
+    A => A.tap('a', () => { A.toTray('a', 0); A.el('b').querySelector('.ribbon-badge').classList.add('ribbon-open'); }),
+    A => A.tap('b', () => A.toTray('b', 1)),
+  ],
   lock: [
     A => { A.el('k1').classList.add('lz-glow'); A.el('k2').classList.add('lz-glow'); },
     A => A.tap('k1', t => { t.classList.remove('lz-glow'); A.toTray('k1', 0);
@@ -364,7 +400,7 @@ function startLessonDemo() {
   stopLessonDemo();
   const demo = $('#modalBox .lesson-demo');
   if (!demo) return;
-  const kind = demo.dataset.lesson, prefix = { ice: 'Ice', lock: 'Lock', clock: 'Clock', trayPair: 'Pair' }[kind];
+  const kind = demo.dataset.lesson, prefix = { ribbon: 'Ribbon', ice: 'Ice', lock: 'Lock', clock: 'Clock', trayPair: 'Pair' }[kind];
   const scene = demo.querySelector('.lesson-scene');
   let step = 0, playing = !matchMedia('(prefers-reduced-motion: reduce)').matches, actor = null;
   const toggle = demo.querySelector('.lesson-toggle');

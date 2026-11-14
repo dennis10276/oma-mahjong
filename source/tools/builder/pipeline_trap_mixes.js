@@ -47,6 +47,7 @@ async function run(opts={}){
   }):[];
   const abundance={};for(const j of existing)abundance[j.name]=(abundance[j.name]||0)+1;
   existing.sort((a,b)=>(counts[a.name]||0)-(counts[b.name]||0)||(abundance[a.name]-abundance[b.name])||rotation(a)-rotation(b));
+  check();
   await execute(existing);
   const known={};
   for(const f of fs.readdirSync(OUT).filter(f=>/^sweep.*\.json$/.test(f)))for(const r of read(path.join(OUT,f)).rows||[])if(r.ok)(known[r.name]??=new Set()).add(r.layout);
@@ -95,7 +96,7 @@ async function run(opts={}){
       const reportDir=path.resolve(__dirname,'../../../codex-tasks/results/trap-variety-v1');fs.mkdirSync(reportDir,{recursive:true});
       const suite=require('child_process').spawnSync(process.execPath,['--test',path.join(__dirname,'test_trap_mixes.js')],{encoding:'utf8',env:{...process.env,TRAP_MIXES_DELIVERABLES:'1'}});
       fs.writeFileSync(path.join(reportDir,'tests-final.log'),(suite.stdout||'')+(suite.stderr||''));
-      result={...result,unitTests:{ok:suite.status===0,tests:10,log:'tests-final.log'}};
+      result={...result,unitTests:{ok:suite.status===0,tests:12,log:'tests-final.log'}};
       if(suite.status!==0)result={...result,ok:false,why:'unitTests'};
       fs.writeFileSync(path.join(OUT,'selection.json'),JSON.stringify(result,null,2)+'\n');
       require('./report_trap_mixes.js').catalogue();

@@ -34,7 +34,7 @@ function reprice(d,k,take,opts={}){
 }
 function mechanism(d){
   const c=B.context(d.tiles),ob=d.obst,sp=[d.clock.i,...ob.keys,...ob.locks,...Object.keys(ob.ice).map(Number)];
-  const all=new Set([...sp,...sp.flatMap(i=>[...c.above[i]]),...Object.keys(ob.ice).map(Number).flatMap(i=>c.inb[i])]);
+  const all=new Set([...sp,...Object.keys(ob.after||{}).map(Number),...Object.values(ob.after||{}),...sp.flatMap(i=>[...c.above[i]]),...Object.keys(ob.ice).map(Number).flatMap(i=>c.inb[i])]);
   for(const i of [...all])for(const j of c.above[i])all.add(j);
   return all;
 }
@@ -64,11 +64,15 @@ function capacity(d,cap,nodes=150000){
 }
 function structure(d,t){
   const m=t.mechanism;if(!m)return 'missingMechanism';
-  const modes={doubleFalseStart:'freezeLock',twoLonelyMelts:'dualMelt',sharedRoofLocks:'addLock',splitThawLocks:'sharedCoverLock',frozenExitFork:'freezeTwoLocks',nestedMeltFork:'freezeTwoRight',keyRoofMeltFork:'freezeRight',freeClockIce:'earlyClock',freeClockKeys:'earlyClock',freeClockShared:'earlyClock',frozenKeyShared:'addLock',frozenRoofShared:'addLock',secondActIce:'tailIce',secondActKeys:'tailLock',roofKeyMelt:'roofKey',roofKeyGuard:'roofKey',roofKeySharedMelt:'roofKey',repeatedKeyChoice:'repeatKeys',repeatedFrozenKey:'repeatKeys'};
+  const modes={doubleFalseStart:'freezeLock',twoLonelyMelts:'dualMelt',sharedRoofLocks:'addLock',splitThawLocks:'earlyClock',frozenExitFork:'freezeTwoLocks',nestedMeltFork:'freezeTwoRight',keyRoofMeltFork:'freezeRight',freeClockIce:'earlyClock',freeClockKeys:'earlyClock',freeClockShared:'earlyClock',frozenKeyShared:'addLock',frozenRoofShared:'earlyClock',secondActIce:'tailIce',secondActKeys:'tailLock',roofKeyMelt:'roofKey',roofKeyGuard:'roofKey',roofKeySharedMelt:'roofKey',repeatedKeyChoice:'repeatKeys',repeatedFrozenKey:'repeatKeys'};
   if(modes[t.type]!==m.mode)return 'familyRecipe';
   const ice=Object.keys(d.obst.ice).map(Number),locks=d.obst.locks;
   if(['frozenKeyShared','repeatedFrozenKey'].includes(t.type)&&!d.obst.keys.some(i=>ice.includes(i)))return 'frozenKey';
-  if(t.type==='frozenRoofShared'&&(locks.length<3||!locks.some(i=>ice.includes(i))))return 'frozenRoof';
+  if(t.type==='frozenRoofShared'&&(locks.length<1||locks.includes(m.originalClock)||!locks.some(i=>ice.includes(i)&&B.context(d.tiles).above[m.originalClock].has(i))||ice.length<2))return 'frozenRoof';
+  if(t.type==='splitThawLocks'&&(!locks.includes(m.originalClock)||!ice.some(i=>B.context(d.tiles).above[m.originalClock].has(i)&&locks.some(l=>l!==m.originalClock&&E.game(d).iceNb[i].includes(l)))))return 'splitThawLocks';
+  if(t.type==='splitThawLocks'){
+    const q=m.relay,c=B.context(d.tiles);if(!q||!locks.includes(q.locked)||d.faces[q.dig]!==d.faces[q.locked]||d.faces.filter(f=>f===d.faces[q.dig]).length!==2||!d.obst.keys.some(k=>B.necessary(c,{clock:k,ice:d.obst.ice,keys:d.obst.keys,locks:new Set(locks),holderSpecials:new Set()},[q.dig]).has(q.dig)))return 'lockedPictureRelay';
+  }
   if(m.mode==='addLock'&&(!locks.includes(m.added)||locks.length<2))return 'sharedLocks';
   if(m.mode==='sharedCoverLock'&&(!locks.includes(m.added)||locks.length<2||!B.context(d.tiles).above[d.clock.i].has(m.added)))return 'sharedCoverLock';
   if(m.mode==='freezeLock'&&!locks.some(i=>i===m.added&&ice.includes(i)))return 'frozenExit';
@@ -104,7 +108,7 @@ function verify(example,opts={}){
   const atK={...d,clock:{...d.clock,n:k}};
   if(!E.replay(atK,d.solution,{strict:true}).ok||oracle(d,k-1,[],opts)!=='lose')fail('unprovenClockMinimum');else checks.push('minimumByUnsatisfiableEarlierDeadline');
   const g=E.game(d),s0=E.start(g),vis=tileVisibility(g.tiles,{...s0,down:g.down,openPeek:-1},null).tiles;
-  const specials=[d.clock.i,...d.obst.keys,...d.obst.locks,...Object.keys(d.obst.ice).map(Number)];
+  const specials=[d.clock.i,...(t.mechanism.mode==='earlyClock'?[t.mechanism.originalClock]:[]),...d.obst.keys,...d.obst.locks,...Object.keys(d.obst.ice).map(Number)];
   if(specials.some(i=>g.down[i]||!vis[i].role))fail('hiddenSpecial');
   for(const i of specials.filter(i=>d.obst.ice[i]&&(d.obst.keys.includes(i)||d.obst.locks.includes(i))))if(!combinedMarkerClear(d,i))fail('combinedBadgeCovered:'+i);
   const costValue=p=>p.result==='lose'?Math.min(3,19-k)+1:p.cost;

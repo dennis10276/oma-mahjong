@@ -1,2 +1,5 @@
 *.log
 !tests-final.log
+!ribbon-tests.log
+!marker-dependency-tests.log
+!engine-regression-tests.log

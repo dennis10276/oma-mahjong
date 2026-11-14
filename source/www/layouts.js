@@ -362,8 +362,26 @@ const Layouts = (() => {
     return gone < h;
   }
   const lockedIn = (i, alive, rules) => !!(rules.locks && rules.locks.has(i) && rules.keys.some(k => alive[k]));
+  // Experimental ribbon prerequisite. No generator emits it; only explicitly
+  // authored prototype boards carry after[target] = source.
+  function afterLinks(after, n) {
+    const out = {};
+    if (after == null) return out;
+    if (typeof after !== 'object' || Array.isArray(after)) throw Error('ribbon: expected a map');
+    if (Object.keys(after).length > 1) throw Error('ribbon: v1 supports one link per board');
+    for (const [target, source] of Object.entries(after)) {
+      const i = +target;
+      if (!/^\d+$/.test(target) || !Number.isInteger(i) || i < 0 || i >= n || !Number.isInteger(source) || source < 0 || source >= n || i === source) throw Error('ribbon: invalid endpoint');
+      out[i] = source;
+    }
+    for (const i of Object.keys(out)) {
+      const seen = new Set(); let j = +i;
+      while (out[j] != null) { if (seen.has(j)) throw Error('ribbon: cycle'); seen.add(j); j = out[j]; }
+    }
+    return out;
+  }
   function takeable(i, alive, nb, rules, alive0) {
-    return isFree(i, alive, nb) && !frozenIn(i, alive, rules, alive0) && !lockedIn(i, alive, rules);
+    return isFree(i, alive, nb) && !frozenIn(i, alive, rules, alive0) && !lockedIn(i, alive, rules) && !(rules.after && rules.after[i] != null && alive[rules.after[i]]);
   }
   /* Place ice and locks so that a known solution still works: we solve the level first, then only
      freeze tiles whose neighbours are taken earlier in that solution, and only lock tiles that are
@@ -608,6 +626,6 @@ const Layouts = (() => {
     return ok ? path : null;
   }
 
-  return { SLOTS, MECH, effLevel, careEff, careDownN, careCatchup, rng, shuffleArr, targetFor, forLevel, forDate, ease, makeDeal, deal, botWinRate, neighbors, isFree, iceNeighbors, takeable, obstacles, solve, buildPiles, difficultyFor, kindsFor, pairFacesFor, layersFor };
+  return { SLOTS, MECH, effLevel, careEff, careDownN, careCatchup, rng, shuffleArr, targetFor, forLevel, forDate, ease, makeDeal, deal, botWinRate, neighbors, isFree, iceNeighbors, takeable, afterLinks, obstacles, solve, buildPiles, difficultyFor, kindsFor, pairFacesFor, layersFor };
 })();
 if (typeof module !== 'undefined') module.exports = Layouts;

@@ -212,16 +212,16 @@
   {
     "name": "splitThawLocks",
     "base": "chain",
-    "chain": 3,
-    "mode": "addLock",
-    "see": "The keys open separate thaw exits together; use the exit whose picture can leave the tray.",
-    "recipe": "Branching locks on distinct thaw routes.",
+    "chain": 40,
+    "mode": "earlyClock",
+    "see": "The locked thaw tile clears a picture carried through the key dig; save the free clock’s tray slot until that relief is ready.",
+    "recipe": "The same keys open the clock partner and a locked picture match on its thaw route.",
     "trapType": "mix:splitThawLocks",
     "dials": {
       "easier": "spare 2; one wrong neighbour; shorter key dig",
       "harder": "spare 1; two wrong neighbours; tail width 3"
     },
-    "status": "experimental",
+    "status": "delivered",
     "testedLayouts": [
       0,
       1,
@@ -273,15 +273,15 @@
       47
     ],
     "hosts": [
-      0,
-      1,
-      3,
-      19,
-      28
+      36,
+      46
     ],
     "jobs": 48,
-    "built": 5,
-    "examples": []
+    "built": 2,
+    "examples": [
+      "splitThawLocks-L36-s8-p2.json",
+      "splitThawLocks-L46-s7-p1.json"
+    ]
   },
   {
     "name": "frozenExitFork",
@@ -363,7 +363,7 @@
       "easier": "spare 2; one wrong neighbour; shorter key dig",
       "harder": "spare 1; two wrong neighbours; tail width 3"
     },
-    "status": "experimental",
+    "status": "delivered",
     "testedLayouts": [
       0,
       1,
@@ -415,11 +415,24 @@
       47
     ],
     "hosts": [
-      24
+      0,
+      1,
+      5,
+      16,
+      17,
+      24,
+      28,
+      31,
+      47
     ],
     "jobs": 48,
-    "built": 1,
-    "examples": []
+    "built": 9,
+    "examples": [
+      "nestedMeltFork-L13-s3-p1.json",
+      "nestedMeltFork-L17-s4-p2.json",
+      "nestedMeltFork-L28-s3-p1.json",
+      "nestedMeltFork-L47-s3-p1.json"
+    ]
   },
   {
     "name": "keyRoofMeltFork",
@@ -486,23 +499,23 @@
     ],
     "hosts": [
       1,
-      6,
-      12,
+      3,
+      4,
       13,
-      18,
       21,
-      24,
+      23,
+      30,
       31,
       33,
       36,
-      43,
+      37,
       46
     ],
     "jobs": 48,
     "built": 12,
     "examples": [
-      "keyRoofMeltFork-L12-s1-p1.json",
-      "keyRoofMeltFork-L46-s1-p1.json"
+      "keyRoofMeltFork-L18-s2-p1.json",
+      "keyRoofMeltFork-L21-s1-p1.json"
     ]
   },
   {
@@ -517,7 +530,7 @@
       "easier": "spare 2; one wrong neighbour; shorter key dig",
       "harder": "spare 1; two wrong neighbours; tail width 3"
     },
-    "status": "experimental",
+    "status": "delivered",
     "testedLayouts": [
       0,
       1,
@@ -575,7 +588,10 @@
     ],
     "jobs": 48,
     "built": 3,
-    "examples": []
+    "examples": [
+      "freeClockIce-L3-s2-p1.json",
+      "freeClockIce-L31-s3-p1.json"
+    ]
   },
   {
     "name": "freeClockKeys",
@@ -589,7 +605,7 @@
       "easier": "spare 2; one wrong neighbour; shorter key dig",
       "harder": "spare 1; two wrong neighbours; tail width 3"
     },
-    "status": "experimental",
+    "status": "delivered",
     "testedLayouts": [
       0,
       1,
@@ -642,7 +658,6 @@
     ],
     "hosts": [
       0,
-      1,
       2,
       4,
       6,
@@ -661,11 +676,15 @@
       36,
       39,
       42,
+      43,
       46
     ],
     "jobs": 48,
     "built": 21,
-    "examples": []
+    "examples": [
+      "freeClockKeys-L42-s1-p1.json",
+      "freeClockKeys-L9-s2-p1.json"
+    ]
   },
   {
     "name": "freeClockShared",
@@ -679,7 +698,7 @@
       "easier": "spare 2; one wrong neighbour; shorter key dig",
       "harder": "spare 1; two wrong neighbours; tail width 3"
     },
-    "status": "experimental",
+    "status": "delivered",
     "testedLayouts": [
       0,
       1,
@@ -731,12 +750,23 @@
       47
     ],
     "hosts": [
+      1,
+      3,
+      14,
+      16,
+      18,
+      29,
+      31,
       36,
       46
     ],
     "jobs": 48,
-    "built": 2,
-    "examples": []
+    "built": 9,
+    "examples": [
+      "freeClockShared-L0-s5-p1.json",
+      "freeClockShared-L29-s5-p1.json",
+      "freeClockShared-L36-s1-p1.json"
+    ]
   },
   {
     "name": "frozenKeyShared",
@@ -750,7 +780,7 @@
       "easier": "spare 2; one wrong neighbour; shorter key dig",
       "harder": "spare 1; two wrong neighbours; tail width 3"
     },
-    "status": "experimental",
+    "status": "delivered",
     "testedLayouts": [
       0,
       1,
@@ -802,30 +832,29 @@
       47
     ],
     "hosts": [
-      9,
-      11,
-      23,
-      27,
-      31,
-      36
+      18,
+      23
     ],
     "jobs": 48,
-    "built": 6,
-    "examples": []
+    "built": 2,
+    "examples": [
+      "frozenKeyShared-L19-s6-p2.json",
+      "frozenKeyShared-L27-s2-p1.json"
+    ]
   },
   {
     "name": "frozenRoofShared",
     "base": "chain",
     "chain": 26,
-    "mode": "addLock",
-    "see": "The icy locked roof and another locked step open together, but their thaw route still has to be prepared.",
-    "recipe": "Three locks sharing keys, with a frozen roof.",
+    "mode": "earlyClock",
+    "see": "The free clock shares its picture with a tile behind a roof that is both frozen and locked; prepare the far key route first.",
+    "recipe": "A free clock and its partner beneath a frozen locked roof, linked to an icy key cover.",
     "trapType": "mix:frozenRoofShared",
     "dials": {
       "easier": "spare 2; one wrong neighbour; shorter key dig",
       "harder": "spare 1; two wrong neighbours; tail width 3"
     },
-    "status": "experimental",
+    "status": "delivered",
     "testedLayouts": [
       0,
       1,
@@ -876,10 +905,21 @@
       46,
       47
     ],
-    "hosts": [],
+    "hosts": [
+      14,
+      18,
+      31,
+      36,
+      43,
+      46
+    ],
     "jobs": 48,
-    "built": 0,
-    "examples": []
+    "built": 6,
+    "examples": [
+      "frozenRoofShared-L1-s7-p1.json",
+      "frozenRoofShared-L18-s6-p2.json",
+      "frozenRoofShared-L23-s6-p2.json"
+    ]
   },
   {
     "name": "secondActIce",
@@ -893,7 +933,7 @@
       "easier": "spare 2; one wrong neighbour; shorter key dig",
       "harder": "spare 1; two wrong neighbours; tail width 3"
     },
-    "status": "experimental",
+    "status": "delivered",
     "testedLayouts": [
       0,
       1,
@@ -945,33 +985,31 @@
       47
     ],
     "hosts": [
-      0,
       2,
-      4,
-      6,
       9,
-      11,
-      18,
+      15,
+      21,
       23,
       27,
-      30,
       31,
-      33,
       35,
-      36,
-      46
+      46,
+      47
     ],
     "jobs": 48,
-    "built": 15,
-    "examples": []
+    "built": 10,
+    "examples": [
+      "secondActIce-L14-s1-p1.json",
+      "secondActIce-L36-s1-p1.json"
+    ]
   },
   {
     "name": "secondActKeys",
     "base": "wrongMelt",
     "chain": null,
     "mode": "tailLock",
-    "see": "Melt the clock without stranding its neighbour, then gather the tail keys before opening the waiting picture gate.",
-    "recipe": "A separate keyed second act linked through a waiting picture.",
+    "see": "Melt the clock without stranding its neighbour, then gather the remaining keys before opening the tail gate.",
+    "recipe": "A keyed second act with a proven tail-fork or tail-pressure effect.",
     "trapType": "mix:secondActKeys",
     "dials": {
       "easier": "spare 2; one wrong neighbour; shorter key dig",
@@ -1127,7 +1165,7 @@
       "easier": "spare 2; one wrong neighbour; shorter key dig",
       "harder": "spare 1; two wrong neighbours; tail width 3"
     },
-    "status": "experimental",
+    "status": "delivered",
     "testedLayouts": [
       0,
       1,
@@ -1179,6 +1217,7 @@
       47
     ],
     "hosts": [
+      0,
       4,
       9,
       12,
@@ -1193,8 +1232,12 @@
       39
     ],
     "jobs": 48,
-    "built": 12,
-    "examples": []
+    "built": 13,
+    "examples": [
+      "roofKeyGuard-L16-s5-p1.json",
+      "roofKeyGuard-L24-s1-p1.json",
+      "roofKeyGuard-L39-s1-p1.json"
+    ]
   },
   {
     "name": "roofKeySharedMelt",
@@ -1276,7 +1319,7 @@
       "easier": "spare 2; one wrong neighbour; shorter key dig",
       "harder": "spare 1; two wrong neighbours; tail width 3"
     },
-    "status": "experimental",
+    "status": "delivered",
     "testedLayouts": [
       0,
       1,
@@ -1330,7 +1373,6 @@
     "hosts": [
       7,
       8,
-      15,
       19,
       20,
       25,
@@ -1343,12 +1385,15 @@
       38,
       39,
       41,
-      44,
-      46
+      44
     ],
     "jobs": 48,
-    "built": 17,
-    "examples": []
+    "built": 15,
+    "examples": [
+      "repeatedKeyChoice-L19-s2-p1.json",
+      "repeatedKeyChoice-L7-s2-p1.json",
+      "repeatedKeyChoice-L8-s2-p1.json"
+    ]
   },
   {
     "name": "repeatedFrozenKey",
@@ -1362,7 +1407,7 @@
       "easier": "spare 2; one wrong neighbour; shorter key dig",
       "harder": "spare 1; two wrong neighbours; tail width 3"
     },
-    "status": "experimental",
+    "status": "delivered",
     "testedLayouts": [
       0,
       1,
@@ -1414,31 +1459,24 @@
       47
     ],
     "hosts": [
-      0,
-      2,
-      3,
       4,
-      5,
-      6,
       9,
-      12,
       13,
-      16,
-      18,
-      23,
       27,
       29,
       30,
+      31,
       35,
       36,
-      37,
       38,
       39,
-      43,
       47
     ],
     "jobs": 48,
-    "built": 22,
-    "examples": []
+    "built": 12,
+    "examples": [
+      "repeatedFrozenKey-L37-s1-p1.json",
+      "repeatedFrozenKey-L38-s1-p1.json"
+    ]
   }
 ]

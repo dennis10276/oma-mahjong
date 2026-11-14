@@ -1,0 +1,36 @@
+{
+  "completed": 0,
+  "counts": {
+    "freeClockIce": 5,
+    "freeClockKeys": 6,
+    "freeClockShared": 6,
+    "frozenExitFork": 1,
+    "frozenKeyShared": 5,
+    "frozenRoofShared": 4,
+    "keyRoofMeltFork": 5,
+    "nestedMeltFork": 5,
+    "repeatedFrozenKey": 5,
+    "repeatedKeyChoice": 6,
+    "roofKeyGuard": 5,
+    "roofKeyMelt": 1,
+    "secondActIce": 5,
+    "sharedRoofLocks": 1,
+    "splitThawLocks": 2,
+    "twoLonelyMelts": 1
+  },
+  "qualified": [
+    "freeClockIce",
+    "freeClockKeys",
+    "freeClockShared",
+    "frozenKeyShared",
+    "frozenRoofShared",
+    "keyRoofMeltFork",
+    "nestedMeltFork",
+    "repeatedFrozenKey",
+    "repeatedKeyChoice",
+    "roofKeyGuard",
+    "secondActIce",
+    "splitThawLocks"
+  ],
+  "rows": []
+}

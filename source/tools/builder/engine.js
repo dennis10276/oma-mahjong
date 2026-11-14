@@ -51,7 +51,8 @@ function game(d, o = {}) {
   const nb = L.neighbors(tiles), iceNb = L.iceNeighbors(tiles), ob = d.obst || {};
   const ice = {}; for (const k in ob.ice || {}) if (ob.ice[k] > 0) ice[+k] = ob.ice[k];
   const keys = (ob.keys || []).slice(), locks = keys.length && (ob.locks || []).length ? new Set(ob.locks) : null;
-  const rules = Object.keys(ice).length || locks ? { iceNb, ice, locks, keys } : null;
+  const prerequisites = L.afterLinks(ob.after, n);
+  const rules = Object.keys(ice).length || locks || Object.keys(prerequisites).length ? { iceNb, ice, locks, keys, after: prerequisites } : null;
   const clock = d.clock && Number.isInteger(d.clock.i) && d.clock.i >= 0 && d.clock.i < n ? { i: d.clock.i, n: d.clock.n } : null;
   const down = new Uint8Array(n); for (const i of d.down || []) down[i] = 1;
   const below = tiles.map(() => []), iceRev = tiles.map(() => []), iceH = new Int8Array(n), lockT = new Uint8Array(n), isKey = new Uint8Array(n);
@@ -59,7 +60,7 @@ function game(d, o = {}) {
   for (const k in ice) { iceH[k] = ice[k]; for (const j of iceNb[k]) iceRev[j].push(+k); }
   if (locks) { for (const i of locks) lockT[i] = 1; for (const k of keys) isKey[k] = 1; }
   const g = { design: d, signature, n, tiles, nb, iceNb, rules, faces: d.faces.slice(), clock, down, peek: !o.strict, after, mode, solution: d.solution,
-    below, iceRev, iceH, lockT, isKey, keys: locks ? keys : [], words: (n + 15) >> 4, dead: new Set(), win: new Map() };
+    below, iceRev, iceH, lockT, isKey, prerequisites, keys: locks ? keys : [], words: (n + 15) >> 4, dead: new Set(), win: new Map() };
   g.faceTiles=new Map();g.faces.forEach((f,i)=>g.faceTiles.set(f,(g.faceTiles.get(f)||[]).concat(i)));
   g.lb = clock ? makeLowerBound(g, clock.i) : null;
   g.reserveCuts = o.reserveCuts===false?[]:Reserve.compile(g);
@@ -134,7 +135,7 @@ class Ctx {
     this.tray = trayFaces.slice(); this.moves = moves; this.clockAlive = !!g.clock && !!a[g.clock.i];
   }
   static of(g, s) { return new Ctx(g, s.alive, s.tray.map(t => g.faces[t]), s.moves); }
-  ok(i) { const g = this.g; return this.alive[i] === 1 && this.up[i] === 0 && (this.lc[i] === 0 || this.rc[i] === 0) && (g.iceH[i] === 0 || this.gone[i] >= g.iceH[i]) && (g.lockT[i] === 0 || this.keysLeft === 0); }
+  ok(i) { const g = this.g; return this.alive[i] === 1 && this.up[i] === 0 && (this.lc[i] === 0 || this.rc[i] === 0) && (g.iceH[i] === 0 || this.gone[i] >= g.iceH[i]) && (g.lockT[i] === 0 || this.keysLeft === 0) && !(g.prerequisites[i] != null && this.alive[g.prerequisites[i]]); }
   rm(i) {
     const g = this.g; this.alive[i] = 0; this.w[i >> 4] ^= 1 << (i & 15); this.left--; this.moves++;
     for (const j of g.below[i]) this.up[j]--;
@@ -360,7 +361,7 @@ function clockShortest(g, o = {}) {
   let r;
   // An explicit total budget must include finishing proofs in strict games
   // too; legacy exactRoute has a separate, unreported solver per goal.
-  if (g.peek || g.reserveCuts.length || g.rowCuts.length || [...g.faceTiles.values()].some(ids=>ids.length>2) || o.totalNodes!=null) r = clockSearch(g, o);
+  if (Object.keys(g.prerequisites).length || g.peek || g.reserveCuts.length || g.rowCuts.length || [...g.faceTiles.values()].some(ids=>ids.length>2) || o.totalNodes!=null) r = clockSearch(g, o);
   else { const x = exactRoute(g, g.clock.i, Math.min(o.nodes ?? 400000,o.totalNodes??Infinity), o.ms ?? Infinity); r = x ? { k: x.k, path: x.path } : null; }
   if (r) r = { k: r.k, path: r.path, ...(r.workNodes!=null?{workNodes:r.workNodes}:{}), ...(r.unsure ? { unsure: true } : {}) };
   return (g[memoKey] = r);

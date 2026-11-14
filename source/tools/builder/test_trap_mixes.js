@@ -41,6 +41,28 @@ test('combined key/lock badge needs a clear upper-left corner, not just a visibl
   assert.equal(V.combinedMarkerClear({tiles:[[0,0,0],[1,0,1]]},0),true);
   assert.equal(V.combinedMarkerClear({tiles:[[0,0,0],[-1,0,1]]},0),false);
 });
+test('retiming replaces a late clock witness and never treats an unresolved minimum as a proof',()=>{
+  const d={...toy,clock:{i:0,n:6},solution:[1,5,0,4,2,6,3,7]},r=M.retime(d,1);
+  assert.equal(r.ok,true);assert.equal(r.k,1);assert.equal(r.design.clock.n,2);assert.equal(r.design.solution[0],0);
+  assert.equal(V.oracle(r.design,0),'lose');assert.equal(d.clock.n,6);assert.equal(d.solution[0],1);
+  assert.equal(M.retime(d,1,{nodes:0,totalNodes:0}).ok,false);
+});
+test('locked picture relief preserves strict play and waits for both real keys',()=>{
+  const tiles=[[0,0,1],[6,0,1],[50,10,0],[56,10,0],[0,0,0],[6,0,0],[20,0,1],[60,10,0],[22,0,1],[18,0,1],[20,0,0],[66,10,0],[72,10,0],[78,10,0]];
+  const faces=[0,1,2,2,3,3,4,4,5,5,6,6,0,1],W=[0,1,2,3,4,5,8,9,6,7,10,11,12,13];
+  const r={clock:11,keys:[4,5],locks:new Set([8,10]),ice:{6:2},holderSpecials:new Set(),bait:{mix:{originalClock:10},tiles:[],keepUp:[]}};
+  const plan={faces:faces.slice(),W,pos:Array.from({length:14},(_,i)=>W.indexOf(i)),pairOf:[12,13,3,2,5,4,7,6,9,8,11,10,0,1],dig:{orphans:[0,1]}};
+  assert.equal(M.lockedRelay(B.context(tiles),r,plan),true);
+  assert.deepEqual(plan.faces.slice().sort(),faces.slice().sort());
+  const d={tiles,faces:plan.faces,down:[],obst:{ice:r.ice,locks:[...r.locks],keys:r.keys},clock:{i:11,n:12},solution:W},E=require('./engine.js');
+  assert.equal(E.replay(d,W,{strict:true}).ok,true);
+  const g=E.game(d);let s=E.start(g);for(const i of [0,1,2,3,4])s=E.step(g,s,i);
+  assert.ok(!E.legal(g,s).includes(8));s=E.step(g,s,5);assert.ok(E.legal(g,s).includes(8));s=E.step(g,s,8);
+  assert.ok(!s.tray.some(i=>g.faces[i]===g.faces[0]));
+  const t={type:'splitThawLocks',mechanism:{mode:'earlyClock',originalClock:10,relay:r.bait.relay},baits:[{tiles:[11]}]};
+  assert.equal(V.structure(d,t),null);
+  assert.equal(V.structure({...d,faces},t),'lockedPictureRelay');
+});
 test('independent search rejects an invented losing-clock bait',()=>{
   const design={...toy,tiles:Array.from({length:72},(_,i)=>[i*6,0,0]),faces:Array.from({length:72},(_,i)=>Math.floor(i/2)),solution:Array.from({length:72},(_,i)=>i)};
   const fake={design,card:{clock:{fewestMoves:1,spare:1},trap:{type:'freeClockIce',priceHorizon:4,
