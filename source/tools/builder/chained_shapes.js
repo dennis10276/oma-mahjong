@@ -79,6 +79,7 @@ const COMBINATIONS={
 for(const [name,[base,kinds]]of Object.entries(COMBINATIONS))SHAPES[name]=Six.compose(name,base,kinds,SHAPES[base]);
 // The same clock-count link on another dependency graph, not another idea.
 SHAPES.clockCountThaw=Six.compose('clockCountThaw','thawRoute',['clockCount'],{chain:3,mode:'sixIdea',baseSignature:'clock<ice; thaw<lock',signature:'clock<ice; thaw<lock',links:2});
+SHAPES.clockCountThaw_savePair=Six.compose('clockCountThaw_savePair','thawRoute',['clockCount','savePair'],{chain:3,mode:'sixIdea',baseSignature:'clock<ice; thaw<lock',signature:'clock<ice; thaw<lock',links:2});
 for(const [kind,bases]of Object.entries({
   selfLocked:['lookalikeWay','lookalikeNested','lookalikeCover','waitLockCover','waitCoverKey','roofNested','roofCoverKey','roofCoverWay'],
   clockCount:['roofCoverKey','roofCoverWay','roofNested','roofCoverThaw'],

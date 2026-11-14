@@ -13,7 +13,8 @@ function place(kind,c,r,brief,rng){
   const free=all.filter(i=>c.free0[i]&&ordinary(i)&&shown(i));
   let q=null;
   if(kind==='savePair'){
-    const route=shuffle(P.filter((i,k)=>ordinary(i)&&shown(i)&&!c.free0[i]&&k>=2&&k<P.length-1),rng);
+    const reserved=new Set((b.sixLinks||[]).filter(q=>q.kind==='clockCount').flatMap(q=>q.orphans));
+    const route=shuffle(P.filter((i,k)=>ordinary(i)&&!reserved.has(i)&&shown(i)&&!c.free0[i]&&k>=2&&k<P.length-1),rng);
     const fs=shuffle(free.filter(i=>!P.includes(i)),rng);
     const buried=shuffle(all.filter(i=>ordinary(i)&&shown(i)&&!P.includes(i)&&!c.free0[i]&&c.above[i].size>=2),rng);
     outer:for(const t of route)for(const a of fs.filter(a=>!geo.close[a][t]))for(const z of fs.filter(z=>z!==a&&!geo.close[z][a]&&!geo.close[z][t])){
@@ -66,7 +67,17 @@ function place(kind,c,r,brief,rng){
     const locks=shuffle(all.filter(i=>ordinary(i)&&v[i].role&&!P.includes(i)&&!keys.includes(i)&&c.above[i].size>=1&&!keys.some(k=>c.above[k].has(i))),rng);
     if(brief.sixMode==='earlyClock')locks.sort((a,b)=>Number(c.above[b].has(brief.sixOriginalClock))-Number(c.above[a].has(brief.sixOriginalClock)));
     const lock=locks[0];
-    if(keys.length===2&&lock!=null&&c.dist(...keys)>3){r.keys=keys;r.locks.add(lock);q={kind,keys,lock,take:keys,visible:[...keys,lock]};}
+    if(keys.length===2&&lock!=null&&c.dist(...keys)>3){
+      r.keys=keys;r.locks.add(lock);q={kind,keys,lock,take:keys,visible:[...keys,lock]};
+      if(brief.targets?.keysClockRelief&&brief.sixMode!=='earlyClock'&&P.length%2){
+        // With an odd dig the clock itself waits as the third picture. Author
+        // its free relief before picture planning, so the fixed tail keys do
+        // not try to open a fourth slot in the planner's first tail move.
+        const relief=free.find(i=>!P.includes(i)&&!keys.includes(i)&&i!==lock&&!geo.close[i][r.clock]);
+        if(relief==null)return {fail:'keysLaterClockRelief'};
+        q.relief=relief;q.visible.push(relief);P.splice(P.indexOf(r.clock),0,relief);
+      }
+    }
   }else if(kind==='doubleMelt'){
     const hosts=shuffle(Object.keys(r.ice).map(Number),rng);
     outer:for(const a of hosts)for(const z of hosts.filter(z=>z!==a)){
@@ -86,7 +97,7 @@ function place(kind,c,r,brief,rng){
     }
   }
   if(!q)return {fail:'place18:'+kind+':geometry'};
-  const pictures=kind==='savePair'?[...q.free,q.third,q.buried]:kind==='selfLocked'?[q.lone,q.twin]:kind==='freeMelt'?[...q.outside,...q.twins]:kind==='doubleMelt'?[...q.right,...q.take]:kind==='clockCount'?[...q.take,q.parkSide]:q.take;
+  const pictures=kind==='savePair'?[...q.free,q.third,q.buried]:kind==='selfLocked'?[q.lone,q.twin]:kind==='freeMelt'?[...q.outside,...q.twins]:kind==='doubleMelt'?[...q.right,...q.take]:kind==='clockCount'?[...q.take,q.parkSide]:kind==='keysLater'&&q.relief!=null?[...q.take,q.relief]:q.take;
   b.six=q;(b.sixLinks??=[]).push(q);b.extraMoves=[...(b.extraMoves||[]),q.take];b.tiles=uniq([...b.tiles,...pictures]);b.keepUp=uniq([...b.keepUp,...q.visible,...q.visible.flatMap(i=>[...c.above[i]])]);r.dig=P;
   return r;
 }
@@ -101,6 +112,7 @@ function pictures(kind,c,r,plan){
   }
   if(kind==='doubleMelt'&&plan.faces[q.right[0]]!==plan.faces[q.right[1]])return 'doubleMeltRightPair';
   if(kind==='clockCount'&&!plan.dig.orphans.includes(q.parkSide))return 'clockCountSideMustWait';
+  if(kind==='keysLater'&&q.relief!=null&&plan.pairOf[r.clock]!==q.relief)return 'keysLaterReliefPicture';
   return null;
 }
 function prove(kind,d,roles,ctx,opts={}){
@@ -111,9 +123,10 @@ function prove(kind,d,roles,ctx,opts={}){
   if(!p?.exact||!(p.result==='lose'||p.result==='win'&&p.cost>ctx.spare))return {ok:false,why:'baitSurvives'};
   const g=E.game(d);let s=E.start(g);for(const i of q.take)s=s&&E.step(g,s,i);
   if(s&&E.winnable(g,s,{nodes:400000,ms:4000}).result!=='lose')return {ok:false,why:'shippingLossUnproven'};
-  const top=kind==='clockCount'?require('./chained_clock_count.js').alternative(d,q):null;
+  const prior=opts.existing?.top;
+  const top=kind==='clockCount'?(require('./chained_six_facts.js').clockAlternativeWitness(d,q,prior)?prior:require('./chained_clock_count.js').alternative(d,q)):null;
   if(kind==='clockCount'&&(!top||top.clockAt<=d.clock.n))return {ok:false,why:'topApproachUnproven'};
-  return {ok:true,price:p,link:{kind,sentence:DEFINITIONS[kind].see,take:q.take,evidence:facts.evidence,result:'lose',...(top?{top}: {})}};
+  return {ok:true,price:p,link:{kind,sentence:DEFINITIONS[kind].see,take:q.take,evidence:facts.evidence,result:'lose',...(top?{top}: {}),...(kind==='keysLater'?{clockRelays:require('./chained_six_facts.js').postClockRelays(d,q.lock)}:{})}};
 }
 const LINK_KINDS=Object.fromEntries(Object.keys(DEFINITIONS).map(kind=>[kind,{
   ...DEFINITIONS[kind],place:(c,r,b,rng)=>place(kind,c,r,b,rng),pictures:(c,r,p)=>pictures(kind,c,r,p),prove:(d,r,c,o)=>prove(kind,d,r,c,o),

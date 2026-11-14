@@ -42,6 +42,10 @@ function chainStructure(r,f){
   for(const i of Object.keys(ob.ice).map(Number))for(const j of E.game(d).iceNb[i])add(i,j);
   for(const l of ob.locks)for(const k of ob.keys)add(l,k);
   if(f.mode==='earlyClock')add(d.clock.i,gate);
+  // A second-act gate can be connected through a picture held by the clock
+  // dig. Restrict this edge to an actual waiting tile at the clock and a live
+  // matching tile guarded by that lock; arbitrary picture matches are not edges.
+  for(const q of b.sixLinks||[b.six])if(q?.kind==='keysLater')for(const relay of require('./chained_six_facts.js').postClockRelays(d,q.lock))add(relay.waiting,relay.lock);
   const seen=new Set([d.clock.i]),todo=[d.clock.i];while(todo.length)for(const j of adj[todo.pop()])if(!seen.has(j)){seen.add(j);todo.push(j);}
   if([d.clock.i,...ob.keys,...ob.locks,...Object.keys(ob.ice).map(Number)].some(i=>!seen.has(i)))failures.push('disconnectedSpecial');
   return failures;

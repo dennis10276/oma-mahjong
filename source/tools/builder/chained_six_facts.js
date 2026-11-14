@@ -2,6 +2,17 @@
 // Board-only TASK 18 evidence. Never imports construction or its proof.
 const E=require('./engine.js'),B=require('./builder.js'),O=require('./chained_obviousness.js');
 const {tileVisibility}=require('../sim/refit/human_board_visibility.js');
+function postClockRelays(d,lock){
+  const g=E.game(d,{strict:true}),c=B.context(d.tiles);let s=E.start(g);
+  for(const i of d.solution){s=E.step(g,s,i);if(!s)return [];if(i===d.clock.i)break;}
+  if(!s.clockTaken)return [];
+  return s.tray.flatMap(waiting=>d.faces.flatMap((f,twin)=>s.alive[twin]&&f===d.faces[waiting]&&(twin===lock||c.above[twin].has(lock))?[{waiting,twin,lock}]:[]));
+}
+function clockAlternativeWitness(d,q,top){
+  if(!top||!Array.isArray(top.solution))return false;
+  const relaxed={...d,clock:{...d.clock,n:99}},prefix=top.solution.slice(0,top.clockAt);
+  return E.replay(relaxed,top.solution,{strict:true}).ok&&top.clockAt===top.solution.indexOf(d.clock.i)+1&&top.clockAt>d.clock.n&&top.side===q.parkSide&&q.take.every((i,k)=>top.solution[k]===i)&&prefix.includes(q.alternative)&&!prefix.includes(top.side)&&d.solution.slice(0,d.solution.indexOf(d.clock.i)+1).includes(top.side);
+}
 function evidence(kind,d,q){
   const no=why=>({ok:false,why});if(!q||q.kind!==kind)return no('missingRecipe');
   const g=E.game(d),s=E.start(g),c=B.context(d.tiles),free=E.legal(g,s).filter(Number.isInteger),P=d.solution.slice(0,d.solution.indexOf(d.clock.i)+1);
@@ -30,6 +41,7 @@ function evidence(kind,d,q){
     if(!d.obst.ice[q.host]||!g.iceNb[q.host].includes(q.alternative)||!c.above[q.alternative].has(q.roof)||P.includes(q.roof)||d.faces[q.pair[0]]!==d.faces[q.pair[1]]||q.side.some(i=>!P.includes(i)||!g.iceNb[q.host].includes(i)))return no('twoApproaches');
   }else if(kind==='keysLater'){
     if(!d.obst.locks.includes(q.lock)||q.keys.some(i=>!d.obst.keys.includes(i)||!free.includes(i)||P.includes(i))||P.includes(q.lock)||d.faces[q.keys[0]]!==d.faces[q.keys[1]])return no('keysOnClockRoute');
+    if(q.relief!=null&&(!free.includes(q.relief)||d.down.includes(q.relief)||!vis[q.relief].picture||d.faces[q.relief]!==d.faces[d.clock.i]))return no('clockReliefChanged');
   }else if(kind==='doubleMelt'){
     if(q.hosts.length!==2||q.hosts.some((h,k)=>!d.obst.ice[h]||!g.iceNb[h].includes(q.right[k])||!g.iceNb[h].includes(q.take[k]))||q.right.some(i=>!free.includes(i)||!P.includes(i))||d.faces[q.right[0]]!==d.faces[q.right[1]])return no('sharedPair');
   }else return no('unknownKind');
@@ -52,10 +64,10 @@ function auditLink(r,q,opts={}){
   const o=O.measure(d,{baits:t.baits,dial:2});
   if(!o.ok||!(t.newLinks||[t.newLink]).some(q=>o.preferredBaits.some(p=>JSON.stringify(p)===JSON.stringify(q?.take))))errors.push('newIdeaNotGreedyBait');
   if(kind==='keysLater'&&!t.effects.some(e=>e.kind==='lock'&&e.tile===q.lock&&['tailFork','tailGreedy'].includes(e.by)))errors.push('postClockLockEffect');
+  if(kind==='keysLater'&&link?.clockRelays&&JSON.stringify(link.clockRelays)!==JSON.stringify(postClockRelays(d,q.lock)))errors.push('postClockRelayEvidence');
   if(kind==='clockCount'){
-    const top=link?.top,relaxed={...d,clock:{...d.clock,n:99}},k=d.solution.indexOf(d.clock.i)+1;
-    if(!top||!E.replay(relaxed,top.solution,{strict:true}).ok||top.clockAt!==top.solution.indexOf(d.clock.i)+1||top.clockAt<=d.clock.n||!q.side.includes(top.side)||!q.take.every((i,k)=>top.solution[k]===i)||!top.solution.slice(0,top.clockAt).includes(q.alternative)||top.solution.slice(0,top.clockAt).includes(top.side)||!d.solution.slice(0,k).includes(top.side))errors.push('topApproachWitness');
+    if(!clockAlternativeWitness(d,q,link?.top))errors.push('topApproachWitness');
   }
   return {ok:!errors.length,errors};
 }
-module.exports={evidence,audit};
+module.exports={evidence,audit,postClockRelays,clockAlternativeWitness};

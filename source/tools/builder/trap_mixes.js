@@ -282,7 +282,7 @@ function prove(name, d, roles, ctx, opts = {}) {
   }
   const newLinks=[];
   for(const kind of f.sixIdeas||[]){
-    const proof=require('./chained_six_ideas.js').LINK_KINDS[kind].prove(d,roles,{k,spare},{C,w});
+    const proof=require('./chained_six_ideas.js').LINK_KINDS[kind].prove(d,roles,{k,spare},{C,w,existing:ctx.existingLinks?.find(q=>q.kind===kind)});
     if(!proof.ok)return {ok:false,why:'idea18:'+proof.why};
     const {link,price:p}=proof;
     if(!baits.some(b=>JSON.stringify(b.tiles)===JSON.stringify(link.take)))baits.push(p);
@@ -374,6 +374,13 @@ function build(name, brief = {}, opts = {}) {
     }
     if(f.mode==='earlyClock'){
       N.add(r.clock);
+      if(f.sixIdea){
+        // The old gate must match the waiting clock, so it cannot be an orphan.
+        // Compose two other tray obligations before assigning those pictures.
+        const gate=r.bait.mix.originalClock;N.delete(gate);
+        const eligible=P.filter(i=>i!==gate&&i!==r.clock&&!r.keys.includes(i));
+        for(const i of eligible){if(eligible.filter(i=>N.has(i)).length>=2)break;N.add(i);}
+      }
       hold.holders=new Set(clockHolders(c,P,r.bait.mix.originalClock,r.bait,!!used.targets.flexClockHolders,r.clock));
       if(hold.holders.size<2){fails.noClockPartnerHolders=(fails.noClockPartnerHolders||0)+1;continue;}
     }

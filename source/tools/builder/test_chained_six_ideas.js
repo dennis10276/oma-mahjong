@@ -49,8 +49,22 @@ test('clock count has a real longer winning approach, not merely a nearby roof',
   const E=require('./engine.js');
   assert.equal(Facts.evidence('clockCount',r.design,q).ok,true);
   assert.ok(top.clockAt>r.design.clock.n);
+  assert.equal(Facts.clockAlternativeWitness(r.design,q,top),true);
+  assert.equal(Facts.clockAlternativeWitness(r.design,q,{...top,side:r.design.clock.i}),false);
   assert.equal(E.replay({...r.design,clock:{...r.design.clock,n:99}},top.solution,{strict:true}).ok,true);
   assert.ok(!top.solution.slice(0,top.clockAt).includes(q.parkSide));
   const wrong=structuredClone(q);wrong.parkSide=r.design.clock.i;
   assert.equal(Facts.evidence('clockCount',r.design,wrong).ok,false);
+});
+test('a tail lock connects through its actual clock-tray twin, not arbitrary matching pictures',()=>{
+  const r=load('keys-later-relay.json'),C=require('./verify_chained_mixes.js'),f=require('./chained_shapes.js').SHAPES.keysLater;
+  const q=r.roles.bait.six,relays=Facts.postClockRelays(r.design,q.lock);
+  assert.equal(relays.length,1);assert.equal(relays[0].twin,q.lock);
+  assert.deepEqual(C.chainStructure(r,f),[]);
+  const edited=structuredClone(r),E=require('./engine.js'),g=E.game(r.design);let s=E.start(g);
+  for(const i of r.design.solution){s=E.step(g,s,i);if(i===r.design.clock.i)break;}
+  const waiting=new Set(s.tray.map(i=>r.design.faces[i]));
+  edited.design.faces[q.lock]=r.design.faces.find(f=>!waiting.has(f));
+  assert.equal(Facts.postClockRelays(edited.design,q.lock).length,0);
+  assert.ok(C.chainStructure(edited,f).includes('disconnectedSpecial'));
 });

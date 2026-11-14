@@ -12,7 +12,7 @@ if(!isMainThread&&require.main===module){
     }
     else if(j.mode==='refresh'){
       const row=JSON.parse(fs.readFileSync(j.file)),roles={...row.roles,locks:new Set(row.roles.locks),holderSpecials:new Set(row.roles.holderSpecials)};
-      const p=M.prove(row.brief.story,row.design,roles,{k:row.card.clock.fewestMoves,spare:row.card.clock.spare,obviousnessDial:2});
+      const p=M.prove(row.brief.story,row.design,roles,{k:row.card.clock.fewestMoves,spare:row.card.clock.spare,obviousnessDial:2,existingLinks:row.card.trap.newLinks||[row.card.trap.newLink]});
       if(!p.ok)r={fail:'proof:'+p.why};else{
         row.card.trap=p.card;row.card.wrongIdea=require('./chained_v2_finish.js').ideas(row);
         row.verification=require('./verify_chained_v2.js').verify(row);
@@ -20,7 +20,7 @@ if(!isMainThread&&require.main===module){
       }
     }
     else if(j.mode==='verify')r=require('./verify_chained_v2.js').verify(JSON.parse(fs.readFileSync(j.file)));
-    else r=M.build(j.name,{layout:j.layout,seed:j.seed,obviousnessDial:2,frame:{spare:1},targets:{digBefore:[2,8],maxDown:.2,...j.targets}},{tries:j.tries??250,wallMs:j.ms-500,onAttempt:x=>parentPort.postMessage({progress:x})});
+    else r=M.build(j.name,{layout:j.layout,seed:j.seed,obviousnessDial:2,frame:{spare:1,...(j.depth!=null?{depth:j.depth}:{})},targets:{digBefore:[2,8],maxDown:.2,...j.targets}},{tries:j.tries??250,wallMs:j.ms-500,onAttempt:x=>parentPort.postMessage({progress:x})});
     if(r.design){r.roles.locks=[...r.roles.locks];r.roles.holderSpecials=[...r.roles.holderSpecials];}
     parentPort.postMessage({result:r});
   }catch(e){parentPort.postMessage({result:{fail:'exception',detail:e.stack}});}
@@ -39,11 +39,15 @@ async function run(){
   const examples=fs.readdirSync(path.join(OUT,'checked')).filter(f=>f.endsWith('.json')).map(f=>JSON.parse(fs.readFileSync(path.join(OUT,'checked',f)))).filter(r=>(r.roles.bait.sixLinks||[r.roles.bait.six]).every(q=>q.kind!=='clockCount'||Number.isInteger(q.parkSide)));
   let jobs=['finish','verify','refresh'].includes(mode)?fs.readdirSync(path.join(OUT,mode==='finish'?'raw':'examples')).filter(f=>names.some(n=>f.startsWith(n+'-'))&&f.endsWith('.json')&&(mode!=='finish'||!fs.existsSync(path.join(OUT,'examples',f)))).map(f=>({mode,file:path.join(OUT,mode==='finish'?'raw':'examples',f),seed,ms})):names.flatMap(name=>B.LAYOUTS.map((l,layout)=>({name,layout,seed,ms,mode,targets:JSON.parse(arg('targets','{}'))})).filter(j=>(arg('all-layers','0')==='1'||B.LAYOUTS[j.layout].tiles.every(t=>t[2]<=2))&&(!layouts.length||layouts.includes(j.layout))&&!examples.some(r=>r.brief.story===name&&r.card.layout===j.layout)));
   if(arg('hosts',null)&&mode==='build')jobs=JSON.parse(fs.readFileSync(arg('hosts'))).map(j=>({...j,seed,ms,mode,targets:j.targets||{}}));
+  if(arg('files',null)&&mode!=='build'){
+    const files=new Set(arg('files','').split(',').map(f=>path.basename(f)));
+    jobs=jobs.filter(j=>files.has(path.basename(j.file)));
+  }
   if(mode==='build')jobs.sort((a,b)=>a.layout-b.layout||names.indexOf(a.name)-names.indexOf(b.name));
   if(arg('reverse','0')==='1')jobs.reverse();
   let cursor=0;const log=path.join(OUT,'runs',`${mode}-s${seed}-${Date.now()}.jsonl`);
   await Promise.all(Array.from({length:workers},async()=>{while(cursor<jobs.length&&Date.now()<until){
-    const j=jobs[cursor++],r=await job({...j,repairMs:+arg('repair-ms',20000),tuneMs:+arg('tune-ms',30000),ms:Math.min(j.ms,until-Date.now())});
+    const j={...jobs[cursor++],...(arg('depth',null)!=null?{depth:+arg('depth',0)}:{})},r=await job({...j,repairMs:+arg('repair-ms',20000),tuneMs:+arg('tune-ms',30000),ms:Math.min(j.ms,until-Date.now())});
     const row={...j,file:j.file&&path.basename(j.file),ok:!!r.design||(mode==='verify'&&r.ok),fail:r.fail,errors:r.errors,detail:r.detail,fails:r.fails,wall:r.wall,attempts:r.progress?.attempt};
     if(r.design){const file=j.file?path.basename(j.file):`${j.name}-L${j.layout}-s${seed}-p1.json`;fs.writeFileSync(path.join(OUT,mode==='refresh'?'checked':mode==='finish'?'examples':'raw',file),JSON.stringify(r,null,2)+'\n');row.output=file;}
     else if(mode==='finish'){
