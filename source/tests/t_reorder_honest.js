@@ -9,7 +9,11 @@ module.exports = [
     const before = load('../analysis/levels-before-reorder-92.js'), now = load('../www/levels-hard.js');
     const report = require('../analysis/reorder-92.json');
     t.eq(report.fingerprint, require('../tools/sim/reorder_honest').fingerprint, 'engine, profiles, baseline and independent sample configuration match the measurements');
-    t.eq([now.from, now.aspect, now.cycleFrom, now.levels.length], [before.from, before.aspect, before.cycleFrom, before.levels.length], 'range and repetition retained');
+    t.eq([now.from, now.aspect, now.cycleFrom], [before.from, before.aspect, before.cycleFrom], 'range and repetition retained');
+    // from 250 the table holds hand-designed trap boards (1.69); the re-ordered boards that sat on 250-269 are retired
+    const DESIGNED = now.designedFrom || Infinity, last = now.from + now.levels.length - 1;
+    t.ok(now.levels.length >= before.levels.length, 'no level lost');
+    t.eq([now.designedFrom, now.designedVersion, H.designVersion(249), H.designVersion(250), H.designVersion(last + 1)], [250, 9, now.v, 9, 9], 'designed levels and every repeat past the table use their own saved-game generation');
     t.eq(now.v, H.GENV, 'table and runtime generation agree');
     t.eq(report.moves.length, 178, 'all 92–269 boards covered');
     t.eq(new Set(report.moves.map(m => m.was)).size, 178, 'no reused source board');
@@ -22,6 +26,7 @@ module.exports = [
     for (const m of report.moves) {
       const r = now.levels[m.lv - now.from], old = before.levels[m.was - before.from];
       t.ok(m.was >= 92 && m.was <= 269, 'source within authorized range ' + m.lv);
+      if (m.lv >= DESIGNED) continue;
       t.eq(hash(r), hash(old), 'whole packed board preserved ' + m.lv);
       t.eq(hash(r), m.hash, 'measurement identifies this board ' + m.lv);
       t.eq(r[0].length / 3 > 88, m.lv % 10 === 0, 'large-board placement ' + m.lv);
@@ -39,8 +44,8 @@ module.exports = [
     t.ok(report.phases.primary.seed !== report.phases.validation.seed, 'validation seed independent of ranking');
     t.ok(report.phases.primary.runs >= 1200 && report.phases.validation.runs >= 600, 'sufficient independent chains');
     t.ok(report.comparison.validation.after.totalVariation < report.comparison.validation.before.totalVariation, 'ordering improves progression on independent simulations');
-    for (let lv = 270; lv < 390; lv++) {
-      const base = now.cycleFrom + (lv - now.cycleFrom) % (269 - now.cycleFrom + 1);
+    for (let lv = last + 1; lv < last + 121; lv++) {
+      const base = now.cycleFrom + (lv - now.cycleFrom) % (last - now.cycleFrom + 1);
       t.eq(H.ratingModel(lv), now.ratingModels[base - now.from], 'repeated board retains calibration label ' + lv);
     }
   } },

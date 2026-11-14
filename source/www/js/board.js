@@ -173,11 +173,8 @@ function decorate(i) {
   const t = G.tiles[i], el = t.el; if (!el) return;
   el.classList.toggle('gold', G.gold.has(i));
   el.classList.toggle('sp-joker', t.face === JOKER);
-  // ice, lock or key: an overlay on the tile
-  const k = obKind(i);
-  let ov = el.querySelector('.ob');
-  if (!k) { if (ov) ov.remove(); }
-  else { if (!ov) { ov = document.createElement('div'); ov.className = 'ob'; el.appendChild(ov); } ov.dataset.k = k; }
+  // Ice keeps its overlay, with the key/lock badge above it when both apply.
+  paintOb(el, obKind(i), obMarker(i));
   if (G.clock && G.clock.i === i) clockBadge();
 }
 // the alarm clock: a badge with the moves left, above everything (so tiles on top never hide it)
@@ -192,8 +189,13 @@ function clockBadge() {
   // one move used: the number gives a little hop, so you see every tile counts (1.58)
   if (+ck.dataset.n > left) try { ck.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.4)', offset: .35 }, { transform: 'scale(1)' }], { duration: 380, easing: 'ease-out' }); } catch (e) { }
   ck.dataset.n = left;
-  ck.style.left = (r.l + r.w * 0.55).toFixed(1) + 'px'; ck.style.top = (r.t - r.h * 0.16).toFixed(1) + 'px';
   ck.style.fontSize = (G.tw * 0.24).toFixed(1) + 'px';
+  // the timer stays whole: a clock in the top row or at the right edge used to push it out of the board, where it was cut off
+  const bd = $('#board'), bw = bd.clientWidth, bh = bd.clientHeight, cw = ck.offsetWidth, ch = ck.offsetHeight;
+  let x = r.l + r.w * 0.55, y = r.t - r.h * 0.16;
+  if (bw && cw) x = Math.max(2, Math.min(x, bw - cw - 2));
+  if (bh && ch) y = Math.max(2, Math.min(y, bh - ch - 2));
+  ck.style.left = x.toFixed(1) + 'px'; ck.style.top = y.toFixed(1) + 'px';
   ck.classList.toggle('urgent', left <= 5);
 }
 const setFace = i => { G.tiles[i].el.querySelector('.face').innerHTML = Tiles.boardFace(S.theme, faceOf(i)); decorate(i); };
@@ -217,7 +219,7 @@ function renderBoard(enter) {
   for (const i of order) {
     const t = G.tiles[i], r = t.r, k = obKind(i);
     const cls = 'tile' + (G.alive[i] ? '' : ' hidden') + (G.down[i] && G.peek !== i ? ' back' : '') + (G.gold.has(i) ? ' gold' : '') + (t.face === JOKER ? ' sp-joker' : '') + (G.alive[i] && !free(i) ? ' blocked' : '');
-    const html = `<div class="${cls}" data-i="${i}" style="left:${r.l}px;top:${r.t}px;width:${r.w.toFixed(1)}px;height:${r.h.toFixed(1)}px;z-index:${r.zi % 10000}"><div class="face">${Tiles.boardFace(S.theme, t.face)}</div>${k ? `<div class="ob" data-k="${k}"></div>` : ''}</div>`;
+    const html = `<div class="${cls}" data-i="${i}" style="left:${r.l}px;top:${r.t}px;width:${r.w.toFixed(1)}px;height:${r.h.toFixed(1)}px;z-index:${r.zi % 10000}"><div class="face">${Tiles.boardFace(S.theme, t.face)}</div>${obHTML(k, obMarker(i))}</div>`;
     if (!layers.has(t.z)) layers.set(t.z, []);
     layers.get(t.z).push([i, html]);
   }
@@ -411,8 +413,9 @@ function tapTile(i) {
   G.st.tp++;
   if (!free(i)) {
     G.st.bt++;
-    replay(el, 'shake'); showBlockers(i);
-    if (lockedT(i)) showKeys();       // a covered locked tile: the keys show too
+    replay(el, 'shake');
+    // a special tile that cannot be taken shows what it needs, not what lies on it (Dennis 2026-11-14): the tiles that thaw it, or the keys
+    if (frozen(i)) showThaw(i); else if (lockedT(i)) showKeys(); else showBlockers(i);
     Sound.blocked(); buzz(30);
     if (++blockedTaps === 3) toast(tx('stillStuck'), 3000);
     return;
