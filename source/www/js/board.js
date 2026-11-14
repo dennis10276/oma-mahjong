@@ -61,6 +61,7 @@ function begin(o, restart = false) {
   $('.toolbar').classList.toggle('gone', toolsGoneFor(o));   // (before measuring: without tools the pile gets their space)
   // shape the pile after the free space on this screen
   const wrap = $('#boardWrap');
+  $('#game').classList.remove('compact');   // the shape is measured on the ordinary screen (fitGeo may narrow the bars for the board before)
   const aspect = Math.max(0.4, Math.min(2.4, Math.round(wrap.clientHeight / Math.max(1, wrap.clientWidth) * 10) / 10)) || 1.5;
   const cur = restart ? null : loadCur();
   // A same-page resume may follow a drained tail. Adopt its cursor only when the saved
@@ -210,7 +211,7 @@ function renderBoard(enter) {
   board.innerHTML = '';
   board.classList.toggle('hl', S.highlight);
   Tiles.useFaces(S.theme, G.tiles.map(t => t.face));
-  const geo = boardGeo(wrap.clientWidth, wrap.clientHeight);
+  const geo = fitGeo();
   if (!geo) return;
   sizeTray();                      // (measured now, while measuring is free: nothing changed since the read above)
   applyGeo(geo, false);
@@ -255,11 +256,12 @@ function boardGeo(W, H) {
     l = Math.min(l, x); r = Math.max(r, x + 1); t0 = Math.min(t0, y); b = Math.max(b, y + ratio);
   }
   const depthF = 0.085;            // the tile's side, drawn right and below it
-  const tw = Math.min(150, (W - 8) / (r - l + depthF + 0.04), (H - 8) / (b - t0 + depthF * 1.4 + 0.04));
+  // 2 px of room on each side (was 4 until 1.68): a pile seven tiles wide keeps 54 px tiles on a 392 px screen (Dennis 2026-11-14)
+  const twW = (W - 4) / (r - l + depthF + 0.04), twH = (H - 4) / (b - t0 + depthF * 1.4 + 0.04), tw = Math.min(150, twW, twH);
   const th = tw * ratio, dz = tw * dF, d = Math.max(3, tw * depthF);
   // centred on what is really there: even space left and right, and between the tray and the buttons below
   const ox = (W - (r - l) * tw - d) / 2 - l * tw, oy = (H - (b - t0) * tw - d * 1.4) / 2 - t0 * tw;
-  return { tw, th, dz, d, ox, oy };
+  return { tw, th, dz, d, ox, oy, tall: twH < twW && twH < 150 };   // tall: the height of the pile area decides the tile size
 }
 // remember the positions (t.r, G.tw); move the tiles that are on the screen already when asked
 function applyGeo(geo, move) {
@@ -274,10 +276,19 @@ function applyGeo(geo, move) {
     if (move && t.el) { const s = t.el.style; s.left = lf + 'px'; s.top = tp + 'px'; s.width = (tw - 1.5).toFixed(1) + 'px'; s.height = (th - 1.5).toFixed(1) + 'px'; }
   }
 }
+// The pile area for this board. A pile that is limited by the height (nine rows, or a short screen) gets a little more room:
+// the top bar and the tray lose some of their padding (#game.compact in style.css), nothing gets smaller (Dennis 2026-11-14).
+function fitGeo() {
+  const game = $('#game'), wrap = $('#boardWrap');
+  game.classList.remove('compact');
+  let geo = boardGeo(wrap.clientWidth, wrap.clientHeight);
+  if (geo && geo.tall) { game.classList.add('compact'); geo = boardGeo(wrap.clientWidth, wrap.clientHeight); }
+  return geo;
+}
 // after a change of screen size: the same tiles, moved
 function layoutBoard() {
   if (!G) return;
-  const wrap = $('#boardWrap'), geo = boardGeo(wrap.clientWidth, wrap.clientHeight);
+  const geo = fitGeo();
   if (!geo) return;
   applyGeo(geo, true);
   sizeTray();

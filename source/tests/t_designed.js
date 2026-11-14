@@ -26,4 +26,17 @@ module.exports = [
     await p.evaluate(() => { G.mv = 2; saveCur(); __mj.startLevel(249); });
     t.eq(await p.evaluate(() => [G.mv, JSON.parse(localStorage.getItem(CUR)).hv]), [2, 8], 'level 249 keeps its generation and resumes');
   } },
+  { name: 'designed levels: tiles keep 54 px on the reference phone, big boards only on the tens, bars narrow for a nine-row pile', async run(t, { startLevel }) {
+    const p = await t.phone({ size: [392, 730], state: { name: 'Dennis', pid: 'test-designed-size', level: 301, seenSp: { clock: 1, clockMoves: 1, ice: 1, lock: 1, gold: 1, joker: 1, trayPair: 1 } } });
+    let compact = 0;
+    for (let lv = 250; lv <= 300; lv++) {
+      await startLevel(p, lv);
+      const m = await p.evaluate(() => ({ tw: G.tw, n: G.tiles.length, compact: document.querySelector('#game').classList.contains('compact'), slot: document.querySelector('#tray .slot').clientWidth, btn: document.querySelector('#game .icon-btn').clientWidth }));
+      t.ok(m.tw >= (m.n === 96 ? 48 : 54), 'tile size on level ' + lv, m.tw);
+      t.eq([m.slot >= 48, m.btn], [true, 44], 'tray slots and buttons keep their size on level ' + lv);
+      t.eq(m.n === 96, lv % 10 === 0, 'big boards only on levels ending in 0: ' + lv);
+      if (m.compact) compact++;
+    }
+    t.ok(compact > 0 && compact < 51, 'piles limited by the height use the narrower bars, the others the ordinary bars', compact);
+  } },
 ];
