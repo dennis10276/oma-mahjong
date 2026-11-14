@@ -21,7 +21,13 @@ function verify(r,opts={}){
   const mech=new Set([...V.mechanism(d),...r.roles.bait.tiles,r.roles.bait.mix.originalClock,...d.solution.slice(0,r.card.clock.fewestMoves)]);
   if(d.down.length/d.tiles.length<.23||d.down.length/d.tiles.length>.28||d.down.some(i=>mech.has(i)))errors.push('faceDown');
   const feel=F.expert(d,{playouts:16,seed:9}),pp=+(feel.parkAt[1]+feel.parkAt[2]).toFixed(1);
-  if(pp<1.5||pp>3||feel.waiting[3]>.1||feel.lostGames)errors.push('pressureTarget');
+  const tail=r.card.finishProfile?require('./bank/tail.js').measure(d,{seed:977,playouts:800}):r.card.tail;
+  if(!require('./chained_finish_profiles.js').check(r,feel,tail))errors.push('pressureTarget');
+  if(r.card.finishProfile&&(!same(tail,r.card.tail)))errors.push('tailCard');
+  if(r.brief.readabilityProfile){
+    const clear=require('./chained_special_readability.js').measure(d);
+    if(r.brief.readabilityProfile!==clear.profile||!clear.ok||!same(clear,r.card.specialReadability))errors.push('specialReadability');
+  }
   if(!same({...feel,pp,seed:9,playouts:16},r.card.feel))errors.push('feelCard');
   if(!Array.isArray(r.card.wrongIdea)||!r.card.wrongIdea.length||!same(r.card.wrongIdea,[...new Set(r.card.wrongIdea)].sort()))errors.push('wrongIdeaLedger');
   const kinds=[],b=r.roles.bait,mode=b.mix.mode;

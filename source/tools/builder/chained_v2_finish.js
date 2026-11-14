@@ -58,6 +58,7 @@ function finish(raw,opts={}){
   const finalProof=M.prove(name,d,roles,{k,spare,obviousnessDial:raw.brief.obviousnessDial});if(!finalProof.ok)return {fail:'finalProof:'+finalProof.why,notes};
   const r={...raw,schema:'chained-v2',design:d,roles,notes,card:{...raw.card,clock:{fewestMoves:k,spare,n:d.clock.n,tile:d.clock.i},trap:finalProof.card,layers:Math.max(...d.tiles.map(t=>t[2]))+1,faceDownShare:d.down.length/d.tiles.length,twins:S.summary(S.closeTwins(d)),pressure:require('./verify_trap_mixes.js').storedPressure(d),tail:Tl.measure(d,{seed:977,playouts:800}),tailOccupancy:Tl.occupancy(d),feel:{...feel,pp,seed:9,playouts:16}}};
   r.card.wrongIdea=ideas(r);
+  if(r.brief.readabilityProfile)r.card.specialReadability=require('./chained_special_readability.js').measure(d);
   const v=require('./verify_chained_v2.js').verify(r);if(!v.ok)return {fail:'independentVerification',verification:v,notes};r.verification=v;return r;
 }
 module.exports={finish,ideas};

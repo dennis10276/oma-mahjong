@@ -356,12 +356,16 @@ function build(name, brief = {}, opts = {}) {
   const layout=brief.layout ?? 0, lay=B.LAYOUTS[layout]; if(!lay) return {fail:'unknownLayout'};
   if(/^blob|^block/.test(lay.shape)) return {fail:'bannedLayout'};
   const c=B.context(lay.tiles), f=FAMILIES[name];
-  const used={...brief,layout,story:name,frame:{spare:1,...brief.frame},targets:{trayRoom:0,maxDown:.2,hiddenOnWay:0,tailPairWidth:2,...brief.targets}};
+  const used={...brief,layout,story:name,readabilityProfile:brief.readabilityProfile??(f.sixIdea?'clear-specials-v1':undefined),frame:{spare:1,...brief.frame},targets:{trayRoom:0,maxDown:.2,hiddenOnWay:0,tailPairWidth:2,...brief.targets}};
   if(![1,2,3].includes(used.frame.spare))return {fail:'invalidSpare'};
   for(let attempt=0;attempt<(opts.tries ?? 30)&&Date.now()-t0<wallMs;attempt++) {
     try{
     const rng=rngOf((brief.seed??1)*7919+attempt*104729),r=STORIES[name].place(c,used,rng);
     if(r.fail){fails[r.fail]=(fails[r.fail]||0)+1;continue;}
+    if(used.readabilityProfile){
+      const sr=require('./chained_special_readability.js').measure({tiles:c.tiles,down:[],obst:{ice:r.ice,locks:[...r.locks],keys:r.keys}});
+      if(used.readabilityProfile!==sr.profile||!sr.ok){fails.specialReadability=(fails.specialReadability||0)+1;continue;}
+    }
     const geo=c._mixGeo||(c._mixGeo=SEP.geometry({tiles:c.tiles,down:[]}));
     const fixedPairs=[...(r.keys.length===2?[r.keys]:[]),...r.bait.pairs,...(f.mode==='earlyClock'?[[r.clock,r.bait.mix.originalClock]]:[])];
     if(fixedPairs.some(([a,b])=>geo.vis[a]&&geo.vis[b]&&geo.close[a][b])){fails.fixedTwinsClose=(fails.fixedTwinsClose||0)+1;continue;}

@@ -20,7 +20,7 @@ if(!isMainThread&&require.main===module){
       }
     }
     else if(j.mode==='verify')r=require('./verify_chained_v2.js').verify(JSON.parse(fs.readFileSync(j.file)));
-    else r=M.build(j.name,{layout:j.layout,seed:j.seed,obviousnessDial:2,frame:{spare:1,...(j.depth!=null?{depth:j.depth}:{})},targets:{digBefore:[2,8],maxDown:.2,...j.targets}},{tries:j.tries??250,wallMs:j.ms-500,onAttempt:x=>parentPort.postMessage({progress:x})});
+    else r=M.build(j.name,{layout:j.layout,seed:j.seed,obviousnessDial:2,...(j.readabilityProfile?{readabilityProfile:j.readabilityProfile}:{}),frame:{spare:1,...(j.depth!=null?{depth:j.depth}:{})},targets:{digBefore:[2,8],maxDown:.2,...j.targets}},{tries:j.tries??250,wallMs:j.ms-500,onAttempt:x=>parentPort.postMessage({progress:x})});
     if(r.design){r.roles.locks=[...r.roles.locks];r.roles.holderSpecials=[...r.roles.holderSpecials];}
     parentPort.postMessage({result:r});
   }catch(e){parentPort.postMessage({result:{fail:'exception',detail:e.stack}});}
@@ -47,7 +47,7 @@ async function run(){
   if(arg('reverse','0')==='1')jobs.reverse();
   let cursor=0;const log=path.join(OUT,'runs',`${mode}-s${seed}-${Date.now()}.jsonl`);
   await Promise.all(Array.from({length:workers},async()=>{while(cursor<jobs.length&&Date.now()<until){
-    const j={...jobs[cursor++],...(arg('depth',null)!=null?{depth:+arg('depth',0)}:{})},r=await job({...j,repairMs:+arg('repair-ms',20000),tuneMs:+arg('tune-ms',30000),ms:Math.min(j.ms,until-Date.now())});
+    const j={...jobs[cursor++],...(arg('readability',null)?{readabilityProfile:arg('readability')}:{}),...(arg('depth',null)!=null?{depth:+arg('depth',0)}:{})},r=await job({...j,repairMs:+arg('repair-ms',20000),tuneMs:+arg('tune-ms',30000),ms:Math.min(j.ms,until-Date.now())});
     const row={...j,file:j.file&&path.basename(j.file),ok:!!r.design||(mode==='verify'&&r.ok),fail:r.fail,errors:r.errors,detail:r.detail,fails:r.fails,wall:r.wall,attempts:r.progress?.attempt};
     if(r.design){const file=j.file?path.basename(j.file):`${j.name}-L${j.layout}-s${seed}-p1.json`;fs.writeFileSync(path.join(OUT,mode==='refresh'?'checked':mode==='finish'?'examples':'raw',file),JSON.stringify(r,null,2)+'\n');row.output=file;}
     else if(mode==='finish'){
