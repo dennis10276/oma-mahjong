@@ -1,0 +1,109 @@
+{
+ "level": 275,
+ "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-275.json",
+ "before": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 1381,
+   "ms": 19,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 417,
+   "ms": 4,
+   "startWaiting": 0,
+   "episodes": 8
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 3,
+   "minimum": null,
+   "upperBound": 8,
+   "tests": [
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 1853,
+     "ms": 10,
+     "startWaiting": 0,
+     "episodeLimit": 1
+    },
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 3072,
+     "ms": 8,
+     "startWaiting": 0,
+     "episodeLimit": 2
+    }
+   ]
+  },
+  "targetMet": true
+ },
+ "downBefore": 0.2625,
+ "tailBefore": 0.1775,
+ "ok": true,
+ "changed": false,
+ "after": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 1381,
+   "ms": 19,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 417,
+   "ms": 4,
+   "startWaiting": 0,
+   "episodes": 8
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 3,
+   "minimum": null,
+   "upperBound": 8,
+   "tests": [
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 1853,
+     "ms": 10,
+     "startWaiting": 0,
+     "episodeLimit": 1
+    },
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 3072,
+     "ms": 8,
+     "startWaiting": 0,
+     "episodeLimit": 2
+    }
+   ]
+  },
+  "targetMet": true
+ },
+ "tailAfter": 0.1775,
+ "downAfter": 0.2625,
+ "score": 6.13
+}

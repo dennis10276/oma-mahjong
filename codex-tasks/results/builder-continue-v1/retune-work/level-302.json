@@ -1,0 +1,105 @@
+{
+ "level": 302,
+ "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-302.json",
+ "before": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 15074,
+   "ms": 51,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "lose",
+   "cap": 2,
+   "peek": true,
+   "nodes": 17217,
+   "ms": 48,
+   "startWaiting": 0
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 1,
+   "minimum": null,
+   "upperBound": null,
+   "tests": []
+  },
+  "targetMet": false
+ },
+ "downBefore": 0.275,
+ "tailBefore": 0.085,
+ "ok": true,
+ "changed": true,
+ "after": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 14962,
+   "ms": 38,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 1119,
+   "ms": 4,
+   "startWaiting": 0,
+   "episodes": 12
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 3,
+   "minimum": null,
+   "upperBound": 12,
+   "tests": [
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 14966,
+     "ms": 37,
+     "startWaiting": 0,
+     "episodeLimit": 1
+    },
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 15003,
+     "ms": 35,
+     "startWaiting": 0,
+     "episodeLimit": 2
+    }
+   ]
+  },
+  "targetMet": true
+ },
+ "edits": [
+  [
+   46,
+   22
+  ]
+ ],
+ "stats": {
+  "proposals": 7,
+  "checked": 1,
+  "failures": {
+   "twins": 1,
+   "gamble": 4,
+   "strictTail:unknown": 1
+  },
+  "ms": 711
+ },
+ "tailAfter": 0.1275,
+ "downAfter": 0.275,
+ "score": 7.22
+}

@@ -1,0 +1,49 @@
+{
+ "level": 259,
+ "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-259.json",
+ "before": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 1877,
+   "ms": 15,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 1322,
+   "ms": 8,
+   "startWaiting": 0,
+   "episodes": 4
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 1,
+   "minimum": 1,
+   "upperBound": 4,
+   "tests": [
+    {
+     "result": "win",
+     "cap": 2,
+     "peek": true,
+     "nodes": 1317,
+     "ms": 4,
+     "startWaiting": 0,
+     "episodeLimit": 1,
+     "episodes": 1
+    }
+   ]
+  },
+  "targetMet": false
+ },
+ "downBefore": 0.19736842105263158,
+ "tailBefore": 1,
+ "ok": false,
+ "kept": "liked older board kept unchanged"
+}

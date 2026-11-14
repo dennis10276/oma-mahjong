@@ -47,4 +47,36 @@ function retuneRecord(job, v, opts = {}) {
   card.retune = { faceDownBefore: o.before.down, faceDownAfter: o.after.down, faceDownAdded: o.faceDownAdded, tailBefore: o.before.tail, tailAfter: o.after.tail, rerouted: o.rerouted, notes: o.notes, scoreBefore: card0.difficulty && card0.difficulty.score, scoreAfter: df.score, ms: Date.now() - t0 };
   return { ok: true, inBand: o.inBand, design: fin, card, retune: card.retune, tail: o.after.tail, score: df.score, needle: df.needle, pressureMiss: o.missAfter };
 }
-module.exports = { retuneRecord, rebuild, BANDS, briefOf, sameBoard };
+// New Task-16 objective, applied after the face-down/greedy retune. The
+// all-prefix proof is essential: the player need not use the stored route.
+function forceRecord(job, v, opts = {}) {
+  const Tl = require('./tail.js'), F = require('./force_tail.js'), T = require('../trap_stories.js'), E = require('../engine.js'), PS = require('../../factory/placement_score.js'), Df = require('./difficulty.js'), SEP = require('./separate.js');
+  const tier = opts.tier || v.tier || 'hard', band = BANDS[tier] || BANDS.std, d = v.design;
+  const budget = { nodes: d.tiles.length > 88 ? 1500000 : 250000, ms: d.tiles.length > 88 ? 4000 : 1200 };
+  const before = Tl.forcedPressure(d, budget), w0 = Tl.measure(d, { seed: 977, playouts: 800 }).tailGreedyWin;
+  const slim = f => { const { solution, path, ...rest } = f; return rest; };
+  if (before.targetMet && w0 >= band[0] && w0 <= band[1]) return { ...v, ok: true, card: { ...v.card, forcedTail: slim(before) }, inBand: true, tail: w0, changed: false };
+  const rb = rebuild(job, d); if (!rb.r) return { ok: false, why: rb.why };
+  const r = rb.r, k = r.card.clock.fewestMoves, spare = r.card.clock.spare; let proof = null;
+  const validate = design => {
+    if (!E.replay(design, design.solution, { strict: true }).ok) return { ok: false, why: 'replay' };
+    const cs = E.clockShortest(E.game(design), { nodes: 300000, ms: 3000, finishNodes: 100000, finishMs: 1000 });
+    if (!cs || cs.unsure || cs.k !== k) return { ok: false, why: 'clock:' + cs?.k };
+    if (!PS.readable(design)) return { ok: false, why: 'readable' };
+    const rp = T.reprove('chain', design, r.roles, r.brief, spare, k); if (rp.ok) proof = rp.proof.card; return rp;
+  };
+  const out = F.tune(d, { ms: opts.ms ?? 20000, seed: opts.seed ?? 1, band, freeze: r.roles.bait.tiles, validate, nodes: budget.nodes, queryMs: budget.ms });
+  const stats = { proposals: out.proposals, checked: out.checked, ms: out.ms, failures: out.failures };
+  if (!out.ok) return { ok: false, why: 'forced tail target not reached', stats };
+  const fin = out.design, card = structuredClone(v.card), press = T.pressureFacts(fin);
+  delete card.difficultyFacts; card.trap = proof; card.control = proof.control;
+  card.baits = proof.baits.map(b => ({ name: b.name, tiles: b.tiles, provenResult: b.result, provenCost: b.cost, value: b.value, controlValue: proof.control.value }));
+  card.firstMoves = { winning: press.firstMoves.winning, legal: press.firstMoves.legal, losingOrUnknownTiles: press.firstMoves.rows, unknown: press.firstMoves.unknown, atLeast3: press.firstMoves.atLeast3 };
+  card.boardKey = require('../../factory/meter.js').boardKey(fin);
+  card.tail = { ...card.tail, band, inBand: true, after: Tl.measure(fin, { seed: 977, playouts: 800 }) };
+  card.forcedTail = slim(out.after); card.tailPressure = Tl.occupancy(fin);
+  card.closeTwins = { ...card.closeTwins, final: SEP.summary(SEP.closeTwins(fin)) };
+  const df = Df.score(fin, card, { facts: Df.facts(fin, card, { press, fresh: true }) }); card.difficulty = df;
+  return { ok: true, design: fin, card, inBand: true, tail: out.tail, score: df.score, needle: df.needle, changed: true, stats, edits: out.edits };
+}
+module.exports = { retuneRecord, forceRecord, rebuild, BANDS, briefOf, sameBoard };

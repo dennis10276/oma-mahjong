@@ -1,0 +1,117 @@
+{
+ "level": 304,
+ "file": "source\\analysis\\builder\\bank\\batch-303-342\\level-304.json",
+ "before": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "win",
+   "cap": 1,
+   "peek": true,
+   "nodes": 44680,
+   "ms": 163,
+   "startWaiting": 0,
+   "episodes": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 44585,
+   "ms": 140,
+   "startWaiting": 0,
+   "episodes": 12
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 0,
+   "minimum": 0,
+   "upperBound": 12,
+   "tests": []
+  },
+  "targetMet": false
+ },
+ "downBefore": 0.275,
+ "tailBefore": 0.0825,
+ "ok": true,
+ "changed": true,
+ "after": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 17285,
+   "ms": 58,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 11813,
+   "ms": 37,
+   "startWaiting": 0,
+   "episodes": 9
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 3,
+   "minimum": null,
+   "upperBound": 9,
+   "tests": [
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 23941,
+     "ms": 74,
+     "startWaiting": 0,
+     "episodeLimit": 1
+    },
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 35463,
+     "ms": 129,
+     "startWaiting": 0,
+     "episodeLimit": 2
+    }
+   ]
+  },
+  "targetMet": true
+ },
+ "edits": [
+  [
+   29,
+   45
+  ],
+  [
+   47,
+   40
+  ],
+  [
+   54,
+   14
+  ]
+ ],
+ "stats": {
+  "proposals": 35,
+  "checked": 6,
+  "failures": {
+   "gamble": 17,
+   "twins": 11,
+   "pressure:win/win/0": 2,
+   "band:easy": 3,
+   "strictTail:lose": 1
+  },
+  "ms": 4998
+ },
+ "tailAfter": 0.17,
+ "downAfter": 0.275,
+ "score": 6.56
+}

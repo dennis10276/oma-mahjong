@@ -1,0 +1,109 @@
+{
+ "level": 285,
+ "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-285.json",
+ "before": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 16504,
+   "ms": 97,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "lose",
+   "cap": 2,
+   "peek": true,
+   "nodes": 28132,
+   "ms": 112,
+   "startWaiting": 0
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 1,
+   "minimum": null,
+   "upperBound": null,
+   "tests": []
+  },
+  "targetMoments": 3,
+  "targetMet": false
+ },
+ "downBefore": 0.225,
+ "tailBefore": 0.2125,
+ "ok": true,
+ "changed": true,
+ "after": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 17681,
+   "ms": 63,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 28939,
+   "ms": 99,
+   "startWaiting": 0,
+   "episodes": 9
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 3,
+   "minimum": null,
+   "upperBound": 9,
+   "tests": [
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 31839,
+     "ms": 113,
+     "startWaiting": 0,
+     "episodeLimit": 1
+    },
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 32257,
+     "ms": 126,
+     "startWaiting": 0,
+     "episodeLimit": 2
+    }
+   ]
+  },
+  "targetMoments": 3,
+  "targetMet": true
+ },
+ "edits": [
+  [
+   74,
+   49
+  ]
+ ],
+ "stats": {
+  "proposals": 166,
+  "checked": 39,
+  "openedFreeze": false,
+  "failures": {
+   "pressure:lose/lose/1": 20,
+   "gamble": 69,
+   "twins": 50,
+   "pressure:lose/win/1": 18
+  },
+  "ms": 10316
+ },
+ "tailAfter": 0.215,
+ "downAfter": 0.225,
+ "score": 6.29
+}

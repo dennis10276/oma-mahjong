@@ -390,7 +390,7 @@
    33,
    31,
    24,
-   34,
+   25,
    16,
    24,
    4,
@@ -415,7 +415,7 @@
    28,
    23,
    14,
-   25,
+   34,
    8,
    19,
    13,
@@ -576,7 +576,7 @@
   "layout": 16,
   "layoutName": "moon",
   "tiles": 74,
-  "boardKey": "e6a63688825aa634232b50eaaa37bacc5594bb4ea34ab548b4383b5fb3db1919",
+  "boardKey": "c4bef4f79f3992959057083f4cdcc63099043c52cfd218b66478a4cf7144ee94",
   "trap": {
    "type": "chain",
    "bait": {
@@ -627,10 +627,8 @@
    "shape": "clock<ice; thaw<lock; keyA<cover:ice",
    "trapType": "chain:clock<ice; thaw<lock; keyA<cover:ice",
    "chainLength": 3,
-   "fair": false,
-   "fairWhy": [
-    "the loss shows only after 7+ more removals (> 6)"
-   ],
+   "fair": true,
+   "fairWhy": [],
    "baits": [
     {
      "name": "keyEarly",
@@ -732,7 +730,7 @@
     }
    },
    "uiNote": "obKind() shows one overlay per tile (ice, else lock, else key): a tile that is both frozen and a key (or locked) shows only the ice until the display fix lands (another agent, 2026-11-13). Shapes with a frozen key or a frozen locked tile are built and marked card.trap.needsUi = 'frozen-key-marker'; they are for Dennis only after that fix.",
-   "engineNodes": 38606
+   "engineNodes": 39997
   },
   "clock": {
    "tile": 67,
@@ -822,7 +820,22 @@
     "tailGreedyWin": 0.1275
    },
    "after": {
-    "tailGreedyWin": 0.16
+    "tailGreedyWin": 0.16,
+    "wins": 128,
+    "playouts": 800,
+    "seed": 977,
+    "start": {
+     "step": 9,
+     "tray": 3,
+     "left": 65
+    },
+    "stored": {
+     "steps": 65,
+     "peakTray": 3,
+     "meanTray": 1.323,
+     "moves2plus": 28,
+     "tray2Share": 0.431
+    }
    },
    "inBand": true,
    "swaps": 12,
@@ -909,37 +922,19 @@
   "tailPressure": {
    "steps": 65,
    "counts": [
-    24,
-    32,
-    8,
-    1
+    15,
+    22,
+    17,
+    11
    ],
    "share": [
-    0.369,
-    0.492,
-    0.123,
-    0.015
+    0.231,
+    0.338,
+    0.262,
+    0.169
    ],
-   "longest2plus": 2,
-   "mean": 0.785,
-   "gentle": true,
-   "before": {
-    "steps": 65,
-    "counts": [
-     8,
-     20,
-     24,
-     13
-    ],
-    "share": [
-     0.123,
-     0.308,
-     0.369,
-     0.2
-    ],
-    "longest2plus": 11,
-    "mean": 1.646
-   }
+   "longest2plus": 21,
+   "mean": 1.369
   },
   "retune": {
    "faceDownBefore": 15,
@@ -957,7 +952,56 @@
   "layoutId": 16,
   "shapeIndex": 11,
   "tier": "deep",
-  "poolId": "11-16-1-d8_4-rp-deep"
+  "poolId": "11-16-1-d8_4-rp-deep",
+  "forcedTail": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 5705,
+    "ms": 13,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 952,
+    "ms": 4,
+    "startWaiting": 0,
+    "episodes": 8
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 8,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 5756,
+      "ms": 22,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 6284,
+      "ms": 23,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMet": true
+  }
  },
  "difficulty": {
   "score": 6.46,
@@ -1015,5 +1059,54 @@
    "tiles": 0.02,
    "faceDown": 0.03
   }
+ },
+ "forcedTail": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 5705,
+   "ms": 13,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 952,
+   "ms": 4,
+   "startWaiting": 0,
+   "episodes": 8
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 3,
+   "minimum": null,
+   "upperBound": 8,
+   "tests": [
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 5756,
+     "ms": 22,
+     "startWaiting": 0,
+     "episodeLimit": 1
+    },
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 6284,
+     "ms": 23,
+     "startWaiting": 0,
+     "episodeLimit": 2
+    }
+   ]
+  },
+  "targetMet": true
  }
 }

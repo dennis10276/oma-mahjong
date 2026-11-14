@@ -1,0 +1,59 @@
+{
+ "level": 256,
+ "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-256.json",
+ "before": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 2398,
+   "ms": 20,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "lose",
+   "cap": 2,
+   "peek": true,
+   "nodes": 2482,
+   "ms": 11,
+   "startWaiting": 0
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 1,
+   "minimum": null,
+   "upperBound": null,
+   "tests": []
+  },
+  "targetMoments": 3,
+  "targetMet": false
+ },
+ "downBefore": 0.27631578947368424,
+ "tailBefore": 0.1563,
+ "ok": false,
+ "why": "forced target not reached within budget",
+ "stats": {
+  "proposals": 20000,
+  "checked": 1708,
+  "openedFreeze": true,
+  "failures": {
+   "twins": 9161,
+   "gamble": 6668,
+   "pressure:lose/lose/1": 1227,
+   "strictTail:lose": 1708,
+   "band:hard": 95,
+   "proof:trapProof:noProvenBait:lonelyNeighbour:win:1": 198,
+   "strictTail:unknown": 104,
+   "pressure:lose/win/1": 26,
+   "band:easy": 100,
+   "pressure:win/win/0": 2,
+   "pressure:lose/win/2": 49,
+   "proof:clock:7": 3,
+   "proof:trapProof:baitNotPaired": 8
+  },
+  "ms": 62252
+ }
+}

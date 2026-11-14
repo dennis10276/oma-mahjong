@@ -1,0 +1,48 @@
+{
+ "level": 269,
+ "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-269.json",
+ "before": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 2356,
+   "ms": 17,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "lose",
+   "cap": 2,
+   "peek": true,
+   "nodes": 2361,
+   "ms": 10,
+   "startWaiting": 0
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 1,
+   "minimum": null,
+   "upperBound": null,
+   "tests": []
+  },
+  "targetMet": false
+ },
+ "downBefore": 0.27631578947368424,
+ "tailBefore": 0.115,
+ "ok": false,
+ "why": "forced target not reached within budget",
+ "stats": {
+  "proposals": 2000,
+  "checked": 264,
+  "failures": {
+   "gamble": 1067,
+   "pressure:lose/lose/1": 264,
+   "twins": 346,
+   "strictTail:unknown": 129
+  },
+  "ms": 8558
+ }
+}

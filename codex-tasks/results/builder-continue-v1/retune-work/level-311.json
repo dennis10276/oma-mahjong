@@ -1,0 +1,112 @@
+{
+ "level": 311,
+ "file": "source\\analysis\\builder\\bank\\batch-303-342\\level-311.json",
+ "before": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 27582,
+   "ms": 99,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "lose",
+   "cap": 2,
+   "peek": true,
+   "nodes": 27620,
+   "ms": 109,
+   "startWaiting": 0
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 1,
+   "minimum": null,
+   "upperBound": null,
+   "tests": []
+  },
+  "targetMet": false
+ },
+ "downBefore": 0.27380952380952384,
+ "tailBefore": 0.2313,
+ "ok": true,
+ "changed": true,
+ "after": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 29349,
+   "ms": 116,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 20689,
+   "ms": 85,
+   "startWaiting": 0,
+   "episodes": 8
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 3,
+   "minimum": null,
+   "upperBound": 8,
+   "tests": [
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 30697,
+     "ms": 102,
+     "startWaiting": 0,
+     "episodeLimit": 1
+    },
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 72941,
+     "ms": 238,
+     "startWaiting": 0,
+     "episodeLimit": 2
+    }
+   ]
+  },
+  "targetMet": true
+ },
+ "edits": [
+  [
+   38,
+   44
+  ],
+  [
+   46,
+   78
+  ]
+ ],
+ "stats": {
+  "proposals": 274,
+  "checked": 41,
+  "failures": {
+   "twins": 83,
+   "strictTail:unknown": 16,
+   "pressure:lose/lose/1": 36,
+   "gamble": 121,
+   "pressure:lose/win/1": 2,
+   "pressure:lose/win/2": 2
+  },
+  "ms": 16579
+ },
+ "tailAfter": 0.105,
+ "downAfter": 0.27380952380952384,
+ "score": 7.66
+}

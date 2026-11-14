@@ -1,0 +1,3794 @@
+[
+ {
+  "level": 250,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-250.json",
+  "source": "batch 250",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 6,
+    "startWaiting": 2
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 907,
+    "ms": 13,
+    "startWaiting": 2,
+    "episodes": 15
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": 15,
+    "tests": [
+     {
+      "result": "unknown",
+      "cap": 2,
+      "peek": true,
+      "nodes": 200001,
+      "ms": 587,
+      "startWaiting": 2,
+      "episodeLimit": 1
+     }
+    ]
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 88,
+   "counts": [
+    30,
+    44,
+    14,
+    0
+   ],
+   "share": [
+    0.341,
+    0.5,
+    0.159,
+    0
+   ],
+   "longest2plus": 1,
+   "mean": 0.818
+  }
+ },
+ {
+  "level": 251,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-251.json",
+  "source": "batch 251",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 2,
+    "startWaiting": 2
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 1,
+    "ms": 0,
+    "startWaiting": 2
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 66,
+   "counts": [
+    23,
+    30,
+    10,
+    3
+   ],
+   "share": [
+    0.348,
+    0.455,
+    0.152,
+    0.045
+   ],
+   "longest2plus": 7,
+   "mean": 0.894
+  }
+ },
+ {
+  "level": 252,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-252.json",
+  "source": "batch 252",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 1,
+    "startWaiting": 2
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 1,
+    "ms": 0,
+    "startWaiting": 2
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 64,
+   "counts": [
+    20,
+    30,
+    12,
+    2
+   ],
+   "share": [
+    0.313,
+    0.469,
+    0.188,
+    0.031
+   ],
+   "longest2plus": 5,
+   "mean": 0.938
+  }
+ },
+ {
+  "level": 253,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-253.json",
+  "source": "batch 253",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 2,
+    "startWaiting": 2
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 112,
+    "ms": 0,
+    "startWaiting": 2,
+    "episodes": 13
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 13,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 5,
+      "ms": 0,
+      "startWaiting": 2,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 79,
+      "ms": 0,
+      "startWaiting": 2,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMet": true
+  },
+  "occupancy": {
+   "steps": 70,
+   "counts": [
+    22,
+    35,
+    13,
+    0
+   ],
+   "share": [
+    0.314,
+    0.5,
+    0.186,
+    0
+   ],
+   "longest2plus": 1,
+   "mean": 0.871
+  }
+ },
+ {
+  "level": 254,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-254.json",
+  "source": "batch 254",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 2,
+    "startWaiting": 2
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 88,
+    "ms": 1,
+    "startWaiting": 2,
+    "episodes": 9
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 9,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 2,
+      "ms": 0,
+      "startWaiting": 2,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 17,
+      "ms": 0,
+      "startWaiting": 2,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMet": true
+  },
+  "occupancy": {
+   "steps": 66,
+   "counts": [
+    22,
+    33,
+    11,
+    0
+   ],
+   "share": [
+    0.333,
+    0.5,
+    0.167,
+    0
+   ],
+   "longest2plus": 1,
+   "mean": 0.833
+  }
+ },
+ {
+  "level": 255,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-255.json",
+  "source": "older release163-175",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 1,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 57,
+   "counts": [
+    10,
+    16,
+    18,
+    13
+   ],
+   "share": [
+    0.175,
+    0.281,
+    0.316,
+    0.228
+   ],
+   "longest2plus": 14,
+   "mean": 1.596
+  }
+ },
+ {
+  "level": 256,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-256.json",
+  "source": "batch 255",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 2,
+    "startWaiting": 2
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 76,
+    "ms": 0,
+    "startWaiting": 2
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 68,
+   "counts": [
+    21,
+    32,
+    13,
+    2
+   ],
+   "share": [
+    0.309,
+    0.471,
+    0.191,
+    0.029
+   ],
+   "longest2plus": 5,
+   "mean": 0.941
+  }
+ },
+ {
+  "level": 257,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-257.json",
+  "source": "bank lab-273",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 1,
+    "startWaiting": 2
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 1,
+    "ms": 0,
+    "startWaiting": 2
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 66,
+   "counts": [
+    11,
+    14,
+    22,
+    19
+   ],
+   "share": [
+    0.167,
+    0.212,
+    0.333,
+    0.288
+   ],
+   "longest2plus": 33,
+   "mean": 1.742
+  }
+ },
+ {
+  "level": 258,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-258.json",
+  "source": "batch 257",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 3,
+    "startWaiting": 2
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 616,
+    "ms": 3,
+    "startWaiting": 2,
+    "episodes": 7
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 2,
+    "minimum": 2,
+    "upperBound": 7,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 72,
+      "ms": 0,
+      "startWaiting": 2,
+      "episodeLimit": 1
+     },
+     {
+      "result": "win",
+      "cap": 2,
+      "peek": true,
+      "nodes": 1280,
+      "ms": 5,
+      "startWaiting": 2,
+      "episodeLimit": 2,
+      "episodes": 2
+     }
+    ]
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 78,
+   "counts": [
+    27,
+    39,
+    12,
+    0
+   ],
+   "share": [
+    0.346,
+    0.5,
+    0.154,
+    0
+   ],
+   "longest2plus": 1,
+   "mean": 0.808
+  }
+ },
+ {
+  "level": 259,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-259.json",
+  "source": "chain lab-293",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 2,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 65,
+   "counts": [
+    27,
+    29,
+    5,
+    4
+   ],
+   "share": [
+    0.415,
+    0.446,
+    0.077,
+    0.062
+   ],
+   "longest2plus": 7,
+   "mean": 0.785
+  }
+ },
+ {
+  "level": 260,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-260.json",
+  "source": "batch 260",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 2,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 85,
+   "counts": [
+    28,
+    42,
+    14,
+    1
+   ],
+   "share": [
+    0.329,
+    0.494,
+    0.165,
+    0.012
+   ],
+   "longest2plus": 2,
+   "mean": 0.859
+  }
+ },
+ {
+  "level": 261,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-261.json",
+  "source": "batch 258",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 1,
+    "startWaiting": 2
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 2,
+    "ms": 1,
+    "startWaiting": 2
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 62,
+   "counts": [
+    1,
+    11,
+    30,
+    20
+   ],
+   "share": [
+    0.016,
+    0.177,
+    0.484,
+    0.323
+   ],
+   "longest2plus": 15,
+   "mean": 2.113
+  }
+ },
+ {
+  "level": 262,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-262.json",
+  "source": "older factory4-176",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 2,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 71,
+   "counts": [
+    11,
+    23,
+    24,
+    13
+   ],
+   "share": [
+    0.155,
+    0.324,
+    0.338,
+    0.183
+   ],
+   "longest2plus": 15,
+   "mean": 1.549
+  }
+ },
+ {
+  "level": 263,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-263.json",
+  "source": "batch 261",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 2,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 67,
+   "counts": [
+    23,
+    33,
+    10,
+    1
+   ],
+   "share": [
+    0.343,
+    0.493,
+    0.149,
+    0.015
+   ],
+   "longest2plus": 2,
+   "mean": 0.836
+  }
+ },
+ {
+  "level": 264,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-264.json",
+  "source": "bank lab-262",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 2,
+    "startWaiting": 2
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 1,
+    "ms": 0,
+    "startWaiting": 2
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 64,
+   "counts": [
+    20,
+    31,
+    12,
+    1
+   ],
+   "share": [
+    0.313,
+    0.484,
+    0.188,
+    0.016
+   ],
+   "longest2plus": 3,
+   "mean": 0.906
+  }
+ },
+ {
+  "level": 265,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-265.json",
+  "source": "batch 262",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 2,
+    "startWaiting": 2
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 1,
+    "ms": 0,
+    "startWaiting": 2
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 68,
+   "counts": [
+    22,
+    33,
+    12,
+    1
+   ],
+   "share": [
+    0.324,
+    0.485,
+    0.176,
+    0.015
+   ],
+   "longest2plus": 3,
+   "mean": 0.882
+  }
+ },
+ {
+  "level": 266,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-266.json",
+  "source": "batch 263",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 2,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 71,
+   "counts": [
+    22,
+    35,
+    13,
+    1
+   ],
+   "share": [
+    0.31,
+    0.493,
+    0.183,
+    0.014
+   ],
+   "longest2plus": 2,
+   "mean": 0.901
+  }
+ },
+ {
+  "level": 267,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-267.json",
+  "source": "chain lab-292",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 2,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 77,
+   "counts": [
+    28,
+    32,
+    10,
+    7
+   ],
+   "share": [
+    0.364,
+    0.416,
+    0.13,
+    0.091
+   ],
+   "longest2plus": 14,
+   "mean": 0.948
+  }
+ },
+ {
+  "level": 268,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-268.json",
+  "source": "batch 264",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 1,
+    "ms": 1,
+    "startWaiting": 1
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 73,
+    "ms": 1,
+    "startWaiting": 1,
+    "episodes": 15
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 15,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 45,
+      "ms": 0,
+      "startWaiting": 1,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 288,
+      "ms": 1,
+      "startWaiting": 1,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMet": true
+  },
+  "occupancy": {
+   "steps": 63,
+   "counts": [
+    19,
+    32,
+    12,
+    0
+   ],
+   "share": [
+    0.302,
+    0.508,
+    0.19,
+    0
+   ],
+   "longest2plus": 1,
+   "mean": 0.889
+  }
+ },
+ {
+  "level": 269,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-269.json",
+  "source": "batch 265",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 1,
+    "startWaiting": 2
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 1,
+    "ms": 0,
+    "startWaiting": 2
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 66,
+   "counts": [
+    22,
+    31,
+    11,
+    2
+   ],
+   "share": [
+    0.333,
+    0.47,
+    0.167,
+    0.03
+   ],
+   "longest2plus": 5,
+   "mean": 0.894
+  }
+ },
+ {
+  "level": 270,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-270.json",
+  "source": "batch 270",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 2,
+    "startWaiting": 2
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 4,
+    "ms": 0,
+    "startWaiting": 2
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 86,
+   "counts": [
+    23,
+    41,
+    20,
+    2
+   ],
+   "share": [
+    0.267,
+    0.477,
+    0.233,
+    0.023
+   ],
+   "longest2plus": 5,
+   "mean": 1.012
+  }
+ },
+ {
+  "level": 271,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-271.json",
+  "source": "older q217-1233c8",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 1,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 65,
+   "counts": [
+    16,
+    28,
+    16,
+    5
+   ],
+   "share": [
+    0.246,
+    0.431,
+    0.246,
+    0.077
+   ],
+   "longest2plus": 10,
+   "mean": 1.154
+  }
+ },
+ {
+  "level": 272,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-272.json",
+  "source": "batch 266",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 1,
+    "ms": 0,
+    "startWaiting": 1
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 74,
+    "ms": 1,
+    "startWaiting": 1,
+    "episodes": 12
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 12,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 32,
+      "ms": 0,
+      "startWaiting": 1,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 164,
+      "ms": 0,
+      "startWaiting": 1,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMet": true
+  },
+  "occupancy": {
+   "steps": 61,
+   "counts": [
+    15,
+    31,
+    15,
+    0
+   ],
+   "share": [
+    0.246,
+    0.508,
+    0.246,
+    0
+   ],
+   "longest2plus": 1,
+   "mean": 1
+  }
+ },
+ {
+  "level": 273,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-273.json",
+  "source": "older factory4-175",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 2,
+    "ms": 2,
+    "startWaiting": 1
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 67,
+    "ms": 1,
+    "startWaiting": 1,
+    "episodes": 8
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 8,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 14,
+      "ms": 0,
+      "startWaiting": 1,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 57,
+      "ms": 0,
+      "startWaiting": 1,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMet": true
+  },
+  "occupancy": {
+   "steps": 43,
+   "counts": [
+    2,
+    8,
+    19,
+    14
+   ],
+   "share": [
+    0.047,
+    0.186,
+    0.442,
+    0.326
+   ],
+   "longest2plus": 13,
+   "mean": 2.047
+  }
+ },
+ {
+  "level": 274,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-274.json",
+  "source": "batch 267",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 20,
+    "ms": 0,
+    "startWaiting": 1
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 185,
+    "ms": 1,
+    "startWaiting": 1,
+    "episodes": 13
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 13,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 245,
+      "ms": 0,
+      "startWaiting": 1,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 390,
+      "ms": 1,
+      "startWaiting": 1,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMet": true
+  },
+  "occupancy": {
+   "steps": 65,
+   "counts": [
+    7,
+    29,
+    25,
+    4
+   ],
+   "share": [
+    0.108,
+    0.446,
+    0.385,
+    0.062
+   ],
+   "longest2plus": 5,
+   "mean": 1.4
+  }
+ },
+ {
+  "level": 275,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-275.json",
+  "source": "batch 268",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 1,
+    "startWaiting": 2
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 75,
+    "ms": 0,
+    "startWaiting": 2,
+    "episodes": 11
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 11,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 35,
+      "ms": 0,
+      "startWaiting": 2,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 483,
+      "ms": 2,
+      "startWaiting": 2,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMet": true
+  },
+  "occupancy": {
+   "steps": 62,
+   "counts": [
+    24,
+    31,
+    7,
+    0
+   ],
+   "share": [
+    0.387,
+    0.5,
+    0.113,
+    0
+   ],
+   "longest2plus": 1,
+   "mean": 0.726
+  }
+ },
+ {
+  "level": 276,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-276.json",
+  "source": "batch 269",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 1,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 63,
+   "counts": [
+    19,
+    30,
+    12,
+    2
+   ],
+   "share": [
+    0.302,
+    0.476,
+    0.19,
+    0.032
+   ],
+   "longest2plus": 4,
+   "mean": 0.952
+  }
+ },
+ {
+  "level": 277,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-277.json",
+  "source": "older blind1-187",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 1,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 49,
+   "counts": [
+    12,
+    15,
+    12,
+    10
+   ],
+   "share": [
+    0.245,
+    0.306,
+    0.245,
+    0.204
+   ],
+   "longest2plus": 14,
+   "mean": 1.408
+  }
+ },
+ {
+  "level": 278,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-278.json",
+  "source": "batch 271",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 641,
+    "ms": 1,
+    "startWaiting": 1
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 60,
+    "ms": 0,
+    "startWaiting": 1,
+    "episodes": 7
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": 1,
+    "upperBound": 7,
+    "tests": [
+     {
+      "result": "win",
+      "cap": 2,
+      "peek": true,
+      "nodes": 198,
+      "ms": 1,
+      "startWaiting": 1,
+      "episodeLimit": 1,
+      "episodes": 1
+     }
+    ]
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 63,
+   "counts": [
+    21,
+    32,
+    10,
+    0
+   ],
+   "share": [
+    0.333,
+    0.508,
+    0.159,
+    0
+   ],
+   "longest2plus": 1,
+   "mean": 0.825
+  }
+ },
+ {
+  "level": 279,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-279.json",
+  "source": "chain lab-291",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 1,
+    "startWaiting": 2
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 65,
+    "ms": 1,
+    "startWaiting": 2,
+    "episodes": 6
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 2,
+    "minimum": 2,
+    "upperBound": 6,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 2,
+      "ms": 0,
+      "startWaiting": 2,
+      "episodeLimit": 1
+     },
+     {
+      "result": "win",
+      "cap": 2,
+      "peek": true,
+      "nodes": 62,
+      "ms": 0,
+      "startWaiting": 2,
+      "episodeLimit": 2,
+      "episodes": 2
+     }
+    ]
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 64,
+   "counts": [
+    28,
+    30,
+    4,
+    2
+   ],
+   "share": [
+    0.438,
+    0.469,
+    0.063,
+    0.031
+   ],
+   "longest2plus": 3,
+   "mean": 0.688
+  }
+ },
+ {
+  "level": 280,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-280.json",
+  "source": "batch 272",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 1,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 71,
+   "counts": [
+    25,
+    35,
+    10,
+    1
+   ],
+   "share": [
+    0.352,
+    0.493,
+    0.141,
+    0.014
+   ],
+   "longest2plus": 2,
+   "mean": 0.817
+  }
+ },
+ {
+  "level": 281,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-281.json",
+  "source": "batch 273",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 1,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 59,
+   "counts": [
+    18,
+    29,
+    11,
+    1
+   ],
+   "share": [
+    0.305,
+    0.492,
+    0.186,
+    0.017
+   ],
+   "longest2plus": 2,
+   "mean": 0.915
+  }
+ },
+ {
+  "level": 282,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-282.json",
+  "source": "older blind1-194",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 1,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 53,
+   "counts": [
+    3,
+    7,
+    23,
+    20
+   ],
+   "share": [
+    0.057,
+    0.132,
+    0.434,
+    0.377
+   ],
+   "longest2plus": 24,
+   "mean": 2.132
+  }
+ },
+ {
+  "level": 283,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-283.json",
+  "source": "batch 274",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 1,
+    "startWaiting": 2
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 18522,
+    "ms": 39,
+    "startWaiting": 2
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 66,
+   "counts": [
+    11,
+    31,
+    22,
+    2
+   ],
+   "share": [
+    0.167,
+    0.47,
+    0.333,
+    0.03
+   ],
+   "longest2plus": 5,
+   "mean": 1.227
+  }
+ },
+ {
+  "level": 284,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-284.json",
+  "source": "older q225-869ece",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 1,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 49,
+   "counts": [
+    6,
+    13,
+    18,
+    12
+   ],
+   "share": [
+    0.122,
+    0.265,
+    0.367,
+    0.245
+   ],
+   "longest2plus": 11,
+   "mean": 1.735
+  }
+ },
+ {
+  "level": 285,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-285.json",
+  "source": "batch 275",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 2
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 3,
+    "ms": 0,
+    "startWaiting": 2
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 64,
+   "counts": [
+    22,
+    31,
+    10,
+    1
+   ],
+   "share": [
+    0.344,
+    0.484,
+    0.156,
+    0.016
+   ],
+   "longest2plus": 3,
+   "mean": 0.844
+  }
+ },
+ {
+  "level": 286,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-286.json",
+  "source": "older factory2-175",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 79,
+   "counts": [
+    11,
+    19,
+    28,
+    21
+   ],
+   "share": [
+    0.139,
+    0.241,
+    0.354,
+    0.266
+   ],
+   "longest2plus": 17,
+   "mean": 1.747
+  }
+ },
+ {
+  "level": 287,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-287.json",
+  "source": "batch 276",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 1,
+    "ms": 0,
+    "startWaiting": 1
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 147,
+    "ms": 1,
+    "startWaiting": 1,
+    "episodes": 11
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 11,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 28,
+      "ms": 0,
+      "startWaiting": 1,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 1326,
+      "ms": 3,
+      "startWaiting": 1,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMet": true
+  },
+  "occupancy": {
+   "steps": 71,
+   "counts": [
+    21,
+    35,
+    14,
+    1
+   ],
+   "share": [
+    0.296,
+    0.493,
+    0.197,
+    0.014
+   ],
+   "longest2plus": 3,
+   "mean": 0.93
+  }
+ },
+ {
+  "level": 288,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-288.json",
+  "source": "older factory6-188",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 2,
+    "startWaiting": 2
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 16739,
+    "ms": 34,
+    "startWaiting": 2,
+    "episodes": 11
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 11,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 687,
+      "ms": 3,
+      "startWaiting": 2,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 14545,
+      "ms": 34,
+      "startWaiting": 2,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMet": true
+  },
+  "occupancy": {
+   "steps": 68,
+   "counts": [
+    7,
+    22,
+    27,
+    12
+   ],
+   "share": [
+    0.103,
+    0.324,
+    0.397,
+    0.176
+   ],
+   "longest2plus": 13,
+   "mean": 1.647
+  }
+ },
+ {
+  "level": 289,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-289.json",
+  "source": "batch 277",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 1,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 65,
+   "counts": [
+    17,
+    31,
+    15,
+    2
+   ],
+   "share": [
+    0.262,
+    0.477,
+    0.231,
+    0.031
+   ],
+   "longest2plus": 3,
+   "mean": 1.031
+  }
+ },
+ {
+  "level": 290,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-290.json",
+  "source": "batch 280",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 83,
+   "counts": [
+    21,
+    38,
+    20,
+    4
+   ],
+   "share": [
+    0.253,
+    0.458,
+    0.241,
+    0.048
+   ],
+   "longest2plus": 3,
+   "mean": 1.084
+  }
+ },
+ {
+  "level": 291,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-291.json",
+  "source": "batch 278",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 2
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 109,
+    "ms": 1,
+    "startWaiting": 2,
+    "episodes": 7
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 2,
+    "minimum": 2,
+    "upperBound": 7,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 1030,
+      "ms": 2,
+      "startWaiting": 2,
+      "episodeLimit": 1
+     },
+     {
+      "result": "win",
+      "cap": 2,
+      "peek": true,
+      "nodes": 4152,
+      "ms": 11,
+      "startWaiting": 2,
+      "episodeLimit": 2,
+      "episodes": 2
+     }
+    ]
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 68,
+   "counts": [
+    26,
+    33,
+    8,
+    1
+   ],
+   "share": [
+    0.382,
+    0.485,
+    0.118,
+    0.015
+   ],
+   "longest2plus": 3,
+   "mean": 0.765
+  }
+ },
+ {
+  "level": 292,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-292.json",
+  "source": "batch 279",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 2
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 233,
+    "ms": 1,
+    "startWaiting": 2,
+    "episodes": 7
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 7,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 40,
+      "ms": 0,
+      "startWaiting": 2,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 415,
+      "ms": 1,
+      "startWaiting": 2,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMet": true
+  },
+  "occupancy": {
+   "steps": 60,
+   "counts": [
+    22,
+    28,
+    8,
+    2
+   ],
+   "share": [
+    0.367,
+    0.467,
+    0.133,
+    0.033
+   ],
+   "longest2plus": 3,
+   "mean": 0.833
+  }
+ },
+ {
+  "level": 293,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-293.json",
+  "source": "batch 281",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 2
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 1,
+    "ms": 1,
+    "startWaiting": 2
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 68,
+   "counts": [
+    23,
+    33,
+    11,
+    1
+   ],
+   "share": [
+    0.338,
+    0.485,
+    0.162,
+    0.015
+   ],
+   "longest2plus": 3,
+   "mean": 0.853
+  }
+ },
+ {
+  "level": 294,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-294.json",
+  "source": "batch 282",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 2
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 2,
+    "ms": 0,
+    "startWaiting": 2
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 62,
+   "counts": [
+    14,
+    30,
+    17,
+    1
+   ],
+   "share": [
+    0.226,
+    0.484,
+    0.274,
+    0.016
+   ],
+   "longest2plus": 3,
+   "mean": 1.081
+  }
+ },
+ {
+  "level": 295,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-295.json",
+  "source": "batch 283",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 2,
+    "startWaiting": 2
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 131,
+    "ms": 0,
+    "startWaiting": 2,
+    "episodes": 20
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 2,
+    "minimum": 2,
+    "upperBound": 20,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 3673,
+      "ms": 9,
+      "startWaiting": 2,
+      "episodeLimit": 1
+     },
+     {
+      "result": "win",
+      "cap": 2,
+      "peek": true,
+      "nodes": 955,
+      "ms": 2,
+      "startWaiting": 2,
+      "episodeLimit": 2,
+      "episodes": 2
+     }
+    ]
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 72,
+   "counts": [
+    23,
+    35,
+    13,
+    1
+   ],
+   "share": [
+    0.319,
+    0.486,
+    0.181,
+    0.014
+   ],
+   "longest2plus": 3,
+   "mean": 0.889
+  }
+ },
+ {
+  "level": 296,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-296.json",
+  "source": "batch 284",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 65,
+   "counts": [
+    22,
+    32,
+    10,
+    1
+   ],
+   "share": [
+    0.338,
+    0.492,
+    0.154,
+    0.015
+   ],
+   "longest2plus": 2,
+   "mean": 0.846
+  }
+ },
+ {
+  "level": 297,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-297.json",
+  "source": "batch 285",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 1,
+    "startWaiting": 2
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 1,
+    "ms": 0,
+    "startWaiting": 2
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 58,
+   "counts": [
+    16,
+    25,
+    13,
+    4
+   ],
+   "share": [
+    0.276,
+    0.431,
+    0.224,
+    0.069
+   ],
+   "longest2plus": 5,
+   "mean": 1.086
+  }
+ },
+ {
+  "level": 298,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-298.json",
+  "source": "batch 286",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 59,
+   "counts": [
+    20,
+    29,
+    9,
+    1
+   ],
+   "share": [
+    0.339,
+    0.492,
+    0.153,
+    0.017
+   ],
+   "longest2plus": 2,
+   "mean": 0.847
+  }
+ },
+ {
+  "level": 299,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-299.json",
+  "source": "batch 287",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 65,
+   "counts": [
+    22,
+    31,
+    10,
+    2
+   ],
+   "share": [
+    0.338,
+    0.477,
+    0.154,
+    0.031
+   ],
+   "longest2plus": 3,
+   "mean": 0.877
+  }
+ },
+ {
+  "level": 300,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-300.json",
+  "source": "batch 288",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 1,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 69,
+   "counts": [
+    23,
+    34,
+    11,
+    1
+   ],
+   "share": [
+    0.333,
+    0.493,
+    0.159,
+    0.014
+   ],
+   "longest2plus": 2,
+   "mean": 0.855
+  }
+ },
+ {
+  "level": 301,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-301.json",
+  "source": "older blind1-185",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 1,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 65,
+   "counts": [
+    5,
+    16,
+    27,
+    17
+   ],
+   "share": [
+    0.077,
+    0.246,
+    0.415,
+    0.262
+   ],
+   "longest2plus": 15,
+   "mean": 1.862
+  }
+ },
+ {
+  "level": 302,
+  "dir": "source/analysis/builder/bank/placed-250-retuned",
+  "file": "level-302.json",
+  "source": "batch 289",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 1,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 67,
+   "counts": [
+    2,
+    29,
+    31,
+    5
+   ],
+   "share": [
+    0.03,
+    0.433,
+    0.463,
+    0.075
+   ],
+   "longest2plus": 7,
+   "mean": 1.582
+  }
+ },
+ {
+  "level": 303,
+  "dir": "source/analysis/builder/bank/batch-303-342",
+  "file": "level-303.json",
+  "source": "12-30-2-d8_4-vA-rp-deep",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 1,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 69,
+   "counts": [
+    23,
+    31,
+    11,
+    4
+   ],
+   "share": [
+    0.333,
+    0.449,
+    0.159,
+    0.058
+   ],
+   "longest2plus": 7,
+   "mean": 0.942
+  }
+ },
+ {
+  "level": 304,
+  "dir": "source/analysis/builder/bank/batch-303-342",
+  "file": "level-304.json",
+  "source": "31-3-2-d5_3-hard",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 67,
+   "counts": [
+    18,
+    31,
+    15,
+    3
+   ],
+   "share": [
+    0.269,
+    0.463,
+    0.224,
+    0.045
+   ],
+   "longest2plus": 3,
+   "mean": 1.045
+  }
+ },
+ {
+  "level": 305,
+  "dir": "source/analysis/builder/bank/batch-303-342",
+  "file": "level-305.json",
+  "source": "11-9-2-d8_4-rp-deep",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 1,
+    "startWaiting": 2
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 72,
+    "ms": 0,
+    "startWaiting": 2,
+    "episodes": 6
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": 1,
+    "upperBound": 6,
+    "tests": [
+     {
+      "result": "win",
+      "cap": 2,
+      "peek": true,
+      "nodes": 102,
+      "ms": 0,
+      "startWaiting": 2,
+      "episodeLimit": 1,
+      "episodes": 1
+     }
+    ]
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 64,
+   "counts": [
+    22,
+    30,
+    10,
+    2
+   ],
+   "share": [
+    0.344,
+    0.469,
+    0.156,
+    0.031
+   ],
+   "longest2plus": 3,
+   "mean": 0.875
+  }
+ },
+ {
+  "level": 306,
+  "dir": "source/analysis/builder/bank/batch-303-342",
+  "file": "level-306.json",
+  "source": "12-41-1-d8_4-rp-deep",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 3,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 67,
+   "counts": [
+    22,
+    32,
+    11,
+    2
+   ],
+   "share": [
+    0.328,
+    0.478,
+    0.164,
+    0.03
+   ],
+   "longest2plus": 3,
+   "mean": 0.896
+  }
+ },
+ {
+  "level": 307,
+  "dir": "source/analysis/builder/bank/batch-303-342",
+  "file": "level-307.json",
+  "source": "35-36-1-d8_4-rp-hard",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 2
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 1,
+    "ms": 0,
+    "startWaiting": 2
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 64,
+   "counts": [
+    18,
+    31,
+    14,
+    1
+   ],
+   "share": [
+    0.281,
+    0.484,
+    0.219,
+    0.016
+   ],
+   "longest2plus": 3,
+   "mean": 0.969
+  }
+ },
+ {
+  "level": 308,
+  "dir": "source/analysis/builder/bank/batch-303-342",
+  "file": "level-308.json",
+  "source": "11-16-1-d8_4-rp-deep",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 65,
+   "counts": [
+    24,
+    32,
+    8,
+    1
+   ],
+   "share": [
+    0.369,
+    0.492,
+    0.123,
+    0.015
+   ],
+   "longest2plus": 2,
+   "mean": 0.785
+  }
+ },
+ {
+  "level": 309,
+  "dir": "source/analysis/builder/bank/batch-303-342",
+  "file": "level-309.json",
+  "source": "12-44-1-d8_4-rp-deep",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 2,
+    "startWaiting": 2
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 78,
+    "ms": 0,
+    "startWaiting": 2,
+    "episodes": 10
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 10,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 196,
+      "ms": 1,
+      "startWaiting": 2,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 1666,
+      "ms": 2,
+      "startWaiting": 2,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMet": true
+  },
+  "occupancy": {
+   "steps": 74,
+   "counts": [
+    24,
+    37,
+    13,
+    0
+   ],
+   "share": [
+    0.324,
+    0.5,
+    0.176,
+    0
+   ],
+   "longest2plus": 1,
+   "mean": 0.851
+  }
+ },
+ {
+  "level": 310,
+  "dir": "source/analysis/builder/bank/batch-303-342",
+  "file": "level-310.json",
+  "source": "8-13-2-d5_3-rp-hard",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 87,
+   "counts": [
+    26,
+    41,
+    17,
+    3
+   ],
+   "share": [
+    0.299,
+    0.471,
+    0.195,
+    0.034
+   ],
+   "longest2plus": 4,
+   "mean": 0.966
+  }
+ },
+ {
+  "level": 311,
+  "dir": "source/analysis/builder/bank/batch-303-342",
+  "file": "level-311.json",
+  "source": "14-4-3-d5_3-std",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 1,
+    "startWaiting": 2
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 18,
+    "ms": 0,
+    "startWaiting": 2
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 70,
+   "counts": [
+    20,
+    34,
+    15,
+    1
+   ],
+   "share": [
+    0.286,
+    0.486,
+    0.214,
+    0.014
+   ],
+   "longest2plus": 3,
+   "mean": 0.957
+  }
+ },
+ {
+  "level": 312,
+  "dir": "source/analysis/builder/bank/batch-303-342",
+  "file": "level-312.json",
+  "source": "33-12-1-d5_3-hard",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 2
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 722,
+    "ms": 1,
+    "startWaiting": 2,
+    "episodes": 9
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 2,
+    "minimum": 2,
+    "upperBound": 9,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 6726,
+      "ms": 18,
+      "startWaiting": 2,
+      "episodeLimit": 1
+     },
+     {
+      "result": "win",
+      "cap": 2,
+      "peek": true,
+      "nodes": 342,
+      "ms": 2,
+      "startWaiting": 2,
+      "episodeLimit": 2,
+      "episodes": 2
+     }
+    ]
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 78,
+   "counts": [
+    26,
+    38,
+    13,
+    1
+   ],
+   "share": [
+    0.333,
+    0.487,
+    0.167,
+    0.013
+   ],
+   "longest2plus": 3,
+   "mean": 0.859
+  }
+ },
+ {
+  "level": 313,
+  "dir": "source/analysis/builder/bank/batch-303-342",
+  "file": "level-313.json",
+  "source": "8-0-2-d8_4-hard",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 1,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 65,
+   "counts": [
+    16,
+    32,
+    16,
+    1
+   ],
+   "share": [
+    0.246,
+    0.492,
+    0.246,
+    0.015
+   ],
+   "longest2plus": 2,
+   "mean": 1.031
+  }
+ },
+ {
+  "level": 314,
+  "dir": "source/analysis/builder/bank/batch-303-342/rejected",
+  "file": "level-314.json",
+  "source": "13-6-1-d8_4-rp-deep",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 1,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 73,
+   "counts": [
+    1,
+    6,
+    35,
+    31
+   ],
+   "share": [
+    0.014,
+    0.082,
+    0.479,
+    0.425
+   ],
+   "longest2plus": 39,
+   "mean": 2.315
+  }
+ },
+ {
+  "level": 315,
+  "dir": "source/analysis/builder/bank/batch-303-342/rejected",
+  "file": "level-315.json",
+  "source": "31-14-2-d5_3-std",
+  "forced": {
+   "schema": "forced-tail-v1",
+   "boundary": "after stored clock prefix",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMet": false
+  },
+  "occupancy": {
+   "steps": 65,
+   "counts": [
+    20,
+    32,
+    12,
+    1
+   ],
+   "share": [
+    0.308,
+    0.492,
+    0.185,
+    0.015
+   ],
+   "longest2plus": 2,
+   "mean": 0.908
+  }
+ }
+]

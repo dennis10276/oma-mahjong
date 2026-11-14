@@ -73,8 +73,8 @@ const jobExists = j => CFG.pools.some(d => fs.existsSync(path.join(d, jobName(j)
 function runJob(job) {
   const T = require('../trap_stories.js'), SEP = require('./separate.js'), M = require('../../factory/meter.js'), E = require('../engine.js'), Df = require('./difficulty.js'), B = require('../builder.js');
   const sig = T.CHAIN_SHAPES[job.si], def = T.CHAIN[sig], t0 = Date.now(), name = 'chain';
-  const out = { job, shape: sig, links: def.length, needsUi: def.needsUi || null, ok: false, variants: [] };
-  if (def.needsUi) { out.why = 'needsUi'; return out; }
+  // Frozen-key/lock overlays and tap hints are present in this checkout.
+  const out = { job, shape: sig, links: def.length, needsUi: null, uiFeature: def.needsUi || null, ok: false, variants: [] };
   const brief = { chain: sig, layout: job.layout, seed: job.seed, stage: job.stage || 'edge', pressure: { run2: job.dial[0], at3: job.dial[1] }, ...(job.spare || job.frame ? { frame: { ...(job.frame || {}), ...(job.spare ? { spare: job.spare } : {}) } } : {}), ...(job.targets ? { targets: job.targets } : {}) };
   const r = T.build(name, brief, { tries: job.tries || 20, wallMs: job.buildWall || 20000 });
   if (!r.design) { out.why = 'nobuild'; out.ms = Date.now() - t0; return out; }
@@ -133,7 +133,7 @@ function wave(n) {
     for (const p of dialOnly ? ['chain-sweep-dial-top-', 'chain-sweep-dial-'] : ['chain-sweep-dial-top-', 'chain-sweep-dial-', 'chain-sweep-top-', 'chain-sweep-']) { try { for (const l of JSON.parse(fs.readFileSync(d + '/' + p + si + '.json', 'utf8')).hosts) hs.add(l); } catch (e) { /* none */ } }
     return [...hs];
   };
-  const shapes3 = T.CHAIN_DEFS.map((d, i) => i).filter(i => !T.CHAIN_DEFS[i].needsUi && T.CHAIN_DEFS[i].length >= 3), shapes2 = T.CHAIN_DEFS.map((d, i) => i).filter(i => T.CHAIN_DEFS[i].length === 2);
+  const shapes3 = T.CHAIN_DEFS.map((d, i) => i).filter(i => T.CHAIN_DEFS[i].length >= 3), shapes2 = T.CHAIN_DEFS.map((d, i) => i).filter(i => T.CHAIN_DEFS[i].length === 2);
   const BIGL = [13, 21, 27, 29, 47];
   if (n === 1) {   // known hosts, two seeds, the standard dial
     for (const si of shapes3.concat(shapes2)) for (const layout of sweepHosts(si)) for (const seed of [1, 2]) jobs.push({ si, layout, seed, dial: [5, 3] });
@@ -217,9 +217,10 @@ function parent() {
   console.log(`pool: ${jobs.length} jobs, ${todo.length} to do, ${W} workers`);
   let done = 0; const t0 = Date.now(); let running = 0;
   const kids = [];
+  const timer = arg('wall-ms', null) ? setTimeout(() => { console.log('pool wall limit reached; stopping owned workers'); for (const c of kids) c.kill(); }, +arg('wall-ms')) : null;
   for (let w = 0; w < W; w++) {
     const c = cp.spawn(process.execPath, [__filename, ...process.argv.slice(2), '--worker', String(w), '--of', String(W), '--jobs', jf], { stdio: ['ignore', 'inherit', 'inherit'] }); kids.push(c); running++;
-    c.on('exit', () => { running--; if (!running) { fs.rmSync(jf, { force: true }); console.log('pool done in', Math.round((Date.now() - t0) / 1000), 's'); } });
+    c.on('exit', () => { running--; if (!running) { if (timer) clearTimeout(timer); fs.rmSync(jf, { force: true }); console.log('pool done in', Math.round((Date.now() - t0) / 1000), 's'); } });
   }
 }
 function worker() {
@@ -252,6 +253,7 @@ function loadPool() {
       const t = v.tail, ok = RT ? (t >= 0.06 && t <= 0.28 && v.inBand) : (t >= 0.08 && t <= 0.40 && v.inBand);
       if (ok && !RT) { const ds = Df.score(v.design, v.card, { facts: v.card.difficulty.facts }); v.card.difficulty = { score: ds.score, parts: ds.parts, needle: ds.needle, facts: ds.facts, weights: ds.weights }; v.score = ds.score; }   // always the current weights
       if (!ok) { fails['tailOutOfBand'] = (fails['tailOutOfBand'] || 0) + 1; continue; }
+      if (CFG.first >= 303 && !v.card.forcedTail?.targetMet) { fails['forcedTailMissing'] = (fails['forcedTailMissing'] || 0) + 1; continue; }
       cands.push({ id: f.replace('.json', '') + '-' + v.tier, file: f, tier: v.tier, shapeIndex: j.job.si, shape: j.shape, links: j.links, layout: j.job.layout, seed: j.job.seed, tiles: v.card.tiles, score: v.card.difficulty.score,
         needle: v.card.difficulty.needle, tail: t, spare: v.card.spare, down: v.card.faceDownShare, rec: v });
     }
@@ -269,14 +271,14 @@ function loadEarlier(C) {
       for (const f of fs.readdirSync(d)) {
         if (!/^level-\d+\.json$/.test(f)) continue;
         const j = JSON.parse(fs.readFileSync(path.join(d, f), 'utf8')); if (!j.design || !j.design.tiles) continue;
-        const key = designKey(j.design), card = j.card || {}; boards.add(key);
-        if (card.layoutId != null && card.shapeIndex != null) { hosts.add(card.layoutId + '/' + card.shapeIndex); meta.set(key, { layout: card.layoutId, shape: card.shape, shapeIndex: card.shapeIndex }); }
+        const key = designKey(j.design), card = j.card || j.pressureCard || {}; boards.add(key);
+        if (card.layoutId != null && card.shapeIndex != null) { hosts.add(card.layoutId + '/' + card.shapeIndex); const m = { layout: card.layoutId, shape: card.shape, shapeIndex: card.shapeIndex }; meta.set(key, m); meta.set(JSON.stringify([j.design.tiles, j.design.clock?.i, j.design.obst]), m); }
         if (j.source != null && j.level != null) placed.push({ level: j.level, key, design: j.design, score: j.score != null ? j.score : (j.difficulty && j.difficulty.score) });
       }
     }
   }
   // a placed folder (files with "source") gives the game's level numbers; layout and shape of its boards come from the batch folders listed with it (same board key)
-  const pre = placed.sort((a, b) => a.level - b.level).map(p => { const m = meta.get(p.key) || {}; if (m.layout != null) hosts.add(m.layout + '/' + m.shapeIndex); return { level: p.level, layout: m.layout ?? null, shape: m.shape || null, score: p.score, sig: L.signature(p.design, { layout: m.layout ?? null, trapType: m.shape || null }) }; });
+  const pre = placed.sort((a, b) => a.level - b.level).map(p => { const m = meta.get(p.key) || meta.get(JSON.stringify([p.design.tiles, p.design.clock?.i, p.design.obst])) || {}; if (m.layout != null) hosts.add(m.layout + '/' + m.shapeIndex); return { level: p.level, layout: m.layout ?? null, shape: m.shape || null, score: p.score, sig: L.signature(p.design, { layout: m.layout ?? null, trapType: m.shape || null }) }; });
   return { boards, hosts, pre };
 }
 
@@ -431,7 +433,7 @@ function write(A) {
   A.spares.forEach((c, i) => { fs.writeFileSync(path.join(OUT, 'spares', `spare-${i + 1}.json`), JSON.stringify(wrap(c, null), null, 1)); });
   for (const t of tail0) fs.writeFileSync(path.join(OUT, 'spares', `after-hole-${t.level}.json`), JSON.stringify(wrap(t.c, null), null, 1));
   const spareRows = A.spares.map((c, i) => ({ spare: i + 1, layout: c.layout, tiles: c.tiles, chain: c.shape, links: c.links, score: c.score, win: c.rec.card.firstMoves.winning + '/' + c.rec.card.firstMoves.legal, tail: c.tail, spareClock: c.rec.card.spare, id: c.id }));
-  const waiting = T.CHAIN_DEFS.map((d, i) => ({ i, d })).filter(x => x.d.needsUi).map(x => `${x.i} ${T.CHAIN_SHAPES[x.i]}`);
+  const waiting = []; // frozen-key and frozen-lock display support is merged
   fs.writeFileSync(path.join(OUT, 'batch.json'), JSON.stringify({ made: new Date().toISOString().slice(0, 10), config: { first: C.first, last: C.last, filledTo: LASTW, ramp: C.ramp, breather: C.breather, twoLinkTo: C.twoLinkTo, hardestFrom: C.hardestFrom, needleGap: C.needleGap, shapeMax: C.shapeMax, dip: C.dip, earlier: C.earlier.map(x => path.relative(ROOT, x)), pools: C.pools.map(x => path.relative(ROOT, x)) }, excludedFromPool: A.excluded, earlierLevelsUsedAsLookBack: A.earlierLevels, levels: rows, spares: spareRows, waitingForDisplayFix: waiting, summary, holes: A.holes, poolJobs: A.jobs, poolCandidates: A.cands.length, poolFails: A.fails, cost: A.cost }, null, 1));
   const f = x => x == null ? '' : x;
   const md = [`# Batch for levels ${FIRST}-${LAST} (chain traps, bot-free)`, '', `Pool: ${A.jobs} jobs, ${A.cands.length} finished boards (after leaving out ${A.excluded ? A.excluded.boards : 0} boards and ${A.excluded ? A.excluded.hosts : 0} boards of hosts used in earlier placed levels). Levels filled: ${rows.filter(r => !r.hole).length} of ${rows.length}${LASTW < LAST ? ` (the batch stops at ${LASTW}: the boards after the first hole are in spares/after-hole-*.json)` : ''}. Score ramp target ${C.ramp[0]} -> ${C.ramp[1]} (difficulty.js)${C.breather ? `, a breather 1.25 below the line every ${C.breather}th level (levels ${rows.filter(r => C.isBreather(r.level)).map(r => r.level).join(', ')})` : ''}.`, '',
@@ -458,7 +460,8 @@ function verify() {
     const ct = SEP.closeTwins(d); if (ct.visible !== 0 || ct.share > 0.05) why.push('twins ' + ct.visible + '/' + ct.share);
     if ((d.down || []).length / d.tiles.length > 0.30) why.push('faceDown');
     const tl = Tl.measure(d, { seed: 977, playouts: 800 }).tailGreedyWin, tb = C.retuned ? [0.06, 0.28] : [0.08, 0.40]; if (tl < tb[0] || tl > tb[1]) why.push('tail ' + tl);
-    if (C.retuned) { const oc = Tl.occupancy(d); if (oc.share[3] > 0.10) why.push('3 waiting in ' + oc.share[3] + ' of the tail steps'); if (oc.share[1] < 0.25) why.push('1 waiting in only ' + oc.share[1]); const ds = (d.down || []).length / d.tiles.length; if (ds < 0.19) why.push('face-down share ' + ds.toFixed(3) + ' (the retune adds some)'); } if (tl < 0.15 && lv < C.hardestFrom) why.push('low tail before ' + C.hardestFrom);
+    if (C.first >= 303) { const fp = Tl.forcedPressure(d, { nodes: d.tiles.length > 88 ? 2000000 : 400000, ms: 6000 }); if (!fp.targetMet) why.push('forced tail target not proven'); }
+    if (C.retuned) { const ds = (d.down || []).length / d.tiles.length; if (ds < 0.19) why.push('face-down share ' + ds.toFixed(3) + ' (the retune adds some)'); } if (tl < 0.15 && lv < C.hardestFrom) why.push('low tail before ' + C.hardestFrom);
     if (c.firstMoves.winning < 3 && lv < C.hardestFrom) why.push('needle before ' + C.hardestFrom);
     if (c.firstMoves.winning < 3) { if (needleAt.length >= C.needleMax) why.push('more than ' + C.needleMax + ' needle boards'); if (C.needleGap && needleAt.some(x => lv - x < C.needleGap)) why.push('needle boards closer than ' + C.needleGap + ' levels'); needleAt.push(lv); }
     if (c.needsUi) why.push('needsUi'); if (lv > C.twoLinkTo && c.links < 3) why.push('links');

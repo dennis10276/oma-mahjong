@@ -448,7 +448,7 @@
    17,
    24,
    28,
-   12,
+   32,
    21,
    15,
    26,
@@ -458,7 +458,7 @@
    14,
    6,
    10,
-   32,
+   12,
    25,
    30
   ],
@@ -589,7 +589,7 @@
   "layout": 36,
   "layoutName": "hourglass",
   "tiles": 76,
-  "boardKey": "258f20b992e87fe3c1101649d1158354b8def1ea763c01d0ba673f86a0c8decc",
+  "boardKey": "632465f6ca0c5fdd40347653d7068286c21fbb7c15b13b39aff7d9694bd38d71",
   "trap": {
    "type": "chain",
    "bait": {
@@ -617,16 +617,16 @@
    "decisive": {
     "offeredAt": 0,
     "first": 0,
-    "last": 11,
+    "last": 9,
     "shareFirst": 0,
-    "shareLast": 0.917,
+    "shareLast": 0.75,
     "inWindow": true,
     "window15to60": [
      2,
      7
     ],
     "states": 12,
-    "lethalStates": 12
+    "lethalStates": 10
    },
    "see": "The clock is frozen, so two of its neighbours must go first; one of the neighbours that can melt it is locked (it needs the keys); the other key also lies under a frozen tile: do not melt with the free neighbour whose twin is buried: it would wait in the tray.",
    "k": 12,
@@ -674,7 +674,7 @@
     {
      "kind": "lock",
      "tile": 32,
-     "kWithout": 7,
+     "kWithout": 3,
      "k": 12
     },
     {
@@ -747,7 +747,7 @@
     }
    },
    "uiNote": "obKind() shows one overlay per tile (ice, else lock, else key): a tile that is both frozen and a key (or locked) shows only the ice until the display fix lands (another agent, 2026-11-13). Shapes with a frozen key or a frozen locked tile are built and marked card.trap.needsUi = 'frozen-key-marker'; they are for Dennis only after that fix.",
-   "engineNodes": 90817
+   "engineNodes": 39303
   },
   "clock": {
    "tile": 31,
@@ -823,7 +823,22 @@
     "tailGreedyWin": 0.1525
    },
    "after": {
-    "tailGreedyWin": 0.0975
+    "tailGreedyWin": 0.0975,
+    "wins": 78,
+    "playouts": 800,
+    "seed": 977,
+    "start": {
+     "step": 12,
+     "tray": 2,
+     "left": 64
+    },
+    "stored": {
+     "steps": 64,
+     "peakTray": 2,
+     "meanTray": 0.906,
+     "moves2plus": 14,
+     "tray2Share": 0.219
+    }
    },
    "inBand": true,
    "swaps": 5,
@@ -911,36 +926,18 @@
    "steps": 64,
    "counts": [
     18,
-    31,
+    32,
     14,
-    1
+    0
    ],
    "share": [
     0.281,
-    0.484,
+    0.5,
     0.219,
-    0.016
+    0
    ],
-   "longest2plus": 3,
-   "mean": 0.969,
-   "gentle": false,
-   "before": {
-    "steps": 64,
-    "counts": [
-     6,
-     15,
-     26,
-     17
-    ],
-    "share": [
-     0.094,
-     0.234,
-     0.406,
-     0.266
-    ],
-    "longest2plus": 11,
-    "mean": 1.844
-   }
+   "longest2plus": 1,
+   "mean": 0.938
   },
   "retune": {
    "faceDownBefore": 15,
@@ -960,7 +957,56 @@
   "layoutId": 36,
   "shapeIndex": 35,
   "tier": "hard",
-  "poolId": "35-36-1-d8_4-rp-hard"
+  "poolId": "35-36-1-d8_4-rp-hard",
+  "forcedTail": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 9286,
+    "ms": 27,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 3132,
+    "ms": 8,
+    "startWaiting": 0,
+    "episodes": 12
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 12,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 9649,
+      "ms": 26,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 13195,
+      "ms": 38,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMet": true
+  }
  },
  "difficulty": {
   "score": 6.9,
@@ -1018,5 +1064,54 @@
    "tiles": 0.02,
    "faceDown": 0.03
   }
+ },
+ "forcedTail": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 9286,
+   "ms": 27,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 3132,
+   "ms": 8,
+   "startWaiting": 0,
+   "episodes": 12
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 3,
+   "minimum": null,
+   "upperBound": 12,
+   "tests": [
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 9649,
+     "ms": 26,
+     "startWaiting": 0,
+     "episodeLimit": 1
+    },
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 13195,
+     "ms": 38,
+     "startWaiting": 0,
+     "episodeLimit": 2
+    }
+   ]
+  },
+  "targetMet": true
  }
 }

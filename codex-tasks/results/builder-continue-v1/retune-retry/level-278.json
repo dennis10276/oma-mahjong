@@ -1,0 +1,131 @@
+{
+ "level": 278,
+ "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-278.json",
+ "before": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 31335,
+   "ms": 129,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 23340,
+   "ms": 89,
+   "startWaiting": 0,
+   "episodes": 7
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 1,
+   "minimum": 1,
+   "upperBound": 7,
+   "tests": [
+    {
+     "result": "win",
+     "cap": 2,
+     "peek": true,
+     "nodes": 23478,
+     "ms": 83,
+     "startWaiting": 0,
+     "episodeLimit": 1,
+     "episodes": 1
+    }
+   ]
+  },
+  "targetMoments": 3,
+  "targetMet": false
+ },
+ "downBefore": 0.2631578947368421,
+ "tailBefore": 0.2475,
+ "ok": true,
+ "changed": true,
+ "after": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 31283,
+   "ms": 138,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 23253,
+   "ms": 95,
+   "startWaiting": 0,
+   "episodes": 7
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 3,
+   "minimum": null,
+   "upperBound": 7,
+   "tests": [
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 40477,
+     "ms": 139,
+     "startWaiting": 0,
+     "episodeLimit": 1
+    },
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 56502,
+     "ms": 180,
+     "startWaiting": 0,
+     "episodeLimit": 2
+    }
+   ]
+  },
+  "targetMoments": 3,
+  "targetMet": true
+ },
+ "edits": [
+  [
+   35,
+   59
+  ],
+  [
+   19,
+   1
+  ],
+  [
+   0,
+   24
+  ]
+ ],
+ "stats": {
+  "proposals": 189,
+  "checked": 21,
+  "openedFreeze": false,
+  "failures": {
+   "pressure:lose/win/1": 10,
+   "twins": 38,
+   "gamble": 123,
+   "pressure:win/win/0": 3,
+   "pressure:lose/win/2": 6,
+   "pressure:lose/lose/1": 1
+  },
+  "ms": 8831
+ },
+ "tailAfter": 0.2387,
+ "downAfter": 0.2631578947368421,
+ "score": 6.63
+}

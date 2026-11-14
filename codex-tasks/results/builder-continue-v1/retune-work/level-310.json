@@ -1,0 +1,61 @@
+{
+ "level": 310,
+ "file": "source\\analysis\\builder\\bank\\batch-303-342\\level-310.json",
+ "before": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 11791,
+   "ms": 76,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 9055,
+   "ms": 52,
+   "startWaiting": 0,
+   "episodes": 16
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 1,
+   "minimum": null,
+   "upperBound": 16,
+   "tests": [
+    {
+     "result": "unknown",
+     "cap": 2,
+     "peek": true,
+     "nodes": 250001,
+     "ms": 754,
+     "startWaiting": 0,
+     "episodeLimit": 1
+    }
+   ]
+  },
+  "targetMet": false
+ },
+ "downBefore": 0.22916666666666666,
+ "tailBefore": 0.1425,
+ "ok": false,
+ "why": "forced target not reached within budget",
+ "stats": {
+  "proposals": 1004,
+  "checked": 59,
+  "failures": {
+   "gamble": 489,
+   "strictTail:unknown": 14,
+   "twins": 393,
+   "pressure:lose/win/1": 43,
+   "pressure:lose/win/2": 16,
+   "strictTail:lose": 12
+  },
+  "ms": 45223
+ }
+}

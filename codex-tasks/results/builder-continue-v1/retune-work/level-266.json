@@ -1,0 +1,118 @@
+{
+ "level": 266,
+ "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-266.json",
+ "before": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 24470,
+   "ms": 64,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 2724,
+   "ms": 18,
+   "startWaiting": 0,
+   "episodes": 6
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 1,
+   "minimum": 1,
+   "upperBound": 6,
+   "tests": [
+    {
+     "result": "win",
+     "cap": 2,
+     "peek": true,
+     "nodes": 2789,
+     "ms": 13,
+     "startWaiting": 0,
+     "episodeLimit": 1,
+     "episodes": 1
+    }
+   ]
+  },
+  "targetMet": false
+ },
+ "downBefore": 0.275,
+ "tailBefore": 0.1975,
+ "ok": true,
+ "changed": true,
+ "after": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 26826,
+   "ms": 56,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 2899,
+   "ms": 8,
+   "startWaiting": 0,
+   "episodes": 9
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 3,
+   "minimum": null,
+   "upperBound": 9,
+   "tests": [
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 26841,
+     "ms": 61,
+     "startWaiting": 0,
+     "episodeLimit": 1
+    },
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 27540,
+     "ms": 65,
+     "startWaiting": 0,
+     "episodeLimit": 2
+    }
+   ]
+  },
+  "targetMet": true
+ },
+ "edits": [
+  [
+   37,
+   1
+  ]
+ ],
+ "stats": {
+  "proposals": 68,
+  "checked": 10,
+  "failures": {
+   "twins": 17,
+   "gamble": 41,
+   "pressure:lose/win/1": 8,
+   "pressure:win/win/0": 1
+  },
+  "ms": 1829
+ },
+ "tailAfter": 0.265,
+ "downAfter": 0.275,
+ "score": 5.34
+}

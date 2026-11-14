@@ -1,0 +1,114 @@
+{
+ "level": 265,
+ "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-265.json",
+ "before": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 9720,
+   "ms": 44,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "lose",
+   "cap": 2,
+   "peek": true,
+   "nodes": 9722,
+   "ms": 40,
+   "startWaiting": 0
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 1,
+   "minimum": null,
+   "upperBound": null,
+   "tests": []
+  },
+  "targetMet": false
+ },
+ "downBefore": 0.275,
+ "tailBefore": 0.1737,
+ "ok": true,
+ "changed": true,
+ "after": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 9789,
+   "ms": 27,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 8224,
+   "ms": 20,
+   "startWaiting": 0,
+   "episodes": 8
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 3,
+   "minimum": null,
+   "upperBound": 8,
+   "tests": [
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 10559,
+     "ms": 45,
+     "startWaiting": 0,
+     "episodeLimit": 1
+    },
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 21763,
+     "ms": 54,
+     "startWaiting": 0,
+     "episodeLimit": 2
+    }
+   ]
+  },
+  "targetMet": true
+ },
+ "edits": [
+  [
+   10,
+   77
+  ],
+  [
+   63,
+   6
+  ],
+  [
+   44,
+   77
+  ]
+ ],
+ "stats": {
+  "proposals": 459,
+  "checked": 47,
+  "failures": {
+   "gamble": 242,
+   "twins": 145,
+   "strictTail:unknown": 10,
+   "pressure:lose/lose/1": 46
+  },
+  "ms": 3899
+ },
+ "tailAfter": 0.27,
+ "downAfter": 0.275,
+ "score": 5.17
+}

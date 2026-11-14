@@ -123,6 +123,10 @@ add new decisions with a date.
     tray pressure after make it at least 2 instead of the 1 now." This replaces "1 in tray is enough". Lead's reading: he
     did not feel it because the measure counted waiting tiles along the stored route, which a player need not follow;
     the board itself has to force it (the part after the trap cannot be cleared while holding fewer than two).
+  - **Keep level 271 at clock 19** (2026-11-14, lab 8, and Dennis's correction to the Task 16 handoff): "19 works so your measurement of 20 is wrong."
+    The lab note says "This is the tightest it can be but its pretty obvious. Keep it like this" and asks for more
+    chains and choices in future digging boards. This is the liked older 217, not a template for future digging.
+    Codex checked its saved strict win and both engine modes: the proven minimum is 19. Do not loosen it to 20.
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
   - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
     played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is

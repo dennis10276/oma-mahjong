@@ -412,7 +412,7 @@
    33,
    21,
    33,
-   11,
+   2,
    9,
    34,
    5,
@@ -423,7 +423,7 @@
    33,
    21,
    33,
-   2,
+   11,
    10,
    12,
    20,
@@ -470,11 +470,11 @@
    17,
    30,
    2,
-   8,
+   5,
    18,
    14,
    35,
-   31,
+   26,
    28,
    28,
    10,
@@ -482,9 +482,9 @@
    4,
    3,
    6,
-   5,
+   8,
    13,
-   26
+   31
   ],
   "down": [
    0,
@@ -620,7 +620,7 @@
   "layout": 0,
   "layoutName": "arch",
   "tiles": 80,
-  "boardKey": "0bc0a2f9e5606c01d7d510a2ce7ebbc35a6bf00d6de3107e7f9ccd4aa60f9ce5",
+  "boardKey": "6ea2d050b17b606fe40b5d4d8452330e97eb637ff3ce59ef909c836559cffaf5",
   "trap": {
    "type": "chain",
    "bait": {
@@ -657,7 +657,7 @@
      9
     ],
     "states": 15,
-    "lethalStates": 15
+    "lethalStates": 13
    },
    "see": "The clock is locked, so both keys must go first; a key lies under a frozen tile, so thaw that tile first; the other key also lies under a frozen tile: do not melt with the free neighbour whose twin is buried: it would wait in the tray.",
    "k": 15,
@@ -717,7 +717,7 @@
     {
      "kind": "ice",
      "tile": 71,
-     "kWithout": 13,
+     "kWithout": 12,
      "k": 15
     }
    ],
@@ -778,7 +778,7 @@
     }
    },
    "uiNote": "obKind() shows one overlay per tile (ice, else lock, else key): a tile that is both frozen and a key (or locked) shows only the ice until the display fix lands (another agent, 2026-11-13). Shapes with a frozen key or a frozen locked tile are built and marked card.trap.needsUi = 'frozen-key-marker'; they are for Dennis only after that fix.",
-   "engineNodes": 35287
+   "engineNodes": 36758
   },
   "clock": {
    "tile": 24,
@@ -856,7 +856,22 @@
     "tailGreedyWin": 0.175
    },
    "after": {
-    "tailGreedyWin": 0.0925
+    "tailGreedyWin": 0.1575,
+    "wins": 126,
+    "playouts": 800,
+    "seed": 977,
+    "start": {
+     "step": 15,
+     "tray": 3,
+     "left": 65
+    },
+    "stored": {
+     "steps": 65,
+     "peakTray": 3,
+     "meanTray": 1.385,
+     "moves2plus": 30,
+     "tray2Share": 0.462
+    }
    },
    "inBand": true,
    "swaps": 4,
@@ -884,7 +899,7 @@
   },
   "see": "The clock is locked, so both keys must go first; a key lies under a frozen tile, so thaw that tile first; the other key also lies under a frozen tile: do not melt with the free neighbour whose twin is buried: it would wait in the tray.",
   "difficulty": {
-   "score": 7.31,
+   "score": 6.69,
    "parts": {
     "links": 0.55,
     "baits": 0,
@@ -892,7 +907,7 @@
     "pressure": 0.966,
     "lateness": 0.084,
     "spare": 1,
-    "tail": 0.955,
+    "tail": 0.728,
     "tiles": 0.333,
     "faceDown": 0.917
    },
@@ -924,7 +939,7 @@
      "ended": "stuck"
     },
     "spare": 1,
-    "tailGreedyWin": 0.0925,
+    "tailGreedyWin": 0.1575,
     "tiles": 80,
     "faceDownShare": 0.275
    },
@@ -943,37 +958,19 @@
   "tailPressure": {
    "steps": 65,
    "counts": [
-    16,
-    32,
-    16,
-    1
+    9,
+    26,
+    23,
+    7
    ],
    "share": [
-    0.246,
-    0.492,
-    0.246,
-    0.015
+    0.138,
+    0.4,
+    0.354,
+    0.108
    ],
-   "longest2plus": 2,
-   "mean": 1.031,
-   "gentle": false,
-   "before": {
-    "steps": 65,
-    "counts": [
-     3,
-     9,
-     29,
-     24
-    ],
-    "share": [
-     0.046,
-     0.138,
-     0.446,
-     0.369
-    ],
-    "longest2plus": 25,
-    "mean": 2.138
-   }
+   "longest2plus": 7,
+   "mean": 1.431
   },
   "retune": {
    "faceDownBefore": 16,
@@ -994,10 +991,59 @@
   "layoutId": 0,
   "shapeIndex": 8,
   "tier": "hard",
-  "poolId": "8-0-2-d8_4-hard"
+  "poolId": "8-0-2-d8_4-hard",
+  "forcedTail": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 7276,
+    "ms": 24,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 2338,
+    "ms": 7,
+    "startWaiting": 0,
+    "episodes": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": 3,
+    "upperBound": 3,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 7985,
+      "ms": 31,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 9491,
+      "ms": 30,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMet": true
+  }
  },
  "difficulty": {
-  "score": 7.31,
+  "score": 6.69,
   "parts": {
    "links": 0.55,
    "baits": 0,
@@ -1005,7 +1051,7 @@
    "pressure": 0.966,
    "lateness": 0.084,
    "spare": 1,
-   "tail": 0.955,
+   "tail": 0.728,
    "tiles": 0.333,
    "faceDown": 0.917
   },
@@ -1037,7 +1083,7 @@
     "ended": "stuck"
    },
    "spare": 1,
-   "tailGreedyWin": 0.0925,
+   "tailGreedyWin": 0.1575,
    "tiles": 80,
    "faceDownShare": 0.275
   },
@@ -1052,5 +1098,54 @@
    "tiles": 0.02,
    "faceDown": 0.03
   }
+ },
+ "forcedTail": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 7276,
+   "ms": 24,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 2338,
+   "ms": 7,
+   "startWaiting": 0,
+   "episodes": 3
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 3,
+   "minimum": 3,
+   "upperBound": 3,
+   "tests": [
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 7985,
+     "ms": 31,
+     "startWaiting": 0,
+     "episodeLimit": 1
+    },
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 9491,
+     "ms": 30,
+     "startWaiting": 0,
+     "episodeLimit": 2
+    }
+   ]
+  },
+  "targetMet": true
  }
 }

@@ -1,0 +1,135 @@
+{
+ "level": 310,
+ "file": "source\\analysis\\builder\\bank\\batch-303-342\\level-310.json",
+ "before": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 7400,
+   "ms": 41,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 6072,
+   "ms": 34,
+   "startWaiting": 0,
+   "episodes": 16
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 2,
+   "minimum": 2,
+   "upperBound": 16,
+   "tests": [
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 256625,
+     "ms": 577,
+     "startWaiting": 0,
+     "episodeLimit": 1
+    },
+    {
+     "result": "win",
+     "cap": 2,
+     "peek": true,
+     "nodes": 608874,
+     "ms": 1227,
+     "startWaiting": 0,
+     "episodeLimit": 2,
+     "episodes": 2
+    }
+   ]
+  },
+  "targetMoments": 3,
+  "targetMet": false
+ },
+ "downBefore": 0.22916666666666666,
+ "tailBefore": 0.1425,
+ "ok": true,
+ "changed": true,
+ "after": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 6390,
+   "ms": 17,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 53715,
+   "ms": 103,
+   "startWaiting": 0,
+   "episodes": 14
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 3,
+   "minimum": null,
+   "upperBound": 14,
+   "tests": [
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 6394,
+     "ms": 28,
+     "startWaiting": 0,
+     "episodeLimit": 1
+    },
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 190310,
+     "ms": 424,
+     "startWaiting": 0,
+     "episodeLimit": 2
+    }
+   ]
+  },
+  "targetMoments": 3,
+  "targetMet": true
+ },
+ "edits": [
+  [
+   58,
+   50
+  ],
+  [
+   43,
+   22
+  ]
+ ],
+ "stats": {
+  "proposals": 118,
+  "checked": 15,
+  "openedFreeze": true,
+  "failures": {
+   "gamble": 52,
+   "twins": 40,
+   "pressure:lose/win/2": 14,
+   "strictTail:lose": 2,
+   "strictTail:unknown": 1
+  },
+  "ms": 53079
+ },
+ "tailAfter": 0.145,
+ "downAfter": 0.22916666666666666,
+ "score": 6.72
+}

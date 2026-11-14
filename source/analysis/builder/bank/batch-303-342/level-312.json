@@ -447,7 +447,7 @@
   "faces": [
    33,
    22,
-   25,
+   2,
    29,
    21,
    25,
@@ -468,7 +468,7 @@
    27,
    5,
    21,
-   16,
+   25,
    12,
    6,
    4,
@@ -500,12 +500,12 @@
    7,
    12,
    15,
-   1,
+   32,
    25,
    13,
    2,
    35,
-   25,
+   16,
    21,
    23,
    11,
@@ -517,11 +517,11 @@
    3,
    35,
    14,
-   32,
+   1,
    13,
    4,
    22,
-   2,
+   25,
    17,
    16,
    5,
@@ -678,7 +678,7 @@
   "layout": 12,
   "layoutName": "arch",
   "tiles": 88,
-  "boardKey": "5608173c048409764e5df087fc1b83ec8d9fbe927f3fd81665ee3a2cc218af62",
+  "boardKey": "638833463eebd4047edfa2e50bd31a5da9e119659b69fecaeedec43d11efa180",
   "trap": {
    "type": "chain",
    "bait": {
@@ -754,8 +754,8 @@
     "unknown": false,
     "dearest": {
      "take": [
-      64,
-      65
+      65,
+      72
      ],
      "kind": "pair",
      "result": "win",
@@ -846,7 +846,7 @@
     }
    },
    "uiNote": "obKind() shows one overlay per tile (ice, else lock, else key): a tile that is both frozen and a key (or locked) shows only the ice until the display fix lands (another agent, 2026-11-13). Shapes with a frozen key or a frozen locked tile are built and marked card.trap.needsUi = 'frozen-key-marker'; they are for Dennis only after that fix.",
-   "engineNodes": 9871
+   "engineNodes": 18678
   },
   "clock": {
    "tile": 36,
@@ -874,8 +874,8 @@
    "unknown": false,
    "dearest": {
     "take": [
-     64,
-     65
+     65,
+     72
     ],
     "kind": "pair",
     "result": "win",
@@ -932,7 +932,22 @@
     "tailGreedyWin": 0.2075
    },
    "after": {
-    "tailGreedyWin": 0.0925
+    "tailGreedyWin": 0.1525,
+    "wins": 122,
+    "playouts": 800,
+    "seed": 977,
+    "start": {
+     "step": 10,
+     "tray": 2,
+     "left": 78
+    },
+    "stored": {
+     "steps": 78,
+     "peakTray": 3,
+     "meanTray": 0.987,
+     "moves2plus": 20,
+     "tray2Share": 0.256
+    }
    },
    "inBand": true,
    "swaps": 8,
@@ -950,8 +965,8 @@
     "meets": false
    },
    "final": {
-    "close": 0,
-    "share": 0,
+    "close": 1,
+    "share": 0.0227,
     "visible": 0,
     "four": 0,
     "meets": true
@@ -960,7 +975,7 @@
   },
   "see": "The tile lying on the clock is locked, so both keys must go first; a key lies under a frozen tile, so thaw that tile first; the other key also lies under a frozen tile: do not melt with the free neighbour whose twin is buried: it would wait in the tray.",
   "difficulty": {
-   "score": 7.44,
+   "score": 6.87,
    "parts": {
     "links": 0.55,
     "baits": 0,
@@ -968,7 +983,7 @@
     "pressure": 0.808,
     "lateness": 0.356,
     "spare": 1,
-    "tail": 0.955,
+    "tail": 0.743,
     "tiles": 0.667,
     "faceDown": 0.91
    },
@@ -1000,7 +1015,7 @@
      "ended": "stuck"
     },
     "spare": 1,
-    "tailGreedyWin": 0.0925,
+    "tailGreedyWin": 0.1525,
     "tiles": 88,
     "faceDownShare": 0.273
    },
@@ -1019,37 +1034,19 @@
   "tailPressure": {
    "steps": 78,
    "counts": [
-    26,
-    38,
-    13,
-    1
+    22,
+    36,
+    17,
+    3
    ],
    "share": [
-    0.333,
-    0.487,
-    0.167,
-    0.013
+    0.282,
+    0.462,
+    0.218,
+    0.038
    ],
-   "longest2plus": 3,
-   "mean": 0.859,
-   "gentle": false,
-   "before": {
-    "steps": 78,
-    "counts": [
-     4,
-     14,
-     35,
-     25
-    ],
-    "share": [
-     0.051,
-     0.179,
-     0.449,
-     0.321
-    ],
-    "longest2plus": 17,
-    "mean": 2.038
-   }
+   "longest2plus": 5,
+   "mean": 1.013
   },
   "retune": {
    "faceDownBefore": 18,
@@ -1067,10 +1064,59 @@
   "layoutId": 12,
   "shapeIndex": 33,
   "tier": "hard",
-  "poolId": "33-12-1-d5_3-hard"
+  "poolId": "33-12-1-d5_3-hard",
+  "forcedTail": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 20145,
+    "ms": 78,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 5305,
+    "ms": 16,
+    "startWaiting": 0,
+    "episodes": 11
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 11,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 21298,
+      "ms": 90,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 39915,
+      "ms": 144,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMet": true
+  }
  },
  "difficulty": {
-  "score": 7.44,
+  "score": 6.87,
   "parts": {
    "links": 0.55,
    "baits": 0,
@@ -1078,7 +1124,7 @@
    "pressure": 0.808,
    "lateness": 0.356,
    "spare": 1,
-   "tail": 0.955,
+   "tail": 0.743,
    "tiles": 0.667,
    "faceDown": 0.91
   },
@@ -1110,7 +1156,7 @@
     "ended": "stuck"
    },
    "spare": 1,
-   "tailGreedyWin": 0.0925,
+   "tailGreedyWin": 0.1525,
    "tiles": 88,
    "faceDownShare": 0.273
   },
@@ -1125,5 +1171,54 @@
    "tiles": 0.02,
    "faceDown": 0.03
   }
+ },
+ "forcedTail": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 20145,
+   "ms": 78,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 5305,
+   "ms": 16,
+   "startWaiting": 0,
+   "episodes": 11
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 3,
+   "minimum": null,
+   "upperBound": 11,
+   "tests": [
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 21298,
+     "ms": 90,
+     "startWaiting": 0,
+     "episodeLimit": 1
+    },
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 39915,
+     "ms": 144,
+     "startWaiting": 0,
+     "episodeLimit": 2
+    }
+   ]
+  },
+  "targetMet": true
  }
 }

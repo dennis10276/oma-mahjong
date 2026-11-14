@@ -32,6 +32,33 @@ function capped(design, cap, opts = {}) {
     count.set(F[i], (count.get(F[i]) || 0) + 1);
   }
   const can = i => !!alive[i] && (g.rules ? L.takeable(i, alive, g.nb, g.rules, init) : L.isFree(i, alive, g.nb));
+  // At the clock, every still-required cover/key must also have gone. If
+  // their picture parity would leave q waiting, at least q-cap OTHER
+  // removals are needed to drain it. This is a lower bound, not a route.
+  function clockTailBound() {
+    const req = new Set();
+    const add = i => { if (!alive[i] || req.has(i)) return; req.add(i); for (const j of g.nb.above[i]) add(j); };
+    add(g.clock.i);
+    let changed;
+    do {
+      const prev = req.size;
+      for (const i of req) {
+        if (g.lockT[i]) for (const j of g.keys) add(j);
+        if (g.iceH[i]) {
+          const nb = g.iceNb[i], accounted = nb.filter(j => !alive[j] || req.has(j)).length, need = g.iceH[i] - accounted;
+          if (need > 0) {
+            const optional = nb.filter(j => alive[j] && !req.has(j));
+            if (optional.length === need) for (const j of optional) add(j);
+            if (optional.filter(j => !g.lockT[j]).length < need) for (const j of g.keys) add(j);
+          }
+        }
+      }
+      changed = req.size > prev;
+    } while (changed);
+    const odd = new Set(tray);
+    for (const i of req) { if (odd.has(F[i])) odd.delete(F[i]); else odd.add(F[i]); }
+    return req.size + Math.max(0, odd.size - cap);
+  }
   const rm = i => { alive[i] = 0; left--; words[i >> 4] ^= 1 << (i & 15); count.set(F[i], count.get(F[i]) - 1); };
   const put = i => { alive[i] = 1; left++; words[i >> 4] ^= 1 << (i & 15); count.set(F[i], count.get(F[i]) + 1); };
   const key = () => String.fromCharCode(...words) + '|' + tray.slice().sort((a, b) => a - b).join(',') + (maxEpisodes === Infinity ? '' : '#' + (maxEpisodes - episodes));
@@ -42,7 +69,7 @@ function capped(design, cap, opts = {}) {
     const k = key(); if (dead.has(k)) return false;
     // Before the clock, preserve the game's full tray and actual deadline.
     // The bound counts required removals, not search depth or mouse taps.
-    if (clockAlive && (n - left >= g.clock.n || n - left + g.lb(alive) > g.clock.n + (peek ? 1 : 0))) { dead.add(k); return false; }
+    if (clockAlive && (n - left >= g.clock.n || n - left + Math.max(g.lb(alive), opts.parityBound === false ? 0 : clockTailBound()) > g.clock.n + (peek ? 1 : 0))) { dead.add(k); return false; }
     const free = []; for (let i = 0; i < n; i++) if (can(i)) free.push(i);
     const pairs = [];
     if (peek) for (let a = 0; a < free.length; a++) for (let b = a + 1; b < free.length; b++) {
@@ -70,6 +97,14 @@ function capped(design, cap, opts = {}) {
         const p = free.find(i => count.get(F[i]) === 2 && free.some(j => j !== i && F[i] === F[j]));
         if (p !== undefined) acts = [p];
       }
+    }
+    if (clockAlive) {
+      const pri = a => {
+        const ids = Array.isArray(a) ? a : [a];
+        if (ids.includes(g.clock.i)) return -1;
+        return ids.some(i => g.toClock[i]) ? 0 : ids.some(i => tray.includes(F[i])) ? 1 : Array.isArray(a) ? 2 : 3;
+      };
+      acts.sort((a, b) => pri(a) - pri(b));
     }
     for (const act of acts) {
       const wasClockAlive = clockAlive, prevEpisodes = episodes, before = tray.length, moves = n - left;
@@ -104,13 +139,13 @@ function capped(design, cap, opts = {}) {
 }
 
 function forced(design, opts = {}) {
-  opts = { ...opts, fromStart: opts.scope === 'board' || opts.fromStart };
+  opts = { ...opts, fromStart: opts.fromStart ?? (opts.scope !== 'stored') };
   const cap1 = capped(design, 1, opts), cap2 = capped(design, 2, opts);
   const target = opts.moments ?? 3, limits = [];
   let minEpisodes = null, lower = cap1.result === 'lose' ? 1 : 0;
   if (cap1.result === 'win') minEpisodes = 0;
   else if (cap2.result === 'win') {
-    const hi = Math.min(target - 1, cap2.episodes - 1);
+    const hi = opts.exactEpisodes ? cap2.episodes - 1 : Math.min(target - 1, cap2.episodes - 1);
     for (let e = lower; e <= hi; e++) {
       const r = capped(design, 2, { ...opts, episodes: e });
       limits.push(r);
@@ -123,7 +158,7 @@ function forced(design, opts = {}) {
   return { schema: 'forced-tail-v1', boundary: opts.fromStart ? 'all legal clock prefixes (board-wide)' : 'after stored clock prefix', rules: opts.peek === false ? 'strict' : 'game (atomic peek pairs)',
     cap1: slim(cap1), cap2: slim(cap2), episodes: { definition: 'entries into >=2 waiting, including the starting tray',
       lowerBound: lower, minimum: minEpisodes, upperBound: cap2.result === 'win' ? cap2.episodes : null, tests: limits.map(slim) },
-    targetMet: cap1.result === 'lose' && cap2.result === 'win' && lower >= target,
+    targetMoments: target, targetMet: cap1.result === 'lose' && cap2.result === 'win' && lower >= target,
     ...(cap2.result === 'win' ? { solution: cap2.solution, path: cap2.path } : {}) };
 }
 module.exports = { boundary, capped, forced };

@@ -85,4 +85,12 @@ test('board-wide search tries every legal prefix instead of mistaking the saved 
   assert.equal(r.result, 'win'); assert.ok(E.replay(d, r.solution).ok);
 });
 
+test('board-wide lower bound agrees with unpruned enumeration for buried clocks and locked routes', () => {
+  for (const clock of [0, 2, 3, 6]) for (const deadline of [2, 4, 7, 10]) for (const cap of [1, 2]) {
+    const d = cycles(2); d.clock = { i: clock, n: deadline };
+    if (clock === 2) d.obst = { locks: [2], keys: [3, 5] };
+    assert.equal(Tl.cappedTail(d, cap, { fromStart: true }).result, reference(d, cap, Infinity, true), JSON.stringify({ clock, deadline, cap }));
+  }
+});
+
 module.exports = { cycles };

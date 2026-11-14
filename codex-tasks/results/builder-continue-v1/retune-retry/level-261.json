@@ -1,0 +1,132 @@
+{
+ "level": 261,
+ "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-261.json",
+ "before": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 17018,
+   "ms": 73,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "lose",
+   "cap": 2,
+   "peek": true,
+   "nodes": 17027,
+   "ms": 67,
+   "startWaiting": 0
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 1,
+   "minimum": null,
+   "upperBound": null,
+   "tests": []
+  },
+  "targetMoments": 3,
+  "targetMet": false
+ },
+ "downBefore": 0.19736842105263158,
+ "tailBefore": 0.35,
+ "ok": true,
+ "changed": true,
+ "after": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 23808,
+   "ms": 73,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 14341,
+   "ms": 44,
+   "startWaiting": 0,
+   "episodes": 14
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 3,
+   "minimum": null,
+   "upperBound": 14,
+   "tests": [
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 23820,
+     "ms": 68,
+     "startWaiting": 0,
+     "episodeLimit": 1
+    },
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 23843,
+     "ms": 69,
+     "startWaiting": 0,
+     "episodeLimit": 2
+    }
+   ]
+  },
+  "targetMoments": 3,
+  "targetMet": true
+ },
+ "edits": [
+  [
+   42,
+   48
+  ],
+  [
+   49,
+   62
+  ],
+  [
+   20,
+   37
+  ],
+  [
+   56,
+   74
+  ],
+  [
+   34,
+   54
+  ],
+  [
+   72,
+   63
+  ]
+ ],
+ "stats": {
+  "proposals": 1314,
+  "checked": 152,
+  "openedFreeze": false,
+  "failures": {
+   "gamble": 636,
+   "twins": 475,
+   "pressure:lose/lose/1": 114,
+   "band:easy": 34,
+   "pressure:lose/win/2": 2,
+   "proof:trapProof:noProvenBait:lonelyNeighbour:win:2": 1,
+   "strictTail:lose": 2
+  },
+  "ms": 26543
+ },
+ "tailAfter": 0.26,
+ "downAfter": 0.19736842105263158,
+ "score": 4.89
+}

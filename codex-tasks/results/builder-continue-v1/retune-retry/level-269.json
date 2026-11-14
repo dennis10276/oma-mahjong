@@ -1,0 +1,112 @@
+{
+ "level": 269,
+ "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-269.json",
+ "before": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 2089,
+   "ms": 22,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "lose",
+   "cap": 2,
+   "peek": true,
+   "nodes": 2094,
+   "ms": 14,
+   "startWaiting": 0
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 1,
+   "minimum": null,
+   "upperBound": null,
+   "tests": []
+  },
+  "targetMoments": 3,
+  "targetMet": false
+ },
+ "downBefore": 0.27631578947368424,
+ "tailBefore": 0.115,
+ "ok": true,
+ "changed": true,
+ "after": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 5863,
+   "ms": 14,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 1943,
+   "ms": 5,
+   "startWaiting": 0,
+   "episodes": 12
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 3,
+   "minimum": null,
+   "upperBound": 12,
+   "tests": [
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 5873,
+     "ms": 12,
+     "startWaiting": 0,
+     "episodeLimit": 1
+    },
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 5895,
+     "ms": 11,
+     "startWaiting": 0,
+     "episodeLimit": 2
+    }
+   ]
+  },
+  "targetMoments": 3,
+  "targetMet": true
+ },
+ "edits": [
+  [
+   58,
+   9
+  ]
+ ],
+ "stats": {
+  "proposals": 265,
+  "checked": 39,
+  "openedFreeze": false,
+  "failures": {
+   "twins": 85,
+   "pressure:lose/lose/1": 28,
+   "gamble": 122,
+   "strictTail:unknown": 2,
+   "proof:trapProof:noProvenBait:lonelyNeighbour:win:1": 7,
+   "band:hard": 2,
+   "band:easy": 1
+  },
+  "ms": 2761
+ },
+ "tailAfter": 0.125,
+ "downAfter": 0.27631578947368424,
+ "score": 6.2
+}

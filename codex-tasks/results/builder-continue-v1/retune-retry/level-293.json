@@ -1,0 +1,120 @@
+{
+ "level": 293,
+ "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-293.json",
+ "before": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 6674,
+   "ms": 32,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "lose",
+   "cap": 2,
+   "peek": true,
+   "nodes": 6983,
+   "ms": 27,
+   "startWaiting": 0
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 1,
+   "minimum": null,
+   "upperBound": null,
+   "tests": []
+  },
+  "targetMoments": 3,
+  "targetMet": false
+ },
+ "downBefore": 0.275,
+ "tailBefore": 0.0975,
+ "ok": true,
+ "changed": true,
+ "after": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 4102,
+   "ms": 8,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 1591,
+   "ms": 3,
+   "startWaiting": 0,
+   "episodes": 10
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 3,
+   "minimum": null,
+   "upperBound": 10,
+   "tests": [
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 4697,
+     "ms": 9,
+     "startWaiting": 0,
+     "episodeLimit": 1
+    },
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 4826,
+     "ms": 11,
+     "startWaiting": 0,
+     "episodeLimit": 2
+    }
+   ]
+  },
+  "targetMoments": 3,
+  "targetMet": true
+ },
+ "edits": [
+  [
+   60,
+   78
+  ],
+  [
+   21,
+   23
+  ],
+  [
+   64,
+   59
+  ]
+ ],
+ "stats": {
+  "proposals": 1117,
+  "checked": 133,
+  "openedFreeze": false,
+  "failures": {
+   "pressure:win/win/0": 15,
+   "gamble": 689,
+   "twins": 243,
+   "pressure:lose/lose/1": 102,
+   "pressure:lose/win/2": 5,
+   "band:easy": 7,
+   "pressure:lose/win/1": 3
+  },
+  "ms": 9790
+ },
+ "tailAfter": 0.1025,
+ "downAfter": 0.275,
+ "score": 6.79
+}

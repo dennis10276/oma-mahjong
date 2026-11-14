@@ -1,0 +1,123 @@
+{
+ "level": 258,
+ "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-258.json",
+ "before": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 1902,
+   "ms": 18,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 892,
+   "ms": 8,
+   "startWaiting": 0,
+   "episodes": 13
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 1,
+   "minimum": 1,
+   "upperBound": 13,
+   "tests": [
+    {
+     "result": "win",
+     "cap": 2,
+     "peek": true,
+     "nodes": 1747,
+     "ms": 8,
+     "startWaiting": 0,
+     "episodeLimit": 1,
+     "episodes": 1
+    }
+   ]
+  },
+  "targetMet": false
+ },
+ "downBefore": 0.2727272727272727,
+ "tailBefore": 0.1325,
+ "ok": true,
+ "changed": true,
+ "after": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 2655,
+   "ms": 12,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 709,
+   "ms": 2,
+   "startWaiting": 0,
+   "episodes": 10
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 3,
+   "minimum": null,
+   "upperBound": 10,
+   "tests": [
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 2663,
+     "ms": 6,
+     "startWaiting": 0,
+     "episodeLimit": 1
+    },
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 2766,
+     "ms": 7,
+     "startWaiting": 0,
+     "episodeLimit": 2
+    }
+   ]
+  },
+  "targetMet": true
+ },
+ "edits": [
+  [
+   21,
+   22
+  ],
+  [
+   63,
+   16
+  ]
+ ],
+ "stats": {
+  "proposals": 171,
+  "checked": 11,
+  "failures": {
+   "gamble": 85,
+   "twins": 72,
+   "pressure:lose/win/1": 8,
+   "strictTail:unknown": 1,
+   "pressure:win/win/0": 2
+  },
+  "ms": 1078
+ },
+ "tailAfter": 0.15,
+ "downAfter": 0.2727272727272727,
+ "score": 6.13
+}

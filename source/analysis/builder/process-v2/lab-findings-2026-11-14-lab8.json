@@ -1,5 +1,5 @@
 {
- "savedAt": "2026-11-14T09:45:42.377Z",
+ "savedAt": "2026-11-14T09:54:31.839Z",
  "ratings": {
   "2038250": {
    "note": "",
@@ -45,6 +45,28 @@
    "tries": 0,
    "wins": 0,
    "results": []
+  },
+  "2038271": {
+   "note": "This is the tightest it can be but its pretty obvious. Keep it like this. For new digging we want more chained and more choices. I think this will be too obvious. Keep this level tho but for the future levels.",
+   "stars": 0,
+   "verdict": null,
+   "starts": 2,
+   "tries": 2,
+   "wins": 1,
+   "results": [
+    {
+     "r": "restart",
+     "left": 64,
+     "s": 32,
+     "t": 1794649678721
+    },
+    {
+     "r": "win",
+     "left": 0,
+     "s": 146,
+     "t": 1794650070419
+    }
+   ]
   },
   "2038272": {
    "note": "",

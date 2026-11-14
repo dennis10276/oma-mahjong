@@ -1,0 +1,111 @@
+{
+ "level": 307,
+ "file": "source\\analysis\\builder\\bank\\batch-303-342\\level-307.json",
+ "before": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 9287,
+   "ms": 47,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "lose",
+   "cap": 2,
+   "peek": true,
+   "nodes": 9288,
+   "ms": 36,
+   "startWaiting": 0
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 1,
+   "minimum": null,
+   "upperBound": null,
+   "tests": []
+  },
+  "targetMet": false
+ },
+ "downBefore": 0.25,
+ "tailBefore": 0.0975,
+ "ok": true,
+ "changed": true,
+ "after": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 9286,
+   "ms": 27,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 3132,
+   "ms": 8,
+   "startWaiting": 0,
+   "episodes": 12
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 3,
+   "minimum": null,
+   "upperBound": 12,
+   "tests": [
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 9649,
+     "ms": 26,
+     "startWaiting": 0,
+     "episodeLimit": 1
+    },
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 13195,
+     "ms": 38,
+     "startWaiting": 0,
+     "episodeLimit": 2
+    }
+   ]
+  },
+  "targetMet": true
+ },
+ "edits": [
+  [
+   73,
+   63
+  ]
+ ],
+ "stats": {
+  "proposals": 726,
+  "checked": 75,
+  "failures": {
+   "twins": 209,
+   "gamble": 403,
+   "strictTail:lose": 10,
+   "pressure:lose/lose/1": 66,
+   "strictTail:unknown": 4,
+   "proof:clock:9": 3,
+   "pressure:lose/win/1": 1,
+   "proof:clock:11": 3,
+   "band:easy": 1
+  },
+  "ms": 9072
+ },
+ "tailAfter": 0.0975,
+ "downAfter": 0.25,
+ "score": 6.9
+}

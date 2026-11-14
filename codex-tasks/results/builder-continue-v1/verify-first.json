@@ -1,0 +1,6762 @@
+[
+ {
+  "level": 250,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-250.json",
+  "ok": true,
+  "newTargetMet": false,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 10,
+   "k": 8,
+   "spare": 2
+  },
+  "roles": [
+   {
+    "tile": 61,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 78,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 82,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     91
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 706289,
+    "ms": 1702,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 16263,
+    "ms": 54,
+    "startWaiting": 0,
+    "episodes": 12
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": 12,
+    "tests": [
+     {
+      "result": "unknown",
+      "cap": 2,
+      "peek": true,
+      "nodes": 2000001,
+      "ms": 5973,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": false
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 12
+  }
+ },
+ {
+  "level": 251,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-251.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 16,
+   "k": 14,
+   "spare": 2
+  },
+  "roles": [
+   {
+    "tile": 52,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 58,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 42,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 71,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "keyEarly",
+    "tiles": [
+     71
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 2683,
+    "ms": 9,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 467,
+    "ms": 2,
+    "startWaiting": 0,
+    "episodes": 8
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 8,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 2718,
+      "ms": 6,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 2807,
+      "ms": 7,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 8
+  }
+ },
+ {
+  "level": 252,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-252.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 10,
+   "k": 8,
+   "spare": 2
+  },
+  "roles": [
+   {
+    "tile": 67,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 40,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 13,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 29,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "keyEarly",
+    "tiles": [
+     29
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 392,
+    "ms": 3,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 267,
+    "ms": 1,
+    "startWaiting": 0,
+    "episodes": 14
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 14,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 413,
+      "ms": 2,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 456,
+      "ms": 2,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 14
+  }
+ },
+ {
+  "level": 253,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-253.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 12,
+   "k": 10,
+   "spare": 2
+  },
+  "roles": [
+   {
+    "tile": 19,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 42,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 39,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 22,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 40,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "keyEarly",
+    "tiles": [
+     40
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 17145,
+    "ms": 54,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 9157,
+    "ms": 20,
+    "startWaiting": 0,
+    "episodes": 12
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 12,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 17260,
+      "ms": 59,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 17671,
+      "ms": 48,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 12
+  }
+ },
+ {
+  "level": 254,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-254.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 12,
+   "k": 10,
+   "spare": 2
+  },
+  "roles": [
+   {
+    "tile": 62,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 72,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 70,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 29,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 25,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 1,
+   "share": 0.0263,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     71
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 10530,
+    "ms": 35,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 2359,
+    "ms": 7,
+    "startWaiting": 0,
+    "episodes": 8
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 8,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 10593,
+      "ms": 28,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 10778,
+      "ms": 29,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 8
+  }
+ },
+ {
+  "level": 255,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-255.json",
+  "ok": true,
+  "newTargetMet": false,
+  "errors": [],
+  "notes": [
+   "liked older board: preserved; new chain gates are not imposed"
+  ],
+  "clock": {
+   "n": 26,
+   "k": 23,
+   "spare": 3
+  },
+  "roles": null,
+  "twins": null,
+  "baits": [],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 62500,
+    "ms": 209,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 5357,
+    "ms": 17,
+    "startWaiting": 0,
+    "episodes": 8
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": 1,
+    "upperBound": 8,
+    "tests": [
+     {
+      "result": "win",
+      "cap": 2,
+      "peek": true,
+      "nodes": 5361,
+      "ms": 22,
+      "startWaiting": 0,
+      "episodeLimit": 1,
+      "episodes": 1
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": false
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 8
+  }
+ },
+ {
+  "level": 256,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-256.json",
+  "ok": true,
+  "newTargetMet": false,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 10,
+   "k": 8,
+   "spare": 2
+  },
+  "roles": [
+   {
+    "tile": 2,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 1,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     3
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 2398,
+    "ms": 6,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 2482,
+    "ms": 6,
+    "startWaiting": 0
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMoments": 3,
+   "targetMet": false
+  },
+  "witness": null
+ },
+ {
+  "level": 257,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-257.json",
+  "ok": true,
+  "newTargetMet": false,
+  "errors": [],
+  "notes": [
+   "liked older board: preserved; new chain gates are not imposed"
+  ],
+  "clock": {
+   "n": 11,
+   "k": 8,
+   "spare": 3
+  },
+  "roles": null,
+  "twins": null,
+  "baits": [],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 1191,
+    "ms": 5,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 7595,
+    "ms": 24,
+    "startWaiting": 0
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMoments": 3,
+   "targetMet": false
+  },
+  "witness": null
+ },
+ {
+  "level": 258,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-258.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 12,
+   "k": 10,
+   "spare": 2
+  },
+  "roles": [
+   {
+    "tile": 39,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 79,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 40,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 6,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 68,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     38
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 2525,
+    "ms": 9,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 709,
+    "ms": 2,
+    "startWaiting": 0,
+    "episodes": 10
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 10,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 2533,
+      "ms": 5,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 2636,
+      "ms": 10,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 10
+  }
+ },
+ {
+  "level": 259,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-259.json",
+  "ok": true,
+  "newTargetMet": false,
+  "errors": [],
+  "notes": [
+   "liked older board: preserved; new chain gates are not imposed"
+  ],
+  "clock": {
+   "n": 12,
+   "k": 11,
+   "spare": 1
+  },
+  "roles": null,
+  "twins": null,
+  "baits": [],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 1526,
+    "ms": 6,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 989,
+    "ms": 4,
+    "startWaiting": 0,
+    "episodes": 4
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": 1,
+    "upperBound": 4,
+    "tests": [
+     {
+      "result": "win",
+      "cap": 2,
+      "peek": true,
+      "nodes": 984,
+      "ms": 4,
+      "startWaiting": 0,
+      "episodeLimit": 1,
+      "episodes": 1
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": false
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 4
+  }
+ },
+ {
+  "level": 260,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-260.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 13,
+   "k": 11,
+   "spare": 2
+  },
+  "roles": [
+   {
+    "tile": 93,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 85,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 90,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 73,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 65,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     91
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 19559,
+    "ms": 75,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 31371,
+    "ms": 99,
+    "startWaiting": 0,
+    "episodes": 17
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 17,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 30278,
+      "ms": 97,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 33703,
+      "ms": 106,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 17
+  }
+ },
+ {
+  "level": 261,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-261.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 16,
+   "k": 14,
+   "spare": 2
+  },
+  "roles": [
+   {
+    "tile": 14,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 45,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 70,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 52,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 46,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 19,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 1,
+   "share": 0.0263,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     53
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 23808,
+    "ms": 77,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 14341,
+    "ms": 48,
+    "startWaiting": 0,
+    "episodes": 14
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 14,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 23820,
+      "ms": 74,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 23843,
+      "ms": 91,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 14
+  }
+ },
+ {
+  "level": 262,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-262.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [
+   "liked older board: preserved; new chain gates are not imposed"
+  ],
+  "clock": {
+   "n": 15,
+   "k": 13,
+   "spare": 2
+  },
+  "roles": null,
+  "twins": null,
+  "baits": [],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 14659,
+    "ms": 53,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 1469,
+    "ms": 8,
+    "startWaiting": 0,
+    "episodes": 12
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 12,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 37983,
+      "ms": 119,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 38146,
+      "ms": 111,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 12
+  }
+ },
+ {
+  "level": 263,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-263.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 15,
+   "k": 13,
+   "spare": 2
+  },
+  "roles": [
+   {
+    "tile": 30,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 66,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 68,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 43,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 0,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 1,
+   "share": 0.025,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "keyEarly",
+    "tiles": [
+     0
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 4367,
+    "ms": 17,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 12712,
+    "ms": 41,
+    "startWaiting": 0,
+    "episodes": 11
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 11,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 8042,
+      "ms": 39,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 8644,
+      "ms": 41,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 11
+  }
+ },
+ {
+  "level": 264,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-264.json",
+  "ok": true,
+  "newTargetMet": false,
+  "errors": [],
+  "notes": [
+   "liked older board: preserved; new chain gates are not imposed"
+  ],
+  "clock": {
+   "n": 13,
+   "k": 12,
+   "spare": 1
+  },
+  "roles": null,
+  "twins": null,
+  "baits": [],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 651,
+    "ms": 3,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 7387,
+    "ms": 33,
+    "startWaiting": 0
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMoments": 3,
+   "targetMet": false
+  },
+  "witness": null
+ },
+ {
+  "level": 265,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-265.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 13,
+   "k": 12,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 20,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 59,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 72,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 41,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 43,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 58,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 2,
+   "share": 0.05,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     70
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 3340,
+    "ms": 14,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 6193,
+    "ms": 28,
+    "startWaiting": 0,
+    "episodes": 8
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 8,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 7826,
+      "ms": 37,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 19030,
+      "ms": 65,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 8
+  }
+ },
+ {
+  "level": 266,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-266.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 11,
+   "k": 9,
+   "spare": 2
+  },
+  "roles": [
+   {
+    "tile": 60,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 72,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 66,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 61,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 53,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "keyEarly",
+    "tiles": [
+     53
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 19024,
+    "ms": 56,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 2899,
+    "ms": 9,
+    "startWaiting": 0,
+    "episodes": 9
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 9,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 25943,
+      "ms": 84,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 26642,
+      "ms": 93,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 9
+  }
+ },
+ {
+  "level": 267,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-267.json",
+  "ok": true,
+  "newTargetMet": false,
+  "errors": [],
+  "notes": [
+   "liked older board: preserved; new chain gates are not imposed"
+  ],
+  "clock": {
+   "n": 13,
+   "k": 11,
+   "spare": 2
+  },
+  "roles": null,
+  "twins": null,
+  "baits": [],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 11199,
+    "ms": 64,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 31202,
+    "ms": 145,
+    "startWaiting": 0
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMoments": 3,
+   "targetMet": false
+  },
+  "witness": null
+ },
+ {
+  "level": 268,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-268.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 14,
+   "k": 13,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 45,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 53,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 62,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 25,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 9,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     66
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 112202,
+    "ms": 448,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 45547,
+    "ms": 165,
+    "startWaiting": 0,
+    "episodes": 15
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 15,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 112270,
+      "ms": 490,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 112513,
+      "ms": 465,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 15
+  }
+ },
+ {
+  "level": 269,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-269.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 12,
+   "k": 10,
+   "spare": 2
+  },
+  "roles": [
+   {
+    "tile": 61,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 73,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 60,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 40,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 67,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 1,
+   "share": 0.0263,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     63
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 5863,
+    "ms": 12,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 1943,
+    "ms": 4,
+    "startWaiting": 0,
+    "episodes": 12
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 12,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 5873,
+      "ms": 16,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 5895,
+      "ms": 13,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 12
+  }
+ },
+ {
+  "level": 270,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-270.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 12,
+   "k": 10,
+   "spare": 2
+  },
+  "roles": [
+   {
+    "tile": 63,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 78,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 53,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 49,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 73,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "keyEarly",
+    "tiles": [
+     73
+    ],
+    "result": "lose"
+   },
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     68
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 62405,
+    "ms": 193,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 55851,
+    "ms": 160,
+    "startWaiting": 0,
+    "episodes": 10
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 10,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 62439,
+      "ms": 225,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 62565,
+      "ms": 242,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 10
+  }
+ },
+ {
+  "level": 271,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-271.json",
+  "ok": true,
+  "newTargetMet": false,
+  "errors": [],
+  "notes": [
+   "liked older board: preserved; new chain gates are not imposed"
+  ],
+  "clock": {
+   "n": 19,
+   "k": 19,
+   "spare": 0
+  },
+  "roles": null,
+  "twins": null,
+  "baits": [],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 1480,
+    "ms": 7,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 9862,
+    "ms": 27,
+    "startWaiting": 0
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMoments": 3,
+   "targetMet": false
+  },
+  "witness": null
+ },
+ {
+  "level": 272,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-272.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 14,
+   "k": 13,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 4,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 68,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 72,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 6,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 66,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 58,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     2
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 24850,
+    "ms": 60,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 23517,
+    "ms": 64,
+    "startWaiting": 0,
+    "episodes": 12
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 12,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 24896,
+      "ms": 64,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 25028,
+      "ms": 60,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 12
+  }
+ },
+ {
+  "level": 273,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-273.json",
+  "ok": true,
+  "newTargetMet": false,
+  "errors": [],
+  "notes": [
+   "liked older board: preserved; new chain gates are not imposed"
+  ],
+  "clock": {
+   "n": 43,
+   "k": 40,
+   "spare": 3
+  },
+  "roles": null,
+  "twins": null,
+  "baits": [],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "unknown",
+    "cap": 1,
+    "peek": true,
+    "nodes": 400001,
+    "ms": 1721,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 35947,
+    "ms": 187,
+    "startWaiting": 0,
+    "episodes": 8
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 0,
+    "minimum": null,
+    "upperBound": 8,
+    "tests": [
+     {
+      "result": "unknown",
+      "cap": 2,
+      "peek": true,
+      "nodes": 400001,
+      "ms": 1654,
+      "startWaiting": 0,
+      "episodeLimit": 0
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": false
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 8
+  }
+ },
+ {
+  "level": 274,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-274.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 12,
+   "k": 11,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 47,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 70,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 74,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 59,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 0,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "keyEarly",
+    "tiles": [
+     0
+    ],
+    "result": "lose"
+   },
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     73
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 3014,
+    "ms": 8,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 1823,
+    "ms": 6,
+    "startWaiting": 0,
+    "episodes": 13
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 13,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 3284,
+      "ms": 10,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 3856,
+      "ms": 16,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 13
+  }
+ },
+ {
+  "level": 275,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-275.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 19,
+   "k": 18,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 67,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 63,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 65,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 69,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 43,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 5,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     73
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 1370,
+    "ms": 4,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 418,
+    "ms": 2,
+    "startWaiting": 0,
+    "episodes": 9
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 9,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 1853,
+      "ms": 5,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 3072,
+      "ms": 7,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 9
+  }
+ },
+ {
+  "level": 276,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-276.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 11,
+   "k": 9,
+   "spare": 2
+  },
+  "roles": [
+   {
+    "tile": 47,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 40,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 41,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 13,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 29,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "keyEarly",
+    "tiles": [
+     29
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 916,
+    "ms": 2,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 105,
+    "ms": 0,
+    "startWaiting": 0,
+    "episodes": 9
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 9,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 945,
+      "ms": 2,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 1007,
+      "ms": 2,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 9
+  }
+ },
+ {
+  "level": 277,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-277.json",
+  "ok": true,
+  "newTargetMet": false,
+  "errors": [],
+  "notes": [
+   "liked older board: preserved; new chain gates are not imposed"
+  ],
+  "clock": {
+   "n": 28,
+   "k": 24,
+   "spare": 4
+  },
+  "roles": null,
+  "twins": null,
+  "baits": [],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 33536,
+    "ms": 104,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 3611,
+    "ms": 9,
+    "startWaiting": 0,
+    "episodes": 9
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 2,
+    "minimum": 2,
+    "upperBound": 9,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 33628,
+      "ms": 91,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "win",
+      "cap": 2,
+      "peek": true,
+      "nodes": 32626,
+      "ms": 99,
+      "startWaiting": 0,
+      "episodeLimit": 2,
+      "episodes": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": false
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 9
+  }
+ },
+ {
+  "level": 278,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-278.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 14,
+   "k": 13,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 52,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 49,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 50,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 33,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 21,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 1,
+   "share": 0.0263,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     44
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 31283,
+    "ms": 101,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 23253,
+    "ms": 84,
+    "startWaiting": 0,
+    "episodes": 7
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 7,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 40477,
+      "ms": 147,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 56502,
+      "ms": 186,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 7
+  }
+ },
+ {
+  "level": 279,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-279.json",
+  "ok": true,
+  "newTargetMet": false,
+  "errors": [],
+  "notes": [
+   "liked older board: preserved; new chain gates are not imposed"
+  ],
+  "clock": {
+   "n": 12,
+   "k": 10,
+   "spare": 2
+  },
+  "roles": null,
+  "twins": null,
+  "baits": [],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 6632,
+    "ms": 19,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 637,
+    "ms": 2,
+    "startWaiting": 0,
+    "episodes": 5
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": 1,
+    "upperBound": 5,
+    "tests": [
+     {
+      "result": "win",
+      "cap": 2,
+      "peek": true,
+      "nodes": 1219,
+      "ms": 2,
+      "startWaiting": 0,
+      "episodeLimit": 1,
+      "episodes": 1
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": false
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 5
+  }
+ },
+ {
+  "level": 280,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-280.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 11,
+   "k": 9,
+   "spare": 2
+  },
+  "roles": [
+   {
+    "tile": 73,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 70,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 72,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 3,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 74,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "keyEarly",
+    "tiles": [
+     74
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 1108,
+    "ms": 2,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 339,
+    "ms": 1,
+    "startWaiting": 0,
+    "episodes": 8
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 8,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 3540,
+      "ms": 8,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 8857,
+      "ms": 20,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 8
+  }
+ },
+ {
+  "level": 281,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-281.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 18,
+   "k": 17,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 5,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 72,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 12,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 41,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 65,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     71
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 9023,
+    "ms": 29,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 496,
+    "ms": 2,
+    "startWaiting": 0,
+    "episodes": 6
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 6,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 9131,
+      "ms": 27,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 9992,
+      "ms": 25,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 6
+  }
+ },
+ {
+  "level": 282,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-282.json",
+  "ok": true,
+  "newTargetMet": false,
+  "errors": [],
+  "notes": [
+   "liked older board: preserved; new chain gates are not imposed"
+  ],
+  "clock": {
+   "n": 24,
+   "k": 23,
+   "spare": 1
+  },
+  "roles": null,
+  "twins": null,
+  "baits": [],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 144459,
+    "ms": 394,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 47993,
+    "ms": 147,
+    "startWaiting": 0,
+    "episodes": 9
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": 1,
+    "upperBound": 9,
+    "tests": [
+     {
+      "result": "win",
+      "cap": 2,
+      "peek": true,
+      "nodes": 47996,
+      "ms": 135,
+      "startWaiting": 0,
+      "episodeLimit": 1,
+      "episodes": 1
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": false
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 9
+  }
+ },
+ {
+  "level": 283,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-283.json",
+  "ok": true,
+  "newTargetMet": false,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 11,
+   "k": 10,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 27,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 66,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 56,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 50,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 2,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 1,
+   "share": 0.0263,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "keyEarly",
+    "tiles": [
+     2
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 14438,
+    "ms": 46,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 72600,
+    "ms": 229,
+    "startWaiting": 0
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMoments": 3,
+   "targetMet": false
+  },
+  "witness": null
+ },
+ {
+  "level": 284,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-284.json",
+  "ok": true,
+  "newTargetMet": false,
+  "errors": [],
+  "notes": [
+   "liked older board: preserved; new chain gates are not imposed"
+  ],
+  "clock": {
+   "n": 24,
+   "k": 21,
+   "spare": 3
+  },
+  "roles": null,
+  "twins": null,
+  "baits": [],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 30384,
+    "ms": 67,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 30387,
+    "ms": 67,
+    "startWaiting": 0
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMoments": 3,
+   "targetMet": false
+  },
+  "witness": null
+ },
+ {
+  "level": 285,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-285.json",
+  "ok": true,
+  "newTargetMet": false,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 17,
+   "k": 16,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 66,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 42,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 73,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 77,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 59,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 23,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     52
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 16504,
+    "ms": 61,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 28132,
+    "ms": 100,
+    "startWaiting": 0
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMoments": 3,
+   "targetMet": false
+  },
+  "witness": null
+ },
+ {
+  "level": 286,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-286.json",
+  "ok": true,
+  "newTargetMet": false,
+  "errors": [],
+  "notes": [
+   "liked older board: preserved; new chain gates are not imposed"
+  ],
+  "clock": {
+   "n": 6,
+   "k": 5,
+   "spare": 1
+  },
+  "roles": null,
+  "twins": null,
+  "baits": [],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 36,
+    "ms": 0,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 37,
+    "ms": 1,
+    "startWaiting": 0
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMoments": 3,
+   "targetMet": false
+  },
+  "witness": null
+ },
+ {
+  "level": 287,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-287.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 10,
+   "k": 9,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 39,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 63,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 64,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 69,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 38,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 74,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "keyEarly",
+    "tiles": [
+     74
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 6534,
+    "ms": 20,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 3454,
+    "ms": 10,
+    "startWaiting": 0,
+    "episodes": 11
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 11,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 6574,
+      "ms": 17,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 7872,
+      "ms": 18,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 11
+  }
+ },
+ {
+  "level": 288,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-288.json",
+  "ok": true,
+  "newTargetMet": false,
+  "errors": [],
+  "notes": [
+   "liked older board: preserved; new chain gates are not imposed"
+  ],
+  "clock": {
+   "n": 18,
+   "k": 1,
+   "spare": 17
+  },
+  "roles": null,
+  "twins": null,
+  "baits": [],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "unknown",
+    "cap": 1,
+    "peek": true,
+    "nodes": 400001,
+    "ms": 1114,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 211485,
+    "ms": 528,
+    "startWaiting": 0,
+    "episodes": 10
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 0,
+    "minimum": null,
+    "upperBound": 10,
+    "tests": [
+     {
+      "result": "unknown",
+      "cap": 2,
+      "peek": true,
+      "nodes": 400001,
+      "ms": 1087,
+      "startWaiting": 0,
+      "episodeLimit": 0
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": false
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 10
+  }
+ },
+ {
+  "level": 289,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-289.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 12,
+   "k": 11,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 5,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 61,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 63,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 31,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 8,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     65
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 74434,
+    "ms": 259,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 74116,
+    "ms": 272,
+    "startWaiting": 0,
+    "episodes": 16
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 16,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 74437,
+      "ms": 305,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 74484,
+      "ms": 291,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 16
+  }
+ },
+ {
+  "level": 290,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-290.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 15,
+   "k": 13,
+   "spare": 2
+  },
+  "roles": [
+   {
+    "tile": 82,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 67,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 87,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 31,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 62,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 2,
+   "share": 0.0417,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     79
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 19956,
+    "ms": 75,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 42262,
+    "ms": 182,
+    "startWaiting": 0,
+    "episodes": 18
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 18,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 44466,
+      "ms": 180,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 45096,
+      "ms": 201,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 18
+  }
+ },
+ {
+  "level": 291,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-291.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 13,
+   "k": 12,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 1,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 72,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 78,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 0,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 61,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 68,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 1,
+   "share": 0.025,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     4
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 55003,
+    "ms": 157,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 37086,
+    "ms": 118,
+    "startWaiting": 0,
+    "episodes": 11
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 11,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 82140,
+      "ms": 245,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 82490,
+      "ms": 247,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 11
+  }
+ },
+ {
+  "level": 292,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-292.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 15,
+   "k": 14,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 5,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 62,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 73,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 8,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 53,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 67,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 1,
+   "share": 0.027,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     3
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 29648,
+    "ms": 81,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 28267,
+    "ms": 80,
+    "startWaiting": 0,
+    "episodes": 7
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 7,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 30209,
+      "ms": 77,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 30584,
+      "ms": 81,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 7
+  }
+ },
+ {
+  "level": 293,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-293.json",
+  "ok": true,
+  "newTargetMet": false,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 13,
+   "k": 12,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 49,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 63,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 57,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 43,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 76,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "keyEarly",
+    "tiles": [
+     76
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 6674,
+    "ms": 21,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "lose",
+    "cap": 2,
+    "peek": true,
+    "nodes": 6983,
+    "ms": 24,
+    "startWaiting": 0
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": null,
+    "upperBound": null,
+    "tests": []
+   },
+   "targetMoments": 3,
+   "targetMet": false
+  },
+  "witness": null
+ },
+ {
+  "level": 294,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-294.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 15,
+   "k": 14,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 32,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 66,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 72,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 31,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 26,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 62,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     71
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 6624,
+    "ms": 15,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 6332,
+    "ms": 16,
+    "startWaiting": 0,
+    "episodes": 13
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 13,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 6792,
+      "ms": 17,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 6909,
+      "ms": 17,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 13
+  }
+ },
+ {
+  "level": 295,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-295.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 13,
+   "k": 12,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 67,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 43,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 49,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 80,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 20,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 26,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     51
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 9687,
+    "ms": 33,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 29694,
+    "ms": 104,
+    "startWaiting": 0,
+    "episodes": 21
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 21,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 37020,
+      "ms": 147,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 65304,
+      "ms": 208,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 21
+  }
+ },
+ {
+  "level": 296,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-296.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 12,
+   "k": 11,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 69,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 36,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 71,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 19,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 50,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     72
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 11146,
+    "ms": 34,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 2582,
+    "ms": 9,
+    "startWaiting": 0,
+    "episodes": 10
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 10,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 11148,
+      "ms": 39,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 11202,
+      "ms": 38,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 10
+  }
+ },
+ {
+  "level": 297,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-297.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 19,
+   "k": 18,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 64,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 52,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 63,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 65,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 47,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 31,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 1,
+   "share": 0.0263,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     62
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 5925,
+    "ms": 18,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 2393,
+    "ms": 6,
+    "startWaiting": 0,
+    "episodes": 6
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 6,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 6000,
+      "ms": 13,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 6348,
+      "ms": 15,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 6
+  }
+ },
+ {
+  "level": 298,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-298.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 18,
+   "k": 17,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 0,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 44,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 49,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 33,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 18,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 1,
+   "share": 0.0263,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     52
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 52310,
+    "ms": 178,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 5575,
+    "ms": 22,
+    "startWaiting": 0,
+    "episodes": 5
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 5,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 52369,
+      "ms": 180,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 52624,
+      "ms": 179,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 5
+  }
+ },
+ {
+  "level": 299,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-299.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 12,
+   "k": 11,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 45,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 63,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 71,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 4,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 0,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 1,
+   "share": 0.0263,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     73
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 17622,
+    "ms": 56,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 1709,
+    "ms": 5,
+    "startWaiting": 0,
+    "episodes": 8
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 8,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 17893,
+      "ms": 64,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 22067,
+      "ms": 71,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 8
+  }
+ },
+ {
+  "level": 300,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-300.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 12,
+   "k": 11,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 61,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 71,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 58,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 62,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 51,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 1,
+   "share": 0.025,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "keyEarly",
+    "tiles": [
+     51
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 16240,
+    "ms": 42,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 1998,
+    "ms": 9,
+    "startWaiting": 0,
+    "episodes": 12
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 12,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 16243,
+      "ms": 45,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 16457,
+      "ms": 48,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 12
+  }
+ },
+ {
+  "level": 301,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-301.json",
+  "ok": true,
+  "newTargetMet": false,
+  "errors": [],
+  "notes": [
+   "liked older board: preserved; new chain gates are not imposed"
+  ],
+  "clock": {
+   "n": 17,
+   "k": 14,
+   "spare": 3
+  },
+  "roles": null,
+  "twins": null,
+  "baits": [],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 40928,
+    "ms": 100,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 1272,
+    "ms": 5,
+    "startWaiting": 0,
+    "episodes": 8
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": 1,
+    "upperBound": 8,
+    "tests": [
+     {
+      "result": "win",
+      "cap": 2,
+      "peek": true,
+      "nodes": 6824,
+      "ms": 20,
+      "startWaiting": 0,
+      "episodeLimit": 1,
+      "episodes": 1
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": false
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 8
+  }
+ },
+ {
+  "level": 302,
+  "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-302.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 14,
+   "k": 13,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 45,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 66,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 67,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 78,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 42,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 0,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     64
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 7550,
+    "ms": 23,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 779,
+    "ms": 3,
+    "startWaiting": 0,
+    "episodes": 12
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 12,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 7554,
+      "ms": 21,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 7591,
+      "ms": 23,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 12
+  }
+ },
+ {
+  "level": 303,
+  "file": "source\\analysis\\builder\\bank\\batch-303-342\\level-303.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 12,
+   "k": 11,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 68,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 73,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 72,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 42,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 0,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "keyEarly",
+    "tiles": [
+     0
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 2892,
+    "ms": 10,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 2931,
+    "ms": 10,
+    "startWaiting": 0,
+    "episodes": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": 3,
+    "upperBound": 3,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 2943,
+      "ms": 7,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 3526,
+      "ms": 9,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 3
+  }
+ },
+ {
+  "level": 304,
+  "file": "source\\analysis\\builder\\bank\\batch-303-342\\level-304.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 14,
+   "k": 13,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 71,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 66,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 76,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 50,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 67,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     79
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 10992,
+    "ms": 40,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 6607,
+    "ms": 25,
+    "startWaiting": 0,
+    "episodes": 9
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 9,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 17648,
+      "ms": 49,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 29170,
+      "ms": 90,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 9
+  }
+ },
+ {
+  "level": 305,
+  "file": "source\\analysis\\builder\\bank\\batch-303-342\\level-305.json",
+  "ok": true,
+  "newTargetMet": false,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 13,
+   "k": 12,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 3,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 72,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 2,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 65,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 44,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "keyEarly",
+    "tiles": [
+     44
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 3128,
+    "ms": 8,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 211,
+    "ms": 1,
+    "startWaiting": 0,
+    "episodes": 6
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 1,
+    "minimum": 1,
+    "upperBound": 6,
+    "tests": [
+     {
+      "result": "win",
+      "cap": 2,
+      "peek": true,
+      "nodes": 241,
+      "ms": 1,
+      "startWaiting": 0,
+      "episodeLimit": 1,
+      "episodes": 1
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": false
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 6
+  }
+ },
+ {
+  "level": 306,
+  "file": "source\\analysis\\builder\\bank\\batch-303-342\\level-306.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 10,
+   "k": 9,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 5,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 73,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 11,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 58,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 62,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "keyEarly",
+    "tiles": [
+     62
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 2176,
+    "ms": 5,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 2066,
+    "ms": 5,
+    "startWaiting": 0,
+    "episodes": 9
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 9,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 2255,
+      "ms": 5,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 3107,
+      "ms": 7,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 9
+  }
+ },
+ {
+  "level": 307,
+  "file": "source\\analysis\\builder\\bank\\batch-303-342\\level-307.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 13,
+   "k": 12,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 31,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 71,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 32,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 29,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 61,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     72
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 8918,
+    "ms": 22,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 3128,
+    "ms": 8,
+    "startWaiting": 0,
+    "episodes": 12
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 12,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 9640,
+      "ms": 27,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 13186,
+      "ms": 33,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 12
+  }
+ },
+ {
+  "level": 308,
+  "file": "source\\analysis\\builder\\bank\\batch-303-342\\level-308.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 10,
+   "k": 9,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 67,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 72,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 63,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 66,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 1,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "keyEarly",
+    "tiles": [
+     1
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 5704,
+    "ms": 14,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 952,
+    "ms": 5,
+    "startWaiting": 0,
+    "episodes": 8
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 8,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 5755,
+      "ms": 17,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 6283,
+      "ms": 17,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 8
+  }
+ },
+ {
+  "level": 309,
+  "file": "source\\analysis\\builder\\bank\\batch-303-342\\level-309.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 11,
+   "k": 10,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 48,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 47,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 56,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 22,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 61,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "keyEarly",
+    "tiles": [
+     61
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 1987,
+    "ms": 4,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 206,
+    "ms": 1,
+    "startWaiting": 0,
+    "episodes": 10
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 10,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 3554,
+      "ms": 7,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 5524,
+      "ms": 11,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 10
+  }
+ },
+ {
+  "level": 310,
+  "file": "source\\analysis\\builder\\bank\\batch-303-342\\level-310.json",
+  "ok": true,
+  "newTargetMet": false,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 10,
+   "k": 9,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 81,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 79,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 82,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 61,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 52,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     87
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 7400,
+    "ms": 28,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 6072,
+    "ms": 22,
+    "startWaiting": 0,
+    "episodes": 16
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 2,
+    "minimum": 2,
+    "upperBound": 16,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 256625,
+      "ms": 686,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "win",
+      "cap": 2,
+      "peek": true,
+      "nodes": 608874,
+      "ms": 1522,
+      "startWaiting": 0,
+      "episodeLimit": 2,
+      "episodes": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": false
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 16
+  }
+ },
+ {
+  "level": 311,
+  "file": "source\\analysis\\builder\\bank\\batch-303-342\\level-311.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 15,
+   "k": 14,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 53,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 69,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 70,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 42,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 48,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 45,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     63
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 28693,
+    "ms": 121,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 20678,
+    "ms": 67,
+    "startWaiting": 0,
+    "episodes": 8
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 8,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 30690,
+      "ms": 101,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 72934,
+      "ms": 175,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 8
+  }
+ },
+ {
+  "level": 312,
+  "file": "source\\analysis\\builder\\bank\\batch-303-342\\level-312.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 11,
+   "k": 10,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 36,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 71,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 80,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 63,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 37,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 47,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 1,
+   "share": 0.0227,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     84
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 2848,
+    "ms": 8,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 2632,
+    "ms": 7,
+    "startWaiting": 0,
+    "episodes": 11
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 11,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 12495,
+      "ms": 47,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 31112,
+      "ms": 76,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 11
+  }
+ },
+ {
+  "level": 313,
+  "file": "source\\analysis\\builder\\bank\\batch-303-342\\level-313.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 16,
+   "k": 15,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 24,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 42,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 71,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 62,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 23,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     52
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 6201,
+    "ms": 32,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 2068,
+    "ms": 6,
+    "startWaiting": 0,
+    "episodes": 3
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": 3,
+    "upperBound": 3,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 6910,
+      "ms": 25,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 8416,
+      "ms": 27,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 3
+  }
+ },
+ {
+  "level": 314,
+  "file": "source\\analysis\\builder\\bank\\batch-303-342\\rejected\\level-314.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 12,
+   "k": 11,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 56,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 66,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 72,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 73,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 48,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 79,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 1,
+   "share": 0.0238,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "keyEarly",
+    "tiles": [
+     79
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 882,
+    "ms": 4,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 741,
+    "ms": 3,
+    "startWaiting": 0,
+    "episodes": 10
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 10,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 1006,
+      "ms": 3,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 3382,
+      "ms": 7,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 10
+  }
+ },
+ {
+  "level": 315,
+  "file": "source\\analysis\\builder\\bank\\batch-303-342\\rejected\\level-315.json",
+  "ok": true,
+  "newTargetMet": true,
+  "errors": [],
+  "notes": [],
+  "clock": {
+   "n": 16,
+   "k": 15,
+   "spare": 1
+  },
+  "roles": [
+   {
+    "tile": 17,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 42,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 65,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 13,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   },
+   {
+    "tile": 44,
+    "faceUp": true,
+    "roleVisible": true,
+    "pictureVisible": true
+   }
+  ],
+  "twins": {
+   "close": 0,
+   "share": 0,
+   "visible": 0,
+   "four": 0,
+   "meets": true
+  },
+  "baits": [
+   {
+    "name": "lonelyNeighbour",
+    "tiles": [
+     63
+    ],
+    "result": "lose"
+   }
+  ],
+  "pressure": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 9010,
+    "ms": 30,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 1026,
+    "ms": 4,
+    "startWaiting": 0,
+    "episodes": 10
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 3,
+    "minimum": null,
+    "upperBound": 10,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 9698,
+      "ms": 30,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 18928,
+      "ms": 55,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     }
+    ]
+   },
+   "targetMoments": 3,
+   "targetMet": true
+  },
+  "witness": {
+   "ok": true,
+   "peak": 2,
+   "episodes": 10
+  }
+ }
+]

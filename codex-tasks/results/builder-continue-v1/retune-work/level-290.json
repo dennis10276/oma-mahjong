@@ -1,0 +1,126 @@
+{
+ "level": 290,
+ "file": "source\\analysis\\builder\\bank\\placed-250-retuned\\level-290.json",
+ "before": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 88603,
+   "ms": 330,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 86393,
+   "ms": 325,
+   "startWaiting": 0,
+   "episodes": 14
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 1,
+   "minimum": 1,
+   "upperBound": 14,
+   "tests": [
+    {
+     "result": "win",
+     "cap": 2,
+     "peek": true,
+     "nodes": 86416,
+     "ms": 337,
+     "startWaiting": 0,
+     "episodeLimit": 1,
+     "episodes": 1
+    }
+   ]
+  },
+  "targetMet": false
+ },
+ "downBefore": 0.2708333333333333,
+ "tailBefore": 0.095,
+ "ok": true,
+ "changed": true,
+ "after": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 104525,
+   "ms": 216,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 102257,
+   "ms": 215,
+   "startWaiting": 0,
+   "episodes": 17
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 3,
+   "minimum": null,
+   "upperBound": 17,
+   "tests": [
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 104655,
+     "ms": 226,
+     "startWaiting": 0,
+     "episodeLimit": 1
+    },
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 105285,
+     "ms": 223,
+     "startWaiting": 0,
+     "episodeLimit": 2
+    }
+   ]
+  },
+  "targetMet": true
+ },
+ "edits": [
+  [
+   81,
+   59
+  ],
+  [
+   20,
+   5
+  ]
+ ],
+ "stats": {
+  "proposals": 373,
+  "checked": 35,
+  "failures": {
+   "gamble": 191,
+   "twins": 128,
+   "pressure:lose/win/1": 16,
+   "pressure:unknown/unknown/0": 2,
+   "pressure:win/win/0": 1,
+   "strictTail:unknown": 7,
+   "pressure:lose/win/2": 14,
+   "band:hard": 1
+  },
+  "ms": 24964
+ },
+ "tailAfter": 0.1487,
+ "downAfter": 0.2708333333333333,
+ "score": 6.53
+}
