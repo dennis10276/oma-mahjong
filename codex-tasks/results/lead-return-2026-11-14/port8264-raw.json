@@ -1,0 +1,263 @@
+{
+ "savedAt": "2026-11-14T14:17:09.417Z",
+ "ratings": {
+  "2040331": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 1,
+   "tries": 1,
+   "wins": 1,
+   "results": [
+    {
+     "r": "win",
+     "left": 0,
+     "s": 135,
+     "t": 1794659819405
+    }
+   ]
+  },
+  "2040332": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2040333": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2040334": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2040335": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2041306": {
+   "note": "Trap feels like an AHA but can easily sit in the <300 range. Its not that hard to spot.",
+   "stars": 4,
+   "verdict": "easy",
+   "starts": 1,
+   "tries": 1,
+   "wins": 1,
+   "results": [
+    {
+     "r": "win",
+     "left": 0,
+     "s": 198,
+     "t": 1794660617125
+    }
+   ]
+  },
+  "2041309": {
+   "note": "Feels like an AHA good. puzzle for 290s <300 level tho",
+   "stars": 4,
+   "verdict": null,
+   "starts": 2,
+   "tries": 3,
+   "wins": 1,
+   "results": [
+    {
+     "r": "stuck",
+     "left": 65,
+     "s": 92,
+     "t": 1794660756593,
+     "ck": 1
+    },
+    {
+     "r": "stuck",
+     "left": 65,
+     "s": 22,
+     "t": 1794660780963,
+     "ck": 1
+    },
+    {
+     "r": "win",
+     "left": 0,
+     "s": 105,
+     "t": 1794660887434
+    }
+   ]
+  },
+  "2041312": {
+   "note": "Did I fall in the trap the first times? Was it impossible that way? Really cool to make it. 300+ approved",
+   "stars": 5,
+   "verdict": "right",
+   "starts": 1,
+   "tries": 7,
+   "wins": 1,
+   "results": [
+    {
+     "r": "stuck",
+     "left": 74,
+     "s": 52,
+     "t": 1794660991936
+    },
+    {
+     "r": "stuck",
+     "left": 68,
+     "s": 76,
+     "t": 1794661068976
+    },
+    {
+     "r": "stuck",
+     "left": 70,
+     "s": 75,
+     "t": 1794661145921
+    },
+    {
+     "r": "restart",
+     "left": 51,
+     "s": 117,
+     "t": 1794661266468
+    },
+    {
+     "r": "restart",
+     "left": 57,
+     "s": 134,
+     "t": 1794661404099
+    },
+    {
+     "r": "stuck",
+     "left": 56,
+     "s": 103,
+     "t": 1794661507553
+    },
+    {
+     "r": "win",
+     "left": 0,
+     "s": 141,
+     "t": 1794661649124
+    }
+   ]
+  },
+  "2041315": {
+   "note": "Fine to put in 300+",
+   "stars": 4,
+   "verdict": "right",
+   "starts": 1,
+   "tries": 2,
+   "wins": 1,
+   "results": [
+    {
+     "r": "stuck",
+     "left": 74,
+     "s": 52,
+     "t": 1794661740145
+    },
+    {
+     "r": "win",
+     "left": 0,
+     "s": 121,
+     "t": 1794661862983
+    }
+   ]
+  },
+  "2041316": {
+   "note": "Feels like an AHA definetely. I got there maybe even earlier then intended? Keep it like it is tho and place it 325+",
+   "stars": 5,
+   "verdict": "right",
+   "starts": 4,
+   "tries": 5,
+   "wins": 1,
+   "results": [
+    {
+     "r": "restart",
+     "left": 72,
+     "s": 55,
+     "t": 1794662016954
+    },
+    {
+     "r": "stuck",
+     "left": 62,
+     "s": 107,
+     "t": 1794662124303
+    },
+    {
+     "r": "stuck",
+     "left": 66,
+     "s": 94,
+     "t": 1794662219442
+    },
+    {
+     "r": "restart",
+     "left": 73,
+     "s": 32,
+     "t": 1794662286763
+    },
+    {
+     "r": "win",
+     "left": 0,
+     "s": 103,
+     "t": 1794662449940
+    }
+   ]
+  },
+  "2041327": {
+   "note": "Good level for 300+. feels like I played it before. Make sure there is no copy of anything in 250-300.",
+   "stars": 4,
+   "verdict": "right",
+   "starts": 3,
+   "tries": 3,
+   "wins": 1,
+   "results": [
+    {
+     "r": "stuck",
+     "left": 65,
+     "s": 93,
+     "t": 1794662557068,
+     "ck": 1
+    },
+    {
+     "r": "stuck",
+     "left": 65,
+     "s": 50,
+     "t": 1794662608624,
+     "ck": 1
+    },
+    {
+     "r": "win",
+     "left": 0,
+     "s": 79,
+     "t": 1794662753891
+    }
+   ]
+  },
+  "2041329": {
+   "note": "Easier to spot chain This can go in 290-300 or start of chained in 300.",
+   "stars": 4,
+   "verdict": null,
+   "starts": 2,
+   "tries": 1,
+   "wins": 1,
+   "results": [
+    {
+     "r": "win",
+     "left": 0,
+     "s": 141,
+     "t": 1794662943891
+    }
+   ]
+  }
+ }
+}

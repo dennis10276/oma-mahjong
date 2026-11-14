@@ -1,0 +1,261 @@
+{
+ "savedAt": "2026-11-14T14:19:52.260Z",
+ "ratings": {
+  "170332": {
+   "note": "No AHA. Finish fine but no hard chain.",
+   "stars": 0,
+   "verdict": null,
+   "starts": 2,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "170333": {
+   "note": "A bit better nut nog hard enough to spot like the other chains.",
+   "stars": 0,
+   "verdict": null,
+   "starts": 1,
+   "tries": 2,
+   "wins": 1,
+   "results": [
+    {
+     "r": "stuck",
+     "left": 64,
+     "s": 30,
+     "t": 1794663102395,
+     "ck": 1
+    },
+    {
+     "r": "win",
+     "left": 0,
+     "s": 114,
+     "t": 1794663217554
+    }
+   ]
+  },
+  "170334": {
+   "note": "This is an AHA yes!. 290-310 level.",
+   "stars": 4,
+   "verdict": null,
+   "starts": 1,
+   "tries": 5,
+   "wins": 1,
+   "results": [
+    {
+     "r": "restart",
+     "left": 69,
+     "s": 118,
+     "t": 1794663378739
+    },
+    {
+     "r": "stuck",
+     "left": 76,
+     "s": 60,
+     "t": 1794663438951,
+     "ck": 1
+    },
+    {
+     "r": "restart",
+     "left": 71,
+     "s": 46,
+     "t": 1794663499296
+    },
+    {
+     "r": "restart",
+     "left": 75,
+     "s": 38,
+     "t": 1794663545549
+    },
+    {
+     "r": "win",
+     "left": 0,
+     "s": 156,
+     "t": 1794663701424
+    }
+   ]
+  },
+  "170335": {
+   "note": "Its an AHA but early introducing chains. Its an easy one.",
+   "stars": 4,
+   "verdict": "easy",
+   "starts": 3,
+   "tries": 2,
+   "wins": 1,
+   "results": [
+    {
+     "r": "win",
+     "left": 0,
+     "s": 134,
+     "t": 1794663895809
+    },
+    {
+     "r": "stuck",
+     "left": 72,
+     "s": 19,
+     "t": 1794663920556
+    }
+   ]
+  },
+  "170336": {
+   "note": "Yes AHA moment :). 300+ level.",
+   "stars": 4,
+   "verdict": "right",
+   "starts": 3,
+   "tries": 4,
+   "wins": 0,
+   "results": [
+    {
+     "r": "stuck",
+     "left": 68,
+     "s": 93,
+     "t": 1794664052588
+    },
+    {
+     "r": "stuck",
+     "left": 68,
+     "s": 23,
+     "t": 1794664077116
+    },
+    {
+     "r": "restart",
+     "left": 71,
+     "s": 55,
+     "t": 1794664151938
+    },
+    {
+     "r": "restart",
+     "left": 69,
+     "s": 134,
+     "t": 1794664384837
+    }
+   ]
+  },
+  "170337": {
+   "note": "Got an AHA but got stuck with it. Is that intended? I dont see it otherwise.",
+   "stars": 0,
+   "verdict": "hard",
+   "starts": 3,
+   "tries": 6,
+   "wins": 0,
+   "results": [
+    {
+     "r": "stuck",
+     "left": 84,
+     "s": 118,
+     "t": 1794664808605
+    },
+    {
+     "r": "stuck",
+     "left": 81,
+     "s": 42,
+     "t": 1794664852278,
+     "ck": 1
+    },
+    {
+     "r": "stuck",
+     "left": 92,
+     "s": 19,
+     "t": 1794664872940
+    },
+    {
+     "r": "stuck",
+     "left": 90,
+     "s": 31,
+     "t": 1794664905532
+    },
+    {
+     "r": "restart",
+     "left": 77,
+     "s": 73,
+     "t": 1794665019615
+    },
+    {
+     "r": "stuck",
+     "left": 81,
+     "s": 60,
+     "t": 1794665080028,
+     "ck": 1
+    }
+   ]
+  },
+  "170338": {
+   "note": "Easy to see the trap. too easy.. not even an AHA",
+   "stars": 2,
+   "verdict": "easy",
+   "starts": 1,
+   "tries": 1,
+   "wins": 1,
+   "results": [
+    {
+     "r": "win",
+     "left": 0,
+     "s": 126,
+     "t": 1794665339184
+    }
+   ]
+  },
+  "170339": {
+   "note": "Just about an AHA could be place around 275 or more chained to place later.",
+   "stars": 3,
+   "verdict": "easy",
+   "starts": 2,
+   "tries": 3,
+   "wins": 1,
+   "results": [
+    {
+     "r": "restart",
+     "left": 81,
+     "s": 14,
+     "t": 1794665425190
+    },
+    {
+     "r": "restart",
+     "left": 76,
+     "s": 63,
+     "t": 1794665500195
+    },
+    {
+     "r": "win",
+     "left": 0,
+     "s": 134,
+     "t": 1794665634497
+    }
+   ]
+  },
+  "172837877": {
+   "note": "",
+   "stars": 0,
+   "verdict": null
+  },
+  "176979083": {
+   "note": "",
+   "stars": 0,
+   "verdict": null
+  },
+  "180072988": {
+   "note": "",
+   "stars": 0,
+   "verdict": null
+  },
+  "181038157": {
+   "note": "",
+   "stars": 0,
+   "verdict": null
+  },
+  "185774229": {
+   "note": "",
+   "stars": 0,
+   "verdict": null
+  },
+  "186131206": {
+   "note": "",
+   "stars": 0,
+   "verdict": null
+  },
+  "186337848": {
+   "note": "",
+   "stars": 0,
+   "verdict": null
+  }
+ }
+}

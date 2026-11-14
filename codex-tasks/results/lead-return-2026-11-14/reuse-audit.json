@@ -1,0 +1,280 @@
+{
+  "earlierRange": [
+    250,
+    300
+  ],
+  "comparedRange": [
+    303,
+    331
+  ],
+  "definitions": {
+    "exact": "indexed tile positions, picture IDs, down, gold, ice, locks, keys, clock tile and number; arrays of sets sorted; solution excluded",
+    "pairing": "same as exact but picture IDs canonicalised by first occurrence, gold excluded",
+    "pairingIgnoringClockNumber": "pairing fingerprint with clock number excluded",
+    "symmetricPairing": "canonical coordinate-sorted pairing and specials, allowing tile renumbering, picture relabeling, translation and horizontal/vertical reflection; gold and clock number ignored",
+    "geometryAndSpecials": "positions, ice, locks, keys and clock tile only; pictures, down, gold and clock number excluded; a match does not prove the same puzzle or the same AHA"
+  },
+  "records": [
+    {
+      "level": 303,
+      "source": "chained waitThawWay-L14-s2-p1",
+      "exactMatches250to300": [],
+      "samePairingAndClock250to300": [],
+      "samePairingIgnoringClockNumber250to300": [],
+      "samePairingAllowingMirrorsAndRenumbering250to300": [],
+      "sameGeometryAndSpecials250to300": []
+    },
+    {
+      "level": 304,
+      "source": "batch2 303",
+      "exactMatches250to300": [],
+      "samePairingAndClock250to300": [],
+      "samePairingIgnoringClockNumber250to300": [],
+      "samePairingAllowingMirrorsAndRenumbering250to300": [],
+      "sameGeometryAndSpecials250to300": []
+    },
+    {
+      "level": 305,
+      "source": "chained waitNested-L31-s2-p2",
+      "exactMatches250to300": [],
+      "samePairingAndClock250to300": [],
+      "samePairingIgnoringClockNumber250to300": [],
+      "samePairingAllowingMirrorsAndRenumbering250to300": [],
+      "sameGeometryAndSpecials250to300": []
+    },
+    {
+      "level": 306,
+      "source": "chained waitThawKey-L14-s2-p2",
+      "exactMatches250to300": [],
+      "samePairingAndClock250to300": [],
+      "samePairingIgnoringClockNumber250to300": [],
+      "samePairingAllowingMirrorsAndRenumbering250to300": [],
+      "sameGeometryAndSpecials250to300": []
+    },
+    {
+      "level": 307,
+      "source": "batch2 304",
+      "exactMatches250to300": [],
+      "samePairingAndClock250to300": [],
+      "samePairingIgnoringClockNumber250to300": [],
+      "samePairingAllowingMirrorsAndRenumbering250to300": [],
+      "sameGeometryAndSpecials250to300": []
+    },
+    {
+      "level": 308,
+      "source": "chained lookalikeThaw-L18-s2-p1",
+      "exactMatches250to300": [],
+      "samePairingAndClock250to300": [],
+      "samePairingIgnoringClockNumber250to300": [],
+      "samePairingAllowingMirrorsAndRenumbering250to300": [],
+      "sameGeometryAndSpecials250to300": []
+    },
+    {
+      "level": 309,
+      "source": "chained lookalikeCover-L31-s1-p1",
+      "exactMatches250to300": [],
+      "samePairingAndClock250to300": [],
+      "samePairingIgnoringClockNumber250to300": [],
+      "samePairingAllowingMirrorsAndRenumbering250to300": [],
+      "sameGeometryAndSpecials250to300": []
+    },
+    {
+      "level": 310,
+      "source": "batch2 310",
+      "exactMatches250to300": [],
+      "samePairingAndClock250to300": [],
+      "samePairingIgnoringClockNumber250to300": [],
+      "samePairingAllowingMirrorsAndRenumbering250to300": [],
+      "sameGeometryAndSpecials250to300": []
+    },
+    {
+      "level": 311,
+      "source": "batch2 305",
+      "exactMatches250to300": [],
+      "samePairingAndClock250to300": [],
+      "samePairingIgnoringClockNumber250to300": [],
+      "samePairingAllowingMirrorsAndRenumbering250to300": [],
+      "sameGeometryAndSpecials250to300": []
+    },
+    {
+      "level": 312,
+      "source": "chained lookalikeWay-L14-s3-p1",
+      "exactMatches250to300": [],
+      "samePairingAndClock250to300": [],
+      "samePairingIgnoringClockNumber250to300": [],
+      "samePairingAllowingMirrorsAndRenumbering250to300": [],
+      "sameGeometryAndSpecials250to300": []
+    },
+    {
+      "level": 313,
+      "source": "chained roofThawKey-L0-s7-p1",
+      "exactMatches250to300": [],
+      "samePairingAndClock250to300": [],
+      "samePairingIgnoringClockNumber250to300": [],
+      "samePairingAllowingMirrorsAndRenumbering250to300": [],
+      "sameGeometryAndSpecials250to300": []
+    },
+    {
+      "level": 314,
+      "source": "batch2 306",
+      "exactMatches250to300": [],
+      "samePairingAndClock250to300": [],
+      "samePairingIgnoringClockNumber250to300": [],
+      "samePairingAllowingMirrorsAndRenumbering250to300": [],
+      "sameGeometryAndSpecials250to300": []
+    },
+    {
+      "level": 315,
+      "source": "chained waitLookalikeRoof-L14-s5-p2",
+      "exactMatches250to300": [],
+      "samePairingAndClock250to300": [],
+      "samePairingIgnoringClockNumber250to300": [],
+      "samePairingAllowingMirrorsAndRenumbering250to300": [],
+      "sameGeometryAndSpecials250to300": []
+    },
+    {
+      "level": 316,
+      "source": "chained waitLookalikeWay-L31-s5-p1",
+      "exactMatches250to300": [],
+      "samePairingAndClock250to300": [],
+      "samePairingIgnoringClockNumber250to300": [],
+      "samePairingAllowingMirrorsAndRenumbering250to300": [],
+      "sameGeometryAndSpecials250to300": []
+    },
+    {
+      "level": 317,
+      "source": "batch2 307",
+      "exactMatches250to300": [],
+      "samePairingAndClock250to300": [],
+      "samePairingIgnoringClockNumber250to300": [],
+      "samePairingAllowingMirrorsAndRenumbering250to300": [],
+      "sameGeometryAndSpecials250to300": []
+    },
+    {
+      "level": 318,
+      "source": "chained waitThawWay-L31-s3-p1",
+      "exactMatches250to300": [],
+      "samePairingAndClock250to300": [],
+      "samePairingIgnoringClockNumber250to300": [],
+      "samePairingAllowingMirrorsAndRenumbering250to300": [],
+      "sameGeometryAndSpecials250to300": []
+    },
+    {
+      "level": 319,
+      "source": "batch2 308",
+      "exactMatches250to300": [],
+      "samePairingAndClock250to300": [],
+      "samePairingIgnoringClockNumber250to300": [],
+      "samePairingAllowingMirrorsAndRenumbering250to300": [],
+      "sameGeometryAndSpecials250to300": []
+    },
+    {
+      "level": 320,
+      "source": "chained waitNested-L36-s3-p1",
+      "exactMatches250to300": [],
+      "samePairingAndClock250to300": [],
+      "samePairingIgnoringClockNumber250to300": [],
+      "samePairingAllowingMirrorsAndRenumbering250to300": [],
+      "sameGeometryAndSpecials250to300": []
+    },
+    {
+      "level": 321,
+      "source": "chained waitThawKey-L18-s4-p1",
+      "exactMatches250to300": [],
+      "samePairingAndClock250to300": [],
+      "samePairingIgnoringClockNumber250to300": [],
+      "samePairingAllowingMirrorsAndRenumbering250to300": [],
+      "sameGeometryAndSpecials250to300": []
+    },
+    {
+      "level": 322,
+      "source": "batch2 309",
+      "exactMatches250to300": [],
+      "samePairingAndClock250to300": [],
+      "samePairingIgnoringClockNumber250to300": [],
+      "samePairingAllowingMirrorsAndRenumbering250to300": [],
+      "sameGeometryAndSpecials250to300": []
+    },
+    {
+      "level": 323,
+      "source": "chained lookalikeThaw-L31-s1-p1",
+      "exactMatches250to300": [],
+      "samePairingAndClock250to300": [],
+      "samePairingIgnoringClockNumber250to300": [],
+      "samePairingAllowingMirrorsAndRenumbering250to300": [],
+      "sameGeometryAndSpecials250to300": []
+    },
+    {
+      "level": 324,
+      "source": "chained lookalikeCover-L18-s3-p1",
+      "exactMatches250to300": [],
+      "samePairingAndClock250to300": [],
+      "samePairingIgnoringClockNumber250to300": [],
+      "samePairingAllowingMirrorsAndRenumbering250to300": [],
+      "sameGeometryAndSpecials250to300": []
+    },
+    {
+      "level": 325,
+      "source": "batch2 311",
+      "exactMatches250to300": [],
+      "samePairingAndClock250to300": [],
+      "samePairingIgnoringClockNumber250to300": [],
+      "samePairingAllowingMirrorsAndRenumbering250to300": [],
+      "sameGeometryAndSpecials250to300": []
+    },
+    {
+      "level": 326,
+      "source": "chained lookalikeWay-L18-s1-p1",
+      "exactMatches250to300": [],
+      "samePairingAndClock250to300": [],
+      "samePairingIgnoringClockNumber250to300": [],
+      "samePairingAllowingMirrorsAndRenumbering250to300": [],
+      "sameGeometryAndSpecials250to300": []
+    },
+    {
+      "level": 327,
+      "source": "chained roofThawKey-L18-s4-p1",
+      "exactMatches250to300": [],
+      "samePairingAndClock250to300": [],
+      "samePairingIgnoringClockNumber250to300": [],
+      "samePairingAllowingMirrorsAndRenumbering250to300": [],
+      "sameGeometryAndSpecials250to300": []
+    },
+    {
+      "level": 328,
+      "source": "batch2 312",
+      "exactMatches250to300": [],
+      "samePairingAndClock250to300": [],
+      "samePairingIgnoringClockNumber250to300": [],
+      "samePairingAllowingMirrorsAndRenumbering250to300": [],
+      "sameGeometryAndSpecials250to300": []
+    },
+    {
+      "level": 329,
+      "source": "chained waitLookalikeRoof-L18-s5-p1",
+      "exactMatches250to300": [],
+      "samePairingAndClock250to300": [],
+      "samePairingIgnoringClockNumber250to300": [],
+      "samePairingAllowingMirrorsAndRenumbering250to300": [],
+      "sameGeometryAndSpecials250to300": []
+    },
+    {
+      "level": 330,
+      "source": "chained waitLookalikeWay-L14-s5-p1",
+      "exactMatches250to300": [],
+      "samePairingAndClock250to300": [],
+      "samePairingIgnoringClockNumber250to300": [],
+      "samePairingAllowingMirrorsAndRenumbering250to300": [],
+      "sameGeometryAndSpecials250to300": []
+    },
+    {
+      "level": 331,
+      "source": "batch2 313",
+      "exactMatches250to300": [],
+      "samePairingAndClock250to300": [],
+      "samePairingIgnoringClockNumber250to300": [],
+      "samePairingAllowingMirrorsAndRenumbering250to300": [],
+      "sameGeometryAndSpecials250to300": []
+    }
+  ]
+}

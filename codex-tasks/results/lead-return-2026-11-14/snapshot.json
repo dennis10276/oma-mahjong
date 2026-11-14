@@ -1,0 +1,77 @@
+{
+  "collectedAtUtc": "2026-11-14T14:39:14.326Z",
+  "branches": {
+    "claude": "56c0218f6d9df91074820069cbf2393722a7b382",
+    "task17": "a22f835cd910f5c9f4d52366df1731031a65d111",
+    "handoffBase": "56c0218f6d9df91074820069cbf2393722a7b382"
+  },
+  "http": [
+    {
+      "port": 8264,
+      "url": "http://127.0.0.1:8264/lab-ideas.js",
+      "status": 200,
+      "matchesDisk": true,
+      "servedSha256": "e86a6909b5209d7b3c7f1cf6b43aa128b40ad738260dbe865f09f4556421e815",
+      "diskSha256": "e86a6909b5209d7b3c7f1cf6b43aa128b40ad738260dbe865f09f4556421e815"
+    },
+    {
+      "port": 8265,
+      "url": "http://127.0.0.1:8265/lab-ideas.js",
+      "status": 200,
+      "matchesDisk": true,
+      "servedSha256": "0789c6c0915f4f7f03cf98854e76e60dcc1c10ff03f0f57c832fffc12a89c196",
+      "diskSha256": "0789c6c0915f4f7f03cf98854e76e60dcc1c10ff03f0f57c832fffc12a89c196"
+    }
+  ],
+  "rawSources": [
+    {
+      "path": "C:\\Users\\den_k\\Idea\\OmasMahjong\\cc-builder-loop\\source\\build\\try-lab-10-findings.json",
+      "sha256": "c758d94350e23ff6fa1bdd86b1066b474a04427015796c4a9e7cad37b159e227"
+    },
+    {
+      "path": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-2\\source\\build\\chained-v2-lab-findings.json",
+      "sha256": "46caef7db973b26156f9ca7f5e568300ff6e1ee31b8b834b379db56e10198d70"
+    },
+    {
+      "path": "C:\\Users\\den_k\\Idea\\OmasMahjong\\cc-builder-loop\\source\\analysis\\builder\\LEVEL-DESIGN-FACTS.md",
+      "sha256": "66a069ad8059b9d830e10dbed98163b553e38efb6640026f96e2d34cb983ed43"
+    },
+    {
+      "path": "C:\\Users\\den_k\\Idea\\OmasMahjong\\cc-builder-loop\\source\\analysis\\builder\\bank\\placed-250-B\\level-250.json",
+      "sha256": "41b62d643eecf96a9ab18dea9defb952c9f26f57158e1eb91e65feeb481c3406"
+    },
+    {
+      "path": "C:\\Users\\den_k\\Idea\\OmasMahjong\\cc-builder-loop\\source\\analysis\\builder\\bank\\placed-303\\placed.md",
+      "sha256": "1f9cbf3be829cbac85591959416ecb0319a7d3431dd75443d918cf2e8f5add12"
+    },
+    {
+      "path": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-2\\codex-tasks\\results\\chained-2\\REPORT.md",
+      "sha256": "b29c34ecee967a8b2a4c14af5d20d057a75ffbd4cabe30a869ac94407eb70c0d"
+    },
+    {
+      "path": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-2\\codex-tasks\\results\\chained-2\\LAB-FINDINGS.md",
+      "sha256": "a84d9605fc597ef17430ce5f7f8303bb99fd727379e53b6b4d15b274f7a3dc0a"
+    },
+    {
+      "path": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-2\\codex-tasks\\results\\chained-2\\validation.json",
+      "sha256": "b7a1cc7d22958d0ae40f463068d68aaf38c9d3ce23bd23367594babf1bc17e7a"
+    }
+  ],
+  "port8264": {
+    "writtenNotes": 7,
+    "servedIdeas": 7
+  },
+  "task17": {
+    "writtenOriginalNotes": 8,
+    "allReportedRatingsMatchLive": true
+  },
+  "level327": {
+    "level": 327,
+    "source": "chained roofThawKey-L18-s4-p1",
+    "exactMatches250to300": [],
+    "samePairingAndClock250to300": [],
+    "samePairingIgnoringClockNumber250to300": [],
+    "samePairingAllowingMirrorsAndRenumbering250to300": [],
+    "sameGeometryAndSpecials250to300": []
+  }
+}

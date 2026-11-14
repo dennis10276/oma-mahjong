@@ -1,0 +1,373 @@
+{
+  "sourceSavedAt": "2026-11-14T14:17:09.417Z",
+  "labMade": "2026-11-14T12:41:25.834Z",
+  "records": [
+    {
+      "id": 2041306,
+      "labelLevel": 306,
+      "title": "306 · waitThawKey",
+      "boardSha256": "6160b70fe069e4bcb47e0617523fe4ebffe93269b3a95cd92b40b7c3f26cd941",
+      "solutionSha256": "67b201936620119c23fd30e41ac3f9617479e4183ea676e10c6f8f51bf5d21ab",
+      "exactPlacedMatches": [
+        {
+          "level": 306,
+          "source": "chained waitThawKey-L14-s2-p2"
+        }
+      ],
+      "rating": {
+        "note": "Trap feels like an AHA but can easily sit in the <300 range. Its not that hard to spot.",
+        "stars": 4,
+        "verdict": "easy",
+        "starts": 1,
+        "tries": 1,
+        "wins": 1,
+        "results": [
+          {
+            "r": "win",
+            "left": 0,
+            "s": 198,
+            "t": 1794660617125
+          }
+        ]
+      },
+      "counters": {
+        "completedRecords": 1,
+        "types": {
+          "win": 1
+        },
+        "startsCounter": 1,
+        "triesCounter": 1,
+        "winsCounter": 1
+      }
+    },
+    {
+      "id": 2041309,
+      "labelLevel": 309,
+      "title": "309 · lookalikeCover",
+      "boardSha256": "870c35e1b456cb3f46302bb37d35b14a81c985046f8891c9ff186562ffac5c53",
+      "solutionSha256": "551b6a047cbb476e37c55b735998ef8b2a959b8072053ba4c0d3acbd6a01f5e3",
+      "exactPlacedMatches": [
+        {
+          "level": 309,
+          "source": "chained lookalikeCover-L31-s1-p1"
+        }
+      ],
+      "rating": {
+        "note": "Feels like an AHA good. puzzle for 290s <300 level tho",
+        "stars": 4,
+        "verdict": null,
+        "starts": 2,
+        "tries": 3,
+        "wins": 1,
+        "results": [
+          {
+            "r": "stuck",
+            "left": 65,
+            "s": 92,
+            "t": 1794660756593,
+            "ck": 1
+          },
+          {
+            "r": "stuck",
+            "left": 65,
+            "s": 22,
+            "t": 1794660780963,
+            "ck": 1
+          },
+          {
+            "r": "win",
+            "left": 0,
+            "s": 105,
+            "t": 1794660887434
+          }
+        ]
+      },
+      "counters": {
+        "completedRecords": 3,
+        "types": {
+          "stuck": 2,
+          "win": 1
+        },
+        "startsCounter": 2,
+        "triesCounter": 3,
+        "winsCounter": 1
+      }
+    },
+    {
+      "id": 2041312,
+      "labelLevel": 312,
+      "title": "312 · lookalikeWay",
+      "boardSha256": "fddec25d6d6993165555c310797426fbb6dc044f6b1a49f3f7739e7d69f86d4e",
+      "solutionSha256": "c2303144c89c8a91761cd0218108ac3e6d90424190154b75bd06ae7a161335a5",
+      "exactPlacedMatches": [
+        {
+          "level": 312,
+          "source": "chained lookalikeWay-L14-s3-p1"
+        }
+      ],
+      "rating": {
+        "note": "Did I fall in the trap the first times? Was it impossible that way? Really cool to make it. 300+ approved",
+        "stars": 5,
+        "verdict": "right",
+        "starts": 1,
+        "tries": 7,
+        "wins": 1,
+        "results": [
+          {
+            "r": "stuck",
+            "left": 74,
+            "s": 52,
+            "t": 1794660991936
+          },
+          {
+            "r": "stuck",
+            "left": 68,
+            "s": 76,
+            "t": 1794661068976
+          },
+          {
+            "r": "stuck",
+            "left": 70,
+            "s": 75,
+            "t": 1794661145921
+          },
+          {
+            "r": "restart",
+            "left": 51,
+            "s": 117,
+            "t": 1794661266468
+          },
+          {
+            "r": "restart",
+            "left": 57,
+            "s": 134,
+            "t": 1794661404099
+          },
+          {
+            "r": "stuck",
+            "left": 56,
+            "s": 103,
+            "t": 1794661507553
+          },
+          {
+            "r": "win",
+            "left": 0,
+            "s": 141,
+            "t": 1794661649124
+          }
+        ]
+      },
+      "counters": {
+        "completedRecords": 7,
+        "types": {
+          "stuck": 4,
+          "restart": 2,
+          "win": 1
+        },
+        "startsCounter": 1,
+        "triesCounter": 7,
+        "winsCounter": 1
+      }
+    },
+    {
+      "id": 2041315,
+      "labelLevel": 315,
+      "title": "315 · waitLookalikeRoof",
+      "boardSha256": "b040740febd3441be36eee90ad6c353c8fe8b5ec04a9e367b3eb40a180dbc963",
+      "solutionSha256": "d10d3822b59c723d4b3363f9562e4e90b0da5fff0caffaf9163fe2a21d298698",
+      "exactPlacedMatches": [
+        {
+          "level": 315,
+          "source": "chained waitLookalikeRoof-L14-s5-p2"
+        }
+      ],
+      "rating": {
+        "note": "Fine to put in 300+",
+        "stars": 4,
+        "verdict": "right",
+        "starts": 1,
+        "tries": 2,
+        "wins": 1,
+        "results": [
+          {
+            "r": "stuck",
+            "left": 74,
+            "s": 52,
+            "t": 1794661740145
+          },
+          {
+            "r": "win",
+            "left": 0,
+            "s": 121,
+            "t": 1794661862983
+          }
+        ]
+      },
+      "counters": {
+        "completedRecords": 2,
+        "types": {
+          "stuck": 1,
+          "win": 1
+        },
+        "startsCounter": 1,
+        "triesCounter": 2,
+        "winsCounter": 1
+      }
+    },
+    {
+      "id": 2041316,
+      "labelLevel": 316,
+      "title": "316 · waitLookalikeWay",
+      "boardSha256": "2e4774034f4b10093a53f2e16cf28ee4a295d3888700779344b1cfa0dc54ff07",
+      "solutionSha256": "4c1752a73ed10b9d9a49df112f9e35f7ca687accd47dc58dae752099d5439d1d",
+      "exactPlacedMatches": [
+        {
+          "level": 316,
+          "source": "chained waitLookalikeWay-L31-s5-p1"
+        }
+      ],
+      "rating": {
+        "note": "Feels like an AHA definetely. I got there maybe even earlier then intended? Keep it like it is tho and place it 325+",
+        "stars": 5,
+        "verdict": "right",
+        "starts": 4,
+        "tries": 5,
+        "wins": 1,
+        "results": [
+          {
+            "r": "restart",
+            "left": 72,
+            "s": 55,
+            "t": 1794662016954
+          },
+          {
+            "r": "stuck",
+            "left": 62,
+            "s": 107,
+            "t": 1794662124303
+          },
+          {
+            "r": "stuck",
+            "left": 66,
+            "s": 94,
+            "t": 1794662219442
+          },
+          {
+            "r": "restart",
+            "left": 73,
+            "s": 32,
+            "t": 1794662286763
+          },
+          {
+            "r": "win",
+            "left": 0,
+            "s": 103,
+            "t": 1794662449940
+          }
+        ]
+      },
+      "counters": {
+        "completedRecords": 5,
+        "types": {
+          "restart": 2,
+          "stuck": 2,
+          "win": 1
+        },
+        "startsCounter": 4,
+        "triesCounter": 5,
+        "winsCounter": 1
+      }
+    },
+    {
+      "id": 2041327,
+      "labelLevel": 327,
+      "title": "327 · roofThawKey",
+      "boardSha256": "0018b2edfff3d667d4d99bed573b373add336eea1b0896d662f9d49f56a6d6a0",
+      "solutionSha256": "3411622444facf6aadaf0c878dc1aa93a8d3ae116d5cbae107e9c2d62beee448",
+      "exactPlacedMatches": [
+        {
+          "level": 327,
+          "source": "chained roofThawKey-L18-s4-p1"
+        }
+      ],
+      "rating": {
+        "note": "Good level for 300+. feels like I played it before. Make sure there is no copy of anything in 250-300.",
+        "stars": 4,
+        "verdict": "right",
+        "starts": 3,
+        "tries": 3,
+        "wins": 1,
+        "results": [
+          {
+            "r": "stuck",
+            "left": 65,
+            "s": 93,
+            "t": 1794662557068,
+            "ck": 1
+          },
+          {
+            "r": "stuck",
+            "left": 65,
+            "s": 50,
+            "t": 1794662608624,
+            "ck": 1
+          },
+          {
+            "r": "win",
+            "left": 0,
+            "s": 79,
+            "t": 1794662753891
+          }
+        ]
+      },
+      "counters": {
+        "completedRecords": 3,
+        "types": {
+          "stuck": 2,
+          "win": 1
+        },
+        "startsCounter": 3,
+        "triesCounter": 3,
+        "winsCounter": 1
+      }
+    },
+    {
+      "id": 2041329,
+      "labelLevel": 329,
+      "title": "329 · waitLookalikeRoof",
+      "boardSha256": "f42b98e68ad66b258f073b91e3efe09cf945ad29f883a01a56bc1cf0aa03deef",
+      "solutionSha256": "1f1edc74444ac7d30093324b9e9a02e888d71bd4aca2da24fc22a6e683d29373",
+      "exactPlacedMatches": [
+        {
+          "level": 329,
+          "source": "chained waitLookalikeRoof-L18-s5-p1"
+        }
+      ],
+      "rating": {
+        "note": "Easier to spot chain This can go in 290-300 or start of chained in 300.",
+        "stars": 4,
+        "verdict": null,
+        "starts": 2,
+        "tries": 1,
+        "wins": 1,
+        "results": [
+          {
+            "r": "win",
+            "left": 0,
+            "s": 141,
+            "t": 1794662943891
+          }
+        ]
+      },
+      "counters": {
+        "completedRecords": 1,
+        "types": {
+          "win": 1
+        },
+        "startsCounter": 2,
+        "triesCounter": 1,
+        "winsCounter": 1
+      }
+    }
+  ]
+}

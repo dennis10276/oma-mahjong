@@ -1,0 +1,45 @@
+{
+  "checkedAtUtc": "2026-11-14T14:39:19.578Z",
+  "labPort": 8264,
+  "id": 2041312,
+  "level": 312,
+  "source": "chained lookalikeWay-L14-s3-p1",
+  "designSha256": "842bda95e5441ae909b25793684b52c8b70466f5614dd6a69d1c4c0a292e0c82",
+  "strictReplay": {
+    "ok": true,
+    "pairs": 0
+  },
+  "clock": {
+    "n": 19,
+    "k": 18,
+    "unresolvedMinimum": false
+  },
+  "designatedBaits": [
+    {
+      "offeredTiles": [
+        75
+      ],
+      "resultAtShippedClock": "lose",
+      "nodes": 3749,
+      "sourceBaitFacesUnchanged": true
+    },
+    {
+      "offeredTiles": [
+        0
+      ],
+      "resultAtShippedClock": "lose",
+      "nodes": 20176,
+      "sourceBaitFacesUnchanged": true
+    },
+    {
+      "offeredTiles": [
+        0,
+        74
+      ],
+      "resultAtShippedClock": "lose",
+      "nodes": 18363,
+      "sourceBaitFacesUnchanged": true
+    }
+  ],
+  "limitation": "The saved localhost ratings contain outcomes, remaining tiles and durations, but no per-move trace of these attempts. A designated bait being losing does not establish that Dennis chose it. His six unsuccessful attempts cannot be attributed from this data."
+}

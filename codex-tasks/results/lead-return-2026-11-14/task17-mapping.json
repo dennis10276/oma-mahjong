@@ -1,0 +1,376 @@
+{
+  "sourceSavedAt": "2026-11-14T14:19:52.260Z",
+  "labMade": "2026-11-14T13:54:20.027Z",
+  "records": [
+    {
+      "id": 170332,
+      "labLevel": 332,
+      "file": "outsideIn-L1-s21-p1.json",
+      "layout": 1,
+      "shape": "outsideIn",
+      "boardSha256": "df083424a7531df797385e3079003d50bdd2e3c49417a08da89658f224cd414b",
+      "rating": {
+        "note": "No AHA. Finish fine but no hard chain.",
+        "stars": 0,
+        "verdict": null,
+        "starts": 2,
+        "tries": 0,
+        "wins": 0,
+        "results": []
+      },
+      "counters": {
+        "completedRecords": 0,
+        "types": {},
+        "startsCounter": 2,
+        "triesCounter": 0,
+        "winsCounter": 0
+      },
+      "reportMatchesLiveRating": true
+    },
+    {
+      "id": 170333,
+      "labLevel": 333,
+      "file": "clearLockRoof-L16-s21-p1.json",
+      "layout": 16,
+      "shape": "clearLockRoof",
+      "boardSha256": "e03dfad8f94dc4783ff6ac1b8761ae27f0bd6a7ad52f605c040b12a49d1c1309",
+      "rating": {
+        "note": "A bit better nut nog hard enough to spot like the other chains.",
+        "stars": 0,
+        "verdict": null,
+        "starts": 1,
+        "tries": 2,
+        "wins": 1,
+        "results": [
+          {
+            "r": "stuck",
+            "left": 64,
+            "s": 30,
+            "t": 1794663102395,
+            "ck": 1
+          },
+          {
+            "r": "win",
+            "left": 0,
+            "s": 114,
+            "t": 1794663217554
+          }
+        ]
+      },
+      "counters": {
+        "completedRecords": 2,
+        "types": {
+          "stuck": 1,
+          "win": 1
+        },
+        "startsCounter": 1,
+        "triesCounter": 2,
+        "winsCounter": 1
+      },
+      "reportMatchesLiveRating": true
+    },
+    {
+      "id": 170334,
+      "labLevel": 334,
+      "file": "lookalikeCoverThaw-L12-s12-p2.json",
+      "layout": 12,
+      "shape": "lookalikeCoverThaw",
+      "boardSha256": "f559bc4aedd6be20622cb16e902ac48e1d74895f46c2ca6b6ac28218c57b895a",
+      "rating": {
+        "note": "This is an AHA yes!. 290-310 level.",
+        "stars": 4,
+        "verdict": null,
+        "starts": 1,
+        "tries": 5,
+        "wins": 1,
+        "results": [
+          {
+            "r": "restart",
+            "left": 69,
+            "s": 118,
+            "t": 1794663378739
+          },
+          {
+            "r": "stuck",
+            "left": 76,
+            "s": 60,
+            "t": 1794663438951,
+            "ck": 1
+          },
+          {
+            "r": "restart",
+            "left": 71,
+            "s": 46,
+            "t": 1794663499296
+          },
+          {
+            "r": "restart",
+            "left": 75,
+            "s": 38,
+            "t": 1794663545549
+          },
+          {
+            "r": "win",
+            "left": 0,
+            "s": 156,
+            "t": 1794663701424
+          }
+        ]
+      },
+      "counters": {
+        "completedRecords": 5,
+        "types": {
+          "restart": 3,
+          "stuck": 1,
+          "win": 1
+        },
+        "startsCounter": 1,
+        "triesCounter": 5,
+        "winsCounter": 1
+      },
+      "reportMatchesLiveRating": true
+    },
+    {
+      "id": 170335,
+      "labLevel": 335,
+      "file": "lookalikeCover-L17-s12-p2.json",
+      "layout": 17,
+      "shape": "lookalikeCover",
+      "boardSha256": "b3737f2bcca148a29acc33f85ff4d92f890e815c1f52444388d2b1b0c002fbed",
+      "rating": {
+        "note": "Its an AHA but early introducing chains. Its an easy one.",
+        "stars": 4,
+        "verdict": "easy",
+        "starts": 3,
+        "tries": 2,
+        "wins": 1,
+        "results": [
+          {
+            "r": "win",
+            "left": 0,
+            "s": 134,
+            "t": 1794663895809
+          },
+          {
+            "r": "stuck",
+            "left": 72,
+            "s": 19,
+            "t": 1794663920556
+          }
+        ]
+      },
+      "counters": {
+        "completedRecords": 2,
+        "types": {
+          "win": 1,
+          "stuck": 1
+        },
+        "startsCounter": 3,
+        "triesCounter": 2,
+        "winsCounter": 1
+      },
+      "reportMatchesLiveRating": true
+    },
+    {
+      "id": 170336,
+      "labLevel": 336,
+      "file": "roofThawKey-L23-s12-p2.json",
+      "layout": 23,
+      "shape": "roofThawKey",
+      "boardSha256": "45873306050bb419b258783c13f80ce3efea467c23feeb4d54ce97ad25ac0352",
+      "rating": {
+        "note": "Yes AHA moment :). 300+ level.",
+        "stars": 4,
+        "verdict": "right",
+        "starts": 3,
+        "tries": 4,
+        "wins": 0,
+        "results": [
+          {
+            "r": "stuck",
+            "left": 68,
+            "s": 93,
+            "t": 1794664052588
+          },
+          {
+            "r": "stuck",
+            "left": 68,
+            "s": 23,
+            "t": 1794664077116
+          },
+          {
+            "r": "restart",
+            "left": 71,
+            "s": 55,
+            "t": 1794664151938
+          },
+          {
+            "r": "restart",
+            "left": 69,
+            "s": 134,
+            "t": 1794664384837
+          }
+        ]
+      },
+      "counters": {
+        "completedRecords": 4,
+        "types": {
+          "stuck": 2,
+          "restart": 2
+        },
+        "startsCounter": 3,
+        "triesCounter": 4,
+        "winsCounter": 0
+      },
+      "reportMatchesLiveRating": true
+    },
+    {
+      "id": 170337,
+      "labLevel": 337,
+      "file": "lookalikeWay-L13-s12-p2.json",
+      "layout": 13,
+      "shape": "lookalikeWay",
+      "boardSha256": "f0579c1456cf374019a09ded6b189277cf5ae1ccb90a9ee1cc201f7d9bf569f0",
+      "rating": {
+        "note": "Got an AHA but got stuck with it. Is that intended? I dont see it otherwise.",
+        "stars": 0,
+        "verdict": "hard",
+        "starts": 3,
+        "tries": 6,
+        "wins": 0,
+        "results": [
+          {
+            "r": "stuck",
+            "left": 84,
+            "s": 118,
+            "t": 1794664808605
+          },
+          {
+            "r": "stuck",
+            "left": 81,
+            "s": 42,
+            "t": 1794664852278,
+            "ck": 1
+          },
+          {
+            "r": "stuck",
+            "left": 92,
+            "s": 19,
+            "t": 1794664872940
+          },
+          {
+            "r": "stuck",
+            "left": 90,
+            "s": 31,
+            "t": 1794664905532
+          },
+          {
+            "r": "restart",
+            "left": 77,
+            "s": 73,
+            "t": 1794665019615
+          },
+          {
+            "r": "stuck",
+            "left": 81,
+            "s": 60,
+            "t": 1794665080028,
+            "ck": 1
+          }
+        ]
+      },
+      "counters": {
+        "completedRecords": 6,
+        "types": {
+          "stuck": 5,
+          "restart": 1
+        },
+        "startsCounter": 3,
+        "triesCounter": 6,
+        "winsCounter": 0
+      },
+      "reportMatchesLiveRating": true
+    },
+    {
+      "id": 170338,
+      "labLevel": 338,
+      "file": "waitLookalikeWay-L7-s11-p1.json",
+      "layout": 7,
+      "shape": "waitLookalikeWay",
+      "boardSha256": "c850ef19fcecc6568685654fa5e429d9cdb2bb319e8dc8ecc4c69d18fed6ec78",
+      "rating": {
+        "note": "Easy to see the trap. too easy.. not even an AHA",
+        "stars": 2,
+        "verdict": "easy",
+        "starts": 1,
+        "tries": 1,
+        "wins": 1,
+        "results": [
+          {
+            "r": "win",
+            "left": 0,
+            "s": 126,
+            "t": 1794665339184
+          }
+        ]
+      },
+      "counters": {
+        "completedRecords": 1,
+        "types": {
+          "win": 1
+        },
+        "startsCounter": 1,
+        "triesCounter": 1,
+        "winsCounter": 1
+      },
+      "reportMatchesLiveRating": true
+    },
+    {
+      "id": 170339,
+      "labLevel": 339,
+      "file": "waitThawKey-L4-s11-p1.json",
+      "layout": 4,
+      "shape": "waitThawKey",
+      "boardSha256": "33d8e4a14e1689045b89eaf48f0ea84eaf7fc14581f9769283c6a0ebc17ecf6d",
+      "rating": {
+        "note": "Just about an AHA could be place around 275 or more chained to place later.",
+        "stars": 3,
+        "verdict": "easy",
+        "starts": 2,
+        "tries": 3,
+        "wins": 1,
+        "results": [
+          {
+            "r": "restart",
+            "left": 81,
+            "s": 14,
+            "t": 1794665425190
+          },
+          {
+            "r": "restart",
+            "left": 76,
+            "s": 63,
+            "t": 1794665500195
+          },
+          {
+            "r": "win",
+            "left": 0,
+            "s": 134,
+            "t": 1794665634497
+          }
+        ]
+      },
+      "counters": {
+        "completedRecords": 3,
+        "types": {
+          "restart": 2,
+          "win": 1
+        },
+        "startsCounter": 2,
+        "triesCounter": 3,
+        "winsCounter": 1
+      },
+      "reportMatchesLiveRating": true
+    }
+  ]
+}

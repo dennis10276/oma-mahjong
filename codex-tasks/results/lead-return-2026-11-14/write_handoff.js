@@ -1,0 +1,90 @@
+'use strict';
+const fs = require('fs'), path = require('path');
+const OUT = __dirname, load = f => JSON.parse(fs.readFileSync(path.join(OUT, f), 'utf8'));
+const snap = load('snapshot.json'), p10 = load('port8264-mapping.json'), t17 = load('task17-mapping.json'), reuse = load('reuse-audit.json'), mechanical = load('level312-mechanical-check.json');
+const rows10 = p10.records.filter(r => r.rating?.note?.trim()), rows17 = t17.records;
+const esc = x => String(x ?? '').replace(/\|/g, '\\|').replace(/\r?\n/g, '<br>');
+const stars = r => r.stars ? r.stars : 'unrated';
+const outcomes = r => Object.entries(r.counters.types).map(([k, v]) => `${v} ${k}`).join(', ') || 'no completed record';
+const time = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Amsterdam', dateStyle: 'long', timeStyle: 'short' }).format(new Date(snap.collectedAtUtc));
+const write = (name, lines) => fs.writeFileSync(path.join(OUT, name), lines.join('\n') + '\n');
+write('PORT-8264.md', [
+  '# Port 8264 — Claude lab 10 / placed 303–331', '',
+  `Snapshot collected ${time} Europe/Amsterdam. Raw findings saved at ${p10.sourceSavedAt}. This is separate from Task 17.`, '',
+  'Seven written notes are reproduced verbatim below. Each served board matches exactly one current placed board by its full board fingerprint. The served manifest was checked by HTTP GET against the source file. No rating was moved between variants.', '',
+  '| Placed level | Lab ID | Exact source | Stars | Verdict choice | Recorded outcomes | Dennis’s note, verbatim |',
+  '|---:|---:|---|---:|---|---|---|',
+  ...rows10.map(r => `| ${r.exactPlacedMatches[0]?.level ?? 'unmatched'} | ${r.id} | ${esc(r.exactPlacedMatches[0]?.source)} | ${stars(r.rating)} | ${r.rating.verdict || 'unset'} | ${outcomes(r)} | ${esc(r.rating.note)} |`), '',
+  'The written level ranges/approvals apply to these exact boards. The counters for starts and tries are not interchangeable. Outcome records, the original counters and hashes are retained in port8264-mapping.json; raw fields are in port8264-raw.json. A zero stars field is displayed as unrated.', '',
+  '## Mechanical questions', '',
+  '**312:** the served board has a strict winning solution; the proven shortest clock is 18 with its timer at 19. On this exact board, the saved designated opening offers [75], [0] and [0,74] each lose at the shipped timer in an independent engine check. The local ratings provide four stuck outcomes, two restarts and a win. They do not contain per-move histories, so they do not establish whether Dennis took any of those offers. The question about his actual first attempts remains unanswered. See level312-mechanical-check.json; these tile IDs are zero-based engine indices.', '',
+  '**327:** compared with every current placed board 250–300. No exact duplicate, picture-relabeled pairing duplicate, clock-number-only variant, or pairing duplicate under translation, reflection and tile renumbering was found. No identical layout-plus-special-position fingerprint was found either. This answers specific mechanical copy checks; it does not establish that the wrong idea feels new. Dennis’s “feels like I played it before” remains valid feedback for Claude to consider. See reuse-audit.json for definitions and every comparison.', '',
+  '## Source and preservation', '',
+  '- Live lab: http://127.0.0.1:8264/',
+  '- Original raw source: cc-builder-loop/source/build/try-lab-10-findings.json',
+  '- Claude already has an untracked copy at cc-builder-loop/source/analysis/builder/process-v2/lab-findings-2026-11-14-lab10.json. It was left untouched.',
+  '- Pinned served boards: port8264-served-boards.json. Exact mappings: port8264-mapping.json.',
+  '- This handoff assigns no new difficulty scores and changes no board.',
+]);
+write('TASK-17.md', [
+  '# Task 17 — separate feedback stream', '',
+  `Task branch snapshot: ${snap.branches.task17}. Its current source report already includes the eight original notes. At collection time all eight report rating objects matched the live findings file exactly.`, '',
+  'Task 17’s original reviewed set is at http://127.0.0.1:8265/ . Additional candidates are at /new.html. Neither is port 8264. The original reviewed IDs are pinned; matching lab level numbers do not identify the same board across pages.', '',
+  '| Original review label | Lab ID | Exact file | Stars | Verdict choice | Recorded outcomes | Dennis’s note, verbatim |',
+  '|---:|---:|---|---:|---|---|---|',
+  ...rows17.map(r => `| ${r.labLevel} | ${r.id} | ${r.file} | ${stars(r.rating)} | ${r.rating.verdict || 'unset'} | ${outcomes(r)} | ${esc(r.rating.note)} |`), '',
+  '## Existing delivery status, attributed to the Task 17 report', '',
+  '- Technical delivery: 60 primary boards on 29 layouts, 2 clearer variants, 6 new implemented bait kinds. The report records a 62-board independent audit.',
+  '- Human review is mixed. The selection manifest does not approve the bank as consecutive levels 332 and up. The ordering predates the feedback and is an author judgment, not a user-approved placement order.',
+  '- The source report holds the exact lookalikeWay-L13-s12-p2 board for continuation/clue review. An engine solution does not settle whether Dennis could read the intended continuation.',
+  '- The reviewed outsideIn-L1 pilot differs from the primary outsideIn-L23 board. The reviewed waitLookalikeWay-L7 seed/spare differs from its primary sibling. The two clearer lookalikeCoverThaw variants differ from the positively reviewed L12 board. No verdict transfers between them.',
+  '- New idea count and search success establish implementation coverage. They do not prove that a person experiences six new AHA moments.', '',
+  'Source documents: codex-chained-2/codex-tasks/results/chained-2/REPORT.md and LAB-FINDINGS.md. Exact raw notes and mappings are pinned separately here in task17-raw.json and task17-mapping.json. These statements preserve the existing report’s status; this handoff supplies no replacement ranking or design direction.',
+]);
+const duplicates = reuse.records.filter(r => r.exactMatches250to300.length || r.samePairingAllowingMirrorsAndRenumbering250to300.length);
+write('REPORT.md', [
+  '# Claude return — evidence and current state', '',
+  `Prepared ${time} Europe/Amsterdam. This is a handoff for Claude as lead, with the two feedback streams kept separate. It is a snapshot, not a new design plan.`, '',
+  '## Start here', '',
+  `1. Claude’s current baseline is **wip/cc-builder-loop at ${snap.branches.claude.slice(0, 8)}**, in cc-builder-loop. Task 16 is closed and was taken back by Claude. Resume from that baseline rather than the old Codex continuation branch.`,
+  '2. Read [PORT-8264.md](PORT-8264.md): seven direct verdicts on the current placed 303–331 set, including the positive 312/316 notes and the 327 copy question.',
+  `3. Read [TASK-17.md](TASK-17.md) separately: eight notes on the Task 17 original lab set. The review branch is wip/codex-chained-2 at ${snap.branches.task17.slice(0, 8)}. Its technical bank is delivered; its human review and placement remain open. It is not merged into Claude’s current baseline.`,
+  '4. Review your current builder and the exact boards using your own design judgment. The technical pass counts and the earlier Codex order are not acceptance decisions about AHA or difficulty.', '',
+  '## Dennis’s direction for this handoff', '',
+  '> See where claude is now. task 17 just got done http://127.0.0.1:8264/ I put in my thoughts. Make it so that everything is clear for claude when he starts again. Do the work you feel like wouldnt make claude get your biases. Claude so far made more original AHA chained moments with the builder so I wont want him on the wrong foot when he picks up as lead again in 2 hours.', '',
+  'Dennis then clarified:', '',
+  '> task 17 is seperate from 8264 feedback.', '',
+  'These are the user’s words. This package preserves them and the exact lab comments rather than inventing a new target, recipe, ordering or interpretation of AHA.', '',
+  '## Current lead state', '',
+  '- Task 16 takeover: 43bfbc3a. Clock-19 / pressure-parks correction: 78c96b8a. Strength-B 250–302: e30ae41d. Current placed 303–331 and lighter tails: 56c0218f.',
+  '- Current placed inputs: source/analysis/builder/bank/placed-250-B/ and placed-303/ on Claude’s branch. The latter combines eighteen chained-mix boards with eleven of Claude’s chain boards.',
+  '- Current pressure measure: source/tools/builder/bank/feel.js, expert(), and feel_retune.js. Claude’s existing guidance uses about 7.5 pressure parks for a familiar/easy-to-see wrong idea, and 1.5–3 after a hard new-idea chain. This handoff does not retune those settings.',
+  '- The older forcedPressure target counts brief visits to the tray that do not establish felt pressure. My earlier “target pass” statements referred to that retired mathematical criterion; they do not establish human difficulty or AHA. Claude’s later correction supersedes them.',
+  '- Level 271 stays at clock 19. Dennis explicitly said it works and to keep it. This is already recorded in Claude’s facts.',
+  '- Claude’s worktree currently has one untracked lab-10 findings snapshot. This handoff preserves its source separately and leaves the worktree untouched.', '',
+  '## Read-only work completed here', '',
+  '- Captured both raw findings files, both exact served board sets, their board mappings, source commit IDs and SHA-256 hashes. HTTP GET confirmed each local page serves its matching captured manifest.',
+  '- Verified all seven port-8264 written verdicts map to the exact current placed boards. Verified all eight Task-17 report rating objects match their live source records.',
+  `- Compared all 29 current placed boards 303–331 with all 51 current boards 250–300 under explicit copy fingerprints. Found ${duplicates.length} exact or translated/reflected/picture-relabeled pairing duplicates. The specific 327 result is in PORT-8264.md; thematic repetition is not disproved by this audit.`,
+  '- Independently checked the exact served 312 solution, shortest clock, and the saved designated losing opening offers. Recorded the limit: outcomes alone cannot identify Dennis’s actual mistakes.',
+  '- Kept Task 17’s unrated candidates and human-review limitations explicit. No technical proof is labeled a human AHA proof.', '',
+  '## Superseded Codex work', '',
+  'The post-takeover amendments in codex-builder-continue were removed from the working tree into an explicitly superseded local archive. No later forced-waiter candidate batch was promoted into the lead branch.', '',
+  '- Old branch: wip/codex-builder-continue at e356cc2d; already superseded by Claude’s takeover and corrections.',
+  '- Archived post-takeover changes: git object 8d8d9b06c27b90a30aad186d97c44bfebdfc45a3, pinned at refs/archive/codex-task16-post-takeover. Diagnostic history only. It includes the unadopted five-moment amendments and experimental batch.',
+  '- Ignored old search outputs remain in that old worktree’s source/build/traps/. They are not current placed levels or recommended inputs.',
+  '- This handoff branch starts from Claude’s current baseline and adds only evidence/documents and read-only collection/check scripts. There are no builder, board, level-table, metric, release or Firebase changes in this handoff.', '',
+  '## Open questions, with evidence limits', '',
+  '- Port 8264, 312: named bait offers really lose on the current board, but the saved local outcomes do not reveal whether Dennis used them. His question about the first attempts remains open.',
+  '- Port 8264, 327: no mechanical copy was detected under the documented fingerprints. Dennis’s sense of familiarity still needs the lead’s judgment about the wrong idea and its presentation.',
+  '- Task 17, original 337: the intended continuation was not clear to Dennis. Keep this exact review issue separate from port 8264’s 312 question.',
+  '- Task 17’s weaker-AHA examples and untested variants still need lead review. No new ranking or recipe is prescribed here.', '',
+  '## Reproduce and refresh', '',
+  'From codex-lead-handoff:', '',
+  '```powershell',
+  'node codex-tasks/results/lead-return-2026-11-14/collect_evidence.js',
+  'node source/tools/builder/loop/heavy.js --label lead-handoff-312-check --cores 1 -- node codex-tasks/results/lead-return-2026-11-14/verify_312.js',
+  'node codex-tasks/results/lead-return-2026-11-14/write_handoff.js',
+  '```', '',
+  'Refresh reads the current files and local manifests; it writes only this evidence folder. The two local lab servers were left running. No raw rating or served board was changed.',
+]);
