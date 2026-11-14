@@ -1,5 +1,5 @@
 {
- "savedAt": "2026-11-14T11:51:30.143Z",
+ "savedAt": "2026-11-14T12:34:15.585Z",
  "ratings": {
   "2042021": {
    "note": "",
@@ -69,49 +69,172 @@
    "results": []
   },
   "2042210": {
-   "note": "",
-   "stars": 0,
-   "verdict": null,
-   "starts": 0,
-   "tries": 0,
-   "wins": 0,
-   "results": []
+   "note": "I could only find the solution after asking you. The chain would feel like a AHA moment but a little too extreme. I like it though! make this like the very end levels archived 999+ or something and make this version a little less hard to spot.\nThe part after the trap feels fine btw. almost all of codex's ideas have a fine after trap tray pressure.",
+   "stars": 4,
+   "verdict": "hard",
+   "starts": 3,
+   "tries": 11,
+   "wins": 1,
+   "results": [
+    {
+     "r": "stuck",
+     "left": 66,
+     "s": 68,
+     "t": 1794657208910
+    },
+    {
+     "r": "stuck",
+     "left": 72,
+     "s": 51,
+     "t": 1794657261646
+    },
+    {
+     "r": "stuck",
+     "left": 72,
+     "s": 25,
+     "t": 1794657288191
+    },
+    {
+     "r": "stuck",
+     "left": 65,
+     "s": 82,
+     "t": 1794657385432,
+     "ck": 1
+    },
+    {
+     "r": "stuck",
+     "left": 72,
+     "s": 103,
+     "t": 1794657489966
+    },
+    {
+     "r": "stuck",
+     "left": 65,
+     "s": 48,
+     "t": 1794657538977,
+     "ck": 1
+    },
+    {
+     "r": "restart",
+     "left": 74,
+     "s": 18,
+     "t": 1794657597269
+    },
+    {
+     "r": "restart",
+     "left": 75,
+     "s": 1,
+     "t": 1794657617985
+    },
+    {
+     "r": "stuck",
+     "left": 65,
+     "s": 148,
+     "t": 1794657803010,
+     "ck": 1
+    },
+    {
+     "r": "restart",
+     "left": 68,
+     "s": 14,
+     "t": 1794657901400
+    },
+    {
+     "r": "win",
+     "left": 0,
+     "s": 278,
+     "t": 1794658179334
+    }
+   ]
   },
   "2042220": {
-   "note": "",
-   "stars": 0,
-   "verdict": null,
-   "starts": 0,
-   "tries": 0,
-   "wins": 0,
-   "results": []
+   "note": "Good like this. Dont increase tray pressure after this is really even a little bit too much already.",
+   "stars": 4,
+   "verdict": "right",
+   "starts": 3,
+   "tries": 2,
+   "wins": 1,
+   "results": [
+    {
+     "r": "restart",
+     "left": 49,
+     "s": 198,
+     "t": 1794658549173
+    },
+    {
+     "r": "win",
+     "left": 0,
+     "s": 130,
+     "t": 1794658679156
+    }
+   ]
   },
   "2042230": {
-   "note": "",
-   "stars": 0,
-   "verdict": null,
-   "starts": 0,
-   "tries": 0,
-   "wins": 0,
-   "results": []
+   "note": "Trap is good AHA is back but make these traps with AHA and more chains in 300+ 250-300 some chained we already made but the most heave chains like these past 300. ALSO the tray pressure after the trap is a bit too much.",
+   "stars": 4,
+   "verdict": "right",
+   "starts": 1,
+   "tries": 4,
+   "wins": 1,
+   "results": [
+    {
+     "r": "stuck",
+     "left": 72,
+     "s": 121,
+     "t": 1794658835631
+    },
+    {
+     "r": "stuck",
+     "left": 65,
+     "s": 41,
+     "t": 1794658878193,
+     "ck": 1
+    },
+    {
+     "r": "stuck",
+     "left": 42,
+     "s": 115,
+     "t": 1794658995728
+    },
+    {
+     "r": "win",
+     "left": 0,
+     "s": 139,
+     "t": 1794659135570
+    }
+   ]
   },
   "2042240": {
-   "note": "",
-   "stars": 0,
-   "verdict": null,
-   "starts": 0,
-   "tries": 0,
-   "wins": 0,
-   "results": []
+   "note": "Trap is good same verdict as 323",
+   "stars": 4,
+   "verdict": "right",
+   "starts": 1,
+   "tries": 1,
+   "wins": 1,
+   "results": [
+    {
+     "r": "win",
+     "left": 0,
+     "s": 163,
+     "t": 1794659402708
+    }
+   ]
   },
   "2042250": {
-   "note": "",
-   "stars": 0,
-   "verdict": null,
-   "starts": 0,
-   "tries": 0,
-   "wins": 0,
-   "results": []
+   "note": "Same verdict as 323. Part after is really al little bit too hard if anything",
+   "stars": 4,
+   "verdict": "right",
+   "starts": 1,
+   "tries": 1,
+   "wins": 1,
+   "results": [
+    {
+     "r": "win",
+     "left": 0,
+     "s": 187,
+     "t": 1794659609059
+    }
+   ]
   }
  }
 }

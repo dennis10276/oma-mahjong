@@ -140,6 +140,15 @@ add new decisions with a date.
     two wrong ideas (take the free key early: 16; melt with the free neighbour whose twin is buried: 31; both: 2), and 302 is the
     same shape and wrong idea as lab-5 292, which he had already solved. An AHA needs a wrong idea he has not seen in that form;
     the ledger must count the wrong idea (bait kind) and not only the chain shape and layout.
+  - **Chained traps with a new wrong idea bring the AHA back; they go past 300** (2026-11-14, lab 9, Codex's chained boards 321-325,
+    all 4 stars): "Trap is good AHA is back but make these traps with AHA and more chains in 300+ 250-300 some chained we already
+    made but the most heave chains like these past 300." lookalikeCoverThaw (11 tries, solved only after asking): "a little too
+    extreme. I like it though! make this like the very end levels archived 999+ or something and make this version a little
+    less hard to spot."
+  - **After a hard trap the rest must be lighter** (same lab): "Dont increase tray pressure after this is really even a little bit too
+    much already" (pressure parks 3.5), "the tray pressure after the trap is a bit too much" (7.8), "a little bit too hard if
+    anything" (2.6), "feels fine" (3.6). So: known wrong idea / easy-to-see trap = strength B (about 7.5 pressure parks); new-idea
+    chain of four = 1.5 to 3.
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
   - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
     played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is

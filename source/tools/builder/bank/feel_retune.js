@@ -22,7 +22,7 @@ function tuneFeel(design, opts = {}) {
   const fl = d => feel(d, { playouts: opts.playouts ?? 100, seed: 5 });
   // how far from the target (0 = met); three waiting is capped so the tray is full of choices, not one slip from losing all the time
   // target.parks = 'pressure parks': how many times per game an expert has to put a tile in the tray while one or two already wait
-  const miss = f => Math.max(0, target.parks - f.pp) / 4 + 3 * Math.max(0, f.waiting[3] - (target.max3 ?? 0.25)) + (f.lostGames ? 2 : 0);
+  const miss = f => Math.max(0, target.parks - f.pp) / 4 + Math.max(0, f.pp - (target.parksMax ?? 99)) / 4 + 3 * Math.max(0, f.waiting[3] - (target.max3 ?? 0.25)) + (f.lostGames ? 2 : 0);
   const before = feel(design, { playouts: 400, seed: 9 });
   let cur = structuredClone(design), curF = fl(cur), curM = miss(curF), best = null, proposals = 0, accepted = 0; const fails = {};
   const fail = k => { fails[k] = (fails[k] || 0) + 1; };
@@ -50,7 +50,7 @@ function tuneFeel(design, opts = {}) {
 function one(lv, out) {
   const PR = require('./pressure_retune.js'), R = require('./retune.js'), T = require('../trap_stories.js'), E = require('../engine.js'), PS = require('../../factory/placement_score.js');
   const f = arg('from', null) ? path.join(path.resolve(arg('from')), `level-${lv}.json`) : PR.findLevel(lv), j = JSON.parse(fs.readFileSync(f, 'utf8')), card0 = PR.metadata(j), d = j.design;
-  const target = { parks: +arg('parks', 7.5), max3: +arg('max3', 0.25) };
+  const target = { parks: +arg('parks', 7.5), parksMax: +arg('parks-max', 99), max3: +arg('max3', 0.25) };
   if (!card0) return { level: lv, ok: false, why: 'older board, kept' };
   const { job } = PR.poolJob(card0), rb = R.rebuild(job, d); if (!rb.r) return { level: lv, ok: false, why: rb.why };
   const r = rb.r, k = r.card.clock.fewestMoves, spare = r.card.clock.spare;
@@ -70,7 +70,7 @@ function oneMix(file, out) {
   const M = require('../trap_mixes.js'), j = JSON.parse(fs.readFileSync(file, 'utf8')), d = j.design, name = j.brief.story, spare = j.card.clock.spare, k = d.solution.indexOf(d.clock.i) + 1;
   const roles = { ...j.roles, locks: new Set(j.roles.locks), holderSpecials: new Set(j.roles.holderSpecials) };
   const validate = x => { const rt = M.retime(x, spare); if (!rt.ok) return rt; if (rt.k !== k) return { ok: false, why: 'clock' }; x.solution = rt.design.solution; return M.prove(name, rt.design, roles, { k, spare }, { skipOpening: true }); };
-  const target = { parks: +arg('parks', 7.5), max3: +arg('max3', 0.25) }, freeze = [...new Set([...roles.bait.tiles, ...d.obst.keys, ...((roles.bait.repeat && roles.bait.repeat.copies) || [])])];
+  const target = { parks: +arg('parks', 7.5), parksMax: +arg('parks-max', 99), max3: +arg('max3', 0.25) }, freeze = [...new Set([...roles.bait.tiles, ...d.obst.keys, ...((roles.bait.repeat && roles.bait.repeat.copies) || [])])];
   const res = tuneFeel(d, { target, ms: +arg('ms', 90000), seed: +arg('seed', 1), freeze, validate }), id = path.basename(file, '.json');
   if (res.ok) fs.writeFileSync(path.join(out, id + '.json'), JSON.stringify({ ...j, design: res.design, feel: { before: res.before, after: res.after, target, met: res.met } }));
   return { level: id, ok: res.ok, met: res.met, before: res.before, after: res.after, proposals: res.proposals, accepted: res.accepted, fails: res.fails };
