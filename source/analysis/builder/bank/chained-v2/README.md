@@ -15,8 +15,15 @@ rank is a difficulty judgment, not a consecutive placement schedule: common
 wrong ideas still need spacing. Use `check_sequence.js` on the proposed numbered
 level files before placement.
 
-The lab runs at http://127.0.0.1:8265/ . `lab-selection.json` identifies its exact
-eight boards, on eight layouts outside the previous five. Findings stay local.
+The original eight played boards and their verdicts are restored at
+http://127.0.0.1:8265/ . `lab-selection-original.json` pins their IDs and designs.
+The final eight-board selection is kept separately at
+http://127.0.0.1:8265/new.html ; `lab-selection.json` identifies those boards.
+Findings stay local and load on both localhost and 127.0.0.1 before the lab starts.
+
+Start the server with:
+`node source/tools/builder/chained_v2_server.js source/build/chained-v2-lab 8265`.
+Rebuilding the lab preserves the original played set and its IDs.
 
 Report: `codex-tasks/results/chained-2/REPORT.md` at the repository root.
 Raw candidates, surplus examples and development logs stay local; the checked-in

@@ -146,6 +146,10 @@ Each accepted board has a complete strict single-tap replay, an exact minimum wi
 
 Fresh final independent audit of the current manifest: {"ok":true,"completed":62}. Real-game preview: {"ok":true,"boards":8}.
 
-Lab: http://127.0.0.1:8265/ . Eight distinct hosts outside the previous five; real game, local fake/offline data, findings saved on this PC. `lab-selection.json` maps the eight previews to exact files. The lab level labels are review labels, not placement.
+Lab: http://127.0.0.1:8265/new.html . Eight distinct hosts outside the previous five; real game, local fake/offline data, findings saved on this PC. `lab-selection.json` maps the eight previews to exact files. The lab level labels are review labels, not placement.
 
 Reproduce the lightweight tests with `node --test source/tools/builder/test_chained_v2.js source/tools/builder/test_chained_mixes.js`. Regeneration and verification must reserve cores through loop/heavy.js. Raw candidates and finishing traces remain local; the delivered JSON cards and aggregate host evidence are the handoff.
+
+## Verdict recovery
+
+The original played set is restored at http://127.0.0.1:8265/ . Its eight notes, stars and verdict choices were still present in the PC findings file. Replacing the displayed board set hid most of their IDs; switching between localhost and 127.0.0.1 also changes browser storage. The replacement boards now live at /new.html. Ratings are never copied onto a different design. The original manifest and complete original board set are pinned, and rebuilds preserve them. `chained_v2_server.js` restores saved ratings before lab.js initializes, on either hostname. Fresh browser checks verified all eight original notes and rating fields on both origins; see verdict-recovery-check.json.

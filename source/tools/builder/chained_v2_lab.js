@@ -18,6 +18,8 @@ function build(){
   const file=path.join(OUT,'lab-ideas.js');fs.writeFileSync(file,'const LAB_IDEAS = '+JSON.stringify(data)+';\n');
   const manifest=picked.map((p,i)=>({id:id(p.file),labLevel:332+i,file:p.file,layout:p.r.card.layout,shape:p.r.brief.story}));fs.writeFileSync(path.join(OUT,'lab-selection.json'),JSON.stringify(manifest,null,2)+'\n');
   const dir=path.join(root,'build/chained-v2-lab');
-  cp.execFileSync(process.execPath,[path.join(root,'tools/lab/build_lab.js'),dir,file],{stdio:'inherit'});console.log(JSON.stringify({dir,manifest}));return {dir,manifest};
+  cp.execFileSync(process.execPath,[path.join(root,'tools/lab/build_lab.js'),dir,file],{stdio:'inherit'});
+  if(fs.existsSync(path.join(OUT,'lab-selection-original.json')))cp.execFileSync(process.execPath,[path.join(__dirname,'recover_chained_v2_verdicts.js')],{stdio:'inherit'});
+  console.log(JSON.stringify({dir,manifest}));return {dir,manifest};
 }
 if(require.main===module)build();module.exports={build};
