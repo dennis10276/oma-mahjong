@@ -1,0 +1,10 @@
+✓ ok    win hearts: failed message stays editable and retry sends once  (8.0s)
+✓ ok    win hearts: every preset message shows the sent confirmation  (10.5s)
+✓ ok    win hearts: same-size picker, custom message, cancel, return and rewards only once  (12.0s)
+✗ FAIL  win hearts: small English screen and foreground presence lifecycle  (8.0s)
+         English picker matches the small win popup — {"got":[320,509],"want":[320,501]}
+
+Failed:
+  ✗ win hearts: small English screen and foreground presence lifecycle
+
+3/4 tests passed in 17s (offline; add --online for the real-database tests)

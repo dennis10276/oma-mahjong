@@ -14,6 +14,37 @@ function sample(aid = 'attempt-a', now = Date.now()) {
 }
 module.exports = [
   {
+    name: 'ui markers: dashboard recording preserves frozen key and lock markers through thaw',
+    async run(t, { serve, FakeDB, browser, WWW }) {
+      const site = await serve(SITE, { '/play/': WWW }), now = Date.now(), born = now - 3600000;
+      const aid = 'frozen-markers', s = sample(aid, born), data = JSON.parse(s.first.data);
+      data.init.state.ob.need = { 5: 1, 6: 2 }; data.init.state.ob.left = { 5: 1, 6: 2 };
+      s.first.data = JSON.stringify(data);
+      const thawed = clone(data.init.state.ob); thawed.left = { 5: 0, 6: 0 };
+      s.next.data = JSON.stringify({ events: [[5000, 'state', { ob: thawed }], [10000, 'end', { r: 'win' }]] });
+      const db = new FakeDB({ scores: { pA: { name: 'Anna', level: 40 } },
+        plays: { pA: { s: { k: 'start', aid, lv: 39, t: born }, e: { k: 'end', aid, lv: 39, r: 'win', t: born + 10000 } } },
+        replays: { pA: { [aid]: { createdAt: born, first: s.first, next: s.next } } } });
+      const ctx = await browser.newContext({ viewport: { width: 1500, height: 1000 } });
+      await ctx.route(u => u.hostname.endsWith('firebasedatabase.app'), r => db.handle(r));
+      const p = await ctx.newPage(), errors = []; p.on('pageerror', e => errors.push(e.message));
+      const badges = () => p.locator('#watchBoard .watch-tile').evaluateAll(tiles => [5, 6].map(i => {
+        const tile = tiles.find(t => +t.dataset.tile === i);
+        return [...tile.querySelectorAll('text')].map(t => t.textContent).filter(s => /❄|🔒|🔑/.test(s));
+      }));
+      try {
+        await p.goto(site.url + 'dash/#pA');
+        await p.locator(`#tbl button[data-aid="${aid}"]`).click();
+        await p.waitForSelector('#watchBoard .watch-tile');
+        await p.locator('#watchPause').click();
+        t.eq(await badges(), [['❄️', '🔒'], ['❄️', '🔑']], 'SVG viewer already draws both independent badges');
+        await p.locator('#watchSeek').evaluate(bar => { bar.value = '6000'; bar.dispatchEvent(new Event('input', { bubbles: true })); });
+        t.eq(await badges(), [['🔒'], ['🔑']], 'reconstructed thaw keeps only lock/key badges');
+        t.eq(errors, [], 'viewer has no page errors');
+      } finally { await ctx.close(); site.close(); }
+    },
+  },
+  {
     name: 'dashboard: replay decoder reconstructs recorded states and refuses gaps, conflicts and corrupt edits',
     async run(t) {
       const s = sample(), aid = 'attempt-a';

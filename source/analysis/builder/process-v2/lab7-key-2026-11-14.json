@@ -1,0 +1,62 @@
+[
+ {
+  "lv": 311,
+  "family": "splitThawLocks",
+  "file": "splitThawLocks-L36-s8-p2.json"
+ },
+ {
+  "lv": 312,
+  "family": "freeClockIce",
+  "file": "freeClockIce-L3-s2-p1.json"
+ },
+ {
+  "lv": 313,
+  "family": "repeatedFrozenKey",
+  "file": "repeatedFrozenKey-L37-s1-p1.json"
+ },
+ {
+  "lv": 314,
+  "family": "nestedMeltFork",
+  "file": "nestedMeltFork-L13-s3-p1.json"
+ },
+ {
+  "lv": 315,
+  "family": "roofKeyGuard",
+  "file": "roofKeyGuard-L16-s5-p1.json"
+ },
+ {
+  "lv": 316,
+  "family": "frozenKeyShared",
+  "file": "frozenKeyShared-L19-s6-p2.json"
+ },
+ {
+  "lv": 317,
+  "family": "freeClockShared",
+  "file": "freeClockShared-L0-s5-p1.json"
+ },
+ {
+  "lv": 318,
+  "family": "secondActIce",
+  "file": "secondActIce-L14-s1-p1.json"
+ },
+ {
+  "lv": 319,
+  "family": "frozenRoofShared",
+  "file": "frozenRoofShared-L18-s6-p2.json"
+ },
+ {
+  "lv": 320,
+  "family": "freeClockKeys",
+  "file": "freeClockKeys-L42-s1-p1.json"
+ },
+ {
+  "lv": 321,
+  "family": "repeatedKeyChoice",
+  "file": "repeatedKeyChoice-L7-s2-p1.json"
+ },
+ {
+  "lv": 322,
+  "family": "keyRoofMeltFork",
+  "file": "keyRoofMeltFork-L21-s1-p1.json"
+ }
+]

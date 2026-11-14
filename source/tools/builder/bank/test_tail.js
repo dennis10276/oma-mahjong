@@ -46,3 +46,29 @@ test('tail: a failing validate keeps the longest valid prefix and a tail already
   const e = load('chain-0-1'), r1 = Tl.tune(e, { band: [0.15, 0.40], wallMs: 8000, validate: () => ({ ok: false, why: 'never' }) });
   assert.equal(r1.swaps, 0); assert.deepEqual(r1.design.faces, e.faces); assert.ok(!r1.inBand);
 });
+
+// ---- the part after the trap, harder (Dennis 2026-11-14): occupancy facts, the one-waiting re-route, extra face-down tiles after the clock
+test('tail: occupancy counts the tray before every tail step (shares add up) and the pressure miss is 0 for a calm route', () => {
+  const d = load('chain-3-8'), o = Tl.occupancy(d), P = Tl.prepare(d);
+  assert.equal(o.steps, P.tail.length); assert.equal(o.counts.reduce((a, b) => a + b, 0), o.steps); assert.ok(Math.abs(o.share.reduce((a, b) => a + b, 0) - 1) < 0.01);
+  assert.equal(Tl.pressureMiss({ share: [0.3, 0.5, 0.2, 0], longest2plus: 2 }, false), 0); assert.ok(Tl.pressureMiss({ share: [0.05, 0.1, 0.45, 0.4], longest2plus: 20 }, false) > 1);
+});
+test('tail: reroute keeps everything but the order of the tail: same pictures, same face-down set, same clock position, strict win, no new blind gamble, and the tray is not held at 2-3 waiting', () => {
+  for (const f of ['chain-3-8', 'chain-11-46']) {
+    const d = load(f), g0 = Tl.gambleFacts(d), o0 = Tl.occupancy(d), r = Tl.reroute(d, { wallMs: 20000 });
+    assert.ok(r.ok, f + ' ' + r.why); const e = r.design;
+    assert.deepEqual(e.faces, d.faces); assert.deepEqual(e.down, d.down); assert.deepEqual(e.obst, d.obst);
+    const ci = d.solution.indexOf(d.clock.i); assert.deepEqual(e.solution.slice(0, ci + 1), d.solution.slice(0, ci + 1)); assert.equal(e.solution.length, d.solution.length); assert.deepEqual(e.solution.slice().sort((a, b) => a - b), d.solution.slice().sort((a, b) => a - b));
+    assert.ok(E.replay(e, e.solution, { strict: true }).ok); const g1 = Tl.gambleFacts(e); assert.ok(g1.gamble <= g0.gamble && g1.blindOnly <= g0.blindOnly);
+    const o1 = Tl.occupancy(e); assert.ok(o1.share[3] <= 0.1, f + ' share of 3 waiting ' + o1.share[3]); assert.ok(Tl.pressureMiss(o1, false) <= Math.max(0.1, Tl.pressureMiss(o0, false)), 'closer to one waiting than before: ' + Tl.pressureMiss(o0, false) + ' -> ' + Tl.pressureMiss(o1, false));
+    assert.equal(Tl.measure(e, { seed: 5, playouts: 100 }).tailGreedyWin, Tl.measure(d, { seed: 5, playouts: 100 }).tailGreedyWin, 'the greedy tail does not depend on the stored order');
+  }
+});
+test('tail: addFaceDown hides only unprotected tail tiles, at most one per pair, stays under the cap and adds no blind gamble', () => {
+  const d = load('chain-3-8'), P = Tl.prepare(d), g0 = Tl.gambleFacts(d), prot = new Set([d.clock.i, ...P.tail.slice(0, 5)]);
+  const a = Tl.addFaceDown(d, { protect: prot, seed: 2, target: 0.27 }); assert.ok(a.added.length >= 1 && a.added.length <= a.want);
+  for (const t of a.added) { assert.ok(P.inTail[t] && !prot.has(t) && !(d.down || []).includes(t)); }
+  assert.ok(a.design.down.length / d.tiles.length <= 0.30); assert.equal(new Set(a.design.down).size, a.design.down.length);
+  const g1 = Tl.gambleFacts(a.design); assert.ok(g1.gamble <= g0.gamble && g1.blindOnly <= g0.blindOnly); assert.ok(E.replay(a.design, a.design.solution, { strict: true }).ok);
+  assert.deepEqual(a.design.faces, d.faces); assert.deepEqual(a.design.solution, d.solution);
+});

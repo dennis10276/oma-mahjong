@@ -1,0 +1,3083 @@
+[
+ {
+  "level": 250,
+  "source": "batch 250",
+  "before": {
+   "score": 3.38,
+   "tail": 0.3738,
+   "down": 19,
+   "tiles": 96
+  },
+  "job": {
+   "si": 6,
+   "layout": 13,
+   "seed": 2,
+   "dial": [
+    3,
+    2
+   ],
+   "spare": 2,
+   "tiers": [
+    "easy",
+    "std"
+   ]
+  },
+  "tier": "easy",
+  "tried": [
+   "1: tail 0.3775 stays outside 0.1-0.28 (windows tried: 0.1-0.28 ",
+   "2: tail 0.4437 stays outside 0.1-0.28 (windows tried: 0.1-0.28 "
+  ],
+  "kept": "not retuned: tail 0.4437 stays outside 0.1-0.28 (windows tried: 0.1-0.28 -> tail 0.4437 miss 0; 0.19-0.28 -> tail 0.4437 miss 0; 0.22-0.28 -> tail 0.4437 miss 0)"
+ },
+ {
+  "level": 251,
+  "source": "batch 251",
+  "before": {
+   "score": 3.32,
+   "tail": 0.3862,
+   "down": 16,
+   "tiles": 80
+  },
+  "job": {
+   "si": 3,
+   "layout": 7,
+   "seed": 2,
+   "dial": [
+    3,
+    2
+   ],
+   "spare": 2,
+   "tiers": [
+    "easy",
+    "std"
+   ]
+  },
+  "tier": "easy",
+  "after": {
+   "score": 4.87,
+   "tail": 0.2037,
+   "inBand": true,
+   "down": 22,
+   "occ": {
+    "steps": 66,
+    "counts": [
+     23,
+     30,
+     10,
+     3
+    ],
+    "share": [
+     0.348,
+     0.455,
+     0.152,
+     0.045
+    ],
+    "longest2plus": 7,
+    "mean": 0.894,
+    "gentle": false,
+    "before": {
+     "steps": 66,
+     "counts": [
+      11,
+      16,
+      22,
+      17
+     ],
+     "share": [
+      0.167,
+      0.242,
+      0.333,
+      0.258
+     ],
+     "longest2plus": 19,
+     "mean": 1.682
+    }
+   },
+   "retune": {
+    "faceDownBefore": 16,
+    "faceDownAfter": 22,
+    "faceDownAdded": 6,
+    "tailBefore": 0.3862,
+    "tailAfter": 0.2037,
+    "rerouted": true,
+    "notes": [
+     "windows tried: 0.1-0.28 -> tail 0.2037 miss 0.24; 0.19-0.28 -> tail 0.2037 miss 0.24; 0.22-0.28 -> tail 0.2125 miss 0.24"
+    ],
+    "scoreBefore": 3.32,
+    "scoreAfter": 4.87,
+    "ms": 20083
+   },
+   "needle": false,
+   "pressureMiss": 0.24
+  }
+ },
+ {
+  "level": 252,
+  "source": "batch 252",
+  "before": {
+   "score": 3.34,
+   "tail": 0.3663,
+   "down": 14,
+   "tiles": 72
+  },
+  "job": {
+   "si": 1,
+   "layout": 40,
+   "seed": 1,
+   "dial": [
+    3,
+    2
+   ],
+   "spare": 2,
+   "tiers": [
+    "easy",
+    "std"
+   ]
+  },
+  "tier": "easy",
+  "after": {
+   "score": 5.18,
+   "tail": 0.1487,
+   "inBand": true,
+   "down": 20,
+   "occ": {
+    "steps": 64,
+    "counts": [
+     20,
+     30,
+     12,
+     2
+    ],
+    "share": [
+     0.313,
+     0.469,
+     0.188,
+     0.031
+    ],
+    "longest2plus": 5,
+    "mean": 0.938,
+    "gentle": false,
+    "before": {
+     "steps": 64,
+     "counts": [
+      12,
+      17,
+      20,
+      15
+     ],
+     "share": [
+      0.188,
+      0.266,
+      0.313,
+      0.234
+     ],
+     "longest2plus": 11,
+     "mean": 1.594
+    }
+   },
+   "retune": {
+    "faceDownBefore": 14,
+    "faceDownAfter": 20,
+    "faceDownAdded": 6,
+    "tailBefore": 0.3663,
+    "tailAfter": 0.1487,
+    "rerouted": true,
+    "notes": [
+     "face-down set rejected (staticGates): tiles one by one",
+     "windows tried: 0.1-0.28 -> tail 0.1487 miss 0.056; 0.19-0.28 -> tail 0.1888 miss 0.062; 0.22-0.28 -> tail 0.2087 miss 0.252"
+    ],
+    "scoreBefore": 3.34,
+    "scoreAfter": 5.18,
+    "ms": 51367
+   },
+   "needle": false,
+   "pressureMiss": 0.056
+  }
+ },
+ {
+  "level": 253,
+  "source": "batch 253",
+  "before": {
+   "score": 3.41,
+   "tail": 0.3725,
+   "down": 16,
+   "tiles": 80
+  },
+  "job": {
+   "si": 7,
+   "layout": 39,
+   "seed": 2,
+   "dial": [
+    3,
+    2
+   ],
+   "spare": 2,
+   "tiers": [
+    "easy",
+    "std"
+   ]
+  },
+  "tier": "easy",
+  "after": {
+   "score": 4.96,
+   "tail": 0.1837,
+   "inBand": true,
+   "down": 22,
+   "occ": {
+    "steps": 70,
+    "counts": [
+     22,
+     35,
+     13,
+     0
+    ],
+    "share": [
+     0.314,
+     0.5,
+     0.186,
+     0
+    ],
+    "longest2plus": 1,
+    "mean": 0.871,
+    "gentle": false,
+    "before": {
+     "steps": 70,
+     "counts": [
+      12,
+      17,
+      23,
+      18
+     ],
+     "share": [
+      0.171,
+      0.243,
+      0.329,
+      0.257
+     ],
+     "longest2plus": 19,
+     "mean": 1.671
+    }
+   },
+   "retune": {
+    "faceDownBefore": 16,
+    "faceDownAfter": 22,
+    "faceDownAdded": 6,
+    "tailBefore": 0.3725,
+    "tailAfter": 0.1837,
+    "rerouted": true,
+    "notes": [
+     "face-down set rejected (staticGates): tiles one by one"
+    ],
+    "scoreBefore": 3.41,
+    "scoreAfter": 4.96,
+    "ms": 60453
+   },
+   "needle": false,
+   "pressureMiss": 0
+  }
+ },
+ {
+  "level": 254,
+  "source": "batch 254",
+  "before": {
+   "score": 3.46,
+   "tail": 0.3275,
+   "down": 15,
+   "tiles": 76
+  },
+  "job": {
+   "si": 5,
+   "layout": 36,
+   "seed": 2,
+   "dial": [
+    3,
+    2
+   ],
+   "spare": 2,
+   "tiers": [
+    "easy",
+    "std"
+   ]
+  },
+  "tier": "easy",
+  "after": {
+   "score": 4.87,
+   "tail": 0.1688,
+   "inBand": true,
+   "down": 21,
+   "occ": {
+    "steps": 66,
+    "counts": [
+     22,
+     33,
+     11,
+     0
+    ],
+    "share": [
+     0.333,
+     0.5,
+     0.167,
+     0
+    ],
+    "longest2plus": 1,
+    "mean": 0.833,
+    "gentle": false,
+    "before": {
+     "steps": 66,
+     "counts": [
+      3,
+      12,
+      30,
+      21
+     ],
+     "share": [
+      0.045,
+      0.182,
+      0.455,
+      0.318
+     ],
+     "longest2plus": 13,
+     "mean": 2.045
+    }
+   },
+   "retune": {
+    "faceDownBefore": 15,
+    "faceDownAfter": 21,
+    "faceDownAdded": 6,
+    "tailBefore": 0.3275,
+    "tailAfter": 0.1688,
+    "rerouted": true,
+    "notes": [],
+    "scoreBefore": 3.46,
+    "scoreAfter": 4.87,
+    "ms": 14950
+   },
+   "needle": false,
+   "pressureMiss": 0
+  }
+ },
+ {
+  "level": 255,
+  "source": "older release163-175",
+  "kept": "older board, copied unchanged"
+ },
+ {
+  "level": 256,
+  "source": "batch 255",
+  "before": {
+   "score": 3.81,
+   "tail": 0.365,
+   "down": 15,
+   "tiles": 76
+  },
+  "job": {
+   "si": 4,
+   "layout": 2,
+   "seed": 2,
+   "dial": [
+    3,
+    2
+   ],
+   "spare": 2,
+   "tiers": [
+    "easy",
+    "std"
+   ]
+  },
+  "tier": "easy",
+  "after": {
+   "score": 5.57,
+   "tail": 0.1563,
+   "inBand": true,
+   "down": 21,
+   "occ": {
+    "steps": 68,
+    "counts": [
+     21,
+     32,
+     13,
+     2
+    ],
+    "share": [
+     0.309,
+     0.471,
+     0.191,
+     0.029
+    ],
+    "longest2plus": 5,
+    "mean": 0.941,
+    "gentle": false,
+    "before": {
+     "steps": 68,
+     "counts": [
+      23,
+      24,
+      11,
+      10
+     ],
+     "share": [
+      0.338,
+      0.353,
+      0.162,
+      0.147
+     ],
+     "longest2plus": 21,
+     "mean": 1.118
+    }
+   },
+   "retune": {
+    "faceDownBefore": 15,
+    "faceDownAfter": 21,
+    "faceDownAdded": 6,
+    "tailBefore": 0.365,
+    "tailAfter": 0.1563,
+    "rerouted": true,
+    "notes": [
+     "windows tried: 0.1-0.28 -> tail 0.1563 miss 0.05; 0.19-0.28 -> tail 0.2112 miss 0.05; 0.22-0.28 -> tail 0.2425 miss 0.05"
+    ],
+    "scoreBefore": 3.81,
+    "scoreAfter": 5.57,
+    "ms": 18863
+   },
+   "needle": false,
+   "pressureMiss": 0.05
+  }
+ },
+ {
+  "level": 257,
+  "source": "bank lab-273",
+  "kept": "older board, copied unchanged"
+ },
+ {
+  "level": 258,
+  "source": "batch 257",
+  "before": {
+   "score": 4.26,
+   "tail": 0.37,
+   "down": 18,
+   "tiles": 88
+  },
+  "job": {
+   "si": 35,
+   "layout": 35,
+   "seed": 2,
+   "dial": [
+    3,
+    2
+   ],
+   "spare": 2,
+   "tiers": [
+    "easy",
+    "std"
+   ]
+  },
+  "tier": "easy",
+  "after": {
+   "score": 6.3,
+   "tail": 0.1325,
+   "inBand": true,
+   "down": 24,
+   "occ": {
+    "steps": 78,
+    "counts": [
+     27,
+     39,
+     12,
+     0
+    ],
+    "share": [
+     0.346,
+     0.5,
+     0.154,
+     0
+    ],
+    "longest2plus": 1,
+    "mean": 0.808,
+    "gentle": false,
+    "before": {
+     "steps": 78,
+     "counts": [
+      6,
+      12,
+      33,
+      27
+     ],
+     "share": [
+      0.077,
+      0.154,
+      0.423,
+      0.346
+     ],
+     "longest2plus": 19,
+     "mean": 2.038
+    }
+   },
+   "retune": {
+    "faceDownBefore": 18,
+    "faceDownAfter": 24,
+    "faceDownAdded": 6,
+    "tailBefore": 0.37,
+    "tailAfter": 0.1325,
+    "rerouted": true,
+    "notes": [],
+    "scoreBefore": 4.26,
+    "scoreAfter": 6.3,
+    "ms": 10982
+   },
+   "needle": false,
+   "pressureMiss": 0
+  }
+ },
+ {
+  "level": 259,
+  "source": "chain lab-293",
+  "kept": "older board, copied unchanged"
+ },
+ {
+  "level": 260,
+  "source": "batch 260",
+  "before": {
+   "score": 4.4,
+   "tail": 0.365,
+   "down": 19,
+   "tiles": 96
+  },
+  "job": {
+   "si": 8,
+   "layout": 47,
+   "seed": 1,
+   "dial": [
+    3,
+    2
+   ],
+   "spare": 2,
+   "tiers": [
+    "easy",
+    "std"
+   ]
+  },
+  "tier": "easy",
+  "after": {
+   "score": 5.63,
+   "tail": 0.2175,
+   "inBand": true,
+   "down": 26,
+   "occ": {
+    "steps": 85,
+    "counts": [
+     28,
+     42,
+     14,
+     1
+    ],
+    "share": [
+     0.329,
+     0.494,
+     0.165,
+     0.012
+    ],
+    "longest2plus": 2,
+    "mean": 0.859,
+    "gentle": false,
+    "before": {
+     "steps": 85,
+     "counts": [
+      3,
+      12,
+      39,
+      31
+     ],
+     "share": [
+      0.035,
+      0.141,
+      0.459,
+      0.365
+     ],
+     "longest2plus": 19,
+     "mean": 2.153
+    }
+   },
+   "retune": {
+    "faceDownBefore": 19,
+    "faceDownAfter": 26,
+    "faceDownAdded": 7,
+    "tailBefore": 0.365,
+    "tailAfter": 0.2175,
+    "rerouted": true,
+    "notes": [
+     "windows tried: 0.1-0.28 -> tail 0.1938 miss 0.08; 0.19-0.28 -> tail 0.2175 miss 0"
+    ],
+    "scoreBefore": 4.4,
+    "scoreAfter": 5.63,
+    "ms": 67884
+   },
+   "needle": false,
+   "pressureMiss": 0
+  }
+ },
+ {
+  "level": 261,
+  "source": "batch 258",
+  "before": {
+   "score": 4.19,
+   "tail": 0.35,
+   "down": 15,
+   "tiles": 76
+  },
+  "job": {
+   "si": 33,
+   "layout": 18,
+   "seed": 2,
+   "dial": [
+    3,
+    2
+   ],
+   "spare": 2,
+   "tiers": [
+    "easy",
+    "std"
+   ]
+  },
+  "tier": "std",
+  "tried": [
+   "1: tail 0.3625 stays outside 0.1-0.28 (band not reached with 6 ",
+   "2: tail 0.555 stays outside 0.1-0.28 (face-down set rejected (s"
+  ],
+  "kept": "not retuned: tail 0.555 stays outside 0.1-0.28 (face-down set rejected (staticGates): tiles one by one | band not reached with 6 extra face-down tiles: trying 3)"
+ },
+ {
+  "level": 262,
+  "source": "older factory4-176",
+  "kept": "older board, copied unchanged"
+ },
+ {
+  "level": 263,
+  "source": "batch 261",
+  "before": {
+   "score": 4.51,
+   "tail": 0.3787,
+   "down": 16,
+   "tiles": 80
+  },
+  "job": {
+   "si": 9,
+   "layout": 14,
+   "seed": 2,
+   "dial": [
+    3,
+    2
+   ],
+   "spare": 2,
+   "tiers": [
+    "easy",
+    "std"
+   ]
+  },
+  "tier": "easy",
+  "after": {
+   "score": 5.94,
+   "tail": 0.2075,
+   "inBand": true,
+   "down": 22,
+   "occ": {
+    "steps": 67,
+    "counts": [
+     23,
+     33,
+     10,
+     1
+    ],
+    "share": [
+     0.343,
+     0.493,
+     0.149,
+     0.015
+    ],
+    "longest2plus": 2,
+    "mean": 0.836,
+    "gentle": false,
+    "before": {
+     "steps": 67,
+     "counts": [
+      11,
+      17,
+      22,
+      17
+     ],
+     "share": [
+      0.164,
+      0.254,
+      0.328,
+      0.254
+     ],
+     "longest2plus": 19,
+     "mean": 1.672
+    }
+   },
+   "retune": {
+    "faceDownBefore": 16,
+    "faceDownAfter": 22,
+    "faceDownAdded": 6,
+    "tailBefore": 0.3787,
+    "tailAfter": 0.2075,
+    "rerouted": true,
+    "notes": [
+     "swaps refused by the proof: {\"trapProof\":1}, kept 6"
+    ],
+    "scoreBefore": 4.51,
+    "scoreAfter": 5.94,
+    "ms": 25694
+   },
+   "needle": false,
+   "pressureMiss": 0
+  }
+ },
+ {
+  "level": 264,
+  "source": "bank lab-262",
+  "kept": "older board, copied unchanged"
+ },
+ {
+  "level": 265,
+  "source": "batch 262",
+  "before": {
+   "score": 4.74,
+   "tail": 0.315,
+   "down": 16,
+   "tiles": 80
+  },
+  "job": {
+   "si": 38,
+   "layout": 0,
+   "seed": 4,
+   "dial": [
+    3,
+    2
+   ],
+   "tiers": [
+    "std",
+    "hard"
+   ],
+   "buildWall": 40000,
+   "tries": 40
+  },
+  "tier": "std",
+  "after": {
+   "score": 5.95,
+   "tail": 0.1737,
+   "inBand": true,
+   "down": 22,
+   "occ": {
+    "steps": 68,
+    "counts": [
+     22,
+     33,
+     12,
+     1
+    ],
+    "share": [
+     0.324,
+     0.485,
+     0.176,
+     0.015
+    ],
+    "longest2plus": 3,
+    "mean": 0.882,
+    "gentle": false,
+    "before": {
+     "steps": 68,
+     "counts": [
+      13,
+      17,
+      21,
+      17
+     ],
+     "share": [
+      0.191,
+      0.25,
+      0.309,
+      0.25
+     ],
+     "longest2plus": 19,
+     "mean": 1.618
+    }
+   },
+   "retune": {
+    "faceDownBefore": 16,
+    "faceDownAfter": 22,
+    "faceDownAdded": 6,
+    "tailBefore": 0.315,
+    "tailAfter": 0.1737,
+    "rerouted": true,
+    "notes": [
+     "face-down set rejected (staticGates): tiles one by one"
+    ],
+    "scoreBefore": 4.74,
+    "scoreAfter": 5.95,
+    "ms": 35040
+   },
+   "needle": false,
+   "pressureMiss": 0
+  }
+ },
+ {
+  "level": 266,
+  "source": "batch 263",
+  "before": {
+   "score": 4.3,
+   "tail": 0.3912,
+   "down": 16,
+   "tiles": 80
+  },
+  "job": {
+   "si": 11,
+   "layout": 3,
+   "seed": 1,
+   "dial": [
+    3,
+    2
+   ],
+   "spare": 2,
+   "tiers": [
+    "easy",
+    "std"
+   ]
+  },
+  "tier": "easy",
+  "after": {
+   "score": 5.89,
+   "tail": 0.1975,
+   "inBand": true,
+   "down": 22,
+   "occ": {
+    "steps": 71,
+    "counts": [
+     22,
+     35,
+     13,
+     1
+    ],
+    "share": [
+     0.31,
+     0.493,
+     0.183,
+     0.014
+    ],
+    "longest2plus": 2,
+    "mean": 0.901,
+    "gentle": false,
+    "before": {
+     "steps": 71,
+     "counts": [
+      8,
+      14,
+      27,
+      22
+     ],
+     "share": [
+      0.113,
+      0.197,
+      0.38,
+      0.31
+     ],
+     "longest2plus": 21,
+     "mean": 1.887
+    }
+   },
+   "retune": {
+    "faceDownBefore": 16,
+    "faceDownAfter": 22,
+    "faceDownAdded": 6,
+    "tailBefore": 0.3912,
+    "tailAfter": 0.1975,
+    "rerouted": true,
+    "notes": [
+     "swaps refused by the proof: {\"trapProof\":1}, kept 6"
+    ],
+    "scoreBefore": 4.3,
+    "scoreAfter": 5.89,
+    "ms": 28113
+   },
+   "needle": false,
+   "pressureMiss": 0
+  }
+ },
+ {
+  "level": 267,
+  "source": "chain lab-292",
+  "kept": "older board, copied unchanged"
+ },
+ {
+  "level": 268,
+  "source": "batch 264",
+  "before": {
+   "score": 4.86,
+   "tail": 0.3088,
+   "down": 15,
+   "tiles": 76
+  },
+  "job": {
+   "si": 31,
+   "layout": 17,
+   "seed": 2,
+   "dial": [
+    5,
+    3
+   ],
+   "tiers": [
+    "std",
+    "hard"
+   ],
+   "buildWall": 20000,
+   "tries": 24
+  },
+  "tier": "std",
+  "tried": [
+   "1: ok"
+  ],
+  "after": {
+   "score": 5.63,
+   "tail": 0.2137,
+   "inBand": true,
+   "down": 15,
+   "occ": {
+    "steps": 63,
+    "counts": [
+     19,
+     32,
+     12,
+     0
+    ],
+    "share": [
+     0.302,
+     0.508,
+     0.19,
+     0
+    ],
+    "longest2plus": 1,
+    "mean": 0.889,
+    "gentle": false,
+    "before": {
+     "steps": 63,
+     "counts": [
+      3,
+      16,
+      28,
+      16
+     ],
+     "share": [
+      0.048,
+      0.254,
+      0.444,
+      0.254
+     ],
+     "longest2plus": 19,
+     "mean": 1.905
+    }
+   },
+   "retune": {
+    "faceDownBefore": 15,
+    "faceDownAfter": 15,
+    "faceDownAdded": 0,
+    "tailBefore": 0.3088,
+    "tailAfter": 0.2137,
+    "rerouted": true,
+    "notes": [
+     "face-down set rejected (staticGates): tiles one by one"
+    ],
+    "scoreBefore": 4.86,
+    "scoreAfter": 5.63,
+    "ms": 407240
+   },
+   "needle": false,
+   "pressureMiss": 0
+  }
+ },
+ {
+  "level": 269,
+  "source": "batch 265",
+  "before": {
+   "score": 4.68,
+   "tail": 0.2988,
+   "down": 15,
+   "tiles": 76
+  },
+  "job": {
+   "si": 35,
+   "layout": 11,
+   "seed": 1,
+   "dial": [
+    3,
+    2
+   ],
+   "spare": 2,
+   "tiers": [
+    "easy",
+    "std"
+   ]
+  },
+  "tier": "std",
+  "after": {
+   "score": 6.3,
+   "tail": 0.115,
+   "inBand": true,
+   "down": 21,
+   "occ": {
+    "steps": 66,
+    "counts": [
+     22,
+     31,
+     11,
+     2
+    ],
+    "share": [
+     0.333,
+     0.47,
+     0.167,
+     0.03
+    ],
+    "longest2plus": 5,
+    "mean": 0.894,
+    "gentle": false,
+    "before": {
+     "steps": 66,
+     "counts": [
+      6,
+      12,
+      27,
+      21
+     ],
+     "share": [
+      0.091,
+      0.182,
+      0.409,
+      0.318
+     ],
+     "longest2plus": 21,
+     "mean": 1.955
+    }
+   },
+   "retune": {
+    "faceDownBefore": 15,
+    "faceDownAfter": 21,
+    "faceDownAdded": 6,
+    "tailBefore": 0.2988,
+    "tailAfter": 0.115,
+    "rerouted": true,
+    "notes": [
+     "windows tried: 0.146-0.246 -> tail 0.115 miss 0.05; 0.19-0.28 -> tail 0.2137 miss 0.05; 0.22-0.28 -> tail 0.2525 miss 0.05"
+    ],
+    "scoreBefore": 4.68,
+    "scoreAfter": 6.3,
+    "ms": 42792
+   },
+   "needle": false,
+   "pressureMiss": 0.05
+  }
+ },
+ {
+  "level": 270,
+  "source": "batch 270",
+  "before": {
+   "score": 4.85,
+   "tail": 0.3488,
+   "down": 19,
+   "tiles": 96
+  },
+  "job": {
+   "si": 11,
+   "layout": 29,
+   "seed": 6,
+   "dial": [
+    3,
+    2
+   ],
+   "tiers": [
+    "std",
+    "hard"
+   ],
+   "buildWall": 25000,
+   "tries": 30
+  },
+  "tier": "std",
+  "tried": [
+   "1: ok"
+  ],
+  "after": {
+   "score": 5.52,
+   "tail": 0.275,
+   "inBand": true,
+   "down": 26,
+   "occ": {
+    "steps": 86,
+    "counts": [
+     29,
+     41,
+     14,
+     2
+    ],
+    "share": [
+     0.337,
+     0.477,
+     0.163,
+     0.023
+    ],
+    "longest2plus": 5,
+    "mean": 0.872,
+    "gentle": false,
+    "before": {
+     "steps": 86,
+     "counts": [
+      6,
+      10,
+      37,
+      33
+     ],
+     "share": [
+      0.07,
+      0.116,
+      0.43,
+      0.384
+     ],
+     "longest2plus": 31,
+     "mean": 2.128
+    }
+   },
+   "retune": {
+    "faceDownBefore": 19,
+    "faceDownAfter": 26,
+    "faceDownAdded": 7,
+    "tailBefore": 0.3488,
+    "tailAfter": 0.275,
+    "rerouted": true,
+    "notes": [
+     "windows tried: 0.144-0.244 -> tail 0.275 miss 0.05; 0.19-0.28 -> tail 0.275 miss 0.05; 0.22-0.28 -> tail 0.275 miss 0.05"
+    ],
+    "scoreBefore": 4.85,
+    "scoreAfter": 5.52,
+    "ms": 296393
+   },
+   "needle": false,
+   "pressureMiss": 0.05
+  }
+ },
+ {
+  "level": 271,
+  "source": "older q217-1233c8",
+  "kept": "older board, copied unchanged"
+ },
+ {
+  "level": 272,
+  "source": "batch 266",
+  "before": {
+   "score": 5.33,
+   "tail": 0.29,
+   "down": 15,
+   "tiles": 74
+  },
+  "job": {
+   "si": 14,
+   "layout": 16,
+   "seed": 4,
+   "dial": [
+    3,
+    2
+   ],
+   "tiers": [
+    "std",
+    "hard"
+   ],
+   "buildWall": 40000,
+   "tries": 40
+  },
+  "tier": "std",
+  "after": {
+   "score": 5.79,
+   "tail": 0.2387,
+   "inBand": true,
+   "down": 19,
+   "occ": {
+    "steps": 61,
+    "counts": [
+     15,
+     31,
+     15,
+     0
+    ],
+    "share": [
+     0.246,
+     0.508,
+     0.246,
+     0
+    ],
+    "longest2plus": 1,
+    "mean": 1,
+    "gentle": true,
+    "before": {
+     "steps": 61,
+     "counts": [
+      6,
+      8,
+      24,
+      23
+     ],
+     "share": [
+      0.098,
+      0.131,
+      0.393,
+      0.377
+     ],
+     "longest2plus": 47,
+     "mean": 2.049
+    }
+   },
+   "retune": {
+    "faceDownBefore": 15,
+    "faceDownAfter": 19,
+    "faceDownAdded": 4,
+    "tailBefore": 0.29,
+    "tailAfter": 0.2387,
+    "rerouted": true,
+    "notes": [
+     "face-down set rejected (staticGates): tiles one by one",
+     "windows tried: 0.139-0.239 -> tail 0.2387 miss 0.092; 0.19-0.28 -> tail 0.2387 miss 0.092; 0.22-0.28 -> tail 0.2387 miss 0.092"
+    ],
+    "scoreBefore": 5.33,
+    "scoreAfter": 5.79,
+    "ms": 329818
+   },
+   "needle": false,
+   "pressureMiss": 0.092
+  }
+ },
+ {
+  "level": 273,
+  "source": "older factory4-175",
+  "kept": "older board, copied unchanged"
+ },
+ {
+  "level": 274,
+  "source": "batch 267",
+  "before": {
+   "score": 5.54,
+   "tail": 0.2938,
+   "down": 15,
+   "tiles": 76
+  },
+  "job": {
+   "si": 9,
+   "layout": 36,
+   "seed": 2,
+   "dial": [
+    5,
+    3
+   ]
+  },
+  "tier": "std",
+  "after": {
+   "score": 6.68,
+   "tail": 0.1613,
+   "inBand": true,
+   "down": 21,
+   "occ": {
+    "steps": 65,
+    "counts": [
+     7,
+     29,
+     25,
+     4
+    ],
+    "share": [
+     0.108,
+     0.446,
+     0.385,
+     0.062
+    ],
+    "longest2plus": 5,
+    "mean": 1.4,
+    "gentle": false,
+    "before": {
+     "steps": 65,
+     "counts": [
+      5,
+      22,
+      27,
+      11
+     ],
+     "share": [
+      0.077,
+      0.338,
+      0.415,
+      0.169
+     ],
+     "longest2plus": 5,
+     "mean": 1.677
+    }
+   },
+   "retune": {
+    "faceDownBefore": 15,
+    "faceDownAfter": 21,
+    "faceDownAdded": 6,
+    "tailBefore": 0.2938,
+    "tailAfter": 0.1613,
+    "rerouted": true,
+    "notes": [
+     "face-down set rejected (staticGates): tiles one by one",
+     "windows tried: 0.135-0.235 -> tail 0.1475 miss 0.778; 0.19-0.28 -> tail 0.1613 miss 0.612; 0.22-0.28 -> tail 0.2662 miss 1.5"
+    ],
+    "scoreBefore": 5.54,
+    "scoreAfter": 6.68,
+    "ms": 91054
+   },
+   "needle": false,
+   "pressureMiss": 0.612
+  }
+ },
+ {
+  "level": 275,
+  "source": "batch 268",
+  "before": {
+   "score": 5.12,
+   "tail": 0.295,
+   "down": 16,
+   "tiles": 80
+  },
+  "job": {
+   "si": 39,
+   "layout": 7,
+   "seed": 2,
+   "dial": [
+    3,
+    2
+   ],
+   "tiers": [
+    "std",
+    "hard"
+   ],
+   "buildWall": 25000,
+   "tries": 30
+  },
+  "tier": "std",
+  "after": {
+   "score": 6.13,
+   "tail": 0.1775,
+   "inBand": true,
+   "down": 21,
+   "occ": {
+    "steps": 62,
+    "counts": [
+     24,
+     31,
+     7,
+     0
+    ],
+    "share": [
+     0.387,
+     0.5,
+     0.113,
+     0
+    ],
+    "longest2plus": 1,
+    "mean": 0.726,
+    "gentle": true,
+    "before": {
+     "steps": 62,
+     "counts": [
+      17,
+      20,
+      14,
+      11
+     ],
+     "share": [
+      0.274,
+      0.323,
+      0.226,
+      0.177
+     ],
+     "longest2plus": 23,
+     "mean": 1.306
+    }
+   },
+   "retune": {
+    "faceDownBefore": 16,
+    "faceDownAfter": 21,
+    "faceDownAdded": 5,
+    "tailBefore": 0.295,
+    "tailAfter": 0.1775,
+    "rerouted": true,
+    "notes": [],
+    "scoreBefore": 5.12,
+    "scoreAfter": 6.13,
+    "ms": 65800
+   },
+   "needle": false,
+   "pressureMiss": 0
+  }
+ },
+ {
+  "level": 276,
+  "source": "batch 269",
+  "before": {
+   "score": 4.9,
+   "tail": 0.2925,
+   "down": 14,
+   "tiles": 72
+  },
+  "job": {
+   "si": 12,
+   "layout": 40,
+   "seed": 1,
+   "dial": [
+    3,
+    2
+   ],
+   "spare": 2,
+   "tiers": [
+    "easy",
+    "std"
+   ]
+  },
+  "tier": "std",
+  "after": {
+   "score": 5.58,
+   "tail": 0.2188,
+   "inBand": true,
+   "down": 20,
+   "occ": {
+    "steps": 63,
+    "counts": [
+     19,
+     30,
+     12,
+     2
+    ],
+    "share": [
+     0.302,
+     0.476,
+     0.19,
+     0.032
+    ],
+    "longest2plus": 4,
+    "mean": 0.952,
+    "gentle": false,
+    "before": {
+     "steps": 63,
+     "counts": [
+      8,
+      11,
+      23,
+      21
+     ],
+     "share": [
+      0.127,
+      0.175,
+      0.365,
+      0.333
+     ],
+     "longest2plus": 23,
+     "mean": 1.905
+    }
+   },
+   "retune": {
+    "faceDownBefore": 14,
+    "faceDownAfter": 20,
+    "faceDownAdded": 6,
+    "tailBefore": 0.2925,
+    "tailAfter": 0.2188,
+    "rerouted": true,
+    "notes": [
+     "windows tried: 0.13-0.23 -> tail 0.1313 miss 0.442; 0.19-0.28 -> tail 0.2 miss 0.252; 0.22-0.28 -> tail 0.2188 miss 0.012"
+    ],
+    "scoreBefore": 4.9,
+    "scoreAfter": 5.58,
+    "ms": 30970
+   },
+   "needle": false,
+   "pressureMiss": 0.012
+  }
+ },
+ {
+  "level": 277,
+  "source": "older blind1-187",
+  "kept": "older board, copied unchanged"
+ },
+ {
+  "level": 278,
+  "source": "batch 271",
+  "before": {
+   "score": 5.62,
+   "tail": 0.355,
+   "down": 15,
+   "tiles": 76
+  },
+  "job": {
+   "si": 24,
+   "layout": 18,
+   "seed": 2,
+   "dial": [
+    3,
+    2
+   ],
+   "tiers": [
+    "std",
+    "hard"
+   ],
+   "buildWall": 25000,
+   "tries": 30
+  },
+  "tier": "std",
+  "tried": [
+   "1: tail 0.3513 stays outside 0.1-0.28 (face-down set rejected (",
+   "2: ok"
+  ],
+  "after": {
+   "score": 6.55,
+   "tail": 0.2475,
+   "inBand": true,
+   "down": 20,
+   "occ": {
+    "steps": 63,
+    "counts": [
+     21,
+     32,
+     10,
+     0
+    ],
+    "share": [
+     0.333,
+     0.508,
+     0.159,
+     0
+    ],
+    "longest2plus": 1,
+    "mean": 0.825,
+    "gentle": false,
+    "before": {
+     "steps": 63,
+     "counts": [
+      8,
+      18,
+      23,
+      14
+     ],
+     "share": [
+      0.127,
+      0.286,
+      0.365,
+      0.222
+     ],
+     "longest2plus": 13,
+     "mean": 1.683
+    }
+   },
+   "retune": {
+    "faceDownBefore": 15,
+    "faceDownAfter": 20,
+    "faceDownAdded": 5,
+    "tailBefore": 0.355,
+    "tailAfter": 0.2475,
+    "rerouted": true,
+    "notes": [
+     "face-down set rejected (staticGates): tiles one by one",
+     "windows tried: 0.125-0.225 -> tail 0.3488 miss 0; 0.19-0.28 -> tail 0.2975 miss 0; 0.22-0.28 -> tail 0.2475 miss 0"
+    ],
+    "scoreBefore": 5.62,
+    "scoreAfter": 6.55,
+    "ms": 258052
+   },
+   "needle": false,
+   "pressureMiss": 0
+  }
+ },
+ {
+  "level": 279,
+  "source": "chain lab-291",
+  "kept": "older board, copied unchanged"
+ },
+ {
+  "level": 280,
+  "source": "batch 272",
+  "before": {
+   "score": 5.47,
+   "tail": 0.2238,
+   "down": 16,
+   "tiles": 80
+  },
+  "job": {
+   "si": 12,
+   "layout": 32,
+   "seed": 1,
+   "dial": [
+    5,
+    3
+   ]
+  },
+  "tier": "std",
+  "after": {
+   "score": 6.56,
+   "tail": 0.1062,
+   "inBand": true,
+   "down": 22,
+   "occ": {
+    "steps": 71,
+    "counts": [
+     25,
+     35,
+     10,
+     1
+    ],
+    "share": [
+     0.352,
+     0.493,
+     0.141,
+     0.014
+    ],
+    "longest2plus": 2,
+    "mean": 0.817,
+    "gentle": false,
+    "before": {
+     "steps": 71,
+     "counts": [
+      16,
+      24,
+      19,
+      12
+     ],
+     "share": [
+      0.225,
+      0.338,
+      0.268,
+      0.169
+     ],
+     "longest2plus": 7,
+     "mean": 1.38
+    }
+   },
+   "retune": {
+    "faceDownBefore": 16,
+    "faceDownAfter": 22,
+    "faceDownAdded": 6,
+    "tailBefore": 0.2238,
+    "tailAfter": 0.1062,
+    "rerouted": true,
+    "notes": [
+     "swaps refused by the proof: {\"staticGates\":1}, kept 6"
+    ],
+    "scoreBefore": 5.47,
+    "scoreAfter": 6.56,
+    "ms": 44965
+   },
+   "needle": false,
+   "pressureMiss": 0
+  }
+ },
+ {
+  "level": 281,
+  "source": "batch 273",
+  "before": {
+   "score": 5.78,
+   "tail": 0.2238,
+   "down": 15,
+   "tiles": 76
+  },
+  "job": {
+   "si": 35,
+   "layout": 9,
+   "seed": 1,
+   "dial": [
+    5,
+    3
+   ]
+  },
+  "tier": "std",
+  "after": {
+   "score": 5.82,
+   "tail": 0.2275,
+   "inBand": true,
+   "down": 21,
+   "occ": {
+    "steps": 59,
+    "counts": [
+     18,
+     29,
+     11,
+     1
+    ],
+    "share": [
+     0.305,
+     0.492,
+     0.186,
+     0.017
+    ],
+    "longest2plus": 2,
+    "mean": 0.915,
+    "gentle": false,
+    "before": {
+     "steps": 59,
+     "counts": [
+      8,
+      13,
+      21,
+      17
+     ],
+     "share": [
+      0.136,
+      0.22,
+      0.356,
+      0.288
+     ],
+     "longest2plus": 29,
+     "mean": 1.797
+    }
+   },
+   "retune": {
+    "faceDownBefore": 15,
+    "faceDownAfter": 21,
+    "faceDownAdded": 6,
+    "tailBefore": 0.2238,
+    "tailAfter": 0.2275,
+    "rerouted": true,
+    "notes": [],
+    "scoreBefore": 5.78,
+    "scoreAfter": 5.82,
+    "ms": 57929
+   },
+   "needle": false,
+   "pressureMiss": 0
+  }
+ },
+ {
+  "level": 282,
+  "source": "older blind1-194",
+  "kept": "older board, copied unchanged"
+ },
+ {
+  "level": 283,
+  "source": "batch 274",
+  "before": {
+   "score": 6.05,
+   "tail": 0.175,
+   "down": 15,
+   "tiles": 76
+  },
+  "job": {
+   "si": 40,
+   "layout": 1,
+   "seed": 2,
+   "dial": [
+    3,
+    2
+   ],
+   "tiers": [
+    "std",
+    "hard"
+   ],
+   "buildWall": 25000,
+   "tries": 30
+  },
+  "tier": "hard",
+  "after": {
+   "score": 6.19,
+   "tail": 0.1663,
+   "inBand": true,
+   "down": 21,
+   "occ": {
+    "steps": 66,
+    "counts": [
+     11,
+     31,
+     22,
+     2
+    ],
+    "share": [
+     0.167,
+     0.47,
+     0.333,
+     0.03
+    ],
+    "longest2plus": 5,
+    "mean": 1.227,
+    "gentle": false,
+    "before": {
+     "steps": 66,
+     "counts": [
+      8,
+      19,
+      25,
+      14
+     ],
+     "share": [
+      0.121,
+      0.288,
+      0.379,
+      0.212
+     ],
+     "longest2plus": 9,
+     "mean": 1.682
+    }
+   },
+   "retune": {
+    "faceDownBefore": 15,
+    "faceDownAfter": 21,
+    "faceDownAdded": 6,
+    "tailBefore": 0.175,
+    "tailAfter": 0.1663,
+    "rerouted": true,
+    "notes": [
+     "windows tried: 0.06-0.18 -> tail 0.1663 miss 0.316; 0.12-0.18 -> tail 0.1663 miss 0.316"
+    ],
+    "scoreBefore": 6.05,
+    "scoreAfter": 6.19,
+    "ms": 203119
+   },
+   "needle": false,
+   "pressureMiss": 0.316
+  }
+ },
+ {
+  "level": 284,
+  "source": "older q225-869ece",
+  "kept": "older board, copied unchanged"
+ },
+ {
+  "level": 285,
+  "source": "batch 275",
+  "before": {
+   "score": 6.07,
+   "tail": 0.24,
+   "down": 16,
+   "tiles": 80
+  },
+  "job": {
+   "si": 33,
+   "layout": 0,
+   "seed": 1,
+   "dial": [
+    5,
+    3
+   ],
+   "buildWall": 12000,
+   "tries": 12
+  },
+  "tier": "std",
+  "after": {
+   "score": 6.31,
+   "tail": 0.2125,
+   "inBand": true,
+   "down": 18,
+   "occ": {
+    "steps": 64,
+    "counts": [
+     22,
+     31,
+     10,
+     1
+    ],
+    "share": [
+     0.344,
+     0.484,
+     0.156,
+     0.016
+    ],
+    "longest2plus": 3,
+    "mean": 0.844,
+    "gentle": false,
+    "before": {
+     "steps": 64,
+     "counts": [
+      16,
+      20,
+      16,
+      12
+     ],
+     "share": [
+      0.25,
+      0.313,
+      0.25,
+      0.188
+     ],
+     "longest2plus": 11,
+     "mean": 1.375
+    }
+   },
+   "retune": {
+    "faceDownBefore": 16,
+    "faceDownAfter": 18,
+    "faceDownAdded": 2,
+    "tailBefore": 0.24,
+    "tailAfter": 0.2125,
+    "rerouted": true,
+    "notes": [
+     "face-down set rejected (staticGates): tiles one by one"
+    ],
+    "scoreBefore": 6.07,
+    "scoreAfter": 6.31,
+    "ms": 202506
+   },
+   "needle": false,
+   "pressureMiss": 0
+  }
+ },
+ {
+  "level": 286,
+  "source": "older factory2-175",
+  "kept": "older board, copied unchanged"
+ },
+ {
+  "level": 287,
+  "source": "batch 276",
+  "before": {
+   "score": 6.16,
+   "tail": 0.1675,
+   "down": 16,
+   "tiles": 80
+  },
+  "job": {
+   "si": 13,
+   "layout": 14,
+   "seed": 1,
+   "dial": [
+    5,
+    3
+   ]
+  },
+  "tier": "std",
+  "after": {
+   "score": 6.59,
+   "tail": 0.1275,
+   "inBand": true,
+   "down": 22,
+   "occ": {
+    "steps": 71,
+    "counts": [
+     21,
+     35,
+     14,
+     1
+    ],
+    "share": [
+     0.296,
+     0.493,
+     0.197,
+     0.014
+    ],
+    "longest2plus": 3,
+    "mean": 0.93,
+    "gentle": true,
+    "before": {
+     "steps": 71,
+     "counts": [
+      4,
+      21,
+      31,
+      15
+     ],
+     "share": [
+      0.056,
+      0.296,
+      0.437,
+      0.211
+     ],
+     "longest2plus": 9,
+     "mean": 1.803
+    }
+   },
+   "retune": {
+    "faceDownBefore": 16,
+    "faceDownAfter": 22,
+    "faceDownAdded": 6,
+    "tailBefore": 0.1675,
+    "tailAfter": 0.1275,
+    "rerouted": true,
+    "notes": [
+     "face-down set rejected (staticGates): tiles one by one"
+    ],
+    "scoreBefore": 6.16,
+    "scoreAfter": 6.59,
+    "ms": 129742
+   },
+   "needle": true,
+   "pressureMiss": 0
+  }
+ },
+ {
+  "level": 288,
+  "source": "older factory6-188",
+  "kept": "older board, copied unchanged"
+ },
+ {
+  "level": 289,
+  "source": "batch 277",
+  "before": {
+   "score": 6.33,
+   "tail": 0.1837,
+   "down": 15,
+   "tiles": 76
+  },
+  "job": {
+   "si": 8,
+   "layout": 17,
+   "seed": 4,
+   "dial": [
+    3,
+    2
+   ],
+   "tiers": [
+    "std",
+    "hard"
+   ],
+   "buildWall": 40000,
+   "tries": 40
+  },
+  "tier": "hard",
+  "tried": [
+   "1: tail 0.2112 stays outside 0.06-0.18 (face-down set rejected ",
+   "2: ok"
+  ],
+  "after": {
+   "score": 6.82,
+   "tail": 0.1313,
+   "inBand": true,
+   "down": 18,
+   "occ": {
+    "steps": 65,
+    "counts": [
+     17,
+     31,
+     15,
+     2
+    ],
+    "share": [
+     0.262,
+     0.477,
+     0.231,
+     0.031
+    ],
+    "longest2plus": 3,
+    "mean": 1.031,
+    "gentle": true,
+    "before": {
+     "steps": 65,
+     "counts": [
+      6,
+      13,
+      26,
+      20
+     ],
+     "share": [
+      0.092,
+      0.2,
+      0.4,
+      0.308
+     ],
+     "longest2plus": 15,
+     "mean": 1.923
+    }
+   },
+   "retune": {
+    "faceDownBefore": 15,
+    "faceDownAfter": 18,
+    "faceDownAdded": 3,
+    "tailBefore": 0.1837,
+    "tailAfter": 0.1313,
+    "rerouted": true,
+    "notes": [
+     "face-down set rejected (staticGates): tiles one by one",
+     "windows tried: 0.06-0.18 -> tail 0.155 miss 0.092; 0.12-0.18 -> tail 0.1313 miss 0.068"
+    ],
+    "scoreBefore": 6.33,
+    "scoreAfter": 6.82,
+    "ms": 235246
+   },
+   "needle": true,
+   "pressureMiss": 0.068
+  }
+ },
+ {
+  "level": 290,
+  "source": "batch 280",
+  "before": {
+   "score": 6.46,
+   "tail": 0.1487,
+   "down": 19,
+   "tiles": 96
+  },
+  "job": {
+   "si": 31,
+   "layout": 13,
+   "seed": 3,
+   "dial": [
+    5,
+    3
+   ],
+   "tiers": [
+    "std",
+    "hard"
+   ],
+   "buildWall": 20000,
+   "tries": 24
+  },
+  "tier": "hard",
+  "after": {
+   "score": 7.05,
+   "tail": 0.095,
+   "inBand": true,
+   "down": 26,
+   "occ": {
+    "steps": 83,
+    "counts": [
+     21,
+     38,
+     20,
+     4
+    ],
+    "share": [
+     0.253,
+     0.458,
+     0.241,
+     0.048
+    ],
+    "longest2plus": 3,
+    "mean": 1.084,
+    "gentle": false,
+    "before": {
+     "steps": 83,
+     "counts": [
+      3,
+      10,
+      38,
+      32
+     ],
+     "share": [
+      0.036,
+      0.12,
+      0.458,
+      0.386
+     ],
+     "longest2plus": 53,
+     "mean": 2.193
+    }
+   },
+   "retune": {
+    "faceDownBefore": 19,
+    "faceDownAfter": 26,
+    "faceDownAdded": 7,
+    "tailBefore": 0.1487,
+    "tailAfter": 0.095,
+    "rerouted": true,
+    "notes": [
+     "windows tried: 0.06-0.18 -> tail 0.095 miss 0.19; 0.12-0.18 -> tail 0.095 miss 0.19"
+    ],
+    "scoreBefore": 6.46,
+    "scoreAfter": 7.05,
+    "ms": 387511
+   },
+   "needle": false,
+   "pressureMiss": 0.19
+  }
+ },
+ {
+  "level": 291,
+  "source": "batch 278",
+  "before": {
+   "score": 6.48,
+   "tail": 0.2188,
+   "down": 16,
+   "tiles": 80
+  },
+  "job": {
+   "si": 14,
+   "layout": 3,
+   "seed": 3,
+   "dial": [
+    5,
+    3
+   ],
+   "tiers": [
+    "std",
+    "hard"
+   ],
+   "buildWall": 20000,
+   "tries": 24
+  },
+  "tier": "hard",
+  "tried": [
+   "1: ok"
+  ],
+  "after": {
+   "score": 6.88,
+   "tail": 0.1762,
+   "inBand": true,
+   "down": 21,
+   "occ": {
+    "steps": 68,
+    "counts": [
+     26,
+     33,
+     8,
+     1
+    ],
+    "share": [
+     0.382,
+     0.485,
+     0.118,
+     0.015
+    ],
+    "longest2plus": 3,
+    "mean": 0.765,
+    "gentle": true,
+    "before": {
+     "steps": 68,
+     "counts": [
+      7,
+      19,
+      27,
+      15
+     ],
+     "share": [
+      0.103,
+      0.279,
+      0.397,
+      0.221
+     ],
+     "longest2plus": 13,
+     "mean": 1.735
+    }
+   },
+   "retune": {
+    "faceDownBefore": 16,
+    "faceDownAfter": 21,
+    "faceDownAdded": 5,
+    "tailBefore": 0.2188,
+    "tailAfter": 0.1762,
+    "rerouted": true,
+    "notes": [
+     "face-down set rejected (staticGates): tiles one by one"
+    ],
+    "scoreBefore": 6.48,
+    "scoreAfter": 6.88,
+    "ms": 208986
+   },
+   "needle": false,
+   "pressureMiss": 0
+  }
+ },
+ {
+  "level": 292,
+  "source": "batch 279",
+  "before": {
+   "score": 6.76,
+   "tail": 0.1575,
+   "down": 15,
+   "tiles": 74
+  },
+  "job": {
+   "si": 25,
+   "layout": 16,
+   "seed": 1,
+   "dial": [
+    3,
+    2
+   ],
+   "tiers": [
+    "std",
+    "hard"
+   ],
+   "buildWall": 25000,
+   "tries": 30
+  },
+  "tier": "hard",
+  "after": {
+   "score": 6.81,
+   "tail": 0.1575,
+   "inBand": true,
+   "down": 19,
+   "occ": {
+    "steps": 60,
+    "counts": [
+     22,
+     28,
+     8,
+     2
+    ],
+    "share": [
+     0.367,
+     0.467,
+     0.133,
+     0.033
+    ],
+    "longest2plus": 3,
+    "mean": 0.833,
+    "gentle": true,
+    "before": {
+     "steps": 60,
+     "counts": [
+      11,
+      15,
+      19,
+      15
+     ],
+     "share": [
+      0.183,
+      0.25,
+      0.317,
+      0.25
+     ],
+     "longest2plus": 23,
+     "mean": 1.633
+    }
+   },
+   "retune": {
+    "faceDownBefore": 15,
+    "faceDownAfter": 19,
+    "faceDownAdded": 4,
+    "tailBefore": 0.1575,
+    "tailAfter": 0.1575,
+    "rerouted": true,
+    "notes": [
+     "face-down set rejected (staticGates): tiles one by one"
+    ],
+    "scoreBefore": 6.76,
+    "scoreAfter": 6.81,
+    "ms": 265131
+   },
+   "needle": false,
+   "pressureMiss": 0.018
+  }
+ },
+ {
+  "level": 293,
+  "source": "batch 281",
+  "before": {
+   "score": 6.58,
+   "tail": 0.1212,
+   "down": 16,
+   "tiles": 80
+  },
+  "job": {
+   "si": 12,
+   "layout": 7,
+   "seed": 2,
+   "dial": [
+    5,
+    3
+   ]
+  },
+  "tier": "hard",
+  "after": {
+   "score": 6.87,
+   "tail": 0.0975,
+   "inBand": true,
+   "down": 22,
+   "occ": {
+    "steps": 68,
+    "counts": [
+     23,
+     33,
+     11,
+     1
+    ],
+    "share": [
+     0.338,
+     0.485,
+     0.162,
+     0.015
+    ],
+    "longest2plus": 3,
+    "mean": 0.853,
+    "gentle": false,
+    "before": {
+     "steps": 68,
+     "counts": [
+      22,
+      25,
+      12,
+      9
+     ],
+     "share": [
+      0.324,
+      0.368,
+      0.176,
+      0.132
+     ],
+     "longest2plus": 17,
+     "mean": 1.118
+    }
+   },
+   "retune": {
+    "faceDownBefore": 16,
+    "faceDownAfter": 22,
+    "faceDownAdded": 6,
+    "tailBefore": 0.1212,
+    "tailAfter": 0.0975,
+    "rerouted": true,
+    "notes": [],
+    "scoreBefore": 6.58,
+    "scoreAfter": 6.87,
+    "ms": 24180
+   },
+   "needle": false,
+   "pressureMiss": 0
+  }
+ },
+ {
+  "level": 294,
+  "source": "batch 282",
+  "before": {
+   "score": 6.66,
+   "tail": 0.1913,
+   "down": 15,
+   "tiles": 76
+  },
+  "job": {
+   "si": 25,
+   "layout": 36,
+   "seed": 6,
+   "dial": [
+    3,
+    2
+   ],
+   "tiers": [
+    "std",
+    "hard"
+   ],
+   "buildWall": 25000,
+   "tries": 30
+  },
+  "tier": "hard",
+  "after": {
+   "score": 7.52,
+   "tail": 0.1,
+   "inBand": true,
+   "down": 19,
+   "occ": {
+    "steps": 62,
+    "counts": [
+     14,
+     30,
+     17,
+     1
+    ],
+    "share": [
+     0.226,
+     0.484,
+     0.274,
+     0.016
+    ],
+    "longest2plus": 3,
+    "mean": 1.081,
+    "gentle": true,
+    "before": {
+     "steps": 62,
+     "counts": [
+      0,
+      2,
+      31,
+      29
+     ],
+     "share": [
+      0,
+      0.032,
+      0.5,
+      0.468
+     ],
+     "longest2plus": 57,
+     "mean": 2.435
+    }
+   },
+   "retune": {
+    "faceDownBefore": 15,
+    "faceDownAfter": 19,
+    "faceDownAdded": 4,
+    "tailBefore": 0.1913,
+    "tailAfter": 0.1,
+    "rerouted": true,
+    "notes": [
+     "windows tried: 0.06-0.18 -> tail 0.1 miss 0.148; 0.12-0.18 -> tail 0.0925 miss 0.16"
+    ],
+    "scoreBefore": 6.66,
+    "scoreAfter": 7.52,
+    "ms": 78734
+   },
+   "needle": false,
+   "pressureMiss": 0.148
+  }
+ },
+ {
+  "level": 295,
+  "source": "batch 283",
+  "before": {
+   "score": 6.82,
+   "tail": 0.185,
+   "down": 17,
+   "tiles": 84
+  },
+  "job": {
+   "si": 33,
+   "layout": 37,
+   "seed": 1,
+   "dial": [
+    5,
+    3
+   ],
+   "buildWall": 12000,
+   "tries": 12
+  },
+  "tier": "hard",
+  "after": {
+   "score": 7.25,
+   "tail": 0.135,
+   "inBand": true,
+   "down": 17,
+   "occ": {
+    "steps": 72,
+    "counts": [
+     23,
+     35,
+     13,
+     1
+    ],
+    "share": [
+     0.319,
+     0.486,
+     0.181,
+     0.014
+    ],
+    "longest2plus": 3,
+    "mean": 0.889,
+    "gentle": false,
+    "before": {
+     "steps": 72,
+     "counts": [
+      1,
+      8,
+      35,
+      28
+     ],
+     "share": [
+      0.014,
+      0.111,
+      0.486,
+      0.389
+     ],
+     "longest2plus": 21,
+     "mean": 2.25
+    }
+   },
+   "retune": {
+    "faceDownBefore": 17,
+    "faceDownAfter": 17,
+    "faceDownAdded": 0,
+    "tailBefore": 0.185,
+    "tailAfter": 0.135,
+    "rerouted": true,
+    "notes": [
+     "face-down set rejected (staticGates): tiles one by one",
+     "band not reached with 4 extra face-down tiles: trying 2",
+     "band not reached with 4 extra face-down tiles: trying 0"
+    ],
+    "scoreBefore": 6.82,
+    "scoreAfter": 7.25,
+    "ms": 479108
+   },
+   "needle": false,
+   "pressureMiss": 0
+  }
+ },
+ {
+  "level": 296,
+  "source": "batch 284",
+  "before": {
+   "score": 6.5,
+   "tail": 0.1862,
+   "down": 15,
+   "tiles": 76
+  },
+  "job": {
+   "si": 8,
+   "layout": 23,
+   "seed": 4,
+   "dial": [
+    3,
+    2
+   ],
+   "tiers": [
+    "std",
+    "hard"
+   ],
+   "buildWall": 40000,
+   "tries": 40
+  },
+  "tier": "hard",
+  "tried": [
+   "1: tail 0.1862 stays outside 0.06-0.18 (face-down set rejected ",
+   "2: ok"
+  ],
+  "after": {
+   "score": 6.67,
+   "tail": 0.175,
+   "inBand": true,
+   "down": 21,
+   "occ": {
+    "steps": 65,
+    "counts": [
+     22,
+     32,
+     10,
+     1
+    ],
+    "share": [
+     0.338,
+     0.492,
+     0.154,
+     0.015
+    ],
+    "longest2plus": 2,
+    "mean": 0.846,
+    "gentle": false,
+    "before": {
+     "steps": 65,
+     "counts": [
+      3,
+      10,
+      29,
+      23
+     ],
+     "share": [
+      0.046,
+      0.154,
+      0.446,
+      0.354
+     ],
+     "longest2plus": 29,
+     "mean": 2.108
+    }
+   },
+   "retune": {
+    "faceDownBefore": 15,
+    "faceDownAfter": 21,
+    "faceDownAdded": 6,
+    "tailBefore": 0.1862,
+    "tailAfter": 0.175,
+    "rerouted": true,
+    "notes": [
+     "face-down set rejected (staticGates): tiles one by one",
+     "windows tried: 0.06-0.18 -> tail 0.1925 miss 0; 0.12-0.18 -> tail 0.175 miss 0"
+    ],
+    "scoreBefore": 6.5,
+    "scoreAfter": 6.67,
+    "ms": 217292
+   },
+   "needle": false,
+   "pressureMiss": 0
+  }
+ },
+ {
+  "level": 297,
+  "source": "batch 285",
+  "before": {
+   "score": 6.96,
+   "tail": 0.1837,
+   "down": 15,
+   "tiles": 76
+  },
+  "job": {
+   "si": 14,
+   "layout": 11,
+   "seed": 1,
+   "dial": [
+    5,
+    3
+   ]
+  },
+  "tier": "hard",
+  "after": {
+   "score": 7.17,
+   "tail": 0.1663,
+   "inBand": true,
+   "down": 21,
+   "occ": {
+    "steps": 58,
+    "counts": [
+     16,
+     25,
+     13,
+     4
+    ],
+    "share": [
+     0.276,
+     0.431,
+     0.224,
+     0.069
+    ],
+    "longest2plus": 5,
+    "mean": 1.086,
+    "gentle": true,
+    "before": {
+     "steps": 58,
+     "counts": [
+      7,
+      13,
+      22,
+      16
+     ],
+     "share": [
+      0.121,
+      0.224,
+      0.379,
+      0.276
+     ],
+     "longest2plus": 21,
+     "mean": 1.81
+    }
+   },
+   "retune": {
+    "faceDownBefore": 15,
+    "faceDownAfter": 21,
+    "faceDownAdded": 6,
+    "tailBefore": 0.1837,
+    "tailAfter": 0.1663,
+    "rerouted": true,
+    "notes": [
+     "windows tried: 0.06-0.18 -> tail 0.1663 miss 0.332; 0.12-0.18 -> tail 0.1663 miss 0.332"
+    ],
+    "scoreBefore": 6.96,
+    "scoreAfter": 7.17,
+    "ms": 117126
+   },
+   "needle": false,
+   "pressureMiss": 0.332
+  }
+ },
+ {
+  "level": 298,
+  "source": "batch 286",
+  "before": {
+   "score": 6.93,
+   "tail": 0.1938,
+   "down": 15,
+   "tiles": 76
+  },
+  "job": {
+   "si": 31,
+   "layout": 18,
+   "seed": 3,
+   "dial": [
+    5,
+    3
+   ],
+   "tiers": [
+    "std",
+    "hard"
+   ],
+   "buildWall": 20000,
+   "tries": 24
+  },
+  "tier": "hard",
+  "after": {
+   "score": 7.16,
+   "tail": 0.1725,
+   "inBand": true,
+   "down": 20,
+   "occ": {
+    "steps": 59,
+    "counts": [
+     20,
+     29,
+     9,
+     1
+    ],
+    "share": [
+     0.339,
+     0.492,
+     0.153,
+     0.017
+    ],
+    "longest2plus": 2,
+    "mean": 0.847,
+    "gentle": false,
+    "before": {
+     "steps": 59,
+     "counts": [
+      4,
+      10,
+      25,
+      20
+     ],
+     "share": [
+      0.068,
+      0.169,
+      0.424,
+      0.339
+     ],
+     "longest2plus": 13,
+     "mean": 2.034
+    }
+   },
+   "retune": {
+    "faceDownBefore": 15,
+    "faceDownAfter": 20,
+    "faceDownAdded": 5,
+    "tailBefore": 0.1938,
+    "tailAfter": 0.1725,
+    "rerouted": true,
+    "notes": [],
+    "scoreBefore": 6.93,
+    "scoreAfter": 7.16,
+    "ms": 148391
+   },
+   "needle": false,
+   "pressureMiss": 0
+  }
+ },
+ {
+  "level": 299,
+  "source": "batch 287",
+  "before": {
+   "score": 6.99,
+   "tail": 0.1787,
+   "down": 15,
+   "tiles": 76
+  },
+  "job": {
+   "si": 9,
+   "layout": 1,
+   "seed": 1,
+   "dial": [
+    5,
+    3
+   ],
+   "buildWall": 12000,
+   "tries": 12
+  },
+  "tier": "hard",
+  "tried": [
+   "1: tail 0.1862 stays outside 0.06-0.18 (face-down set rejected ",
+   "2: ok"
+  ],
+  "after": {
+   "score": 7.59,
+   "tail": 0.1175,
+   "inBand": true,
+   "down": 20,
+   "occ": {
+    "steps": 65,
+    "counts": [
+     22,
+     31,
+     10,
+     2
+    ],
+    "share": [
+     0.338,
+     0.477,
+     0.154,
+     0.031
+    ],
+    "longest2plus": 3,
+    "mean": 0.877,
+    "gentle": false,
+    "before": {
+     "steps": 65,
+     "counts": [
+      4,
+      11,
+      28,
+      22
+     ],
+     "share": [
+      0.062,
+      0.169,
+      0.431,
+      0.338
+     ],
+     "longest2plus": 21,
+     "mean": 2.046
+    }
+   },
+   "retune": {
+    "faceDownBefore": 15,
+    "faceDownAfter": 20,
+    "faceDownAdded": 5,
+    "tailBefore": 0.1787,
+    "tailAfter": 0.1175,
+    "rerouted": true,
+    "notes": [
+     "face-down set rejected (staticGates): tiles one by one"
+    ],
+    "scoreBefore": 6.99,
+    "scoreAfter": 7.59,
+    "ms": 94017
+   },
+   "needle": false,
+   "pressureMiss": 0.006
+  }
+ },
+ {
+  "level": 300,
+  "source": "batch 288",
+  "before": {
+   "score": 6.97,
+   "tail": 0.1138,
+   "down": 16,
+   "tiles": 80
+  },
+  "job": {
+   "si": 11,
+   "layout": 0,
+   "seed": 2,
+   "dial": [
+    5,
+    3
+   ]
+  },
+  "tier": "hard",
+  "after": {
+   "score": 7.11,
+   "tail": 0.1062,
+   "inBand": true,
+   "down": 22,
+   "occ": {
+    "steps": 69,
+    "counts": [
+     23,
+     34,
+     11,
+     1
+    ],
+    "share": [
+     0.333,
+     0.493,
+     0.159,
+     0.014
+    ],
+    "longest2plus": 2,
+    "mean": 0.855,
+    "gentle": false,
+    "before": {
+     "steps": 69,
+     "counts": [
+      11,
+      15,
+      23,
+      20
+     ],
+     "share": [
+      0.159,
+      0.217,
+      0.333,
+      0.29
+     ],
+     "longest2plus": 37,
+     "mean": 1.754
+    }
+   },
+   "retune": {
+    "faceDownBefore": 16,
+    "faceDownAfter": 22,
+    "faceDownAdded": 6,
+    "tailBefore": 0.1138,
+    "tailAfter": 0.1062,
+    "rerouted": true,
+    "notes": [
+     "face-down set rejected (staticGates): tiles one by one"
+    ],
+    "scoreBefore": 6.97,
+    "scoreAfter": 7.11,
+    "ms": 170406
+   },
+   "needle": false,
+   "pressureMiss": 0
+  }
+ },
+ {
+  "level": 301,
+  "source": "older blind1-185",
+  "kept": "older board, copied unchanged"
+ },
+ {
+  "level": 302,
+  "source": "batch 289",
+  "before": {
+   "score": 7.51,
+   "tail": 0.09,
+   "down": 16,
+   "tiles": 80
+  },
+  "job": {
+   "si": 15,
+   "layout": 14,
+   "seed": 1,
+   "dial": [
+    5,
+    3
+   ],
+   "tiers": [
+    "std",
+    "hard",
+    "deep"
+   ],
+   "buildWall": 12000,
+   "tries": 12
+  },
+  "tier": "hard",
+  "after": {
+   "score": 7.63,
+   "tail": 0.085,
+   "inBand": true,
+   "down": 22,
+   "occ": {
+    "steps": 67,
+    "counts": [
+     2,
+     29,
+     31,
+     5
+    ],
+    "share": [
+     0.03,
+     0.433,
+     0.463,
+     0.075
+    ],
+    "longest2plus": 7,
+    "mean": 1.582,
+    "gentle": true,
+    "before": {
+     "steps": 67,
+     "counts": [
+      1,
+      4,
+      32,
+      30
+     ],
+     "share": [
+      0.015,
+      0.06,
+      0.478,
+      0.448
+     ],
+     "longest2plus": 45,
+     "mean": 2.358
+    }
+   },
+   "retune": {
+    "faceDownBefore": 16,
+    "faceDownAfter": 22,
+    "faceDownAdded": 6,
+    "tailBefore": 0.09,
+    "tailAfter": 0.085,
+    "rerouted": true,
+    "notes": [
+     "face-down set rejected (staticGates): tiles one by one",
+     "windows tried: 0.06-0.18 -> tail 0.085 miss 0.946; 0.12-0.18 -> tail 0.1062 miss 1.006"
+    ],
+    "scoreBefore": 7.51,
+    "scoreAfter": 7.63,
+    "ms": 62797
+   },
+   "needle": false,
+   "pressureMiss": 0.946
+  }
+ }
+]

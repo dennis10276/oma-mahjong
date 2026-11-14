@@ -1,0 +1,6 @@
+✓ ok    ui markers: dashboard recording preserves frozen key and lock markers through thaw  (1.4s)
+✓ ok    ui markers: frozen keys and locks retain both badges through cracks, thaw, redraw and unlock  (2.1s)
+✓ ok    ui markers: frozen tap hints all alive thaw neighbours including covered, side-blocked and frozen tiles  (3.8s)
+✓ ok    ui markers: coach replay shows combined badges and removes ice after neighbouring takes  (5.5s)
+
+4/4 tests passed in 7s (offline; add --online for the real-database tests)

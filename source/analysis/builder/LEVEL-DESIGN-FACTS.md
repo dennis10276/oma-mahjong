@@ -99,6 +99,25 @@ add new decisions with a date.
     `process-v1/e5-boards.json`, plus bank boards 262 and 273); they are kept as they are and placed by how many
     tries he needed.
     217 gets its clock tightened by one move when placed (Dennis: yes, 2026-11-13), provided it stays winnable.
+  - **New game mechanics are allowed, jokers are not** (2026-11-13): "We can add new game mechanics but no
+    jokers." New mechanics are proposed and prototyped first; Dennis chooses which go into the game.
+  - **The part after the trap must not feel like just clicking** (2026-11-14, lab 6, level 250: 4 stars, 5 tries, "FUN trap.
+    Really that AHA moment. After the trap tray pressure may increase. Its too easy after. Maybe more face down as
+    well after the trap"; later: "Not too much, but it shouldnt feel like just clicking"). The builder raises tray
+    pressure after the clock and puts somewhat more face-down tiles in the part after the trap; the trap itself
+    stays fully visible. Not overdone (same day): "Dont overdo on tray pressure. 1 in tray is
+    enough after a hard trap."
+  - **Chained traps stay the model; other trap ideas go inside a chain** (2026-11-14, lab 7, twelve new trap kinds by
+    Codex, all rated "too easy", 1-3 stars): "These traps feel less of a AHA moment then the chained ones. These are
+    more straightforward"; "all of these ideas seem fine just make them chained and less obvious"; "Fine to have more
+    then 1 trap but it should be meaningfull. This was just 2 easy traps." A trap is too obvious when the tiles of
+    the right route are already waiting in the tray. He likes three layers ("easier to see") and boards read from
+    above rather than from the side.
+  - **Two traps on one board** (2026-11-14, correction): "Preferably depend on eachother but they can also be 1 hard and
+    1 medium trap." Two easy, unrelated traps are what he does not want.
+  - **No ribbon mechanic** (2026-11-14): "In essence its the same as lock and key cause you can only take lock after key."
+  - **Tapping a frozen or locked tile that cannot be taken shows what it needs** (the tiles that thaw it, or the keys),
+    not the tiles lying on it (2026-11-14). Done on the work branch.
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
   - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
     played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is
