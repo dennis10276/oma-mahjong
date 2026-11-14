@@ -1,0 +1,20 @@
+✔ new stories register without replacing established stories (0.8311ms)
+✔ invalid briefs fail without a search (4.0881ms)
+✔ independent oracle checks deadline, capacity, illegality and exact prices (3.8243ms)
+✔ independent verifier rejects malformed and fabricated records (1.0431ms)
+✔ independent verifier has no story-proof dependency (1.139ms)
+✔ combined key/lock badge needs a clear upper-left corner, not just a visible ice overlay (0.2036ms)
+✔ retiming replaces a late clock witness and never treats an unresolved minimum as a proof (1.3628ms)
+✔ locked picture relief preserves strict play and waits for both real keys (1.9386ms)
+✔ independent search rejects an invented losing-clock bait (209.8518ms)
+✔ finished examples carry successful independent certificates (18.835ms)
+✔ hard worker deadline terminates work and yields a failure, never an example (8.8003ms)
+✔ delivery has thirty independently certified boards, twelve families and a valid ledger order (30.0548ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 435.1286

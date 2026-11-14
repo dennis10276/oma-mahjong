@@ -1,0 +1,6 @@
+✓ ok    hard: designed levels are the same every time, can be finished, fair, near their target; face-down only where it hurts; the clock from 80  (10.5s)
+✓ ok    hard: the test player knows only what a person can see, and is fitted to real players (strong ~ Dennisisdebeste, average ~ Mrs. Doubtfire)  (6.3s)
+✓ ok    hard: the alarm clock counts down with every tile taken, ends the level at 0, and is safe once its tile is gone  (5.0s)
+✓ ok    hard: the designed levels come ready-made: the same on every phone, started at once (also past the last one); grandma keeps her own levels  (8.9s)
+
+4/4 tests passed in 31s (offline; add --online for the real-database tests)

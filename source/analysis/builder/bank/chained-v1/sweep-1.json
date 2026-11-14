@@ -1,0 +1,2245 @@
+{
+  "counts": {
+    "waitThawKey": 0,
+    "waitCoverKey": 0,
+    "waitCoverWay": 0,
+    "waitNested": 0,
+    "roofCoverKey": 0,
+    "roofThawKey": 0,
+    "roofCoverWay": 0,
+    "lookalikeThaw": 0,
+    "lookalikeCover": 0,
+    "lookalikeNested": 0,
+    "nestedThawKey": 0,
+    "nestedCoverKey": 0,
+    "lookalikeWay": 0,
+    "roofNested": 0
+  },
+  "rows": [
+    {
+      "name": "waitThawKey",
+      "layout": 25,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 187
+    },
+    {
+      "name": "waitThawKey",
+      "layout": 28,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 70
+      },
+      "ms": 248
+    },
+    {
+      "name": "waitThawKey",
+      "layout": 19,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 348
+    },
+    {
+      "name": "waitThawKey",
+      "layout": 14,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 46,
+        "clockTwinNotGate": 20,
+        "fixedTwinsClose": 2,
+        "twoMeaningfulBaits": 1,
+        "clockNotBait": 1
+      },
+      "ms": 1916
+    },
+    {
+      "name": "waitThawKey",
+      "layout": 18,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "clockTwinNotGate": 5,
+        "noClockPartnerHolders": 9
+      },
+      "ms": 7009
+    },
+    {
+      "name": "waitThawKey",
+      "layout": 12,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "clockTwinNotGate": 14,
+        "noClockPartnerHolders": 33,
+        "noProvenBait": 5,
+        "clockNotBait": 1,
+        "clockShortest": 1,
+        "fixedTwinsClose": 2
+      },
+      "ms": 7010
+    },
+    {
+      "name": "waitThawKey",
+      "layout": 17,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noClockPartnerHolders": 3,
+        "clockNotBait": 1,
+        "clockTwinNotGate": 2,
+        "fixedTwinsClose": 1
+      },
+      "ms": 7005
+    },
+    {
+      "name": "waitThawKey",
+      "layout": 31,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "clockTwinNotGate": 5,
+        "noClockPartnerHolders": 14,
+        "trayOverflow": 3,
+        "clockNotBait": 1,
+        "noProvenBait": 1,
+        "fixedTwinsClose": 1
+      },
+      "ms": 455,
+      "file": "waitThawKey-L31-s1-p1.json"
+    },
+    {
+      "name": "waitCoverKey",
+      "layout": 25,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 175
+    },
+    {
+      "name": "waitCoverKey",
+      "layout": 19,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 198
+    },
+    {
+      "name": "waitCoverKey",
+      "layout": 28,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 205
+    },
+    {
+      "name": "waitCoverKey",
+      "layout": 18,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 67,
+        "clockTwinNotGate": 3
+      },
+      "ms": 235
+    },
+    {
+      "name": "waitCoverKey",
+      "layout": 14,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 55,
+        "clockTwinNotGate": 8,
+        "noClockPartnerHolders": 6,
+        "fixedTwinsClose": 1
+      },
+      "ms": 293
+    },
+    {
+      "name": "waitThawKey",
+      "layout": 23,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "clockTwinNotGate": 1,
+        "noClockPartnerHolders": 1
+      },
+      "ms": 7019
+    },
+    {
+      "name": "waitCoverKey",
+      "layout": 12,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 61,
+        "obvious:greedyPrefix": 1,
+        "clockNotBait": 1,
+        "trayOverflow": 1,
+        "clockTwinNotGate": 6
+      },
+      "ms": 375
+    },
+    {
+      "name": "waitCoverKey",
+      "layout": 23,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "fixedTwinsClose": 2,
+        "noClockPartnerHolders": 54,
+        "clockTwinNotGate": 11,
+        "trayOverflow": 3
+      },
+      "ms": 250
+    },
+    {
+      "name": "waitCoverKey",
+      "layout": 17,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "clockTwinNotGate": 14,
+        "noClockPartnerHolders": 54,
+        "clockNotBait": 2
+      },
+      "ms": 437
+    },
+    {
+      "name": "waitCoverKey",
+      "layout": 1,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 45,
+        "noChain": 25
+      },
+      "ms": 257
+    },
+    {
+      "name": "waitCoverKey",
+      "layout": 31,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 38,
+        "fixedTwinsClose": 8,
+        "clockTwinNotGate": 23,
+        "clockNotBait": 1
+      },
+      "ms": 294
+    },
+    {
+      "name": "waitCoverWay",
+      "layout": 25,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 187
+    },
+    {
+      "name": "waitCoverWay",
+      "layout": 19,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 70
+      },
+      "ms": 205
+    },
+    {
+      "name": "waitCoverWay",
+      "layout": 28,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 195
+    },
+    {
+      "name": "waitCoverWay",
+      "layout": 18,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 21,
+        "noClockPartnerHolders": 49
+      },
+      "ms": 270
+    },
+    {
+      "name": "waitCoverWay",
+      "layout": 14,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "clockTwinNotGate": 27,
+        "noClockPartnerHolders": 37,
+        "noChain": 4,
+        "fixedTwinsClose": 2
+      },
+      "ms": 266
+    },
+    {
+      "name": "waitCoverWay",
+      "layout": 12,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 63,
+        "noClockPartnerHolders": 7
+      },
+      "ms": 346
+    },
+    {
+      "name": "waitThawKey",
+      "layout": 1,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "clockNotBait": 1,
+        "noProvenBait": 1,
+        "obvious:greedyPrefix": 1,
+        "noClockPartnerHolders": 1
+      },
+      "ms": 6981,
+      "file": "waitThawKey-L1-s1-p1.json"
+    },
+    {
+      "name": "waitCoverWay",
+      "layout": 23,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 2,
+        "noClockPartnerHolders": 50,
+        "trayOverflow": 8,
+        "clockTwinNotGate": 8,
+        "fixedTwinsClose": 2
+      },
+      "ms": 270
+    },
+    {
+      "name": "waitThawKey",
+      "layout": 13,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "clockNotBait": 2,
+        "clockTwinNotGate": 20,
+        "noProvenBait": 8,
+        "clockShortest": 4,
+        "noClockPartnerHolders": 21,
+        "fixedTwinsClose": 1
+      },
+      "ms": 6921
+    },
+    {
+      "name": "waitCoverWay",
+      "layout": 1,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 204
+    },
+    {
+      "name": "waitCoverWay",
+      "layout": 31,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noClockPartnerHolders": 14,
+        "fixedTwinsClose": 2,
+        "clockTwinNotGate": 15,
+        "clockNotBait": 1
+      },
+      "ms": 581,
+      "file": "waitCoverWay-L31-s1-p1.json"
+    },
+    {
+      "name": "waitCoverKey",
+      "layout": 13,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 36,
+        "clockTwinNotGate": 29,
+        "clockShortest": 4,
+        "fixedTwinsClose": 1
+      },
+      "ms": 5267
+    },
+    {
+      "name": "waitNested",
+      "layout": 25,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 179
+    },
+    {
+      "name": "waitNested",
+      "layout": 19,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 70
+      },
+      "ms": 185
+    },
+    {
+      "name": "waitNested",
+      "layout": 28,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 70
+      },
+      "ms": 185
+    },
+    {
+      "name": "waitNested",
+      "layout": 18,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 196
+    },
+    {
+      "name": "waitNested",
+      "layout": 12,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 70
+      },
+      "ms": 204
+    },
+    {
+      "name": "waitNested",
+      "layout": 17,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 67,
+        "noChain": 3
+      },
+      "ms": 223
+    },
+    {
+      "name": "waitNested",
+      "layout": 23,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 210
+    },
+    {
+      "name": "waitNested",
+      "layout": 1,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 69,
+        "noChain": 1
+      },
+      "ms": 221
+    },
+    {
+      "name": "waitNested",
+      "layout": 14,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 26,
+        "clockNotBait": 11,
+        "noClockPartnerHolders": 27,
+        "obvious:greedyPrefix": 6
+      },
+      "ms": 1260
+    },
+    {
+      "name": "waitCoverWay",
+      "layout": 17,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noChain": 20,
+        "clockShortest": 4,
+        "noClockPartnerHolders": 31,
+        "clockTwinNotGate": 5,
+        "clockNotBait": 1
+      },
+      "ms": 7001
+    },
+    {
+      "name": "waitCoverWay",
+      "layout": 13,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noClockPartnerHolders": 44,
+        "clockTwinNotGate": 21,
+        "noProvenBait": 2,
+        "fixedTwinsClose": 1,
+        "clockNotBait": 2
+      },
+      "ms": 3877
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 25,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 162
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 19,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 185
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 28,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 175
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 18,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 70
+      },
+      "ms": 205
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 14,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 10,
+        "noRoofKeyCell": 60
+      },
+      "ms": 229
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 12,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 70
+      },
+      "ms": 198
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 17,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 70
+      },
+      "ms": 178
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 23,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 70
+      },
+      "ms": 176
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 31,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 70
+      },
+      "ms": 198
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 1,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 56,
+        "noChain": 14
+      },
+      "ms": 227
+    },
+    {
+      "name": "roofCoverKey",
+      "layout": 13,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 70
+      },
+      "ms": 183
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 25,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 187
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 28,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 37,
+        "digPictures": 33
+      },
+      "ms": 260
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 19,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 349
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 18,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "digPictures": 52,
+        "noRoofKeyCell": 15,
+        "mixedDig": 3
+      },
+      "ms": 243
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 14,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "digPictures": 50,
+        "noRoofKeyCell": 10,
+        "fixedTwinsClose": 2,
+        "mixedDig": 8
+      },
+      "ms": 241
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 12,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "digPictures": 53,
+        "noRoofKeyCell": 15,
+        "mixedDig": 2
+      },
+      "ms": 224
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 17,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "digPictures": 37,
+        "mixedDig": 1,
+        "noRoofKeyCell": 32
+      },
+      "ms": 208
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 23,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "mixedDig": 4,
+        "digPictures": 46,
+        "noRoofKeyCell": 20
+      },
+      "ms": 215
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 1,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 16,
+        "digPictures": 50,
+        "fixedTwinsClose": 2,
+        "mixedDig": 2
+      },
+      "ms": 280
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 31,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "digPictures": 40,
+        "noRoofKeyCell": 25,
+        "mixedDig": 5
+      },
+      "ms": 234
+    },
+    {
+      "name": "roofThawKey",
+      "layout": 13,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 25,
+        "digPictures": 44,
+        "mixedDig": 1
+      },
+      "ms": 225
+    },
+    {
+      "name": "roofCoverWay",
+      "layout": 25,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 178
+    },
+    {
+      "name": "roofCoverWay",
+      "layout": 19,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 69,
+        "noChain": 1
+      },
+      "ms": 193
+    },
+    {
+      "name": "roofCoverWay",
+      "layout": 28,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 197
+    },
+    {
+      "name": "roofCoverWay",
+      "layout": 18,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 26,
+        "noRoofKeyCell": 44
+      },
+      "ms": 252
+    },
+    {
+      "name": "roofCoverWay",
+      "layout": 14,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 70
+      },
+      "ms": 206
+    },
+    {
+      "name": "roofCoverWay",
+      "layout": 12,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 62,
+        "noChain": 8
+      },
+      "ms": 232
+    },
+    {
+      "name": "roofCoverWay",
+      "layout": 17,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 59,
+        "noChain": 11
+      },
+      "ms": 224
+    },
+    {
+      "name": "roofCoverWay",
+      "layout": 1,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 178
+    },
+    {
+      "name": "roofCoverWay",
+      "layout": 23,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 66,
+        "noChain": 4
+      },
+      "ms": 215
+    },
+    {
+      "name": "roofCoverWay",
+      "layout": 13,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 70
+      },
+      "ms": 200
+    },
+    {
+      "name": "roofCoverWay",
+      "layout": 31,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 3,
+        "noRoofKeyCell": 67
+      },
+      "ms": 235
+    },
+    {
+      "name": "lookalikeThaw",
+      "layout": 25,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 181
+    },
+    {
+      "name": "lookalikeThaw",
+      "layout": 19,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 331
+    },
+    {
+      "name": "lookalikeThaw",
+      "layout": 28,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRepeatedKeyPair": 70
+      },
+      "ms": 545
+    },
+    {
+      "name": "waitNested",
+      "layout": 31,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "idle:lock:44": 2,
+        "noClockPartnerHolders": 3,
+        "clockTwinNotGate": 1,
+        "clockNotBait": 7,
+        "noChain": 1,
+        "idle:lock:43": 1
+      },
+      "ms": 7003
+    },
+    {
+      "name": "waitNested",
+      "layout": 13,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "clockNotBait": 4,
+        "noProvenBait": 8,
+        "noClockPartnerHolders": 7
+      },
+      "ms": 7021
+    },
+    {
+      "name": "lookalikeThaw",
+      "layout": 18,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRepeatedKeyPair": 63,
+        "twoMeaningfulBaits": 4,
+        "fixedTwinsClose": 1,
+        "obvious:freeRoutePair": 1,
+        "noProvenBait": 1
+      },
+      "ms": 3648
+    },
+    {
+      "name": "lookalikeThaw",
+      "layout": 12,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRepeatedKeyPair": 63,
+        "twoMeaningfulBaits": 5,
+        "obvious:freeRoutePair": 1,
+        "noProvenBait": 1
+      },
+      "ms": 2761
+    },
+    {
+      "name": "lookalikeThaw",
+      "layout": 14,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "obvious:freeRoutePair": 1,
+        "noRepeatedKeyPair": 6,
+        "noProvenBait": 1,
+        "twoMeaningfulBaits": 2
+      },
+      "ms": 7008
+    },
+    {
+      "name": "lookalikeThaw",
+      "layout": 17,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noRepeatedKeyPair": 16,
+        "trayOverflow": 1
+      },
+      "ms": 6889,
+      "file": "lookalikeThaw-L17-s1-p1.json"
+    },
+    {
+      "name": "lookalikeThaw",
+      "layout": 31,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noRepeatedKeyPair": 20,
+        "trayOverflow": 1,
+        "twoMeaningfulBaits": 1
+      },
+      "ms": 1361,
+      "file": "lookalikeThaw-L31-s1-p1.json"
+    },
+    {
+      "name": "lookalikeCover",
+      "layout": 25,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 176
+    },
+    {
+      "name": "lookalikeCover",
+      "layout": 19,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 188
+    },
+    {
+      "name": "lookalikeCover",
+      "layout": 28,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 180
+    },
+    {
+      "name": "lookalikeThaw",
+      "layout": 23,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noRepeatedKeyPair": 56,
+        "twoMeaningfulBaits": 4
+      },
+      "ms": 7012
+    },
+    {
+      "name": "lookalikeThaw",
+      "layout": 1,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noRepeatedKeyPair": 47,
+        "clockShortest": 1,
+        "twoMeaningfulBaits": 1
+      },
+      "ms": 7016
+    },
+    {
+      "name": "lookalikeThaw",
+      "layout": 13,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noProvenBait": 1,
+        "twoMeaningfulBaits": 1,
+        "noRepeatedKeyPair": 2
+      },
+      "ms": 7014
+    },
+    {
+      "name": "lookalikeCover",
+      "layout": 12,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noRepeatedKeyPair": 35,
+        "trayOverflow": 4,
+        "idle:ice:63": 1,
+        "idle:ice:79": 1
+      },
+      "ms": 5066,
+      "file": "lookalikeCover-L12-s1-p1.json"
+    },
+    {
+      "name": "lookalikeCover",
+      "layout": 18,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noRepeatedKeyPair": 18,
+        "clockShortest": 1
+      },
+      "ms": 7003
+    },
+    {
+      "name": "lookalikeCover",
+      "layout": 14,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noChain": 1,
+        "noRepeatedKeyPair": 3
+      },
+      "ms": 7014
+    },
+    {
+      "name": "lookalikeCover",
+      "layout": 17,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noRepeatedKeyPair": 13
+      },
+      "ms": 2665,
+      "file": "lookalikeCover-L17-s1-p1.json"
+    },
+    {
+      "name": "lookalikeCover",
+      "layout": 31,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noRepeatedKeyPair": 26,
+        "fixedTwinsClose": 10,
+        "trayOverflow": 1
+      },
+      "ms": 560,
+      "file": "lookalikeCover-L31-s1-p1.json"
+    },
+    {
+      "name": "lookalikeNested",
+      "layout": 25,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 182
+    },
+    {
+      "name": "lookalikeCover",
+      "layout": 23,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noRepeatedKeyPair": 29,
+        "twoMeaningfulBaits": 1
+      },
+      "ms": 7001
+    },
+    {
+      "name": "lookalikeNested",
+      "layout": 28,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRepeatedKeyPair": 70
+      },
+      "ms": 480
+    },
+    {
+      "name": "lookalikeCover",
+      "layout": 1,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noRepeatedKeyPair": 16,
+        "fixedTwinsClose": 2,
+        "noChain": 5,
+        "trayOverflow": 1,
+        "wrongRepeatedPairNotBait": 1,
+        "obvious:freeRoutePair": 1
+      },
+      "ms": 7001
+    },
+    {
+      "name": "lookalikeNested",
+      "layout": 18,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 224
+    },
+    {
+      "name": "lookalikeCover",
+      "layout": 13,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noRepeatedKeyPair": 14,
+        "idle:ice:90": 1,
+        "fixedTwinsClose": 1,
+        "wrongRepeatedPairNotBait": 1
+      },
+      "ms": 7012
+    },
+    {
+      "name": "lookalikeNested",
+      "layout": 17,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRepeatedKeyPair": 63,
+        "noChain": 3,
+        "trayOverflow": 4
+      },
+      "ms": 504
+    },
+    {
+      "name": "lookalikeNested",
+      "layout": 19,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noRepeatedKeyPair": 34,
+        "twoMeaningfulBaits": 6
+      },
+      "ms": 7004
+    },
+    {
+      "name": "lookalikeNested",
+      "layout": 23,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 222
+    },
+    {
+      "name": "lookalikeNested",
+      "layout": 12,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRepeatedKeyPair": 67,
+        "trayOverflow": 2,
+        "clockShortest": 1
+      },
+      "ms": 3508
+    },
+    {
+      "name": "lookalikeNested",
+      "layout": 31,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRepeatedKeyPair": 57,
+        "trayOverflow": 2,
+        "noChain": 4,
+        "fixedTwinsClose": 6,
+        "idle:ice:70": 1
+      },
+      "ms": 2166
+    },
+    {
+      "name": "nestedThawKey",
+      "layout": 25,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 198
+    },
+    {
+      "name": "nestedThawKey",
+      "layout": 19,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 353
+    },
+    {
+      "name": "lookalikeNested",
+      "layout": 1,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "trayOverflow": 5,
+        "noRepeatedKeyPair": 62,
+        "fixedTwinsClose": 1,
+        "noProvenBait": 1,
+        "noChain": 1
+      },
+      "ms": 3981
+    },
+    {
+      "name": "lookalikeNested",
+      "layout": 14,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noChain": 4,
+        "noRepeatedKeyPair": 3,
+        "idle:ice:71": 1,
+        "twoMeaningfulBaits": 1
+      },
+      "ms": 7007
+    },
+    {
+      "name": "lookalikeNested",
+      "layout": 13,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noRepeatedKeyPair": 14,
+        "wrongRepeatedPairNotBait": 1
+      },
+      "ms": 7005
+    },
+    {
+      "name": "nestedThawKey",
+      "layout": 28,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "clockShortest": 1,
+        "idle:lock:11": 1,
+        "noProvenBait": 1,
+        "twoMeaningfulBaits": 1
+      },
+      "ms": 7006
+    },
+    {
+      "name": "nestedThawKey",
+      "layout": 18,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "obvious:greedyPrefix": 1,
+        "twoMeaningfulBaits": 9,
+        "mixedDig": 1,
+        "clockShortest": 1,
+        "digPictures": 1
+      },
+      "ms": 7012
+    },
+    {
+      "name": "nestedThawKey",
+      "layout": 14,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "twoMeaningfulBaits": 3,
+        "restOrder": 1,
+        "noInnerMelt": 5,
+        "clockShortest": 1,
+        "mixedDig": 2,
+        "noProvenBait": 1
+      },
+      "ms": 7008
+    },
+    {
+      "name": "nestedThawKey",
+      "layout": 12,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "idle:ice:52": 2,
+        "twoMeaningfulBaits": 17,
+        "restOrder": 6,
+        "mixedDig": 2,
+        "obvious:greedyPrefix": 2,
+        "noProvenBait": 1
+      },
+      "ms": 7010
+    },
+    {
+      "name": "nestedThawKey",
+      "layout": 17,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "twoMeaningfulBaits": 3,
+        "mixedDig": 2
+      },
+      "ms": 7004
+    },
+    {
+      "name": "nestedThawKey",
+      "layout": 23,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "mixedDig": 2,
+        "noProvenBait": 1,
+        "clockShortest": 1,
+        "twoMeaningfulBaits": 2
+      },
+      "ms": 7003
+    },
+    {
+      "name": "nestedCoverKey",
+      "layout": 25,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 211
+    },
+    {
+      "name": "nestedCoverKey",
+      "layout": 19,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 220
+    },
+    {
+      "name": "nestedCoverKey",
+      "layout": 28,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 218
+    },
+    {
+      "name": "nestedThawKey",
+      "layout": 1,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noProvenBait": 1,
+        "mixedDig": 2,
+        "clockShortest": 1,
+        "obvious:greedyPrefix": 2,
+        "twoMeaningfulBaits": 1
+      },
+      "ms": 7002
+    },
+    {
+      "name": "nestedCoverKey",
+      "layout": 14,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 55,
+        "mixedDig": 15
+      },
+      "ms": 293
+    },
+    {
+      "name": "nestedThawKey",
+      "layout": 31,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "twoMeaningfulBaits": 34,
+        "mixedDig": 11,
+        "digPictures": 6,
+        "noProvenBait": 5,
+        "fixedTwinsClose": 1,
+        "idle:lock:53": 2,
+        "obvious:greedyPrefix": 3,
+        "idle:lock:27": 2
+      },
+      "ms": 7013
+    },
+    {
+      "name": "nestedThawKey",
+      "layout": 13,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "mixedDig": 3,
+        "twoMeaningfulBaits": 11
+      },
+      "ms": 7007
+    },
+    {
+      "name": "nestedCoverKey",
+      "layout": 18,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "clockShortest": 2
+      },
+      "ms": 7014
+    },
+    {
+      "name": "nestedCoverKey",
+      "layout": 12,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "mixedDig": 9,
+        "twoMeaningfulBaits": 2,
+        "obvious:greedyPrefix": 1
+      },
+      "ms": 6878
+    },
+    {
+      "name": "nestedCoverKey",
+      "layout": 31,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "mixedDig": 1,
+        "obvious:greedyPrefix": 1,
+        "trayOverflow": 1,
+        "fixedTwinsClose": 1,
+        "twoMeaningfulBaits": 1,
+        "digPictures": 1
+      },
+      "ms": 735,
+      "file": "nestedCoverKey-L31-s1-p1.json"
+    },
+    {
+      "name": "nestedCoverKey",
+      "layout": 17,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "clockShortest": 1,
+        "obvious:freeRoutePair": 1
+      },
+      "ms": 7006
+    },
+    {
+      "name": "lookalikeWay",
+      "layout": 25,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 212
+    },
+    {
+      "name": "nestedCoverKey",
+      "layout": 23,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "restOrder": 1,
+        "mixedDig": 2,
+        "clockShortest": 1,
+        "twoMeaningfulBaits": 5,
+        "noProvenBait": 1,
+        "obvious:greedyPrefix": 1
+      },
+      "ms": 7015
+    },
+    {
+      "name": "lookalikeWay",
+      "layout": 28,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 221
+    },
+    {
+      "name": "nestedCoverKey",
+      "layout": 1,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "mixedDig": 1
+      },
+      "ms": 7015
+    },
+    {
+      "name": "lookalikeWay",
+      "layout": 18,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noChain": 19,
+        "noRepeatedKeyPair": 29,
+        "fixedTwinsClose": 6
+      },
+      "ms": 1980,
+      "file": "lookalikeWay-L18-s1-p1.json"
+    },
+    {
+      "name": "nestedCoverKey",
+      "layout": 13,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "obvious:freeRoutePair": 2
+      },
+      "ms": 7006
+    },
+    {
+      "name": "lookalikeWay",
+      "layout": 17,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRepeatedKeyPair": 56,
+        "noChain": 11,
+        "trayOverflow": 3
+      },
+      "ms": 534
+    },
+    {
+      "name": "lookalikeWay",
+      "layout": 19,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noRepeatedKeyPair": 12,
+        "twoMeaningfulBaits": 3,
+        "noChain": 1
+      },
+      "ms": 7015
+    },
+    {
+      "name": "lookalikeWay",
+      "layout": 1,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 195
+    },
+    {
+      "name": "lookalikeWay",
+      "layout": 31,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noChain": 1,
+        "noRepeatedKeyPair": 5
+      },
+      "ms": 2133,
+      "file": "lookalikeWay-L31-s1-p1.json"
+    },
+    {
+      "name": "lookalikeWay",
+      "layout": 14,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noRepeatedKeyPair": 6,
+        "trayOverflow": 1,
+        "twoMeaningfulBaits": 2,
+        "noProvenBait": 1,
+        "fixedTwinsClose": 1
+      },
+      "ms": 6810,
+      "file": "lookalikeWay-L14-s1-p1.json"
+    },
+    {
+      "name": "roofNested",
+      "layout": 25,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 214
+    },
+    {
+      "name": "roofNested",
+      "layout": 19,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 70
+      },
+      "ms": 224
+    },
+    {
+      "name": "lookalikeWay",
+      "layout": 12,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noRepeatedKeyPair": 3
+      },
+      "ms": 7015
+    },
+    {
+      "name": "roofNested",
+      "layout": 28,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 70
+      },
+      "ms": 223
+    },
+    {
+      "name": "roofNested",
+      "layout": 18,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 226
+    },
+    {
+      "name": "roofNested",
+      "layout": 14,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 26,
+        "noRoofKeyCell": 44
+      },
+      "ms": 260
+    },
+    {
+      "name": "roofNested",
+      "layout": 12,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 70
+      },
+      "ms": 226
+    },
+    {
+      "name": "roofNested",
+      "layout": 17,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 67,
+        "noChain": 3
+      },
+      "ms": 231
+    },
+    {
+      "name": "roofNested",
+      "layout": 23,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noChain": 70
+      },
+      "ms": 236
+    },
+    {
+      "name": "roofNested",
+      "layout": 1,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 69,
+        "noChain": 1
+      },
+      "ms": 229
+    },
+    {
+      "name": "roofNested",
+      "layout": 31,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 66,
+        "noChain": 4
+      },
+      "ms": 260
+    },
+    {
+      "name": "lookalikeWay",
+      "layout": 13,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": true,
+      "fails": {
+        "noRepeatedKeyPair": 1
+      },
+      "ms": 1868,
+      "file": "lookalikeWay-L13-s1-p1.json"
+    },
+    {
+      "name": "roofNested",
+      "layout": 13,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "noProvenMix",
+      "fails": {
+        "noRoofKeyCell": 67,
+        "noChain": 3
+      },
+      "ms": 276
+    },
+    {
+      "name": "lookalikeWay",
+      "layout": 23,
+      "seed": 1,
+      "spare": 1,
+      "mode": "build",
+      "ok": false,
+      "fail": "hardWall",
+      "fails": {
+        "noRepeatedKeyPair": 40,
+        "noChain": 3,
+        "twoMeaningfulBaits": 2,
+        "noProvenBait": 1
+      },
+      "ms": 7014
+    }
+  ]
+}

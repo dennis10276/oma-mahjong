@@ -1,0 +1,111 @@
+{
+  "counts": {
+    "waitLookalikeRoof": 2,
+    "waitLookalikeWay": 2,
+    "waitLookalikeThaw": 0,
+    "waitLookalikeCoverThaw": 0,
+    "waitLookalikeCoverLock": 1,
+    "waitThawKey": 2,
+    "waitCoverKey": 0,
+    "waitCoverWay": 0,
+    "waitNested": 3,
+    "roofCoverKey": 0,
+    "roofThawKey": 2,
+    "roofCoverWay": 0,
+    "lookalikeThaw": 2,
+    "lookalikeCover": 2,
+    "lookalikeNested": 0,
+    "nestedThaw": 1,
+    "nestedCoverThaw": 0,
+    "nestedThawKey": 0,
+    "nestedCoverKey": 1,
+    "lookalikeWay": 4,
+    "roofNested": 0,
+    "waitThawWay": 3,
+    "waitLockCover": 1,
+    "waitKeyRoofs": 2,
+    "roofThawWay": 2,
+    "roofCoverThaw": 0,
+    "lookalikeThawWay": 0,
+    "lookalikeCoverThaw": 2
+  },
+  "rows": [
+    {
+      "name": "nestedCoverKey",
+      "layout": 31,
+      "seed": 1,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\nestedCoverKey-L31-s1-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 12000
+    },
+    {
+      "name": "nestedCoverKey",
+      "layout": 31,
+      "seed": 3,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\nestedCoverKey-L31-s3-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 20474
+    },
+    {
+      "name": "nestedCoverKey",
+      "layout": 31,
+      "seed": 4,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\nestedCoverKey-L31-s4-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 13059
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 13,
+      "seed": 7,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\nestedThaw-L13-s7-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 10945
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 17,
+      "seed": 7,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\nestedThaw-L17-s7-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 2928
+    },
+    {
+      "name": "nestedCoverThaw",
+      "layout": 31,
+      "seed": 7,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\nestedCoverThaw-L31-s7-p1.json",
+      "ok": false,
+      "fail": "separation",
+      "ms": 19710
+    },
+    {
+      "name": "nestedThaw",
+      "layout": 36,
+      "seed": 7,
+      "spare": 1,
+      "mode": "finish",
+      "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-chained-mixes\\source\\analysis\\builder\\bank\\chained-v1\\raw\\nestedThaw-L36-s7-p1.json",
+      "ok": false,
+      "fail": "tailPressure",
+      "ms": 6649
+    }
+  ]
+}

@@ -60,7 +60,10 @@ function run(){
     '## Verification and reproduction','',
     `Fresh independent audit: ${audit?.completed||0}/20, ${audit?.ok?'passed':'pending'}. Regression checks: ${tests?.ok?'passed':'pending'}. The audit imports declarative shape metadata and engine helpers, and never imports either story module, calls a story proof, or uses the construction clock-minimum routine. It replays the full strict witness and proves k−1 unsatisfiable directly, re-prices all baits/controls, checks each ablation and every winning first-move claim, and re-measures the tail and visibility facts.`, '',
     'No edits to `trap_stories.js`, `bank/*` or `builder-next/construct.js`. Heavy work reserves cores through `loop/heavy.js`, uses disposable workers with hard outer deadlines, and stays within the shared twelve-core / 80% limit. Each collection run also has a total wall.','',
+    'The saved boards can be re-audited without regeneration. Collection seeds and outcomes are recorded in the collection JSON files. Game checks use the existing local Playwright dependency and installed Chrome:', '',
     '```powershell',
+    "$env:NODE_PATH='C:/Users/den_k/Idea/OmasMahjong/oma-mahjong/tests/node_modules'",
+    "$env:CHROME='C:/Program Files/Google/Chrome/Application/chrome.exe'",
     'node source/tools/builder/loop/heavy.js --label chained-collect --cores 4 -- node source/tools/builder/run_chained_mixes.js --workers 4 --minutes 20 --layers 3 --rounds 2',
     'node source/tools/builder/loop/heavy.js --label chained-check --cores 4 -- node source/tools/builder/check_chained_mixes.js --workers 4',
     'node source/tools/builder/report_chained_mixes.js','```','');

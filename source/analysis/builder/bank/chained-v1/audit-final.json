@@ -1,0 +1,3060 @@
+{
+  "ok": true,
+  "completed": 20,
+  "rows": [
+    {
+      "file": "lookalikeCoverThaw-L36-s3-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 10,
+      "spare": 1,
+      "winningFirstMoves": 2,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 2,
+        "unknown": 0,
+        "legal": 10,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 6,
+            "result": "lose"
+          },
+          {
+            "tile": 25,
+            "result": "lose"
+          },
+          {
+            "tile": 30,
+            "result": "lose"
+          },
+          {
+            "tile": 52,
+            "result": "lose"
+          },
+          {
+            "tile": 68,
+            "result": "win"
+          },
+          {
+            "tile": 69,
+            "result": "win"
+          },
+          {
+            "tile": 70,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.2025,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 5,
+        "at3": 3,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          1,
+          2,
+          3,
+          2
+        ]
+      },
+      "signature": "clock<cover:ice; coverThaw<lock; keyA<cover:ice; keyPair<lookalikeChoice",
+      "layers": 4,
+      "obviousness": {
+        "ok": true,
+        "dial": 0,
+        "firstTwo": [
+          68,
+          69
+        ],
+        "greedyFirst": {
+          "rank": "freePair",
+          "tiles": [
+            25,
+            52
+          ]
+        },
+        "greedySecond": {
+          "rank": "freePair",
+          "tiles": [
+            25,
+            52
+          ]
+        },
+        "greedyPrefix": false,
+        "rightFreePairs": false,
+        "routeFreePairs": [],
+        "preferredBaits": [
+          [
+            25
+          ],
+          [
+            25,
+            52
+          ]
+        ],
+        "rule": "Reject both route taps in greedy tie sets, or any ready free pair on the pre-clock route; dial 2 also requires a greedy first bait."
+      },
+      "tailOccupancy": {
+        "steps": 66,
+        "counts": [
+          26,
+          31,
+          7,
+          2
+        ],
+        "share": [
+          0.394,
+          0.47,
+          0.106,
+          0.03
+        ],
+        "longest2plus": 3,
+        "mean": 0.773
+      },
+      "fingerprint": "e0ba5ea9bf13eaafe8fc5ba67dcdb53c53fd07f5b560ee8d3ffcb3324e1d4a01",
+      "historyBoards": 83,
+      "ms": 473
+    },
+    {
+      "file": "waitLookalikeWay-L14-s5-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 9,
+      "spare": 1,
+      "winningFirstMoves": 4,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 4,
+        "unknown": 0,
+        "legal": 12,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "win"
+          },
+          {
+            "tile": 6,
+            "result": "lose"
+          },
+          {
+            "tile": 48,
+            "result": "lose"
+          },
+          {
+            "tile": 63,
+            "result": "lose"
+          },
+          {
+            "tile": 64,
+            "result": "lose"
+          },
+          {
+            "tile": 65,
+            "result": "win"
+          },
+          {
+            "tile": 66,
+            "result": "lose"
+          },
+          {
+            "tile": 67,
+            "result": "win"
+          },
+          {
+            "tile": 68,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 76,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.2288,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 8,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "signature": "clock<lock; keyA<way:ice; clock<waitForTwin; keyPair<lookalikeChoice",
+      "layers": 3,
+      "obviousness": {
+        "ok": true,
+        "dial": 0,
+        "firstTwo": [
+          65,
+          44
+        ],
+        "greedyFirst": {
+          "rank": "freePair",
+          "tiles": [
+            6,
+            63,
+            64,
+            68
+          ]
+        },
+        "greedySecond": {
+          "rank": "freePair",
+          "tiles": [
+            6,
+            44,
+            63,
+            64,
+            67,
+            68
+          ]
+        },
+        "greedyPrefix": false,
+        "rightFreePairs": false,
+        "routeFreePairs": [],
+        "preferredBaits": [
+          [
+            6
+          ],
+          [
+            6,
+            64
+          ]
+        ],
+        "rule": "Reject both route taps in greedy tie sets, or any ready free pair on the pre-clock route; dial 2 also requires a greedy first bait."
+      },
+      "tailOccupancy": {
+        "steps": 71,
+        "counts": [
+          23,
+          35,
+          12,
+          1
+        ],
+        "share": [
+          0.324,
+          0.493,
+          0.169,
+          0.014
+        ],
+        "longest2plus": 2,
+        "mean": 0.873
+      },
+      "fingerprint": "1e443414bcd4d64108e8f8514f11461197877612887774fd75e8ad8b6cd68251",
+      "historyBoards": 83,
+      "ms": 703
+    },
+    {
+      "file": "roofThawKey-L18-s4-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 10,
+      "spare": 1,
+      "winningFirstMoves": 3,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 3,
+        "unknown": 0,
+        "legal": 12,
+        "rows": [
+          {
+            "tile": 44,
+            "result": "lose"
+          },
+          {
+            "tile": 52,
+            "result": "lose"
+          },
+          {
+            "tile": 53,
+            "result": "win"
+          },
+          {
+            "tile": 59,
+            "result": "lose"
+          },
+          {
+            "tile": 67,
+            "result": "win"
+          },
+          {
+            "tile": 68,
+            "result": "lose"
+          },
+          {
+            "tile": 69,
+            "result": "win"
+          },
+          {
+            "tile": 70,
+            "result": "lose"
+          },
+          {
+            "tile": 71,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.22,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 7,
+        "at3": 3,
+        "occ": [
+          1,
+          2,
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2
+        ]
+      },
+      "signature": "clock<ice; thaw<lock; keyA<cover:ice; keyB<clockRoof",
+      "layers": 3,
+      "obviousness": {
+        "ok": true,
+        "dial": 0,
+        "firstTwo": [
+          69,
+          67
+        ],
+        "greedyFirst": {
+          "rank": "specialProgress",
+          "tiles": [
+            52,
+            53,
+            70
+          ]
+        },
+        "greedySecond": {
+          "rank": "freePair",
+          "tiles": [
+            65,
+            67
+          ]
+        },
+        "greedyPrefix": false,
+        "rightFreePairs": false,
+        "routeFreePairs": [],
+        "preferredBaits": [
+          [
+            52
+          ],
+          [
+            70
+          ]
+        ],
+        "rule": "Reject both route taps in greedy tie sets, or any ready free pair on the pre-clock route; dial 2 also requires a greedy first bait."
+      },
+      "tailOccupancy": {
+        "steps": 66,
+        "counts": [
+          22,
+          33,
+          11,
+          0
+        ],
+        "share": [
+          0.333,
+          0.5,
+          0.167,
+          0
+        ],
+        "longest2plus": 1,
+        "mean": 0.833
+      },
+      "fingerprint": "27d6fd786cceb7f3985f20186e7e9fa476c483b15de111e46733ed4c3e296cf2",
+      "historyBoards": 83,
+      "ms": 403
+    },
+    {
+      "file": "lookalikeThaw-L31-s1-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 10,
+      "spare": 1,
+      "winningFirstMoves": 3,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 3,
+        "unknown": 0,
+        "legal": 13,
+        "rows": [
+          {
+            "tile": 31,
+            "result": "lose"
+          },
+          {
+            "tile": 34,
+            "result": "lose"
+          },
+          {
+            "tile": 54,
+            "result": "lose"
+          },
+          {
+            "tile": 57,
+            "result": "lose"
+          },
+          {
+            "tile": 58,
+            "result": "lose"
+          },
+          {
+            "tile": 59,
+            "result": "lose"
+          },
+          {
+            "tile": 60,
+            "result": "lose"
+          },
+          {
+            "tile": 61,
+            "result": "win"
+          },
+          {
+            "tile": 65,
+            "result": "lose"
+          },
+          {
+            "tile": 66,
+            "result": "lose"
+          },
+          {
+            "tile": 67,
+            "result": "win"
+          },
+          {
+            "tile": 73,
+            "result": "win"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.1875,
+      "close": {
+        "close": 1,
+        "share": 0.0263,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 9,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2
+        ]
+      },
+      "signature": "clock<ice; thaw<lock; keyA<cover:ice; keyPair<lookalikeChoice",
+      "layers": 3,
+      "obviousness": {
+        "ok": true,
+        "dial": 0,
+        "firstTwo": [
+          61,
+          62
+        ],
+        "greedyFirst": {
+          "rank": "freePair",
+          "tiles": [
+            54,
+            58,
+            59,
+            65
+          ]
+        },
+        "greedySecond": {
+          "rank": "freePair",
+          "tiles": [
+            54,
+            58,
+            59,
+            65
+          ]
+        },
+        "greedyPrefix": false,
+        "rightFreePairs": false,
+        "routeFreePairs": [],
+        "preferredBaits": [
+          [
+            58
+          ],
+          [
+            58,
+            59
+          ]
+        ],
+        "rule": "Reject both route taps in greedy tie sets, or any ready free pair on the pre-clock route; dial 2 also requires a greedy first bait."
+      },
+      "tailOccupancy": {
+        "steps": 66,
+        "counts": [
+          26,
+          32,
+          7,
+          1
+        ],
+        "share": [
+          0.394,
+          0.485,
+          0.106,
+          0.015
+        ],
+        "longest2plus": 3,
+        "mean": 0.742
+      },
+      "fingerprint": "4da64aa4f78b3cf018e2383054e950a9473b39ea3b0f22db471e4a8b71f050f9",
+      "historyBoards": 83,
+      "ms": 562
+    },
+    {
+      "file": "waitLookalikeRoof-L14-s5-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 7,
+      "spare": 2,
+      "winningFirstMoves": 5,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 5,
+        "unknown": 0,
+        "legal": 12,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "win"
+          },
+          {
+            "tile": 6,
+            "result": "lose"
+          },
+          {
+            "tile": 48,
+            "result": "lose"
+          },
+          {
+            "tile": 63,
+            "result": "lose"
+          },
+          {
+            "tile": 64,
+            "result": "lose"
+          },
+          {
+            "tile": 65,
+            "result": "win"
+          },
+          {
+            "tile": 66,
+            "result": "win"
+          },
+          {
+            "tile": 67,
+            "result": "win"
+          },
+          {
+            "tile": 73,
+            "result": "win"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          },
+          {
+            "tile": 76,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.1625,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 6,
+        "at3": 3,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "signature": "clock<lock; keyA<cover:ice; clock<waitForTwin; keyPair<lookalikeChoice",
+      "layers": 3,
+      "obviousness": {
+        "ok": true,
+        "dial": 0,
+        "firstTwo": [
+          67,
+          72
+        ],
+        "greedyFirst": {
+          "rank": "freePair",
+          "tiles": [
+            6,
+            48,
+            65,
+            66
+          ]
+        },
+        "greedySecond": {
+          "rank": "freePair",
+          "tiles": [
+            6,
+            48,
+            65,
+            66
+          ]
+        },
+        "greedyPrefix": false,
+        "rightFreePairs": false,
+        "routeFreePairs": [],
+        "preferredBaits": [
+          [
+            6
+          ],
+          [
+            6,
+            48
+          ]
+        ],
+        "rule": "Reject both route taps in greedy tie sets, or any ready free pair on the pre-clock route; dial 2 also requires a greedy first bait."
+      },
+      "tailOccupancy": {
+        "steps": 73,
+        "counts": [
+          27,
+          36,
+          9,
+          1
+        ],
+        "share": [
+          0.37,
+          0.493,
+          0.123,
+          0.014
+        ],
+        "longest2plus": 2,
+        "mean": 0.781
+      },
+      "fingerprint": "c10bc451a3824a6bc533e37021c92573b3fe9ddb1d147810a7bd8142d9c85671",
+      "historyBoards": 83,
+      "ms": 814
+    },
+    {
+      "file": "waitThawWay-L31-s3-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 11,
+      "spare": 1,
+      "winningFirstMoves": 4,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 4,
+        "unknown": 0,
+        "legal": 13,
+        "rows": [
+          {
+            "tile": 31,
+            "result": "lose"
+          },
+          {
+            "tile": 34,
+            "result": "win"
+          },
+          {
+            "tile": 53,
+            "result": "lose"
+          },
+          {
+            "tile": 54,
+            "result": "lose"
+          },
+          {
+            "tile": 57,
+            "result": "win"
+          },
+          {
+            "tile": 58,
+            "result": "lose"
+          },
+          {
+            "tile": 59,
+            "result": "lose"
+          },
+          {
+            "tile": 61,
+            "result": "win"
+          },
+          {
+            "tile": 64,
+            "result": "win"
+          },
+          {
+            "tile": 66,
+            "result": "lose"
+          },
+          {
+            "tile": 67,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.2238,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 10,
+        "at3": 5,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "signature": "clock<ice; thaw<lock; keyA<way:ice; clock<waitForTwin",
+      "layers": 3,
+      "obviousness": {
+        "ok": true,
+        "dial": 0,
+        "firstTwo": [
+          64,
+          57
+        ],
+        "greedyFirst": {
+          "rank": "specialProgress",
+          "tiles": [
+            53,
+            61,
+            73,
+            74
+          ]
+        },
+        "greedySecond": {
+          "rank": "freePair",
+          "tiles": [
+            54,
+            70
+          ]
+        },
+        "greedyPrefix": false,
+        "rightFreePairs": false,
+        "routeFreePairs": [],
+        "preferredBaits": [
+          [
+            74
+          ],
+          [
+            53
+          ],
+          [
+            73
+          ]
+        ],
+        "rule": "Reject both route taps in greedy tie sets, or any ready free pair on the pre-clock route; dial 2 also requires a greedy first bait."
+      },
+      "tailOccupancy": {
+        "steps": 65,
+        "counts": [
+          24,
+          31,
+          8,
+          2
+        ],
+        "share": [
+          0.369,
+          0.477,
+          0.123,
+          0.031
+        ],
+        "longest2plus": 4,
+        "mean": 0.815
+      },
+      "fingerprint": "abde1788230538bfd1a4daf449f54262fc4b9c5626996ed9e4128d006190faf2",
+      "historyBoards": 83,
+      "ms": 357
+    },
+    {
+      "file": "lookalikeWay-L14-s3-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 18,
+      "spare": 1,
+      "winningFirstMoves": 4,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 4,
+        "unknown": 0,
+        "legal": 12,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 6,
+            "result": "lose"
+          },
+          {
+            "tile": 48,
+            "result": "lose"
+          },
+          {
+            "tile": 63,
+            "result": "win"
+          },
+          {
+            "tile": 64,
+            "result": "win"
+          },
+          {
+            "tile": 65,
+            "result": "win"
+          },
+          {
+            "tile": 67,
+            "result": "win"
+          },
+          {
+            "tile": 68,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          },
+          {
+            "tile": 76,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.2537,
+      "close": {
+        "close": 2,
+        "share": 0.05,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 17,
+        "at3": 8,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2
+        ]
+      },
+      "signature": "clock<lock; clock<cover:ice; keyA<way:ice; keyPair<lookalikeChoice",
+      "layers": 3,
+      "obviousness": {
+        "ok": true,
+        "dial": 0,
+        "firstTwo": [
+          65,
+          63
+        ],
+        "greedyFirst": {
+          "rank": "freePair",
+          "tiles": [
+            0,
+            6,
+            73,
+            74
+          ]
+        },
+        "greedySecond": {
+          "rank": "freePair",
+          "tiles": [
+            0,
+            6,
+            73,
+            74
+          ]
+        },
+        "greedyPrefix": false,
+        "rightFreePairs": false,
+        "routeFreePairs": [],
+        "preferredBaits": [
+          [
+            0
+          ],
+          [
+            0,
+            74
+          ]
+        ],
+        "rule": "Reject both route taps in greedy tie sets, or any ready free pair on the pre-clock route; dial 2 also requires a greedy first bait."
+      },
+      "tailOccupancy": {
+        "steps": 62,
+        "counts": [
+          24,
+          30,
+          7,
+          1
+        ],
+        "share": [
+          0.387,
+          0.484,
+          0.113,
+          0.016
+        ],
+        "longest2plus": 3,
+        "mean": 0.758
+      },
+      "fingerprint": "be648656b4c9ad9a927ceb9d54772ed9e5d9d7ffccb155b3e63218a70766a525",
+      "historyBoards": 83,
+      "ms": 1952
+    },
+    {
+      "file": "lookalikeCover-L31-s1-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 10,
+      "spare": 1,
+      "winningFirstMoves": 3,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 3,
+        "unknown": 0,
+        "legal": 13,
+        "rows": [
+          {
+            "tile": 31,
+            "result": "lose"
+          },
+          {
+            "tile": 34,
+            "result": "lose"
+          },
+          {
+            "tile": 53,
+            "result": "lose"
+          },
+          {
+            "tile": 54,
+            "result": "lose"
+          },
+          {
+            "tile": 57,
+            "result": "lose"
+          },
+          {
+            "tile": 58,
+            "result": "lose"
+          },
+          {
+            "tile": 59,
+            "result": "lose"
+          },
+          {
+            "tile": 60,
+            "result": "win"
+          },
+          {
+            "tile": 61,
+            "result": "win"
+          },
+          {
+            "tile": 66,
+            "result": "lose"
+          },
+          {
+            "tile": 67,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "win"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.1237,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 9,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2
+        ]
+      },
+      "signature": "clock<lock; clock<cover:ice; keyA<cover:ice; keyPair<lookalikeChoice",
+      "layers": 3,
+      "obviousness": {
+        "ok": true,
+        "dial": 0,
+        "firstTwo": [
+          60,
+          61
+        ],
+        "greedyFirst": {
+          "rank": "freePair",
+          "tiles": [
+            53,
+            59,
+            66,
+            67
+          ]
+        },
+        "greedySecond": {
+          "rank": "freePair",
+          "tiles": [
+            53,
+            59,
+            66,
+            67
+          ]
+        },
+        "greedyPrefix": false,
+        "rightFreePairs": false,
+        "routeFreePairs": [],
+        "preferredBaits": [
+          [
+            53
+          ],
+          [
+            53,
+            66
+          ]
+        ],
+        "rule": "Reject both route taps in greedy tie sets, or any ready free pair on the pre-clock route; dial 2 also requires a greedy first bait."
+      },
+      "tailOccupancy": {
+        "steps": 66,
+        "counts": [
+          21,
+          32,
+          12,
+          1
+        ],
+        "share": [
+          0.318,
+          0.485,
+          0.182,
+          0.015
+        ],
+        "longest2plus": 3,
+        "mean": 0.894
+      },
+      "fingerprint": "75caf0fabf89557f31ac678c47aa0f9960010b0f4fa8d182c0d1f60413c2549e",
+      "historyBoards": 83,
+      "ms": 581
+    },
+    {
+      "file": "waitNested-L31-s2-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 11,
+      "spare": 2,
+      "winningFirstMoves": 4,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 4,
+        "unknown": 0,
+        "legal": 13,
+        "rows": [
+          {
+            "tile": 31,
+            "result": "win"
+          },
+          {
+            "tile": 34,
+            "result": "lose"
+          },
+          {
+            "tile": 53,
+            "result": "lose"
+          },
+          {
+            "tile": 54,
+            "result": "win"
+          },
+          {
+            "tile": 57,
+            "result": "lose"
+          },
+          {
+            "tile": 58,
+            "result": "lose"
+          },
+          {
+            "tile": 59,
+            "result": "lose"
+          },
+          {
+            "tile": 60,
+            "result": "win"
+          },
+          {
+            "tile": 64,
+            "result": "lose"
+          },
+          {
+            "tile": 65,
+            "result": "lose"
+          },
+          {
+            "tile": 66,
+            "result": "win"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.165,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 10,
+        "at3": 5,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "signature": "clock<lock; clock<cover:ice; coverThaw<ice; clock<waitForTwin",
+      "layers": 3,
+      "obviousness": {
+        "ok": true,
+        "dial": 0,
+        "firstTwo": [
+          60,
+          66
+        ],
+        "greedyFirst": {
+          "rank": "freePair",
+          "tiles": [
+            31,
+            54
+          ]
+        },
+        "greedySecond": {
+          "rank": "freePair",
+          "tiles": [
+            31,
+            34,
+            54,
+            63
+          ]
+        },
+        "greedyPrefix": false,
+        "rightFreePairs": false,
+        "routeFreePairs": [],
+        "preferredBaits": [],
+        "rule": "Reject both route taps in greedy tie sets, or any ready free pair on the pre-clock route; dial 2 also requires a greedy first bait."
+      },
+      "tailOccupancy": {
+        "steps": 65,
+        "counts": [
+          23,
+          30,
+          9,
+          3
+        ],
+        "share": [
+          0.354,
+          0.462,
+          0.138,
+          0.046
+        ],
+        "longest2plus": 6,
+        "mean": 0.877
+      },
+      "fingerprint": "2cac537476c7a4361f34ebc0f6eb4e0b03ddf736c435d0692ee9e65e57642f3e",
+      "historyBoards": 83,
+      "ms": 458
+    },
+    {
+      "file": "waitThawKey-L14-s2-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 9,
+      "spare": 2,
+      "winningFirstMoves": 4,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 4,
+        "unknown": 0,
+        "legal": 12,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "win"
+          },
+          {
+            "tile": 6,
+            "result": "lose"
+          },
+          {
+            "tile": 48,
+            "result": "lose"
+          },
+          {
+            "tile": 63,
+            "result": "lose"
+          },
+          {
+            "tile": 64,
+            "result": "lose"
+          },
+          {
+            "tile": 65,
+            "result": "lose"
+          },
+          {
+            "tile": 66,
+            "result": "lose"
+          },
+          {
+            "tile": 67,
+            "result": "win"
+          },
+          {
+            "tile": 73,
+            "result": "win"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "win"
+          },
+          {
+            "tile": 76,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.26,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 8,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "signature": "clock<ice; thaw<lock; keyA<cover:ice; clock<waitForTwin",
+      "layers": 3,
+      "obviousness": {
+        "ok": true,
+        "dial": 0,
+        "firstTwo": [
+          73,
+          67
+        ],
+        "greedyFirst": {
+          "rank": "freePair",
+          "tiles": [
+            0,
+            75
+          ]
+        },
+        "greedySecond": {
+          "rank": "freePair",
+          "tiles": [
+            0,
+            75
+          ]
+        },
+        "greedyPrefix": false,
+        "rightFreePairs": false,
+        "routeFreePairs": [],
+        "preferredBaits": [],
+        "rule": "Reject both route taps in greedy tie sets, or any ready free pair on the pre-clock route; dial 2 also requires a greedy first bait."
+      },
+      "tailOccupancy": {
+        "steps": 71,
+        "counts": [
+          27,
+          35,
+          8,
+          1
+        ],
+        "share": [
+          0.38,
+          0.493,
+          0.113,
+          0.014
+        ],
+        "longest2plus": 2,
+        "mean": 0.761
+      },
+      "fingerprint": "d398c5dbcb7ae2952229da4edbaeecdc600ed444caea73cbf09fb2aa51726436",
+      "historyBoards": 83,
+      "ms": 552
+    },
+    {
+      "file": "lookalikeCoverThaw-L18-s4-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 12,
+      "spare": 1,
+      "winningFirstMoves": 3,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 3,
+        "unknown": 0,
+        "legal": 12,
+        "rows": [
+          {
+            "tile": 52,
+            "result": "lose"
+          },
+          {
+            "tile": 53,
+            "result": "win"
+          },
+          {
+            "tile": 58,
+            "result": "lose"
+          },
+          {
+            "tile": 59,
+            "result": "lose"
+          },
+          {
+            "tile": 67,
+            "result": "win"
+          },
+          {
+            "tile": 68,
+            "result": "win"
+          },
+          {
+            "tile": 69,
+            "result": "lose"
+          },
+          {
+            "tile": 70,
+            "result": "lose"
+          },
+          {
+            "tile": 71,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.15,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 9,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2
+        ]
+      },
+      "signature": "clock<cover:ice; coverThaw<lock; keyA<cover:ice; keyPair<lookalikeChoice",
+      "layers": 3,
+      "obviousness": {
+        "ok": true,
+        "dial": 0,
+        "firstTwo": [
+          68,
+          62
+        ],
+        "greedyFirst": {
+          "rank": "freePair",
+          "tiles": [
+            58,
+            59
+          ]
+        },
+        "greedySecond": {
+          "rank": "freePair",
+          "tiles": [
+            53,
+            58,
+            59,
+            62
+          ]
+        },
+        "greedyPrefix": false,
+        "rightFreePairs": false,
+        "routeFreePairs": [],
+        "preferredBaits": [
+          [
+            59
+          ],
+          [
+            59,
+            58
+          ]
+        ],
+        "rule": "Reject both route taps in greedy tie sets, or any ready free pair on the pre-clock route; dial 2 also requires a greedy first bait."
+      },
+      "tailOccupancy": {
+        "steps": 64,
+        "counts": [
+          25,
+          31,
+          7,
+          1
+        ],
+        "share": [
+          0.391,
+          0.484,
+          0.109,
+          0.016
+        ],
+        "longest2plus": 3,
+        "mean": 0.75
+      },
+      "fingerprint": "a5dd71b9bba218f6d4c4237295e8fc14610dea13efb60c1837626a1d39de3bce",
+      "historyBoards": 83,
+      "ms": 675
+    },
+    {
+      "file": "waitLookalikeWay-L31-s5-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 13,
+      "spare": 1,
+      "winningFirstMoves": 4,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 4,
+        "unknown": 0,
+        "legal": 14,
+        "rows": [
+          {
+            "tile": 31,
+            "result": "win"
+          },
+          {
+            "tile": 34,
+            "result": "lose"
+          },
+          {
+            "tile": 53,
+            "result": "lose"
+          },
+          {
+            "tile": 54,
+            "result": "lose"
+          },
+          {
+            "tile": 57,
+            "result": "lose"
+          },
+          {
+            "tile": 58,
+            "result": "lose"
+          },
+          {
+            "tile": 59,
+            "result": "lose"
+          },
+          {
+            "tile": 60,
+            "result": "win"
+          },
+          {
+            "tile": 61,
+            "result": "lose"
+          },
+          {
+            "tile": 64,
+            "result": "lose"
+          },
+          {
+            "tile": 65,
+            "result": "win"
+          },
+          {
+            "tile": 67,
+            "result": "win"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.2512,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 12,
+        "at3": 6,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "signature": "clock<lock; keyA<way:ice; clock<waitForTwin; keyPair<lookalikeChoice",
+      "layers": 3,
+      "obviousness": {
+        "ok": true,
+        "dial": 0,
+        "firstTwo": [
+          65,
+          71
+        ],
+        "greedyFirst": {
+          "rank": "freePair",
+          "tiles": [
+            34,
+            73
+          ]
+        },
+        "greedySecond": {
+          "rank": "freePair",
+          "tiles": [
+            31,
+            34,
+            71,
+            73
+          ]
+        },
+        "greedyPrefix": false,
+        "rightFreePairs": false,
+        "routeFreePairs": [],
+        "preferredBaits": [
+          [
+            73
+          ],
+          [
+            73,
+            34
+          ]
+        ],
+        "rule": "Reject both route taps in greedy tie sets, or any ready free pair on the pre-clock route; dial 2 also requires a greedy first bait."
+      },
+      "tailOccupancy": {
+        "steps": 63,
+        "counts": [
+          22,
+          31,
+          9,
+          1
+        ],
+        "share": [
+          0.349,
+          0.492,
+          0.143,
+          0.016
+        ],
+        "longest2plus": 2,
+        "mean": 0.825
+      },
+      "fingerprint": "316f6e9e05328f74821e627ea34a42417b7c417ad5731707bfd942796aff9027",
+      "historyBoards": 83,
+      "ms": 467
+    },
+    {
+      "file": "lookalikeWay-L18-s1-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 12,
+      "spare": 1,
+      "winningFirstMoves": 3,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 3,
+        "unknown": 0,
+        "legal": 13,
+        "rows": [
+          {
+            "tile": 44,
+            "result": "lose"
+          },
+          {
+            "tile": 52,
+            "result": "lose"
+          },
+          {
+            "tile": 53,
+            "result": "lose"
+          },
+          {
+            "tile": 58,
+            "result": "lose"
+          },
+          {
+            "tile": 59,
+            "result": "lose"
+          },
+          {
+            "tile": 67,
+            "result": "win"
+          },
+          {
+            "tile": 68,
+            "result": "win"
+          },
+          {
+            "tile": 69,
+            "result": "lose"
+          },
+          {
+            "tile": 70,
+            "result": "lose"
+          },
+          {
+            "tile": 71,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "win"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.1525,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 9,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2
+        ]
+      },
+      "signature": "clock<lock; clock<cover:ice; keyA<way:ice; keyPair<lookalikeChoice",
+      "layers": 3,
+      "obviousness": {
+        "ok": true,
+        "dial": 0,
+        "firstTwo": [
+          72,
+          67
+        ],
+        "greedyFirst": {
+          "rank": "freePair",
+          "tiles": [
+            44,
+            58
+          ]
+        },
+        "greedySecond": {
+          "rank": "freePair",
+          "tiles": [
+            44,
+            58
+          ]
+        },
+        "greedyPrefix": false,
+        "rightFreePairs": false,
+        "routeFreePairs": [],
+        "preferredBaits": [
+          [
+            44
+          ],
+          [
+            44,
+            58
+          ]
+        ],
+        "rule": "Reject both route taps in greedy tie sets, or any ready free pair on the pre-clock route; dial 2 also requires a greedy first bait."
+      },
+      "tailOccupancy": {
+        "steps": 64,
+        "counts": [
+          25,
+          31,
+          7,
+          1
+        ],
+        "share": [
+          0.391,
+          0.484,
+          0.109,
+          0.016
+        ],
+        "longest2plus": 3,
+        "mean": 0.75
+      },
+      "fingerprint": "cdb4a92d37109f7bb2ddfe312829c04339b74a4082c53e5262db690f85f27aaa",
+      "historyBoards": 83,
+      "ms": 707
+    },
+    {
+      "file": "roofThawKey-L0-s7-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 12,
+      "spare": 1,
+      "winningFirstMoves": 4,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 4,
+        "unknown": 0,
+        "legal": 15,
+        "rows": [
+          {
+            "tile": 28,
+            "result": "lose"
+          },
+          {
+            "tile": 29,
+            "result": "lose"
+          },
+          {
+            "tile": 30,
+            "result": "lose"
+          },
+          {
+            "tile": 31,
+            "result": "lose"
+          },
+          {
+            "tile": 41,
+            "result": "lose"
+          },
+          {
+            "tile": 42,
+            "result": "win"
+          },
+          {
+            "tile": 51,
+            "result": "lose"
+          },
+          {
+            "tile": 52,
+            "result": "lose"
+          },
+          {
+            "tile": 70,
+            "result": "win"
+          },
+          {
+            "tile": 71,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "win"
+          },
+          {
+            "tile": 76,
+            "result": "win"
+          },
+          {
+            "tile": 77,
+            "result": "lose"
+          },
+          {
+            "tile": 78,
+            "result": "lose"
+          },
+          {
+            "tile": 79,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.2637,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 11,
+        "at3": 5,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2
+        ]
+      },
+      "signature": "clock<ice; thaw<lock; keyA<cover:ice; keyB<clockRoof",
+      "layers": 5,
+      "obviousness": {
+        "ok": true,
+        "dial": 0,
+        "firstTwo": [
+          70,
+          73
+        ],
+        "greedyFirst": {
+          "rank": "freePair",
+          "tiles": [
+            51,
+            79
+          ]
+        },
+        "greedySecond": {
+          "rank": "freePair",
+          "tiles": [
+            51,
+            79
+          ]
+        },
+        "greedyPrefix": false,
+        "rightFreePairs": false,
+        "routeFreePairs": [],
+        "preferredBaits": [],
+        "rule": "Reject both route taps in greedy tie sets, or any ready free pair on the pre-clock route; dial 2 also requires a greedy first bait."
+      },
+      "tailOccupancy": {
+        "steps": 68,
+        "counts": [
+          25,
+          33,
+          9,
+          1
+        ],
+        "share": [
+          0.368,
+          0.485,
+          0.132,
+          0.015
+        ],
+        "longest2plus": 3,
+        "mean": 0.794
+      },
+      "fingerprint": "44a3f0d3d4df25767d05c977a2e69ab390dd8ee9426c61609f2793777798d600",
+      "historyBoards": 83,
+      "ms": 518
+    },
+    {
+      "file": "lookalikeThaw-L18-s2-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 11,
+      "spare": 1,
+      "winningFirstMoves": 5,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 5,
+        "unknown": 0,
+        "legal": 12,
+        "rows": [
+          {
+            "tile": 52,
+            "result": "lose"
+          },
+          {
+            "tile": 53,
+            "result": "win"
+          },
+          {
+            "tile": 58,
+            "result": "lose"
+          },
+          {
+            "tile": 59,
+            "result": "win"
+          },
+          {
+            "tile": 67,
+            "result": "win"
+          },
+          {
+            "tile": 68,
+            "result": "win"
+          },
+          {
+            "tile": 69,
+            "result": "lose"
+          },
+          {
+            "tile": 70,
+            "result": "lose"
+          },
+          {
+            "tile": 71,
+            "result": "win"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.2775,
+      "close": {
+        "close": 1,
+        "share": 0.0263,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 8,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "signature": "clock<ice; thaw<lock; keyA<cover:ice; keyPair<lookalikeChoice",
+      "layers": 3,
+      "obviousness": {
+        "ok": true,
+        "dial": 0,
+        "firstTwo": [
+          67,
+          51
+        ],
+        "greedyFirst": {
+          "rank": "freePair",
+          "tiles": [
+            59,
+            68,
+            71,
+            75
+          ]
+        },
+        "greedySecond": {
+          "rank": "freePair",
+          "tiles": [
+            51,
+            53,
+            59,
+            68,
+            71,
+            75
+          ]
+        },
+        "greedyPrefix": false,
+        "rightFreePairs": false,
+        "routeFreePairs": [],
+        "preferredBaits": [
+          [
+            59,
+            75
+          ]
+        ],
+        "rule": "Reject both route taps in greedy tie sets, or any ready free pair on the pre-clock route; dial 2 also requires a greedy first bait."
+      },
+      "tailOccupancy": {
+        "steps": 65,
+        "counts": [
+          23,
+          32,
+          9,
+          1
+        ],
+        "share": [
+          0.354,
+          0.492,
+          0.138,
+          0.015
+        ],
+        "longest2plus": 2,
+        "mean": 0.815
+      },
+      "fingerprint": "35c57650d0852a5abe37164f67626ab14cbb170f6a0bb812b11241c8d368e604",
+      "historyBoards": 83,
+      "ms": 722
+    },
+    {
+      "file": "waitThawWay-L14-s2-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 15,
+      "spare": 1,
+      "winningFirstMoves": 3,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 3,
+        "unknown": 0,
+        "legal": 12,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 6,
+            "result": "lose"
+          },
+          {
+            "tile": 48,
+            "result": "lose"
+          },
+          {
+            "tile": 63,
+            "result": "win"
+          },
+          {
+            "tile": 65,
+            "result": "win"
+          },
+          {
+            "tile": 66,
+            "result": "lose"
+          },
+          {
+            "tile": 67,
+            "result": "win"
+          },
+          {
+            "tile": 68,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          },
+          {
+            "tile": 76,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.2338,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 12,
+        "at3": 6,
+        "occ": [
+          1,
+          2,
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "signature": "clock<ice; thaw<lock; keyA<way:ice; clock<waitForTwin",
+      "layers": 3,
+      "obviousness": {
+        "ok": true,
+        "dial": 0,
+        "firstTwo": [
+          63,
+          38
+        ],
+        "greedyFirst": {
+          "rank": "freePair",
+          "tiles": [
+            6,
+            74
+          ]
+        },
+        "greedySecond": {
+          "rank": "freePair",
+          "tiles": [
+            6,
+            38,
+            67,
+            74
+          ]
+        },
+        "greedyPrefix": false,
+        "rightFreePairs": false,
+        "routeFreePairs": [],
+        "preferredBaits": [],
+        "rule": "Reject both route taps in greedy tie sets, or any ready free pair on the pre-clock route; dial 2 also requires a greedy first bait."
+      },
+      "tailOccupancy": {
+        "steps": 65,
+        "counts": [
+          23,
+          31,
+          9,
+          2
+        ],
+        "share": [
+          0.354,
+          0.477,
+          0.138,
+          0.031
+        ],
+        "longest2plus": 3,
+        "mean": 0.846
+      },
+      "fingerprint": "4d598b699c15f4ec31d8292f11a76fe89ecc87ea3401b26aedd63f588faf2eca",
+      "historyBoards": 83,
+      "ms": 422
+    },
+    {
+      "file": "lookalikeCover-L18-s3-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 13,
+      "spare": 1,
+      "winningFirstMoves": 5,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 5,
+        "unknown": 0,
+        "legal": 12,
+        "rows": [
+          {
+            "tile": 45,
+            "result": "win"
+          },
+          {
+            "tile": 52,
+            "result": "lose"
+          },
+          {
+            "tile": 53,
+            "result": "win"
+          },
+          {
+            "tile": 58,
+            "result": "lose"
+          },
+          {
+            "tile": 59,
+            "result": "lose"
+          },
+          {
+            "tile": 67,
+            "result": "lose"
+          },
+          {
+            "tile": 68,
+            "result": "win"
+          },
+          {
+            "tile": 70,
+            "result": "win"
+          },
+          {
+            "tile": 71,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "win"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.19,
+      "close": {
+        "close": 1,
+        "share": 0.0263,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 6,
+        "at3": 5,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "signature": "clock<lock; clock<cover:ice; keyA<cover:ice; keyPair<lookalikeChoice",
+      "layers": 3,
+      "obviousness": {
+        "ok": true,
+        "dial": 0,
+        "firstTwo": [
+          45,
+          70
+        ],
+        "greedyFirst": {
+          "rank": "freePair",
+          "tiles": [
+            45,
+            53,
+            58,
+            68
+          ]
+        },
+        "greedySecond": {
+          "rank": "trayMatch",
+          "tiles": [
+            58
+          ]
+        },
+        "greedyPrefix": false,
+        "rightFreePairs": false,
+        "routeFreePairs": [],
+        "preferredBaits": [
+          [
+            45,
+            58
+          ]
+        ],
+        "rule": "Reject both route taps in greedy tie sets, or any ready free pair on the pre-clock route; dial 2 also requires a greedy first bait."
+      },
+      "tailOccupancy": {
+        "steps": 63,
+        "counts": [
+          20,
+          31,
+          11,
+          1
+        ],
+        "share": [
+          0.317,
+          0.492,
+          0.175,
+          0.016
+        ],
+        "longest2plus": 2,
+        "mean": 0.889
+      },
+      "fingerprint": "f7e5a51f6357279018ced9b8d12bd9913d8c06c1010a10f787948a8655c1a3ed",
+      "historyBoards": 83,
+      "ms": 1343
+    },
+    {
+      "file": "waitLookalikeRoof-L18-s5-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 7,
+      "spare": 1,
+      "winningFirstMoves": 3,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 3,
+        "unknown": 0,
+        "legal": 12,
+        "rows": [
+          {
+            "tile": 44,
+            "result": "win"
+          },
+          {
+            "tile": 45,
+            "result": "lose"
+          },
+          {
+            "tile": 53,
+            "result": "lose"
+          },
+          {
+            "tile": 58,
+            "result": "lose"
+          },
+          {
+            "tile": 59,
+            "result": "lose"
+          },
+          {
+            "tile": 67,
+            "result": "lose"
+          },
+          {
+            "tile": 68,
+            "result": "lose"
+          },
+          {
+            "tile": 69,
+            "result": "lose"
+          },
+          {
+            "tile": 70,
+            "result": "win"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.2313,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 4,
+        "at3": 2,
+        "occ": [
+          1,
+          2,
+          1,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "signature": "clock<lock; keyA<cover:ice; clock<waitForTwin; keyPair<lookalikeChoice",
+      "layers": 3,
+      "obviousness": {
+        "ok": true,
+        "dial": 0,
+        "firstTwo": [
+          70,
+          44
+        ],
+        "greedyFirst": {
+          "rank": "freePair",
+          "tiles": [
+            53,
+            58,
+            59,
+            67,
+            72,
+            75
+          ]
+        },
+        "greedySecond": {
+          "rank": "freePair",
+          "tiles": [
+            44,
+            46,
+            53,
+            58,
+            59,
+            67,
+            72,
+            75
+          ]
+        },
+        "greedyPrefix": false,
+        "rightFreePairs": false,
+        "routeFreePairs": [],
+        "preferredBaits": [
+          [
+            75,
+            59
+          ]
+        ],
+        "rule": "Reject both route taps in greedy tie sets, or any ready free pair on the pre-clock route; dial 2 also requires a greedy first bait."
+      },
+      "tailOccupancy": {
+        "steps": 69,
+        "counts": [
+          25,
+          34,
+          9,
+          1
+        ],
+        "share": [
+          0.362,
+          0.493,
+          0.13,
+          0.014
+        ],
+        "longest2plus": 2,
+        "mean": 0.797
+      },
+      "fingerprint": "45d07a4c93c16f2fc5df99646d5e764f51ca19bf81bd1ec0e8b87ad89febcc64",
+      "historyBoards": 83,
+      "ms": 1787
+    },
+    {
+      "file": "waitThawKey-L18-s4-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 13,
+      "spare": 1,
+      "winningFirstMoves": 2,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 2,
+        "unknown": 0,
+        "legal": 13,
+        "rows": [
+          {
+            "tile": 45,
+            "result": "lose"
+          },
+          {
+            "tile": 52,
+            "result": "win"
+          },
+          {
+            "tile": 53,
+            "result": "lose"
+          },
+          {
+            "tile": 58,
+            "result": "lose"
+          },
+          {
+            "tile": 59,
+            "result": "lose"
+          },
+          {
+            "tile": 67,
+            "result": "lose"
+          },
+          {
+            "tile": 68,
+            "result": "win"
+          },
+          {
+            "tile": 69,
+            "result": "lose"
+          },
+          {
+            "tile": 70,
+            "result": "lose"
+          },
+          {
+            "tile": 71,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.2338,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 12,
+        "at3": 6,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "signature": "clock<ice; thaw<lock; keyA<cover:ice; clock<waitForTwin",
+      "layers": 3,
+      "obviousness": {
+        "ok": true,
+        "dial": 0,
+        "firstTwo": [
+          52,
+          14
+        ],
+        "greedyFirst": {
+          "rank": "specialProgress",
+          "tiles": [
+            52,
+            53,
+            74
+          ]
+        },
+        "greedySecond": {
+          "rank": "specialProgress",
+          "tiles": [
+            53,
+            74
+          ]
+        },
+        "greedyPrefix": false,
+        "rightFreePairs": false,
+        "routeFreePairs": [],
+        "preferredBaits": [
+          [
+            74
+          ],
+          [
+            53
+          ]
+        ],
+        "rule": "Reject both route taps in greedy tie sets, or any ready free pair on the pre-clock route; dial 2 also requires a greedy first bait."
+      },
+      "tailOccupancy": {
+        "steps": 63,
+        "counts": [
+          24,
+          30,
+          7,
+          2
+        ],
+        "share": [
+          0.381,
+          0.476,
+          0.111,
+          0.032
+        ],
+        "longest2plus": 4,
+        "mean": 0.794
+      },
+      "fingerprint": "dfb28caab50eb31f70575e45da08c76a40f4e4126a402dba8b135db12a723e1e",
+      "historyBoards": 83,
+      "ms": 484
+    },
+    {
+      "file": "waitNested-L36-s3-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 7,
+      "spare": 1,
+      "winningFirstMoves": 3,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 3,
+        "unknown": 0,
+        "legal": 11,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 6,
+            "result": "win"
+          },
+          {
+            "tile": 25,
+            "result": "lose"
+          },
+          {
+            "tile": 30,
+            "result": "lose"
+          },
+          {
+            "tile": 52,
+            "result": "lose"
+          },
+          {
+            "tile": 68,
+            "result": "lose"
+          },
+          {
+            "tile": 69,
+            "result": "win"
+          },
+          {
+            "tile": 70,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "win"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.2475,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 6,
+        "at3": 3,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "signature": "clock<lock; clock<cover:ice; coverThaw<ice; clock<waitForTwin",
+      "layers": 4,
+      "obviousness": {
+        "ok": true,
+        "dial": 0,
+        "firstTwo": [
+          69,
+          67
+        ],
+        "greedyFirst": {
+          "rank": "freePair",
+          "tiles": [
+            30,
+            52
+          ]
+        },
+        "greedySecond": {
+          "rank": "freePair",
+          "tiles": [
+            30,
+            52
+          ]
+        },
+        "greedyPrefix": false,
+        "rightFreePairs": false,
+        "routeFreePairs": [],
+        "preferredBaits": [],
+        "rule": "Reject both route taps in greedy tie sets, or any ready free pair on the pre-clock route; dial 2 also requires a greedy first bait."
+      },
+      "tailOccupancy": {
+        "steps": 69,
+        "counts": [
+          26,
+          32,
+          8,
+          3
+        ],
+        "share": [
+          0.377,
+          0.464,
+          0.116,
+          0.043
+        ],
+        "longest2plus": 6,
+        "mean": 0.826
+      },
+      "fingerprint": "2a2236b34c2c01b25902aa1df70deab7bd945190aaf32bf769e1b2fa48f896ea",
+      "historyBoards": 83,
+      "ms": 304
+    }
+  ]
+}
