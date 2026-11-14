@@ -127,6 +127,12 @@ add new decisions with a date.
     The lab note says "This is the tightest it can be but its pretty obvious. Keep it like this" and asks for more
     chains and choices in future digging boards. This is the liked older 217, not a template for future digging.
     Codex checked its saved strict win and both engine modes: the proven minimum is 19. Do not loosen it to 20.
+  - **271 (the old 217) stays at clock 19** (2026-11-14, lab 8): "This is the tightest it can be but its pretty obvious. Keep it
+    like this. For new digging we want more chained and more choices." 19 is the proven shortest route (no spare move).
+  - **Tray pressure is measured as a strong player feels it** (lead, 2026-11-14): a tile that only sits in the tray is not felt
+    (302 as played had one parked the whole way: "the 1 now"); what is felt is having to put another tile in the tray while one or
+    two already wait. Count per game for a never-blundering natural player (, "pressure parks"): 293 "tiny bit too easy"
+    0, 250 "too easy after" 2.4, 302/303 "didnt feel it" 4.4-4.8, his 4-5 star older boards 5.6-9.6. Target until he says otherwise: 7-9.
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
   - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
     played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is
