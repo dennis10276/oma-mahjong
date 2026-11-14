@@ -118,6 +118,11 @@ add new decisions with a date.
   - **No ribbon mechanic** (2026-11-14): "In essence its the same as lock and key cause you can only take lock after key."
   - **Tapping a frozen or locked tile that cannot be taken shows what it needs** (the tiles that thaw it, or the keys),
     not the tiles lying on it (2026-11-14). Done on the work branch.
+  - **More tray pressure after the trap: at least two waiting, and it must be felt** (2026-11-14, lab 8, levels 302 and
+    303 after the first retune): "Not overdone. I didnt feel the tray pressure after the trap. Still I would like more
+    tray pressure after make it at least 2 instead of the 1 now." This replaces "1 in tray is enough". Lead's reading: he
+    did not feel it because the measure counted waiting tiles along the stored route, which a player need not follow;
+    the board itself has to force it (the part after the trap cannot be cleared while holding fewer than two).
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
   - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
     played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is

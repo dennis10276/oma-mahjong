@@ -1,0 +1,169 @@
+{
+ "savedAt": "2026-11-14T09:45:42.377Z",
+ "ratings": {
+  "2038250": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 1,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2038253": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2038258": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2038261": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2038265": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2038272": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2038275": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2038283": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2038287": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2038292": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2038299": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2038302": {
+   "note": "Not overdone. I didnt feel the tray pressure after the trap. Still I would like more tray pressure after make it at least 2 instead of the 1 now.",
+   "stars": 0,
+   "verdict": null,
+   "starts": 1,
+   "tries": 1,
+   "wins": 1,
+   "results": [
+    {
+     "r": "win",
+     "left": 0,
+     "s": 171,
+     "t": 1794649300619
+    }
+   ]
+  },
+  "2038303": {
+   "note": "Still I would like more tray pressure after make it at least 2 instead of the 1 now.",
+   "stars": 0,
+   "verdict": null,
+   "starts": 2,
+   "tries": 2,
+   "wins": 1,
+   "results": [
+    {
+     "r": "stuck",
+     "left": 76,
+     "s": 29,
+     "t": 1794649360408
+    },
+    {
+     "r": "win",
+     "left": 0,
+     "s": 123,
+     "t": 1794649484779
+    }
+   ]
+  },
+  "2038307": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2038311": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2038313": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  }
+ }
+}
