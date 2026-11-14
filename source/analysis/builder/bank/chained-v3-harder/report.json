@@ -1,0 +1,239 @@
+[
+ {
+  "name": "waitNested",
+  "layout": 33,
+  "tries": [
+   "d2 s41: noProvenMix",
+   "d2 s42: noProvenMix",
+   "d2 s43: noProvenMix",
+   "d2 s44: noProvenMix",
+   "d2 s45: noProvenMix",
+   "d2 s46: noProvenMix",
+   "d1 s41: noProvenMix",
+   "d1 s42: noProvenMix",
+   "d1 s43: noProvenMix",
+   "d1 s44: noProvenMix",
+   "d1 s45: noProvenMix",
+   "d1 s46: noProvenMix"
+  ]
+ },
+ {
+  "name": "waitNested",
+  "layout": 18,
+  "tries": [
+   "d2 s41: noProvenMix",
+   "d2 s42: noProvenMix",
+   "d2 s43: noProvenMix",
+   "d2 s44: noProvenMix",
+   "d2 s45: noProvenMix",
+   "d2 s46: noProvenMix",
+   "d1 s41: noProvenMix",
+   "d1 s42: noProvenMix",
+   "d1 s43: noProvenMix",
+   "d1 s44: noProvenMix",
+   "d1 s45: noProvenMix",
+   "d1 s46: noProvenMix"
+  ]
+ },
+ {
+  "name": "waitNested",
+  "layout": 16,
+  "tries": [
+   "d2 s41: noProvenMix",
+   "d2 s42: noProvenMix",
+   "d2 s43: noProvenMix",
+   "d2 s44: noProvenMix",
+   "d2 s45: noProvenMix",
+   "d2 s46: noProvenMix",
+   "d1 s41: noProvenMix",
+   "d1 s42: noProvenMix",
+   "d1 s43: noProvenMix",
+   "d1 s44: noProvenMix",
+   "d1 s45: noProvenMix",
+   "d1 s46: noProvenMix"
+  ]
+ },
+ {
+  "name": "waitNested",
+  "layout": 3,
+  "tries": [
+   "d2 s41: noProvenMix",
+   "d2 s42: noProvenMix",
+   "d2 s43: noProvenMix",
+   "d2 s44: noProvenMix",
+   "d2 s45: noProvenMix",
+   "d2 s46: noProvenMix",
+   "d1 s41: noProvenMix",
+   "d1 s42: noProvenMix",
+   "d1 s43: noProvenMix",
+   "d1 s44: noProvenMix",
+   "d1 s45: noProvenMix",
+   "d1 s46: noProvenMix"
+  ]
+ },
+ {
+  "name": "waitNested",
+  "layout": 9,
+  "tries": [
+   "d2 s41: noProvenMix",
+   "d2 s42: noProvenMix",
+   "d2 s43: noProvenMix",
+   "d2 s44: noProvenMix",
+   "d2 s45: noProvenMix",
+   "d2 s46: noProvenMix",
+   "d1 s41: noProvenMix",
+   "d1 s42: noProvenMix",
+   "d1 s43: noProvenMix",
+   "d1 s44: noProvenMix",
+   "d1 s45: noProvenMix",
+   "d1 s46: noProvenMix"
+  ]
+ },
+ {
+  "name": "waitThawWay",
+  "layout": 31,
+  "tries": [
+   "d2 s41: noProvenMix",
+   "d2 s42: noProvenMix",
+   "d2 s43: noProvenMix",
+   "d2 s44: noProvenMix",
+   "d2 s45: noProvenMix",
+   "d2 s46: noProvenMix"
+  ],
+  "ok": "waitThawWay-L31-s41-p1",
+  "dial": 1
+ },
+ {
+  "name": "waitNested",
+  "layout": 31,
+  "tries": [
+   "d2 s41: noProvenMix",
+   "d2 s42: noProvenMix",
+   "d2 s43: noProvenMix",
+   "d2 s44: noProvenMix",
+   "d2 s45: noProvenMix",
+   "d2 s46: noProvenMix"
+  ],
+  "ok": "waitNested-L31-s41-p1",
+  "dial": 1
+ },
+ {
+  "name": "waitThawWay",
+  "layout": 7,
+  "tries": [
+   "d2 s41: noProvenMix",
+   "d2 s42: noProvenMix",
+   "d2 s43: noProvenMix",
+   "d2 s44: noProvenMix",
+   "d2 s45: noProvenMix",
+   "d2 s46: noProvenMix"
+  ],
+  "ok": "waitThawWay-L7-s41-p1",
+  "dial": 1
+ },
+ {
+  "name": "waitThawKey",
+  "layout": 43,
+  "tries": [
+   "d2 s41: noProvenMix",
+   "d2 s42: noProvenMix",
+   "d2 s43: noProvenMix",
+   "d2 s44: noProvenMix",
+   "d2 s45: noProvenMix",
+   "d2 s46: noProvenMix"
+  ],
+  "ok": "waitThawKey-L43-s41-p1",
+  "dial": 1
+ },
+ {
+  "name": "waitThawKey",
+  "layout": 5,
+  "tries": [
+   "d2 s41: noProvenMix",
+   "d2 s42: noProvenMix",
+   "d2 s43: noProvenMix",
+   "d2 s44: noProvenMix",
+   "d2 s45: noProvenMix",
+   "d2 s46: noProvenMix"
+  ],
+  "ok": "waitThawKey-L5-s41-p1",
+  "dial": 1
+ },
+ {
+  "name": "waitThawWay",
+  "layout": 14,
+  "tries": [
+   "d2 s41: noProvenMix",
+   "d2 s42: noProvenMix",
+   "d2 s43: noProvenMix",
+   "d2 s44: noProvenMix",
+   "d2 s45: noProvenMix",
+   "d2 s46: noProvenMix",
+   "d1 s41: noProvenMix"
+  ],
+  "ok": "waitThawWay-L14-s42-p1",
+  "dial": 1
+ },
+ {
+  "name": "waitThawKey",
+  "layout": 18,
+  "tries": [
+   "d2 s41: noProvenMix",
+   "d2 s42: noProvenMix",
+   "d2 s43: noProvenMix",
+   "d2 s44: noProvenMix",
+   "d2 s45: noProvenMix",
+   "d2 s46: noProvenMix"
+  ],
+  "ok": "waitThawKey-L18-s41-p1",
+  "dial": 1
+ },
+ {
+  "name": "waitThawKey",
+  "layout": 21,
+  "tries": [
+   "d2 s41: noProvenMix",
+   "d2 s42: noProvenMix",
+   "d2 s43: noProvenMix",
+   "d2 s44: noProvenMix",
+   "d2 s45: noProvenMix",
+   "d2 s46: noProvenMix",
+   "d1 s41: finish separation",
+   "d1 s42: finish separation",
+   "d1 s43: finish separation"
+  ],
+  "ok": "waitThawKey-L21-s44-p1",
+  "dial": 1
+ },
+ {
+  "name": "waitThawWay",
+  "layout": 9,
+  "tries": [
+   "d2 s41: noProvenMix",
+   "d2 s42: noProvenMix",
+   "d2 s43: noProvenMix",
+   "d2 s44: noProvenMix",
+   "d2 s45: noProvenMix",
+   "d2 s46: noProvenMix",
+   "d1 s41: finish separation",
+   "d1 s42: finish feel",
+   "d1 s43: finish separation"
+  ],
+  "ok": "waitThawWay-L9-s44-p1",
+  "dial": 1
+ },
+ {
+  "name": "waitThawWay",
+  "layout": 23,
+  "tries": [
+   "d2 s41: hardWall",
+   "d2 s42: noProvenMix",
+   "d2 s43: noProvenMix",
+   "d2 s44: noProvenMix",
+   "d2 s45: hardWall",
+   "d2 s46: noProvenMix"
+  ],
+  "ok": "waitThawWay-L23-s41-p1",
+  "dial": 1
+ }
+]

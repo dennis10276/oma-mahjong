@@ -159,6 +159,11 @@ add new decisions with a date.
       lookalikeWay-L13 "Got an AHA but got stuck with it. Is that intended?" (held).
     - "feels like I played it before. Make sure there is no copy of anything in 250-300."
     Levels 250-340 on the work branch follow this (`bank/assemble_all.js`, list in `bank/placed-all/placed.md`): known-idea chains end at 302.
+  - **More chained ideas for 300+, more AHA moments** (2026-11-14): "You should come up with more chained ideas for 300+ as well more
+    AHA moments"; and on the fifteen easy leftover chains: "These can be made into slightly harder ones to fit 300+." Six new
+    wrong ideas are written out in `codex-tasks/TASK-18-six-new-wrong-ideas.md` (one pair two melts, the dig melts it for you, count
+    the clock, the melter's twin is under the ice, three of a kind, keys are not for now); a new idea must be built into the board,
+    not found afterwards on a finished one.
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
   - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
     played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is
