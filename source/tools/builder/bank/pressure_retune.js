@@ -38,7 +38,7 @@ function one(lv) {
   const Tl = require('./tail.js'), F = require('./force_tail.js'), T = require('../trap_stories.js'), R = require('./retune.js'), E = require('../engine.js'), Df = require('./difficulty.js'), SEP = require('./separate.js'), PS = require('../../factory/placement_score.js');
   const f = findLevel(lv), j = JSON.parse(fs.readFileSync(f, 'utf8')), card0 = metadata(j), d = j.design, ms = +arg('ms', 60000);
   const queryNodes = +arg('nodes', d.tiles.length > 88 ? 1500000 : 250000), queryMs = +arg('query-ms', d.tiles.length > 88 ? 4000 : 1200);
-  const before = Tl.forcedPressure(d, { scope: 'board', nodes: queryNodes, ms: queryMs });
+  const moments = +arg('moments', 3), before = Tl.forcedPressure(d, { scope: 'board', nodes: queryNodes, ms: queryMs, moments });
   const base = { level: lv, file: path.relative(ROOT, f), before: factsOnly(before), downBefore: d.down.length / d.tiles.length, tailBefore: Tl.measure(d, { seed: 977, playouts: 800 }).tailGreedyWin };
   if (!card0) return { ...base, ok: false, kept: 'liked older board kept unchanged' };
   const { job, tier } = poolJob(card0), band = R.BANDS[tier] || R.BANDS.std;
@@ -58,7 +58,7 @@ function one(lv) {
     if (rp.ok) lastProof = rp.proof.card;
     return rp;
   };
-  const res = F.tune(d, { ms, seed: +arg('seed', 1), band, freeze: r.roles.bait.tiles, validate, queryMs, nodes: queryNodes, escalate: process.argv.includes('--escalate') });
+  const res = F.tune(d, { ms, seed: +arg('seed', 1), band, freeze: r.roles.bait.tiles, validate, queryMs, nodes: queryNodes, moments, escalate: process.argv.includes('--escalate') });
   const stats = { proposals: res.proposals, checked: res.checked, openedFreeze: res.openedFreeze, failures: res.failures, ms: res.ms };
   if (!res.ok) {
     if (res.candidate) { const dir = path.join(OUT, 'candidates'); fs.mkdirSync(dir, { recursive: true }); fs.writeFileSync(path.join(dir, `level-${lv}.json`), JSON.stringify(res.candidate)); }

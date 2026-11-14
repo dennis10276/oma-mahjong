@@ -301,7 +301,7 @@ function assign(opts = {}) {
   cands.forEach((c, i) => { c.ix = i; }); const pairMemo = new Map();
   const pair = (a, b) => { const k = a.ix < b.ix ? a.ix * 65536 + b.ix : b.ix * 65536 + a.ix; let p = pairMemo.get(k); if (!p) { p = { sameLay: a.layout === b.layout || L.overlap(a.sig, b.sig) > L.RULES.overlap, sameLS: a.layout === b.layout && a.shape === b.shape, diff: L.diffCount(a.sig, b.sig), sameShape: a.shape === b.shape }; pairMemo.set(k, p); } return p; };
   const unaryBase = (lv, c) => { const big = C.isBig(lv); if ((c.tiles === 96) !== big) return false; if (!big && (c.tiles < 72 || c.tiles > 88)) return false; if (lv > C.twoLinkTo && c.links < 3) return false; if ((c.needle || c.tail < 0.15) && lv < C.hardestFrom) return false; return true; };
-  const unary = (lv, c) => unaryBase(lv, c) && !preBlocked(lv, c).length;
+  const unary = (lv, c) => unaryBase(lv, c) && (!opts.frozen?.[lv] || opts.frozen[lv] === c.id) && !preBlocked(lv, c).length;
   const dom = Array.from({ length: NL }, (_, i) => cands.filter(c => unary(FIRST + i, c)));
   if (opts.frozen) for (const [lv, id] of Object.entries(opts.frozen)) dom[lv - FIRST] = dom[lv - FIRST].filter(c => c.id === id);   // a level fixed in advance (the scarce 96-tile levels)
   // A = array of NL entries (a candidate, or null = not assigned / hole). The hard rules of one entry against all others, in both directions:

@@ -406,18 +406,18 @@
   ],
   "faces": [
    6,
-   32,
+   9,
    33,
    28,
    16,
    35,
-   9,
+   32,
    30,
    33,
    22,
    34,
    18,
-   34,
+   24,
    25,
    32,
    10,
@@ -430,7 +430,7 @@
    18,
    34,
    22,
-   24,
+   34,
    20,
    29,
    0,
@@ -438,10 +438,10 @@
    12,
    9,
    3,
-   25,
+   19,
    20,
    4,
-   23,
+   1,
    14,
    14,
    21,
@@ -450,9 +450,9 @@
    6,
    11,
    2,
-   9,
+   5,
    33,
-   33,
+   28,
    3,
    24,
    15,
@@ -464,22 +464,22 @@
    16,
    23,
    19,
-   19,
+   25,
    17,
    11,
    26,
-   5,
+   9,
    12,
    20,
    13,
-   1,
+   23,
    15,
    0,
    31,
    10,
    31,
    8,
-   28,
+   33,
    4,
    8,
    29,
@@ -543,72 +543,72 @@
    50,
    27,
    28,
-   59,
-   58,
-   53,
-   60,
    63,
-   55,
-   39,
+   29,
    13,
    33,
+   58,
+   59,
+   60,
+   53,
    41,
-   8,
-   2,
-   57,
-   45,
-   29,
-   35,
-   75,
-   67,
-   51,
    56,
+   39,
    46,
    36,
+   51,
+   3,
+   8,
    20,
    79,
-   74,
-   3,
    4,
+   54,
+   44,
+   74,
+   55,
+   2,
    64,
    30,
    47,
+   57,
+   45,
+   31,
+   75,
+   67,
    1,
+   35,
    14,
+   5,
+   6,
    71,
    15,
+   19,
+   18,
    43,
+   17,
    61,
-   40,
    66,
-   44,
-   54,
-   7,
-   16,
+   40,
    37,
    38,
-   31,
-   6,
-   17,
-   19,
-   21,
-   12,
-   65,
-   26,
-   32,
-   48,
-   49,
-   25,
-   52,
    34,
-   5,
-   18,
-   22,
-   11,
+   52,
+   7,
+   16,
+   26,
+   65,
+   49,
+   12,
+   48,
+   32,
+   21,
+   25,
+   9,
    24,
-   23,
    10,
-   9
+   23,
+   11,
+   22
   ]
  },
  "card": {
@@ -620,7 +620,7 @@
   "layout": 30,
   "layoutName": "diamond",
   "tiles": 80,
-  "boardKey": "df7ee832175f49179a8bb0ec3c46eddda92524e3fa745f8f41fa27700edf948d",
+  "boardKey": "f609852a3e3dc729816d99b4510e0852e3380d48039a19a8fca39b63c8b39599",
   "trap": {
    "type": "chain",
    "bait": {
@@ -777,7 +777,7 @@
     }
    },
    "uiNote": "obKind() shows one overlay per tile (ice, else lock, else key): a tile that is both frozen and a key (or locked) shows only the ice until the display fix lands (another agent, 2026-11-13). Shapes with a frozen key or a frozen locked tile are built and marked card.trap.needsUi = 'frozen-key-marker'; they are for Dennis only after that fix.",
-   "engineNodes": 7981
+   "engineNodes": 8036
   },
   "clock": {
    "tile": 68,
@@ -863,7 +863,22 @@
     "tailGreedyWin": 0.0838
    },
    "after": {
-    "tailGreedyWin": 0.1138
+    "tailGreedyWin": 0.0862,
+    "wins": 69,
+    "playouts": 800,
+    "seed": 977,
+    "start": {
+     "step": 11,
+     "tray": 3,
+     "left": 69
+    },
+    "stored": {
+     "steps": 69,
+     "peakTray": 3,
+     "meanTray": 1.188,
+     "moves2plus": 25,
+     "tray2Share": 0.362
+    }
    },
    "inBand": true,
    "swaps": 0,
@@ -891,7 +906,7 @@
   },
   "see": "The clock is frozen, so two of its neighbours must go first; one of the neighbours that can melt it is locked (it needs the keys); the way to a key runs past a frozen tile, so thaw that tile first: do not take the free key early: it would sit in the tray through the whole dig.",
   "difficulty": {
-   "score": 7.03,
+   "score": 7.3,
    "parts": {
     "links": 0.55,
     "baits": 0,
@@ -899,7 +914,7 @@
     "pressure": 0.871,
     "lateness": 0.142,
     "spare": 1,
-    "tail": 0.879,
+    "tail": 0.978,
     "tiles": 0.333,
     "faceDown": 0.917
    },
@@ -931,7 +946,7 @@
      "ended": "stuck"
     },
     "spare": 1,
-    "tailGreedyWin": 0.1138,
+    "tailGreedyWin": 0.0862,
     "tiles": 80,
     "faceDownShare": 0.275
    },
@@ -950,37 +965,19 @@
   "tailPressure": {
    "steps": 69,
    "counts": [
-    23,
-    31,
-    11,
-    4
+    16,
+    28,
+    18,
+    7
    ],
    "share": [
-    0.333,
-    0.449,
-    0.159,
-    0.058
+    0.232,
+    0.406,
+    0.261,
+    0.101
    ],
    "longest2plus": 7,
-   "mean": 0.942,
-   "gentle": false,
-   "before": {
-    "steps": 69,
-    "counts": [
-     8,
-     15,
-     26,
-     20
-    ],
-    "share": [
-     0.116,
-     0.217,
-     0.377,
-     0.29
-    ],
-    "longest2plus": 21,
-    "mean": 1.841
-   }
+   "mean": 1.232
   },
   "retune": {
    "faceDownBefore": 16,
@@ -1000,10 +997,78 @@
   "layoutId": 30,
   "shapeIndex": 12,
   "tier": "deep",
-  "poolId": "12-30-2-d8_4-vA-rp-deep"
+  "poolId": "12-30-2-d8_4-vA-rp-deep",
+  "forcedTail": {
+   "schema": "forced-tail-v1",
+   "boundary": "all legal clock prefixes (board-wide)",
+   "rules": "game (atomic peek pairs)",
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 2937,
+    "ms": 5,
+    "startWaiting": 0
+   },
+   "cap2": {
+    "result": "win",
+    "cap": 2,
+    "peek": true,
+    "nodes": 3041,
+    "ms": 5,
+    "startWaiting": 0,
+    "episodes": 7
+   },
+   "episodes": {
+    "definition": "entries into >=2 waiting, including the starting tray",
+    "lowerBound": 5,
+    "minimum": null,
+    "upperBound": 7,
+    "tests": [
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 3176,
+      "ms": 6,
+      "startWaiting": 0,
+      "episodeLimit": 1
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 6020,
+      "ms": 8,
+      "startWaiting": 0,
+      "episodeLimit": 2
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 9536,
+      "ms": 15,
+      "startWaiting": 0,
+      "episodeLimit": 3
+     },
+     {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 13181,
+      "ms": 19,
+      "startWaiting": 0,
+      "episodeLimit": 4
+     }
+    ]
+   },
+   "targetMoments": 5,
+   "targetMet": true
+  }
  },
  "difficulty": {
-  "score": 7.03,
+  "score": 7.3,
   "parts": {
    "links": 0.55,
    "baits": 0,
@@ -1011,7 +1076,7 @@
    "pressure": 0.871,
    "lateness": 0.142,
    "spare": 1,
-   "tail": 0.879,
+   "tail": 0.978,
    "tiles": 0.333,
    "faceDown": 0.917
   },
@@ -1043,7 +1108,7 @@
     "ended": "stuck"
    },
    "spare": 1,
-   "tailGreedyWin": 0.1138,
+   "tailGreedyWin": 0.0862,
    "tiles": 80,
    "faceDownShare": 0.275
   },
@@ -1067,31 +1132,31 @@
    "result": "lose",
    "cap": 1,
    "peek": true,
-   "nodes": 2892,
-   "ms": 22,
+   "nodes": 2937,
+   "ms": 5,
    "startWaiting": 0
   },
   "cap2": {
    "result": "win",
    "cap": 2,
    "peek": true,
-   "nodes": 2931,
-   "ms": 15,
+   "nodes": 3041,
+   "ms": 5,
    "startWaiting": 0,
-   "episodes": 3
+   "episodes": 7
   },
   "episodes": {
    "definition": "entries into >=2 waiting, including the starting tray",
-   "lowerBound": 3,
-   "minimum": 3,
-   "upperBound": 3,
+   "lowerBound": 5,
+   "minimum": null,
+   "upperBound": 7,
    "tests": [
     {
      "result": "lose",
      "cap": 2,
      "peek": true,
-     "nodes": 2943,
-     "ms": 14,
+     "nodes": 3176,
+     "ms": 6,
      "startWaiting": 0,
      "episodeLimit": 1
     },
@@ -1099,13 +1164,32 @@
      "result": "lose",
      "cap": 2,
      "peek": true,
-     "nodes": 3526,
-     "ms": 13,
+     "nodes": 6020,
+     "ms": 8,
      "startWaiting": 0,
      "episodeLimit": 2
+    },
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 9536,
+     "ms": 15,
+     "startWaiting": 0,
+     "episodeLimit": 3
+    },
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 13181,
+     "ms": 19,
+     "startWaiting": 0,
+     "episodeLimit": 4
     }
    ]
   },
+  "targetMoments": 5,
   "targetMet": true
  }
 }

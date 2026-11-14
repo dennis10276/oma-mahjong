@@ -1,0 +1,172 @@
+{
+ "level": 303,
+ "file": "source\\analysis\\builder\\bank\\batch-303-342\\level-303.json",
+ "before": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 2892,
+   "ms": 16,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 2931,
+   "ms": 12,
+   "startWaiting": 0,
+   "episodes": 3
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 3,
+   "minimum": 3,
+   "upperBound": 3,
+   "tests": [
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 2943,
+     "ms": 10,
+     "startWaiting": 0,
+     "episodeLimit": 1
+    },
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 3526,
+     "ms": 9,
+     "startWaiting": 0,
+     "episodeLimit": 2
+    }
+   ]
+  },
+  "targetMoments": 5,
+  "targetMet": false
+ },
+ "downBefore": 0.275,
+ "tailBefore": 0.1138,
+ "ok": true,
+ "changed": true,
+ "after": {
+  "schema": "forced-tail-v1",
+  "boundary": "all legal clock prefixes (board-wide)",
+  "rules": "game (atomic peek pairs)",
+  "cap1": {
+   "result": "lose",
+   "cap": 1,
+   "peek": true,
+   "nodes": 2937,
+   "ms": 5,
+   "startWaiting": 0
+  },
+  "cap2": {
+   "result": "win",
+   "cap": 2,
+   "peek": true,
+   "nodes": 3041,
+   "ms": 5,
+   "startWaiting": 0,
+   "episodes": 7
+  },
+  "episodes": {
+   "definition": "entries into >=2 waiting, including the starting tray",
+   "lowerBound": 5,
+   "minimum": null,
+   "upperBound": 7,
+   "tests": [
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 3176,
+     "ms": 6,
+     "startWaiting": 0,
+     "episodeLimit": 1
+    },
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 6020,
+     "ms": 8,
+     "startWaiting": 0,
+     "episodeLimit": 2
+    },
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 9536,
+     "ms": 15,
+     "startWaiting": 0,
+     "episodeLimit": 3
+    },
+    {
+     "result": "lose",
+     "cap": 2,
+     "peek": true,
+     "nodes": 13181,
+     "ms": 19,
+     "startWaiting": 0,
+     "episodeLimit": 4
+    }
+   ]
+  },
+  "targetMoments": 5,
+  "targetMet": true
+ },
+ "edits": [
+  [
+   59,
+   33
+  ],
+  [
+   12,
+   25
+  ],
+  [
+   6,
+   1
+  ],
+  [
+   67,
+   36
+  ],
+  [
+   74,
+   47
+  ],
+  [
+   45,
+   63
+  ]
+ ],
+ "stats": {
+  "proposals": 218,
+  "checked": 36,
+  "openedFreeze": false,
+  "failures": {
+   "twins": 64,
+   "pressure:lose/win/1": 4,
+   "gamble": 109,
+   "pressure:lose/win/3": 17,
+   "strictTail:lose": 1,
+   "pressure:lose/win/2": 2,
+   "pressure:lose/win/4": 10,
+   "pressure:lose/lose/1": 1,
+   "band:hard": 1
+  },
+  "ms": 2449
+ },
+ "tailAfter": 0.0862,
+ "downAfter": 0.275,
+ "score": 7.3
+}

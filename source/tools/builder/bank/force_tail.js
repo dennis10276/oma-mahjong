@@ -8,7 +8,7 @@ const copy = x => structuredClone(x);
 function tune(design, opts = {}) {
   const t0 = Date.now(), wall = opts.ms ?? 60000, seed0 = opts.seed ?? 1;
   let seed = seed0 >>> 0; const rnd = n => { seed |= 0; seed = (seed + 0x6D2B79F5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return Math.floor(((t ^ (t >>> 14)) >>> 0) / 4294967296 * n); };
-  const band = opts.band || [0.06, 0.28], budget = { scope: 'board', nodes: opts.nodes ?? 200000, ms: opts.queryMs ?? 1000 };
+  const band = opts.band || [0.06, 0.28], budget = { scope: 'board', nodes: opts.nodes ?? 200000, ms: opts.queryMs ?? 1000, moments: opts.moments ?? 3 };
   const before = Tl.forcedPressure(design, budget), P = Tl.prepare(design), g0 = Tl.gambleFacts(design), geo = SEP.geometry(design), c0 = SEP.closeTwins(design, geo);
   const freeze = new Set((opts.freeze || []).map(i => design.faces[i]));
   let movable = P.tail.filter(i => !freeze.has(design.faces[i]));

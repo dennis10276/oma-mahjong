@@ -72,9 +72,11 @@ function capped(design, cap, opts = {}) {
     if (clockAlive && (n - left >= g.clock.n || n - left + Math.max(g.lb(alive), opts.parityBound === false ? 0 : clockTailBound()) > g.clock.n + (peek ? 1 : 0))) { dead.add(k); return false; }
     const free = []; for (let i = 0; i < n; i++) if (can(i)) free.push(i);
     const pairs = [];
-    if (peek) for (let a = 0; a < free.length; a++) for (let b = a + 1; b < free.length; b++) {
+    if (peek || opts.atomic) for (let a = 0; a < free.length; a++) for (let b = a + 1; b < free.length; b++) {
       const i = free[a], j = free[b];
-      if (F[i] === F[j] && !tray.includes(F[i]) && (g.down[i] || g.down[j])) pairs.push([i, j]);
+      // opts.atomic (Dennis 2026-11-14: he did not feel 'two waiting'): a free face-up pair is one action too, so a tile that only passes
+      // through the tray on its way to its free twin is not counted as waiting. It needs a free slot for that moment (a 4th tile loses).
+      if (F[i] === F[j] && !tray.includes(F[i]) && (g.down[i] || g.down[j] || (opts.atomic && tray.length < 3))) pairs.push([i, j]);
     }
     // A complete, unique, atomic pair can only uncover/unlock/thaw tiles.
     // Taking it now cannot increase waiting or the episode count.
