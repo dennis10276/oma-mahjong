@@ -4,22 +4,25 @@
 // a new minimum and witness have been found. No shared builder file is edited.
 const E=require('./engine.js'),S=require('./bank/separate.js');
 function repair(d,roles,name,spare,opts={}){
-  const M=require('./trap_mixes.js'),until=Date.now()+(opts.wallMs??25000),notes=[],protectedFaces=new Set([...roles.bait.tiles,...roles.keys,...(roles.bait.repeat?.copies||[]),...(roles.bait.mix.mode==='earlyClock'?[d.clock.i,roles.bait.mix.originalClock]:[])].map(i=>d.faces[i]));
+  const M=require('./trap_mixes.js'),until=Date.now()+(opts.wallMs??25000),notes=[],protectedTiles=new Set([...roles.bait.tiles,...roles.keys,...(roles.bait.repeat?.copies||[]),...(roles.bait.mix.mode==='earlyClock'?[d.clock.i,roles.bait.mix.originalClock]:[])]);
   let cur=d,tested=0;
-  for(let pass=0;pass<4&&Date.now()<until;pass++){
+  for(let pass=0;pass<24&&Date.now()<until;pass++){
     const geo=S.geometry(cur),before=S.closeTwins(cur,geo);if(before.meets)break;
     const candidates=[];
-    for(const [a,b]of before.closeVisible)for(const u of [a,b]){
-      if(protectedFaces.has(cur.faces[u]))continue;
+    const defects=[...before.closeVisible,...before.closeFour,...before.close];
+    for(const [a,b]of defects)for(const u of [a,b]){
+      if(protectedTiles.has(u))continue;
       for(let v=0;v<cur.tiles.length;v++){
-        if(u===v||cur.faces[u]===cur.faces[v]||protectedFaces.has(cur.faces[v]))continue;
+        if(u===v||cur.faces[u]===cur.faces[v]||protectedTiles.has(v))continue;
         const faces=cur.faces.slice();[faces[u],faces[v]]=[faces[v],faces[u]];
         const dd={...cur,faces},after=S.closeTwins(dd,geo);
-        if(after.visible>=before.visible||after.four>before.four||after.share>.05)continue;
+        const improved=after.visible<before.visible||(after.visible===before.visible&&after.four<before.four)||(after.visible===before.visible&&after.four===before.four&&after.count<before.count);
+        if(!improved||after.four>before.four||after.share>Math.max(.05,before.share))continue;
         candidates.push({d:dd,u,v,after,hidden:geo.vis[v]?1:0});
       }
     }
-    candidates.sort((a,b)=>a.after.visible-b.after.visible||a.after.count-b.after.count||a.hidden-b.hidden);
+    const tie=q=>((Math.imul(q.u+1,7919)^Math.imul(q.v+1,104729)^Math.imul((opts.seed??1)+pass,2654435761))>>>0);
+    candidates.sort((a,b)=>a.after.visible-b.after.visible||a.after.count-b.after.count||a.hidden-b.hidden||tie(a)-tie(b));
     let kept=false;
     for(const cd of candidates.slice(0,100)){
       if(Date.now()>=until)break;tested++;
