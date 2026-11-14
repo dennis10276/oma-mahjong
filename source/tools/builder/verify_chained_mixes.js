@@ -33,6 +33,7 @@ function chainStructure(r,f){
     flags.keyA?'keyA<'+(flags.keyA==='frozen'?'frozen':flags.keyA+':ice'):null,
     flags.keyB?'keyB<'+(flags.keyB==='frozen'?'frozen':flags.keyB+':ice'):null].filter(Boolean).join('; ');
   if(parts!==f.baseSignature)failures.push('baseSignature');
+  if(f.mode==='dualMelt'&&(!ice(b.mix.added)||!c.above[ob.keys.find(k=>k!==b.keyEarly)].has(b.mix.added)||b.wrong.length<2))failures.push('twoThawFronts');
   if(f.mode==='freezeRight'&&(!ice(b.mix.added)||!Object.keys(ob.ice).some(i=>+i!==b.mix.added&&E.game(d).iceNb[+i].includes(b.mix.added))))failures.push('innerIce');
   // Actual needs graph: cover -> tile below, ice neighbour -> host, both keys
   // -> each lock, plus the waiting clock's twin and ordinary lookalike choice.
@@ -55,9 +56,11 @@ function verify(r,opts={}){
   const independent=t.baits.some((p,i)=>t.baits.some((q,j)=>i!==j&&p.tiles.every(x=>!q.tiles.includes(x))));
   const medium=require('./chained_facts.js').mediumEvidence(d,r.roles,t.baits);
   if(!independent||t.twoTraps?.hardLinks<3||t.twoTraps?.mediumLinks<2||medium.length<2||!same(medium,t.twoTraps.mediumEvidence))errors.push('twoMeaningfulTraps');
+  for(const q of t.twoFronts||[]){const c=B.context(d.tiles);if(!d.obst.ice[q.host]||!E.game(d).iceNb[q.host].includes(q.lone)||d.faces[q.lone]!==d.faces[q.twin]||c.above[q.twin].size<2||d.down.includes(q.lone)||d.down.includes(q.twin)||!t.baits.some(p=>p.tiles.length===1&&p.tiles[0]===q.lone))errors.push('twoFrontEvidence');}
+  if(t.twoFronts&&new Set(t.twoFronts.map(q=>q.host)).size<2)errors.push('twoFrontHosts');
   const layers=Math.max(...d.tiles.map(t=>t[2]))+1;if(c.layers!==layers)errors.push('layerCard');
   const occ=Tail.occupancy(d);if(!same(occ,c.tailOccupancy)||occ.share[1]<.40||occ.share[2]>.20||occ.share[3]>.05||occ.longest2plus>6)errors.push('tailOccupancy');
-  const mech=V.mechanism(d),route=new Set(d.solution.slice(0,c.clock.fewestMoves));
+  const mech=new Set([...V.mechanism(d),...r.roles.bait.tiles,r.roles.bait.mix.originalClock]),route=new Set(d.solution.slice(0,c.clock.fewestMoves));
   if(d.down.length/d.tiles.length<.23||d.down.some(i=>mech.has(i)||route.has(i)))errors.push('faceDownTargetOrProtectedTile');
   const old=opts.history||history(),fp=fingerprint(d);
   if(old.some(h=>h.fingerprint===fp||(h.layout===c.layout&&h.signature===t.signature)))errors.push('reuse');

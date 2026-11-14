@@ -17,6 +17,10 @@ const rows = [
   ['lookalikeThaw',11,'repeatKeys','clock<ice; thaw<lock; keyA<cover:ice','A matching ordinary picture cannot replace the guarded key: save the true key pair to unlock the neighbour that thaws the clock.'],
   ['lookalikeCover',9,'repeatKeys','clock<lock; clock<cover:ice; keyA<cover:ice','Reject the easy lookalike pair, thaw the real key roof, then open the lock and melt the separate clock roof.'],
   ['lookalikeNested',10,'repeatKeys','clock<lock; clock<cover:ice; coverThaw<ice','Pair the actual keys rather than the ordinary lookalike, then follow both melts under the clock roof.'],
+  ['twoFrontThaw',3,'dualMelt','clock<ice; thaw<lock','Do not park either lonely thaw picture: prepare the key roof on one front, unlock the thaw tile on the other, then collect the clock.'],
+  ['twoFrontCoverThaw',5,'dualMelt','clock<cover:ice; coverThaw<lock','The lonely neighbours on the key roof and the clock roof compete for the same tray room; solve the key melt before the locked clock melt.'],
+  ['nestedThaw',3,'freezeRight','clock<ice; thaw<lock','The lonely outer neighbour cannot replace the inner melt: unlock one thaw front while melting the other, then collect the clock.'],
+  ['nestedCoverThaw',5,'freezeRight','clock<cover:ice; coverThaw<lock','The clock roof needs a locked neighbour and a neighbour behind its own ice; prepare both fronts rather than parking the lonely thaw picture.'],
   ['nestedThawKey',11,'freezeRight','clock<ice; thaw<lock; keyA<cover:ice','The lonely thaw tile waits on one front while the key roof is melted on the other; unlock and thaw the inner neighbour before the clock.'],
   ['nestedCoverKey',13,'freezeRight','clock<cover:ice; coverThaw<lock; keyA<cover:ice','Follow the key roof through the locked neighbour and its own ice before melting the clock roof; neither lonely neighbour is a shortcut.'],
   ['lookalikeWay',30,'repeatKeys','clock<lock; clock<cover:ice; keyA<way:ice','The matching lookalike spends the wrong key; thaw the way to the true partner before the separate clock roof.'],
@@ -29,11 +33,11 @@ const rows = [
   ['lookalikeThawWay',12,'repeatKeys','clock<ice; thaw<lock; keyA<way:ice','Save the real key pair through the icy way, rather than matching the lookalike and stranding the locked clock-thaw route.'],
   ['lookalikeCoverThaw',13,'repeatKeys','clock<cover:ice; coverThaw<lock; keyA<cover:ice','The wrong matching key picture leaves the thaw tile locked; first melt the true key roof, then the clock roof.'],
 ];
-const extension = {earlyClock:'clock<waitForTwin',roofKey:'keyB<clockRoof',repeatKeys:'keyPair<lookalikeChoice',freezeRight:'thaw<innerIce'};
+const extension = {dualMelt:'keyA<lonelyMeltRoof:ice',earlyClock:'clock<waitForTwin',roofKey:'keyB<clockRoof',repeatKeys:'keyPair<lookalikeChoice',freezeRight:'thaw<innerIce'};
 const SHAPES = Object.fromEntries(rows.map(([name,chain,mode,baseSignature,see,repeat=false])=>[name,{
   name,base:'chain',chain,mode,baseSignature,repeat,signature:baseSignature+'; '+extension[mode]+(repeat?'; keyPair<lookalikeChoice':''),see,
   baseLinks:baseSignature.split('; ').length,links:baseSignature.split('; ').length+1+(repeat?1:0),
-  extension:extension[mode],recipe:(repeat?'Two special gates, a waiting clock and a guarded-key lookalike choice':'Three linked special gates plus '+extension[mode]),trapType:'chained:'+name,chained:true,
+  extension:extension[mode],recipe:(repeat?'Two special gates, a waiting clock and a guarded-key lookalike choice':baseSignature.split('; ').length+' existing gate links plus '+extension[mode]),trapType:'chained:'+name,chained:true,
   dials:{easier:'spare 2; obviousness dial 0',harder:'spare 1; obviousness dial 2 requires a greedy first bait'},
 }]));
 module.exports={SHAPES};

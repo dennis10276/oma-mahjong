@@ -8,11 +8,11 @@ function select(){
   const dir=path.join(OUT,'examples'),pool=fs.readdirSync(dir).filter(f=>f.endsWith('.json')).map(file=>({file,r:read(path.join(dir,file))})).filter(p=>p.r.verification?.ok);
   const score=p=>(p.r.card.layers<=3?20:0)+(p.r.card.trap.firstMoves.winning>=3?15:0)+p.r.card.trap.obviousness.preferredBaits.length*3-p.r.card.layers;
   const groups=Object.keys(SHAPES).map(name=>({name,ps:pool.filter(p=>p.r.card.trap.type===name).sort((a,b)=>score(b)-score(a))})).filter(g=>new Set(g.ps.map(p=>p.r.card.layout)).size>=2);
-  for(const g of groups){g.pair=[g.ps[0],g.ps.find(p=>p.r.card.layout!==g.ps[0].r.card.layout)];g.score=g.pair.reduce((n,p)=>n+score(p),0);}
+  for(const g of groups){const first=g.ps.find(p=>p.r.card.trap.twoFronts?.length>=2)||g.ps[0];g.pair=[first,g.ps.find(p=>p.r.card.layout!==first.r.card.layout)];g.score=g.pair.reduce((n,p)=>n+score(p),0);}
   groups.sort((a,b)=>b.score-a.score);
-  const chosen=[];
+  const chosen=[],frontGroup=groups.find(g=>g.pair.some(p=>p.r.card.trap.twoFronts?.length>=2));if(frontGroup)chosen.push(frontGroup);
   // Prefer covering each authored link idea before adding more shapes of it.
-  for(const mode of ['earlyClock','repeatKeys','roofKey','freezeRight']){const g=groups.find(g=>SHAPES[g.name].mode===mode);if(g)chosen.push(g);}
+  for(const mode of ['earlyClock','repeatKeys','roofKey','dualMelt','freezeRight']){const g=groups.find(g=>SHAPES[g.name].mode===mode);if(g&&!chosen.includes(g))chosen.push(g);}
   for(const g of groups)if(chosen.length<10&&!chosen.includes(g))chosen.push(g);
   const rows=chosen.flatMap(g=>g.pair),needles=rows.filter(p=>p.r.card.trap.firstMoves.winning<3).length;
   const order=[...chosen.map(g=>g.pair[0].file),...chosen.map(g=>g.pair[1].file)];
@@ -43,6 +43,8 @@ async function run(opts={}){
   results.chained=command('chained-tests',['--test','source/tools/builder/test_chained_mixes.js'],{CHAINED_DELIVERABLES:'1'});
   results.markers=command('task13-markers',['source/tests/run.js','ui markers'],{JOBS:'1'});
   results.hard=command('hard-regression',['source/tests/run.js','t_hard'],{JOBS:'1'});
+  const previewFiles=require('./report_chained_mixes.js').run().picks;
+  results.previews=command('game-previews',['source/tools/builder/preview_chained_mixes.js',...previewFiles]);
   results.ok=Object.values(results).every(v=>v.ok);fs.writeFileSync(path.join(REPORT,'validation.json'),JSON.stringify(results,null,2)+'\n');
   require('./report_chained_mixes.js').run();if(!results.ok)process.exitCode=1;
 }

@@ -61,7 +61,7 @@ Object.assign(FAMILIES, require('./chained_shapes.js').SHAPES);
 function place(name, c, brief, rng) {
   const f = FAMILIES[name]; if (!f) return { fail: 'unknownMix' };
   const b = { ...brief, targets: { ...brief.targets }, ...(f.chain != null ? { chain: T.CHAIN_SHAPES[f.chain] } : {}) };
-  if(f.chained&&f.mode==='roofKey')b.frame={...b.frame,depth:T.CHAIN_DEFS[f.chain].cover?2:1};
+  if(f.chained&&f.mode==='roofKey')b.frame={...b.frame,depth:T.CHAIN_DEFS[f.chain].cover?2:(rng()<.5?1:2)};
   if (f.base === 'lockedMelt') {b.targets.locks=4;b.targets.digBefore??=[2,8];b.targets.keyCover??=[1,4];}
   if(f.mode==='freezeTwoRight'){b.frame={...b.frame,depth:0};b.targets.minWay=3;}
   const r = T.STORIES[f.base].place(c, b, rng); if (r.fail) return r;
@@ -97,7 +97,7 @@ function place(name, c, brief, rng) {
     if (cand.length<count) return { fail: 'noInnerMelt' };
     addedTiles=cand.slice(0,count);added = cand[0];for(const tile of addedTiles)r.ice[tile] = 2; P = null;
   } else if (f.mode === 'dualMelt') {
-    const far=bait.keyFar;
+    const far=bait.keyFar??r.keys.find(k=>k!==bait.keyEarly);
     const guards=shuffled([...c.above[far]].filter(i=>visible(i)&&c.free0[i]&&!r.ice[i]&&c.inb[i].length>=2),rng);
     if(!guards.length)return {fail:'noSecondMeltFront'};
     const guard=guards[0];r.ice[guard]=2;added=guard;
@@ -380,7 +380,7 @@ function finishExample(raw,opts={}){
   }
   if(!SEP.closeTwins(d).meets)return {fail:'separation',notes};
   if(chained){
-    const protect=new Set([...mechanismOf(d),...d.solution.slice(0,k),...roles.bait.tiles]);
+    const protect=new Set([...mechanismOf(d),...d.solution.slice(0,k),...roles.bait.tiles,roles.bait.mix.originalClock]);
     const down=Tail.addFaceDown(d,{protect,target:.25,cap:.30,seed:opts.seed??1});d=down.design;
     notes.push({stage:'extraFaceDown',added:down.added,want:down.want});
     if(d.down.length/d.tiles.length<.23)return {fail:'faceDownTarget',notes};
@@ -405,7 +405,19 @@ function finishExample(raw,opts={}){
       if(rr.ok)d=rr.design;const o=Tail.occupancy(d);notes.push({stage:'tailRoute',routePass,ok:rr.ok,why:rr.why,occupancy:o});
       if(o.share[1]>=.40&&o.share[2]<=.20&&o.share[3]<=.05&&o.longest2plus<=6)break;
     }
-    const o=Tail.occupancy(d);if(o.share[1]<.40||o.share[2]>.20||o.share[3]>.05||o.longest2plus>6)return {fail:'tailPressure',notes};
+    let o=Tail.occupancy(d);
+    if(o.share[1]<.40||o.share[2]>.20||o.share[3]>.05||o.longest2plus>6){
+      const directed=require('./chained_tail_route.js').reroute(d,{wallMs:10000,width:300});notes.push({stage:'waitingTwinRoute',...directed,design:undefined});if(directed.ok)d=directed.design;o=Tail.occupancy(d);
+    }
+    if(o.share[1]<.40||o.share[2]>.20||o.share[3]>.05||o.longest2plus>6)return {fail:'tailPressure',notes};
+  }
+  if(chained){
+    const protect=new Set([...mechanismOf(d),...d.solution.slice(0,k),...roles.bait.tiles,roles.bait.mix.originalClock]),bad=d.down.filter(i=>protect.has(i));
+    if(bad.length){
+      d={...d,down:d.down.filter(i=>!protect.has(i))};const fd=Tail.addFaceDown(d,{protect,target:.25,cap:.30,seed:(opts.seed??1)+97});d=fd.design;
+      notes.push({stage:'protectFinalRoute',removed:bad,added:fd.added});const rt=retime(d,spare);if(!rt.ok)return {fail:rt.why,notes};d=rt.design;k=rt.k;
+      const score=Tail.measure(d,{seed:977,playouts:800}).tailGreedyWin;if(score<.10||score>.28)return {fail:'postVisibilityTailBand',notes};
+    }
   }
   const p=prove(name,d,roles,{k,spare,obviousnessDial:raw.brief.obviousnessDial});if(!p.ok)return {fail:'finalProof:'+p.why,notes};
   const V=require(chained?'./verify_chained_mixes.js':'./verify_trap_mixes.js'),tail=Tail.measure(d,{seed:977,playouts:800});
@@ -415,7 +427,7 @@ function finishExample(raw,opts={}){
       ...(chained?{layers:Math.max(...d.tiles.map(t=>t[2]))+1,tailOccupancy:Tail.occupancy(d)}:{}),
       faceDownShare:(d.down||[]).length/d.tiles.length,twins:SEP.summary(SEP.closeTwins(d))},notes,ms:Date.now()-t0};
   const verification=V.verify(r);if(!verification.ok)return {fail:'independentVerification',verification,notes};
-  r.verification=verification;return r;
+  r.verification=verification;return chained?require('./loosen_chained.js').loosen(r):r;
 }
 
 module.exports={FAMILIES,STORIES,build,place,prove,price,shortest,opening,mechanismOf,rngOf,clone,retime,lockedRelay,finishExample,SEP,Tail,Ledger};

@@ -922,11 +922,3 @@ body.contrast .tmini { border: 2px solid #222; background: #fff; }
 
 /* translated text (lang.js fx): takes the size of where it sits; fitTexts may make it smaller */
 span.fx { font-size: inherit; }
-
-/* A frozen key/lock keeps its badge at the top, clear of the snowflakes below. */
-.tile .ob[data-marker]::before { position: absolute; left: -4%; top: -6%; line-height: 1; font-size: calc(var(--fs, 30px) * .46); filter: drop-shadow(0 1px 1px rgba(0,0,0,.35)); }
-.tile .ob[data-marker="key"]::before { content: '🔑'; }
-.tile .ob[data-marker="lock"]::before { content: '🔒'; }
-
-/* An inset rim also marks the visible part of a neighbour under the pile. Keep its layer. */
-#board .tile.obhint::after { content: ''; position: absolute; inset: 0; border: 3px solid #7fd0ff; border-radius: inherit; background: rgba(120,200,255,.22); opacity: 1; z-index: 4; pointer-events: none; }
