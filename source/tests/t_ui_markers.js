@@ -76,15 +76,14 @@ module.exports = [
       await p.locator('#board .tile[data-i="0"]').tap();
       t.eq(await p.evaluate(() => G.tiles.flatMap((t, i) => t.el.classList.contains('obhint') ? [i] : [])), [1, 3, 5, 9], 'all and only alive ice-neighbours are hinted');
       t.eq(await p.evaluate(() => JSON.stringify([Array.from(G.alive), obState(), G.mv, G.tray])), before, 'blocked tap changes no board, obstacle, move or tray state');
-      await p.waitForFunction(() => +getComputedStyle(G.tiles[3].el, '::after').opacity > .9);
       t.ok(await p.evaluate(() => {
-        const el = G.tiles[3].el, rim = getComputedStyle(el, '::after'), r = el.getBoundingClientRect();
+        const el = G.tiles[3].el, r = el.getBoundingClientRect();   // the same subtle glow as on free tiles (Dennis 2026-11-14), no extra rim or tint
         let visible = false;
         for (const x of [.1, .3, .7, .9]) for (const y of [.1, .3, .7, .9]) {
           const hit = document.elementFromPoint(r.left + r.width * x, r.top + r.height * y);
           if (hit && hit.closest('.tile') === el) visible = true;
         }
-        return visible && +rim.opacity > 0 && rim.content !== 'none' && parseFloat(rim.borderTopWidth) > 0 && rim.backgroundColor !== 'rgba(0, 0, 0, 0)' && el.parentNode.classList.contains('lyr');
+        return visible && !parseFloat(getComputedStyle(el, '::after').borderTopWidth) && getComputedStyle(el).boxShadow !== 'none' && el.parentNode.classList.contains('lyr');
       }), 'covered neighbour has a visible highlighted part and stays in its original layer');
       await shot(p, 'thaw-hint-covered-neighbour.png');
       await sleep(1450);

@@ -632,7 +632,6 @@ body.sunny .how-tray .hm, body.sunny .lesson-slot .lesson-tile { background: lin
 @keyframes crack { from { opacity: 1; transform: scale(.6); } to { opacity: 0; transform: scale(1.5); } }
 #board .tile.obhint { animation: nudgeShake 1.3s ease-in-out 1; box-shadow: 0 0 0 4px #7fd0ff, 0 0 16px 6px rgba(120,200,255,.85); }
 /* An inset rim also marks the visible part of a neighbour under the pile. Keep its layer. */
-#board .tile.obhint::after { content: ''; position: absolute; inset: 0; border: 3px solid #7fd0ff; border-radius: inherit; background: rgba(120,200,255,.22); opacity: 1; z-index: 4; pointer-events: none; }
 .nt-ico { font-size: 72px; line-height: 1.1; animation: giftWiggle 1.4s ease-in-out infinite; display: inline-block; }
 .clock-help { padding: 16px; }
 .clock-help .nt-ico { font-size: 40px; }
