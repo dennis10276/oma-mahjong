@@ -40,6 +40,16 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 
 ## Levels and difficulty (decisions by Dennis, 2026-10-15)
 
+- Release 1.69 (Dennis, 2026-11-14): levels 250-300 are hand-designed trap boards (ice, locks, keys and the clock
+  linked in chains), placed by Dennis's own lab verdicts, without bot ratings; 96-tile boards only on levels ending
+  in 0. Levels below 250 are unchanged. Saved games on 250 and up start again (generation 9: table fields
+  `designedFrom` / `designedVersion`, `Hard.designVersion`); levels past 300 repeat 150-300 mirrored. Display: the
+  clock counter stays inside the board, a frozen key or lock shows both markers, a frozen tile's tap lights every
+  tile that thaws it, a tap on an untakeable frozen/locked tile shows what it needs; the pile gets 2 px of side
+  room and narrower bars when the height limits it, so tiles stay 54 px on the reference phone. Details and the
+  level list: `source/analysis/levels-250-300-2026-11-14.md`. The builder lives on `wip/cc-builder-loop`
+  (`source/tools/builder/bank/`, decisions in `source/analysis/builder/LEVEL-DESIGN-FACTS.md`); only the table it
+  wrote is in the game. Dennis approved release with "Release" on 2026-11-14.
 - Latest decision (2026-10-16, release 1.54): levels 1-91 stay fixed; 92-269 are reordered using
   both fitted personal players, including retries, in five-point ease bands with smoothing.
   Each complete 1.53 board is preserved exactly, with large boards every tenth level. See
