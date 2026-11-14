@@ -1,5 +1,5 @@
-/* Oma's Mahjong — made-up stories from the neighbourhood, about the computer players in the ranking
-   (BOTS in social.js). One part per won level (now and then, between the real news: VILLAGE in
+/* Oma's Mahjong — made-up stories from the neighbourhood, about fictional village characters
+   (VILLAGE_CHARACTERS in village.js). One part per won level (now and then, between the real news: VILLAGE in
    rules.js), each part ends with a little cliffhanger. Before part `ask.at` a memory question
    about an earlier part (right = a bonus star).
    A part: [text, cliffhanger] (the last part has no cliffhanger). Dutch only: these are for grandma. */

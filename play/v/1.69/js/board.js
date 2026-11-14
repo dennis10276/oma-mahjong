@@ -20,7 +20,7 @@ function saveCur() {
 }
 function syncClock() { if (G && G.tStart) { const n = performance.now(); G.elapsed += (n - G.tStart) / 1000; G.tStart = n; } }
 function pauseClock() { syncClock(); if (G) { G.tStart = 0; replayMark('pause'); replayCapture(); replayDrain(G); } saveCur(); }
-function resumeClock() { if (G && !G.done && curScreen === 'game') { G.tStart = performance.now(); replayMark('resume'); } }
+function resumeClock() { if (G && !G.done && !G.introducing && curScreen === 'game') { G.tStart = performance.now(); replayMark('resume'); } }
 
 // ---------- starting a level ----------
 // the part "own, easier levels" (grandma mode) plays its own, gentler levels (Layouts track 'care')
@@ -61,6 +61,7 @@ function begin(o, restart = false) {
   $('.toolbar').classList.toggle('gone', toolsGoneFor(o));   // (before measuring: without tools the pile gets their space)
   // shape the pile after the free space on this screen
   const wrap = $('#boardWrap');
+  $('#game').classList.remove('compact');   // the shape is measured on the ordinary screen (fitGeo may narrow the bars for the board before)
   const aspect = Math.max(0.4, Math.min(2.4, Math.round(wrap.clientHeight / Math.max(1, wrap.clientWidth) * 10) / 10)) || 1.5;
   const cur = restart ? null : loadCur();
   // A same-page resume may follow a drained tail. Adopt its cursor only when the saved
@@ -129,12 +130,20 @@ function begin(o, restart = false) {
   if (villageOn()) setTimeout(villageTease, 1800);
   const ready = () => {
     if (!S.seenTray) setTimeout(() => showIntro(), 700);
-    else if (!S.seenDown && G.down.some(x => x)) setTimeout(showDownTip, 900);
     else { setTimeout(checkStuck, 500); setTimeout(jokerLeftover, 700); setTimeout(specialTip, 1200); }
   };
-  if (!clockIntro(ready) && !newTileIntro(ready) && !retryTileHelp(ready, resumed)) ready();
+  // Finish every new-tile introduction before starting play or any optional replay.
+  const introductions = () => {
+    if (clockIntro(introductions) || newTileIntro(introductions)) return;
+    if (!S.seenDown && G.down.some(Boolean)) { showDownTip(introductions); return; }
+    G.introducing = false; resumeClock();
+    ready();
+    if (!resumed) proCheck();
+  };
+  G.introducing = true; syncClock(); G.tStart = 0;
+  introductions();
 }
-const restart = () => { if (G) { if (!G.done && !G.logged) { noteFail(); coachCount(); endLevel('restart'); } begin(G.o, true); } };
+const restart = () => { if (G) { if (!G.done && !G.logged) { noteFail(); endLevel('restart'); } begin(G.o, true); } };
 // failed tries per level (cleared when it is won); a failed try also ends a win streak
 function noteFail() { if (!G) return; S.fails[G.key] = (S.fails[G.key] || 0) + 1; S.winStreak = 0; save(); }
 
@@ -165,11 +174,8 @@ function decorate(i) {
   const t = G.tiles[i], el = t.el; if (!el) return;
   el.classList.toggle('gold', G.gold.has(i));
   el.classList.toggle('sp-joker', t.face === JOKER);
-  // ice, lock or key: an overlay on the tile
-  const k = obKind(i);
-  let ov = el.querySelector('.ob');
-  if (!k) { if (ov) ov.remove(); }
-  else { if (!ov) { ov = document.createElement('div'); ov.className = 'ob'; el.appendChild(ov); } ov.dataset.k = k; }
+  // Ice keeps its overlay, with the key/lock badge above it when both apply.
+  paintOb(el, obKind(i), obMarker(i));
   if (G.clock && G.clock.i === i) clockBadge();
 }
 // the alarm clock: a badge with the moves left, above everything (so tiles on top never hide it)
@@ -184,8 +190,13 @@ function clockBadge() {
   // one move used: the number gives a little hop, so you see every tile counts (1.58)
   if (+ck.dataset.n > left) try { ck.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.4)', offset: .35 }, { transform: 'scale(1)' }], { duration: 380, easing: 'ease-out' }); } catch (e) { }
   ck.dataset.n = left;
-  ck.style.left = (r.l + r.w * 0.55).toFixed(1) + 'px'; ck.style.top = (r.t - r.h * 0.16).toFixed(1) + 'px';
   ck.style.fontSize = (G.tw * 0.24).toFixed(1) + 'px';
+  // the timer stays whole: a clock in the top row or at the right edge used to push it out of the board, where it was cut off
+  const bd = $('#board'), bw = bd.clientWidth, bh = bd.clientHeight, cw = ck.offsetWidth, ch = ck.offsetHeight;
+  let x = r.l + r.w * 0.55, y = r.t - r.h * 0.16;
+  if (bw && cw) x = Math.max(2, Math.min(x, bw - cw - 2));
+  if (bh && ch) y = Math.max(2, Math.min(y, bh - ch - 2));
+  ck.style.left = x.toFixed(1) + 'px'; ck.style.top = y.toFixed(1) + 'px';
   ck.classList.toggle('urgent', left <= 5);
 }
 const setFace = i => { G.tiles[i].el.querySelector('.face').innerHTML = Tiles.boardFace(S.theme, faceOf(i)); decorate(i); };
@@ -200,7 +211,7 @@ function renderBoard(enter) {
   board.innerHTML = '';
   board.classList.toggle('hl', S.highlight);
   Tiles.useFaces(S.theme, G.tiles.map(t => t.face));
-  const geo = boardGeo(wrap.clientWidth, wrap.clientHeight);
+  const geo = fitGeo();
   if (!geo) return;
   sizeTray();                      // (measured now, while measuring is free: nothing changed since the read above)
   applyGeo(geo, false);
@@ -209,7 +220,7 @@ function renderBoard(enter) {
   for (const i of order) {
     const t = G.tiles[i], r = t.r, k = obKind(i);
     const cls = 'tile' + (G.alive[i] ? '' : ' hidden') + (G.down[i] && G.peek !== i ? ' back' : '') + (G.gold.has(i) ? ' gold' : '') + (t.face === JOKER ? ' sp-joker' : '') + (G.alive[i] && !free(i) ? ' blocked' : '');
-    const html = `<div class="${cls}" data-i="${i}" style="left:${r.l}px;top:${r.t}px;width:${r.w.toFixed(1)}px;height:${r.h.toFixed(1)}px;z-index:${r.zi % 10000}"><div class="face">${Tiles.boardFace(S.theme, t.face)}</div>${k ? `<div class="ob" data-k="${k}"></div>` : ''}</div>`;
+    const html = `<div class="${cls}" data-i="${i}" style="left:${r.l}px;top:${r.t}px;width:${r.w.toFixed(1)}px;height:${r.h.toFixed(1)}px;z-index:${r.zi % 10000}"><div class="face">${Tiles.boardFace(S.theme, t.face)}</div>${obHTML(k, obMarker(i))}</div>`;
     if (!layers.has(t.z)) layers.set(t.z, []);
     layers.get(t.z).push([i, html]);
   }
@@ -245,11 +256,12 @@ function boardGeo(W, H) {
     l = Math.min(l, x); r = Math.max(r, x + 1); t0 = Math.min(t0, y); b = Math.max(b, y + ratio);
   }
   const depthF = 0.085;            // the tile's side, drawn right and below it
-  const tw = Math.min(150, (W - 8) / (r - l + depthF + 0.04), (H - 8) / (b - t0 + depthF * 1.4 + 0.04));
+  // 2 px of room on each side (was 4 until 1.68): a pile seven tiles wide keeps 54 px tiles on a 392 px screen (Dennis 2026-11-14)
+  const twW = (W - 4) / (r - l + depthF + 0.04), twH = (H - 4) / (b - t0 + depthF * 1.4 + 0.04), tw = Math.min(150, twW, twH);
   const th = tw * ratio, dz = tw * dF, d = Math.max(3, tw * depthF);
   // centred on what is really there: even space left and right, and between the tray and the buttons below
   const ox = (W - (r - l) * tw - d) / 2 - l * tw, oy = (H - (b - t0) * tw - d * 1.4) / 2 - t0 * tw;
-  return { tw, th, dz, d, ox, oy };
+  return { tw, th, dz, d, ox, oy, tall: twH < twW && twH < 150 };   // tall: the height of the pile area decides the tile size
 }
 // remember the positions (t.r, G.tw); move the tiles that are on the screen already when asked
 function applyGeo(geo, move) {
@@ -264,10 +276,19 @@ function applyGeo(geo, move) {
     if (move && t.el) { const s = t.el.style; s.left = lf + 'px'; s.top = tp + 'px'; s.width = (tw - 1.5).toFixed(1) + 'px'; s.height = (th - 1.5).toFixed(1) + 'px'; }
   }
 }
+// The pile area for this board. A pile that is limited by the height (nine rows, or a short screen) gets a little more room:
+// the top bar and the tray lose some of their padding (#game.compact in style.css), nothing gets smaller (Dennis 2026-11-14).
+function fitGeo() {
+  const game = $('#game'), wrap = $('#boardWrap');
+  game.classList.remove('compact');
+  let geo = boardGeo(wrap.clientWidth, wrap.clientHeight);
+  if (geo && geo.tall) { game.classList.add('compact'); geo = boardGeo(wrap.clientWidth, wrap.clientHeight); }
+  return geo;
+}
 // after a change of screen size: the same tiles, moved
 function layoutBoard() {
   if (!G) return;
-  const wrap = $('#boardWrap'), geo = boardGeo(wrap.clientWidth, wrap.clientHeight);
+  const geo = fitGeo();
   if (!geo) return;
   applyGeo(geo, true);
   sizeTray();
@@ -389,7 +410,7 @@ function showBlockers(i) {
 // ---------- tapping ----------
 let blockedTaps = 0, comboTimer;
 function onTap(i, auto = false, point = null) {
-  if (!G || G.done) return;
+  if (!G || G.done || G.introducing) return;
   if (G.busy || !G.alive[i] || (G.autoFin && !auto)) {
     replayMark('ignored', [i, auto ? 1 : 0, point, G.busy ? 'busy' : !G.alive[i] ? 'gone' : 'auto']);
     return;   // (auto-finish: hands off)
@@ -403,8 +424,9 @@ function tapTile(i) {
   G.st.tp++;
   if (!free(i)) {
     G.st.bt++;
-    replay(el, 'shake'); showBlockers(i);
-    if (lockedT(i)) showKeys();       // a covered locked tile: the keys show too
+    replay(el, 'shake');
+    // a special tile that cannot be taken shows what it needs, not what lies on it (Dennis 2026-11-14): the tiles that thaw it, or the keys
+    if (frozen(i)) showThaw(i); else if (lockedT(i)) showKeys(); else showBlockers(i);
     Sound.blocked(); buzz(30);
     if (++blockedTaps === 3) toast(tx('stillStuck'), 3000);
     return;
@@ -500,14 +522,13 @@ function turn(i, faceDown) {
 }
 // work that can wait until the screen has shown the change (saving, task counting)
 const afterPaint = fn => requestAnimationFrame(() => setTimeout(fn, 0));
-function showDownTip() {
+function showDownTip(after = null) {
   openModal(`<h2>${tx('downTitle')}</h2>
     <div class="how-tray" style="grid-template-columns:repeat(2,52px)"><div class="hm backmini"></div><div class="hm glow">${Tiles.faceHTML('classic', 32)}</div></div>
     <p>${tx('down1')}</p>
     <p>${tx('down2')}</p>
-    <button class="big-btn play" id="mGo"><span class="bb-text"><b>${tx('gotIt')}</b></span></button>`, true);
-  $('#mGo').onclick = closeModal;
-  S.seenDown = true; save();
+    <button class="big-btn play" id="mGo"><span class="bb-text"><b>${tx('gotIt')}</b></span></button>`, false);
+  $('#mGo').onclick = () => { S.seenDown = true; save(); closeModal(); if (after) after(); };
 }
 
 // ---------- a pair is made ----------
@@ -627,20 +648,14 @@ function checkStuck() {
 function failTry() { bumpStat('losses'); noteFail(); endLevel('stuck'); }
 function gameOver() {
   failTry();
-  // from RULES.coach.fromLevel: the film of the last moves and what would have worked (coach.js)
-  let review = null;
-  try { review = coachDue() ? coachReview('tray') : null; } catch (e) { review = null; }
-  if (review) coachShown();
   setTimeout(() => {
     Sound.stuck(); buzz([40, 80, 40]);
-    openModal(`<h2>${tx(review ? 'czOwnTitle' : 'fullTitle')}</h2>
-      ${review ? coachReviewHTML(review) : `<p>${tx('fullText')}</p>`}
+    openModal(`<h2>${tx('fullTitle')}</h2>
+      <p>${tx('fullText')}</p>
       <button class="big-btn play" id="sRetry"><span class="bb-text"><b>${tx('tryAgain')}</b></span></button>
-      <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false, null, review ? 'tile-help coach-help coach-loss' : '');
-    let message = null;
-    if (review) { coachReviewStart(review); message = recordHelpMessage('coach-' + review.tip, 'review'); }
-    $('#sRetry').onclick = () => { if (message) message('retry'); closeModal(); restart(); };
-    $('#sMenu').onclick = () => { if (message) message('menu'); closeModal(); clearCur(); G.done = true; show('home'); };
+      <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false);
+    $('#sRetry').onclick = () => { closeModal(); restart(); };
+    $('#sMenu').onclick = () => { closeModal(); clearCur(); G.done = true; show('home'); };
   }, 450);
 }
 
@@ -744,22 +759,11 @@ function checkClock() {
   setTimeout(() => {
     Sound.stuck(); buzz([40, 80, 40]);
     replay(G.tiles[G.clock.i].el, 'shake');
-    // from RULES.coach.fromLevel: the film of this try and a route that reached the clock in time
-    const coach = coachLevelOn();
-    let review = null;
-    if (coach) try { review = coachDue() ? coachReview('clock') : null; } catch (e) { review = null; }
-    if (review) coachShown();
-    // (from there no lesson film of its own: without a film of the own try only what happened)
     openModal(`<div class="nt-ico">⏰</div><h2>${tx('clockTitle')}</h2>
-      ${review ? coachReviewHTML(review) : coach ? `<p>${tx('clockText', G.clock.n)}</p>` : `<p>${tx('clockText', G.clock.n)}</p>${coachDemoHTML(false, 'clock')}${clockHelpShort()}`}
+      <p>${tx('clockText', G.clock.n)}</p>
       <button class="big-btn play" id="sRetry"><span class="bb-text"><b>${tx('tryAgain')}</b></span></button>
-      <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false, null, review ? 'tile-help coach-help coach-loss' : coach ? 'clock-help' : 'clock-help coach-help');
-    if (review) coachReviewStart(review);
-    else if (!coach) coachPlay($('#modalBox .coach-demo'), coachClockClip());
-    // (only a film or an explanation is logged as help: the plain loss window of a coach level is not
-    // a lesson, and the dashboard showed it as "Uitleg getoond: Wekker" after every lost try; 1.62)
-    const message = review || !coach ? recordHelpMessage(review ? 'coach-' + review.tip : 'clock', 'timeout') : () => { };
-    $('#sRetry').onclick = () => { message('retry'); closeModal(); restart(); };
-    $('#sMenu').onclick = () => { message('menu'); closeModal(); clearCur(); G.done = true; show('home'); };
+      <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false, null, 'clock-help');
+    $('#sRetry').onclick = () => { closeModal(); restart(); };
+    $('#sMenu').onclick = () => { closeModal(); clearCur(); G.done = true; show('home'); };
   }, 600);
 }

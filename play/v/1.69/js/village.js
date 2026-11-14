@@ -1,10 +1,9 @@
 /* Oma's Mahjong — news from Apeldoorn after a won level, for grandma (and DennisTEST, see GRANDMA
    in rules.js). Mostly real local news (tools/news.py collects it every two hours), and now and
-   then a part of a made-up story about the computer players in the ranking (js/stories.js), which
+   then a part of a made-up story about the fictional village characters (js/stories.js), which
    ends with a little cliffhanger: the next level tells how it goes on. VILLAGE in rules.js has the
    numbers (1 in 5 a story, how old news may be, ...).
-   Everything read so far stays in "Het krantje" (📰 on the home screen); in the ranking, 💬 next
-   to a computer player shows its story so far. */
+   Everything read so far stays in "Het krantje" (📰 on the home screen). */
 'use strict';
 
 const villageOn = () => getsNews(S.pid, S.name, S.cfg || {});      // grandma by default; switch per player on the dashboard
@@ -74,7 +73,13 @@ function showVillage(then) {
   if (ask && x.p === ask.at && vg().ask[x.st.id] === undefined) return askMemory(x.st, () => showStoryPart(x, then));
   showStoryPart(x, then);
 }
-const whoAvatar = name => (BOTS.find(b => b[0] === name) || [name, '🙂'])[1];
+const VILLAGE_CHARACTERS = [
+  ['Ria', '🧁'], ['Joke', '🚲'], ['Henk', '🧀'], ['Tante Riet', '🌷'], ['Opa Kees', '🎣'], ['Buurvrouw Ans', '🐈'],
+  ['Mien', '🧶'], ['Gerrit', '🌳'], ['Truus', '☕'], ['Wim', '🎺'], ['Corrie', '🌸'],
+  ['Bep', '🍰'], ['Jan', '⛵'], ['Greet', '🐦'], ['Klaas', '🚜'], ['Lies', '💐'], ['Juffrouw Bos', '📚'], ['Meester Dekker', '🎩'],
+];
+
+const whoAvatar = name => (VILLAGE_CHARACTERS.find(b => b[0] === name) || [name, '🙂'])[1];
 const vgCard = (head, body, btn) => `<div class="vg-head">${head}</div>${body}<button class="big-btn play" id="vgOk"><span class="bb-text"><b>${btn}</b></span></button>`;
 // the news photo, shown from the news site itself (if it does not load: the smaller one, or none)
 function vgImgErr(img) { if (img.dataset.alt) { img.src = img.dataset.alt; img.dataset.alt = ''; } else img.parentNode.remove(); }
@@ -130,7 +135,7 @@ function openPaper() {
     <button class="big-btn play" id="vgClose"><span class="bb-text"><b>${tx('close')}</b></span></button>`, true, null, 'vg paper');
   $('#vgClose').onclick = closeModal;
 }
-// the story so far of one computer player (💬 in the ranking)
+// the story so far of one fictional village character
 function storyOf(name) { const v = vg(); return STORIES.filter(st => st.who === name && v.sp[st.id] > 0); }
 function openWho(name) {
   const v = vg();
@@ -139,7 +144,6 @@ function openWho(name) {
     <button class="big-btn play" id="vgClose"><span class="bb-text"><b>${tx('close')}</b></span></button>`, true, null, 'vg paper');
   $('#vgClose').onclick = closeModal;
 }
-const chatBtn = e => villageOn() && e.bot && storyOf(e.name).length ? `<button class="vg-chat" data-who="${esc(e.name)}" aria-label="${tx('vgChatLbl')}">💬</button>` : '';
 function renderPaperChip() {
   const b = $('#btnPaper'); if (!b) return;
   b.classList.toggle('hidden', !villageOn());

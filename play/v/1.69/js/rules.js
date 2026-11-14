@@ -13,13 +13,15 @@ const RULES = {
     earn: { every: 5, stars: 3 } },            // from HELP.toolsGoneFrom on they have to be earned, per block of 5 levels (see board.js)
   // from this level: when no order of the remaining taps can fill the tray any more, the rest plays itself
   // (checked exactly, for at most maxTiles tiles left and within a search budget)
-  // from this level (decision Dennis 2026-10-22) no lessons are shown on their own any more: after a lost
-  // try the player sees a film of their own last moves and the better move, tied to its game tip
-  // (js/coach.js). The game tips stay in the menu; first-time introductions of a new tile kind stay.
-  // When (decision Dennis 2026-10-22): once from the 3rd lost try of a level; then from the 9th lost try
-  // every 3rd one (9, 12, 15, 18), and after the 20th every lost try (21, 22, ...), but from the 9th on
-  // only when that try was more than 60% done. Starting over counts as a lost try.
-  coach: { fromLevel: 60, first: 3, again: 9, every: 3, always: 21, done: 0.6 },
+  // Game tips are opened manually from the menu. Automatic tips between attempts were removed
+  // (Dennis, 2026-11-12); new tile introductions must finish before play starts.
+  coach: { fromLevel: 60 },
+  // replay of a win (js/pro.js, decisions Dennis 2026-11-06; on per player on the dashboard, part 'pro'): after
+  // `after` lost tries of a level not passed yet (restarts count), once per level a winning try of that exact
+  // board (Dennisisdebeste's, else the fewest tries), at `speed` × its pace
+  // (pauses longer than maxGapMs, after speeding up, are shortened); only a small × at the top, after closeAfterMs
+  pro: { after: 5, speed: 2, maxGapMs: 3000, closeAfterMs: 3000, waitMs: 5000,
+    url: 'https://dennis10276.github.io/oma-mahjong/play/pro/' },
   autoFinish: { fromLevel: 50, maxTiles: 24, budget: 200000, stepMs: 260 },
   // the harder levels (www/hard.js): from measureFrom the test player designs each level so a
   // sensible player wins about `sense` of first tries; from `from` the levels get harder (a tile on
@@ -96,6 +98,7 @@ const PARTS = [
   { id: 'shuffleLater', group: 'help', help: ['shuffleAfter'], label: 'Schudden niet meteen', note: 'pas na een paar zetten (bewaart de ster)' },
   { id: 'lucky', group: 'extra', help: ['lucky'], label: 'Meer geluksmomentjes', note: 'vanaf level 1, tot 2 per level' },
   { id: 'keepTools', group: 'extra', help: ['toolsGoneFrom', 'jokersGoneFrom'], label: 'Hint, Schudden en jokers na level 50', note: 'blijven, ook na level 50' },
+  { id: 'pro', group: 'help', label: 'Replay na 5 keer mis', note: 'hoe Dennisisdebeste (of wie het snelst won) het level haalde, 2× zo snel' },
   { id: 'news', group: 'news', label: 'Nieuws uit Apeldoorn', note: 'na een gewonnen level een nieuwtje of buurtverhaal' },
 ];
 const PART_GROUPS = { easy: 'Makkelijker spelen', help: 'Hulp', extra: "Extra's", news: 'Nieuws' };
