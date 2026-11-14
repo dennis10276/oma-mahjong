@@ -1,0 +1,32 @@
+{
+  "date": "14 November 2026 at 20:20",
+  "url": "http://127.0.0.1:8266/",
+  "cards": 8,
+  "labId": 193895334,
+  "route": {
+    "taps": 6,
+    "clockDeadline": 7,
+    "uiResult": "Op tijd!",
+    "restartRecorded": true
+  },
+  "attempts": [
+    {
+      "aid": "1e4e6b00-cc3d-4b07-a9ad-8a535eac1511",
+      "taps": 6,
+      "end": [
+        {
+          "r": "restart"
+        }
+      ]
+    },
+    {
+      "aid": "20e1c82d-5951-4541-945c-22bbb5919253",
+      "taps": 0,
+      "end": []
+    }
+  ],
+  "replays": "source/build/new-ideas-lab-replays.json",
+  "serverPid": 20632,
+  "serverSource": "unchanged from c582db46",
+  "screenshot": "LAB.jpg"
+}

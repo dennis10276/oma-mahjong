@@ -1,0 +1,123 @@
+{
+  "made": "2026-11-14T21:59:12.704Z",
+  "independentlyAccepted": 92,
+  "mainTarget": 40,
+  "mainAccepted": 40,
+  "pairCounts": {
+    "keysLater+savePair": 4,
+    "savePair+selfLocked": 4,
+    "keysLater+waitForTwin": 3,
+    "keysLater+selfLocked": 1,
+    "clockCount+clockRoof": 1,
+    "clockCount+savePair": 4,
+    "clockRoof+savePair": 4,
+    "savePair+waitForTwin": 3,
+    "clockRoof+selfLocked": 2,
+    "clockCount+waitForTwin": 3,
+    "lookalikeChoice+savePair": 4,
+    "clockCount+lookalikeChoice": 3,
+    "clockCount+keysLater": 1,
+    "selfLocked+waitForTwin": 3
+  },
+  "singleHostCounts": {
+    "doubleMelt": 0,
+    "freeMelt": 0,
+    "clockCount": 3,
+    "selfLocked": 4,
+    "savePair": 4,
+    "keysLater": 4
+  },
+  "reserve": [
+    {
+      "id": "waitNested-L31-s2-p2",
+      "accepted": [
+        "waitNested_savePair-L31-s97-p1.json",
+        "waitNested_selfLocked-L31-s173-p1.json"
+      ]
+    },
+    {
+      "id": "waitThawKey-L18-s4-p1",
+      "accepted": [
+        "waitThawKey_savePair-L18-s107-p1.json"
+      ]
+    },
+    {
+      "id": "waitThawWay-L14-s2-p1",
+      "accepted": []
+    },
+    {
+      "id": "waitThawWay-L31-s3-p1",
+      "accepted": []
+    },
+    {
+      "id": "waitNested-L16-s12-p2",
+      "accepted": [
+        "waitNested_savePair-L16-s227-p1.json"
+      ]
+    },
+    {
+      "id": "waitNested-L18-s35-p2",
+      "accepted": [
+        "waitNested_savePair-L18-s107-p1.json",
+        "waitNested_savePair-L18-s227-p1.json"
+      ]
+    },
+    {
+      "id": "waitNested-L3-s12-p2",
+      "accepted": [
+        "waitNested_savePair-L3-s107-p1.json",
+        "waitNested_savePair-L3-s227-p1.json"
+      ]
+    },
+    {
+      "id": "waitNested-L33-s15-p3",
+      "accepted": [
+        "waitNested_savePair-L33-s227-p1.json"
+      ]
+    },
+    {
+      "id": "waitNested-L9-s15-p1",
+      "accepted": []
+    },
+    {
+      "id": "waitThawKey-L21-s12-p2",
+      "accepted": [
+        "waitThawKey_savePair-L21-s227-p1.json"
+      ]
+    },
+    {
+      "id": "waitThawKey-L43-s11-p1",
+      "accepted": []
+    },
+    {
+      "id": "waitThawKey-L5-s11-p1",
+      "accepted": []
+    },
+    {
+      "id": "waitThawWay-L23-s12-p2",
+      "accepted": []
+    },
+    {
+      "id": "waitThawWay-L7-s12-p2",
+      "accepted": [
+        "waitThawWay_savePair-L7-s251-p1.json"
+      ]
+    },
+    {
+      "id": "waitThawWay-L9-s12-p2",
+      "accepted": []
+    }
+  ],
+  "tests": {
+    "passed": 34,
+    "skipped": 2,
+    "legacyStorySweep": "stopped after 437 seconds"
+  },
+  "humanReview": {
+    "status": "revision-required",
+    "approvedFor320Plus": false,
+    "findings": "VERDICTS.json",
+    "revisions": "REVISIONS.json",
+    "note": "Counts above are the initial technical delivery under its historical checks, not placement approval or the new badge-readability profile."
+  }
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "file": "lookalikeThaw_clockCount-L30-s113-p1.json",
+    "labId": 190403256,
+    "reason": "Dennis: Good AHA trap. Part after is too hard."
+  },
+  {
+    "file": "lookalikeThaw_savePair-L14-s85-p1.json",
+    "labId": 189772842,
+    "reason": "Dennis: Good trap! 320+ too hard after the trap. tune that easier."
+  },
+  {
+    "file": "keysLater_savePair-L31-s93-p1.json",
+    "requireReadable": true,
+    "reason": "Replacement for hidden-lock key-delay example; two wrong ideas, visible lock, easier finish."
+  },
+  {
+    "file": "selfLocked_savePair-L31-s93-p1.json",
+    "requireReadable": true,
+    "reason": "Replacement for obvious single-idea self-locked example; two wrong ideas, easier finish."
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "file": "selfLocked_savePair-L31-s93-p1.json",
+  "requireReadable": true,
+  "reason": "Replacement for obvious single-idea self-locked example; two wrong ideas, easier finish.",
+  "ms": 150000,
+  "seed": 401,
+  "ok": true,
+  "summary": {
+    "file": "selfLocked_savePair-L31-s93-p1.json",
+    "pp": 0.8,
+    "greedy": 0.8488,
+    "beforePp": 1.8,
+    "beforeGreedy": 0.48,
+    "edits": 20
+  }
+}

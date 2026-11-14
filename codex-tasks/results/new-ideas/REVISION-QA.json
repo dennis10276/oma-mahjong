@@ -1,0 +1,28 @@
+{
+  "agentQa": true,
+  "url": "http://127.0.0.1:8266/new.html",
+  "cards": 4,
+  "screenshot": "REVISED-BOARD.jpg",
+  "visibleSpecials": true,
+  "clockUiResult": "Op tijd!",
+  "attempts": [
+    {
+      "aid": "4e0007ee-44d1-4dec-bd38-4839b776ce0c",
+      "labId": 218115308,
+      "labLevel": 360,
+      "attempt": 1,
+      "partial": false,
+      "chunks": 3,
+      "continuous": true,
+      "taps": 10,
+      "moves": 10,
+      "reachedClock": true,
+      "end": null
+    }
+  ],
+  "ratingsEntered": false,
+  "tests": {
+    "passed": 38,
+    "skipped": 2
+  }
+}

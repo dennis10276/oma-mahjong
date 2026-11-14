@@ -1,0 +1,600 @@
+{
+  "made": "2026-11-14T21:59:12.704Z",
+  "target": 40,
+  "met": true,
+  "combinations": [
+    {
+      "file": "keysLater_savePair-L18-s97-p1.json",
+      "layout": 18,
+      "primary": [
+        "keysLater",
+        "savePair"
+      ],
+      "layers": 3,
+      "rank": 13.6
+    },
+    {
+      "file": "selfLocked_savePair-L31-s93-p1.json",
+      "layout": 31,
+      "primary": [
+        "savePair",
+        "selfLocked"
+      ],
+      "layers": 3,
+      "rank": 17.9
+    },
+    {
+      "file": "waitInnerIce_keysLater-L3-s277-p1.json",
+      "layout": 3,
+      "primary": [
+        "keysLater",
+        "waitForTwin"
+      ],
+      "layers": 4,
+      "rank": 15.6
+    },
+    {
+      "file": "keysLater_selfLocked-L36-s97-p1.json",
+      "layout": 36,
+      "primary": [
+        "keysLater",
+        "selfLocked"
+      ],
+      "layers": 4,
+      "rank": 15.9
+    },
+    {
+      "file": "roofThawKey_clockCount-L1-s139-p1.json",
+      "layout": 1,
+      "primary": [
+        "clockCount",
+        "clockRoof"
+      ],
+      "layers": 3,
+      "rank": 20.2
+    },
+    {
+      "file": "clockCountThaw_savePair-L8-s211-p1.json",
+      "layout": 8,
+      "primary": [
+        "clockCount",
+        "savePair"
+      ],
+      "layers": 5,
+      "rank": 17.6
+    },
+    {
+      "file": "roofThawKey_savePair-L23-s85-p1.json",
+      "layout": 23,
+      "primary": [
+        "clockRoof",
+        "savePair"
+      ],
+      "layers": 3,
+      "rank": 21.2
+    },
+    {
+      "file": "waitThawKey_savePair-L35-s97-p1.json",
+      "layout": 35,
+      "primary": [
+        "savePair",
+        "waitForTwin"
+      ],
+      "layers": 5,
+      "rank": 19.9
+    },
+    {
+      "file": "roofThawKey_selfLocked-L6-s97-p1.json",
+      "layout": 6,
+      "primary": [
+        "clockRoof",
+        "selfLocked"
+      ],
+      "layers": 5,
+      "rank": 22.5
+    },
+    {
+      "file": "waitThawWay_clockCount-L21-s113-p1.json",
+      "layout": 21,
+      "primary": [
+        "clockCount",
+        "waitForTwin"
+      ],
+      "layers": 7,
+      "rank": 22.5
+    },
+    {
+      "file": "selfLocked_savePair-L17-s93-p1.json",
+      "layout": 17,
+      "primary": [
+        "savePair",
+        "selfLocked"
+      ],
+      "layers": 3,
+      "rank": 18.2
+    },
+    {
+      "file": "lookalikeThaw_savePair-L19-s85-p1.json",
+      "layout": 19,
+      "primary": [
+        "lookalikeChoice",
+        "savePair"
+      ],
+      "layers": 3,
+      "rank": 26.5
+    },
+    {
+      "file": "waitInnerIce_keysLater-L47-s277-p1.json",
+      "layout": 47,
+      "primary": [
+        "keysLater",
+        "waitForTwin"
+      ],
+      "layers": 5,
+      "rank": 15.9
+    },
+    {
+      "file": "lookalikeThaw_clockCount-L11-s113-p1.json",
+      "layout": 11,
+      "primary": [
+        "clockCount",
+        "lookalikeChoice"
+      ],
+      "layers": 5,
+      "rank": 24.2
+    },
+    {
+      "file": "keysLater_savePair-L5-s127-p1.json",
+      "layout": 5,
+      "primary": [
+        "keysLater",
+        "savePair"
+      ],
+      "layers": 4,
+      "rank": 16.9
+    },
+    {
+      "file": "clockCount_savePair-L0-s197-p1.json",
+      "layout": 0,
+      "primary": [
+        "clockCount",
+        "savePair"
+      ],
+      "layers": 5,
+      "rank": 18.2
+    },
+    {
+      "file": "roofThawKey_savePair-L14-s85-p1.json",
+      "layout": 14,
+      "primary": [
+        "clockRoof",
+        "savePair"
+      ],
+      "layers": 3,
+      "rank": 22.5
+    },
+    {
+      "file": "waitThawWay_savePair-L7-s251-p1.json",
+      "layout": 7,
+      "primary": [
+        "savePair",
+        "waitForTwin"
+      ],
+      "layers": 4,
+      "rank": 19.9
+    },
+    {
+      "file": "selfLocked_savePair-L25-s93-p1.json",
+      "layout": 25,
+      "primary": [
+        "savePair",
+        "selfLocked"
+      ],
+      "layers": 3,
+      "rank": 18.2
+    },
+    {
+      "file": "lookalikeThaw_savePair-L27-s97-p1.json",
+      "layout": 27,
+      "primary": [
+        "lookalikeChoice",
+        "savePair"
+      ],
+      "layers": 7,
+      "rank": 23.9
+    },
+    {
+      "file": "waitThawWay_clockCount-L33-s113-p1.json",
+      "layout": 33,
+      "primary": [
+        "clockCount",
+        "waitForTwin"
+      ],
+      "layers": 5,
+      "rank": 24.8
+    },
+    {
+      "file": "keysLater_savePair-L24-s97-p1.json",
+      "layout": 24,
+      "primary": [
+        "keysLater",
+        "savePair"
+      ],
+      "layers": 4,
+      "rank": 17.9
+    },
+    {
+      "file": "clockCountThaw_savePair-L9-s211-p1.json",
+      "layout": 9,
+      "primary": [
+        "clockCount",
+        "savePair"
+      ],
+      "layers": 6,
+      "rank": 19.3
+    },
+    {
+      "file": "lookalikeThaw_clockCount-L30-s113-p1.json",
+      "layout": 30,
+      "primary": [
+        "clockCount",
+        "lookalikeChoice"
+      ],
+      "layers": 5,
+      "rank": 27.3
+    },
+    {
+      "file": "roofThawKey_savePair-L43-s97-p1.json",
+      "layout": 43,
+      "primary": [
+        "clockRoof",
+        "savePair"
+      ],
+      "layers": 5,
+      "rank": 20.9
+    },
+    {
+      "file": "keysLater_clockCount-L18-s197-p1.json",
+      "layout": 18,
+      "primary": [
+        "clockCount",
+        "keysLater"
+      ],
+      "layers": 3,
+      "rank": 20.3
+    },
+    {
+      "file": "lookalikeThaw_savePair-L46-s97-p1.json",
+      "layout": 46,
+      "primary": [
+        "lookalikeChoice",
+        "savePair"
+      ],
+      "layers": 5,
+      "rank": 24.2
+    },
+    {
+      "file": "waitNested_savePair-L16-s227-p1.json",
+      "layout": 16,
+      "primary": [
+        "savePair",
+        "waitForTwin"
+      ],
+      "layers": 5,
+      "rank": 24.8
+    },
+    {
+      "file": "selfLocked_savePair-L42-s127-p1.json",
+      "layout": 42,
+      "primary": [
+        "savePair",
+        "selfLocked"
+      ],
+      "layers": 5,
+      "rank": 18.2
+    },
+    {
+      "file": "waitNested_selfLocked-L31-s173-p1.json",
+      "layout": 31,
+      "primary": [
+        "selfLocked",
+        "waitForTwin"
+      ],
+      "layers": 3,
+      "rank": 27.1
+    },
+    {
+      "file": "roofThawKey_selfLocked-L35-s97-p1.json",
+      "layout": 35,
+      "primary": [
+        "clockRoof",
+        "selfLocked"
+      ],
+      "layers": 5,
+      "rank": 23.2
+    },
+    {
+      "file": "waitCoverKey_selfLocked-L47-s173-p1.json",
+      "layout": 47,
+      "primary": [
+        "selfLocked",
+        "waitForTwin"
+      ],
+      "layers": 5,
+      "rank": 24.8
+    },
+    {
+      "file": "lookalikeThaw_clockCount-L1-s113-p1.json",
+      "layout": 1,
+      "primary": [
+        "clockCount",
+        "lookalikeChoice"
+      ],
+      "layers": 3,
+      "rank": 24.9
+    },
+    {
+      "file": "keysLater_savePair-L3-s97-p1.json",
+      "layout": 3,
+      "primary": [
+        "keysLater",
+        "savePair"
+      ],
+      "layers": 4,
+      "rank": 16.6
+    },
+    {
+      "file": "waitInnerIce_keysLater-L24-s277-p1.json",
+      "layout": 24,
+      "primary": [
+        "keysLater",
+        "waitForTwin"
+      ],
+      "layers": 4,
+      "rank": 20.2
+    },
+    {
+      "file": "waitLockCover_selfLocked-L6-s173-p1.json",
+      "layout": 6,
+      "primary": [
+        "selfLocked",
+        "waitForTwin"
+      ],
+      "layers": 5,
+      "rank": 24.8
+    },
+    {
+      "file": "waitThawWay_clockCount-L0-s113-p1.json",
+      "layout": 0,
+      "primary": [
+        "clockCount",
+        "waitForTwin"
+      ],
+      "layers": 5,
+      "rank": 27.1
+    },
+    {
+      "file": "clockCount_savePair-L5-s197-p1.json",
+      "layout": 5,
+      "primary": [
+        "clockCount",
+        "savePair"
+      ],
+      "layers": 4,
+      "rank": 20.5
+    },
+    {
+      "file": "roofThawKey_savePair-L19-s85-p1.json",
+      "layout": 19,
+      "primary": [
+        "clockRoof",
+        "savePair"
+      ],
+      "layers": 3,
+      "rank": 23.5
+    },
+    {
+      "file": "lookalikeThaw_savePair-L23-s85-p1.json",
+      "layout": 23,
+      "primary": [
+        "lookalikeChoice",
+        "savePair"
+      ],
+      "layers": 3,
+      "rank": 24.2
+    }
+  ],
+  "pairCounts": {
+    "keysLater+savePair": 4,
+    "savePair+selfLocked": 4,
+    "keysLater+waitForTwin": 3,
+    "keysLater+selfLocked": 1,
+    "clockCount+clockRoof": 1,
+    "clockCount+savePair": 4,
+    "clockRoof+savePair": 4,
+    "savePair+waitForTwin": 3,
+    "clockRoof+selfLocked": 2,
+    "clockCount+waitForTwin": 3,
+    "lookalikeChoice+savePair": 4,
+    "clockCount+lookalikeChoice": 3,
+    "clockCount+keysLater": 1,
+    "selfLocked+waitForTwin": 3
+  },
+  "layouts": {
+    "0": 2,
+    "1": 2,
+    "3": 2,
+    "5": 2,
+    "6": 2,
+    "7": 1,
+    "8": 1,
+    "9": 1,
+    "11": 1,
+    "14": 1,
+    "16": 1,
+    "17": 1,
+    "18": 2,
+    "19": 2,
+    "21": 1,
+    "23": 2,
+    "24": 2,
+    "25": 1,
+    "27": 1,
+    "30": 1,
+    "31": 2,
+    "33": 1,
+    "35": 2,
+    "36": 1,
+    "42": 1,
+    "43": 1,
+    "46": 1,
+    "47": 2
+  },
+  "singles": {
+    "doubleMelt": [],
+    "freeMelt": [],
+    "clockCount": [
+      {
+        "file": "clockCountThaw-L1-s139-p1.json",
+        "layout": 1,
+        "primary": [
+          "clockCount"
+        ],
+        "layers": 3,
+        "rank": 12.3
+      },
+      {
+        "file": "clockCountThaw-L18-s139-p1.json",
+        "layout": 18,
+        "primary": [
+          "clockCount"
+        ],
+        "layers": 3,
+        "rank": 13.6
+      },
+      {
+        "file": "clockCount-L12-s139-p1.json",
+        "layout": 12,
+        "primary": [
+          "clockCount"
+        ],
+        "layers": 3,
+        "rank": 18.2
+      }
+    ],
+    "selfLocked": [
+      {
+        "file": "selfLocked-L23-s89-p1.json",
+        "layout": 23,
+        "primary": [
+          "selfLocked"
+        ],
+        "layers": 3,
+        "rank": 13.9
+      },
+      {
+        "file": "selfLocked-L31-s89-p1.json",
+        "layout": 31,
+        "primary": [
+          "selfLocked"
+        ],
+        "layers": 3,
+        "rank": 14.6
+      },
+      {
+        "file": "selfLocked-L25-s85-p1.json",
+        "layout": 25,
+        "primary": [
+          "selfLocked"
+        ],
+        "layers": 3,
+        "rank": 16.2
+      },
+      {
+        "file": "selfLocked-L19-s85-p1.json",
+        "layout": 19,
+        "primary": [
+          "selfLocked"
+        ],
+        "layers": 3,
+        "rank": 19.5
+      }
+    ],
+    "savePair": [
+      {
+        "file": "savePair-L17-s83-p1.json",
+        "layout": 17,
+        "primary": [
+          "savePair"
+        ],
+        "layers": 3,
+        "rank": 13.9
+      },
+      {
+        "file": "savePair-L12-s83-p1.json",
+        "layout": 12,
+        "primary": [
+          "savePair"
+        ],
+        "layers": 3,
+        "rank": 15.9
+      },
+      {
+        "file": "savePair-L18-s83-p1.json",
+        "layout": 18,
+        "primary": [
+          "savePair"
+        ],
+        "layers": 3,
+        "rank": 15.9
+      },
+      {
+        "file": "savePair-L31-s81-p1.json",
+        "layout": 31,
+        "primary": [
+          "savePair"
+        ],
+        "layers": 3,
+        "rank": 15.9
+      }
+    ],
+    "keysLater": [
+      {
+        "file": "keysLater-L31-s89-p1.json",
+        "layout": 31,
+        "primary": [
+          "keysLater"
+        ],
+        "layers": 3,
+        "rank": 9.3
+      },
+      {
+        "file": "keysLater-L28-s89-p1.json",
+        "layout": 28,
+        "primary": [
+          "keysLater"
+        ],
+        "layers": 3,
+        "rank": 11.6
+      },
+      {
+        "file": "keysLater-L12-s157-p1.json",
+        "layout": 12,
+        "primary": [
+          "keysLater"
+        ],
+        "layers": 3,
+        "rank": 19.5
+      },
+      {
+        "file": "keysLater-L18-s89-p1.json",
+        "layout": 18,
+        "primary": [
+          "keysLater"
+        ],
+        "layers": 3,
+        "rank": 19.5
+      }
+    ]
+  }
+}

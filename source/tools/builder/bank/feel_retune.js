@@ -15,14 +15,18 @@ const arg = (n, d) => { const i = process.argv.indexOf('--' + n); return i < 0 ?
 
 function tuneFeel(design, opts = {}) {
   const Tl = require('./tail.js'), SEP = require('./separate.js'), { expert } = require('./feel.js');
-  const feel = (d, o) => { const r = expert(d, { playouts: Math.max(5, Math.round(o.playouts / 25)), seed: o.seed, wrong: o.playouts >= 400 }); r.pp = +(r.parkAt[1] + r.parkAt[2]).toFixed(1); return r; };
+  const feel = (d, o) => { const r = expert(d, { playouts: Math.max(5, Math.round(o.playouts / 25)), seed: o.seed, wrong: o.playouts >= 400 }); r.pp = +(r.parkAt[1] + r.parkAt[2]).toFixed(1);
+    // Optional Task 18 feedback target: low measured pressure alone allowed
+    // tails full of fatal natural choices. Require an easier natural finish too.
+    if(opts.target.greedyMin!=null)r.tailGreedyWin=Tl.measure(d,{seed:977,playouts:o.playouts>=400?800:80}).tailGreedyWin;
+    return r; };
   const t0 = Date.now(), wall = opts.ms ?? 60000, target = opts.target, P = Tl.prepare(design), geo = SEP.geometry(design), c0 = SEP.closeTwins(design, geo), g0 = Tl.gambleFacts(design);
   let seed = (opts.seed ?? 1) >>> 0; const rnd = n => { seed |= 0; seed = (seed + 0x6D2B79F5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return Math.floor(((t ^ (t >>> 14)) >>> 0) / 4294967296 * n); };
   const frozen = new Set((opts.freeze || []).map(i => design.faces[i])), movable = P.tail.filter(i => !frozen.has(design.faces[i]));
   const fl = d => feel(d, { playouts: opts.playouts ?? 100, seed: 5 });
   // how far from the target (0 = met); three waiting is capped so the tray is full of choices, not one slip from losing all the time
   // target.parks = 'pressure parks': how many times per game an expert has to put a tile in the tray while one or two already wait
-  const miss = f => Math.max(0, target.parks - f.pp) / 4 + Math.max(0, f.pp - (target.parksMax ?? 99)) / 4 + 3 * Math.max(0, f.waiting[3] - (target.max3 ?? 0.25)) + (f.lostGames ? 2 : 0);
+  const miss = f => Math.max(0, target.parks - f.pp) / 4 + Math.max(0, f.pp - (target.parksMax ?? 99)) / 4 + 3 * Math.max(0, f.waiting[3] - (target.max3 ?? 0.25)) + (f.lostGames ? 2 : 0) + (target.greedyMin==null?0:2*Math.max(0,target.greedyMin-f.tailGreedyWin));
   const before = feel(design, { playouts: 400, seed: 9 });
   let cur = structuredClone(design), curF = fl(cur), curM = miss(curF), best = null, proposals = 0, accepted = 0; const fails = {};
   const fail = k => { fails[k] = (fails[k] || 0) + 1; };
@@ -41,10 +45,10 @@ function tuneFeel(design, opts = {}) {
       if (best && m2 >= best.m) continue;
       const vr = opts.validate ? opts.validate(d) : { ok: true }; if (!vr.ok) { fail('proof:' + vr.why); continue; }
       best = { design: structuredClone(d), feel: f2, m: m2 };
-      if (m2 <= 0.1) break;
+      if (m2 <= (opts.tolerance ?? 0.1)) break;
     }
   }
-  return { ok: !!best, met: !!best && best.m <= 0.1, design: best ? best.design : design, before, after: best ? best.feel : before, proposals, accepted, fails, ms: Date.now() - t0 };
+  return { ok: !!best, met: !!best && best.m <= (opts.tolerance ?? 0.1), design: best ? best.design : design, before, after: best ? best.feel : before, proposals, accepted, fails, ms: Date.now() - t0 };
 }
 
 function one(lv, out) {

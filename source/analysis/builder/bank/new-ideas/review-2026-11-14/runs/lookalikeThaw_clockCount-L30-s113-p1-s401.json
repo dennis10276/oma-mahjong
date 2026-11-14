@@ -1,0 +1,16 @@
+{
+  "file": "lookalikeThaw_clockCount-L30-s113-p1.json",
+  "labId": 190403256,
+  "reason": "Dennis: Good AHA trap. Part after is too hard.",
+  "ms": 150000,
+  "seed": 401,
+  "ok": true,
+  "summary": {
+    "file": "lookalikeThaw_clockCount-L30-s113-p1.json",
+    "pp": 0.9,
+    "greedy": 0.8925,
+    "beforePp": 2.2,
+    "beforeGreedy": 0.5288,
+    "edits": 29
+  }
+}

@@ -1,0 +1,236 @@
+{
+ "savedAt": "2026-11-14T21:28:33.971Z",
+ "ratings": {
+  "188787899": {
+   "note": "No AHA too easy needs more chains",
+   "stars": 2,
+   "verdict": null,
+   "starts": 1,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "189772842": {
+   "note": "Good trap! 320+  too hard after the trap. tune that easier. its more about the traps now.",
+   "stars": 0,
+   "verdict": null,
+   "starts": 1,
+   "tries": 1,
+   "wins": 1,
+   "results": [
+    {
+     "r": "win",
+     "left": 0,
+     "s": 300,
+     "t": 1794691275127
+    }
+   ]
+  },
+  "190403256": {
+   "note": "Good AHA trap. Part after is too hard.",
+   "stars": 4,
+   "verdict": "right",
+   "starts": 1,
+   "tries": 5,
+   "wins": 0,
+   "results": [
+    {
+     "r": "stuck",
+     "left": 65,
+     "s": 74,
+     "t": 1794689704199,
+     "ck": 1
+    },
+    {
+     "r": "restart",
+     "left": 71,
+     "s": 31,
+     "t": 1794689747378
+    },
+    {
+     "r": "stuck",
+     "left": 66,
+     "s": 49,
+     "t": 1794689796019
+    },
+    {
+     "r": "stuck",
+     "left": 65,
+     "s": 18,
+     "t": 1794689815981,
+     "ck": 1
+    },
+    {
+     "r": "stuck",
+     "left": 38,
+     "s": 83,
+     "t": 1794689900404
+    }
+   ]
+  },
+  "191365061": {
+   "note": "Very good AHA moment. 320+ ",
+   "stars": 4,
+   "verdict": "right",
+   "starts": 1,
+   "tries": 7,
+   "wins": 1,
+   "results": [
+    {
+     "r": "restart",
+     "left": 65,
+     "s": 102,
+     "t": 1794690090075
+    },
+    {
+     "r": "stuck",
+     "left": 60,
+     "s": 111,
+     "t": 1794690201555
+    },
+    {
+     "r": "stuck",
+     "left": 62,
+     "s": 113,
+     "t": 1794690316323
+    },
+    {
+     "r": "stuck",
+     "left": 66,
+     "s": 38,
+     "t": 1794690355586
+    },
+    {
+     "r": "restart",
+     "left": 63,
+     "s": 97,
+     "t": 1794690471974
+    },
+    {
+     "r": "restart",
+     "left": 61,
+     "s": 26,
+     "t": 1794690498381
+    },
+    {
+     "r": "win",
+     "left": 0,
+     "s": 103,
+     "t": 1794690601751
+    }
+   ]
+  },
+  "192163876": {
+   "note": "Trap is fine but a bit too easy. Make 1 more chain in it. After its too hard tune it easier.",
+   "stars": 0,
+   "verdict": null,
+   "starts": 1,
+   "tries": 1,
+   "wins": 0,
+   "results": [
+    {
+     "r": "stuck",
+     "left": 44,
+     "s": 143,
+     "t": 1794691474275
+    }
+   ]
+  },
+  "193895334": {
+   "note": "No AHA really need more chains with diferent ideas, Easy to spot",
+   "stars": 2,
+   "verdict": "easy",
+   "starts": 1,
+   "tries": 1,
+   "wins": 0,
+   "results": [
+    {
+     "r": "stuck",
+     "left": 72,
+     "s": 37,
+     "t": 1794689505251
+    }
+   ]
+  },
+  "194256584": {
+   "note": "The lock is not clearly shown so it doesnt feel rewarding to get the keys yet untill its too late. The locks should show.",
+   "stars": 0,
+   "verdict": null,
+   "starts": 1,
+   "tries": 7,
+   "wins": 0,
+   "results": [
+    {
+     "r": "restart",
+     "left": 71,
+     "s": 34,
+     "t": 1794690673434
+    },
+    {
+     "r": "stuck",
+     "left": 70,
+     "s": 75,
+     "t": 1794690748403
+    },
+    {
+     "r": "restart",
+     "left": 53,
+     "s": 51,
+     "t": 1794690803178
+    },
+    {
+     "r": "restart",
+     "left": 70,
+     "s": 20,
+     "t": 1794690828842
+    },
+    {
+     "r": "restart",
+     "left": 71,
+     "s": 21,
+     "t": 1794690855107
+    },
+    {
+     "r": "restart",
+     "left": 72,
+     "s": 6,
+     "t": 1794690879904
+    },
+    {
+     "r": "restart",
+     "left": 69,
+     "s": 30,
+     "t": 1794690910744
+    }
+   ]
+  },
+  "196526931": {
+   "note": "This is very stupid. You cant see the honey under the tiles so you kind find the solution. Also the keys are just laying there. Not chained at all.",
+   "stars": 0,
+   "verdict": null,
+   "starts": 1,
+   "tries": 3,
+   "wins": 0,
+   "results": [
+    {
+     "r": "stuck",
+     "left": 62,
+     "s": 92,
+     "t": 1794691598196
+    },
+    {
+     "r": "restart",
+     "left": 67,
+     "s": 43,
+     "t": 1794691650627
+    },
+    {
+     "r": "restart",
+     "left": 64,
+     "s": 20,
+     "t": 1794691670751
+    }
+   ]
+  }
+ }
+}

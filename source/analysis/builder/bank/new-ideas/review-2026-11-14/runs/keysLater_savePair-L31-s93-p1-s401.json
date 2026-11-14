@@ -1,0 +1,16 @@
+{
+  "file": "keysLater_savePair-L31-s93-p1.json",
+  "requireReadable": true,
+  "reason": "Replacement for hidden-lock key-delay example; two wrong ideas, visible lock, easier finish.",
+  "ms": 150000,
+  "seed": 401,
+  "ok": true,
+  "summary": {
+    "file": "keysLater_savePair-L31-s93-p1.json",
+    "pp": 0.9,
+    "greedy": 0.7538,
+    "beforePp": 1.5,
+    "beforeGreedy": 0.75,
+    "edits": 2
+  }
+}

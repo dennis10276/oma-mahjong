@@ -1,0 +1,136 @@
+{
+  "fail": "independentVerification",
+  "verification": {
+    "ok": false,
+    "errors": [
+      "chain:disconnectedSpecial"
+    ],
+    "checks": [
+      "strictReplay",
+      "minimumByUnsatisfiableEarlierDeadline"
+    ],
+    "k": 12,
+    "spare": 1,
+    "winningFirstMoves": 2,
+    "unknownFirstMoves": 0,
+    "firstMoves": {
+      "winning": 2,
+      "unknown": 0,
+      "legal": 15,
+      "rows": [
+        {
+          "tile": 62,
+          "result": "lose"
+        },
+        {
+          "tile": 64,
+          "result": "lose"
+        },
+        {
+          "tile": 65,
+          "result": "lose"
+        },
+        {
+          "tile": 71,
+          "result": "lose"
+        },
+        {
+          "tile": 72,
+          "result": "lose"
+        },
+        {
+          "tile": 73,
+          "result": "lose"
+        },
+        {
+          "tile": 74,
+          "result": "lose"
+        },
+        {
+          "tile": 77,
+          "result": "lose"
+        },
+        {
+          "tile": 78,
+          "result": "lose"
+        },
+        {
+          "tile": 79,
+          "result": "lose"
+        },
+        {
+          "tile": 80,
+          "result": "lose"
+        },
+        {
+          "tile": 81,
+          "result": "win"
+        },
+        {
+          "tile": 82,
+          "result": "win"
+        },
+        {
+          "tile": 83,
+          "result": "lose"
+        },
+        {
+          "tile": 84,
+          "result": "lose"
+        }
+      ]
+    },
+    "tailGreedyWin": 0.05,
+    "close": {
+      "close": 1,
+      "share": 0.0227,
+      "visible": 0,
+      "four": 0,
+      "meets": true
+    },
+    "pressure": {
+      "peak": 3,
+      "run2": 11,
+      "at3": 5,
+      "occ": [
+        1,
+        2,
+        3,
+        2,
+        3,
+        2,
+        3,
+        2,
+        3,
+        2,
+        3,
+        2
+      ]
+    },
+    "feel": {
+      "games": 16,
+      "lostGames": 0,
+      "waiting": [
+        0.732,
+        0.024,
+        0.195,
+        0.049
+      ],
+      "mean": 0.56,
+      "twoPlus": 0.244,
+      "parks": 2,
+      "parkAt": [
+        0,
+        0,
+        2
+      ],
+      "wrongPark": 0.92,
+      "danger": 0.043,
+      "decisions": 41,
+      "pp": 2
+    },
+    "signature": "clock<ice; thaw<ice; route<keysLater"
+  },
+  "notes": [],
+  "wall": 14158
+}

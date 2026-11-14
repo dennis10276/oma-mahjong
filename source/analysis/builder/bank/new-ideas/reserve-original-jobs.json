@@ -1,0 +1,317 @@
+[
+  {
+    "name": "waitThawWay_savePair",
+    "layout": 14,
+    "reserve": "waitThawWay-L14-s2-p1",
+    "original": "source/analysis/builder/bank/chained-v1/examples/waitThawWay-L14-s2-p1.json",
+    "targets": {
+      "trayRoom": 0,
+      "maxDown": 0.2,
+      "hiddenOnWay": 0,
+      "tailPairWidth": 2,
+      "flexClockHolders": true
+    }
+  },
+  {
+    "name": "waitThawWay_selfLocked",
+    "layout": 14,
+    "reserve": "waitThawWay-L14-s2-p1",
+    "original": "source/analysis/builder/bank/chained-v1/examples/waitThawWay-L14-s2-p1.json",
+    "targets": {
+      "trayRoom": 0,
+      "maxDown": 0.2,
+      "hiddenOnWay": 0,
+      "tailPairWidth": 2,
+      "flexClockHolders": true
+    }
+  },
+  {
+    "name": "waitThawWay_clockCount",
+    "layout": 14,
+    "reserve": "waitThawWay-L14-s2-p1",
+    "original": "source/analysis/builder/bank/chained-v1/examples/waitThawWay-L14-s2-p1.json",
+    "targets": {
+      "trayRoom": 0,
+      "maxDown": 0.2,
+      "hiddenOnWay": 0,
+      "tailPairWidth": 2,
+      "flexClockHolders": true
+    }
+  },
+  {
+    "name": "waitThawWay_savePair",
+    "layout": 31,
+    "reserve": "waitThawWay-L31-s3-p1",
+    "original": "source/analysis/builder/bank/chained-v1/examples/waitThawWay-L31-s3-p1.json",
+    "targets": {
+      "trayRoom": 0,
+      "maxDown": 0.2,
+      "hiddenOnWay": 0,
+      "tailPairWidth": 2,
+      "flexClockHolders": true
+    }
+  },
+  {
+    "name": "waitThawWay_selfLocked",
+    "layout": 31,
+    "reserve": "waitThawWay-L31-s3-p1",
+    "original": "source/analysis/builder/bank/chained-v1/examples/waitThawWay-L31-s3-p1.json",
+    "targets": {
+      "trayRoom": 0,
+      "maxDown": 0.2,
+      "hiddenOnWay": 0,
+      "tailPairWidth": 2,
+      "flexClockHolders": true
+    }
+  },
+  {
+    "name": "waitThawWay_clockCount",
+    "layout": 31,
+    "reserve": "waitThawWay-L31-s3-p1",
+    "original": "source/analysis/builder/bank/chained-v1/examples/waitThawWay-L31-s3-p1.json",
+    "targets": {
+      "trayRoom": 0,
+      "maxDown": 0.2,
+      "hiddenOnWay": 0,
+      "tailPairWidth": 2,
+      "flexClockHolders": true
+    }
+  },
+  {
+    "name": "waitNested_savePair",
+    "layout": 9,
+    "reserve": "waitNested-L9-s15-p1",
+    "original": "source/analysis/builder/bank/chained-v2/examples/waitNested-L9-s15-p1.json",
+    "targets": {
+      "trayRoom": 0,
+      "maxDown": 0.2,
+      "hiddenOnWay": 0,
+      "tailPairWidth": 2,
+      "nestedFallback": true,
+      "flexClockHolders": true
+    }
+  },
+  {
+    "name": "waitNested_selfLocked",
+    "layout": 9,
+    "reserve": "waitNested-L9-s15-p1",
+    "original": "source/analysis/builder/bank/chained-v2/examples/waitNested-L9-s15-p1.json",
+    "targets": {
+      "trayRoom": 0,
+      "maxDown": 0.2,
+      "hiddenOnWay": 0,
+      "tailPairWidth": 2,
+      "nestedFallback": true,
+      "flexClockHolders": true
+    }
+  },
+  {
+    "name": "waitNested_clockCount",
+    "layout": 9,
+    "reserve": "waitNested-L9-s15-p1",
+    "original": "source/analysis/builder/bank/chained-v2/examples/waitNested-L9-s15-p1.json",
+    "targets": {
+      "trayRoom": 0,
+      "maxDown": 0.2,
+      "hiddenOnWay": 0,
+      "tailPairWidth": 2,
+      "nestedFallback": true,
+      "flexClockHolders": true
+    }
+  },
+  {
+    "name": "waitThawKey_savePair",
+    "layout": 43,
+    "reserve": "waitThawKey-L43-s11-p1",
+    "original": "source/analysis/builder/bank/chained-v2/examples/waitThawKey-L43-s11-p1.json",
+    "targets": {
+      "trayRoom": 0,
+      "maxDown": 0.2,
+      "hiddenOnWay": 0,
+      "tailPairWidth": 2,
+      "flexClockHolders": true
+    }
+  },
+  {
+    "name": "waitThawKey_selfLocked",
+    "layout": 43,
+    "reserve": "waitThawKey-L43-s11-p1",
+    "original": "source/analysis/builder/bank/chained-v2/examples/waitThawKey-L43-s11-p1.json",
+    "targets": {
+      "trayRoom": 0,
+      "maxDown": 0.2,
+      "hiddenOnWay": 0,
+      "tailPairWidth": 2,
+      "flexClockHolders": true
+    }
+  },
+  {
+    "name": "waitThawKey_clockCount",
+    "layout": 43,
+    "reserve": "waitThawKey-L43-s11-p1",
+    "original": "source/analysis/builder/bank/chained-v2/examples/waitThawKey-L43-s11-p1.json",
+    "targets": {
+      "trayRoom": 0,
+      "maxDown": 0.2,
+      "hiddenOnWay": 0,
+      "tailPairWidth": 2,
+      "flexClockHolders": true
+    }
+  },
+  {
+    "name": "waitThawKey_savePair",
+    "layout": 5,
+    "reserve": "waitThawKey-L5-s11-p1",
+    "original": "source/analysis/builder/bank/chained-v2/examples/waitThawKey-L5-s11-p1.json",
+    "targets": {
+      "trayRoom": 0,
+      "maxDown": 0.2,
+      "hiddenOnWay": 0,
+      "tailPairWidth": 2,
+      "flexClockHolders": true
+    }
+  },
+  {
+    "name": "waitThawKey_selfLocked",
+    "layout": 5,
+    "reserve": "waitThawKey-L5-s11-p1",
+    "original": "source/analysis/builder/bank/chained-v2/examples/waitThawKey-L5-s11-p1.json",
+    "targets": {
+      "trayRoom": 0,
+      "maxDown": 0.2,
+      "hiddenOnWay": 0,
+      "tailPairWidth": 2,
+      "flexClockHolders": true
+    }
+  },
+  {
+    "name": "waitThawKey_clockCount",
+    "layout": 5,
+    "reserve": "waitThawKey-L5-s11-p1",
+    "original": "source/analysis/builder/bank/chained-v2/examples/waitThawKey-L5-s11-p1.json",
+    "targets": {
+      "trayRoom": 0,
+      "maxDown": 0.2,
+      "hiddenOnWay": 0,
+      "tailPairWidth": 2,
+      "flexClockHolders": true
+    }
+  },
+  {
+    "name": "waitThawWay_savePair",
+    "layout": 23,
+    "reserve": "waitThawWay-L23-s12-p2",
+    "original": "source/analysis/builder/bank/chained-v2/examples/waitThawWay-L23-s12-p2.json",
+    "targets": {
+      "trayRoom": 0,
+      "maxDown": 0.2,
+      "hiddenOnWay": 0,
+      "tailPairWidth": 2,
+      "flexClockHolders": true
+    }
+  },
+  {
+    "name": "waitThawWay_selfLocked",
+    "layout": 23,
+    "reserve": "waitThawWay-L23-s12-p2",
+    "original": "source/analysis/builder/bank/chained-v2/examples/waitThawWay-L23-s12-p2.json",
+    "targets": {
+      "trayRoom": 0,
+      "maxDown": 0.2,
+      "hiddenOnWay": 0,
+      "tailPairWidth": 2,
+      "flexClockHolders": true
+    }
+  },
+  {
+    "name": "waitThawWay_clockCount",
+    "layout": 23,
+    "reserve": "waitThawWay-L23-s12-p2",
+    "original": "source/analysis/builder/bank/chained-v2/examples/waitThawWay-L23-s12-p2.json",
+    "targets": {
+      "trayRoom": 0,
+      "maxDown": 0.2,
+      "hiddenOnWay": 0,
+      "tailPairWidth": 2,
+      "flexClockHolders": true
+    }
+  },
+  {
+    "name": "waitThawWay_savePair",
+    "layout": 7,
+    "reserve": "waitThawWay-L7-s12-p2",
+    "original": "source/analysis/builder/bank/chained-v2/examples/waitThawWay-L7-s12-p2.json",
+    "targets": {
+      "trayRoom": 0,
+      "maxDown": 0.2,
+      "hiddenOnWay": 0,
+      "tailPairWidth": 2,
+      "flexClockHolders": true
+    }
+  },
+  {
+    "name": "waitThawWay_selfLocked",
+    "layout": 7,
+    "reserve": "waitThawWay-L7-s12-p2",
+    "original": "source/analysis/builder/bank/chained-v2/examples/waitThawWay-L7-s12-p2.json",
+    "targets": {
+      "trayRoom": 0,
+      "maxDown": 0.2,
+      "hiddenOnWay": 0,
+      "tailPairWidth": 2,
+      "flexClockHolders": true
+    }
+  },
+  {
+    "name": "waitThawWay_clockCount",
+    "layout": 7,
+    "reserve": "waitThawWay-L7-s12-p2",
+    "original": "source/analysis/builder/bank/chained-v2/examples/waitThawWay-L7-s12-p2.json",
+    "targets": {
+      "trayRoom": 0,
+      "maxDown": 0.2,
+      "hiddenOnWay": 0,
+      "tailPairWidth": 2,
+      "flexClockHolders": true
+    }
+  },
+  {
+    "name": "waitThawWay_savePair",
+    "layout": 9,
+    "reserve": "waitThawWay-L9-s12-p2",
+    "original": "source/analysis/builder/bank/chained-v2/examples/waitThawWay-L9-s12-p2.json",
+    "targets": {
+      "trayRoom": 0,
+      "maxDown": 0.2,
+      "hiddenOnWay": 0,
+      "tailPairWidth": 2,
+      "flexClockHolders": true
+    }
+  },
+  {
+    "name": "waitThawWay_selfLocked",
+    "layout": 9,
+    "reserve": "waitThawWay-L9-s12-p2",
+    "original": "source/analysis/builder/bank/chained-v2/examples/waitThawWay-L9-s12-p2.json",
+    "targets": {
+      "trayRoom": 0,
+      "maxDown": 0.2,
+      "hiddenOnWay": 0,
+      "tailPairWidth": 2,
+      "flexClockHolders": true
+    }
+  },
+  {
+    "name": "waitThawWay_clockCount",
+    "layout": 9,
+    "reserve": "waitThawWay-L9-s12-p2",
+    "original": "source/analysis/builder/bank/chained-v2/examples/waitThawWay-L9-s12-p2.json",
+    "targets": {
+      "trayRoom": 0,
+      "maxDown": 0.2,
+      "hiddenOnWay": 0,
+      "tailPairWidth": 2,
+      "flexClockHolders": true
+    }
+  }
+]
