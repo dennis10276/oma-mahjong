@@ -56,9 +56,12 @@ const FAMILIES = Object.fromEntries(DEFINITIONS.map(([name, base, chain, mode, s
   dials: { easier: 'spare 2; one wrong neighbour; shorter key dig', harder: 'spare 1; two wrong neighbours; tail width 3' },
 }]));
 
+Object.assign(FAMILIES, require('./chained_shapes.js').SHAPES);
+
 function place(name, c, brief, rng) {
   const f = FAMILIES[name]; if (!f) return { fail: 'unknownMix' };
   const b = { ...brief, targets: { ...brief.targets }, ...(f.chain != null ? { chain: T.CHAIN_SHAPES[f.chain] } : {}) };
+  if(f.chained&&f.mode==='roofKey')b.frame={...b.frame,depth:T.CHAIN_DEFS[f.chain].cover?2:1};
   if (f.base === 'lockedMelt') {b.targets.locks=4;b.targets.digBefore??=[2,8];b.targets.keyCover??=[1,4];}
   if(f.mode==='freezeTwoRight'){b.frame={...b.frame,depth:0};b.targets.minWay=3;}
   const r = T.STORIES[f.base].place(c, b, rng); if (r.fail) return r;
@@ -76,7 +79,7 @@ function place(name, c, brief, rng) {
     const cand=shuffled([...c.above[r.clock]].filter(i=>visible(i)&&c.free0[i]&&!r.ice[i]&&!r.locks.has(i)&&!r.keys.includes(i)&&!bait.pairs.some(p=>p.includes(i))),rng);
     if(!cand.length)return {fail:'noRoofKeyCell'};
     added=cand[0];r.keys=r.keys.map(i=>i===oldKey?added:i);bait.keyEarly=added;
-    bait.tiles=bait.tiles.filter(i=>i!==oldKey).concat(added);P=null;
+    bait.tiles=bait.tiles.filter(i=>i!==oldKey).concat(added);P=f.chained?uniq(P.map(i=>i===oldKey?added:i)):null;
   } else if (f.mode === 'addLock' || f.mode==='sharedCoverLock') {
     const cand = shuffled(P.filter(i => !protectedTiles.has(i) && visible(i) && (f.mode==='sharedCoverLock'?c.above[r.clock].has(i)&&!r.keys.some(k=>c.above[k].has(i)):r.keys.every(k => P.indexOf(k) < P.indexOf(i)))), rng);
     if (!cand.length) return { fail: 'noExtraLock' };
@@ -227,7 +230,7 @@ function prove(name, d, roles, ctx, opts = {}) {
   if(d.obst.keys.length===2&&d.faces[d.obst.keys[0]]!==d.faces[d.obst.keys[1]])return {ok:false,why:'keysNotPair'};
   if(name==='splitThawLocks'&&(!roles.bait.relay||d.faces[roles.bait.relay.dig]!==d.faces[roles.bait.relay.locked]))return {ok:false,why:'relayChanged'};
   if(roles.bait.pairs.some(([a,b])=>d.faces[a]!==d.faces[b]))return {ok:false,why:'baitPairChanged'};
-  if(f.mode==='repeatKeys'&&(!roles.bait.repeat||roles.bait.repeat.copies.some(i=>d.faces[i]!==roles.bait.repeat.face)||d.faces.filter(f=>f===roles.bait.repeat.face).length!==4))return {ok:false,why:'repeatChoiceChanged'};
+  if((f.mode==='repeatKeys'||f.repeat)&&(!roles.bait.repeat||roles.bait.repeat.copies.some(i=>d.faces[i]!==roles.bait.repeat.face)||d.faces.filter(f=>f===roles.bait.repeat.face).length!==4))return {ok:false,why:'repeatChoiceChanged'};
   if ((d.down || []).length / d.tiles.length > .3) return {ok:false,why:'faceDownShare'};
   const g = E.game(d), s0 = E.start(g), vis = tileVisibility(g.tiles,{...s0,down:g.down,openPeek:-1},null).tiles;
   const special = uniq([d.clock.i,...(f.mode==='earlyClock'?[roles.bait.mix.originalClock]:[]),...d.obst.keys,...d.obst.locks,...Object.keys(d.obst.ice).map(Number)]);
@@ -244,17 +247,23 @@ function prove(name, d, roles, ctx, opts = {}) {
   if (!baits.length) return {ok:false,why:'noProvenBait'};
   if (f.mode==='earlyClock' && !baits.some(p=>p.tiles.includes(d.clock.i))) return {ok:false,why:'clockNotBait'};
   if (f.mode==='roofKey' && !baits.some(p=>p.tiles.includes(roles.bait.keyEarly))) return {ok:false,why:'roofKeyNotBait'};
-  if (f.mode==='repeatKeys' && !baits.some(p=>JSON.stringify(p.tiles)===JSON.stringify(roles.bait.repeat?.wrongPair))) return {ok:false,why:'wrongRepeatedPairNotBait'};
+  if ((f.mode==='repeatKeys'||f.repeat) && !baits.some(p=>JSON.stringify(p.tiles)===JSON.stringify(roles.bait.repeat?.wrongPair))) return {ok:false,why:'wrongRepeatedPairNotBait'};
   if (f.mode==='dualMelt' && (roles.bait.wrong.length<2 || roles.bait.wrong.some(i=>!baits.some(p=>p.tiles.includes(i))))) return {ok:false,why:'needTwoLonelyBaits'};
   if (name==='doubleFalseStart' && (!baits.some(p=>p.tiles.includes(roles.bait.keyNear)) || !baits.some(p=>roles.bait.wrong.includes(p.tiles[0])))) return {ok:false,why:'needTwoBaits'};
   const mech=mechanismOf(d), controls=D.temptingMoves(g,s0,{singles:true}).filter(m=>!m.peek && m.take.every(i=>!mech.has(i)));
-  const rows=controls.map(m=>price(d,m.take,k,{C,w}));
+  const rows=opts.skipControl?[]:controls.map(m=>price(d,m.take,k,{C,w}));
   if(rows.some(p=>!p || !p.exact || p.result==='unknown')) return {ok:false,why:'controlUnknown'};
   const dearest=rows.sort((a,b)=>value(b,k)-value(a,k))[0] || null;
   // Report the complete control, not the capped sample used by the older stories.
   const control={ moves:rows.length,dearest,value:dearest?value(dearest,k):0 };
   for(const bait of baits)bait.aboveControl=value(bait,k)>control.value;
   const first=opts.skipOpening?null:opening(d);
+  let subtle=null;
+  if(f.chained){
+    subtle=require('./chained_obviousness.js').measure(d,{baits,dial:ctx.obviousnessDial??0});
+    if(!subtle.ok)return {ok:false,why:subtle.rightFreePairs?'obvious:freeRoutePair':'obvious:greedyPrefix'};
+    if(baits.length<2 || !baits.some(p=>p.tiles.every(i=>!baits[0].tiles.includes(i))))return {ok:false,why:'twoMeaningfulBaits'};
+  }
   if(first && first.winning<2) return {ok:false,why:'fewerThan2WinningStarts'};
   const effects=[];
   if(!opts.skipEffects) for(const [kind,tile] of [...d.obst.locks.map(i=>['lock',i]),...Object.keys(d.obst.ice).map(i=>['ice',+i])]) {
@@ -276,6 +285,7 @@ function prove(name, d, roles, ctx, opts = {}) {
     effects.push({kind,tile,...effect});
   }
   const card={type:name,trapType:f.trapType,see:f.see,recipe:f.recipe,dials:f.dials,k,spare,priceHorizon:Math.min(19,k+3),baits,control,effects,firstMoves:first,mechanism:{...roles.bait.mix,repeat:roles.bait.repeat||null,relay:roles.bait.relay||null},
+    ...(f.chained?{signature:f.signature,baseSignature:f.baseSignature,links:f.links,obviousness:subtle,twoTraps:{kind:'hardChainAndMediumBait',hardLinks:f.links,mediumLinks:2,mediumEvidence:require('./chained_facts.js').mediumEvidence(d,roles,baits),baits:baits.map(p=>p.tiles),note:'Two separately priced bad decisions on one connected chain; no claim of additive sequential costs.'}}:{}),
     combinedBadges:combined,needsUi:combined.length?'TASK-13':null};
   return {ok:true,card};
 }
@@ -315,7 +325,7 @@ function build(name, brief = {}, opts = {}) {
     if(!plan || plan.fail){const why=plan?.fail||'pictures';fails[why]=(fails[why]||0)+1;continue;}
     if(f.mode==='earlyClock'&&plan.faces[r.clock]!==plan.faces[r.bait.mix.originalClock]){fails.clockTwinNotGate=(fails.clockTwinNotGate||0)+1;continue;}
     if(name==='splitThawLocks'&&!lockedRelay(c,r,plan)){fails.noLockedRelay=(fails.noLockedRelay||0)+1;continue;}
-    if(f.mode==='repeatKeys'&&!repeatedKeys(c,r,plan,rng)){fails.noRepeatedKeyPair=(fails.noRepeatedKeyPair||0)+1;continue;}
+    if((f.mode==='repeatKeys'||f.repeat)&&!repeatedKeys(c,r,plan,rng)){fails.noRepeatedKeyPair=(fails.noRepeatedKeyPair||0)+1;continue;}
     const pd=VC.placeDownVC(c,r,P,plan,used,rng);
     const d={tiles:c.tiles.map(t=>[t.x,t.y,t.z]),faces:plan.faces,down:pd.down,gold:[],obst:{ice:{...r.ice},locks:[...r.locks],keys:r.keys.slice()},clock:{i:r.clock,n:99},solution:plan.W};
     const cs=shortest(d); if(!cs || cs.k>18){fails.clockShortest=(fails.clockShortest||0)+1;continue;}
@@ -327,7 +337,8 @@ function build(name, brief = {}, opts = {}) {
       d.solution=E.flatten(strict.path);
     }
     if(!E.replay(d,d.solution,{strict:true}).ok){fails.strictReplay=(fails.strictReplay||0)+1;continue;}
-    const p=prove(name,d,r,{k,spare},opts.proof || {});
+    if(f.chained){const ob=require('./chained_obviousness.js').measure(d);if(!ob.ok){const why=ob.rightFreePairs?'obvious:freeRoutePair':'obvious:greedyPrefix';fails[why]=(fails[why]||0)+1;continue;}}
+    const p=prove(name,d,r,{k,spare,obviousnessDial:used.obviousnessDial},opts.proof || {});
     if(!p.ok){fails[p.why]=(fails[p.why]||0)+1;continue;}
     const card={layout,shape:lay.shape,tiles:c.n,trapType:f.trapType,clock:{fewestMoves:k,spare,n:d.clock.n,tile:d.clock.i},trap:p.card,attempt};
     return {design:d,roles:r,brief:used,card,fails,ms:Date.now()-t0};
@@ -347,7 +358,7 @@ function retime(d,spare,opts={}){
 }
 function finishExample(raw,opts={}){
   const t0=Date.now(),name=raw.brief.story,spare=raw.card.clock.spare;let k=raw.card.clock.fewestMoves;
-  const roles={...raw.roles,locks:new Set(raw.roles.locks),holderSpecials:new Set(raw.roles.holderSpecials)},notes=[];
+  const roles={...raw.roles,locks:new Set(raw.roles.locks),holderSpecials:new Set(raw.roles.holderSpecials)},notes=[],chained=!!FAMILIES[name]?.chained,band=chained?[.10,.28]:[.15,.40];
   if(roles.bait.mix.mode!==FAMILIES[name].mode)return {fail:'recipeChanged'};
   let d=clone(raw.design);
   const geo=SEP.geometry(d),mode=roles.bait.mix.mode;
@@ -359,27 +370,49 @@ function finishExample(raw,opts={}){
     const rt=retime(dd,spare);if(!rt.ok)return rt;
     return prove(name,rt.design,roles,{k:rt.k,spare},{skipOpening:true});
   };
-  for(let pass=0;pass<6&&!SEP.closeTwins(d).meets;pass++){
+  for(let pass=0;pass<(chained?2:6)&&!SEP.closeTwins(d).meets;pass++){
     const freeze=uniq([...d.obst.keys,...(roles.bait.repeat?.copies||[]),...roles.bait.tiles]);
     const sep=SEP.separate(d,{k,seed:(opts.seed??1)+pass*7,wallMs:opts.sepMs??7000,freeze,validate});
     notes.push({stage:'separate',pass,after:SEP.summary(sep.after),notes:sep.notes});if(sep.validated){const rt=retime(sep.design,spare);if(rt.ok){if(rt.k!==k)notes.push({stage:'retime',from:k,to:rt.k});d=rt.design;k=rt.k;}}
   }
+  if(chained&&!SEP.closeTwins(d).meets){
+    const repair=require('./repair_chained_twins.js').repair(d,roles,name,spare,{wallMs:25000});d=repair.design;k=d.solution.indexOf(d.clock.i)+1;notes.push({stage:'routeChangingRepair',...repair,design:undefined});
+  }
   if(!SEP.closeTwins(d).meets)return {fail:'separation',notes};
+  if(chained){
+    const protect=new Set([...mechanismOf(d),...d.solution.slice(0,k),...roles.bait.tiles]);
+    const down=Tail.addFaceDown(d,{protect,target:.25,cap:.30,seed:opts.seed??1});d=down.design;
+    notes.push({stage:'extraFaceDown',added:down.added,want:down.want});
+    if(d.down.length/d.tiles.length<.23)return {fail:'faceDownTarget',notes};
+  }
   let tailReady=false;
   for(let round=0;round<2&&!tailReady;round++){
     const freeze=uniq([...roles.bait.tiles,...d.obst.keys,...(roles.bait.repeat?.copies||[])]);
-    const tune=Tail.tune(d,{seed:(opts.seed??1)+round*17,wallMs:opts.tailMs??12000,freeze,validate});
+    const tune=Tail.tune(d,{seed:(opts.seed??1)+round*17,wallMs:opts.tailMs??12000,band,freeze,validate});
     notes.push({stage:'tail',round,before:tune.before.tailGreedyWin,after:tune.after.tailGreedyWin,notes:tune.notes});
     if(!tune.validated)return {fail:'tailValidation',notes};
     const rt=retime(tune.design,spare);if(!rt.ok)return {fail:rt.why,notes};d=rt.design;k=rt.k;
-    const score=Tail.measure(d,{seed:977,playouts:800}).tailGreedyWin;tailReady=score>=.15&&score<=.40;
+    const score=Tail.measure(d,{seed:977,playouts:800}).tailGreedyWin;tailReady=score>=band[0]&&score<=band[1];
+  }
+  if(chained&&!tailReady){
+    const fallback=require('./chained_tail.js').tune(d,{seed:opts.seed??1,wallMs:16000,freeze:roles.bait.tiles,validate});
+    notes.push({stage:'tailPlateau',...fallback,design:undefined});if(fallback.ok){d=fallback.design;const rt=retime(d,spare);if(rt.ok){d=rt.design;k=rt.k;tailReady=true;}}
   }
   if(!tailReady)return {fail:'tailBand',notes};
-  const p=prove(name,d,roles,{k,spare});if(!p.ok)return {fail:'finalProof:'+p.why,notes};
-  const V=require('./verify_trap_mixes.js'),tail=Tail.measure(d,{seed:977,playouts:800});
+  if(chained){
+    for(let routePass=0;routePass<3;routePass++){
+      const rr=Tail.reroute(d,{seed:(opts.seed??1)+routePass*17,gentle:true,pen:[24,120],width:180,wallMs:6000});
+      if(rr.ok)d=rr.design;const o=Tail.occupancy(d);notes.push({stage:'tailRoute',routePass,ok:rr.ok,why:rr.why,occupancy:o});
+      if(o.share[1]>=.40&&o.share[2]<=.20&&o.share[3]<=.05&&o.longest2plus<=6)break;
+    }
+    const o=Tail.occupancy(d);if(o.share[1]<.40||o.share[2]>.20||o.share[3]>.05||o.longest2plus>6)return {fail:'tailPressure',notes};
+  }
+  const p=prove(name,d,roles,{k,spare,obviousnessDial:raw.brief.obviousnessDial});if(!p.ok)return {fail:'finalProof:'+p.why,notes};
+  const V=require(chained?'./verify_chained_mixes.js':'./verify_trap_mixes.js'),tail=Tail.measure(d,{seed:977,playouts:800});
   const pf=T.pressureFacts(d,{capNodes:60000,firstNodes:1e6}),pressureFacts={capProof:pf.capProof,needsWaiting:pf.needsWaitingProven?pf.needsWaiting:null,needsWaitingProven:pf.needsWaitingProven};
-  const r={schema:'trap-variety-v1',design:d,brief:raw.brief,roles:raw.roles,
+  const r={schema:chained?'chained-v1':'trap-variety-v1',design:d,brief:raw.brief,roles:raw.roles,
     card:{...raw.card,clock:{fewestMoves:k,spare,n:d.clock.n,tile:d.clock.i},trap:p.card,tail,pressure:V.storedPressure(d),pressureFacts,
+      ...(chained?{layers:Math.max(...d.tiles.map(t=>t[2]))+1,tailOccupancy:Tail.occupancy(d)}:{}),
       faceDownShare:(d.down||[]).length/d.tiles.length,twins:SEP.summary(SEP.closeTwins(d))},notes,ms:Date.now()-t0};
   const verification=V.verify(r);if(!verification.ok)return {fail:'independentVerification',verification,notes};
   r.verification=verification;return r;

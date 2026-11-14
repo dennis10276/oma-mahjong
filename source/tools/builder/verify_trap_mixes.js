@@ -65,7 +65,7 @@ function capacity(d,cap,nodes=150000){
 function structure(d,t){
   const m=t.mechanism;if(!m)return 'missingMechanism';
   const modes={doubleFalseStart:'freezeLock',twoLonelyMelts:'dualMelt',sharedRoofLocks:'addLock',splitThawLocks:'earlyClock',frozenExitFork:'freezeTwoLocks',nestedMeltFork:'freezeTwoRight',keyRoofMeltFork:'freezeRight',freeClockIce:'earlyClock',freeClockKeys:'earlyClock',freeClockShared:'earlyClock',frozenKeyShared:'addLock',frozenRoofShared:'earlyClock',secondActIce:'tailIce',secondActKeys:'tailLock',roofKeyMelt:'roofKey',roofKeyGuard:'roofKey',roofKeySharedMelt:'roofKey',repeatedKeyChoice:'repeatKeys',repeatedFrozenKey:'repeatKeys'};
-  if(modes[t.type]!==m.mode)return 'familyRecipe';
+  if((modes[t.type]||require('./chained_shapes.js').SHAPES[t.type]?.mode)!==m.mode)return 'familyRecipe';
   const ice=Object.keys(d.obst.ice).map(Number),locks=d.obst.locks;
   if(['frozenKeyShared','repeatedFrozenKey'].includes(t.type)&&!d.obst.keys.some(i=>ice.includes(i)))return 'frozenKey';
   if(t.type==='frozenRoofShared'&&(locks.length<1||locks.includes(m.originalClock)||!locks.some(i=>ice.includes(i)&&B.context(d.tiles).above[m.originalClock].has(i))||ice.length<2))return 'frozenRoof';
@@ -84,7 +84,7 @@ function structure(d,t){
   if((t.type==='twoLonelyMelts'||t.type==='doubleFalseStart')&&t.baits.length<2)return 'dualBait';
   if(m.mode==='dualMelt'&&(ice.length<2||!ice.includes(m.added)||!t.baits.some(p=>E.game(d).iceNb[m.added].includes(p.tiles[0]))))return 'twoMeltFronts';
   if(m.mode==='roofKey'&&(!d.obst.keys.includes(m.added)||!B.context(d.tiles).above[d.clock.i].has(m.added)||!t.baits.some(p=>p.tiles.includes(m.added))))return 'keyOnClockRoof';
-  if(m.mode==='repeatKeys'){
+  if(m.mode==='repeatKeys'||m.repeat){
     const q=m.repeat;if(!q||q.copies.length!==4||new Set(q.copies).size!==4||q.copies.some(i=>d.faces[i]!==q.face)||d.faces.filter(f=>f===q.face).length!==4||!q.wrongPair.some(i=>d.obst.keys.includes(i))||q.wrongPair.every(i=>d.obst.keys.includes(i))||!t.baits.some(p=>same(p.tiles,q.wrongPair)))return 'fourCopyKeyChoice';
   }
   return null;
@@ -146,7 +146,7 @@ function verify(example,opts={}){
   const close=SEP.closeTwins(d);
   if(opts.finished!==false && !close.meets)fail('twinsTogether');
   const tail=Tail.measure(d,{seed:977,playouts:800});
-  if(opts.finished!==false && (tail.tailGreedyWin<.15||tail.tailGreedyWin>.40))fail('tailOutsideBand');
+  if(opts.finished!==false && (tail.tailGreedyWin<(opts.tailBand?.[0]??.15)||tail.tailGreedyWin>(opts.tailBand?.[1]??.40)))fail('tailOutsideBand');
   if(card.tail && !same(card.tail,tail))fail('tailCard');
   const pressure=storedPressure(d);
   if(card.pressure && !same(card.pressure,pressure))fail('pressureCard');
@@ -168,4 +168,4 @@ if(require.main===module){
   const rows=files.map(file=>({file,...verify(JSON.parse(fs.readFileSync(file,'utf8')))}));
   console.log(JSON.stringify({ok:rows.every(r=>r.ok),rows},null,2));if(rows.some(r=>!r.ok))process.exitCode=1;
 }
-module.exports={verify,checkDesign,reprice,oracle,controls,storedPressure,structure,capacity,combinedMarkerClear};
+module.exports={mechanism,verify,checkDesign,reprice,oracle,controls,storedPressure,structure,capacity,combinedMarkerClear};
