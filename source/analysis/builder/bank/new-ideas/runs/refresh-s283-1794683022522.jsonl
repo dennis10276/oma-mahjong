@@ -1,0 +1,16 @@
+{"mode":"refresh","file":"clockCount-L18-s81-p1.json","seed":283,"ms":50000,"ok":false,"fail":"proof:idea18:sideNotParkedAlternative","wall":146}
+{"mode":"refresh","file":"clockCount-L12-s83-p1.json","seed":283,"ms":50000,"ok":false,"fail":"proof:idea18:sideNotParkedAlternative","wall":173}
+{"mode":"refresh","file":"clockCount-L17-s83-p1.json","seed":283,"ms":50000,"ok":false,"fail":"proof:idea18:sideNotParkedAlternative","wall":288}
+{"mode":"refresh","file":"clockCount-L19-s81-p1.json","seed":283,"ms":50000,"ok":false,"fail":"proof:idea18:sideNotParkedAlternative","wall":142}
+{"mode":"refresh","file":"clockCount-L1-s83-p1.json","seed":283,"ms":50000,"ok":false,"fail":"proof:idea18:sideNotParkedAlternative","wall":319}
+{"mode":"refresh","file":"lookalikeThaw_clockCount-L18-s85-p1.json","seed":283,"ms":50000,"ok":false,"fail":"proof:idea18:sideNotParkedAlternative","wall":226}
+{"mode":"refresh","file":"clockCount_savePair-L19-s85-p1.json","seed":283,"ms":50000,"ok":false,"fail":"proof:idea18:sideNotParkedAlternative","wall":312}
+{"mode":"refresh","file":"lookalikeThaw_clockCount-L31-s85-p1.json","seed":283,"ms":50000,"ok":false,"fail":"proof:idea18:sideNotParkedAlternative","wall":181}
+{"mode":"refresh","file":"lookalikeThaw_clockCount-L19-s85-p1.json","seed":283,"ms":50000,"ok":false,"fail":"proof:idea18:sideNotParkedAlternative","wall":322}
+{"mode":"refresh","file":"clockCount-L31-s83-p1.json","seed":283,"ms":50000,"ok":false,"fail":"proof:idea18:sideNotParkedAlternative","wall":782}
+{"mode":"refresh","file":"lookalikeThaw_clockCount-L13-s85-p1.json","seed":283,"ms":50000,"ok":false,"fail":"proof:idea18:sideNotParkedAlternative","wall":734}
+{"mode":"refresh","file":"lookalikeThaw_clockCount-L37-s97-p1.json","seed":283,"ms":50000,"ok":false,"fail":"proof:idea18:sideNotParkedAlternative","wall":254}
+{"mode":"refresh","file":"roofThawKey_clockCount-L18-s85-p1.json","seed":283,"ms":50000,"ok":false,"fail":"proof:idea18:sideNotParkedAlternative","wall":180}
+{"mode":"refresh","file":"waitInnerIce_keysLater-L24-s277-p1.json","seed":283,"ms":50000,"ok":true,"fails":{"noClockPartnerHolders":15,"place18:keysLater:geometry":1,"clockNotBait":3,"fixedTwinsClose":4},"wall":1017,"attempts":23,"output":"waitInnerIce_keysLater-L24-s277-p1.json"}
+{"mode":"refresh","file":"waitInnerIce_keysLater-L47-s277-p1.json","seed":283,"ms":50000,"ok":true,"fails":{"clockNotBait":8,"place18:keysLater:geometry":1,"noClockPartnerHolders":8,"trayOverflow":1},"wall":1183,"attempts":18,"output":"waitInnerIce_keysLater-L47-s277-p1.json"}
+{"mode":"refresh","file":"waitInnerIce_keysLater-L3-s277-p1.json","seed":283,"ms":50000,"ok":true,"fails":{"noClockPartnerHolders":2,"clockNotBait":1,"idle:lock:22":1},"wall":1231,"attempts":4,"output":"waitInnerIce_keysLater-L3-s277-p1.json"}

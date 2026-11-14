@@ -1,0 +1,116 @@
+{
+  "fail": "proof:fewerThan2WinningStarts",
+  "notes": [
+    {
+      "stage": "separate",
+      "after": {
+        "close": 1,
+        "share": 0.0263,
+        "visible": 1,
+        "four": 0,
+        "meets": false
+      }
+    },
+    {
+      "stage": "separate",
+      "after": {
+        "close": 1,
+        "share": 0.0263,
+        "visible": 1,
+        "four": 0,
+        "meets": false
+      }
+    },
+    {
+      "stage": "separate",
+      "after": {
+        "close": 1,
+        "share": 0.0263,
+        "visible": 1,
+        "four": 0,
+        "meets": false
+      }
+    },
+    {
+      "stage": "repair",
+      "tested": 57,
+      "notes": [
+        {
+          "swap": [
+            53,
+            64
+          ],
+          "before": 1,
+          "after": 0,
+          "k": 11
+        }
+      ],
+      "after": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      }
+    },
+    {
+      "stage": "feel",
+      "ok": true,
+      "met": true,
+      "before": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.912,
+          0.029,
+          0.029,
+          0.029
+        ],
+        "mean": 0.18,
+        "twoPlus": 0.058,
+        "parks": 0,
+        "parkAt": [
+          0,
+          0,
+          0
+        ],
+        "wrongPark": 0,
+        "danger": 0,
+        "decisions": 34,
+        "pp": 0
+      },
+      "after": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.678,
+          0.163,
+          0.113,
+          0.046
+        ],
+        "mean": 0.53,
+        "twoPlus": 0.159,
+        "parks": 4,
+        "parkAt": [
+          2,
+          1.4,
+          0.6
+        ],
+        "wrongPark": 0.06,
+        "danger": 0.005,
+        "decisions": 38,
+        "pp": 2
+      },
+      "proposals": 228,
+      "accepted": 9,
+      "fails": {
+        "gamble": 76,
+        "twins": 120,
+        "noGain": 12,
+        "unsolved": 4
+      },
+      "ms": 3475
+    }
+  ],
+  "wall": 22592
+}

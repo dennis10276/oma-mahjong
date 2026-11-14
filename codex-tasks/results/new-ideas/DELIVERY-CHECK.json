@@ -1,0 +1,15 @@
+{
+  "ok": true,
+  "selected": 40,
+  "layouts": 28,
+  "pairMaximum": 4,
+  "bigBoards": 4,
+  "labBoards": 8,
+  "labKinds": {
+    "clockCount": 2,
+    "selfLocked": 2,
+    "savePair": 2,
+    "keysLater": 2
+  },
+  "acceptedPool": 92
+}

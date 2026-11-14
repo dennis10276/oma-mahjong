@@ -1,0 +1,10 @@
+{"mode":"finish","file":"clockCount-L18-s81-p1.json","seed":82,"ms":150000,"ok":true,"fails":{"idea18:hiddenReason":5,"obvious:freeRoutePair":4,"place18:clockCount:geometry":15,"idea18:twoApproaches":4,"noProvenBait":1},"wall":3468,"attempts":29,"output":"clockCount-L18-s81-p1.json"}
+{"mode":"finish","file":"clockCount-L19-s81-p1.json","seed":82,"ms":150000,"ok":true,"fails":{"place18:clockCount:geometry":4,"twoMeaningfulBaits":6,"idea18:twoApproaches":3,"idea18:hiddenReason":3,"trayOverflow":1,"obvious:freeRoutePair":3},"wall":3596,"attempts":20,"output":"clockCount-L19-s81-p1.json"}
+{"mode":"finish","file":"savePair-L12-s81-p1.json","seed":82,"ms":150000,"ok":false,"fail":"separation","wall":5919}
+{"mode":"finish","file":"savePair-L28-s81-p1.json","seed":82,"ms":150000,"ok":true,"fails":{"savePairSchedule":4,"noProvenBait":2,"idea18:thirdNotInDig":4,"idea18:copyNotSaved":1,"place18:savePair:geometry":1,"strictMinimum":1},"wall":12813,"attempts":13,"output":"savePair-L28-s81-p1.json"}
+{"mode":"finish","file":"savePair-L31-s81-p1.json","seed":82,"ms":150000,"ok":true,"fails":{"savePairSchedule":61,"place18:savePair:geometry":51,"obvious:freeRoutePair":20,"twoMeaningfulBaits":2,"trayOverflow":2,"fixedTwinsClose":3,"idea18:thirdNotInDig":2,"idle:lock:63":1,"idea18:copyNotSaved":1,"strictMinimum":1,"idle:lock:32":1},"wall":2152,"attempts":145,"output":"savePair-L31-s81-p1.json"}
+{"mode":"finish","file":"clockCount-L23-s81-p1.json","seed":82,"ms":150000,"ok":false,"fail":"separation","wall":22239}
+{"mode":"finish","file":"savePair-L13-s81-p1.json","seed":82,"ms":150000,"ok":false,"fail":"separation","wall":37246}
+{"mode":"finish","file":"savePair-L25-s81-p1.json","seed":82,"ms":150000,"ok":false,"fail":"separation","wall":33701}
+{"mode":"finish","file":"clockCount-L28-s81-p1.json","seed":82,"ms":150000,"ok":false,"fail":"separation","wall":43966}
+{"mode":"finish","file":"savePair-L17-s81-p1.json","seed":82,"ms":150000,"ok":false,"fail":"separation","wall":52858}

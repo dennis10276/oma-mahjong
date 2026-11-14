@@ -1,0 +1,6 @@
+{"mode":"finish","file":"keysLater-L12-s157-p1.json","seed":167,"ms":180000,"ok":false,"fail":"independentVerification","wall":14158}
+{"mode":"finish","file":"keysLater-L14-s89-p1.json","seed":167,"ms":180000,"ok":false,"fail":"separation","wall":98090}
+{"mode":"finish","file":"keysLater-L23-s83-p1.json","seed":167,"ms":180000,"ok":false,"fail":"separation","wall":35202}
+{"mode":"finish","file":"keysLater-L17-s89-p1.json","seed":167,"ms":180000,"ok":false,"fail":"separation","wall":120285}
+{"mode":"finish","file":"keysLater-L31-s89-p1.json","seed":167,"ms":180000,"ok":true,"fails":{"obvious:freeRoutePair":6,"idle:lock:52":3,"trayOverflow":60,"place18:keysLater:geometry":35,"noProvenBait":4,"fixedTwinsClose":9,"noChain":2,"idle:ice:70":4,"idle:lock:24":2,"idle:lock:33":2,"idle:lock:11":2,"idle:lock:44":1,"idle:lock:32":2,"idle:ice:65":2,"idle:lock:0":1,"idle:lock:5":2,"idle:lock:37":1,"idle:lock:48":2,"idle:lock:4":2,"idle:lock:17":2,"idle:lock:18":1,"idle:lock:51":3,"idle:ice:67":1,"idle:lock:23":1,"idle:lock:47":1,"idle:lock:38":1},"wall":61863,"attempts":152,"output":"keysLater-L31-s89-p1.json"}
+{"mode":"finish","file":"keysLater-L23-s89-p1.json","seed":167,"ms":180000,"ok":false,"fail":"separation","wall":78084}

@@ -1,0 +1,1425 @@
+{
+  "design": {
+    "tiles": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        2,
+        0,
+        0
+      ],
+      [
+        4,
+        0,
+        0
+      ],
+      [
+        6,
+        0,
+        0
+      ],
+      [
+        8,
+        0,
+        0
+      ],
+      [
+        10,
+        0,
+        0
+      ],
+      [
+        12,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        0
+      ],
+      [
+        3,
+        2,
+        0
+      ],
+      [
+        5,
+        2,
+        0
+      ],
+      [
+        7,
+        2,
+        0
+      ],
+      [
+        9,
+        2,
+        0
+      ],
+      [
+        11,
+        2,
+        0
+      ],
+      [
+        2,
+        4,
+        0
+      ],
+      [
+        4,
+        4,
+        0
+      ],
+      [
+        6,
+        4,
+        0
+      ],
+      [
+        8,
+        4,
+        0
+      ],
+      [
+        10,
+        4,
+        0
+      ],
+      [
+        5,
+        6,
+        0
+      ],
+      [
+        7,
+        6,
+        0
+      ],
+      [
+        4,
+        8,
+        0
+      ],
+      [
+        6,
+        8,
+        0
+      ],
+      [
+        8,
+        8,
+        0
+      ],
+      [
+        3,
+        10,
+        0
+      ],
+      [
+        5,
+        10,
+        0
+      ],
+      [
+        7,
+        10,
+        0
+      ],
+      [
+        9,
+        10,
+        0
+      ],
+      [
+        0,
+        12,
+        0
+      ],
+      [
+        2,
+        12,
+        0
+      ],
+      [
+        4,
+        12,
+        0
+      ],
+      [
+        6,
+        12,
+        0
+      ],
+      [
+        8,
+        12,
+        0
+      ],
+      [
+        10,
+        12,
+        0
+      ],
+      [
+        12,
+        12,
+        0
+      ],
+      [
+        1,
+        14,
+        0
+      ],
+      [
+        3,
+        14,
+        0
+      ],
+      [
+        5,
+        14,
+        0
+      ],
+      [
+        7,
+        14,
+        0
+      ],
+      [
+        9,
+        14,
+        0
+      ],
+      [
+        11,
+        14,
+        0
+      ],
+      [
+        3,
+        4,
+        1
+      ],
+      [
+        9,
+        4,
+        1
+      ],
+      [
+        5,
+        4,
+        1
+      ],
+      [
+        7,
+        4,
+        1
+      ],
+      [
+        5,
+        8,
+        1
+      ],
+      [
+        7,
+        8,
+        1
+      ],
+      [
+        6,
+        6,
+        1
+      ],
+      [
+        4,
+        2,
+        1
+      ],
+      [
+        8,
+        2,
+        1
+      ],
+      [
+        2,
+        2,
+        1
+      ],
+      [
+        10,
+        2,
+        1
+      ],
+      [
+        4,
+        10,
+        1
+      ],
+      [
+        8,
+        10,
+        1
+      ],
+      [
+        6,
+        2,
+        1
+      ],
+      [
+        6,
+        10,
+        1
+      ],
+      [
+        3,
+        0,
+        1
+      ],
+      [
+        9,
+        0,
+        1
+      ],
+      [
+        3,
+        12,
+        1
+      ],
+      [
+        9,
+        12,
+        1
+      ],
+      [
+        1,
+        12,
+        1
+      ],
+      [
+        11,
+        12,
+        1
+      ],
+      [
+        1,
+        0,
+        1
+      ],
+      [
+        11,
+        0,
+        1
+      ],
+      [
+        4,
+        4,
+        2
+      ],
+      [
+        8,
+        4,
+        2
+      ],
+      [
+        6,
+        4,
+        2
+      ],
+      [
+        6,
+        8,
+        2
+      ],
+      [
+        9,
+        2,
+        2
+      ],
+      [
+        3,
+        2,
+        2
+      ],
+      [
+        5,
+        10,
+        2
+      ],
+      [
+        7,
+        10,
+        2
+      ],
+      [
+        5,
+        2,
+        2
+      ],
+      [
+        7,
+        2,
+        2
+      ],
+      [
+        10,
+        0,
+        2
+      ],
+      [
+        2,
+        0,
+        2
+      ],
+      [
+        10,
+        12,
+        2
+      ],
+      [
+        2,
+        12,
+        2
+      ],
+      [
+        5,
+        4,
+        3
+      ],
+      [
+        7,
+        4,
+        3
+      ],
+      [
+        4,
+        2,
+        3
+      ],
+      [
+        8,
+        2,
+        3
+      ],
+      [
+        6,
+        2,
+        3
+      ],
+      [
+        6,
+        10,
+        3
+      ],
+      [
+        6,
+        4,
+        4
+      ]
+    ],
+    "faces": [
+      29,
+      13,
+      33,
+      0,
+      21,
+      11,
+      34,
+      28,
+      10,
+      19,
+      9,
+      15,
+      1,
+      12,
+      11,
+      34,
+      11,
+      27,
+      6,
+      16,
+      11,
+      24,
+      31,
+      19,
+      32,
+      29,
+      30,
+      21,
+      33,
+      0,
+      13,
+      19,
+      12,
+      19,
+      28,
+      23,
+      8,
+      15,
+      29,
+      28,
+      7,
+      2,
+      8,
+      31,
+      25,
+      23,
+      18,
+      15,
+      25,
+      6,
+      16,
+      30,
+      15,
+      4,
+      4,
+      24,
+      4,
+      17,
+      26,
+      26,
+      32,
+      5,
+      10,
+      9,
+      29,
+      26,
+      26,
+      28,
+      18,
+      7,
+      22,
+      2,
+      1,
+      22,
+      20,
+      4,
+      27,
+      17,
+      3,
+      3,
+      20,
+      27,
+      27,
+      5
+    ],
+    "down": [
+      1,
+      5,
+      9,
+      10,
+      12,
+      19,
+      24,
+      25,
+      26,
+      31,
+      32,
+      33,
+      35,
+      36,
+      37,
+      38,
+      52,
+      53,
+      54,
+      58,
+      60
+    ],
+    "gold": [],
+    "obst": {
+      "ice": {
+        "49": 2,
+        "80": 2
+      },
+      "locks": [
+        61
+      ],
+      "keys": [
+        67,
+        34
+      ]
+    },
+    "clock": {
+      "i": 49,
+      "n": 12
+    },
+    "solution": [
+      79,
+      68,
+      76,
+      81,
+      74,
+      46,
+      83,
+      78,
+      55,
+      80,
+      49,
+      18,
+      7,
+      34,
+      39,
+      67,
+      61,
+      0,
+      38,
+      19,
+      50,
+      12,
+      72,
+      57,
+      77,
+      59,
+      66,
+      35,
+      45,
+      44,
+      48,
+      11,
+      37,
+      64,
+      41,
+      71,
+      17,
+      82,
+      53,
+      75,
+      10,
+      63,
+      40,
+      69,
+      58,
+      65,
+      22,
+      43,
+      16,
+      20,
+      36,
+      42,
+      70,
+      73,
+      21,
+      56,
+      47,
+      52,
+      54,
+      8,
+      62,
+      6,
+      15,
+      5,
+      14,
+      4,
+      27,
+      26,
+      51,
+      25,
+      9,
+      23,
+      24,
+      60,
+      1,
+      2,
+      28,
+      3,
+      29,
+      30,
+      31,
+      33,
+      13,
+      32
+    ]
+  },
+  "roles": {
+    "clock": 49,
+    "locks": [
+      61
+    ],
+    "keys": [
+      67,
+      34
+    ],
+    "ice": {
+      "49": 2,
+      "80": 2
+    },
+    "holderSpecials": [],
+    "dig": [
+      83,
+      78,
+      79,
+      81,
+      82,
+      80,
+      67,
+      34,
+      74,
+      68,
+      61,
+      49
+    ],
+    "bait": {
+      "type": "lookalikeThaw_savePair",
+      "chain": "clock<ice; thaw<lock; keyA<cover:ice",
+      "def": {
+        "ck": "ice",
+        "nb": "lock",
+        "keyA": "cover",
+        "sig": "clock<ice; thaw<lock; keyA<cover:ice",
+        "length": 3,
+        "frozenKey": false,
+        "lockedFrozen": false,
+        "needsUi": null
+      },
+      "tiles": [
+        34,
+        82,
+        76,
+        81,
+        17,
+        39,
+        7
+      ],
+      "single": [
+        34
+      ],
+      "pairs": [
+        [
+          76,
+          17
+        ]
+      ],
+      "keepUp": [
+        49,
+        68,
+        79,
+        61,
+        80,
+        67,
+        34,
+        40,
+        47,
+        55,
+        63,
+        77,
+        83,
+        71,
+        81,
+        74,
+        82,
+        76,
+        17,
+        41,
+        64,
+        78,
+        7,
+        8,
+        72,
+        39
+      ],
+      "keyEarly": 34,
+      "wrong": [],
+      "twins": [],
+      "links": [
+        [
+          49,
+          61
+        ],
+        [
+          67,
+          80
+        ],
+        [
+          61,
+          67
+        ],
+        [
+          61,
+          34
+        ]
+      ],
+      "frozen": 49,
+      "special": 61,
+      "right": [
+        61
+      ],
+      "clockCover": null,
+      "six": {
+        "kind": "savePair",
+        "free": [
+          82,
+          76
+        ],
+        "third": 81,
+        "buried": 17,
+        "take": [
+          82,
+          76
+        ],
+        "visible": [
+          82,
+          76,
+          81,
+          17
+        ]
+      },
+      "sixLinks": [
+        {
+          "kind": "savePair",
+          "free": [
+            82,
+            76
+          ],
+          "third": 81,
+          "buried": 17,
+          "take": [
+            82,
+            76
+          ],
+          "visible": [
+            82,
+            76,
+            81,
+            17
+          ]
+        }
+      ],
+      "extraMoves": [
+        [
+          34,
+          39
+        ]
+      ],
+      "mix": {
+        "originalClock": 49,
+        "added": null,
+        "addedTiles": [],
+        "setup": null,
+        "mode": "repeatKeys"
+      },
+      "see": "Save one of the two free copies for the visible third copy in the dig; pairing both free copies leaves that third picture waiting through a full tray.",
+      "repeat": {
+        "face": 28,
+        "copies": [
+          67,
+          34,
+          39,
+          7
+        ],
+        "wrongPair": [
+          34,
+          39
+        ]
+      }
+    }
+  },
+  "brief": {
+    "layout": 43,
+    "seed": 97,
+    "obviousnessDial": 2,
+    "frame": {
+      "spare": 1
+    },
+    "targets": {
+      "trayRoom": 0,
+      "maxDown": 0.2,
+      "hiddenOnWay": 0,
+      "tailPairWidth": 2,
+      "digBefore": [
+        2,
+        8
+      ]
+    },
+    "story": "lookalikeThaw_savePair"
+  },
+  "card": {
+    "layout": 43,
+    "shape": "hourglass",
+    "tiles": 84,
+    "trapType": "chained:lookalikeThaw_savePair",
+    "clock": {
+      "fewestMoves": 11,
+      "spare": 1,
+      "n": 12,
+      "tile": 49
+    },
+    "trap": {
+      "type": "lookalikeThaw_savePair",
+      "trapType": "chained:lookalikeThaw_savePair",
+      "see": "Save one of the two free copies for the visible third copy in the dig; pairing both free copies leaves that third picture waiting through a full tray.",
+      "recipe": "Save one of the two free copies for the visible third copy in the dig; pairing both free copies leaves that third picture waiting through a full tray.",
+      "dials": {
+        "easier": "spare 2",
+        "harder": "spare 1; obviousness dial 2"
+      },
+      "k": 11,
+      "spare": 1,
+      "priceHorizon": 14,
+      "baits": [
+        {
+          "tiles": [
+            34,
+            39
+          ],
+          "result": "win",
+          "cost": 2,
+          "exact": true,
+          "need": 13,
+          "aboveControl": false
+        },
+        {
+          "tiles": [
+            82,
+            76
+          ],
+          "result": "win",
+          "cost": 2,
+          "exact": true,
+          "need": 13,
+          "aboveControl": false
+        }
+      ],
+      "control": {
+        "moves": 1,
+        "dearest": {
+          "tiles": [
+            76,
+            82
+          ],
+          "result": "win",
+          "cost": 2,
+          "exact": true,
+          "need": 13
+        },
+        "value": 2
+      },
+      "effects": [
+        {
+          "kind": "lock",
+          "tile": 61,
+          "by": "clockRoute",
+          "kWithout": 7
+        },
+        {
+          "kind": "ice",
+          "tile": 49,
+          "by": "clockRoute",
+          "kWithout": 3
+        },
+        {
+          "kind": "ice",
+          "tile": 80,
+          "by": "clockRoute",
+          "kWithout": 7
+        }
+      ],
+      "firstMoves": {
+        "winning": 7,
+        "unknown": 0,
+        "legal": 11,
+        "rows": [
+          {
+            "tile": 34,
+            "result": "win"
+          },
+          {
+            "tile": 39,
+            "result": "lose"
+          },
+          {
+            "tile": 46,
+            "result": "win"
+          },
+          {
+            "tile": 66,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "win"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          },
+          {
+            "tile": 76,
+            "result": "win"
+          },
+          {
+            "tile": 79,
+            "result": "win"
+          },
+          {
+            "tile": 82,
+            "result": "win"
+          },
+          {
+            "tile": 83,
+            "result": "win"
+          }
+        ]
+      },
+      "mechanism": {
+        "originalClock": 49,
+        "added": null,
+        "addedTiles": [],
+        "setup": null,
+        "mode": "repeatKeys",
+        "repeat": {
+          "face": 28,
+          "copies": [
+            67,
+            34,
+            39,
+            7
+          ],
+          "wrongPair": [
+            34,
+            39
+          ]
+        },
+        "relay": null
+      },
+      "signature": "clock<ice; thaw<lock; keyA<cover:ice; keyPair<lookalikeChoice; route<savePair",
+      "baseSignature": "clock<ice; thaw<lock; keyA<cover:ice",
+      "links": 5,
+      "obviousness": {
+        "ok": true,
+        "dial": 2,
+        "firstTwo": [
+          79,
+          68
+        ],
+        "greedyFirst": {
+          "rank": "freePair",
+          "tiles": [
+            34,
+            39,
+            76,
+            82
+          ]
+        },
+        "greedySecond": {
+          "rank": "freePair",
+          "tiles": [
+            34,
+            39,
+            46,
+            68,
+            76,
+            81,
+            82
+          ]
+        },
+        "greedyPrefix": false,
+        "rightFreePairs": false,
+        "routeFreePairs": [],
+        "preferredBaits": [
+          [
+            34,
+            39
+          ],
+          [
+            82,
+            76
+          ]
+        ],
+        "rule": "Reject both route taps in greedy tie sets, or any ready free pair on the pre-clock route; dial 2 also requires a greedy first bait."
+      },
+      "twoTraps": {
+        "kind": "composedWrongIdeas",
+        "hardLinks": 5,
+        "ideas": [
+          "savePair",
+          "lookalikeChoice"
+        ],
+        "baits": [
+          [
+            82,
+            76
+          ]
+        ],
+        "note": "Every authored new decision is separately proven lost; no additive sequential-cost claim."
+      },
+      "newLink": {
+        "kind": "savePair",
+        "sentence": "Save one of the two free copies for the visible third copy in the dig; pairing both free copies leaves that third picture waiting through a full tray.",
+        "take": [
+          82,
+          76
+        ],
+        "evidence": {
+          "kind": "savePair",
+          "free": [
+            82,
+            76
+          ],
+          "third": 81,
+          "buried": 17,
+          "take": [
+            82,
+            76
+          ],
+          "visible": [
+            82,
+            76,
+            81,
+            17
+          ]
+        },
+        "result": "lose"
+      },
+      "newLinks": [
+        {
+          "kind": "savePair",
+          "sentence": "Save one of the two free copies for the visible third copy in the dig; pairing both free copies leaves that third picture waiting through a full tray.",
+          "take": [
+            82,
+            76
+          ],
+          "evidence": {
+            "kind": "savePair",
+            "free": [
+              82,
+              76
+            ],
+            "third": 81,
+            "buried": 17,
+            "take": [
+              82,
+              76
+            ],
+            "visible": [
+              82,
+              76,
+              81,
+              17
+            ]
+          },
+          "result": "lose"
+        }
+      ],
+      "combinedBadges": [],
+      "needsUi": null
+    },
+    "attempt": 17,
+    "layers": 5,
+    "faceDownShare": 0.25,
+    "twins": {
+      "close": 0,
+      "share": 0,
+      "visible": 0,
+      "four": 0,
+      "meets": true
+    },
+    "pressure": {
+      "peak": 3,
+      "run2": 10,
+      "at3": 5,
+      "occ": [
+        1,
+        2,
+        3,
+        2,
+        3,
+        2,
+        3,
+        2,
+        3,
+        2,
+        3
+      ]
+    },
+    "tail": {
+      "tailGreedyWin": 0.7037,
+      "wins": 563,
+      "playouts": 800,
+      "seed": 977,
+      "start": {
+        "step": 11,
+        "tray": 3,
+        "left": 73
+      },
+      "stored": {
+        "steps": 73,
+        "peakTray": 3,
+        "meanTray": 1.699,
+        "moves2plus": 45,
+        "tray2Share": 0.616
+      }
+    },
+    "tailOccupancy": {
+      "steps": 73,
+      "counts": [
+        5,
+        23,
+        31,
+        14
+      ],
+      "share": [
+        0.068,
+        0.315,
+        0.425,
+        0.192
+      ],
+      "longest2plus": 21,
+      "mean": 1.74
+    },
+    "feel": {
+      "games": 16,
+      "lostGames": 0,
+      "waiting": [
+        0.258,
+        0.455,
+        0.223,
+        0.065
+      ],
+      "mean": 1.09,
+      "twoPlus": 0.288,
+      "parks": 2.7,
+      "parkAt": [
+        1.1,
+        0.6,
+        1
+      ],
+      "wrongPark": 0.35,
+      "danger": 0.029,
+      "decisions": 41,
+      "pp": 1.6,
+      "seed": 9,
+      "playouts": 16
+    },
+    "wrongIdea": [
+      "lookalikeChoice",
+      "savePair"
+    ]
+  },
+  "fails": {
+    "savePairSchedule": 15,
+    "noRepeatedKeyPair": 1,
+    "idea18:thirdNotInDig": 1
+  },
+  "ms": 1902,
+  "wall": 7492,
+  "progress": {
+    "attempt": 17,
+    "fails": {
+      "savePairSchedule": 15,
+      "noRepeatedKeyPair": 1,
+      "idea18:thirdNotInDig": 1
+    }
+  },
+  "schema": "chained-v2",
+  "notes": [
+    {
+      "stage": "separate",
+      "after": {
+        "close": 2,
+        "share": 0.0476,
+        "visible": 2,
+        "four": 0,
+        "meets": false
+      }
+    },
+    {
+      "stage": "separate",
+      "after": {
+        "close": 2,
+        "share": 0.0476,
+        "visible": 2,
+        "four": 0,
+        "meets": false
+      }
+    },
+    {
+      "stage": "separate",
+      "after": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      }
+    },
+    {
+      "stage": "feel",
+      "ok": true,
+      "met": true,
+      "before": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.232,
+          0.534,
+          0.186,
+          0.049
+        ],
+        "mean": 1.05,
+        "twoPlus": 0.235,
+        "parks": 1.9,
+        "parkAt": [
+          0.8,
+          0.6,
+          0.6
+        ],
+        "wrongPark": 0.26,
+        "danger": 0.016,
+        "decisions": 40,
+        "pp": 1.2
+      },
+      "after": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.258,
+          0.455,
+          0.223,
+          0.065
+        ],
+        "mean": 1.09,
+        "twoPlus": 0.288,
+        "parks": 2.7,
+        "parkAt": [
+          1.1,
+          0.6,
+          1
+        ],
+        "wrongPark": 0.35,
+        "danger": 0.029,
+        "decisions": 41,
+        "pp": 1.6
+      },
+      "proposals": 44,
+      "accepted": 1,
+      "fails": {
+        "twins": 16,
+        "gamble": 23,
+        "unsolved": 1
+      },
+      "ms": 1001
+    }
+  ],
+  "verification": {
+    "ok": true,
+    "errors": [],
+    "checks": [
+      "strictReplay",
+      "minimumByUnsatisfiableEarlierDeadline"
+    ],
+    "k": 11,
+    "spare": 1,
+    "winningFirstMoves": 7,
+    "unknownFirstMoves": 0,
+    "firstMoves": {
+      "winning": 7,
+      "unknown": 0,
+      "legal": 11,
+      "rows": [
+        {
+          "tile": 34,
+          "result": "win"
+        },
+        {
+          "tile": 39,
+          "result": "lose"
+        },
+        {
+          "tile": 46,
+          "result": "win"
+        },
+        {
+          "tile": 66,
+          "result": "lose"
+        },
+        {
+          "tile": 73,
+          "result": "lose"
+        },
+        {
+          "tile": 74,
+          "result": "win"
+        },
+        {
+          "tile": 75,
+          "result": "lose"
+        },
+        {
+          "tile": 76,
+          "result": "win"
+        },
+        {
+          "tile": 79,
+          "result": "win"
+        },
+        {
+          "tile": 82,
+          "result": "win"
+        },
+        {
+          "tile": 83,
+          "result": "win"
+        }
+      ]
+    },
+    "tailGreedyWin": 0.7037,
+    "close": {
+      "close": 0,
+      "share": 0,
+      "visible": 0,
+      "four": 0,
+      "meets": true
+    },
+    "pressure": {
+      "peak": 3,
+      "run2": 10,
+      "at3": 5,
+      "occ": [
+        1,
+        2,
+        3,
+        2,
+        3,
+        2,
+        3,
+        2,
+        3,
+        2,
+        3
+      ]
+    },
+    "feel": {
+      "games": 16,
+      "lostGames": 0,
+      "waiting": [
+        0.258,
+        0.455,
+        0.223,
+        0.065
+      ],
+      "mean": 1.09,
+      "twoPlus": 0.288,
+      "parks": 2.7,
+      "parkAt": [
+        1.1,
+        0.6,
+        1
+      ],
+      "wrongPark": 0.35,
+      "danger": 0.029,
+      "decisions": 41,
+      "pp": 1.6
+    },
+    "signature": "clock<ice; thaw<lock; keyA<cover:ice; keyPair<lookalikeChoice; route<savePair"
+  }
+}
