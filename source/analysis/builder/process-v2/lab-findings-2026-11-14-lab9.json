@@ -1,0 +1,117 @@
+{
+ "savedAt": "2026-11-14T11:51:30.143Z",
+ "ratings": {
+  "2042021": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 1,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2042022": {
+   "note": "B is good. But the trap itself gets more chained right? The AHA moment your puzzles gave me didnt really feel like this trap. But the tray pressure after is good like this.\n",
+   "stars": 0,
+   "verdict": null,
+   "starts": 1,
+   "tries": 2,
+   "wins": 1,
+   "results": [
+    {
+     "r": "stuck",
+     "left": 34,
+     "s": 182,
+     "t": 1794656899743
+    },
+    {
+     "r": "win",
+     "left": 0,
+     "s": 130,
+     "t": 1794657030659
+    }
+   ]
+  },
+  "2042023": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2042031": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2042032": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2042033": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2042210": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2042220": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2042230": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2042240": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  },
+  "2042250": {
+   "note": "",
+   "stars": 0,
+   "verdict": null,
+   "starts": 0,
+   "tries": 0,
+   "wins": 0,
+   "results": []
+  }
+ }
+}

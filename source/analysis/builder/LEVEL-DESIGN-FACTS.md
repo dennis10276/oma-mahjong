@@ -133,6 +133,13 @@ add new decisions with a date.
     (302 as played had one parked the whole way: "the 1 now"); what is felt is having to put another tile in the tray while one or
     two already wait. Count per game for a never-blundering natural player (, "pressure parks"): 293 "tiny bit too easy"
     0, 250 "too easy after" 2.4, 302/303 "didnt feel it" 4.4-4.8, his 4-5 star older boards 5.6-9.6. Target until he says otherwise: 7-9.
+  - **Tray pressure after the trap: strength B is right** (2026-11-14, lab 9, level 302 B, 2 tries): "B is good ... the tray pressure
+    after is good like this." B = about 7.5 pressure parks per game (`bank/feel.js`). Levels 250-302 carry it on the work branch.
+  - **The trap must be a new idea, not only a longer chain** (same note): "But the trap itself gets more chained right? The AHA
+    moment your puzzles gave me didnt really feel like this trap." Lead's finding: all 49 chain boards of 250-313 use one of only
+    two wrong ideas (take the free key early: 16; melt with the free neighbour whose twin is buried: 31; both: 2), and 302 is the
+    same shape and wrong idea as lab-5 292, which he had already solved. An AHA needs a wrong idea he has not seen in that form;
+    the ledger must count the wrong idea (bait kind) and not only the chain shape and layout.
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
   - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
     played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is
