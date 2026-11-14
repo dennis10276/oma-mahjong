@@ -65,15 +65,26 @@ function one(lv, out) {
   if (res.ok) fs.writeFileSync(path.join(out, `level-${lv}.json`), JSON.stringify({ level: lv, source: j.source || (j.card && j.card.poolId), score: j.score || (j.difficulty && j.difficulty.score), design: res.design, feel: { before: res.before, after: res.after, target, met: res.met } }));
   return { level: lv, ok: res.ok, met: res.met, before: res.before, after: res.after, proposals: res.proposals, accepted: res.accepted, fails: res.fails };
 }
+// a board of Codex's trap_mixes.js (chained-v1 examples: { design, brief, roles, card }): proof by its own story
+function oneMix(file, out) {
+  const M = require('../trap_mixes.js'), j = JSON.parse(fs.readFileSync(file, 'utf8')), d = j.design, name = j.brief.story, spare = j.card.clock.spare, k = d.solution.indexOf(d.clock.i) + 1;
+  const roles = { ...j.roles, locks: new Set(j.roles.locks), holderSpecials: new Set(j.roles.holderSpecials) };
+  const validate = x => { const rt = M.retime(x, spare); if (!rt.ok) return rt; if (rt.k !== k) return { ok: false, why: 'clock' }; x.solution = rt.design.solution; return M.prove(name, rt.design, roles, { k, spare }, { skipOpening: true }); };
+  const target = { parks: +arg('parks', 7.5), max3: +arg('max3', 0.25) }, freeze = [...new Set([...roles.bait.tiles, ...d.obst.keys, ...((roles.bait.repeat && roles.bait.repeat.copies) || [])])];
+  const res = tuneFeel(d, { target, ms: +arg('ms', 90000), seed: +arg('seed', 1), freeze, validate }), id = path.basename(file, '.json');
+  if (res.ok) fs.writeFileSync(path.join(out, id + '.json'), JSON.stringify({ ...j, design: res.design, feel: { before: res.before, after: res.after, target, met: res.met } }));
+  return { level: id, ok: res.ok, met: res.met, before: res.before, after: res.after, proposals: res.proposals, accepted: res.accepted, fails: res.fails };
+}
 function main() {
   const out = path.resolve(arg('out', path.join(ROOT, 'source/build/traps/feel-out'))); fs.mkdirSync(out, { recursive: true });
   if (arg('one', null)) {
-    let res; try { res = one(+arg('one'), out); } catch (e) { res = { level: +arg('one'), ok: false, why: String(e.stack || e).slice(0, 300) }; }
+    const mix = /.json$/.test(arg('one')); let res; try { res = mix ? oneMix(path.resolve(arg('one')), out) : one(+arg('one'), out); } catch (e) { res = { level: arg('one'), ok: false, why: String(e.stack || e).slice(0, 300) }; }
+    if (mix) res.level = path.basename(arg('one'), '.json');
     fs.writeFileSync(path.join(out, `r-${res.level}.json`), JSON.stringify(res));
     const s = f => f ? `pressure parks ${f.pp} (at 0/1/2 waiting: ${f.parkAt.join('/')}) mean waiting ${f.mean} three: ${f.waiting[3]} wrongPark ${f.wrongPark}` : '';
     console.log(res.level, res.ok ? (res.met ? 'MET ' : 'best ') + s(res.before) + '  ->  ' + s(res.after) : 'FAILED ' + (res.why || JSON.stringify(res.fails))); return;
   }
-  const levels = String(arg('levels', '')).split(',').filter(Boolean).map(Number), W = +arg('workers', 4); let next = 0, run = 0;
+  const levels = arg('files', null) ? String(arg('files')).split(',') : String(arg('levels', '')).split(',').filter(Boolean).map(Number), W = +arg('workers', 4); let next = 0, run = 0;
   const go = () => { while (run < W && next < levels.length) { const lv = levels[next++]; run++; const c = cp.spawn(process.execPath, [__filename, ...process.argv.slice(2), '--one', String(lv)], { stdio: 'inherit' });
     const tm = setTimeout(() => c.kill(), +arg('ms', 90000) + 240000); c.on('exit', () => { clearTimeout(tm); run--; go(); }); } }; go();
 }
