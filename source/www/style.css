@@ -923,17 +923,6 @@ body.contrast .tmini { border: 2px solid #222; background: #fff; }
 /* translated text (lang.js fx): takes the size of where it sits; fitTexts may make it smaller */
 span.fx { font-size: inherit; }
 
-/* TASK-14 ribbon proposal: only explicit prototype boards render these badges. */
-.ribbon-badge{position:absolute;right:0;top:0;z-index:4;min-width:1.45em;padding:.08em .22em;border-radius:0 .25em 0 .4em;background:#126e6b;color:#fff;font:bold .28em/1.25 system-ui;box-shadow:0 1px 2px #0005;pointer-events:none}
-.tile .ribbon-badge{font-size:var(--ribbon-fs,13px)}
-.ribbon-target{background:#294e6d;border:1px solid #b9f0ec}
-.ribbon-open{background:#237d48}.ribbon-open::after{content:'✓';padding-left:.12em}
-.lesson-tile .ribbon-badge{font-size:14px}
-
-#ribbonControls{position:fixed;left:6px;right:6px;top:5px;z-index:20000;display:flex;align-items:center;gap:5px;padding:7px;border-radius:12px;background:#103b3a;color:white;font:12px system-ui;box-shadow:0 2px 8px #0006}
-#ribbonControls strong{max-width:96px}#ribbonControls select{min-width:0;flex:1;width:90px}#ribbonControls button,#ribbonControls select{font:inherit;padding:6px 3px;border-radius:7px;border:0}
-body:has(#ribbonControls) #app{padding-top:52px}
-
 /* A frozen key/lock keeps its badge at the top, clear of the snowflakes below. */
 .tile .ob[data-marker]::before { position: absolute; left: -4%; top: -6%; line-height: 1; font-size: calc(var(--fs, 30px) * .46); filter: drop-shadow(0 1px 1px rgba(0,0,0,.35)); }
 .tile .ob[data-marker="key"]::before { content: '🔑'; }

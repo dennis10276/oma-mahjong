@@ -485,25 +485,16 @@ const Hard = (() => {
   const list2 = s => { const o = []; for (let i = 0; i < s.length; i += 2) o.push(d2(s, i)); return o; };
   function pack(d) {
     const ob = d.obst || {};
-    const packed = [d.tiles.map(([x, y, z]) => e1(x) + e1(y) + e1(z)).join(''), d.faces.map(e1).join(''), d.down.map(e2).join(''), (d.gold || []).map(e2).join(''),
+    return [d.tiles.map(([x, y, z]) => e1(x) + e1(y) + e1(z)).join(''), d.faces.map(e1).join(''), d.down.map(e2).join(''), (d.gold || []).map(e2).join(''),
       Object.entries(ob.ice || {}).map(([i, h]) => e2(+i) + e1(h)).join(''), (ob.locks || []).map(e2).join(''), (ob.keys || []).map(e2).join(''),
       d.clock ? [d.clock.i, d.clock.n] : 0, d.info.rate, d.info.strong, d.solution ? d.solution.map(e2).join('') : ''];
-    const after = L.afterLinks(ob.after, d.tiles.length);
-    if (Object.keys(after).length) packed.push('r1:' + Object.entries(after).map(([i, j]) => e2(+i) + e2(j)).join(''));
-    return packed;
   }
   function unpack(level, r) {
     const [t, f, dn, g, ice, locks, keys, ck, rate, strong, proof] = r;
     const tiles = []; for (let i = 0; i < t.length; i += 3) tiles.push([d1(t, i), d1(t, i + 1), d1(t, i + 2)]);
     const faces = []; for (let i = 0; i < f.length; i++) faces.push(d1(f, i));
     const iceO = {}; for (let i = 0; i < ice.length; i += 3) iceO[d2(ice, i)] = d1(ice, i + 2);
-    const ribbon = r[11]; let after = null;
-    if (ribbon != null) {
-      if (typeof ribbon !== 'string' || !/^r1:(?:[A-Za-z0-9_-]{4})+$/.test(ribbon)) throw Error('ribbon: invalid packed extension');
-      after = {}; for (let i = 3; i < ribbon.length; i += 4) { const target = d2(ribbon, i); if (after[target] != null) throw Error('ribbon: duplicate target'); after[target] = d2(ribbon, i + 2); }
-      after = L.afterLinks(after, tiles.length);
-    }
-    const obst = ice || keys || after ? { ice: iceO, locks: list2(locks), keys: list2(keys), ...(after ? { after } : {}) } : null;
+    const obst = ice || keys ? { ice: iceO, locks: list2(locks), keys: list2(keys) } : null;
     return { level, tiles, faces, down: list2(dn), gold: list2(g), obst, clock: ck ? { i: ck[0], n: ck[1] } : null, solution: proof ? list2(proof) : null, info: { rate, strong } };
   }
   const table = () => (typeof HARD_LEVELS !== 'undefined' ? HARD_LEVELS : null);

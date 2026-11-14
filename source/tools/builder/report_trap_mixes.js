@@ -26,8 +26,6 @@ function svg(r){
     if(marker)parts.push(`<rect x="${x+1}" y="${y+1}" width="12" height="11" rx="2" fill="#183942"/><text x="${x+7}" y="${y+9}" text-anchor="middle" font-family="sans-serif" font-size="8" fill="white">${marker}</text>`);
     const label=[!ice&&locks.has(i)?'L':'',ice?'I'+ice:''].filter(Boolean).join(' ');
     if(label)parts.push(`<rect x="${x+1}" y="${y+37}" width="35" height="10" rx="2" fill="#183942"/><text x="${x+18.5}" y="${y+45}" text-anchor="middle" font-family="sans-serif" font-size="8" fill="white">${label}</text>`);
-    const ribbon=Object.entries(d.obst.after||{}),target=ribbon.findIndex(([j])=>+j===i),source=ribbon.findIndex(([,j])=>j===i);
-    if(target>=0||source>=0)parts.push(`<rect x="${x+21}" y="${y+1}" width="15" height="10" rx="2" fill="#126e6b"/><text x="${x+28}" y="${y+9}" text-anchor="middle" font-size="7" font-family="sans-serif" fill="white">${target>=0?(target+1)+'→':source+1}</text>`);
     parts.push('</g>');
   }
   const ci=d.clock.i,cx=(xs[ci]-x0)*scale+(w-boardW)/2,cy=(ys[ci]-y0)*scale+70,bx=Math.max(8,Math.min(w-86,cx-4)),by=Math.max(73,cy-19);
