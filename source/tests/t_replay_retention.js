@@ -110,4 +110,39 @@ module.exports = [
       t.ok(read('release.py').includes("'replay-retention.yml'"), 'future releases install the workflow');
     },
   },
+  {
+    name: 'replay retention: archiving writes expired attempts to disk before deletion and skips in dry-run',
+    cpu: true,
+    async run(t) {
+      const os = require('os');
+      const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'omamj-archive-'));
+      try {
+        const f1 = fixture();
+        const r1 = await pruneReplays({ ...f1, archiveDir: tmpDir });
+        t.eq(r1.archived, 0, 'dry run writes no archive files');
+        t.eq(fs.readdirSync(tmpDir).length, 0, 'archive dir stays empty in dry run');
+
+        const f2 = fixture();
+        const r2 = await pruneReplays({ ...f2, apply: true, archiveDir: tmpDir });
+        t.eq(r2.archived, 5, 'all expired attempts are archived before deletion');
+        t.eq(r2.deleted, 5, 'all expired attempts are deleted');
+
+        const aliceOld = JSON.parse(fs.readFileSync(path.join(tmpDir, 'replays', 'alice', 'old.json'), 'utf8'));
+        t.eq(aliceOld.c.data, 'old', 'archived record preserves chunk content');
+        t.eq(aliceOld.createdAt, cutoff - DAY, 'archived record preserves createdAt');
+
+        const aliceBoundary = JSON.parse(fs.readFileSync(path.join(tmpDir, 'replays', 'alice', 'boundary.json'), 'utf8'));
+        t.eq(aliceBoundary.createdAt, cutoff, 'boundary attempt archived');
+
+        t.ok(!fs.existsSync(path.join(tmpDir, 'replays', 'alice', 'recent.json')), 'unexpired attempts are not archived');
+        t.ok(!fs.existsSync(path.join(tmpDir, 'replays', 'test-reserved')), 'test attempts are not archived');
+
+        t.ok(fs.existsSync(path.join(tmpDir, 'replays', 'bob', 'old1.json')), 'bob old1 archived');
+        t.ok(fs.existsSync(path.join(tmpDir, 'replays', 'bob', 'old2.json')), 'bob old2 archived');
+        t.ok(fs.existsSync(path.join(tmpDir, 'replays', 'bob', 'old3.json')), 'bob old3 archived');
+      } finally {
+        fs.rmSync(tmpDir, { recursive: true, force: true });
+      }
+    },
+  },
 ];

@@ -126,11 +126,14 @@ This avoids paid Firebase scheduled Cloud Functions and performs no cleanup work
 Deletion occurs at the next successful daily run after expiry (normally at 30–31 days), rather
 than at the exact expiry instant. GitHub jobs can be delayed or fail, and inactive repository
 schedules can be disabled; retention depends on successful runs. Failed cleanup makes the job fail
-visibly. The workflow and replay database rules are installed with version 1.50.
+visibly. The workflow exports expired attempts to disk before pruning and commits them to the
+dedicated `archive` git branch (`replays/<pid>/<aid>.json`), permanently preserving them for
+solver evaluation and difficulty analysis without bloating the main game checkout.
 
 ```text
-node tools/prune_replays.js           # dry run; one batch/player, flags possibly incomplete counts
-node tools/prune_replays.js --apply   # delete verified expired attempts only
+node tools/prune_replays.js                     # dry run; one batch/player, flags possibly incomplete counts
+node tools/prune_replays.js --apply             # delete verified expired attempts only
+node tools/prune_replays.js --apply --archive D # archive expired attempts under D/replays/<pid>/ before delete
 ```
 
 ## Responsiveness measurement and validation

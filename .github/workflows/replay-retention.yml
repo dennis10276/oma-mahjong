@@ -1,11 +1,12 @@
 # Runs outside players' phones. Firebase rules allow deletion only after 30 days.
+# Archives expired replay attempts to the `archive` branch before pruning from Firebase.
 name: Replay retention
 on:
   schedule:
     - cron: '41 3 * * *'
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 concurrency:
   group: replay-retention
   cancel-in-progress: false
@@ -18,7 +19,54 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Delete replay attempts older than 30 days
+      - name: Prepare archive branch
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ARCHIVE_DIR="${RUNNER_TEMP:-/tmp}/replay-archive"
+          rm -rf "$ARCHIVE_DIR"
+          REPO_URL="https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
+          if git ls-remote --exit-code --heads "$REPO_URL" archive >/dev/null 2>&1; then
+            git clone --single-branch --branch archive "$REPO_URL" "$ARCHIVE_DIR"
+          else
+            mkdir -p "$ARCHIVE_DIR"
+            cd "$ARCHIVE_DIR"
+            git init -b archive
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git remote add origin "$REPO_URL"
+            echo "# Oma's Mahjong — Replay Archive" > README.md
+            echo "" >> README.md
+            echo "Offline archive of player attempt recordings (Firebase \`replays/\`) preserved before 30-day cleanup." >> README.md
+            git add README.md
+            git commit -m "Initialize replay archive branch"
+            git push -u origin archive
+          fi
+      - name: Archive and delete replay attempts older than 30 days
         env:
           FIREBASE_DB_SECRET: ${{ secrets.FIREBASE_DB_SECRET }}
-        run: node source/tools/prune_replays.js --apply
+        run: |
+          ARCHIVE_DIR="${RUNNER_TEMP:-/tmp}/replay-archive"
+          node source/tools/prune_replays.js --apply --archive "$ARCHIVE_DIR"
+      - name: Commit and push archived replays
+        if: always()
+        run: |
+          ARCHIVE_DIR="${RUNNER_TEMP:-/tmp}/replay-archive"
+          if [ -d "$ARCHIVE_DIR/.git" ]; then
+            cd "$ARCHIVE_DIR"
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            if [ -d "replays" ]; then
+              git add replays
+              if ! git diff --cached --quiet; then
+                COUNT=$(git diff --cached --name-only | grep '\.json$' | wc -l | tr -d ' ')
+                git commit -m "Archive $COUNT replay attempts ($(date -u +'%Y-%m-%d'))"
+                git push origin archive
+                echo "Archived and pushed $COUNT attempts to branch archive"
+              else
+                echo "No new replays to archive"
+              fi
+            else
+              echo "No replays directory created"
+            fi
+          fi
