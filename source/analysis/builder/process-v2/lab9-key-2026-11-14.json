@@ -1,0 +1,29 @@
+{
+ "ladder": {
+  "A": "pressure-ladder/played",
+  "B": "pressure-ladder/parks-6.5",
+  "C": "pressure-ladder/parks-8.5"
+ },
+ "chained": [
+  {
+   "lv": 321,
+   "file": "lookalikeCoverThaw-L36-s3-p1"
+  },
+  {
+   "lv": 322,
+   "file": "lookalikeThaw-L31-s1-p1"
+  },
+  {
+   "lv": 323,
+   "file": "roofThawKey-L18-s4-p1"
+  },
+  {
+   "lv": 324,
+   "file": "waitThawWay-L14-s2-p1"
+  },
+  {
+   "lv": 325,
+   "file": "waitNested-L36-s3-p1"
+  }
+ ]
+}
