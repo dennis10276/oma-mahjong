@@ -105,7 +105,8 @@ add new decisions with a date.
     Really that AHA moment. After the trap tray pressure may increase. Its too easy after. Maybe more face down as
     well after the trap"; later: "Not too much, but it shouldnt feel like just clicking"). The builder raises tray
     pressure after the clock and puts somewhat more face-down tiles in the part after the trap; the trap itself
-    stays fully visible.
+    stays fully visible. Not overdone (same day): "Dont overdo on tray pressure. 1 in tray is
+    enough after a hard trap."
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
   - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
     played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is
