@@ -25,7 +25,7 @@ Task 13 was already completed separately on `wip/codex-ui-markers` (`1244e794`);
 
 Every family has its own `place()` and `prove()`, unique `mix:<name>` ledger type, see sentence and easier/harder dials. The common easier dial is spare 2; harder is spare 1, additional wrong neighbours where supported, and tail weave width 3. These are construction dials, not guarantees that every setting yields a board.
 
-A raw build proves the route, bait, openings and special effects. It is not a finished example: separation and tail tuning can still reject it. Host sets are observed lower bounds from the bounded full-catalogue sweeps; a failure is not a proof that a layout cannot host a family. Each sweep JSON records its seed, spare, attempts, hard wall and failures. Final examples can demonstrate additional hosts.
+A raw build proves the route, bait, openings and special effects. It is not a finished example: separation and tail tuning can still reject it. Layout ids are 0–47. Host sets are observed lower bounds from the bounded full-catalogue sweeps; a failure is not a proof that a layout cannot host a family. Each sweep JSON records its seed, spare, attempts, hard wall and failures. Final examples can demonstrate additional hosts.
 
 ## Thirty examples and their cards
 
@@ -97,7 +97,7 @@ My strongest ideas are the free-clock families (the goal tile is itself the wron
 | roofKeyMelt | 2/48 | Prototype only; not counted among the twelve delivered families |
 | roofKeySharedMelt | 0/48 | No proved host in the recorded bounded sweep; not claimed impossible |
 
-Pipeline rejection totals: `{}`. See [pipeline records](../../../source/analysis/builder/bank/variety-v1/pipeline-run.json) and [development pilot](../../../source/analysis/builder/bank/variety-v1/finish-pilot.json) for details.
+Pipeline rejection totals: `{"recipeChanged":8,"separation":103,"fixedTwinsClose":1,"noProvenMix":2098,"hardWall":9,"tailBand":2,"finalProof:fewerThan2WinningStarts":1}`. See [pipeline records](../../../source/analysis/builder/bank/variety-v1/pipeline-collection-v3.json) and [development pilot](../../../source/analysis/builder/bank/variety-v1/finish-pilot.json) for details.
 
 ## New mechanics and existing specials
 
@@ -111,10 +111,11 @@ For integration into the shared constructor, add a scoped way for a proved post-
 
 ## Reproduce and limits
 
-All heavy runs use `loop/heavy.js`, four reserved cores per job. At most two of this task’s four-core jobs overlapped; the shared 12-core budget was respected. Worker termination provides an outer wall even for reused helper calls: bounded builds, 65-second combined generation jobs, and 90-second finishing/audit jobs. The pipeline’s 30-minute limit is for collection; the final bounded host sweep and audit follow under the same reservation.
+Collection and host sweeps use `loop/heavy.js`, four reserved cores per job, within the original shared 12-core budget. On 2026-11-14 Dennis explicitly allowed the final job with a 95% CPU ceiling. The final checks use one reserved worker, `OMA_MAX_LOAD=95` and a 19-logical-core ceiling on the 20-thread PC; other jobs are left running. Worker termination provides an outer wall even for reused helper calls: bounded builds, 65-second combined generation jobs, and 90-second finishing/audit jobs. The pipeline’s 30-minute limit is for collection; the final bounded host sweep and audit follow under the same reservation.
 
 ```powershell
 node source/tools/builder/loop/heavy.js --label trap-variety --cores 4 -- node source/tools/builder/pipeline_trap_mixes.js --workers 4 --minutes 30 --history-checkout ../cc-builder-loop
+node source/tools/builder/loop/heavy.js --label trap-variety-final-checks --cores 1 -- node source/tools/builder/check_trap_variety.js --workers 1
 node source/tools/builder/loop/heavy.js --label trap-variety-audit --cores 4 -- node source/tools/builder/run_trap_mixes.js --mode verify --workers 4 --wall-ms 90000 --tag audit-rerun
 $env:TRAP_MIXES_DELIVERABLES='1'
 node --test source/tools/builder/test_trap_mixes.js
@@ -132,4 +133,4 @@ Four ranked mechanic proposals and the local playable entry are in [NEW-MECHANIC
 
 ![Ribbon animated lesson](ribbon-lesson.png)
 
-The final ribbon/browser validation is pending; see [validation manifest](validation-final.json) when the reserved checks finish.
+The final reserved finishing checks passed: ribbon rule/format/browser tests, Task 13 marker tests, existing engine regression tests, all twelve mixed-trap tests, all thirty fresh board audits and both fresh ribbon audits. Details: [validation manifest](validation-final.json), [ribbon tests](ribbon-tests.log), [marker tests](marker-dependency-tests.log), [engine tests](engine-regression-tests.log).

@@ -54,7 +54,7 @@ module.exports=[
       t.eq(await p.locator('.lesson-demo').getAttribute('data-lesson'),'ribbon','animated lesson is wired');await lib.sleep(2600);t.ok(await p.evaluate(()=>+document.querySelector('.lesson-demo').dataset.step>0),'lesson advances');
       if(dir&&i===0)await p.screenshot({path:path.join(dir,'ribbon-lesson.png')});
       await p.click('#ribbonGotIt');t.eq(await p.evaluate(()=>JSON.stringify([G.mv,G.alive,G.tray,obState()])),before,'lesson leaves game unchanged');
-      const result=await p.evaluate(async()=>{const d=__ribbonPrototype.examples[+document.querySelector('#ribbonControls select').value].design;for(const i of d.solution){if(!canTake(i))return {error:'illegal '+i};onTap(i);if(G.alive[i]&&G.peek===i)onTap(i);await new Promise(r=>setTimeout(r,20));}return {left:aliveCount(),tray:G.tray.length,done:G.done,moves:G.mv};});t.eq(result.left,0,'all tiles taken');t.eq(result.tray,0,'tray empty');t.ok(result.done,'prototype wins');
+      const result=await p.evaluate(async()=>{const d=__ribbonPrototype.examples[+document.querySelector('#ribbonControls select').value].design;for(const i of d.solution){if(!canTake(i))return {error:'illegal '+i};onTap(i);if(G.alive[i]&&G.peek===i)onTap(i);await new Promise(r=>setTimeout(r,20));}return {left:aliveCount(),tray:G.tray.length,done:G.done,moves:G.mv};});t.eq(result.left,0,'all tiles taken');t.eq(result.tray,0,'tray empty');t.ok(result.done,'prototype wins');await lib.sleep(800);
     }
   }finally{await server.close();}
 }},

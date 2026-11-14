@@ -912,7 +912,7 @@
       "target": 75,
       "kWithout": 7,
       "rule": "Take the numbered source before its arrow tile.",
-      "see": "Clear the ribbon source before the clock route, while keeping the melt and keys in order."
+      "see": "Clear the numbered source before its arrow tile, then follow the melt route without parking the clock too early."
     }
   },
   "notes": [

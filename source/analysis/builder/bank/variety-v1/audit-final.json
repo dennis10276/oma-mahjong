@@ -91,7 +91,107 @@
           3
         ]
       },
-      "ms": 231,
+      "ms": 190,
+      "deleted": false
+    },
+    {
+      "file": "freeClockIce-L3-s2-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 7,
+      "spare": 1,
+      "winningFirstMoves": 2,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 2,
+        "unknown": 0,
+        "legal": 14,
+        "rows": [
+          {
+            "tile": 4,
+            "result": "lose"
+          },
+          {
+            "tile": 5,
+            "result": "lose"
+          },
+          {
+            "tile": 10,
+            "result": "lose"
+          },
+          {
+            "tile": 11,
+            "result": "lose"
+          },
+          {
+            "tile": 47,
+            "result": "lose"
+          },
+          {
+            "tile": 48,
+            "result": "lose"
+          },
+          {
+            "tile": 53,
+            "result": "lose"
+          },
+          {
+            "tile": 54,
+            "result": "lose"
+          },
+          {
+            "tile": 55,
+            "result": "lose"
+          },
+          {
+            "tile": 56,
+            "result": "lose"
+          },
+          {
+            "tile": 71,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "win"
+          },
+          {
+            "tile": 78,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.2737,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 6,
+        "at3": 3,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "ms": 621,
       "deleted": false
     },
     {
@@ -209,196 +309,7 @@
           3
         ]
       },
-      "ms": 370,
-      "deleted": false
-    },
-    {
-      "file": "frozenKeyShared-L19-s6-p2.json",
-      "ok": true,
-      "errors": [],
-      "checks": [
-        "strictReplay",
-        "minimumByUnsatisfiableEarlierDeadline"
-      ],
-      "k": 12,
-      "spare": 2,
-      "winningFirstMoves": 4,
-      "unknownFirstMoves": 0,
-      "firstMoves": {
-        "winning": 4,
-        "unknown": 0,
-        "legal": 10,
-        "rows": [
-          {
-            "tile": 52,
-            "result": "win"
-          },
-          {
-            "tile": 53,
-            "result": "lose"
-          },
-          {
-            "tile": 64,
-            "result": "win"
-          },
-          {
-            "tile": 65,
-            "result": "win"
-          },
-          {
-            "tile": 70,
-            "result": "lose"
-          },
-          {
-            "tile": 71,
-            "result": "lose"
-          },
-          {
-            "tile": 72,
-            "result": "lose"
-          },
-          {
-            "tile": 73,
-            "result": "lose"
-          },
-          {
-            "tile": 74,
-            "result": "win"
-          },
-          {
-            "tile": 75,
-            "result": "lose"
-          }
-        ]
-      },
-      "tailGreedyWin": 0.2938,
-      "close": {
-        "close": 0,
-        "share": 0,
-        "visible": 0,
-        "four": 0,
-        "meets": true
-      },
-      "pressure": {
-        "peak": 3,
-        "run2": 9,
-        "at3": 4,
-        "occ": [
-          1,
-          2,
-          3,
-          2,
-          3,
-          2,
-          3,
-          2,
-          3,
-          2,
-          1,
-          2
-        ]
-      },
-      "ms": 192,
-      "deleted": false
-    },
-    {
-      "file": "freeClockIce-L3-s2-p1.json",
-      "ok": true,
-      "errors": [],
-      "checks": [
-        "strictReplay",
-        "minimumByUnsatisfiableEarlierDeadline"
-      ],
-      "k": 7,
-      "spare": 1,
-      "winningFirstMoves": 2,
-      "unknownFirstMoves": 0,
-      "firstMoves": {
-        "winning": 2,
-        "unknown": 0,
-        "legal": 14,
-        "rows": [
-          {
-            "tile": 4,
-            "result": "lose"
-          },
-          {
-            "tile": 5,
-            "result": "lose"
-          },
-          {
-            "tile": 10,
-            "result": "lose"
-          },
-          {
-            "tile": 11,
-            "result": "lose"
-          },
-          {
-            "tile": 47,
-            "result": "lose"
-          },
-          {
-            "tile": 48,
-            "result": "lose"
-          },
-          {
-            "tile": 53,
-            "result": "lose"
-          },
-          {
-            "tile": 54,
-            "result": "lose"
-          },
-          {
-            "tile": 55,
-            "result": "lose"
-          },
-          {
-            "tile": 56,
-            "result": "lose"
-          },
-          {
-            "tile": 71,
-            "result": "lose"
-          },
-          {
-            "tile": 72,
-            "result": "lose"
-          },
-          {
-            "tile": 75,
-            "result": "win"
-          },
-          {
-            "tile": 78,
-            "result": "win"
-          }
-        ]
-      },
-      "tailGreedyWin": 0.2737,
-      "close": {
-        "close": 0,
-        "share": 0,
-        "visible": 0,
-        "four": 0,
-        "meets": true
-      },
-      "pressure": {
-        "peak": 3,
-        "run2": 6,
-        "at3": 3,
-        "occ": [
-          1,
-          2,
-          3,
-          2,
-          3,
-          2,
-          3
-        ]
-      },
-      "ms": 741,
+      "ms": 309,
       "deleted": false
     },
     {
@@ -510,7 +421,212 @@
           1
         ]
       },
-      "ms": 855,
+      "ms": 688,
+      "deleted": false
+    },
+    {
+      "file": "roofKeyGuard-L16-s5-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 15,
+      "spare": 1,
+      "winningFirstMoves": 4,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 4,
+        "unknown": 0,
+        "legal": 16,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 1,
+            "result": "lose"
+          },
+          {
+            "tile": 2,
+            "result": "win"
+          },
+          {
+            "tile": 3,
+            "result": "lose"
+          },
+          {
+            "tile": 4,
+            "result": "lose"
+          },
+          {
+            "tile": 5,
+            "result": "lose"
+          },
+          {
+            "tile": 29,
+            "result": "lose"
+          },
+          {
+            "tile": 31,
+            "result": "lose"
+          },
+          {
+            "tile": 44,
+            "result": "lose"
+          },
+          {
+            "tile": 45,
+            "result": "lose"
+          },
+          {
+            "tile": 46,
+            "result": "win"
+          },
+          {
+            "tile": 68,
+            "result": "win"
+          },
+          {
+            "tile": 69,
+            "result": "lose"
+          },
+          {
+            "tile": 70,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "win"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.3362,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 5,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          1,
+          2,
+          3,
+          2,
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          1
+        ]
+      },
+      "ms": 4058,
+      "deleted": false
+    },
+    {
+      "file": "frozenKeyShared-L19-s6-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 12,
+      "spare": 2,
+      "winningFirstMoves": 4,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 4,
+        "unknown": 0,
+        "legal": 10,
+        "rows": [
+          {
+            "tile": 52,
+            "result": "win"
+          },
+          {
+            "tile": 53,
+            "result": "lose"
+          },
+          {
+            "tile": 64,
+            "result": "win"
+          },
+          {
+            "tile": 65,
+            "result": "win"
+          },
+          {
+            "tile": 70,
+            "result": "lose"
+          },
+          {
+            "tile": 71,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "win"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.2938,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 9,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          1,
+          2
+        ]
+      },
+      "ms": 265,
       "deleted": false
     },
     {
@@ -610,268 +726,7 @@
           3
         ]
       },
-      "ms": 449,
-      "deleted": false
-    },
-    {
-      "file": "secondActIce-L14-s1-p1.json",
-      "ok": true,
-      "errors": [],
-      "checks": [
-        "strictReplay",
-        "minimumByUnsatisfiableEarlierDeadline"
-      ],
-      "k": 8,
-      "spare": 1,
-      "winningFirstMoves": 3,
-      "unknownFirstMoves": 0,
-      "firstMoves": {
-        "winning": 3,
-        "unknown": 0,
-        "legal": 12,
-        "rows": [
-          {
-            "tile": 0,
-            "result": "win"
-          },
-          {
-            "tile": 6,
-            "result": "lose"
-          },
-          {
-            "tile": 48,
-            "result": "lose"
-          },
-          {
-            "tile": 63,
-            "result": "lose"
-          },
-          {
-            "tile": 64,
-            "result": "lose"
-          },
-          {
-            "tile": 65,
-            "result": "lose"
-          },
-          {
-            "tile": 66,
-            "result": "lose"
-          },
-          {
-            "tile": 68,
-            "result": "win"
-          },
-          {
-            "tile": 73,
-            "result": "lose"
-          },
-          {
-            "tile": 74,
-            "result": "win"
-          },
-          {
-            "tile": 75,
-            "result": "lose"
-          },
-          {
-            "tile": 76,
-            "result": "lose"
-          }
-        ]
-      },
-      "tailGreedyWin": 0.2787,
-      "close": {
-        "close": 0,
-        "share": 0,
-        "visible": 0,
-        "four": 0,
-        "meets": true
-      },
-      "pressure": {
-        "peak": 3,
-        "run2": 7,
-        "at3": 3,
-        "occ": [
-          1,
-          2,
-          3,
-          2,
-          3,
-          2,
-          3,
-          2
-        ]
-      },
-      "ms": 253,
-      "deleted": false
-    },
-    {
-      "file": "frozenRoofShared-L18-s6-p2.json",
-      "ok": true,
-      "errors": [],
-      "checks": [
-        "strictReplay",
-        "minimumByUnsatisfiableEarlierDeadline"
-      ],
-      "k": 11,
-      "spare": 2,
-      "winningFirstMoves": 5,
-      "unknownFirstMoves": 0,
-      "firstMoves": {
-        "winning": 5,
-        "unknown": 0,
-        "legal": 12,
-        "rows": [
-          {
-            "tile": 44,
-            "result": "lose"
-          },
-          {
-            "tile": 45,
-            "result": "lose"
-          },
-          {
-            "tile": 52,
-            "result": "lose"
-          },
-          {
-            "tile": 53,
-            "result": "lose"
-          },
-          {
-            "tile": 58,
-            "result": "win"
-          },
-          {
-            "tile": 59,
-            "result": "win"
-          },
-          {
-            "tile": 67,
-            "result": "lose"
-          },
-          {
-            "tile": 68,
-            "result": "lose"
-          },
-          {
-            "tile": 69,
-            "result": "win"
-          },
-          {
-            "tile": 70,
-            "result": "win"
-          },
-          {
-            "tile": 71,
-            "result": "win"
-          },
-          {
-            "tile": 72,
-            "result": "lose"
-          }
-        ]
-      },
-      "tailGreedyWin": 0.3463,
-      "close": {
-        "close": 0,
-        "share": 0,
-        "visible": 0,
-        "four": 0,
-        "meets": true
-      },
-      "pressure": {
-        "peak": 3,
-        "run2": 10,
-        "at3": 5,
-        "occ": [
-          1,
-          2,
-          3,
-          2,
-          3,
-          2,
-          3,
-          2,
-          3,
-          2,
-          3
-        ]
-      },
-      "ms": 233,
-      "deleted": false
-    },
-    {
-      "file": "freeClockKeys-L42-s1-p1.json",
-      "ok": true,
-      "errors": [],
-      "checks": [
-        "strictReplay",
-        "minimumByUnsatisfiableEarlierDeadline"
-      ],
-      "k": 11,
-      "spare": 1,
-      "winningFirstMoves": 4,
-      "unknownFirstMoves": 0,
-      "firstMoves": {
-        "winning": 4,
-        "unknown": 0,
-        "legal": 6,
-        "rows": [
-          {
-            "tile": 45,
-            "result": "lose"
-          },
-          {
-            "tile": 61,
-            "result": "lose"
-          },
-          {
-            "tile": 72,
-            "result": "win"
-          },
-          {
-            "tile": 73,
-            "result": "win"
-          },
-          {
-            "tile": 74,
-            "result": "win"
-          },
-          {
-            "tile": 75,
-            "result": "win"
-          }
-        ]
-      },
-      "tailGreedyWin": 0.32,
-      "close": {
-        "close": 0,
-        "share": 0,
-        "visible": 0,
-        "four": 0,
-        "meets": true
-      },
-      "pressure": {
-        "peak": 3,
-        "run2": 4,
-        "at3": 2,
-        "occ": [
-          1,
-          2,
-          1,
-          0,
-          1,
-          0,
-          1,
-          2,
-          3,
-          2,
-          3
-        ]
-      },
-      "ms": 198,
+      "ms": 586,
       "deleted": false
     },
     {
@@ -989,7 +844,268 @@
           3
         ]
       },
-      "ms": 781,
+      "ms": 1019,
+      "deleted": false
+    },
+    {
+      "file": "secondActIce-L14-s1-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 8,
+      "spare": 1,
+      "winningFirstMoves": 3,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 3,
+        "unknown": 0,
+        "legal": 12,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "win"
+          },
+          {
+            "tile": 6,
+            "result": "lose"
+          },
+          {
+            "tile": 48,
+            "result": "lose"
+          },
+          {
+            "tile": 63,
+            "result": "lose"
+          },
+          {
+            "tile": 64,
+            "result": "lose"
+          },
+          {
+            "tile": 65,
+            "result": "lose"
+          },
+          {
+            "tile": 66,
+            "result": "lose"
+          },
+          {
+            "tile": 68,
+            "result": "win"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "win"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          },
+          {
+            "tile": 76,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.2787,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 7,
+        "at3": 3,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2
+        ]
+      },
+      "ms": 220,
+      "deleted": false
+    },
+    {
+      "file": "frozenRoofShared-L18-s6-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 11,
+      "spare": 2,
+      "winningFirstMoves": 5,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 5,
+        "unknown": 0,
+        "legal": 12,
+        "rows": [
+          {
+            "tile": 44,
+            "result": "lose"
+          },
+          {
+            "tile": 45,
+            "result": "lose"
+          },
+          {
+            "tile": 52,
+            "result": "lose"
+          },
+          {
+            "tile": 53,
+            "result": "lose"
+          },
+          {
+            "tile": 58,
+            "result": "win"
+          },
+          {
+            "tile": 59,
+            "result": "win"
+          },
+          {
+            "tile": 67,
+            "result": "lose"
+          },
+          {
+            "tile": 68,
+            "result": "lose"
+          },
+          {
+            "tile": 69,
+            "result": "win"
+          },
+          {
+            "tile": 70,
+            "result": "win"
+          },
+          {
+            "tile": 71,
+            "result": "win"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.3463,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 10,
+        "at3": 5,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "ms": 193,
+      "deleted": false
+    },
+    {
+      "file": "freeClockKeys-L42-s1-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 11,
+      "spare": 1,
+      "winningFirstMoves": 4,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 4,
+        "unknown": 0,
+        "legal": 6,
+        "rows": [
+          {
+            "tile": 45,
+            "result": "lose"
+          },
+          {
+            "tile": 61,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "win"
+          },
+          {
+            "tile": 73,
+            "result": "win"
+          },
+          {
+            "tile": 74,
+            "result": "win"
+          },
+          {
+            "tile": 75,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.32,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 4,
+        "at3": 2,
+        "occ": [
+          1,
+          2,
+          1,
+          0,
+          1,
+          0,
+          1,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "ms": 164,
       "deleted": false
     },
     {
@@ -1090,7 +1206,7 @@
           2
         ]
       },
-      "ms": 270,
+      "ms": 227,
       "deleted": false
     },
     {
@@ -1175,369 +1291,7 @@
           2
         ]
       },
-      "ms": 277,
-      "deleted": false
-    },
-    {
-      "file": "repeatedKeyChoice-L7-s2-p1.json",
-      "ok": true,
-      "errors": [],
-      "checks": [
-        "strictReplay",
-        "minimumByUnsatisfiableEarlierDeadline"
-      ],
-      "k": 7,
-      "spare": 1,
-      "winningFirstMoves": 3,
-      "unknownFirstMoves": 0,
-      "firstMoves": {
-        "winning": 3,
-        "unknown": 0,
-        "legal": 10,
-        "rows": [
-          {
-            "tile": 70,
-            "result": "win"
-          },
-          {
-            "tile": 71,
-            "result": "lose"
-          },
-          {
-            "tile": 72,
-            "result": "lose"
-          },
-          {
-            "tile": 73,
-            "result": "lose"
-          },
-          {
-            "tile": 74,
-            "result": "win"
-          },
-          {
-            "tile": 75,
-            "result": "lose"
-          },
-          {
-            "tile": 76,
-            "result": "lose"
-          },
-          {
-            "tile": 77,
-            "result": "lose"
-          },
-          {
-            "tile": 78,
-            "result": "win"
-          },
-          {
-            "tile": 79,
-            "result": "lose"
-          }
-        ]
-      },
-      "tailGreedyWin": 0.3088,
-      "close": {
-        "close": 0,
-        "share": 0,
-        "visible": 0,
-        "four": 0,
-        "meets": true
-      },
-      "pressure": {
-        "peak": 3,
-        "run2": 4,
-        "at3": 2,
-        "occ": [
-          1,
-          2,
-          1,
-          2,
-          3,
-          2,
-          3
-        ]
-      },
-      "ms": 163,
-      "deleted": false
-    },
-    {
-      "file": "secondActIce-L36-s1-p1.json",
-      "ok": true,
-      "errors": [],
-      "checks": [
-        "strictReplay",
-        "minimumByUnsatisfiableEarlierDeadline"
-      ],
-      "k": 7,
-      "spare": 1,
-      "winningFirstMoves": 2,
-      "unknownFirstMoves": 0,
-      "firstMoves": {
-        "winning": 2,
-        "unknown": 0,
-        "legal": 12,
-        "rows": [
-          {
-            "tile": 0,
-            "result": "lose"
-          },
-          {
-            "tile": 6,
-            "result": "lose"
-          },
-          {
-            "tile": 25,
-            "result": "lose"
-          },
-          {
-            "tile": 30,
-            "result": "lose"
-          },
-          {
-            "tile": 52,
-            "result": "lose"
-          },
-          {
-            "tile": 68,
-            "result": "lose"
-          },
-          {
-            "tile": 69,
-            "result": "win"
-          },
-          {
-            "tile": 71,
-            "result": "lose"
-          },
-          {
-            "tile": 72,
-            "result": "win"
-          },
-          {
-            "tile": 73,
-            "result": "lose"
-          },
-          {
-            "tile": 74,
-            "result": "lose"
-          },
-          {
-            "tile": 75,
-            "result": "lose"
-          }
-        ]
-      },
-      "tailGreedyWin": 0.245,
-      "close": {
-        "close": 1,
-        "share": 0.0263,
-        "visible": 0,
-        "four": 0,
-        "meets": true
-      },
-      "pressure": {
-        "peak": 3,
-        "run2": 6,
-        "at3": 3,
-        "occ": [
-          1,
-          2,
-          3,
-          2,
-          3,
-          2,
-          3
-        ]
-      },
-      "ms": 186,
-      "deleted": false
-    },
-    {
-      "file": "freeClockKeys-L9-s2-p1.json",
-      "ok": true,
-      "errors": [],
-      "checks": [
-        "strictReplay",
-        "minimumByUnsatisfiableEarlierDeadline"
-      ],
-      "k": 7,
-      "spare": 1,
-      "winningFirstMoves": 3,
-      "unknownFirstMoves": 0,
-      "firstMoves": {
-        "winning": 3,
-        "unknown": 0,
-        "legal": 9,
-        "rows": [
-          {
-            "tile": 0,
-            "result": "lose"
-          },
-          {
-            "tile": 5,
-            "result": "lose"
-          },
-          {
-            "tile": 30,
-            "result": "lose"
-          },
-          {
-            "tile": 44,
-            "result": "win"
-          },
-          {
-            "tile": 45,
-            "result": "lose"
-          },
-          {
-            "tile": 59,
-            "result": "lose"
-          },
-          {
-            "tile": 60,
-            "result": "lose"
-          },
-          {
-            "tile": 71,
-            "result": "win"
-          },
-          {
-            "tile": 75,
-            "result": "win"
-          }
-        ]
-      },
-      "tailGreedyWin": 0.3688,
-      "close": {
-        "close": 0,
-        "share": 0,
-        "visible": 0,
-        "four": 0,
-        "meets": true
-      },
-      "pressure": {
-        "peak": 3,
-        "run2": 4,
-        "at3": 2,
-        "occ": [
-          1,
-          2,
-          1,
-          2,
-          3,
-          2,
-          3
-        ]
-      },
-      "ms": 233,
-      "deleted": false
-    },
-    {
-      "file": "roofKeyGuard-L39-s1-p1.json",
-      "ok": true,
-      "errors": [],
-      "checks": [
-        "strictReplay",
-        "minimumByUnsatisfiableEarlierDeadline"
-      ],
-      "k": 9,
-      "spare": 1,
-      "winningFirstMoves": 3,
-      "unknownFirstMoves": 0,
-      "firstMoves": {
-        "winning": 3,
-        "unknown": 0,
-        "legal": 15,
-        "rows": [
-          {
-            "tile": 0,
-            "result": "lose"
-          },
-          {
-            "tile": 6,
-            "result": "lose"
-          },
-          {
-            "tile": 38,
-            "result": "win"
-          },
-          {
-            "tile": 39,
-            "result": "win"
-          },
-          {
-            "tile": 40,
-            "result": "lose"
-          },
-          {
-            "tile": 41,
-            "result": "lose"
-          },
-          {
-            "tile": 42,
-            "result": "lose"
-          },
-          {
-            "tile": 56,
-            "result": "lose"
-          },
-          {
-            "tile": 57,
-            "result": "lose"
-          },
-          {
-            "tile": 68,
-            "result": "lose"
-          },
-          {
-            "tile": 69,
-            "result": "lose"
-          },
-          {
-            "tile": 76,
-            "result": "lose"
-          },
-          {
-            "tile": 77,
-            "result": "win"
-          },
-          {
-            "tile": 78,
-            "result": "lose"
-          },
-          {
-            "tile": 79,
-            "result": "lose"
-          }
-        ]
-      },
-      "tailGreedyWin": 0.3013,
-      "close": {
-        "close": 0,
-        "share": 0,
-        "visible": 0,
-        "four": 0,
-        "meets": true
-      },
-      "pressure": {
-        "peak": 3,
-        "run2": 8,
-        "at3": 4,
-        "occ": [
-          1,
-          2,
-          3,
-          2,
-          3,
-          2,
-          3,
-          2,
-          3
-        ]
-      },
-      "ms": 400,
+      "ms": 236,
       "deleted": false
     },
     {
@@ -1645,7 +1399,369 @@
           3
         ]
       },
-      "ms": 675,
+      "ms": 566,
+      "deleted": false
+    },
+    {
+      "file": "repeatedKeyChoice-L7-s2-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 7,
+      "spare": 1,
+      "winningFirstMoves": 3,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 3,
+        "unknown": 0,
+        "legal": 10,
+        "rows": [
+          {
+            "tile": 70,
+            "result": "win"
+          },
+          {
+            "tile": 71,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "win"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          },
+          {
+            "tile": 76,
+            "result": "lose"
+          },
+          {
+            "tile": 77,
+            "result": "lose"
+          },
+          {
+            "tile": 78,
+            "result": "win"
+          },
+          {
+            "tile": 79,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.3088,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 4,
+        "at3": 2,
+        "occ": [
+          1,
+          2,
+          1,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "ms": 142,
+      "deleted": false
+    },
+    {
+      "file": "secondActIce-L36-s1-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 7,
+      "spare": 1,
+      "winningFirstMoves": 2,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 2,
+        "unknown": 0,
+        "legal": 12,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 6,
+            "result": "lose"
+          },
+          {
+            "tile": 25,
+            "result": "lose"
+          },
+          {
+            "tile": 30,
+            "result": "lose"
+          },
+          {
+            "tile": 52,
+            "result": "lose"
+          },
+          {
+            "tile": 68,
+            "result": "lose"
+          },
+          {
+            "tile": 69,
+            "result": "win"
+          },
+          {
+            "tile": 71,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "win"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.245,
+      "close": {
+        "close": 1,
+        "share": 0.0263,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 6,
+        "at3": 3,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "ms": 155,
+      "deleted": false
+    },
+    {
+      "file": "freeClockKeys-L9-s2-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 7,
+      "spare": 1,
+      "winningFirstMoves": 3,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 3,
+        "unknown": 0,
+        "legal": 9,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 5,
+            "result": "lose"
+          },
+          {
+            "tile": 30,
+            "result": "lose"
+          },
+          {
+            "tile": 44,
+            "result": "win"
+          },
+          {
+            "tile": 45,
+            "result": "lose"
+          },
+          {
+            "tile": 59,
+            "result": "lose"
+          },
+          {
+            "tile": 60,
+            "result": "lose"
+          },
+          {
+            "tile": 71,
+            "result": "win"
+          },
+          {
+            "tile": 75,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.3688,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 4,
+        "at3": 2,
+        "occ": [
+          1,
+          2,
+          1,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "ms": 187,
+      "deleted": false
+    },
+    {
+      "file": "roofKeyGuard-L39-s1-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 9,
+      "spare": 1,
+      "winningFirstMoves": 3,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 3,
+        "unknown": 0,
+        "legal": 15,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 6,
+            "result": "lose"
+          },
+          {
+            "tile": 38,
+            "result": "win"
+          },
+          {
+            "tile": 39,
+            "result": "win"
+          },
+          {
+            "tile": 40,
+            "result": "lose"
+          },
+          {
+            "tile": 41,
+            "result": "lose"
+          },
+          {
+            "tile": 42,
+            "result": "lose"
+          },
+          {
+            "tile": 56,
+            "result": "lose"
+          },
+          {
+            "tile": 57,
+            "result": "lose"
+          },
+          {
+            "tile": 68,
+            "result": "lose"
+          },
+          {
+            "tile": 69,
+            "result": "lose"
+          },
+          {
+            "tile": 76,
+            "result": "lose"
+          },
+          {
+            "tile": 77,
+            "result": "win"
+          },
+          {
+            "tile": 78,
+            "result": "lose"
+          },
+          {
+            "tile": 79,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.3013,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 8,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "ms": 321,
       "deleted": false
     },
     {
@@ -1743,191 +1859,7 @@
           3
         ]
       },
-      "ms": 335,
-      "deleted": false
-    },
-    {
-      "file": "repeatedKeyChoice-L19-s2-p1.json",
-      "ok": true,
-      "errors": [],
-      "checks": [
-        "strictReplay",
-        "minimumByUnsatisfiableEarlierDeadline"
-      ],
-      "k": 7,
-      "spare": 1,
-      "winningFirstMoves": 5,
-      "unknownFirstMoves": 0,
-      "firstMoves": {
-        "winning": 5,
-        "unknown": 0,
-        "legal": 12,
-        "rows": [
-          {
-            "tile": 52,
-            "result": "lose"
-          },
-          {
-            "tile": 53,
-            "result": "lose"
-          },
-          {
-            "tile": 64,
-            "result": "lose"
-          },
-          {
-            "tile": 65,
-            "result": "win"
-          },
-          {
-            "tile": 66,
-            "result": "lose"
-          },
-          {
-            "tile": 67,
-            "result": "lose"
-          },
-          {
-            "tile": 70,
-            "result": "lose"
-          },
-          {
-            "tile": 71,
-            "result": "win"
-          },
-          {
-            "tile": 72,
-            "result": "lose"
-          },
-          {
-            "tile": 73,
-            "result": "win"
-          },
-          {
-            "tile": 74,
-            "result": "win"
-          },
-          {
-            "tile": 75,
-            "result": "win"
-          }
-        ]
-      },
-      "tailGreedyWin": 0.3225,
-      "close": {
-        "close": 0,
-        "share": 0,
-        "visible": 0,
-        "four": 0,
-        "meets": true
-      },
-      "pressure": {
-        "peak": 3,
-        "run2": 6,
-        "at3": 3,
-        "occ": [
-          1,
-          2,
-          3,
-          2,
-          3,
-          2,
-          3
-        ]
-      },
-      "ms": 222,
-      "deleted": false
-    },
-    {
-      "file": "keyRoofMeltFork-L18-s2-p1.json",
-      "ok": true,
-      "errors": [],
-      "checks": [
-        "strictReplay",
-        "minimumByUnsatisfiableEarlierDeadline"
-      ],
-      "k": 11,
-      "spare": 1,
-      "winningFirstMoves": 2,
-      "unknownFirstMoves": 0,
-      "firstMoves": {
-        "winning": 2,
-        "unknown": 0,
-        "legal": 11,
-        "rows": [
-          {
-            "tile": 45,
-            "result": "lose"
-          },
-          {
-            "tile": 53,
-            "result": "lose"
-          },
-          {
-            "tile": 59,
-            "result": "lose"
-          },
-          {
-            "tile": 67,
-            "result": "lose"
-          },
-          {
-            "tile": 68,
-            "result": "win"
-          },
-          {
-            "tile": 69,
-            "result": "lose"
-          },
-          {
-            "tile": 70,
-            "result": "win"
-          },
-          {
-            "tile": 71,
-            "result": "lose"
-          },
-          {
-            "tile": 72,
-            "result": "lose"
-          },
-          {
-            "tile": 74,
-            "result": "lose"
-          },
-          {
-            "tile": 75,
-            "result": "lose"
-          }
-        ]
-      },
-      "tailGreedyWin": 0.3787,
-      "close": {
-        "close": 0,
-        "share": 0,
-        "visible": 0,
-        "four": 0,
-        "meets": true
-      },
-      "pressure": {
-        "peak": 3,
-        "run2": 10,
-        "at3": 5,
-        "occ": [
-          1,
-          2,
-          3,
-          2,
-          3,
-          2,
-          3,
-          2,
-          3,
-          2,
-          3
-        ]
-      },
-      "ms": 312,
+      "ms": 280,
       "deleted": false
     },
     {
@@ -2025,7 +1957,99 @@
           3
         ]
       },
-      "ms": 576,
+      "ms": 454,
+      "deleted": false
+    },
+    {
+      "file": "repeatedKeyChoice-L19-s2-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 7,
+      "spare": 1,
+      "winningFirstMoves": 5,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 5,
+        "unknown": 0,
+        "legal": 12,
+        "rows": [
+          {
+            "tile": 52,
+            "result": "lose"
+          },
+          {
+            "tile": 53,
+            "result": "lose"
+          },
+          {
+            "tile": 64,
+            "result": "lose"
+          },
+          {
+            "tile": 65,
+            "result": "win"
+          },
+          {
+            "tile": 66,
+            "result": "lose"
+          },
+          {
+            "tile": 67,
+            "result": "lose"
+          },
+          {
+            "tile": 70,
+            "result": "lose"
+          },
+          {
+            "tile": 71,
+            "result": "win"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "win"
+          },
+          {
+            "tile": 74,
+            "result": "win"
+          },
+          {
+            "tile": 75,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.3225,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 6,
+        "at3": 3,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "ms": 186,
       "deleted": false
     },
     {
@@ -2148,7 +2172,99 @@
           2
         ]
       },
-      "ms": 560,
+      "ms": 458,
+      "deleted": false
+    },
+    {
+      "file": "keyRoofMeltFork-L18-s2-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 11,
+      "spare": 1,
+      "winningFirstMoves": 2,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 2,
+        "unknown": 0,
+        "legal": 11,
+        "rows": [
+          {
+            "tile": 45,
+            "result": "lose"
+          },
+          {
+            "tile": 53,
+            "result": "lose"
+          },
+          {
+            "tile": 59,
+            "result": "lose"
+          },
+          {
+            "tile": 67,
+            "result": "lose"
+          },
+          {
+            "tile": 68,
+            "result": "win"
+          },
+          {
+            "tile": 69,
+            "result": "lose"
+          },
+          {
+            "tile": 70,
+            "result": "win"
+          },
+          {
+            "tile": 71,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.3787,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 10,
+        "at3": 5,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "ms": 265,
       "deleted": false
     },
     {
@@ -2221,7 +2337,7 @@
           2
         ]
       },
-      "ms": 166,
+      "ms": 146,
       "deleted": false
     },
     {
@@ -2360,513 +2476,7 @@
           2
         ]
       },
-      "ms": 906,
-      "deleted": false
-    },
-    {
-      "file": "splitThawLocks-L46-s7-p1.json",
-      "ok": true,
-      "errors": [],
-      "checks": [
-        "strictReplay",
-        "minimumByUnsatisfiableEarlierDeadline"
-      ],
-      "k": 11,
-      "spare": 1,
-      "winningFirstMoves": 2,
-      "unknownFirstMoves": 0,
-      "firstMoves": {
-        "winning": 2,
-        "unknown": 0,
-        "legal": 10,
-        "rows": [
-          {
-            "tile": 0,
-            "result": "lose"
-          },
-          {
-            "tile": 5,
-            "result": "win"
-          },
-          {
-            "tile": 15,
-            "result": "lose"
-          },
-          {
-            "tile": 25,
-            "result": "lose"
-          },
-          {
-            "tile": 30,
-            "result": "lose"
-          },
-          {
-            "tile": 65,
-            "result": "lose"
-          },
-          {
-            "tile": 66,
-            "result": "lose"
-          },
-          {
-            "tile": 70,
-            "result": "lose"
-          },
-          {
-            "tile": 72,
-            "result": "win"
-          },
-          {
-            "tile": 73,
-            "result": "lose"
-          }
-        ]
-      },
-      "tailGreedyWin": 0.2938,
-      "close": {
-        "close": 0,
-        "share": 0,
-        "visible": 0,
-        "four": 0,
-        "meets": true
-      },
-      "pressure": {
-        "peak": 3,
-        "run2": 10,
-        "at3": 5,
-        "occ": [
-          1,
-          2,
-          3,
-          2,
-          3,
-          2,
-          3,
-          2,
-          3,
-          2,
-          3
-        ]
-      },
-      "ms": 198,
-      "deleted": false
-    },
-    {
-      "file": "repeatedFrozenKey-L38-s1-p1.json",
-      "ok": true,
-      "errors": [],
-      "checks": [
-        "strictReplay",
-        "minimumByUnsatisfiableEarlierDeadline"
-      ],
-      "k": 11,
-      "spare": 1,
-      "winningFirstMoves": 2,
-      "unknownFirstMoves": 0,
-      "firstMoves": {
-        "winning": 2,
-        "unknown": 0,
-        "legal": 13,
-        "rows": [
-          {
-            "tile": 44,
-            "result": "lose"
-          },
-          {
-            "tile": 45,
-            "result": "lose"
-          },
-          {
-            "tile": 46,
-            "result": "lose"
-          },
-          {
-            "tile": 47,
-            "result": "lose"
-          },
-          {
-            "tile": 48,
-            "result": "lose"
-          },
-          {
-            "tile": 49,
-            "result": "lose"
-          },
-          {
-            "tile": 50,
-            "result": "lose"
-          },
-          {
-            "tile": 51,
-            "result": "lose"
-          },
-          {
-            "tile": 52,
-            "result": "lose"
-          },
-          {
-            "tile": 53,
-            "result": "lose"
-          },
-          {
-            "tile": 76,
-            "result": "win"
-          },
-          {
-            "tile": 77,
-            "result": "win"
-          },
-          {
-            "tile": 87,
-            "result": "lose"
-          }
-        ]
-      },
-      "tailGreedyWin": 0.3075,
-      "close": {
-        "close": 0,
-        "share": 0,
-        "visible": 0,
-        "four": 0,
-        "meets": true
-      },
-      "pressure": {
-        "peak": 3,
-        "run2": 10,
-        "at3": 5,
-        "occ": [
-          1,
-          2,
-          3,
-          2,
-          3,
-          2,
-          3,
-          2,
-          3,
-          2,
-          3
-        ]
-      },
-      "ms": 325,
-      "deleted": false
-    },
-    {
-      "file": "freeClockShared-L36-s1-p1.json",
-      "ok": true,
-      "errors": [],
-      "checks": [
-        "strictReplay",
-        "minimumByUnsatisfiableEarlierDeadline"
-      ],
-      "k": 9,
-      "spare": 1,
-      "winningFirstMoves": 2,
-      "unknownFirstMoves": 0,
-      "firstMoves": {
-        "winning": 2,
-        "unknown": 0,
-        "legal": 11,
-        "rows": [
-          {
-            "tile": 0,
-            "result": "lose"
-          },
-          {
-            "tile": 6,
-            "result": "lose"
-          },
-          {
-            "tile": 25,
-            "result": "win"
-          },
-          {
-            "tile": 30,
-            "result": "lose"
-          },
-          {
-            "tile": 52,
-            "result": "lose"
-          },
-          {
-            "tile": 68,
-            "result": "lose"
-          },
-          {
-            "tile": 70,
-            "result": "lose"
-          },
-          {
-            "tile": 72,
-            "result": "lose"
-          },
-          {
-            "tile": 73,
-            "result": "lose"
-          },
-          {
-            "tile": 74,
-            "result": "lose"
-          },
-          {
-            "tile": 75,
-            "result": "win"
-          }
-        ]
-      },
-      "tailGreedyWin": 0.315,
-      "close": {
-        "close": 0,
-        "share": 0,
-        "visible": 0,
-        "four": 0,
-        "meets": true
-      },
-      "pressure": {
-        "peak": 3,
-        "run2": 8,
-        "at3": 4,
-        "occ": [
-          1,
-          2,
-          3,
-          2,
-          3,
-          2,
-          3,
-          2,
-          3
-        ]
-      },
-      "ms": 416,
-      "deleted": false
-    },
-    {
-      "file": "roofKeyGuard-L16-s5-p1.json",
-      "ok": true,
-      "errors": [],
-      "checks": [
-        "strictReplay",
-        "minimumByUnsatisfiableEarlierDeadline"
-      ],
-      "k": 15,
-      "spare": 1,
-      "winningFirstMoves": 4,
-      "unknownFirstMoves": 0,
-      "firstMoves": {
-        "winning": 4,
-        "unknown": 0,
-        "legal": 16,
-        "rows": [
-          {
-            "tile": 0,
-            "result": "lose"
-          },
-          {
-            "tile": 1,
-            "result": "lose"
-          },
-          {
-            "tile": 2,
-            "result": "win"
-          },
-          {
-            "tile": 3,
-            "result": "lose"
-          },
-          {
-            "tile": 4,
-            "result": "lose"
-          },
-          {
-            "tile": 5,
-            "result": "lose"
-          },
-          {
-            "tile": 29,
-            "result": "lose"
-          },
-          {
-            "tile": 31,
-            "result": "lose"
-          },
-          {
-            "tile": 44,
-            "result": "lose"
-          },
-          {
-            "tile": 45,
-            "result": "lose"
-          },
-          {
-            "tile": 46,
-            "result": "win"
-          },
-          {
-            "tile": 68,
-            "result": "win"
-          },
-          {
-            "tile": 69,
-            "result": "lose"
-          },
-          {
-            "tile": 70,
-            "result": "lose"
-          },
-          {
-            "tile": 72,
-            "result": "win"
-          },
-          {
-            "tile": 73,
-            "result": "lose"
-          }
-        ]
-      },
-      "tailGreedyWin": 0.3362,
-      "close": {
-        "close": 0,
-        "share": 0,
-        "visible": 0,
-        "four": 0,
-        "meets": true
-      },
-      "pressure": {
-        "peak": 3,
-        "run2": 5,
-        "at3": 4,
-        "occ": [
-          1,
-          2,
-          3,
-          2,
-          1,
-          2,
-          3,
-          2,
-          1,
-          2,
-          3,
-          2,
-          3,
-          2,
-          1
-        ]
-      },
-      "ms": 4463,
-      "deleted": false
-    },
-    {
-      "file": "freeClockShared-L29-s5-p1.json",
-      "ok": true,
-      "errors": [],
-      "checks": [
-        "strictReplay",
-        "minimumByUnsatisfiableEarlierDeadline"
-      ],
-      "k": 7,
-      "spare": 1,
-      "winningFirstMoves": 2,
-      "unknownFirstMoves": 0,
-      "firstMoves": {
-        "winning": 2,
-        "unknown": 0,
-        "legal": 17,
-        "rows": [
-          {
-            "tile": 0,
-            "result": "lose"
-          },
-          {
-            "tile": 6,
-            "result": "lose"
-          },
-          {
-            "tile": 7,
-            "result": "lose"
-          },
-          {
-            "tile": 12,
-            "result": "lose"
-          },
-          {
-            "tile": 40,
-            "result": "lose"
-          },
-          {
-            "tile": 46,
-            "result": "lose"
-          },
-          {
-            "tile": 68,
-            "result": "lose"
-          },
-          {
-            "tile": 69,
-            "result": "lose"
-          },
-          {
-            "tile": 72,
-            "result": "lose"
-          },
-          {
-            "tile": 73,
-            "result": "lose"
-          },
-          {
-            "tile": 78,
-            "result": "lose"
-          },
-          {
-            "tile": 84,
-            "result": "lose"
-          },
-          {
-            "tile": 85,
-            "result": "lose"
-          },
-          {
-            "tile": 89,
-            "result": "lose"
-          },
-          {
-            "tile": 90,
-            "result": "lose"
-          },
-          {
-            "tile": 93,
-            "result": "win"
-          },
-          {
-            "tile": 95,
-            "result": "win"
-          }
-        ]
-      },
-      "tailGreedyWin": 0.2437,
-      "close": {
-        "close": 0,
-        "share": 0,
-        "visible": 0,
-        "four": 0,
-        "meets": true
-      },
-      "pressure": {
-        "peak": 3,
-        "run2": 6,
-        "at3": 3,
-        "occ": [
-          1,
-          2,
-          3,
-          2,
-          3,
-          2,
-          3
-        ]
-      },
-      "ms": 1807,
+      "ms": 746,
       "deleted": false
     },
     {
@@ -2986,7 +2596,397 @@
           3
         ]
       },
-      "ms": 4399,
+      "ms": 4109,
+      "deleted": false
+    },
+    {
+      "file": "freeClockShared-L29-s5-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 7,
+      "spare": 1,
+      "winningFirstMoves": 2,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 2,
+        "unknown": 0,
+        "legal": 17,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 6,
+            "result": "lose"
+          },
+          {
+            "tile": 7,
+            "result": "lose"
+          },
+          {
+            "tile": 12,
+            "result": "lose"
+          },
+          {
+            "tile": 40,
+            "result": "lose"
+          },
+          {
+            "tile": 46,
+            "result": "lose"
+          },
+          {
+            "tile": 68,
+            "result": "lose"
+          },
+          {
+            "tile": 69,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          },
+          {
+            "tile": 78,
+            "result": "lose"
+          },
+          {
+            "tile": 84,
+            "result": "lose"
+          },
+          {
+            "tile": 85,
+            "result": "lose"
+          },
+          {
+            "tile": 89,
+            "result": "lose"
+          },
+          {
+            "tile": 90,
+            "result": "lose"
+          },
+          {
+            "tile": 93,
+            "result": "win"
+          },
+          {
+            "tile": 95,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.2437,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 6,
+        "at3": 3,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "ms": 1549,
+      "deleted": false
+    },
+    {
+      "file": "splitThawLocks-L46-s7-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 11,
+      "spare": 1,
+      "winningFirstMoves": 2,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 2,
+        "unknown": 0,
+        "legal": 10,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 5,
+            "result": "win"
+          },
+          {
+            "tile": 15,
+            "result": "lose"
+          },
+          {
+            "tile": 25,
+            "result": "lose"
+          },
+          {
+            "tile": 30,
+            "result": "lose"
+          },
+          {
+            "tile": 65,
+            "result": "lose"
+          },
+          {
+            "tile": 66,
+            "result": "lose"
+          },
+          {
+            "tile": 70,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "win"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.2938,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 10,
+        "at3": 5,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "ms": 189,
+      "deleted": false
+    },
+    {
+      "file": "repeatedFrozenKey-L38-s1-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 11,
+      "spare": 1,
+      "winningFirstMoves": 2,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 2,
+        "unknown": 0,
+        "legal": 13,
+        "rows": [
+          {
+            "tile": 44,
+            "result": "lose"
+          },
+          {
+            "tile": 45,
+            "result": "lose"
+          },
+          {
+            "tile": 46,
+            "result": "lose"
+          },
+          {
+            "tile": 47,
+            "result": "lose"
+          },
+          {
+            "tile": 48,
+            "result": "lose"
+          },
+          {
+            "tile": 49,
+            "result": "lose"
+          },
+          {
+            "tile": 50,
+            "result": "lose"
+          },
+          {
+            "tile": 51,
+            "result": "lose"
+          },
+          {
+            "tile": 52,
+            "result": "lose"
+          },
+          {
+            "tile": 53,
+            "result": "lose"
+          },
+          {
+            "tile": 76,
+            "result": "win"
+          },
+          {
+            "tile": 77,
+            "result": "win"
+          },
+          {
+            "tile": 87,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.3075,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 10,
+        "at3": 5,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "ms": 286,
+      "deleted": false
+    },
+    {
+      "file": "freeClockShared-L36-s1-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 9,
+      "spare": 1,
+      "winningFirstMoves": 2,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 2,
+        "unknown": 0,
+        "legal": 11,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 6,
+            "result": "lose"
+          },
+          {
+            "tile": 25,
+            "result": "win"
+          },
+          {
+            "tile": 30,
+            "result": "lose"
+          },
+          {
+            "tile": 52,
+            "result": "lose"
+          },
+          {
+            "tile": 68,
+            "result": "lose"
+          },
+          {
+            "tile": 70,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.315,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 8,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "ms": 367,
       "deleted": false
     }
   ]

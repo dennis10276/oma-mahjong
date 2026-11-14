@@ -1,0 +1,5 @@
+✓ ok    ui markers: frozen keys and locks retain both badges through cracks, thaw, redraw and unlock  (1.3s)
+✓ ok    ui markers: frozen tap hints all alive thaw neighbours including covered, side-blocked and frozen tiles  (2.6s)
+✓ ok    ui markers: coach replay shows combined badges and removes ice after neighbouring takes  (5.2s)
+
+3/3 tests passed in 9s (offline; add --online for the real-database tests)
