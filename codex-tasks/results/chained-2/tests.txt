@@ -1,0 +1,19 @@
+✔ obviousness rejects a ready route pair and uses all greedy ties (2.5333ms)
+✔ obviousness separates a deliberate unmatched start from greedy and checks the optional bait dial (0.2851ms)
+✔ recipes have distinct extended signatures and at least three linked requirements (7.2805ms)
+✔ ribbon runtime is removed and the Task 13 special tap priority is retained (21.5193ms)
+✔ worker wall terminates a search without inventing a certificate (4.574ms)
+﹣ twenty-board delivery has ten shapes with two hosts, independently checked facts and limited needles (0.1312ms) # SKIP
+✔ sequence spacing uses actual level distances, including each boundary (0.7517ms)
+✔ every shared wrong idea counts and shapes alone do not trigger the idea rule (0.5208ms)
+✔ duplicate levels and missing annotations cannot pass (0.1023ms)
+✔ unsorted supplied ledgers are reported rather than silently repaired (0.3375ms)
+✔ six new kinds have distinct statements and three or four link recipes (8.4653ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 122.9839

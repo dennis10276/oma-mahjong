@@ -1,0 +1,34 @@
+{
+  "ok": true,
+  "codeCommit": "c6a6a81260a59fa52ae8cfa2eff393d2661d4ed9",
+  "primary": 60,
+  "clearer": 2,
+  "archived": 2,
+  "layouts": 29,
+  "newKinds": [
+    "clearLockRoof",
+    "outsideIn",
+    "pairedFalseMelt",
+    "roofBeforeSide",
+    "splitPreparation",
+    "twinChase"
+  ],
+  "independentAudit": {
+    "ok": true,
+    "completed": 62
+  },
+  "realGame": {
+    "ok": true,
+    "completed": 8
+  },
+  "pressureParks": {
+    "min": 1.5,
+    "max": 3
+  },
+  "tests": {
+    "passed": 10,
+    "skipped": 1,
+    "failed": 0
+  },
+  "bigBoards": 6
+}

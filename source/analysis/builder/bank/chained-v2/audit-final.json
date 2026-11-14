@@ -1,0 +1,7679 @@
+{
+  "ok": true,
+  "expected": 62,
+  "rows": [
+    {
+      "file": "waitNested-L33-s15-p3.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 9,
+      "spare": 3,
+      "winningFirstMoves": 5,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 5,
+        "unknown": 0,
+        "legal": 12,
+        "rows": [
+          {
+            "tile": 4,
+            "result": "lose"
+          },
+          {
+            "tile": 5,
+            "result": "lose"
+          },
+          {
+            "tile": 10,
+            "result": "win"
+          },
+          {
+            "tile": 11,
+            "result": "lose"
+          },
+          {
+            "tile": 32,
+            "result": "lose"
+          },
+          {
+            "tile": 33,
+            "result": "win"
+          },
+          {
+            "tile": 40,
+            "result": "lose"
+          },
+          {
+            "tile": 41,
+            "result": "win"
+          },
+          {
+            "tile": 49,
+            "result": "lose"
+          },
+          {
+            "tile": 50,
+            "result": "lose"
+          },
+          {
+            "tile": 68,
+            "result": "win"
+          },
+          {
+            "tile": 71,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.97,
+      "close": {
+        "close": 1,
+        "share": 0.0278,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 8,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.724,
+          0.111,
+          0.12,
+          0.045
+        ],
+        "mean": 0.48,
+        "twoPlus": 0.165,
+        "parks": 3.5,
+        "parkAt": [
+          1,
+          1.9,
+          0.6
+        ],
+        "wrongPark": 0.02,
+        "danger": 0.005,
+        "decisions": 37,
+        "pp": 2.5
+      },
+      "signature": "clock<lock; clock<cover:ice; coverThaw<ice; clock<waitForTwin",
+      "ms": 305
+    },
+    {
+      "file": "waitNested-L16-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 5,
+      "spare": 2,
+      "winningFirstMoves": 5,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 5,
+        "unknown": 0,
+        "legal": 15,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 1,
+            "result": "win"
+          },
+          {
+            "tile": 2,
+            "result": "lose"
+          },
+          {
+            "tile": 3,
+            "result": "lose"
+          },
+          {
+            "tile": 4,
+            "result": "lose"
+          },
+          {
+            "tile": 5,
+            "result": "lose"
+          },
+          {
+            "tile": 29,
+            "result": "win"
+          },
+          {
+            "tile": 31,
+            "result": "lose"
+          },
+          {
+            "tile": 44,
+            "result": "win"
+          },
+          {
+            "tile": 45,
+            "result": "win"
+          },
+          {
+            "tile": 46,
+            "result": "lose"
+          },
+          {
+            "tile": 47,
+            "result": "lose"
+          },
+          {
+            "tile": 68,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.055,
+      "close": {
+        "close": 1,
+        "share": 0.027,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 4,
+        "at3": 2,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.446,
+          0.255,
+          0.236,
+          0.063
+        ],
+        "mean": 0.92,
+        "twoPlus": 0.299,
+        "parks": 2.4,
+        "parkAt": [
+          0,
+          1,
+          1.4
+        ],
+        "wrongPark": 0.85,
+        "danger": 0.02,
+        "decisions": 38,
+        "pp": 2.4
+      },
+      "signature": "clock<lock; clock<cover:ice; coverThaw<ice; clock<waitForTwin",
+      "ms": 312
+    },
+    {
+      "file": "waitThawWay-L7-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 11,
+      "spare": 2,
+      "winningFirstMoves": 4,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 4,
+        "unknown": 0,
+        "legal": 10,
+        "rows": [
+          {
+            "tile": 70,
+            "result": "win"
+          },
+          {
+            "tile": 71,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "win"
+          },
+          {
+            "tile": 73,
+            "result": "win"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          },
+          {
+            "tile": 76,
+            "result": "lose"
+          },
+          {
+            "tile": 77,
+            "result": "win"
+          },
+          {
+            "tile": 78,
+            "result": "lose"
+          },
+          {
+            "tile": 79,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.6837,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 10,
+        "at3": 5,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.621,
+          0.223,
+          0.087,
+          0.068
+        ],
+        "mean": 0.6,
+        "twoPlus": 0.155,
+        "parks": 2.6,
+        "parkAt": [
+          1.1,
+          0.8,
+          0.8
+        ],
+        "wrongPark": 0.14,
+        "danger": 0.008,
+        "decisions": 39,
+        "pp": 1.6
+      },
+      "signature": "clock<ice; thaw<lock; keyA<way:ice; clock<waitForTwin",
+      "ms": 324
+    },
+    {
+      "file": "waitThawWay-L21-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 7,
+      "spare": 2,
+      "winningFirstMoves": 6,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 6,
+        "unknown": 0,
+        "legal": 12,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 1,
+            "result": "win"
+          },
+          {
+            "tile": 5,
+            "result": "lose"
+          },
+          {
+            "tile": 8,
+            "result": "lose"
+          },
+          {
+            "tile": 52,
+            "result": "win"
+          },
+          {
+            "tile": 60,
+            "result": "lose"
+          },
+          {
+            "tile": 61,
+            "result": "win"
+          },
+          {
+            "tile": 74,
+            "result": "win"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          },
+          {
+            "tile": 76,
+            "result": "lose"
+          },
+          {
+            "tile": 91,
+            "result": "win"
+          },
+          {
+            "tile": 95,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.2238,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 6,
+        "at3": 3,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.581,
+          0.195,
+          0.175,
+          0.048
+        ],
+        "mean": 0.69,
+        "twoPlus": 0.223,
+        "parks": 3.6,
+        "parkAt": [
+          1.1,
+          1.3,
+          1.3
+        ],
+        "wrongPark": 0.28,
+        "danger": 0.018,
+        "decisions": 50,
+        "pp": 2.6
+      },
+      "signature": "clock<ice; thaw<lock; keyA<way:ice; clock<waitForTwin",
+      "ms": 340
+    },
+    {
+      "file": "waitNested-L18-s35-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 9,
+      "spare": 2,
+      "winningFirstMoves": 6,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 6,
+        "unknown": 0,
+        "legal": 13,
+        "rows": [
+          {
+            "tile": 44,
+            "result": "lose"
+          },
+          {
+            "tile": 52,
+            "result": "lose"
+          },
+          {
+            "tile": 53,
+            "result": "lose"
+          },
+          {
+            "tile": 58,
+            "result": "win"
+          },
+          {
+            "tile": 59,
+            "result": "win"
+          },
+          {
+            "tile": 67,
+            "result": "lose"
+          },
+          {
+            "tile": 68,
+            "result": "win"
+          },
+          {
+            "tile": 69,
+            "result": "lose"
+          },
+          {
+            "tile": 70,
+            "result": "lose"
+          },
+          {
+            "tile": 71,
+            "result": "win"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "win"
+          },
+          {
+            "tile": 75,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.48,
+      "close": {
+        "close": 1,
+        "share": 0.0263,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 8,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.146,
+          0.231,
+          0.546,
+          0.077
+        ],
+        "mean": 1.55,
+        "twoPlus": 0.623,
+        "parks": 4,
+        "parkAt": [
+          1,
+          1,
+          2
+        ],
+        "wrongPark": 0.33,
+        "danger": 0.053,
+        "decisions": 39,
+        "pp": 3
+      },
+      "signature": "clock<lock; clock<cover:ice; coverThaw<ice; clock<waitForTwin",
+      "ms": 794
+    },
+    {
+      "file": "waitThawWay-L11-s11-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 11,
+      "spare": 1,
+      "winningFirstMoves": 4,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 4,
+        "unknown": 0,
+        "legal": 8,
+        "rows": [
+          {
+            "tile": 37,
+            "result": "lose"
+          },
+          {
+            "tile": 52,
+            "result": "lose"
+          },
+          {
+            "tile": 62,
+            "result": "win"
+          },
+          {
+            "tile": 63,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "win"
+          },
+          {
+            "tile": 74,
+            "result": "win"
+          },
+          {
+            "tile": 75,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.5887,
+      "close": {
+        "close": 1,
+        "share": 0.0263,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 10,
+        "at3": 5,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.204,
+          0.524,
+          0.245,
+          0.027
+        ],
+        "mean": 1.09,
+        "twoPlus": 0.272,
+        "parks": 3.3,
+        "parkAt": [
+          1.8,
+          1.6,
+          0
+        ],
+        "wrongPark": 0,
+        "danger": 0,
+        "decisions": 37,
+        "pp": 1.6
+      },
+      "signature": "clock<ice; thaw<lock; keyA<way:ice; clock<waitForTwin",
+      "ms": 229
+    },
+    {
+      "file": "waitThawWay-L9-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 17,
+      "spare": 2,
+      "winningFirstMoves": 5,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 5,
+        "unknown": 0,
+        "legal": 11,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 5,
+            "result": "lose"
+          },
+          {
+            "tile": 30,
+            "result": "win"
+          },
+          {
+            "tile": 44,
+            "result": "lose"
+          },
+          {
+            "tile": 45,
+            "result": "lose"
+          },
+          {
+            "tile": 59,
+            "result": "win"
+          },
+          {
+            "tile": 60,
+            "result": "win"
+          },
+          {
+            "tile": 71,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "win"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.445,
+      "close": {
+        "close": 1,
+        "share": 0.0263,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 14,
+        "at3": 7,
+        "occ": [
+          1,
+          2,
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.428,
+          0.116,
+          0.384,
+          0.072
+        ],
+        "mean": 1.1,
+        "twoPlus": 0.456,
+        "parks": 3,
+        "parkAt": [
+          1,
+          1,
+          1
+        ],
+        "wrongPark": 0.2,
+        "danger": 0.029,
+        "decisions": 34,
+        "pp": 2
+      },
+      "signature": "clock<ice; thaw<lock; keyA<way:ice; clock<waitForTwin",
+      "ms": 242
+    },
+    {
+      "file": "waitNested-L3-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 13,
+      "spare": 2,
+      "winningFirstMoves": 7,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 7,
+        "unknown": 0,
+        "legal": 14,
+        "rows": [
+          {
+            "tile": 4,
+            "result": "win"
+          },
+          {
+            "tile": 5,
+            "result": "win"
+          },
+          {
+            "tile": 10,
+            "result": "lose"
+          },
+          {
+            "tile": 11,
+            "result": "lose"
+          },
+          {
+            "tile": 47,
+            "result": "lose"
+          },
+          {
+            "tile": 48,
+            "result": "win"
+          },
+          {
+            "tile": 53,
+            "result": "lose"
+          },
+          {
+            "tile": 54,
+            "result": "lose"
+          },
+          {
+            "tile": 55,
+            "result": "win"
+          },
+          {
+            "tile": 56,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "win"
+          },
+          {
+            "tile": 76,
+            "result": "win"
+          },
+          {
+            "tile": 78,
+            "result": "lose"
+          },
+          {
+            "tile": 79,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.8488,
+      "close": {
+        "close": 1,
+        "share": 0.025,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 10,
+        "at3": 5,
+        "occ": [
+          1,
+          2,
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.713,
+          0.129,
+          0.106,
+          0.053
+        ],
+        "mean": 0.5,
+        "twoPlus": 0.159,
+        "parks": 2.9,
+        "parkAt": [
+          1,
+          1.3,
+          0.6
+        ],
+        "wrongPark": 0.07,
+        "danger": 0,
+        "decisions": 38,
+        "pp": 1.9
+      },
+      "signature": "clock<lock; clock<cover:ice; coverThaw<ice; clock<waitForTwin",
+      "ms": 1151
+    },
+    {
+      "file": "waitThawWay-L3-s11-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 15,
+      "spare": 1,
+      "winningFirstMoves": 3,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 3,
+        "unknown": 0,
+        "legal": 14,
+        "rows": [
+          {
+            "tile": 4,
+            "result": "lose"
+          },
+          {
+            "tile": 5,
+            "result": "lose"
+          },
+          {
+            "tile": 10,
+            "result": "lose"
+          },
+          {
+            "tile": 11,
+            "result": "lose"
+          },
+          {
+            "tile": 47,
+            "result": "lose"
+          },
+          {
+            "tile": 48,
+            "result": "lose"
+          },
+          {
+            "tile": 53,
+            "result": "lose"
+          },
+          {
+            "tile": 54,
+            "result": "lose"
+          },
+          {
+            "tile": 55,
+            "result": "lose"
+          },
+          {
+            "tile": 56,
+            "result": "lose"
+          },
+          {
+            "tile": 71,
+            "result": "win"
+          },
+          {
+            "tile": 75,
+            "result": "win"
+          },
+          {
+            "tile": 78,
+            "result": "win"
+          },
+          {
+            "tile": 79,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.6275,
+      "close": {
+        "close": 1,
+        "share": 0.025,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 14,
+        "at3": 7,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.754,
+          0.111,
+          0.081,
+          0.054
+        ],
+        "mean": 0.44,
+        "twoPlus": 0.135,
+        "parks": 3.1,
+        "parkAt": [
+          1.1,
+          1,
+          1
+        ],
+        "wrongPark": 0.22,
+        "danger": 0.019,
+        "decisions": 37,
+        "pp": 2
+      },
+      "signature": "clock<ice; thaw<lock; keyA<way:ice; clock<waitForTwin",
+      "ms": 358
+    },
+    {
+      "file": "waitThawWay-L23-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 17,
+      "spare": 2,
+      "winningFirstMoves": 5,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 5,
+        "unknown": 0,
+        "legal": 16,
+        "rows": [
+          {
+            "tile": 36,
+            "result": "lose"
+          },
+          {
+            "tile": 53,
+            "result": "lose"
+          },
+          {
+            "tile": 54,
+            "result": "lose"
+          },
+          {
+            "tile": 60,
+            "result": "lose"
+          },
+          {
+            "tile": 61,
+            "result": "lose"
+          },
+          {
+            "tile": 63,
+            "result": "win"
+          },
+          {
+            "tile": 64,
+            "result": "lose"
+          },
+          {
+            "tile": 66,
+            "result": "lose"
+          },
+          {
+            "tile": 67,
+            "result": "win"
+          },
+          {
+            "tile": 68,
+            "result": "win"
+          },
+          {
+            "tile": 69,
+            "result": "lose"
+          },
+          {
+            "tile": 71,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "win"
+          },
+          {
+            "tile": 74,
+            "result": "win"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.5775,
+      "close": {
+        "close": 1,
+        "share": 0.0263,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 16,
+        "at3": 8,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.735,
+          0.116,
+          0.09,
+          0.059
+        ],
+        "mean": 0.47,
+        "twoPlus": 0.149,
+        "parks": 3,
+        "parkAt": [
+          1,
+          1,
+          1
+        ],
+        "wrongPark": 0.22,
+        "danger": 0.029,
+        "decisions": 34,
+        "pp": 2
+      },
+      "signature": "clock<ice; thaw<lock; keyA<way:ice; clock<waitForTwin",
+      "ms": 1177
+    },
+    {
+      "file": "waitNested-L9-s15-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 15,
+      "spare": 1,
+      "winningFirstMoves": 3,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 3,
+        "unknown": 0,
+        "legal": 9,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "win"
+          },
+          {
+            "tile": 5,
+            "result": "lose"
+          },
+          {
+            "tile": 30,
+            "result": "lose"
+          },
+          {
+            "tile": 44,
+            "result": "lose"
+          },
+          {
+            "tile": 45,
+            "result": "lose"
+          },
+          {
+            "tile": 59,
+            "result": "lose"
+          },
+          {
+            "tile": 60,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "win"
+          },
+          {
+            "tile": 75,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.5162,
+      "close": {
+        "close": 1,
+        "share": 0.0263,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 12,
+        "at3": 6,
+        "occ": [
+          1,
+          2,
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.538,
+          0.251,
+          0.163,
+          0.048
+        ],
+        "mean": 0.72,
+        "twoPlus": 0.211,
+        "parks": 4.1,
+        "parkAt": [
+          2,
+          1.4,
+          0.8
+        ],
+        "wrongPark": 0.27,
+        "danger": 0.014,
+        "decisions": 36,
+        "pp": 2.2
+      },
+      "signature": "clock<lock; clock<cover:ice; coverThaw<ice; clock<waitForTwin",
+      "ms": 247
+    },
+    {
+      "file": "waitThawKey-L16-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 9,
+      "spare": 2,
+      "winningFirstMoves": 6,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 6,
+        "unknown": 0,
+        "legal": 16,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 1,
+            "result": "lose"
+          },
+          {
+            "tile": 2,
+            "result": "win"
+          },
+          {
+            "tile": 3,
+            "result": "win"
+          },
+          {
+            "tile": 4,
+            "result": "lose"
+          },
+          {
+            "tile": 5,
+            "result": "lose"
+          },
+          {
+            "tile": 29,
+            "result": "win"
+          },
+          {
+            "tile": 31,
+            "result": "lose"
+          },
+          {
+            "tile": 44,
+            "result": "lose"
+          },
+          {
+            "tile": 45,
+            "result": "win"
+          },
+          {
+            "tile": 46,
+            "result": "lose"
+          },
+          {
+            "tile": 47,
+            "result": "lose"
+          },
+          {
+            "tile": 68,
+            "result": "lose"
+          },
+          {
+            "tile": 69,
+            "result": "lose"
+          },
+          {
+            "tile": 70,
+            "result": "win"
+          },
+          {
+            "tile": 72,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.3925,
+      "close": {
+        "close": 1,
+        "share": 0.027,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 8,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.398,
+          0.443,
+          0.108,
+          0.05
+        ],
+        "mean": 0.81,
+        "twoPlus": 0.158,
+        "parks": 1.9,
+        "parkAt": [
+          0.3,
+          1,
+          0.6
+        ],
+        "wrongPark": 0.16,
+        "danger": 0.005,
+        "decisions": 36,
+        "pp": 1.6
+      },
+      "signature": "clock<ice; thaw<lock; keyA<cover:ice; clock<waitForTwin",
+      "ms": 480
+    },
+    {
+      "file": "waitThawKey-L39-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 5,
+      "spare": 2,
+      "winningFirstMoves": 9,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 9,
+        "unknown": 0,
+        "legal": 15,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 6,
+            "result": "lose"
+          },
+          {
+            "tile": 38,
+            "result": "win"
+          },
+          {
+            "tile": 39,
+            "result": "lose"
+          },
+          {
+            "tile": 40,
+            "result": "win"
+          },
+          {
+            "tile": 41,
+            "result": "lose"
+          },
+          {
+            "tile": 43,
+            "result": "win"
+          },
+          {
+            "tile": 56,
+            "result": "win"
+          },
+          {
+            "tile": 57,
+            "result": "lose"
+          },
+          {
+            "tile": 68,
+            "result": "win"
+          },
+          {
+            "tile": 69,
+            "result": "win"
+          },
+          {
+            "tile": 76,
+            "result": "win"
+          },
+          {
+            "tile": 77,
+            "result": "lose"
+          },
+          {
+            "tile": 78,
+            "result": "win"
+          },
+          {
+            "tile": 79,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.335,
+      "close": {
+        "close": 1,
+        "share": 0.025,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 4,
+        "at3": 2,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.554,
+          0.254,
+          0.138,
+          0.054
+        ],
+        "mean": 0.69,
+        "twoPlus": 0.192,
+        "parks": 3.6,
+        "parkAt": [
+          1.1,
+          1.1,
+          1.3
+        ],
+        "wrongPark": 0.29,
+        "danger": 0.026,
+        "decisions": 43,
+        "pp": 2.4
+      },
+      "signature": "clock<ice; thaw<lock; keyA<cover:ice; clock<waitForTwin",
+      "ms": 538
+    },
+    {
+      "file": "waitThawKey-L4-s11-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 9,
+      "spare": 1,
+      "winningFirstMoves": 3,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 3,
+        "unknown": 0,
+        "legal": 12,
+        "rows": [
+          {
+            "tile": 61,
+            "result": "lose"
+          },
+          {
+            "tile": 62,
+            "result": "lose"
+          },
+          {
+            "tile": 63,
+            "result": "lose"
+          },
+          {
+            "tile": 69,
+            "result": "lose"
+          },
+          {
+            "tile": 70,
+            "result": "lose"
+          },
+          {
+            "tile": 71,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "win"
+          },
+          {
+            "tile": 74,
+            "result": "win"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          },
+          {
+            "tile": 76,
+            "result": "lose"
+          },
+          {
+            "tile": 81,
+            "result": "win"
+          },
+          {
+            "tile": 82,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.95,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 8,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.304,
+          0.124,
+          0.497,
+          0.075
+        ],
+        "mean": 1.34,
+        "twoPlus": 0.572,
+        "parks": 2.8,
+        "parkAt": [
+          0.8,
+          1,
+          0.9
+        ],
+        "wrongPark": 0.06,
+        "danger": 0.01,
+        "decisions": 42,
+        "pp": 1.9
+      },
+      "signature": "clock<ice; thaw<lock; keyA<cover:ice; clock<waitForTwin",
+      "ms": 445
+    },
+    {
+      "file": "waitNested-L23-s36-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 11,
+      "spare": 1,
+      "winningFirstMoves": 2,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 2,
+        "unknown": 0,
+        "legal": 15,
+        "rows": [
+          {
+            "tile": 36,
+            "result": "lose"
+          },
+          {
+            "tile": 53,
+            "result": "win"
+          },
+          {
+            "tile": 54,
+            "result": "lose"
+          },
+          {
+            "tile": 60,
+            "result": "lose"
+          },
+          {
+            "tile": 61,
+            "result": "lose"
+          },
+          {
+            "tile": 62,
+            "result": "lose"
+          },
+          {
+            "tile": 63,
+            "result": "lose"
+          },
+          {
+            "tile": 64,
+            "result": "lose"
+          },
+          {
+            "tile": 66,
+            "result": "lose"
+          },
+          {
+            "tile": 67,
+            "result": "lose"
+          },
+          {
+            "tile": 68,
+            "result": "lose"
+          },
+          {
+            "tile": 69,
+            "result": "win"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.2288,
+      "close": {
+        "close": 1,
+        "share": 0.0263,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 5,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          1,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.376,
+          0.363,
+          0.199,
+          0.061
+        ],
+        "mean": 0.95,
+        "twoPlus": 0.26,
+        "parks": 4.9,
+        "parkAt": [
+          2.2,
+          1.6,
+          1.1
+        ],
+        "wrongPark": 0.16,
+        "danger": 0.01,
+        "decisions": 39,
+        "pp": 2.7
+      },
+      "signature": "clock<lock; clock<cover:ice; coverThaw<ice; clock<waitForTwin",
+      "ms": 1426
+    },
+    {
+      "file": "waitThawKey-L43-s11-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 11,
+      "spare": 1,
+      "winningFirstMoves": 3,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 3,
+        "unknown": 0,
+        "legal": 10,
+        "rows": [
+          {
+            "tile": 34,
+            "result": "lose"
+          },
+          {
+            "tile": 39,
+            "result": "lose"
+          },
+          {
+            "tile": 46,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          },
+          {
+            "tile": 76,
+            "result": "lose"
+          },
+          {
+            "tile": 79,
+            "result": "win"
+          },
+          {
+            "tile": 82,
+            "result": "win"
+          },
+          {
+            "tile": 83,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.7288,
+      "close": {
+        "close": 1,
+        "share": 0.0238,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 10,
+        "at3": 5,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.697,
+          0.17,
+          0.101,
+          0.032
+        ],
+        "mean": 0.47,
+        "twoPlus": 0.133,
+        "parks": 3.5,
+        "parkAt": [
+          1.7,
+          1.6,
+          0.2
+        ],
+        "wrongPark": 0.04,
+        "danger": 0.006,
+        "decisions": 42,
+        "pp": 1.8
+      },
+      "signature": "clock<ice; thaw<lock; keyA<cover:ice; clock<waitForTwin",
+      "ms": 314
+    },
+    {
+      "file": "waitThawKey-L21-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 15,
+      "spare": 2,
+      "winningFirstMoves": 3,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 3,
+        "unknown": 0,
+        "legal": 11,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 1,
+            "result": "lose"
+          },
+          {
+            "tile": 5,
+            "result": "lose"
+          },
+          {
+            "tile": 8,
+            "result": "lose"
+          },
+          {
+            "tile": 52,
+            "result": "lose"
+          },
+          {
+            "tile": 61,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "win"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          },
+          {
+            "tile": 76,
+            "result": "win"
+          },
+          {
+            "tile": 94,
+            "result": "win"
+          },
+          {
+            "tile": 95,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.2625,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 14,
+        "at3": 7,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.361,
+          0.399,
+          0.197,
+          0.042
+        ],
+        "mean": 0.92,
+        "twoPlus": 0.239,
+        "parks": 2.1,
+        "parkAt": [
+          0.3,
+          1.3,
+          0.6
+        ],
+        "wrongPark": 0.38,
+        "danger": 0.011,
+        "decisions": 44,
+        "pp": 1.9
+      },
+      "signature": "clock<ice; thaw<lock; keyA<cover:ice; clock<waitForTwin",
+      "ms": 282
+    },
+    {
+      "file": "lookalikeThaw-L6-s13-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 11,
+      "spare": 2,
+      "winningFirstMoves": 6,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 6,
+        "unknown": 0,
+        "legal": 9,
+        "rows": [
+          {
+            "tile": 53,
+            "result": "lose"
+          },
+          {
+            "tile": 58,
+            "result": "win"
+          },
+          {
+            "tile": 66,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "win"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          },
+          {
+            "tile": 79,
+            "result": "win"
+          },
+          {
+            "tile": 80,
+            "result": "win"
+          },
+          {
+            "tile": 81,
+            "result": "win"
+          },
+          {
+            "tile": 83,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.24,
+      "close": {
+        "close": 2,
+        "share": 0.0476,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 10,
+        "at3": 5,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.464,
+          0.267,
+          0.19,
+          0.08
+        ],
+        "mean": 0.89,
+        "twoPlus": 0.27,
+        "parks": 4.4,
+        "parkAt": [
+          1.5,
+          1.1,
+          1.8
+        ],
+        "wrongPark": 0.32,
+        "danger": 0.04,
+        "decisions": 42,
+        "pp": 2.9
+      },
+      "signature": "clock<ice; thaw<lock; keyA<cover:ice; keyPair<lookalikeChoice",
+      "ms": 363
+    },
+    {
+      "file": "lookalikeThaw-L30-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 12,
+      "spare": 2,
+      "winningFirstMoves": 6,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 6,
+        "unknown": 0,
+        "legal": 12,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "win"
+          },
+          {
+            "tile": 34,
+            "result": "lose"
+          },
+          {
+            "tile": 50,
+            "result": "win"
+          },
+          {
+            "tile": 51,
+            "result": "win"
+          },
+          {
+            "tile": 53,
+            "result": "lose"
+          },
+          {
+            "tile": 54,
+            "result": "lose"
+          },
+          {
+            "tile": 55,
+            "result": "lose"
+          },
+          {
+            "tile": 68,
+            "result": "lose"
+          },
+          {
+            "tile": 76,
+            "result": "lose"
+          },
+          {
+            "tile": 77,
+            "result": "win"
+          },
+          {
+            "tile": 78,
+            "result": "win"
+          },
+          {
+            "tile": 79,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.2,
+      "close": {
+        "close": 1,
+        "share": 0.025,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 3,
+        "at3": 1,
+        "occ": [
+          1,
+          2,
+          1,
+          0,
+          1,
+          2,
+          1,
+          2,
+          3,
+          2,
+          1,
+          2
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.359,
+          0.348,
+          0.272,
+          0.021
+        ],
+        "mean": 0.96,
+        "twoPlus": 0.293,
+        "parks": 4,
+        "parkAt": [
+          1.9,
+          1.4,
+          0.7
+        ],
+        "wrongPark": 0.12,
+        "danger": 0.008,
+        "decisions": 39,
+        "pp": 2.1
+      },
+      "signature": "clock<ice; thaw<lock; keyA<cover:ice; keyPair<lookalikeChoice",
+      "ms": 406
+    },
+    {
+      "file": "lookalikeThaw-L46-s11-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 8,
+      "spare": 1,
+      "winningFirstMoves": 3,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 3,
+        "unknown": 0,
+        "legal": 10,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 5,
+            "result": "lose"
+          },
+          {
+            "tile": 15,
+            "result": "lose"
+          },
+          {
+            "tile": 25,
+            "result": "lose"
+          },
+          {
+            "tile": 30,
+            "result": "lose"
+          },
+          {
+            "tile": 65,
+            "result": "lose"
+          },
+          {
+            "tile": 69,
+            "result": "win"
+          },
+          {
+            "tile": 70,
+            "result": "win"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.1675,
+      "close": {
+        "close": 1,
+        "share": 0.027,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 5,
+        "at3": 2,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          1,
+          2
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.492,
+          0.268,
+          0.214,
+          0.026
+        ],
+        "mean": 0.77,
+        "twoPlus": 0.24,
+        "parks": 1.9,
+        "parkAt": [
+          0,
+          1,
+          0.9
+        ],
+        "wrongPark": 0.43,
+        "danger": 0.019,
+        "decisions": 36,
+        "pp": 1.9
+      },
+      "signature": "clock<ice; thaw<lock; keyA<cover:ice; keyPair<lookalikeChoice",
+      "ms": 397
+    },
+    {
+      "file": "lookalikeThaw-L16-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 12,
+      "spare": 2,
+      "winningFirstMoves": 5,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 5,
+        "unknown": 0,
+        "legal": 16,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 1,
+            "result": "lose"
+          },
+          {
+            "tile": 2,
+            "result": "lose"
+          },
+          {
+            "tile": 3,
+            "result": "lose"
+          },
+          {
+            "tile": 4,
+            "result": "win"
+          },
+          {
+            "tile": 5,
+            "result": "lose"
+          },
+          {
+            "tile": 29,
+            "result": "lose"
+          },
+          {
+            "tile": 31,
+            "result": "lose"
+          },
+          {
+            "tile": 44,
+            "result": "lose"
+          },
+          {
+            "tile": 45,
+            "result": "win"
+          },
+          {
+            "tile": 46,
+            "result": "lose"
+          },
+          {
+            "tile": 47,
+            "result": "lose"
+          },
+          {
+            "tile": 69,
+            "result": "win"
+          },
+          {
+            "tile": 70,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "win"
+          },
+          {
+            "tile": 73,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.4363,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 3,
+        "at3": 1,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          1,
+          0,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.344,
+          0.375,
+          0.224,
+          0.058
+        ],
+        "mean": 1,
+        "twoPlus": 0.282,
+        "parks": 2.4,
+        "parkAt": [
+          0,
+          1,
+          1.4
+        ],
+        "wrongPark": 0.4,
+        "danger": 0.04,
+        "decisions": 34,
+        "pp": 2.4
+      },
+      "signature": "clock<ice; thaw<lock; keyA<cover:ice; keyPair<lookalikeChoice",
+      "ms": 1428
+    },
+    {
+      "file": "lookalikeThaw-L5-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 11,
+      "spare": 2,
+      "winningFirstMoves": 7,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 7,
+        "unknown": 0,
+        "legal": 16,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "win"
+          },
+          {
+            "tile": 1,
+            "result": "lose"
+          },
+          {
+            "tile": 2,
+            "result": "lose"
+          },
+          {
+            "tile": 3,
+            "result": "win"
+          },
+          {
+            "tile": 4,
+            "result": "lose"
+          },
+          {
+            "tile": 5,
+            "result": "win"
+          },
+          {
+            "tile": 71,
+            "result": "win"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "win"
+          },
+          {
+            "tile": 77,
+            "result": "lose"
+          },
+          {
+            "tile": 78,
+            "result": "lose"
+          },
+          {
+            "tile": 82,
+            "result": "lose"
+          },
+          {
+            "tile": 84,
+            "result": "win"
+          },
+          {
+            "tile": 85,
+            "result": "lose"
+          },
+          {
+            "tile": 86,
+            "result": "win"
+          },
+          {
+            "tile": 87,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.6925,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 8,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.554,
+          0.099,
+          0.292,
+          0.056
+        ],
+        "mean": 0.85,
+        "twoPlus": 0.348,
+        "parks": 2.4,
+        "parkAt": [
+          0.7,
+          0.8,
+          1
+        ],
+        "wrongPark": 0.29,
+        "danger": 0.01,
+        "decisions": 42,
+        "pp": 1.8
+      },
+      "signature": "clock<ice; thaw<lock; keyA<cover:ice; keyPair<lookalikeChoice",
+      "ms": 2946
+    },
+    {
+      "file": "lookalikeThaw-L27-s13-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 13,
+      "spare": 2,
+      "winningFirstMoves": 4,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 4,
+        "unknown": 0,
+        "legal": 8,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "win"
+          },
+          {
+            "tile": 2,
+            "result": "lose"
+          },
+          {
+            "tile": 52,
+            "result": "lose"
+          },
+          {
+            "tile": 53,
+            "result": "win"
+          },
+          {
+            "tile": 81,
+            "result": "lose"
+          },
+          {
+            "tile": 90,
+            "result": "win"
+          },
+          {
+            "tile": 94,
+            "result": "win"
+          },
+          {
+            "tile": 95,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.0138,
+      "close": {
+        "close": 2,
+        "share": 0.0417,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 7,
+        "at3": 5,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          1,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.721,
+          0.127,
+          0.087,
+          0.065
+        ],
+        "mean": 0.5,
+        "twoPlus": 0.152,
+        "parks": 3.2,
+        "parkAt": [
+          0.2,
+          1,
+          2
+        ],
+        "wrongPark": 0.82,
+        "danger": 0.062,
+        "decisions": 46,
+        "pp": 3
+      },
+      "signature": "clock<ice; thaw<lock; keyA<cover:ice; keyPair<lookalikeChoice",
+      "ms": 1970
+    },
+    {
+      "file": "outsideIn-L23-s21-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 9,
+      "spare": 1,
+      "winningFirstMoves": 3,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 3,
+        "unknown": 0,
+        "legal": 15,
+        "rows": [
+          {
+            "tile": 36,
+            "result": "lose"
+          },
+          {
+            "tile": 53,
+            "result": "lose"
+          },
+          {
+            "tile": 54,
+            "result": "win"
+          },
+          {
+            "tile": 60,
+            "result": "lose"
+          },
+          {
+            "tile": 62,
+            "result": "lose"
+          },
+          {
+            "tile": 63,
+            "result": "lose"
+          },
+          {
+            "tile": 64,
+            "result": "lose"
+          },
+          {
+            "tile": 67,
+            "result": "lose"
+          },
+          {
+            "tile": 68,
+            "result": "lose"
+          },
+          {
+            "tile": 69,
+            "result": "win"
+          },
+          {
+            "tile": 71,
+            "result": "win"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.3725,
+      "close": {
+        "close": 1,
+        "share": 0.0263,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 6,
+        "at3": 3,
+        "occ": [
+          1,
+          2,
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.085,
+          0.143,
+          0.705,
+          0.067
+        ],
+        "mean": 1.75,
+        "twoPlus": 0.772,
+        "parks": 2.5,
+        "parkAt": [
+          0,
+          1,
+          1.5
+        ],
+        "wrongPark": 0.39,
+        "danger": 0.04,
+        "decisions": 38,
+        "pp": 2.5
+      },
+      "signature": "clock<lock; keyA<cover:ice; route<outsideIn",
+      "ms": 1971
+    },
+    {
+      "file": "waitThawKey-L5-s11-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 11,
+      "spare": 1,
+      "winningFirstMoves": 4,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 4,
+        "unknown": 0,
+        "legal": 17,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 1,
+            "result": "win"
+          },
+          {
+            "tile": 2,
+            "result": "lose"
+          },
+          {
+            "tile": 3,
+            "result": "lose"
+          },
+          {
+            "tile": 4,
+            "result": "lose"
+          },
+          {
+            "tile": 5,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 77,
+            "result": "lose"
+          },
+          {
+            "tile": 78,
+            "result": "win"
+          },
+          {
+            "tile": 81,
+            "result": "lose"
+          },
+          {
+            "tile": 82,
+            "result": "lose"
+          },
+          {
+            "tile": 84,
+            "result": "lose"
+          },
+          {
+            "tile": 85,
+            "result": "lose"
+          },
+          {
+            "tile": 86,
+            "result": "win"
+          },
+          {
+            "tile": 87,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.35,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 10,
+        "at3": 5,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.408,
+          0.29,
+          0.25,
+          0.052
+        ],
+        "mean": 0.95,
+        "twoPlus": 0.302,
+        "parks": 3.3,
+        "parkAt": [
+          1.1,
+          1,
+          1.2
+        ],
+        "wrongPark": 0.4,
+        "danger": 0.026,
+        "decisions": 43,
+        "pp": 2.2
+      },
+      "signature": "clock<ice; thaw<lock; keyA<cover:ice; clock<waitForTwin",
+      "ms": 5276
+    },
+    {
+      "file": "lookalikeCover-L12-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 10,
+      "spare": 2,
+      "winningFirstMoves": 7,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 7,
+        "unknown": 0,
+        "legal": 14,
+        "rows": [
+          {
+            "tile": 62,
+            "result": "lose"
+          },
+          {
+            "tile": 63,
+            "result": "lose"
+          },
+          {
+            "tile": 64,
+            "result": "lose"
+          },
+          {
+            "tile": 65,
+            "result": "lose"
+          },
+          {
+            "tile": 71,
+            "result": "win"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "win"
+          },
+          {
+            "tile": 77,
+            "result": "lose"
+          },
+          {
+            "tile": 78,
+            "result": "win"
+          },
+          {
+            "tile": 80,
+            "result": "win"
+          },
+          {
+            "tile": 81,
+            "result": "win"
+          },
+          {
+            "tile": 82,
+            "result": "win"
+          },
+          {
+            "tile": 83,
+            "result": "lose"
+          },
+          {
+            "tile": 84,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.6475,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 9,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.424,
+          0.184,
+          0.317,
+          0.075
+        ],
+        "mean": 1.04,
+        "twoPlus": 0.392,
+        "parks": 3.4,
+        "parkAt": [
+          0.9,
+          1,
+          1.5
+        ],
+        "wrongPark": 0.3,
+        "danger": 0.035,
+        "decisions": 43,
+        "pp": 2.5
+      },
+      "signature": "clock<lock; clock<cover:ice; keyA<cover:ice; keyPair<lookalikeChoice",
+      "ms": 2544
+    },
+    {
+      "file": "lookalikeCover-L5-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 10,
+      "spare": 2,
+      "winningFirstMoves": 12,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 12,
+        "unknown": 0,
+        "legal": 16,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "win"
+          },
+          {
+            "tile": 1,
+            "result": "win"
+          },
+          {
+            "tile": 2,
+            "result": "win"
+          },
+          {
+            "tile": 3,
+            "result": "lose"
+          },
+          {
+            "tile": 4,
+            "result": "win"
+          },
+          {
+            "tile": 5,
+            "result": "lose"
+          },
+          {
+            "tile": 71,
+            "result": "win"
+          },
+          {
+            "tile": 73,
+            "result": "win"
+          },
+          {
+            "tile": 74,
+            "result": "win"
+          },
+          {
+            "tile": 77,
+            "result": "lose"
+          },
+          {
+            "tile": 78,
+            "result": "win"
+          },
+          {
+            "tile": 81,
+            "result": "win"
+          },
+          {
+            "tile": 82,
+            "result": "win"
+          },
+          {
+            "tile": 84,
+            "result": "lose"
+          },
+          {
+            "tile": 86,
+            "result": "win"
+          },
+          {
+            "tile": 87,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.2687,
+      "close": {
+        "close": 1,
+        "share": 0.0227,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 3,
+        "at3": 1,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          1,
+          2,
+          1,
+          0,
+          1,
+          2
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.101,
+          0.417,
+          0.466,
+          0.016
+        ],
+        "mean": 1.4,
+        "twoPlus": 0.482,
+        "parks": 2.3,
+        "parkAt": [
+          0.1,
+          1.5,
+          0.6
+        ],
+        "wrongPark": 0.21,
+        "danger": 0.007,
+        "decisions": 42,
+        "pp": 2.1
+      },
+      "signature": "clock<lock; clock<cover:ice; keyA<cover:ice; keyPair<lookalikeChoice",
+      "ms": 4051
+    },
+    {
+      "file": "lookalikeCover-L3-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 9,
+      "spare": 2,
+      "winningFirstMoves": 4,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 4,
+        "unknown": 0,
+        "legal": 14,
+        "rows": [
+          {
+            "tile": 4,
+            "result": "lose"
+          },
+          {
+            "tile": 5,
+            "result": "lose"
+          },
+          {
+            "tile": 10,
+            "result": "lose"
+          },
+          {
+            "tile": 11,
+            "result": "win"
+          },
+          {
+            "tile": 47,
+            "result": "win"
+          },
+          {
+            "tile": 48,
+            "result": "lose"
+          },
+          {
+            "tile": 53,
+            "result": "lose"
+          },
+          {
+            "tile": 54,
+            "result": "win"
+          },
+          {
+            "tile": 55,
+            "result": "lose"
+          },
+          {
+            "tile": 56,
+            "result": "lose"
+          },
+          {
+            "tile": 71,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 76,
+            "result": "win"
+          },
+          {
+            "tile": 78,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.2288,
+      "close": {
+        "close": 2,
+        "share": 0.05,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 8,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.075,
+          0.552,
+          0.33,
+          0.043
+        ],
+        "mean": 1.34,
+        "twoPlus": 0.373,
+        "parks": 2.4,
+        "parkAt": [
+          0,
+          1.7,
+          0.7
+        ],
+        "wrongPark": 0.36,
+        "danger": 0.014,
+        "decisions": 39,
+        "pp": 2.4
+      },
+      "signature": "clock<lock; clock<cover:ice; keyA<cover:ice; keyPair<lookalikeChoice",
+      "ms": 2735
+    },
+    {
+      "file": "lookalikeCover-L37-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 11,
+      "spare": 2,
+      "winningFirstMoves": 6,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 6,
+        "unknown": 0,
+        "legal": 18,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "win"
+          },
+          {
+            "tile": 6,
+            "result": "lose"
+          },
+          {
+            "tile": 36,
+            "result": "lose"
+          },
+          {
+            "tile": 41,
+            "result": "lose"
+          },
+          {
+            "tile": 42,
+            "result": "lose"
+          },
+          {
+            "tile": 43,
+            "result": "win"
+          },
+          {
+            "tile": 50,
+            "result": "win"
+          },
+          {
+            "tile": 51,
+            "result": "lose"
+          },
+          {
+            "tile": 55,
+            "result": "lose"
+          },
+          {
+            "tile": 56,
+            "result": "win"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          },
+          {
+            "tile": 76,
+            "result": "win"
+          },
+          {
+            "tile": 80,
+            "result": "lose"
+          },
+          {
+            "tile": 81,
+            "result": "win"
+          },
+          {
+            "tile": 82,
+            "result": "lose"
+          },
+          {
+            "tile": 83,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.7575,
+      "close": {
+        "close": 1,
+        "share": 0.0238,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 6,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.636,
+          0.136,
+          0.181,
+          0.048
+        ],
+        "mean": 0.64,
+        "twoPlus": 0.229,
+        "parks": 3.5,
+        "parkAt": [
+          2,
+          0.5,
+          1
+        ],
+        "wrongPark": 0.27,
+        "danger": 0.024,
+        "decisions": 42,
+        "pp": 1.5
+      },
+      "signature": "clock<lock; clock<cover:ice; keyA<cover:ice; keyPair<lookalikeChoice",
+      "ms": 3483
+    },
+    {
+      "file": "lookalikeCover-L17-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 10,
+      "spare": 2,
+      "winningFirstMoves": 14,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 14,
+        "unknown": 0,
+        "legal": 24,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 1,
+            "result": "win"
+          },
+          {
+            "tile": 2,
+            "result": "win"
+          },
+          {
+            "tile": 3,
+            "result": "win"
+          },
+          {
+            "tile": 4,
+            "result": "win"
+          },
+          {
+            "tile": 5,
+            "result": "lose"
+          },
+          {
+            "tile": 37,
+            "result": "win"
+          },
+          {
+            "tile": 38,
+            "result": "lose"
+          },
+          {
+            "tile": 39,
+            "result": "lose"
+          },
+          {
+            "tile": 40,
+            "result": "lose"
+          },
+          {
+            "tile": 41,
+            "result": "lose"
+          },
+          {
+            "tile": 42,
+            "result": "win"
+          },
+          {
+            "tile": 58,
+            "result": "lose"
+          },
+          {
+            "tile": 59,
+            "result": "lose"
+          },
+          {
+            "tile": 62,
+            "result": "win"
+          },
+          {
+            "tile": 63,
+            "result": "win"
+          },
+          {
+            "tile": 64,
+            "result": "win"
+          },
+          {
+            "tile": 65,
+            "result": "lose"
+          },
+          {
+            "tile": 66,
+            "result": "win"
+          },
+          {
+            "tile": 67,
+            "result": "win"
+          },
+          {
+            "tile": 68,
+            "result": "win"
+          },
+          {
+            "tile": 71,
+            "result": "win"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.59,
+      "close": {
+        "close": 1,
+        "share": 0.0263,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 3,
+        "at3": 1,
+        "occ": [
+          1,
+          2,
+          1,
+          2,
+          3,
+          2,
+          1,
+          2,
+          1,
+          2
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.464,
+          0.162,
+          0.325,
+          0.05
+        ],
+        "mean": 0.96,
+        "twoPlus": 0.375,
+        "parks": 3.8,
+        "parkAt": [
+          1.8,
+          1,
+          1
+        ],
+        "wrongPark": 0.24,
+        "danger": 0.025,
+        "decisions": 38,
+        "pp": 2
+      },
+      "signature": "clock<lock; clock<cover:ice; keyA<cover:ice; keyPair<lookalikeChoice",
+      "ms": 9009
+    },
+    {
+      "file": "roofBeforeSide-L4-s22-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 11,
+      "spare": 1,
+      "winningFirstMoves": 3,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 3,
+        "unknown": 0,
+        "legal": 13,
+        "rows": [
+          {
+            "tile": 61,
+            "result": "lose"
+          },
+          {
+            "tile": 62,
+            "result": "lose"
+          },
+          {
+            "tile": 63,
+            "result": "lose"
+          },
+          {
+            "tile": 64,
+            "result": "lose"
+          },
+          {
+            "tile": 70,
+            "result": "lose"
+          },
+          {
+            "tile": 71,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "win"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "win"
+          },
+          {
+            "tile": 76,
+            "result": "lose"
+          },
+          {
+            "tile": 81,
+            "result": "lose"
+          },
+          {
+            "tile": 82,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.8037,
+      "close": {
+        "close": 1,
+        "share": 0.0238,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 9,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          1
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.512,
+          0.397,
+          0.071,
+          0.021
+        ],
+        "mean": 0.6,
+        "twoPlus": 0.092,
+        "parks": 2.6,
+        "parkAt": [
+          1,
+          0.9,
+          0.7
+        ],
+        "wrongPark": 0.12,
+        "danger": 0.002,
+        "decisions": 40,
+        "pp": 1.6
+      },
+      "signature": "clock<lock; keyA<cover:ice; route<roofBeforeSide",
+      "ms": 1159
+    },
+    {
+      "file": "lookalikeCover-L13-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 12,
+      "spare": 2,
+      "winningFirstMoves": 9,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 9,
+        "unknown": 0,
+        "legal": 17,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 1,
+            "result": "win"
+          },
+          {
+            "tile": 2,
+            "result": "win"
+          },
+          {
+            "tile": 4,
+            "result": "win"
+          },
+          {
+            "tile": 37,
+            "result": "win"
+          },
+          {
+            "tile": 43,
+            "result": "win"
+          },
+          {
+            "tile": 44,
+            "result": "lose"
+          },
+          {
+            "tile": 49,
+            "result": "win"
+          },
+          {
+            "tile": 77,
+            "result": "win"
+          },
+          {
+            "tile": 78,
+            "result": "lose"
+          },
+          {
+            "tile": 82,
+            "result": "lose"
+          },
+          {
+            "tile": 83,
+            "result": "win"
+          },
+          {
+            "tile": 86,
+            "result": "win"
+          },
+          {
+            "tile": 87,
+            "result": "lose"
+          },
+          {
+            "tile": 90,
+            "result": "lose"
+          },
+          {
+            "tile": 91,
+            "result": "lose"
+          },
+          {
+            "tile": 94,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.4025,
+      "close": {
+        "close": 1,
+        "share": 0.0208,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 11,
+        "at3": 5,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.395,
+          0.262,
+          0.279,
+          0.064
+        ],
+        "mean": 1.01,
+        "twoPlus": 0.343,
+        "parks": 2.3,
+        "parkAt": [
+          0.8,
+          0.3,
+          1.2
+        ],
+        "wrongPark": 0.45,
+        "danger": 0.037,
+        "decisions": 45,
+        "pp": 1.5
+      },
+      "signature": "clock<lock; clock<cover:ice; keyA<cover:ice; keyPair<lookalikeChoice",
+      "ms": 9457
+    },
+    {
+      "file": "lookalikeWay-L37-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 10,
+      "spare": 2,
+      "winningFirstMoves": 7,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 7,
+        "unknown": 0,
+        "legal": 19,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 6,
+            "result": "win"
+          },
+          {
+            "tile": 36,
+            "result": "lose"
+          },
+          {
+            "tile": 41,
+            "result": "lose"
+          },
+          {
+            "tile": 42,
+            "result": "win"
+          },
+          {
+            "tile": 43,
+            "result": "lose"
+          },
+          {
+            "tile": 50,
+            "result": "lose"
+          },
+          {
+            "tile": 51,
+            "result": "lose"
+          },
+          {
+            "tile": 52,
+            "result": "win"
+          },
+          {
+            "tile": 55,
+            "result": "lose"
+          },
+          {
+            "tile": 56,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "win"
+          },
+          {
+            "tile": 74,
+            "result": "win"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          },
+          {
+            "tile": 76,
+            "result": "win"
+          },
+          {
+            "tile": 80,
+            "result": "lose"
+          },
+          {
+            "tile": 81,
+            "result": "lose"
+          },
+          {
+            "tile": 82,
+            "result": "lose"
+          },
+          {
+            "tile": 83,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.3525,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 9,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.5,
+          0.237,
+          0.206,
+          0.057
+        ],
+        "mean": 0.82,
+        "twoPlus": 0.263,
+        "parks": 2.9,
+        "parkAt": [
+          1,
+          0.9,
+          0.9
+        ],
+        "wrongPark": 0.25,
+        "danger": 0.014,
+        "decisions": 41,
+        "pp": 1.8
+      },
+      "signature": "clock<lock; clock<cover:ice; keyA<way:ice; keyPair<lookalikeChoice",
+      "ms": 7255
+    },
+    {
+      "file": "pairedFalseMelt-L1-s23-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 10,
+      "spare": 1,
+      "winningFirstMoves": 2,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 2,
+        "unknown": 0,
+        "legal": 18,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 2,
+            "result": "lose"
+          },
+          {
+            "tile": 46,
+            "result": "lose"
+          },
+          {
+            "tile": 47,
+            "result": "lose"
+          },
+          {
+            "tile": 55,
+            "result": "lose"
+          },
+          {
+            "tile": 58,
+            "result": "lose"
+          },
+          {
+            "tile": 59,
+            "result": "lose"
+          },
+          {
+            "tile": 60,
+            "result": "win"
+          },
+          {
+            "tile": 61,
+            "result": "lose"
+          },
+          {
+            "tile": 66,
+            "result": "win"
+          },
+          {
+            "tile": 67,
+            "result": "lose"
+          },
+          {
+            "tile": 68,
+            "result": "lose"
+          },
+          {
+            "tile": 69,
+            "result": "lose"
+          },
+          {
+            "tile": 71,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 1,
+      "close": {
+        "close": 1,
+        "share": 0.0263,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 9,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.578,
+          0.218,
+          0.199,
+          0.005
+        ],
+        "mean": 0.63,
+        "twoPlus": 0.204,
+        "parks": 3.1,
+        "parkAt": [
+          1,
+          1.9,
+          0.2
+        ],
+        "wrongPark": 0,
+        "danger": 0,
+        "decisions": 37,
+        "pp": 2.1
+      },
+      "signature": "clock<lock; clock<cover:ice; keyA<cover:ice; route<pairedFalseMelt",
+      "ms": 3222
+    },
+    {
+      "file": "lookalikeWay-L47-s19-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 13,
+      "spare": 1,
+      "winningFirstMoves": 5,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 5,
+        "unknown": 0,
+        "legal": 16,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 1,
+            "result": "lose"
+          },
+          {
+            "tile": 2,
+            "result": "lose"
+          },
+          {
+            "tile": 3,
+            "result": "win"
+          },
+          {
+            "tile": 5,
+            "result": "lose"
+          },
+          {
+            "tile": 6,
+            "result": "lose"
+          },
+          {
+            "tile": 9,
+            "result": "lose"
+          },
+          {
+            "tile": 81,
+            "result": "lose"
+          },
+          {
+            "tile": 82,
+            "result": "lose"
+          },
+          {
+            "tile": 86,
+            "result": "win"
+          },
+          {
+            "tile": 89,
+            "result": "win"
+          },
+          {
+            "tile": 90,
+            "result": "lose"
+          },
+          {
+            "tile": 91,
+            "result": "lose"
+          },
+          {
+            "tile": 92,
+            "result": "win"
+          },
+          {
+            "tile": 94,
+            "result": "win"
+          },
+          {
+            "tile": 95,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.8225,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 12,
+        "at3": 6,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.345,
+          0.498,
+          0.101,
+          0.056
+        ],
+        "mean": 0.87,
+        "twoPlus": 0.157,
+        "parks": 2.8,
+        "parkAt": [
+          0.6,
+          1.1,
+          1.1
+        ],
+        "wrongPark": 0.12,
+        "danger": 0.004,
+        "decisions": 46,
+        "pp": 2.2
+      },
+      "signature": "clock<lock; clock<cover:ice; keyA<way:ice; keyPair<lookalikeChoice",
+      "ms": 6680
+    },
+    {
+      "file": "lookalikeWay-L13-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 13,
+      "spare": 2,
+      "winningFirstMoves": 11,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 11,
+        "unknown": 0,
+        "legal": 18,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "win"
+          },
+          {
+            "tile": 1,
+            "result": "win"
+          },
+          {
+            "tile": 2,
+            "result": "win"
+          },
+          {
+            "tile": 4,
+            "result": "lose"
+          },
+          {
+            "tile": 37,
+            "result": "lose"
+          },
+          {
+            "tile": 43,
+            "result": "win"
+          },
+          {
+            "tile": 44,
+            "result": "lose"
+          },
+          {
+            "tile": 49,
+            "result": "win"
+          },
+          {
+            "tile": 77,
+            "result": "win"
+          },
+          {
+            "tile": 79,
+            "result": "win"
+          },
+          {
+            "tile": 82,
+            "result": "win"
+          },
+          {
+            "tile": 83,
+            "result": "win"
+          },
+          {
+            "tile": 86,
+            "result": "lose"
+          },
+          {
+            "tile": 87,
+            "result": "win"
+          },
+          {
+            "tile": 90,
+            "result": "lose"
+          },
+          {
+            "tile": 91,
+            "result": "lose"
+          },
+          {
+            "tile": 93,
+            "result": "lose"
+          },
+          {
+            "tile": 94,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.4763,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 10,
+        "at3": 5,
+        "occ": [
+          1,
+          2,
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.429,
+          0.249,
+          0.272,
+          0.05
+        ],
+        "mean": 0.94,
+        "twoPlus": 0.322,
+        "parks": 3,
+        "parkAt": [
+          0.9,
+          1,
+          1.1
+        ],
+        "wrongPark": 0.32,
+        "danger": 0.026,
+        "decisions": 46,
+        "pp": 2.1
+      },
+      "signature": "clock<lock; clock<cover:ice; keyA<way:ice; keyPair<lookalikeChoice",
+      "ms": 14810
+    },
+    {
+      "file": "lookalikeWay-L3-s11-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 17,
+      "spare": 1,
+      "winningFirstMoves": 7,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 7,
+        "unknown": 0,
+        "legal": 15,
+        "rows": [
+          {
+            "tile": 4,
+            "result": "lose"
+          },
+          {
+            "tile": 5,
+            "result": "win"
+          },
+          {
+            "tile": 10,
+            "result": "win"
+          },
+          {
+            "tile": 11,
+            "result": "lose"
+          },
+          {
+            "tile": 47,
+            "result": "win"
+          },
+          {
+            "tile": 48,
+            "result": "lose"
+          },
+          {
+            "tile": 53,
+            "result": "lose"
+          },
+          {
+            "tile": 54,
+            "result": "win"
+          },
+          {
+            "tile": 55,
+            "result": "lose"
+          },
+          {
+            "tile": 56,
+            "result": "lose"
+          },
+          {
+            "tile": 71,
+            "result": "win"
+          },
+          {
+            "tile": 72,
+            "result": "win"
+          },
+          {
+            "tile": 75,
+            "result": "win"
+          },
+          {
+            "tile": 78,
+            "result": "lose"
+          },
+          {
+            "tile": 79,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.04,
+      "close": {
+        "close": 2,
+        "share": 0.05,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 10,
+        "at3": 7,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.353,
+          0.476,
+          0.119,
+          0.052
+        ],
+        "mean": 0.87,
+        "twoPlus": 0.171,
+        "parks": 5.4,
+        "parkAt": [
+          3,
+          1.4,
+          1
+        ],
+        "wrongPark": 0.51,
+        "danger": 0.072,
+        "decisions": 38,
+        "pp": 2.4
+      },
+      "signature": "clock<lock; clock<cover:ice; keyA<way:ice; keyPair<lookalikeChoice",
+      "ms": 8888
+    },
+    {
+      "file": "roofThawKey-L23-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 10,
+      "spare": 2,
+      "winningFirstMoves": 6,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 6,
+        "unknown": 0,
+        "legal": 16,
+        "rows": [
+          {
+            "tile": 36,
+            "result": "lose"
+          },
+          {
+            "tile": 53,
+            "result": "win"
+          },
+          {
+            "tile": 54,
+            "result": "lose"
+          },
+          {
+            "tile": 61,
+            "result": "win"
+          },
+          {
+            "tile": 62,
+            "result": "win"
+          },
+          {
+            "tile": 63,
+            "result": "lose"
+          },
+          {
+            "tile": 64,
+            "result": "lose"
+          },
+          {
+            "tile": 66,
+            "result": "lose"
+          },
+          {
+            "tile": 67,
+            "result": "lose"
+          },
+          {
+            "tile": 68,
+            "result": "win"
+          },
+          {
+            "tile": 69,
+            "result": "lose"
+          },
+          {
+            "tile": 71,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "win"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.5763,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 9,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.046,
+          0.423,
+          0.442,
+          0.088
+        ],
+        "mean": 1.57,
+        "twoPlus": 0.53,
+        "parks": 2.3,
+        "parkAt": [
+          0,
+          0.8,
+          1.5
+        ],
+        "wrongPark": 0.45,
+        "danger": 0.038,
+        "decisions": 36,
+        "pp": 2.3
+      },
+      "signature": "clock<ice; thaw<lock; keyA<cover:ice; keyB<clockRoof",
+      "ms": 1320
+    },
+    {
+      "file": "clearLockRoof-L16-s21-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 9,
+      "spare": 1,
+      "winningFirstMoves": 3,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 3,
+        "unknown": 0,
+        "legal": 17,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 1,
+            "result": "lose"
+          },
+          {
+            "tile": 2,
+            "result": "lose"
+          },
+          {
+            "tile": 3,
+            "result": "lose"
+          },
+          {
+            "tile": 4,
+            "result": "lose"
+          },
+          {
+            "tile": 5,
+            "result": "lose"
+          },
+          {
+            "tile": 29,
+            "result": "win"
+          },
+          {
+            "tile": 31,
+            "result": "lose"
+          },
+          {
+            "tile": 44,
+            "result": "lose"
+          },
+          {
+            "tile": 45,
+            "result": "lose"
+          },
+          {
+            "tile": 46,
+            "result": "lose"
+          },
+          {
+            "tile": 47,
+            "result": "lose"
+          },
+          {
+            "tile": 68,
+            "result": "lose"
+          },
+          {
+            "tile": 69,
+            "result": "win"
+          },
+          {
+            "tile": 70,
+            "result": "win"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.1675,
+      "close": {
+        "close": 1,
+        "share": 0.027,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 8,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.613,
+          0.12,
+          0.213,
+          0.054
+        ],
+        "mean": 0.71,
+        "twoPlus": 0.267,
+        "parks": 3,
+        "parkAt": [
+          1,
+          1,
+          1
+        ],
+        "wrongPark": 0.57,
+        "danger": 0.039,
+        "decisions": 37,
+        "pp": 2
+      },
+      "signature": "clock<ice; thaw<lock; route<clearLockRoof",
+      "ms": 1866
+    },
+    {
+      "file": "roofThawKey-L6-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 10,
+      "spare": 2,
+      "winningFirstMoves": 4,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 4,
+        "unknown": 0,
+        "legal": 9,
+        "rows": [
+          {
+            "tile": 53,
+            "result": "lose"
+          },
+          {
+            "tile": 58,
+            "result": "lose"
+          },
+          {
+            "tile": 66,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "win"
+          },
+          {
+            "tile": 79,
+            "result": "lose"
+          },
+          {
+            "tile": 80,
+            "result": "win"
+          },
+          {
+            "tile": 81,
+            "result": "win"
+          },
+          {
+            "tile": 82,
+            "result": "win"
+          },
+          {
+            "tile": 83,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.4437,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 7,
+        "at3": 3,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          1,
+          2
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.545,
+          0.169,
+          0.239,
+          0.047
+        ],
+        "mean": 0.79,
+        "twoPlus": 0.286,
+        "parks": 3.5,
+        "parkAt": [
+          0.9,
+          1,
+          1.6
+        ],
+        "wrongPark": 0.35,
+        "danger": 0.026,
+        "decisions": 42,
+        "pp": 2.6
+      },
+      "signature": "clock<ice; thaw<lock; keyA<cover:ice; keyB<clockRoof",
+      "ms": 899
+    },
+    {
+      "file": "roofThawKey-L15-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 12,
+      "spare": 2,
+      "winningFirstMoves": 5,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 5,
+        "unknown": 0,
+        "legal": 11,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "win"
+          },
+          {
+            "tile": 21,
+            "result": "win"
+          },
+          {
+            "tile": 27,
+            "result": "lose"
+          },
+          {
+            "tile": 28,
+            "result": "lose"
+          },
+          {
+            "tile": 33,
+            "result": "lose"
+          },
+          {
+            "tile": 50,
+            "result": "win"
+          },
+          {
+            "tile": 66,
+            "result": "win"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          },
+          {
+            "tile": 78,
+            "result": "lose"
+          },
+          {
+            "tile": 79,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.0075,
+      "close": {
+        "close": 1,
+        "share": 0.025,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 7,
+        "at3": 3,
+        "occ": [
+          1,
+          2,
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          1,
+          2
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.257,
+          0.433,
+          0.267,
+          0.044
+        ],
+        "mean": 1.1,
+        "twoPlus": 0.311,
+        "parks": 3.7,
+        "parkAt": [
+          1,
+          1,
+          1.7
+        ],
+        "wrongPark": 0.55,
+        "danger": 0.071,
+        "decisions": 39,
+        "pp": 2.7
+      },
+      "signature": "clock<ice; thaw<lock; keyA<cover:ice; keyB<clockRoof",
+      "ms": 968
+    },
+    {
+      "file": "lookalikeWay-L5-s11-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 16,
+      "spare": 1,
+      "winningFirstMoves": 4,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 4,
+        "unknown": 0,
+        "legal": 17,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 1,
+            "result": "lose"
+          },
+          {
+            "tile": 2,
+            "result": "lose"
+          },
+          {
+            "tile": 3,
+            "result": "win"
+          },
+          {
+            "tile": 4,
+            "result": "lose"
+          },
+          {
+            "tile": 5,
+            "result": "lose"
+          },
+          {
+            "tile": 71,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "win"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 77,
+            "result": "win"
+          },
+          {
+            "tile": 78,
+            "result": "lose"
+          },
+          {
+            "tile": 81,
+            "result": "lose"
+          },
+          {
+            "tile": 82,
+            "result": "win"
+          },
+          {
+            "tile": 84,
+            "result": "lose"
+          },
+          {
+            "tile": 86,
+            "result": "lose"
+          },
+          {
+            "tile": 87,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.0563,
+      "close": {
+        "close": 2,
+        "share": 0.0455,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 15,
+        "at3": 7,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.057,
+          0.643,
+          0.281,
+          0.019
+        ],
+        "mean": 1.26,
+        "twoPlus": 0.3,
+        "parks": 2.8,
+        "parkAt": [
+          0,
+          2,
+          0.8
+        ],
+        "wrongPark": 0.38,
+        "danger": 0.06,
+        "decisions": 40,
+        "pp": 2.8
+      },
+      "signature": "clock<lock; clock<cover:ice; keyA<way:ice; keyPair<lookalikeChoice",
+      "ms": 8638
+    },
+    {
+      "file": "roofThawKey-L35-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 10,
+      "spare": 2,
+      "winningFirstMoves": 6,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 6,
+        "unknown": 0,
+        "legal": 11,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "win"
+          },
+          {
+            "tile": 5,
+            "result": "win"
+          },
+          {
+            "tile": 38,
+            "result": "win"
+          },
+          {
+            "tile": 63,
+            "result": "lose"
+          },
+          {
+            "tile": 78,
+            "result": "win"
+          },
+          {
+            "tile": 79,
+            "result": "lose"
+          },
+          {
+            "tile": 83,
+            "result": "win"
+          },
+          {
+            "tile": 84,
+            "result": "lose"
+          },
+          {
+            "tile": 85,
+            "result": "win"
+          },
+          {
+            "tile": 86,
+            "result": "lose"
+          },
+          {
+            "tile": 87,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.0525,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 9,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.362,
+          0.222,
+          0.358,
+          0.058
+        ],
+        "mean": 1.11,
+        "twoPlus": 0.416,
+        "parks": 3,
+        "parkAt": [
+          0.3,
+          0.6,
+          2.1
+        ],
+        "wrongPark": 0.66,
+        "danger": 0.047,
+        "decisions": 43,
+        "pp": 2.7
+      },
+      "signature": "clock<ice; thaw<lock; keyA<cover:ice; keyB<clockRoof",
+      "ms": 2923
+    },
+    {
+      "file": "twinChase-L7-s22-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 14,
+      "spare": 1,
+      "winningFirstMoves": 3,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 3,
+        "unknown": 0,
+        "legal": 10,
+        "rows": [
+          {
+            "tile": 70,
+            "result": "lose"
+          },
+          {
+            "tile": 71,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "win"
+          },
+          {
+            "tile": 75,
+            "result": "win"
+          },
+          {
+            "tile": 76,
+            "result": "win"
+          },
+          {
+            "tile": 77,
+            "result": "lose"
+          },
+          {
+            "tile": 78,
+            "result": "lose"
+          },
+          {
+            "tile": 79,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.055,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 13,
+        "at3": 6,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.289,
+          0.118,
+          0.543,
+          0.05
+        ],
+        "mean": 1.35,
+        "twoPlus": 0.593,
+        "parks": 2.1,
+        "parkAt": [
+          0,
+          0.7,
+          1.4
+        ],
+        "wrongPark": 0.56,
+        "danger": 0.017,
+        "decisions": 36,
+        "pp": 2.1
+      },
+      "signature": "clock<ice; thaw<lock; route<twinChase",
+      "ms": 1045
+    },
+    {
+      "file": "roofThawKey-L11-s11-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 16,
+      "spare": 1,
+      "winningFirstMoves": 3,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 3,
+        "unknown": 0,
+        "legal": 8,
+        "rows": [
+          {
+            "tile": 37,
+            "result": "lose"
+          },
+          {
+            "tile": 52,
+            "result": "lose"
+          },
+          {
+            "tile": 62,
+            "result": "lose"
+          },
+          {
+            "tile": 71,
+            "result": "win"
+          },
+          {
+            "tile": 72,
+            "result": "win"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "win"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.3387,
+      "close": {
+        "close": 1,
+        "share": 0.0263,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 11,
+        "at3": 5,
+        "occ": [
+          1,
+          2,
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          1,
+          0
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.585,
+          0.148,
+          0.177,
+          0.09
+        ],
+        "mean": 0.77,
+        "twoPlus": 0.267,
+        "parks": 3.3,
+        "parkAt": [
+          1,
+          1.1,
+          1.1
+        ],
+        "wrongPark": 0.32,
+        "danger": 0.023,
+        "decisions": 33,
+        "pp": 2.2
+      },
+      "signature": "clock<ice; thaw<lock; keyA<cover:ice; keyB<clockRoof",
+      "ms": 942
+    },
+    {
+      "file": "roofThawKey-L4-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 16,
+      "spare": 2,
+      "winningFirstMoves": 4,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 4,
+        "unknown": 0,
+        "legal": 13,
+        "rows": [
+          {
+            "tile": 61,
+            "result": "lose"
+          },
+          {
+            "tile": 62,
+            "result": "lose"
+          },
+          {
+            "tile": 63,
+            "result": "lose"
+          },
+          {
+            "tile": 64,
+            "result": "lose"
+          },
+          {
+            "tile": 69,
+            "result": "win"
+          },
+          {
+            "tile": 71,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "win"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          },
+          {
+            "tile": 76,
+            "result": "win"
+          },
+          {
+            "tile": 81,
+            "result": "win"
+          },
+          {
+            "tile": 82,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.4075,
+      "close": {
+        "close": 1,
+        "share": 0.0238,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 15,
+        "at3": 7,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.143,
+          0.534,
+          0.317,
+          0.007
+        ],
+        "mean": 1.19,
+        "twoPlus": 0.324,
+        "parks": 3.1,
+        "parkAt": [
+          0.9,
+          1.9,
+          0.3
+        ],
+        "wrongPark": 0.21,
+        "danger": 0.015,
+        "decisions": 38,
+        "pp": 2.2
+      },
+      "signature": "clock<ice; thaw<lock; keyA<cover:ice; keyB<clockRoof",
+      "ms": 1743
+    },
+    {
+      "file": "waitLookalikeRoof-L35-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 9,
+      "spare": 2,
+      "winningFirstMoves": 3,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 3,
+        "unknown": 0,
+        "legal": 11,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 5,
+            "result": "lose"
+          },
+          {
+            "tile": 38,
+            "result": "lose"
+          },
+          {
+            "tile": 62,
+            "result": "lose"
+          },
+          {
+            "tile": 63,
+            "result": "lose"
+          },
+          {
+            "tile": 79,
+            "result": "lose"
+          },
+          {
+            "tile": 83,
+            "result": "lose"
+          },
+          {
+            "tile": 84,
+            "result": "win"
+          },
+          {
+            "tile": 85,
+            "result": "lose"
+          },
+          {
+            "tile": 86,
+            "result": "win"
+          },
+          {
+            "tile": 87,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.5463,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 6,
+        "at3": 3,
+        "occ": [
+          1,
+          2,
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.434,
+          0.406,
+          0.12,
+          0.041
+        ],
+        "mean": 0.77,
+        "twoPlus": 0.161,
+        "parks": 3.7,
+        "parkAt": [
+          1.1,
+          1.9,
+          0.6
+        ],
+        "wrongPark": 0.16,
+        "danger": 0.011,
+        "decisions": 45,
+        "pp": 2.5
+      },
+      "signature": "clock<lock; keyA<cover:ice; clock<waitForTwin; keyPair<lookalikeChoice",
+      "ms": 1226
+    },
+    {
+      "file": "waitLookalikeRoof-L6-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 9,
+      "spare": 2,
+      "winningFirstMoves": 3,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 3,
+        "unknown": 0,
+        "legal": 9,
+        "rows": [
+          {
+            "tile": 53,
+            "result": "win"
+          },
+          {
+            "tile": 58,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "win"
+          },
+          {
+            "tile": 75,
+            "result": "win"
+          },
+          {
+            "tile": 79,
+            "result": "lose"
+          },
+          {
+            "tile": 80,
+            "result": "lose"
+          },
+          {
+            "tile": 81,
+            "result": "lose"
+          },
+          {
+            "tile": 82,
+            "result": "lose"
+          },
+          {
+            "tile": 83,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.2062,
+      "close": {
+        "close": 1,
+        "share": 0.0238,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 8,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.33,
+          0.498,
+          0.131,
+          0.04
+        ],
+        "mean": 0.88,
+        "twoPlus": 0.171,
+        "parks": 1.9,
+        "parkAt": [
+          0.2,
+          1.1,
+          0.6
+        ],
+        "wrongPark": 0.27,
+        "danger": 0.005,
+        "decisions": 41,
+        "pp": 1.7
+      },
+      "signature": "clock<lock; keyA<cover:ice; clock<waitForTwin; keyPair<lookalikeChoice",
+      "ms": 1100
+    },
+    {
+      "file": "waitLookalikeRoof-L39-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 9,
+      "spare": 2,
+      "winningFirstMoves": 5,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 5,
+        "unknown": 0,
+        "legal": 15,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 6,
+            "result": "lose"
+          },
+          {
+            "tile": 38,
+            "result": "lose"
+          },
+          {
+            "tile": 40,
+            "result": "lose"
+          },
+          {
+            "tile": 41,
+            "result": "win"
+          },
+          {
+            "tile": 42,
+            "result": "lose"
+          },
+          {
+            "tile": 43,
+            "result": "win"
+          },
+          {
+            "tile": 56,
+            "result": "win"
+          },
+          {
+            "tile": 57,
+            "result": "lose"
+          },
+          {
+            "tile": 68,
+            "result": "lose"
+          },
+          {
+            "tile": 69,
+            "result": "lose"
+          },
+          {
+            "tile": 76,
+            "result": "win"
+          },
+          {
+            "tile": 77,
+            "result": "lose"
+          },
+          {
+            "tile": 78,
+            "result": "win"
+          },
+          {
+            "tile": 79,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.1113,
+      "close": {
+        "close": 2,
+        "share": 0.05,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 6,
+        "at3": 3,
+        "occ": [
+          1,
+          2,
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.266,
+          0.476,
+          0.209,
+          0.049
+        ],
+        "mean": 1.04,
+        "twoPlus": 0.258,
+        "parks": 3.7,
+        "parkAt": [
+          1.1,
+          2.1,
+          0.4
+        ],
+        "wrongPark": 0.27,
+        "danger": 0.034,
+        "decisions": 41,
+        "pp": 2.5
+      },
+      "signature": "clock<lock; keyA<cover:ice; clock<waitForTwin; keyPair<lookalikeChoice",
+      "ms": 3282
+    },
+    {
+      "file": "lookalikeWay-L12-s11-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 13,
+      "spare": 1,
+      "winningFirstMoves": 4,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 4,
+        "unknown": 0,
+        "legal": 15,
+        "rows": [
+          {
+            "tile": 62,
+            "result": "lose"
+          },
+          {
+            "tile": 64,
+            "result": "win"
+          },
+          {
+            "tile": 65,
+            "result": "win"
+          },
+          {
+            "tile": 71,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 77,
+            "result": "lose"
+          },
+          {
+            "tile": 78,
+            "result": "lose"
+          },
+          {
+            "tile": 79,
+            "result": "lose"
+          },
+          {
+            "tile": 80,
+            "result": "lose"
+          },
+          {
+            "tile": 81,
+            "result": "win"
+          },
+          {
+            "tile": 82,
+            "result": "lose"
+          },
+          {
+            "tile": 83,
+            "result": "win"
+          },
+          {
+            "tile": 84,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.79,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 12,
+        "at3": 6,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.648,
+          0.117,
+          0.141,
+          0.093
+        ],
+        "mean": 0.68,
+        "twoPlus": 0.234,
+        "parks": 2.6,
+        "parkAt": [
+          0.7,
+          0.8,
+          1.1
+        ],
+        "wrongPark": 0.16,
+        "danger": 0.017,
+        "decisions": 42,
+        "pp": 1.9
+      },
+      "signature": "clock<lock; clock<cover:ice; keyA<way:ice; keyPair<lookalikeChoice",
+      "ms": 22666
+    },
+    {
+      "file": "splitPreparation-L39-s25-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 7,
+      "spare": 1,
+      "winningFirstMoves": 4,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 4,
+        "unknown": 0,
+        "legal": 15,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 6,
+            "result": "lose"
+          },
+          {
+            "tile": 38,
+            "result": "win"
+          },
+          {
+            "tile": 39,
+            "result": "lose"
+          },
+          {
+            "tile": 40,
+            "result": "lose"
+          },
+          {
+            "tile": 41,
+            "result": "lose"
+          },
+          {
+            "tile": 43,
+            "result": "lose"
+          },
+          {
+            "tile": 56,
+            "result": "lose"
+          },
+          {
+            "tile": 57,
+            "result": "lose"
+          },
+          {
+            "tile": 68,
+            "result": "win"
+          },
+          {
+            "tile": 69,
+            "result": "win"
+          },
+          {
+            "tile": 76,
+            "result": "win"
+          },
+          {
+            "tile": 77,
+            "result": "lose"
+          },
+          {
+            "tile": 78,
+            "result": "lose"
+          },
+          {
+            "tile": 79,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.3688,
+      "close": {
+        "close": 2,
+        "share": 0.05,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 6,
+        "at3": 3,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.592,
+          0.242,
+          0.109,
+          0.057
+        ],
+        "mean": 0.63,
+        "twoPlus": 0.166,
+        "parks": 3.4,
+        "parkAt": [
+          1,
+          1,
+          1.4
+        ],
+        "wrongPark": 0.33,
+        "danger": 0.033,
+        "decisions": 41,
+        "pp": 2.4
+      },
+      "signature": "clock<ice; thaw<lock; keyA<cover:ice; route<splitPreparation",
+      "ms": 1292
+    },
+    {
+      "file": "waitLookalikeRoof-L3-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 9,
+      "spare": 2,
+      "winningFirstMoves": 7,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 7,
+        "unknown": 0,
+        "legal": 15,
+        "rows": [
+          {
+            "tile": 4,
+            "result": "win"
+          },
+          {
+            "tile": 5,
+            "result": "lose"
+          },
+          {
+            "tile": 10,
+            "result": "lose"
+          },
+          {
+            "tile": 11,
+            "result": "win"
+          },
+          {
+            "tile": 47,
+            "result": "lose"
+          },
+          {
+            "tile": 48,
+            "result": "lose"
+          },
+          {
+            "tile": 53,
+            "result": "lose"
+          },
+          {
+            "tile": 54,
+            "result": "win"
+          },
+          {
+            "tile": 55,
+            "result": "lose"
+          },
+          {
+            "tile": 56,
+            "result": "win"
+          },
+          {
+            "tile": 71,
+            "result": "win"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "win"
+          },
+          {
+            "tile": 76,
+            "result": "win"
+          },
+          {
+            "tile": 78,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.1263,
+      "close": {
+        "close": 2,
+        "share": 0.05,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 6,
+        "at3": 3,
+        "occ": [
+          1,
+          2,
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.199,
+          0.628,
+          0.117,
+          0.056
+        ],
+        "mean": 1.03,
+        "twoPlus": 0.173,
+        "parks": 2.9,
+        "parkAt": [
+          0,
+          1.7,
+          1.3
+        ],
+        "wrongPark": 0.59,
+        "danger": 0.045,
+        "decisions": 40,
+        "pp": 3
+      },
+      "signature": "clock<lock; keyA<cover:ice; clock<waitForTwin; keyPair<lookalikeChoice",
+      "ms": 5552
+    },
+    {
+      "file": "waitLookalikeRoof-L30-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 11,
+      "spare": 2,
+      "winningFirstMoves": 4,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 4,
+        "unknown": 0,
+        "legal": 14,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "win"
+          },
+          {
+            "tile": 32,
+            "result": "lose"
+          },
+          {
+            "tile": 33,
+            "result": "lose"
+          },
+          {
+            "tile": 34,
+            "result": "lose"
+          },
+          {
+            "tile": 50,
+            "result": "lose"
+          },
+          {
+            "tile": 51,
+            "result": "lose"
+          },
+          {
+            "tile": 53,
+            "result": "win"
+          },
+          {
+            "tile": 54,
+            "result": "lose"
+          },
+          {
+            "tile": 55,
+            "result": "lose"
+          },
+          {
+            "tile": 68,
+            "result": "lose"
+          },
+          {
+            "tile": 76,
+            "result": "lose"
+          },
+          {
+            "tile": 77,
+            "result": "win"
+          },
+          {
+            "tile": 78,
+            "result": "lose"
+          },
+          {
+            "tile": 79,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.2888,
+      "close": {
+        "close": 2,
+        "share": 0.05,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 10,
+        "at3": 5,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.6,
+          0.224,
+          0.121,
+          0.055
+        ],
+        "mean": 0.63,
+        "twoPlus": 0.176,
+        "parks": 4.8,
+        "parkAt": [
+          2,
+          1.5,
+          1.3
+        ],
+        "wrongPark": 0.21,
+        "danger": 0.029,
+        "decisions": 41,
+        "pp": 2.8
+      },
+      "signature": "clock<lock; keyA<cover:ice; clock<waitForTwin; keyPair<lookalikeChoice",
+      "ms": 2632
+    },
+    {
+      "file": "waitLookalikeWay-L7-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 7,
+      "spare": 2,
+      "winningFirstMoves": 4,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 4,
+        "unknown": 0,
+        "legal": 10,
+        "rows": [
+          {
+            "tile": 70,
+            "result": "win"
+          },
+          {
+            "tile": 71,
+            "result": "win"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "win"
+          },
+          {
+            "tile": 74,
+            "result": "win"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          },
+          {
+            "tile": 76,
+            "result": "lose"
+          },
+          {
+            "tile": 77,
+            "result": "lose"
+          },
+          {
+            "tile": 78,
+            "result": "lose"
+          },
+          {
+            "tile": 79,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.4537,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 6,
+        "at3": 3,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.558,
+          0.2,
+          0.175,
+          0.067
+        ],
+        "mean": 0.75,
+        "twoPlus": 0.242,
+        "parks": 3.2,
+        "parkAt": [
+          0.9,
+          1.1,
+          1.2
+        ],
+        "wrongPark": 0.31,
+        "danger": 0.021,
+        "decisions": 41,
+        "pp": 2.3
+      },
+      "signature": "clock<lock; keyA<way:ice; clock<waitForTwin; keyPair<lookalikeChoice",
+      "ms": 1567
+    },
+    {
+      "file": "waitLookalikeWay-L20-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 7,
+      "spare": 2,
+      "winningFirstMoves": 8,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 8,
+        "unknown": 0,
+        "legal": 15,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "win"
+          },
+          {
+            "tile": 1,
+            "result": "lose"
+          },
+          {
+            "tile": 2,
+            "result": "win"
+          },
+          {
+            "tile": 3,
+            "result": "lose"
+          },
+          {
+            "tile": 4,
+            "result": "lose"
+          },
+          {
+            "tile": 5,
+            "result": "win"
+          },
+          {
+            "tile": 6,
+            "result": "lose"
+          },
+          {
+            "tile": 45,
+            "result": "win"
+          },
+          {
+            "tile": 46,
+            "result": "lose"
+          },
+          {
+            "tile": 51,
+            "result": "lose"
+          },
+          {
+            "tile": 71,
+            "result": "win"
+          },
+          {
+            "tile": 72,
+            "result": "win"
+          },
+          {
+            "tile": 81,
+            "result": "lose"
+          },
+          {
+            "tile": 82,
+            "result": "win"
+          },
+          {
+            "tile": 83,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.0963,
+      "close": {
+        "close": 2,
+        "share": 0.0476,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 6,
+        "at3": 3,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.317,
+          0.526,
+          0.119,
+          0.038
+        ],
+        "mean": 0.88,
+        "twoPlus": 0.157,
+        "parks": 3,
+        "parkAt": [
+          1,
+          1.4,
+          0.6
+        ],
+        "wrongPark": 0.42,
+        "danger": 0.02,
+        "decisions": 43,
+        "pp": 2
+      },
+      "signature": "clock<lock; keyA<way:ice; clock<waitForTwin; keyPair<lookalikeChoice",
+      "ms": 2000
+    },
+    {
+      "file": "waitLookalikeWay-L41-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 9,
+      "spare": 2,
+      "winningFirstMoves": 3,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 3,
+        "unknown": 0,
+        "legal": 7,
+        "rows": [
+          {
+            "tile": 42,
+            "result": "win"
+          },
+          {
+            "tile": 43,
+            "result": "lose"
+          },
+          {
+            "tile": 63,
+            "result": "win"
+          },
+          {
+            "tile": 64,
+            "result": "lose"
+          },
+          {
+            "tile": 65,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.3713,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 8,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.713,
+          0.084,
+          0.152,
+          0.051
+        ],
+        "mean": 0.54,
+        "twoPlus": 0.203,
+        "parks": 2.9,
+        "parkAt": [
+          1,
+          1,
+          0.9
+        ],
+        "wrongPark": 0.21,
+        "danger": 0.018,
+        "decisions": 38,
+        "pp": 1.9
+      },
+      "signature": "clock<lock; keyA<way:ice; clock<waitForTwin; keyPair<lookalikeChoice",
+      "ms": 1115
+    },
+    {
+      "file": "waitLookalikeWay-L46-s12-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 13,
+      "spare": 2,
+      "winningFirstMoves": 3,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 3,
+        "unknown": 0,
+        "legal": 12,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 5,
+            "result": "lose"
+          },
+          {
+            "tile": 15,
+            "result": "lose"
+          },
+          {
+            "tile": 25,
+            "result": "lose"
+          },
+          {
+            "tile": 30,
+            "result": "lose"
+          },
+          {
+            "tile": 65,
+            "result": "win"
+          },
+          {
+            "tile": 66,
+            "result": "lose"
+          },
+          {
+            "tile": 69,
+            "result": "win"
+          },
+          {
+            "tile": 70,
+            "result": "lose"
+          },
+          {
+            "tile": 71,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.155,
+      "close": {
+        "close": 1,
+        "share": 0.027,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 12,
+        "at3": 6,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.172,
+          0.459,
+          0.289,
+          0.08
+        ],
+        "mean": 1.28,
+        "twoPlus": 0.369,
+        "parks": 3.9,
+        "parkAt": [
+          1,
+          2,
+          0.9
+        ],
+        "wrongPark": 0.31,
+        "danger": 0.026,
+        "decisions": 36,
+        "pp": 2.9
+      },
+      "signature": "clock<lock; keyA<way:ice; clock<waitForTwin; keyPair<lookalikeChoice",
+      "ms": 1312
+    },
+    {
+      "file": "waitLookalikeWay-L11-s11-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 9,
+      "spare": 1,
+      "winningFirstMoves": 4,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 4,
+        "unknown": 0,
+        "legal": 9,
+        "rows": [
+          {
+            "tile": 37,
+            "result": "lose"
+          },
+          {
+            "tile": 52,
+            "result": "win"
+          },
+          {
+            "tile": 62,
+            "result": "lose"
+          },
+          {
+            "tile": 63,
+            "result": "lose"
+          },
+          {
+            "tile": 71,
+            "result": "win"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "win"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.335,
+      "close": {
+        "close": 1,
+        "share": 0.0263,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 8,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.537,
+          0.249,
+          0.163,
+          0.052
+        ],
+        "mean": 0.73,
+        "twoPlus": 0.215,
+        "parks": 4.9,
+        "parkAt": [
+          2,
+          2,
+          0.9
+        ],
+        "wrongPark": 0.24,
+        "danger": 0.02,
+        "decisions": 40,
+        "pp": 2.9
+      },
+      "signature": "clock<lock; keyA<way:ice; clock<waitForTwin; keyPair<lookalikeChoice",
+      "ms": 1428
+    },
+    {
+      "file": "waitLookalikeWay-L44-s13-p2.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 13,
+      "spare": 2,
+      "winningFirstMoves": 5,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 5,
+        "unknown": 0,
+        "legal": 9,
+        "rows": [
+          {
+            "tile": 59,
+            "result": "win"
+          },
+          {
+            "tile": 60,
+            "result": "win"
+          },
+          {
+            "tile": 61,
+            "result": "lose"
+          },
+          {
+            "tile": 62,
+            "result": "lose"
+          },
+          {
+            "tile": 67,
+            "result": "lose"
+          },
+          {
+            "tile": 68,
+            "result": "win"
+          },
+          {
+            "tile": 70,
+            "result": "win"
+          },
+          {
+            "tile": 71,
+            "result": "lose"
+          },
+          {
+            "tile": 83,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.6625,
+      "close": {
+        "close": 2,
+        "share": 0.0476,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 12,
+        "at3": 6,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.68,
+          0.144,
+          0.127,
+          0.05
+        ],
+        "mean": 0.55,
+        "twoPlus": 0.177,
+        "parks": 3,
+        "parkAt": [
+          1,
+          1,
+          1
+        ],
+        "wrongPark": 0.23,
+        "danger": 0.025,
+        "decisions": 40,
+        "pp": 2
+      },
+      "signature": "clock<lock; keyA<way:ice; clock<waitForTwin; keyPair<lookalikeChoice",
+      "ms": 2173
+    },
+    {
+      "file": "waitLookalikeRoof-L24-s11-p1.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 9,
+      "spare": 1,
+      "winningFirstMoves": 3,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 3,
+        "unknown": 0,
+        "legal": 18,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 1,
+            "result": "lose"
+          },
+          {
+            "tile": 2,
+            "result": "win"
+          },
+          {
+            "tile": 3,
+            "result": "lose"
+          },
+          {
+            "tile": 4,
+            "result": "lose"
+          },
+          {
+            "tile": 5,
+            "result": "lose"
+          },
+          {
+            "tile": 40,
+            "result": "lose"
+          },
+          {
+            "tile": 41,
+            "result": "lose"
+          },
+          {
+            "tile": 45,
+            "result": "lose"
+          },
+          {
+            "tile": 53,
+            "result": "lose"
+          },
+          {
+            "tile": 54,
+            "result": "lose"
+          },
+          {
+            "tile": 67,
+            "result": "lose"
+          },
+          {
+            "tile": 68,
+            "result": "win"
+          },
+          {
+            "tile": 70,
+            "result": "lose"
+          },
+          {
+            "tile": 71,
+            "result": "win"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0,
+      "close": {
+        "close": 0,
+        "share": 0,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 4,
+        "at3": 3,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          1,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.074,
+          0.272,
+          0.584,
+          0.069
+        ],
+        "mean": 1.65,
+        "twoPlus": 0.653,
+        "parks": 2,
+        "parkAt": [
+          0,
+          1,
+          1
+        ],
+        "wrongPark": 0.77,
+        "danger": 0.113,
+        "decisions": 37,
+        "pp": 2
+      },
+      "signature": "clock<lock; keyA<cover:ice; clock<waitForTwin; keyPair<lookalikeChoice",
+      "ms": 8912
+    },
+    {
+      "file": "lookalikeCoverThaw-L3-s21-p3.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 11,
+      "spare": 3,
+      "winningFirstMoves": 3,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 3,
+        "unknown": 0,
+        "legal": 13,
+        "rows": [
+          {
+            "tile": 4,
+            "result": "lose"
+          },
+          {
+            "tile": 5,
+            "result": "lose"
+          },
+          {
+            "tile": 10,
+            "result": "lose"
+          },
+          {
+            "tile": 11,
+            "result": "lose"
+          },
+          {
+            "tile": 47,
+            "result": "win"
+          },
+          {
+            "tile": 48,
+            "result": "lose"
+          },
+          {
+            "tile": 53,
+            "result": "win"
+          },
+          {
+            "tile": 54,
+            "result": "lose"
+          },
+          {
+            "tile": 55,
+            "result": "lose"
+          },
+          {
+            "tile": 56,
+            "result": "lose"
+          },
+          {
+            "tile": 71,
+            "result": "lose"
+          },
+          {
+            "tile": 75,
+            "result": "win"
+          },
+          {
+            "tile": 79,
+            "result": "lose"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.075,
+      "close": {
+        "close": 2,
+        "share": 0.05,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 5,
+        "at3": 4,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          3,
+          2,
+          1,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.37,
+          0.415,
+          0.155,
+          0.06
+        ],
+        "mean": 0.9,
+        "twoPlus": 0.215,
+        "parks": 4.7,
+        "parkAt": [
+          1.9,
+          1.4,
+          1.4
+        ],
+        "wrongPark": 0.35,
+        "danger": 0.025,
+        "decisions": 41,
+        "pp": 2.8
+      },
+      "signature": "clock<cover:ice; coverThaw<lock; keyA<cover:ice; keyPair<lookalikeChoice",
+      "ms": 6294
+    },
+    {
+      "file": "lookalikeCoverThaw-L5-s12-p3.json",
+      "ok": true,
+      "errors": [],
+      "checks": [
+        "strictReplay",
+        "minimumByUnsatisfiableEarlierDeadline"
+      ],
+      "k": 13,
+      "spare": 3,
+      "winningFirstMoves": 5,
+      "unknownFirstMoves": 0,
+      "firstMoves": {
+        "winning": 5,
+        "unknown": 0,
+        "legal": 16,
+        "rows": [
+          {
+            "tile": 0,
+            "result": "lose"
+          },
+          {
+            "tile": 1,
+            "result": "lose"
+          },
+          {
+            "tile": 2,
+            "result": "lose"
+          },
+          {
+            "tile": 3,
+            "result": "lose"
+          },
+          {
+            "tile": 4,
+            "result": "win"
+          },
+          {
+            "tile": 5,
+            "result": "lose"
+          },
+          {
+            "tile": 72,
+            "result": "lose"
+          },
+          {
+            "tile": 73,
+            "result": "lose"
+          },
+          {
+            "tile": 74,
+            "result": "win"
+          },
+          {
+            "tile": 77,
+            "result": "win"
+          },
+          {
+            "tile": 78,
+            "result": "lose"
+          },
+          {
+            "tile": 81,
+            "result": "win"
+          },
+          {
+            "tile": 84,
+            "result": "lose"
+          },
+          {
+            "tile": 85,
+            "result": "lose"
+          },
+          {
+            "tile": 86,
+            "result": "lose"
+          },
+          {
+            "tile": 87,
+            "result": "win"
+          }
+        ]
+      },
+      "tailGreedyWin": 0.195,
+      "close": {
+        "close": 1,
+        "share": 0.0227,
+        "visible": 0,
+        "four": 0,
+        "meets": true
+      },
+      "pressure": {
+        "peak": 3,
+        "run2": 4,
+        "at3": 3,
+        "occ": [
+          1,
+          2,
+          3,
+          2,
+          1,
+          2,
+          1,
+          0,
+          1,
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "feel": {
+        "games": 16,
+        "lostGames": 0,
+        "waiting": [
+          0.308,
+          0.316,
+          0.336,
+          0.04
+        ],
+        "mean": 1.11,
+        "twoPlus": 0.376,
+        "parks": 4.7,
+        "parkAt": [
+          1.9,
+          2.1,
+          0.8
+        ],
+        "wrongPark": 0.19,
+        "danger": 0.007,
+        "decisions": 44,
+        "pp": 2.9
+      },
+      "signature": "clock<cover:ice; coverThaw<lock; keyA<cover:ice; keyPair<lookalikeChoice",
+      "ms": 10928
+    }
+  ]
+}

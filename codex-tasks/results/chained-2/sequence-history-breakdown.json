@@ -1,0 +1,113 @@
+{
+  "250-302": {
+    "boards": 53,
+    "counts": {
+      "wrongIdea6": 91,
+      "wrongIdeaShape20": 13,
+      "layout12": 1,
+      "duplicateLevel": 0
+    },
+    "missing": [
+      {
+        "level": 255,
+        "wrongIdea": true,
+        "shape": true,
+        "layout": -1
+      },
+      {
+        "level": 257,
+        "wrongIdea": true,
+        "shape": true,
+        "layout": 16
+      },
+      {
+        "level": 259,
+        "wrongIdea": true,
+        "shape": true,
+        "layout": 9
+      },
+      {
+        "level": 262,
+        "wrongIdea": true,
+        "shape": true,
+        "layout": -1
+      },
+      {
+        "level": 264,
+        "wrongIdea": true,
+        "shape": true,
+        "layout": 24
+      },
+      {
+        "level": 267,
+        "wrongIdea": true,
+        "shape": true,
+        "layout": 12
+      },
+      {
+        "level": 271,
+        "wrongIdea": true,
+        "shape": true,
+        "layout": 34
+      },
+      {
+        "level": 273,
+        "wrongIdea": true,
+        "shape": true,
+        "layout": -1
+      },
+      {
+        "level": 277,
+        "wrongIdea": true,
+        "shape": true,
+        "layout": -1
+      },
+      {
+        "level": 279,
+        "wrongIdea": true,
+        "shape": true,
+        "layout": 46
+      },
+      {
+        "level": 282,
+        "wrongIdea": true,
+        "shape": true,
+        "layout": -1
+      },
+      {
+        "level": 284,
+        "wrongIdea": true,
+        "shape": true,
+        "layout": 40
+      },
+      {
+        "level": 286,
+        "wrongIdea": true,
+        "shape": true,
+        "layout": -1
+      },
+      {
+        "level": 288,
+        "wrongIdea": true,
+        "shape": true,
+        "layout": -1
+      },
+      {
+        "level": 301,
+        "wrongIdea": true,
+        "shape": true,
+        "layout": -1
+      }
+    ]
+  },
+  "303-331": {
+    "boards": 29,
+    "counts": {
+      "wrongIdea6": 159,
+      "wrongIdeaShape20": 27,
+      "layout12": 24,
+      "duplicateLevel": 0
+    },
+    "missing": []
+  }
+}

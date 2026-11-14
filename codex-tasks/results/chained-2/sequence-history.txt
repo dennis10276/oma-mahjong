@@ -1,0 +1,4008 @@
+{
+  "ok": false,
+  "boards": 82,
+  "counts": {
+    "wrongIdea6": 262,
+    "wrongIdeaShape20": 46,
+    "layout12": 29,
+    "duplicateLevel": 0
+  },
+  "missing": [
+    {
+      "level": 255,
+      "wrongIdea": true,
+      "shape": true,
+      "layout": -1
+    },
+    {
+      "level": 257,
+      "wrongIdea": true,
+      "shape": true,
+      "layout": 16
+    },
+    {
+      "level": 259,
+      "wrongIdea": true,
+      "shape": true,
+      "layout": 9
+    },
+    {
+      "level": 262,
+      "wrongIdea": true,
+      "shape": true,
+      "layout": -1
+    },
+    {
+      "level": 264,
+      "wrongIdea": true,
+      "shape": true,
+      "layout": 24
+    },
+    {
+      "level": 267,
+      "wrongIdea": true,
+      "shape": true,
+      "layout": 12
+    },
+    {
+      "level": 271,
+      "wrongIdea": true,
+      "shape": true,
+      "layout": 34
+    },
+    {
+      "level": 273,
+      "wrongIdea": true,
+      "shape": true,
+      "layout": -1
+    },
+    {
+      "level": 277,
+      "wrongIdea": true,
+      "shape": true,
+      "layout": -1
+    },
+    {
+      "level": 279,
+      "wrongIdea": true,
+      "shape": true,
+      "layout": 46
+    },
+    {
+      "level": 282,
+      "wrongIdea": true,
+      "shape": true,
+      "layout": -1
+    },
+    {
+      "level": 284,
+      "wrongIdea": true,
+      "shape": true,
+      "layout": 40
+    },
+    {
+      "level": 286,
+      "wrongIdea": true,
+      "shape": true,
+      "layout": -1
+    },
+    {
+      "level": 288,
+      "wrongIdea": true,
+      "shape": true,
+      "layout": -1
+    },
+    {
+      "level": 301,
+      "wrongIdea": true,
+      "shape": true,
+      "layout": -1
+    }
+  ],
+  "rows": [
+    {
+      "level": 250,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-250.json",
+      "layout": 13,
+      "shape": "clock<cover:ice; coverThaw<ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 251,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-251.json",
+      "layout": 7,
+      "shape": "clock<ice; thaw<lock",
+      "wrongIdea": [
+        "earlyKey"
+      ],
+      "derived": true
+    },
+    {
+      "level": 252,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-252.json",
+      "layout": 40,
+      "shape": "clock<lock; keyA<way:ice",
+      "wrongIdea": [
+        "earlyKey"
+      ],
+      "derived": true
+    },
+    {
+      "level": 253,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-253.json",
+      "layout": 39,
+      "shape": "clock<cover:lock; keyA<cover:ice",
+      "wrongIdea": [
+        "earlyKey"
+      ],
+      "derived": true
+    },
+    {
+      "level": 254,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-254.json",
+      "layout": 36,
+      "shape": "clock<cover:ice; coverThaw<lock",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 255,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-255.json",
+      "layout": -1,
+      "shape": null,
+      "wrongIdea": [],
+      "derived": true
+    },
+    {
+      "level": 256,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-256.json",
+      "layout": 2,
+      "shape": "clock<ice; thaw<ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 257,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-257.json",
+      "layout": 16,
+      "shape": null,
+      "wrongIdea": [],
+      "derived": true
+    },
+    {
+      "level": 258,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-258.json",
+      "layout": 35,
+      "shape": "clock<ice; thaw<lock; keyB<cover:ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 259,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-259.json",
+      "layout": 9,
+      "shape": null,
+      "wrongIdea": [],
+      "derived": true
+    },
+    {
+      "level": 260,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-260.json",
+      "layout": 47,
+      "shape": "clock<lock; keyA<cover:ice; keyB<cover:ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 261,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-261.json",
+      "layout": 18,
+      "shape": "clock<cover:lock; keyA<cover:ice; keyB<cover:ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 262,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-262.json",
+      "layout": -1,
+      "shape": null,
+      "wrongIdea": [],
+      "derived": true
+    },
+    {
+      "level": 263,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-263.json",
+      "layout": 14,
+      "shape": "clock<lock; clock<cover:ice; keyA<cover:ice",
+      "wrongIdea": [
+        "earlyKey"
+      ],
+      "derived": true
+    },
+    {
+      "level": 264,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-264.json",
+      "layout": 24,
+      "shape": null,
+      "wrongIdea": [],
+      "derived": true
+    },
+    {
+      "level": 265,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-265.json",
+      "layout": 0,
+      "shape": "clock<cover:lock; keyA<way:ice; keyB<cover:ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 266,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-266.json",
+      "layout": 3,
+      "shape": "clock<ice; thaw<lock; keyA<cover:ice",
+      "wrongIdea": [
+        "earlyKey"
+      ],
+      "derived": true
+    },
+    {
+      "level": 267,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-267.json",
+      "layout": 12,
+      "shape": null,
+      "wrongIdea": [],
+      "derived": true
+    },
+    {
+      "level": 268,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-268.json",
+      "layout": 17,
+      "shape": "clock<lock; keyA<way:ice; keyB<cover:ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 269,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-269.json",
+      "layout": 11,
+      "shape": "clock<ice; thaw<lock; keyB<cover:ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 270,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-270.json",
+      "layout": 29,
+      "shape": "clock<ice; thaw<lock; keyA<cover:ice",
+      "wrongIdea": [
+        "earlyKey",
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 271,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-271.json",
+      "layout": 34,
+      "shape": null,
+      "wrongIdea": [],
+      "derived": true
+    },
+    {
+      "level": 272,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-272.json",
+      "layout": 16,
+      "shape": "clock<ice; thaw<lock; keyA<cover:ice; keyB<cover:ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 273,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-273.json",
+      "layout": -1,
+      "shape": null,
+      "wrongIdea": [],
+      "derived": true
+    },
+    {
+      "level": 274,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-274.json",
+      "layout": 36,
+      "shape": "clock<lock; clock<cover:ice; keyA<cover:ice",
+      "wrongIdea": [
+        "earlyKey",
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 275,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-275.json",
+      "layout": 7,
+      "shape": "clock<ice; thaw<lock; keyA<way:ice; keyB<way:ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 276,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-276.json",
+      "layout": 40,
+      "shape": "clock<ice; thaw<lock; keyA<way:ice",
+      "wrongIdea": [
+        "earlyKey"
+      ],
+      "derived": true
+    },
+    {
+      "level": 277,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-277.json",
+      "layout": -1,
+      "shape": null,
+      "wrongIdea": [],
+      "derived": true
+    },
+    {
+      "level": 278,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-278.json",
+      "layout": 18,
+      "shape": "clock<lock; keyA<way:ice; keyB<way:ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 279,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-279.json",
+      "layout": 46,
+      "shape": null,
+      "wrongIdea": [],
+      "derived": true
+    },
+    {
+      "level": 280,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-280.json",
+      "layout": 32,
+      "shape": "clock<ice; thaw<lock; keyA<way:ice",
+      "wrongIdea": [
+        "earlyKey"
+      ],
+      "derived": true
+    },
+    {
+      "level": 281,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-281.json",
+      "layout": 9,
+      "shape": "clock<ice; thaw<lock; keyB<cover:ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 282,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-282.json",
+      "layout": -1,
+      "shape": null,
+      "wrongIdea": [],
+      "derived": true
+    },
+    {
+      "level": 283,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-283.json",
+      "layout": 1,
+      "shape": "clock<lock; clock<cover:ice; coverThaw<lock",
+      "wrongIdea": [
+        "earlyKey"
+      ],
+      "derived": true
+    },
+    {
+      "level": 284,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-284.json",
+      "layout": 40,
+      "shape": null,
+      "wrongIdea": [],
+      "derived": true
+    },
+    {
+      "level": 285,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-285.json",
+      "layout": 0,
+      "shape": "clock<cover:lock; keyA<cover:ice; keyB<cover:ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 286,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-286.json",
+      "layout": -1,
+      "shape": null,
+      "wrongIdea": [],
+      "derived": true
+    },
+    {
+      "level": 287,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-287.json",
+      "layout": 14,
+      "shape": "clock<cover:ice; coverThaw<lock; keyA<cover:ice",
+      "wrongIdea": [
+        "earlyKey"
+      ],
+      "derived": true
+    },
+    {
+      "level": 288,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-288.json",
+      "layout": -1,
+      "shape": null,
+      "wrongIdea": [],
+      "derived": true
+    },
+    {
+      "level": 289,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-289.json",
+      "layout": 17,
+      "shape": "clock<lock; keyA<cover:ice; keyB<cover:ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 290,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-290.json",
+      "layout": 13,
+      "shape": "clock<lock; keyA<way:ice; keyB<cover:ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 291,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-291.json",
+      "layout": 3,
+      "shape": "clock<ice; thaw<lock; keyA<cover:ice; keyB<cover:ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 292,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-292.json",
+      "layout": 16,
+      "shape": "clock<ice; thaw<lock; keyA<way:ice; keyB<cover:ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 293,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-293.json",
+      "layout": 7,
+      "shape": "clock<ice; thaw<lock; keyA<way:ice",
+      "wrongIdea": [
+        "earlyKey"
+      ],
+      "derived": true
+    },
+    {
+      "level": 294,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-294.json",
+      "layout": 36,
+      "shape": "clock<ice; thaw<lock; keyA<way:ice; keyB<cover:ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 295,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-295.json",
+      "layout": 37,
+      "shape": "clock<cover:lock; keyA<cover:ice; keyB<cover:ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 296,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-296.json",
+      "layout": 23,
+      "shape": "clock<lock; keyA<cover:ice; keyB<cover:ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 297,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-297.json",
+      "layout": 11,
+      "shape": "clock<ice; thaw<lock; keyA<cover:ice; keyB<cover:ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 298,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-298.json",
+      "layout": 18,
+      "shape": "clock<lock; keyA<way:ice; keyB<cover:ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 299,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-299.json",
+      "layout": 1,
+      "shape": "clock<lock; clock<cover:ice; keyA<cover:ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 300,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-300.json",
+      "layout": 0,
+      "shape": "clock<ice; thaw<lock; keyA<cover:ice",
+      "wrongIdea": [
+        "earlyKey"
+      ],
+      "derived": true
+    },
+    {
+      "level": 301,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-301.json",
+      "layout": -1,
+      "shape": null,
+      "wrongIdea": [],
+      "derived": true
+    },
+    {
+      "level": 302,
+      "file": "source\\analysis\\builder\\bank\\placed-250-B\\level-302.json",
+      "layout": 14,
+      "shape": "clock<lock; clock<cover:ice; coverThaw<ice; keyA<cover:ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 303,
+      "file": "source\\analysis\\builder\\bank\\placed-303\\level-303.json",
+      "layout": 14,
+      "shape": "clock<ice; thaw<lock; keyA<way:ice; clock<waitForTwin",
+      "wrongIdea": [
+        "earlyKey",
+        "lonelyMelt",
+        "waitForTwin"
+      ],
+      "derived": true
+    },
+    {
+      "level": 304,
+      "file": "source\\analysis\\builder\\bank\\placed-303\\level-304.json",
+      "layout": 30,
+      "shape": "clock<ice; thaw<lock; keyA<way:ice",
+      "wrongIdea": [
+        "earlyKey"
+      ],
+      "derived": true
+    },
+    {
+      "level": 305,
+      "file": "source\\analysis\\builder\\bank\\placed-303\\level-305.json",
+      "layout": 31,
+      "shape": "clock<lock; clock<cover:ice; coverThaw<ice; clock<waitForTwin",
+      "wrongIdea": [
+        "earlyKey",
+        "lonelyMelt",
+        "waitForTwin"
+      ],
+      "derived": true
+    },
+    {
+      "level": 306,
+      "file": "source\\analysis\\builder\\bank\\placed-303\\level-306.json",
+      "layout": 14,
+      "shape": "clock<ice; thaw<lock; keyA<cover:ice; clock<waitForTwin",
+      "wrongIdea": [
+        "earlyKey",
+        "waitForTwin"
+      ],
+      "derived": true
+    },
+    {
+      "level": 307,
+      "file": "source\\analysis\\builder\\bank\\placed-303\\level-307.json",
+      "layout": 3,
+      "shape": "clock<lock; keyA<way:ice; keyB<cover:ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 308,
+      "file": "source\\analysis\\builder\\bank\\placed-303\\level-308.json",
+      "layout": 18,
+      "shape": "clock<ice; thaw<lock; keyA<cover:ice; keyPair<lookalikeChoice",
+      "wrongIdea": [
+        "lonelyMelt",
+        "lookalikeChoice"
+      ],
+      "derived": true
+    },
+    {
+      "level": 309,
+      "file": "source\\analysis\\builder\\bank\\placed-303\\level-309.json",
+      "layout": 31,
+      "shape": "clock<lock; clock<cover:ice; keyA<cover:ice; keyPair<lookalikeChoice",
+      "wrongIdea": [
+        "earlyKey",
+        "lonelyMelt",
+        "lookalikeChoice"
+      ],
+      "derived": true
+    },
+    {
+      "level": 310,
+      "file": "source\\analysis\\builder\\bank\\placed-303\\level-310.json",
+      "layout": 13,
+      "shape": "clock<lock; keyA<cover:ice; keyB<cover:ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 311,
+      "file": "source\\analysis\\builder\\bank\\placed-303\\level-311.json",
+      "layout": 9,
+      "shape": "clock<ice; thaw<lock; keyA<cover:ice",
+      "wrongIdea": [
+        "earlyKey"
+      ],
+      "derived": true
+    },
+    {
+      "level": 312,
+      "file": "source\\analysis\\builder\\bank\\placed-303\\level-312.json",
+      "layout": 14,
+      "shape": "clock<lock; clock<cover:ice; keyA<way:ice; keyPair<lookalikeChoice",
+      "wrongIdea": [
+        "earlyKey",
+        "lonelyMelt",
+        "lookalikeChoice"
+      ],
+      "derived": true
+    },
+    {
+      "level": 313,
+      "file": "source\\analysis\\builder\\bank\\placed-303\\level-313.json",
+      "layout": 0,
+      "shape": "clock<ice; thaw<lock; keyA<cover:ice; keyB<clockRoof",
+      "wrongIdea": [
+        "clockRoof",
+        "earlyKey",
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 314,
+      "file": "source\\analysis\\builder\\bank\\placed-303\\level-314.json",
+      "layout": 41,
+      "shape": "clock<ice; thaw<lock; keyA<way:ice",
+      "wrongIdea": [
+        "earlyKey"
+      ],
+      "derived": true
+    },
+    {
+      "level": 315,
+      "file": "source\\analysis\\builder\\bank\\placed-303\\level-315.json",
+      "layout": 14,
+      "shape": "clock<lock; keyA<cover:ice; clock<waitForTwin; keyPair<lookalikeChoice",
+      "wrongIdea": [
+        "earlyKey",
+        "lookalikeChoice",
+        "waitForTwin"
+      ],
+      "derived": true
+    },
+    {
+      "level": 316,
+      "file": "source\\analysis\\builder\\bank\\placed-303\\level-316.json",
+      "layout": 31,
+      "shape": "clock<lock; keyA<way:ice; clock<waitForTwin; keyPair<lookalikeChoice",
+      "wrongIdea": [
+        "earlyKey",
+        "lookalikeChoice",
+        "waitForTwin"
+      ],
+      "derived": true
+    },
+    {
+      "level": 317,
+      "file": "source\\analysis\\builder\\bank\\placed-303\\level-317.json",
+      "layout": 36,
+      "shape": "clock<ice; thaw<lock; keyB<cover:ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 318,
+      "file": "source\\analysis\\builder\\bank\\placed-303\\level-318.json",
+      "layout": 31,
+      "shape": "clock<ice; thaw<lock; keyA<way:ice; clock<waitForTwin",
+      "wrongIdea": [
+        "earlyKey",
+        "lonelyMelt",
+        "waitForTwin"
+      ],
+      "derived": true
+    },
+    {
+      "level": 319,
+      "file": "source\\analysis\\builder\\bank\\placed-303\\level-319.json",
+      "layout": 16,
+      "shape": "clock<ice; thaw<lock; keyA<cover:ice",
+      "wrongIdea": [
+        "earlyKey"
+      ],
+      "derived": true
+    },
+    {
+      "level": 320,
+      "file": "source\\analysis\\builder\\bank\\placed-303\\level-320.json",
+      "layout": 36,
+      "shape": "clock<lock; clock<cover:ice; coverThaw<ice; clock<waitForTwin",
+      "wrongIdea": [
+        "earlyKey",
+        "lonelyMelt",
+        "waitForTwin"
+      ],
+      "derived": true
+    },
+    {
+      "level": 321,
+      "file": "source\\analysis\\builder\\bank\\placed-303\\level-321.json",
+      "layout": 18,
+      "shape": "clock<ice; thaw<lock; keyA<cover:ice; clock<waitForTwin",
+      "wrongIdea": [
+        "earlyKey",
+        "waitForTwin"
+      ],
+      "derived": true
+    },
+    {
+      "level": 322,
+      "file": "source\\analysis\\builder\\bank\\placed-303\\level-322.json",
+      "layout": 44,
+      "shape": "clock<ice; thaw<lock; keyA<way:ice",
+      "wrongIdea": [
+        "earlyKey"
+      ],
+      "derived": true
+    },
+    {
+      "level": 323,
+      "file": "source\\analysis\\builder\\bank\\placed-303\\level-323.json",
+      "layout": 31,
+      "shape": "clock<ice; thaw<lock; keyA<cover:ice; keyPair<lookalikeChoice",
+      "wrongIdea": [
+        "earlyKey",
+        "lonelyMelt",
+        "lookalikeChoice"
+      ],
+      "derived": true
+    },
+    {
+      "level": 324,
+      "file": "source\\analysis\\builder\\bank\\placed-303\\level-324.json",
+      "layout": 18,
+      "shape": "clock<lock; clock<cover:ice; keyA<cover:ice; keyPair<lookalikeChoice",
+      "wrongIdea": [
+        "lonelyMelt",
+        "lookalikeChoice"
+      ],
+      "derived": true
+    },
+    {
+      "level": 325,
+      "file": "source\\analysis\\builder\\bank\\placed-303\\level-325.json",
+      "layout": 4,
+      "shape": "clock<ice; thaw<lock; keyA<cover:ice; keyB<cover:ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 326,
+      "file": "source\\analysis\\builder\\bank\\placed-303\\level-326.json",
+      "layout": 18,
+      "shape": "clock<lock; clock<cover:ice; keyA<way:ice; keyPair<lookalikeChoice",
+      "wrongIdea": [
+        "earlyKey",
+        "lonelyMelt",
+        "lookalikeChoice"
+      ],
+      "derived": true
+    },
+    {
+      "level": 327,
+      "file": "source\\analysis\\builder\\bank\\placed-303\\level-327.json",
+      "layout": 18,
+      "shape": "clock<ice; thaw<lock; keyA<cover:ice; keyB<clockRoof",
+      "wrongIdea": [
+        "clockRoof",
+        "earlyKey",
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 328,
+      "file": "source\\analysis\\builder\\bank\\placed-303\\level-328.json",
+      "layout": 12,
+      "shape": "clock<cover:lock; keyA<cover:ice; keyB<cover:ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    },
+    {
+      "level": 329,
+      "file": "source\\analysis\\builder\\bank\\placed-303\\level-329.json",
+      "layout": 18,
+      "shape": "clock<lock; keyA<cover:ice; clock<waitForTwin; keyPair<lookalikeChoice",
+      "wrongIdea": [
+        "lookalikeChoice",
+        "waitForTwin"
+      ],
+      "derived": true
+    },
+    {
+      "level": 330,
+      "file": "source\\analysis\\builder\\bank\\placed-303\\level-330.json",
+      "layout": 14,
+      "shape": "clock<lock; keyA<way:ice; clock<waitForTwin; keyPair<lookalikeChoice",
+      "wrongIdea": [
+        "earlyKey",
+        "lookalikeChoice",
+        "waitForTwin"
+      ],
+      "derived": true
+    },
+    {
+      "level": 331,
+      "file": "source\\analysis\\builder\\bank\\placed-303\\level-331.json",
+      "layout": 0,
+      "shape": "clock<lock; keyA<cover:ice; keyB<cover:ice",
+      "wrongIdea": [
+        "lonelyMelt"
+      ],
+      "derived": true
+    }
+  ],
+  "violations": [
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        251,
+        252
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        251,
+        253
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        252,
+        253
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        250,
+        254
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        250,
+        256
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        254,
+        256
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        254,
+        258
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        256,
+        258
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        254,
+        260
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        256,
+        260
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        258,
+        260
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        256,
+        261
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        258,
+        261
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        260,
+        261
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        260,
+        265
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        261,
+        265
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        263,
+        266
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        265,
+        268
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        258,
+        269
+      ],
+      "wrongIdea": "lonelyMelt",
+      "shape": "clock<ice; thaw<lock; keyB<cover:ice",
+      "distance": 11
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        265,
+        269
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        268,
+        269
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        265,
+        270
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        266,
+        270
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        266,
+        270
+      ],
+      "wrongIdea": "earlyKey",
+      "shape": "clock<ice; thaw<lock; keyA<cover:ice",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        268,
+        270
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        269,
+        270
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        268,
+        272
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        269,
+        272
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        270,
+        272
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        263,
+        274
+      ],
+      "wrongIdea": "earlyKey",
+      "shape": "clock<lock; clock<cover:ice; keyA<cover:ice",
+      "distance": 11
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        268,
+        274
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        269,
+        274
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        270,
+        274
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        270,
+        274
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        272,
+        274
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        269,
+        275
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        270,
+        275
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        272,
+        275
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        274,
+        275
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        270,
+        276
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        274,
+        276
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        272,
+        278
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        274,
+        278
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        275,
+        278
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        274,
+        280
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        276,
+        280
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        276,
+        280
+      ],
+      "wrongIdea": "earlyKey",
+      "shape": "clock<ice; thaw<lock; keyA<way:ice",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        269,
+        281
+      ],
+      "wrongIdea": "lonelyMelt",
+      "shape": "clock<ice; thaw<lock; keyB<cover:ice",
+      "distance": 12
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        275,
+        281
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        278,
+        281
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        280,
+        283
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 3
+    },
+    {
+      "rule": "layout12",
+      "levels": [
+        276,
+        284
+      ],
+      "layout": 40,
+      "distance": 8
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        281,
+        285
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        283,
+        287
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        285,
+        289
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        285,
+        290
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        289,
+        290
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        272,
+        291
+      ],
+      "wrongIdea": "lonelyMelt",
+      "shape": "clock<ice; thaw<lock; keyA<cover:ice; keyB<cover:ice",
+      "distance": 19
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        285,
+        291
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        289,
+        291
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        290,
+        291
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        289,
+        292
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        290,
+        292
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        291,
+        292
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        276,
+        293
+      ],
+      "wrongIdea": "earlyKey",
+      "shape": "clock<ice; thaw<lock; keyA<way:ice",
+      "distance": 17
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        280,
+        293
+      ],
+      "wrongIdea": "earlyKey",
+      "shape": "clock<ice; thaw<lock; keyA<way:ice",
+      "distance": 13
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        287,
+        293
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        289,
+        294
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        290,
+        294
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        291,
+        294
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        292,
+        294
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        292,
+        294
+      ],
+      "wrongIdea": "lonelyMelt",
+      "shape": "clock<ice; thaw<lock; keyA<way:ice; keyB<cover:ice",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        285,
+        295
+      ],
+      "wrongIdea": "lonelyMelt",
+      "shape": "clock<cover:lock; keyA<cover:ice; keyB<cover:ice",
+      "distance": 10
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        289,
+        295
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        290,
+        295
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        291,
+        295
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        292,
+        295
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        294,
+        295
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        289,
+        296
+      ],
+      "wrongIdea": "lonelyMelt",
+      "shape": "clock<lock; keyA<cover:ice; keyB<cover:ice",
+      "distance": 7
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        290,
+        296
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        291,
+        296
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        292,
+        296
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        294,
+        296
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        295,
+        296
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        291,
+        297
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        291,
+        297
+      ],
+      "wrongIdea": "lonelyMelt",
+      "shape": "clock<ice; thaw<lock; keyA<cover:ice; keyB<cover:ice",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        292,
+        297
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        294,
+        297
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        295,
+        297
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        296,
+        297
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        290,
+        298
+      ],
+      "wrongIdea": "lonelyMelt",
+      "shape": "clock<lock; keyA<way:ice; keyB<cover:ice",
+      "distance": 8
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        292,
+        298
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        294,
+        298
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        295,
+        298
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        296,
+        298
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        297,
+        298
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        294,
+        299
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        295,
+        299
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        296,
+        299
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        297,
+        299
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        298,
+        299
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        296,
+        302
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        297,
+        302
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        298,
+        302
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        299,
+        302
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        297,
+        303
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        298,
+        303
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        299,
+        303
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        300,
+        303
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 3
+    },
+    {
+      "rule": "layout12",
+      "levels": [
+        302,
+        303
+      ],
+      "layout": 14,
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        302,
+        303
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        293,
+        304
+      ],
+      "wrongIdea": "earlyKey",
+      "shape": "clock<ice; thaw<lock; keyA<way:ice",
+      "distance": 11
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        300,
+        304
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        303,
+        304
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        299,
+        305
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        300,
+        305
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        302,
+        305
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        303,
+        305
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        303,
+        305
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        303,
+        305
+      ],
+      "wrongIdea": "waitForTwin",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        304,
+        305
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        300,
+        306
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 6
+    },
+    {
+      "rule": "layout12",
+      "levels": [
+        302,
+        306
+      ],
+      "layout": 14,
+      "distance": 4
+    },
+    {
+      "rule": "layout12",
+      "levels": [
+        303,
+        306
+      ],
+      "layout": 14,
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        303,
+        306
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        303,
+        306
+      ],
+      "wrongIdea": "waitForTwin",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        304,
+        306
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        305,
+        306
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        305,
+        306
+      ],
+      "wrongIdea": "waitForTwin",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        290,
+        307
+      ],
+      "wrongIdea": "lonelyMelt",
+      "shape": "clock<lock; keyA<way:ice; keyB<cover:ice",
+      "distance": 17
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        298,
+        307
+      ],
+      "wrongIdea": "lonelyMelt",
+      "shape": "clock<lock; keyA<way:ice; keyB<cover:ice",
+      "distance": 9
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        302,
+        307
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        303,
+        307
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        305,
+        307
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 2
+    },
+    {
+      "rule": "layout12",
+      "levels": [
+        298,
+        308
+      ],
+      "layout": 18,
+      "distance": 10
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        302,
+        308
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        303,
+        308
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        305,
+        308
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        307,
+        308
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        303,
+        309
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        303,
+        309
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        304,
+        309
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 5
+    },
+    {
+      "rule": "layout12",
+      "levels": [
+        305,
+        309
+      ],
+      "layout": 31,
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        305,
+        309
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        305,
+        309
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        306,
+        309
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        307,
+        309
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        308,
+        309
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        308,
+        309
+      ],
+      "wrongIdea": "lookalikeChoice",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        296,
+        310
+      ],
+      "wrongIdea": "lonelyMelt",
+      "shape": "clock<lock; keyA<cover:ice; keyB<cover:ice",
+      "distance": 14
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        305,
+        310
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        307,
+        310
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        308,
+        310
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        309,
+        310
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        300,
+        311
+      ],
+      "wrongIdea": "earlyKey",
+      "shape": "clock<ice; thaw<lock; keyA<cover:ice",
+      "distance": 11
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        305,
+        311
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        306,
+        311
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        309,
+        311
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 2
+    },
+    {
+      "rule": "layout12",
+      "levels": [
+        302,
+        312
+      ],
+      "layout": 14,
+      "distance": 10
+    },
+    {
+      "rule": "layout12",
+      "levels": [
+        303,
+        312
+      ],
+      "layout": 14,
+      "distance": 9
+    },
+    {
+      "rule": "layout12",
+      "levels": [
+        306,
+        312
+      ],
+      "layout": 14,
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        306,
+        312
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        307,
+        312
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        308,
+        312
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        308,
+        312
+      ],
+      "wrongIdea": "lookalikeChoice",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        309,
+        312
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        309,
+        312
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        309,
+        312
+      ],
+      "wrongIdea": "lookalikeChoice",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        310,
+        312
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        311,
+        312
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        307,
+        313
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        308,
+        313
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        309,
+        313
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        309,
+        313
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        310,
+        313
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        311,
+        313
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        312,
+        313
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        312,
+        313
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        304,
+        314
+      ],
+      "wrongIdea": "earlyKey",
+      "shape": "clock<ice; thaw<lock; keyA<way:ice",
+      "distance": 10
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        309,
+        314
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        311,
+        314
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        312,
+        314
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        313,
+        314
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 1
+    },
+    {
+      "rule": "layout12",
+      "levels": [
+        303,
+        315
+      ],
+      "layout": 14,
+      "distance": 12
+    },
+    {
+      "rule": "layout12",
+      "levels": [
+        306,
+        315
+      ],
+      "layout": 14,
+      "distance": 9
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        309,
+        315
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        309,
+        315
+      ],
+      "wrongIdea": "lookalikeChoice",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        311,
+        315
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 4
+    },
+    {
+      "rule": "layout12",
+      "levels": [
+        312,
+        315
+      ],
+      "layout": 14,
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        312,
+        315
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        312,
+        315
+      ],
+      "wrongIdea": "lookalikeChoice",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        313,
+        315
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        314,
+        315
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 1
+    },
+    {
+      "rule": "layout12",
+      "levels": [
+        305,
+        316
+      ],
+      "layout": 31,
+      "distance": 11
+    },
+    {
+      "rule": "layout12",
+      "levels": [
+        309,
+        316
+      ],
+      "layout": 31,
+      "distance": 7
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        311,
+        316
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        312,
+        316
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        312,
+        316
+      ],
+      "wrongIdea": "lookalikeChoice",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        313,
+        316
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        314,
+        316
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        315,
+        316
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        315,
+        316
+      ],
+      "wrongIdea": "lookalikeChoice",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        315,
+        316
+      ],
+      "wrongIdea": "waitForTwin",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        312,
+        317
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        313,
+        317
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        303,
+        318
+      ],
+      "wrongIdea": "earlyKey",
+      "shape": "clock<ice; thaw<lock; keyA<way:ice; clock<waitForTwin",
+      "distance": 15
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        303,
+        318
+      ],
+      "wrongIdea": "lonelyMelt",
+      "shape": "clock<ice; thaw<lock; keyA<way:ice; clock<waitForTwin",
+      "distance": 15
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        303,
+        318
+      ],
+      "wrongIdea": "waitForTwin",
+      "shape": "clock<ice; thaw<lock; keyA<way:ice; clock<waitForTwin",
+      "distance": 15
+    },
+    {
+      "rule": "layout12",
+      "levels": [
+        309,
+        318
+      ],
+      "layout": 31,
+      "distance": 9
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        312,
+        318
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        312,
+        318
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        313,
+        318
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        313,
+        318
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        314,
+        318
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        315,
+        318
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        315,
+        318
+      ],
+      "wrongIdea": "waitForTwin",
+      "distance": 3
+    },
+    {
+      "rule": "layout12",
+      "levels": [
+        316,
+        318
+      ],
+      "layout": 31,
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        316,
+        318
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        316,
+        318
+      ],
+      "wrongIdea": "waitForTwin",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        317,
+        318
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        300,
+        319
+      ],
+      "wrongIdea": "earlyKey",
+      "shape": "clock<ice; thaw<lock; keyA<cover:ice",
+      "distance": 19
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        311,
+        319
+      ],
+      "wrongIdea": "earlyKey",
+      "shape": "clock<ice; thaw<lock; keyA<cover:ice",
+      "distance": 8
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        313,
+        319
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        314,
+        319
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        315,
+        319
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        316,
+        319
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        318,
+        319
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        305,
+        320
+      ],
+      "wrongIdea": "earlyKey",
+      "shape": "clock<lock; clock<cover:ice; coverThaw<ice; clock<waitForTwin",
+      "distance": 15
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        305,
+        320
+      ],
+      "wrongIdea": "lonelyMelt",
+      "shape": "clock<lock; clock<cover:ice; coverThaw<ice; clock<waitForTwin",
+      "distance": 15
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        305,
+        320
+      ],
+      "wrongIdea": "waitForTwin",
+      "shape": "clock<lock; clock<cover:ice; coverThaw<ice; clock<waitForTwin",
+      "distance": 15
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        314,
+        320
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        315,
+        320
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        315,
+        320
+      ],
+      "wrongIdea": "waitForTwin",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        316,
+        320
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        316,
+        320
+      ],
+      "wrongIdea": "waitForTwin",
+      "distance": 4
+    },
+    {
+      "rule": "layout12",
+      "levels": [
+        317,
+        320
+      ],
+      "layout": 36,
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        317,
+        320
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        318,
+        320
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        318,
+        320
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        318,
+        320
+      ],
+      "wrongIdea": "waitForTwin",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        319,
+        320
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        306,
+        321
+      ],
+      "wrongIdea": "earlyKey",
+      "shape": "clock<ice; thaw<lock; keyA<cover:ice; clock<waitForTwin",
+      "distance": 15
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        306,
+        321
+      ],
+      "wrongIdea": "waitForTwin",
+      "shape": "clock<ice; thaw<lock; keyA<cover:ice; clock<waitForTwin",
+      "distance": 15
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        315,
+        321
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        315,
+        321
+      ],
+      "wrongIdea": "waitForTwin",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        316,
+        321
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        316,
+        321
+      ],
+      "wrongIdea": "waitForTwin",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        318,
+        321
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        318,
+        321
+      ],
+      "wrongIdea": "waitForTwin",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        319,
+        321
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        320,
+        321
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        320,
+        321
+      ],
+      "wrongIdea": "waitForTwin",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        304,
+        322
+      ],
+      "wrongIdea": "earlyKey",
+      "shape": "clock<ice; thaw<lock; keyA<way:ice",
+      "distance": 18
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        314,
+        322
+      ],
+      "wrongIdea": "earlyKey",
+      "shape": "clock<ice; thaw<lock; keyA<way:ice",
+      "distance": 8
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        316,
+        322
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        318,
+        322
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        319,
+        322
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        320,
+        322
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        321,
+        322
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        308,
+        323
+      ],
+      "wrongIdea": "lonelyMelt",
+      "shape": "clock<ice; thaw<lock; keyA<cover:ice; keyPair<lookalikeChoice",
+      "distance": 15
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        308,
+        323
+      ],
+      "wrongIdea": "lookalikeChoice",
+      "shape": "clock<ice; thaw<lock; keyA<cover:ice; keyPair<lookalikeChoice",
+      "distance": 15
+    },
+    {
+      "rule": "layout12",
+      "levels": [
+        316,
+        323
+      ],
+      "layout": 31,
+      "distance": 7
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        317,
+        323
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 6
+    },
+    {
+      "rule": "layout12",
+      "levels": [
+        318,
+        323
+      ],
+      "layout": 31,
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        318,
+        323
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        318,
+        323
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        319,
+        323
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        320,
+        323
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        320,
+        323
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        321,
+        323
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        322,
+        323
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        309,
+        324
+      ],
+      "wrongIdea": "lonelyMelt",
+      "shape": "clock<lock; clock<cover:ice; keyA<cover:ice; keyPair<lookalikeChoice",
+      "distance": 15
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        309,
+        324
+      ],
+      "wrongIdea": "lookalikeChoice",
+      "shape": "clock<lock; clock<cover:ice; keyA<cover:ice; keyPair<lookalikeChoice",
+      "distance": 15
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        318,
+        324
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        320,
+        324
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 4
+    },
+    {
+      "rule": "layout12",
+      "levels": [
+        321,
+        324
+      ],
+      "layout": 18,
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        323,
+        324
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        323,
+        324
+      ],
+      "wrongIdea": "lookalikeChoice",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        320,
+        325
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        323,
+        325
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        324,
+        325
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        312,
+        326
+      ],
+      "wrongIdea": "earlyKey",
+      "shape": "clock<lock; clock<cover:ice; keyA<way:ice; keyPair<lookalikeChoice",
+      "distance": 14
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        312,
+        326
+      ],
+      "wrongIdea": "lonelyMelt",
+      "shape": "clock<lock; clock<cover:ice; keyA<way:ice; keyPair<lookalikeChoice",
+      "distance": 14
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        312,
+        326
+      ],
+      "wrongIdea": "lookalikeChoice",
+      "shape": "clock<lock; clock<cover:ice; keyA<way:ice; keyPair<lookalikeChoice",
+      "distance": 14
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        320,
+        326
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        320,
+        326
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 6
+    },
+    {
+      "rule": "layout12",
+      "levels": [
+        321,
+        326
+      ],
+      "layout": 18,
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        321,
+        326
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        322,
+        326
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        323,
+        326
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        323,
+        326
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        323,
+        326
+      ],
+      "wrongIdea": "lookalikeChoice",
+      "distance": 3
+    },
+    {
+      "rule": "layout12",
+      "levels": [
+        324,
+        326
+      ],
+      "layout": 18,
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        324,
+        326
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        324,
+        326
+      ],
+      "wrongIdea": "lookalikeChoice",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        325,
+        326
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        313,
+        327
+      ],
+      "wrongIdea": "clockRoof",
+      "shape": "clock<ice; thaw<lock; keyA<cover:ice; keyB<clockRoof",
+      "distance": 14
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        313,
+        327
+      ],
+      "wrongIdea": "earlyKey",
+      "shape": "clock<ice; thaw<lock; keyA<cover:ice; keyB<clockRoof",
+      "distance": 14
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        313,
+        327
+      ],
+      "wrongIdea": "lonelyMelt",
+      "shape": "clock<ice; thaw<lock; keyA<cover:ice; keyB<clockRoof",
+      "distance": 14
+    },
+    {
+      "rule": "layout12",
+      "levels": [
+        321,
+        327
+      ],
+      "layout": 18,
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        321,
+        327
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        322,
+        327
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        323,
+        327
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        323,
+        327
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 4
+    },
+    {
+      "rule": "layout12",
+      "levels": [
+        324,
+        327
+      ],
+      "layout": 18,
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        324,
+        327
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        325,
+        327
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 2
+    },
+    {
+      "rule": "layout12",
+      "levels": [
+        326,
+        327
+      ],
+      "layout": 18,
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        326,
+        327
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        326,
+        327
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        323,
+        328
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        324,
+        328
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        325,
+        328
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        326,
+        328
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        327,
+        328
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        315,
+        329
+      ],
+      "wrongIdea": "lookalikeChoice",
+      "shape": "clock<lock; keyA<cover:ice; clock<waitForTwin; keyPair<lookalikeChoice",
+      "distance": 14
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        315,
+        329
+      ],
+      "wrongIdea": "waitForTwin",
+      "shape": "clock<lock; keyA<cover:ice; clock<waitForTwin; keyPair<lookalikeChoice",
+      "distance": 14
+    },
+    {
+      "rule": "layout12",
+      "levels": [
+        321,
+        329
+      ],
+      "layout": 18,
+      "distance": 8
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        323,
+        329
+      ],
+      "wrongIdea": "lookalikeChoice",
+      "distance": 6
+    },
+    {
+      "rule": "layout12",
+      "levels": [
+        324,
+        329
+      ],
+      "layout": 18,
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        324,
+        329
+      ],
+      "wrongIdea": "lookalikeChoice",
+      "distance": 5
+    },
+    {
+      "rule": "layout12",
+      "levels": [
+        326,
+        329
+      ],
+      "layout": 18,
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        326,
+        329
+      ],
+      "wrongIdea": "lookalikeChoice",
+      "distance": 3
+    },
+    {
+      "rule": "layout12",
+      "levels": [
+        327,
+        329
+      ],
+      "layout": 18,
+      "distance": 2
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        316,
+        330
+      ],
+      "wrongIdea": "earlyKey",
+      "shape": "clock<lock; keyA<way:ice; clock<waitForTwin; keyPair<lookalikeChoice",
+      "distance": 14
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        316,
+        330
+      ],
+      "wrongIdea": "lookalikeChoice",
+      "shape": "clock<lock; keyA<way:ice; clock<waitForTwin; keyPair<lookalikeChoice",
+      "distance": 14
+    },
+    {
+      "rule": "wrongIdeaShape20",
+      "levels": [
+        316,
+        330
+      ],
+      "wrongIdea": "waitForTwin",
+      "shape": "clock<lock; keyA<way:ice; clock<waitForTwin; keyPair<lookalikeChoice",
+      "distance": 14
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        324,
+        330
+      ],
+      "wrongIdea": "lookalikeChoice",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        326,
+        330
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        326,
+        330
+      ],
+      "wrongIdea": "lookalikeChoice",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        327,
+        330
+      ],
+      "wrongIdea": "earlyKey",
+      "distance": 3
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        329,
+        330
+      ],
+      "wrongIdea": "lookalikeChoice",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        329,
+        330
+      ],
+      "wrongIdea": "waitForTwin",
+      "distance": 1
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        325,
+        331
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 6
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        326,
+        331
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 5
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        327,
+        331
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 4
+    },
+    {
+      "rule": "wrongIdea6",
+      "levels": [
+        328,
+        331
+      ],
+      "wrongIdea": "lonelyMelt",
+      "distance": 3
+    }
+  ]
+}
