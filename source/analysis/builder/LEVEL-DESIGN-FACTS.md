@@ -149,6 +149,16 @@ add new decisions with a date.
     much already" (pressure parks 3.5), "the tray pressure after the trap is a bit too much" (7.8), "a little bit too hard if
     anything" (2.6), "feels fine" (3.6). So: known wrong idea / easy-to-see trap = strength B (about 7.5 pressure parks); new-idea
     chain of four = 1.5 to 3.
+  - **Where the chained traps go** (2026-11-14, lab 10 and Codex's lab on 8265; every note is about one exact board):
+    - easy to spot, small AHA -> below 300: waitThawKey "can easily sit in the <300 range", "around 275 or more chained to place later";
+      lookalikeCover "puzzle for 290s", "early introducing chains. Its an easy one"; waitLookalikeRoof-L18 "290-300 or start of chained in 300";
+      lookalikeCoverThaw-L12 "This is an AHA yes!. 290-310".
+    - 300+: lookalikeWay-L14 (5 stars, 7 tries) "Really cool to make it. 300+ approved"; roofThawKey "Yes AHA moment :). 300+ level";
+      waitLookalikeRoof-L14 "Fine to put in 300+". 325+: waitLookalikeWay-L31 (5 stars, 5 tries) "Keep it like it is tho and place it 325+".
+    - not good enough: waitLookalikeWay-L7 "too easy.. not even an AHA"; outsideIn "No AHA"; clearLockRoof "not hard enough to spot";
+      lookalikeWay-L13 "Got an AHA but got stuck with it. Is that intended?" (held).
+    - "feels like I played it before. Make sure there is no copy of anything in 250-300."
+    Levels 250-340 on the work branch follow this (`bank/assemble_all.js`, list in `bank/placed-all/placed.md`): known-idea chains end at 302.
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
   - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
     played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is
