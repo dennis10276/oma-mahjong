@@ -573,5 +573,18 @@
       "shape": "waitLookalikeWay",
       "layout": 44
     }
-  ]
+  ],
+  "humanReview": {
+    "status": "mixed-requires-revision",
+    "approvedFor332Plus": false,
+    "findings": "codex-tasks/results/chained-2/lab-findings.json",
+    "reviewedPrimaryFiles": [
+      "clearLockRoof-L16-s21-p1.json",
+      "lookalikeCover-L17-s12-p2.json",
+      "roofThawKey-L23-s12-p2.json",
+      "lookalikeWay-L13-s12-p2.json",
+      "waitThawKey-L4-s11-p1.json"
+    ],
+    "rankingStatus": "pre-feedback design judgment; use exact-board findings before placement"
+  }
 }

@@ -30,5 +30,11 @@
     "skipped": 1,
     "failed": 0
   },
-  "bigBoards": 6
+  "bigBoards": 6,
+  "humanReview": {
+    "status": "mixed-requires-revision",
+    "approvedFor332Plus": false,
+    "notes": 8,
+    "exactPrimaryBoardsReviewed": 5
+  }
 }

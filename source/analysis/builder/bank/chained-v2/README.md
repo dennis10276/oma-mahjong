@@ -5,6 +5,12 @@ hosts per original shape, and two clearer-key-roof variants. The `far-end/`
 directory preserves the two original extreme designs separately. Nothing here
 changes the level table.
 
+Dennis’s lab feedback is mixed. Several exact boards need a stronger AHA or
+earlier placement, and the L13 lookalikeWay board needs continuation/clue review.
+`selection.json` includes a human-review overlay; placement approval for 332+
+remains pending. Full notes and conclusions are in
+`codex-tasks/results/chained-2/LAB-FINDINGS.md` and `lab-findings.json`.
+
 Each delivered card contains `card.wrongIdea`, its clock minimum and spare,
 separately proven baits, every special's ablation, twin and visibility facts,
 and the prescribed expert's pressure parks. `audit-final.json` records the fresh
