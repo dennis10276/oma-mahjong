@@ -168,6 +168,13 @@ add new decisions with a date.
     make it 320+". It sits on level 330 (a 96-tile board).
   - **All six new wrong ideas are approved** (same message): "I liked all your ideas so far so after they are done place them in the
     builder and then make combinations to make 320+ levels with the builder."
+  - **Big boards on the tens, and tiles stay 54 px** (2026-11-14, when the 250-300 release was prepared): "Can we move the big boards
+    at 10's and can we find a way to keep the tiles 54 px by moving other parts of the screen slightly?" 96-tile boards sit only on
+    levels ending in 0 (250-300, 310, 330). In the game (release branch): 2 px of room beside the pile instead of 4, and a pile
+    limited by the screen height takes a little padding from the top bar and the tray (nothing gets smaller). On the 392 x 600
+    reference: nine-row boards 52.2 -> 54.1 px, seven-wide boards 53.9 -> 54.5 px.
+  - **Release of 250-300 and the tile fixes asked** (2026-11-14): "Can we release 250-300? And all the fixes for tiles we did in a new
+    release?" Prepared as 1.69 on `wip/release-levels-250-300`; not released until he says so.
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
   - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
     played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is
