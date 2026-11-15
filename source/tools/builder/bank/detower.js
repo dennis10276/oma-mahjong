@@ -261,6 +261,88 @@ function cutMiddleRun(level, opts = {}) {
   return save({ level, ok: false, method: 'cut the middle strip', source: c.source, tried });
 }
 
+// ---------- slide the bands (from the released board; Dennis's editor work of 2026-11-16) ----------
+// 288: "move the second to lowest row to the right"; 278: two bottom-left tiles into the hollow, "then move the pile to the
+// middle". The board is split into horizontal bands that no tile crosses (all layers). Sliding a whole band sideways keeps
+// every relation inside it (on, beside, thaws), and bands do not touch each other, so the game is the same. A band wider than
+// the window loses its outer tiles on the side without trap tiles (with whatever rests on them); those go back brick-wise,
+// into the hollow middle first. Every band is then centred. Rows may end up lined up under each other (as in Dennis's 288);
+// nothing is stacked straight on a tile.
+function bandRun(level, opts = {}) {
+  const c = candidate(level), before = P.original(c.source), a = before.design, base = P.prepare(before), n = a.tiles.length;
+  const sp = [a.clock.i, ...a.obst.keys, ...a.obst.locks, ...Object.keys(a.obst.ice).map(Number)], bait = (before.card?.trap?.baits || []).flatMap(b => b.tiles);
+  const g = E.game(clone(a)), core = new Set([...sp, ...bait, ...a.solution.slice(0, a.solution.indexOf(a.clock.i) + 1)]);
+  for (const s of [...sp, ...bait]) { for (const k of ['above', 'left', 'right']) for (const u of g.nb[k][s] || []) core.add(u); if (g.iceH && g.iceH[s]) for (const u of g.iceNb[s]) core.add(u); }
+  // bands: merge overlapping y-intervals
+  const iv = [...new Set(a.tiles.map(t => t[1]))].sort((p, q) => p - q), bands = [];
+  for (const y of iv) { const last = bands[bands.length - 1]; if (last && y < last.y1) last.y1 = Math.max(last.y1, y + 2); else bands.push({ y0: y, y1: y + 2 }); }
+  const bandOf = t => bands.findIndex(b => t[1] >= b.y0 && t[1] < b.y1);
+  const members = bands.map((_, k) => a.tiles.map((t, i) => bandOf(t) === k ? i : null).filter(i => i != null));
+  const tried = [], ZMAX = Math.max(...a.tiles.map(t => t[2]));
+  // per band, the ways to make it fit: trim 0..2 half-units on the left and/or right (with cascade), no trap tile cut
+  const trims = (k, W) => {
+    const ids = members[k], xs = ids.map(i => a.tiles[i][0]), lo = Math.min(...xs), hi = Math.max(...xs) + 2, out = [];
+    for (let tl = 0; tl <= 3; tl++) for (let tr = 0; tr <= 3; tr++) {
+      const cut = new Set(ids.filter(i => a.tiles[i][0] < lo + tl || a.tiles[i][0] + 2 > hi - tr));
+      for (let ch = true; ch;) { ch = false; for (const i of ids) { if (cut.has(i) || !a.tiles[i][2]) continue; const rest = ids.filter(j => !cut.has(j)).map(j => a.tiles[j]); if (!supportedAt(rest, a.tiles[i], -1)) { cut.add(i); ch = true; } } }
+      const left = ids.filter(i => !cut.has(i)); if (!left.length || [...cut].some(i => core.has(i))) continue;
+      // groups inside the band that do not touch (any layer): their gaps may close to half a tile, nothing gains a neighbour
+      const segs = []; for (const i of left.slice().sort((p, q) => a.tiles[p][0] - a.tiles[q][0])) { const t = a.tiles[i], s = segs[segs.length - 1]; if (s && t[0] <= s.hi) { s.ids.push(i); s.hi = Math.max(s.hi, t[0] + 2); } else segs.push({ ids: [i], lo: t[0], hi: t[0] + 2 }); }
+      // merge groups that overlap after sorting by lo (a later tile may reach back)
+      for (let ch = true; ch;) { ch = false; for (let s = 0; s + 1 < segs.length; s++) if (segs[s + 1].lo < segs[s].hi) { segs[s].ids.push(...segs[s + 1].ids); segs[s].hi = Math.max(segs[s].hi, segs[s + 1].hi); segs.splice(s + 1, 1); ch = true; break; } }
+      const w0 = segs[segs.length - 1].hi - segs[0].lo, gaps = segs.slice(1).map((s, j) => s.lo - segs[j].hi), slack = gaps.reduce((p, q) => p + q - 1, 0);
+      let need = Math.max(0, w0 - W); if (need > slack) continue;
+      // close the gaps evenly, middle ones first
+      const red = gaps.map(() => 0), order = gaps.map((_, j) => j).sort((p, q) => Math.abs(p - (gaps.length - 1) / 2) - Math.abs(q - (gaps.length - 1) / 2));
+      while (need > 0) { let moved = false; for (const j of order) { if (need && gaps[j] - red[j] > 1) { red[j]++; need--; moved = true; } } if (!moved) break; }
+      const shift = new Map(); let acc = 0; segs.forEach((s, j) => { if (j) acc += red[j - 1]; for (const i of s.ids) shift.set(i, -acc); });
+      const nx = left.map(i => a.tiles[i][0] + shift.get(i)), lo2 = Math.min(...nx), w = Math.max(...nx) + 2 - lo2;
+      if (w > W) continue;
+      out.push({ cut: [...cut], lo: lo2, w, shift });
+    }
+    const best = new Map(); for (const o of out) { const key = o.cut.slice().sort((p, q) => p - q).join(','); if (!best.has(key)) best.set(key, o); }
+    return [...best.values()].sort((p, q) => p.cut.length - q.cut.length).slice(0, 4);
+  };
+  for (const W of opts.widths || [12, 13]) {
+    const opt = bands.map((_, k) => trims(k, W));
+    if (opt.some(o => !o.length)) { tried.push({ W, why: 'band ' + opt.findIndex(o => !o.length) + ' cannot fit without cutting a trap tile' }); continue; }
+    // combinations, fewest cut tiles first (capped)
+    let combos = [[]]; for (const o of opt) { const next = []; for (const cmb of combos) for (const x of o) next.push(cmb.concat([x])); combos = next.sort((p, q) => p.reduce((s, x) => s + x.cut.length, 0) - q.reduce((s, x) => s + x.cut.length, 0)).slice(0, 24); }
+    for (const cmb of combos.slice(0, opts.tries || 8)) for (const parity of [0, 1]) {
+      const T = a.tiles.map(t => t.slice()), loose = new Set();
+      cmb.forEach((o, k) => { for (const i of o.cut) { loose.add(i); T[i] = null; } let sh = Math.floor((W - o.w) / 2) - o.lo; if ((W - o.w) % 2 && parity) sh += 1; for (const i of members[k]) if (T[i]) T[i] = [T[i][0] + (o.shift.get(i) || 0) + sh, T[i][1], T[i][2]]; });
+      const m = W - 2, left = [...loose].sort((i, j) => a.tiles[i][2] - a.tiles[j][2]);
+      const guardT = [...core].map(i => T[i]).filter(Boolean);
+      const nearGuard = p => guardT.some(q => (p[2] === q[2] + 1 && Math.abs(p[0] - q[0]) < 2 && Math.abs(p[1] - q[1]) < 2) || (p[2] === q[2] && Math.abs(p[1] - q[1]) < 2 && Math.abs(p[0] - q[0]) === 2));
+      const Y0 = Math.min(...a.tiles.map(t => t[1])), Y1 = Math.max(...a.tiles.map(t => t[1])) + 2;
+      for (let guard = 0; left.length && guard < 400; guard++) {
+        const cur = T.filter(Boolean), i = left[0]; let best = null;
+        for (let z = 0; z <= ZMAX; z++) { if (z > 2 && z > a.tiles[i][2]) continue; for (let y = Y0; y + 2 <= Y1; y++) for (let x = 0; x + 2 <= W; x++) {
+          const p = [x, y, z]; if (!brickSpot(cur, p) || nearGuard(p) || !leanOk(cur, p)) continue;
+          const mir = cur.some(q => same(q, [m - x, y, z])) || m - x === x;
+          const sc = z * 10 - (mir ? 30 : 0) + Math.abs(x + 1 - W / 2) * 0.5 + Math.abs(y - a.tiles[i][1]) * 0.2;
+          if (!best || sc < best.sc) best = { p, sc };
+        } }
+        if (!best) break;
+        T[left.shift()] = best.p;
+      }
+      const tag = { W, parity, cut: cmb.map(o => o.cut.length) };
+      if (left.length) { tried.push({ ...tag, why: 'no brick spot for ' + left.length + ' tiles' }); continue; }
+      if (!G.valid(T)) { tried.push({ ...tag, why: 'invalid geometry' }); continue; }
+      let d = { ...clone(a), tiles: T };
+      if (SEP.closeTwins(d).visible > base.twins) d = untwin(d, base.twins, new Set([...sp, ...bait])).d;
+      const s1 = shape(T);
+      const sol = route(d); if (!sol) { tried.push({ ...tag, shape: strip(s1), why: 'no full winning route' }); continue; }
+      d.solution = sol;
+      const keep = Array.from({ length: n }, (_, i) => i), cert = Q.certify(before, d, keep, base);
+      const rec = { ...tag, loose: loose.size, moved: [...loose].map(i => ({ tile: i, from: a.tiles[i], to: T[i], face: a.faces[i] })), shape: strip(s1), ok: cert.ok && s1.straight === 0, errors: cert.errors, footprint: cert.footprint && +cert.footprint.tilePx.toFixed(1) };
+      tried.push(rec);
+      if (rec.ok) return save({ level, ok: true, method: 'bands slid to the middle, outer tiles into the hollow', source: c.source, design: d, keep, ...rec, certificate: cert, tried });
+    }
+  }
+  return save({ level, ok: false, method: 'bands', source: c.source, tried });
+}
+
 // ---------- restack the finish tiles (from the candidate board) ----------
 // The candidate's base layer and its whole trap stay as they are: specials, wrong moves, the route to the clock, the tiles
 // on, beside or thawing a special or a wrong move, and everything that holds those up. Every other upper tile is lifted
@@ -316,7 +398,7 @@ function restackRun(level, opts = {}) {
 const strip = s => ({ straight: s.straight, stray: s.stray, edge: s.edge, mirror: s.mirror });
 function save(r) { fs.mkdirSync(OUT, { recursive: true }); fs.writeFileSync(path.join(OUT, `level-${r.level}.json`), JSON.stringify(r, null, 1)); return r; }
 
-module.exports = { candidate, shape, run, trimRun, restackRun, cutMiddleRun, route, brickSpot, supportedAt, freeSpot, untwin, strip: s => ({ straight: s.straight, stray: s.stray, edge: s.edge, mirror: s.mirror }), CF };
+module.exports = { candidate, shape, run, trimRun, restackRun, cutMiddleRun, bandRun, route, brickSpot, supportedAt, freeSpot, untwin, strip: s => ({ straight: s.straight, stray: s.stray, edge: s.edge, mirror: s.mirror }), CF };
 if (require.main === module) {
   const arg = k => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : null; };
   for (const lv of (arg('--levels') || '').split(',').filter(Boolean).map(Number)) {
