@@ -244,6 +244,9 @@ add new decisions with a date.
     the specials with their thawing neighbours, covers and the wrong moves (tiles only on the route to the clock may move; the clock route,
     special order and effects are checked after); a tile with a trap picture may be dropped after handing that picture to the nearest
     ordinary tile; a whole column or row may be cut out and closed up. Result: 27 of 45 narrowed, all won in the real game.
+  - **All-trap boards go to the tenth levels** (2026-11-15): "Keep them as is. Try to fit 260,270,280,290.300 to fit 60px to replace these
+    boards with those." 262, 277, 289, 291, 296 (the trap is the whole board) keep their board and move to a tenth level; the narrowed big
+    tenth-level boards (at most 88 tiles) take their slots. Done for 262 <-> 260 and 277 <-> 270 on the work branch.
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
   - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
     played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is
