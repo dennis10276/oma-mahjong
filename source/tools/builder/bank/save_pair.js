@@ -103,4 +103,4 @@ function main() {
     const tm = setTimeout(() => c.kill(), +arg('ms', 120000) + +arg('tail-ms', 60000) + 120000); c.on('exit', () => { clearTimeout(tm); run--; go(); }); } }; go();
 }
 if (require.main === module) main();
-module.exports = { inject };
+module.exports = { inject, mixCtx, chainCtx };
