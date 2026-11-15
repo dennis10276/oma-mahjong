@@ -36,7 +36,8 @@ module.exports = [
     async run(t, { startLevel, solve, click, modal, sleep }) {
       const bar = p => p.evaluate(() => ({ shown: getComputedStyle(document.querySelector('.toolbar')).display !== 'none', open: toolsOpen() }));
       const stars = (to, s = 3, extra = {}) => ({ ...Object.fromEntries(Array.from({ length: to }, (_, i) => [i + 1, s])), ...extra });
-      const room = p => p.evaluate(() => document.querySelector('#boardWrap').clientHeight);
+      // the pile area measured with the ordinary bars (a tall pile narrows them, board.js fitGeo)
+      const room = p => p.evaluate(() => { const g = document.querySelector('#game'), c = g.classList.contains('compact'); g.classList.remove('compact'); const h = document.querySelector('#boardWrap').clientHeight; g.classList.toggle('compact', c); return h; });
       // every level 3 stars: the buttons are there in 50-54, and the pile leaves room for them
       const p = await t.phone({ state: { name: 'Dennis', pid: 'test-dennis', level: 56, stars: stars(49, 3, { 50: 3, 51: 2, 52: 3, 53: 3, 54: 3, 55: 3 }) } });
       await startLevel(p, 49);
@@ -48,7 +49,8 @@ module.exports = [
       t.eq(await bar(p), { shown: true, open: true }, 'level 54: same block, still there (51 having 2 stars counts from 55)');
       await startLevel(p, 55);
       t.eq(await bar(p), { shown: false, open: false }, 'level 55: checked again, gone (level 51 has 2 stars)');
-      t.ok(await room(p) > withTools, 'without the buttons the pile gets their space', { withTools, without: await room(p) });
+      // hint and shuffle sit beside the tray (Dennis 2026-11-15): with or without them the pile has the same room
+      t.eq(await room(p), withTools, 'the buttons take no room from the pile');
       t.eq(await p.evaluate(() => toolsMissing(55)), [51], 'knows which level is missing');
       await p.evaluate(() => { __mj.S.stars[51] = 3; });
       await startLevel(p, 56);

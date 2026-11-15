@@ -62,7 +62,10 @@ function begin(o, restart = false) {
   // shape the pile after the free space on this screen
   const wrap = $('#boardWrap');
   $('#game').classList.remove('compact');   // the shape is measured on the ordinary screen (fitGeo may narrow the bars for the board before)
-  const aspect = Math.max(0.4, Math.min(2.4, Math.round(wrap.clientHeight / Math.max(1, wrap.clientWidth) * 10) / 10)) || 1.5;
+  // Levels made for this screen (1-50, 52, grandma's track) must stay the same now that hint and shuffle sit beside the tray:
+  // their row under the pile was always 48 px high, so the shape is measured as if it were still there.
+  const toolRow = toolsGoneFor(o) ? 0 : OLD_TOOLBAR_H;
+  const aspect = Math.max(0.4, Math.min(2.4, Math.round((wrap.clientHeight - toolRow) / Math.max(1, wrap.clientWidth) * 10) / 10)) || 1.5;
   const cur = restart ? null : loadCur();
   // A same-page resume may follow a drained tail. Adopt its cursor only when the saved
   // position matches, without writing over saves replaced by an update/reset.
@@ -311,6 +314,7 @@ function addScore(pts) { G.score += pts; updateScore(); floatScore('+' + pts); }
 // that block has 3 stars. So they are checked again every 5 levels, and come back as soon as the
 // missing levels are played again for 3 stars. Without them the toolbar is not shown and the pile
 // gets its space; with them the pile leaves room for the buttons, as before level 50.
+const OLD_TOOLBAR_H = 48;   // height of the hint/shuffle row under the pile until 1.69 (same on every screen and language)
 const toolLevel = o => o.mode === 'level' ? o.level : S.level;
 const toolBlock = L => { const g = help().toolsGoneFrom, k = RULES.tools.earn.every; return g + Math.floor((L - g) / k) * k; };
 function toolsMissing(L) { const m = []; for (let l = 1; l < toolBlock(L); l++) if ((S.stars[l] || 0) < RULES.tools.earn.stars) m.push(l); return m; }
