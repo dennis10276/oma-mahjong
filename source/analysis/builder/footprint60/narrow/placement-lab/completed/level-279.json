@@ -1,0 +1,14 @@
+{
+  "level": 279,
+  "baseHash": "6b21e45486b5293ba0ac851859f18d56f637947dc8d245086addd4c9c67fc685",
+  "status": "open",
+  "note": "",
+  "seeds": 1,
+  "tested": 0,
+  "constructed": 150,
+  "failures": {},
+  "packRejects": {
+    "startBroken": 150
+  },
+  "ms": 1773
+}

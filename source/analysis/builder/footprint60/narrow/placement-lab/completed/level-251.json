@@ -12,5 +12,10 @@
     "clockMinimum,specialEffects,baitPrice:71,ownTrapProof:trapProof:noProvenBait:keyEarly:win:0": 57,
     "clockMinimum,specialEffects,specialRoleOrder,baitPrice:71,ownTrapProof:trapProof:noProvenBait:keyEarly:win:-1": 7
   },
-  "ms": 11267
+  "packRejects": {
+    "startBroken": 150,
+    "twins": 1,
+    "badge": 2
+  },
+  "ms": 17705
 }

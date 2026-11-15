@@ -14,5 +14,10 @@
     "baitPrice:38,ownTrapProof:trapProof:noProvenBait:lonelyNeighbour:win:1": 4,
     "specialEffects,ownTrapProof:trapProof:idleUnproven:ice79": 2
   },
-  "ms": 15011
+  "packRejects": {
+    "noSpot": 150,
+    "startBroken": 150,
+    "twins": 36
+  },
+  "ms": 18555
 }

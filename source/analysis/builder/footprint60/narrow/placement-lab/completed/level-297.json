@@ -1,0 +1,18 @@
+{
+  "level": 297,
+  "baseHash": "8ef2aac95e944ee16934414f232e9e11d98e3046a44d062dad2d69401f552632",
+  "status": "open",
+  "note": "",
+  "seeds": 13,
+  "tested": 654,
+  "constructed": 1950,
+  "failures": {
+    "ownTrapProof:trapProof:mechanismNotVisible": 417,
+    "specialEffects,ownTrapProof:trapProof:mechanismNotVisible": 237
+  },
+  "packRejects": {
+    "twins": 261,
+    "startBroken": 150
+  },
+  "ms": 123489
+}

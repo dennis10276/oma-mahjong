@@ -1,0 +1,131 @@
+{
+  "viewport": [
+    392,
+    730
+  ],
+  "fakeDatabase": true,
+  "passed": 15,
+  "total": 15,
+  "rows": [
+    {
+      "level": 252,
+      "ok": true,
+      "tilePx": 59.13285048119854,
+      "tiles": 72,
+      "trayGap": 11.200000000000003,
+      "rows": 8
+    },
+    {
+      "level": 254,
+      "ok": true,
+      "tilePx": 58.56603773584906,
+      "tiles": 76,
+      "trayGap": 69.9,
+      "rows": 6
+    },
+    {
+      "level": 255,
+      "ok": true,
+      "tilePx": 61.93136472466082,
+      "tiles": 80,
+      "trayGap": 31,
+      "rows": 7
+    },
+    {
+      "level": 256,
+      "ok": true,
+      "tilePx": 61.93136472466082,
+      "tiles": 76,
+      "trayGap": 69.4,
+      "rows": 6
+    },
+    {
+      "level": 257,
+      "ok": true,
+      "tilePx": 58.32273216557393,
+      "tiles": 74,
+      "trayGap": 11.200000000000003,
+      "rows": 8
+    },
+    {
+      "level": 259,
+      "ok": true,
+      "tilePx": 61.93136472466082,
+      "tiles": 76,
+      "trayGap": 69.4,
+      "rows": 6
+    },
+    {
+      "level": 263,
+      "ok": true,
+      "tilePx": 61.93136472466082,
+      "tiles": 80,
+      "trayGap": 31,
+      "rows": 7
+    },
+    {
+      "level": 265,
+      "ok": true,
+      "tilePx": 61.93136472466082,
+      "tiles": 80,
+      "trayGap": 52.099999999999994,
+      "rows": 6
+    },
+    {
+      "level": 268,
+      "ok": true,
+      "tilePx": 63.3469387755102,
+      "tiles": 76,
+      "trayGap": 50.80000000000001,
+      "rows": 6
+    },
+    {
+      "level": 272,
+      "ok": true,
+      "tilePx": 59.13285048119854,
+      "tiles": 84,
+      "trayGap": 11.200000000000003,
+      "rows": 8
+    },
+    {
+      "level": 273,
+      "ok": true,
+      "tilePx": 59.13285048119854,
+      "tiles": 76,
+      "trayGap": 11.200000000000003,
+      "rows": 8
+    },
+    {
+      "level": 282,
+      "ok": true,
+      "tilePx": 63.3469387755102,
+      "tiles": 80,
+      "trayGap": 20.400000000000006,
+      "rows": 7
+    },
+    {
+      "level": 283,
+      "ok": true,
+      "tilePx": 59.13285048119854,
+      "tiles": 72,
+      "trayGap": 11.200000000000003,
+      "rows": 8
+    },
+    {
+      "level": 287,
+      "ok": true,
+      "tilePx": 61.93136472466082,
+      "tiles": 80,
+      "trayGap": 52.099999999999994,
+      "rows": 6
+    },
+    {
+      "level": 293,
+      "ok": true,
+      "tilePx": 59.13285048119854,
+      "tiles": 76,
+      "trayGap": 11.200000000000003,
+      "rows": 8
+    }
+  ]
+}

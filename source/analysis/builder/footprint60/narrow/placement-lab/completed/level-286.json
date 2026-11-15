@@ -1,0 +1,16 @@
+{
+  "level": 286,
+  "baseHash": "00c6c6f306e7b0e8788a09463dfa149eabd8cee4ac8e5b7adeb0ab6bf527eed7",
+  "status": "open",
+  "note": "",
+  "seeds": 1,
+  "tested": 88,
+  "constructed": 150,
+  "failures": {
+    "clockMinimum,specialEffects,baitPrice:74,baitPrice:75,ownTrapProof:noProvenBait": 88
+  },
+  "packRejects": {
+    "twins": 61
+  },
+  "ms": 4384
+}

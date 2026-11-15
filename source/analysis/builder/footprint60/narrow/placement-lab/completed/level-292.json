@@ -1,0 +1,17 @@
+{
+  "level": 292,
+  "baseHash": "9fffd8e3d35433a5b2660ff38623c81e6eea3f4dd6b07ed09cb056aec4f3bf57",
+  "status": "open",
+  "note": "",
+  "seeds": 52,
+  "tested": 4,
+  "constructed": 7800,
+  "failures": {
+    "baitPrice:74,baitPrice:53,baitPrice:53,66": 4
+  },
+  "packRejects": {
+    "startBroken": 7650,
+    "twins": 65
+  },
+  "ms": 4695
+}
