@@ -222,6 +222,11 @@ add new decisions with a date.
     Lead's note: the released piles are 7 tiles wide, which is 54.5 px on the 392 px reference; 60 px needs 6 wide (the older levels
     are 6 wide), so about one tile in seven of every layer has to move to another place. Codex's 46 drafts
     (`footprint60/range-250-300.json`) do that by free repacking and are not adopted.
+  - **Narrow what can be narrowed, leave the rest, build 301+ six wide** (2026-11-15): "Do 3 and search for more ways to narrow it
+    without changing too much and build 301 and up on 6-wide layouts(also 8 rows I think? 9makes it 54px?)". Six wide and seven rows is
+    63.3 px, eight rows about 58.5 px, nine rows about 52 px. "Codex or gemini should be able to complete: search for more ways to
+    narrow it ... Make tasks for them": `codex-tasks/TASK-19-narrow-251-299.md`, `gemini-tasks/TASK-G14-six-wide-layouts.md`.
+    State: `footprint60/narrow/` (tool `bank/narrow.js`): 9 levels narrowed with no picture changed, 5 already 58 px or more.
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
   - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
     played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is
