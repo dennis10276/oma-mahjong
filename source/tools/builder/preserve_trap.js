@@ -5,6 +5,15 @@ const clone = x => JSON.parse(JSON.stringify(x));
 const same = (a,b) => JSON.stringify(a) === JSON.stringify(b);
 const hash = d => crypto.createHash('sha256').update(JSON.stringify(d)).digest('hex');
 const sorted = xs => Array.from(xs).sort((a,b)=>a-b);
+function constraints(before){
+  const d=before.design||before,ga=E.game(clone(d)),core=new Set(),trap=before.card?.trap;
+  const baits=trap?.baits || (trap?.bait?[...(trap.bait.single||[]).map(i=>({tiles:[i]})),...(trap.bait.pairs||[]).map(tiles=>({tiles}))]:[]);
+  for(const i of [d.clock?.i,...(d.obst?.keys||[]),...(d.obst?.locks||[]),...Object.keys(d.obst?.ice||{}).map(Number),...d.solution.slice(0,d.solution.indexOf(d.clock?.i)+1),...baits.flatMap(q=>q.tiles)])if(Number.isInteger(i))core.add(i);
+  const faces=new Set([...core].map(i=>d.faces[i]));d.faces.forEach((f,i)=>{if(faces.has(f))core.add(i)});
+  // A design without a factual trap card needs complete rule-graph preservation.
+  if(!baits.length)for(let i=0;i<d.tiles.length;i++)core.add(i);
+  return {core,nb:ga.nb,iceNb:ga.iceNb,ice:new Set(Object.keys(d.obst?.ice||{}).map(Number))};
+}
 function verify(before, after, opts = {}) {
   const a=before.design||before, b=after.design||after, errors=[], checks=[];
   if (!a?.tiles || !b?.tiles) return { ok:false, errors:['missingDesign'] };
@@ -67,7 +76,7 @@ function verify(before, after, opts = {}) {
   if(f){const C=require('./verify_chained_mixes.js');for(const [label,d]of[['before',a],['after',b]])errors.push(...C.chainStructure({...before,design:d},f).map(e=>label+':chain:'+e));checks.push('sameDeclaredChainStructure');}
   return {ok:!errors.length,errors,checks,beforeHash:hash(a),afterHash:hash(b),clockMinimum:ca?.k,spare:a.clock&&ca?a.clock.n-ca.k:null,prices,core:[...core]};
 }
-module.exports={verify};
+module.exports={verify,constraints};
 if(require.main===module){
   const fs=require('fs');
   const [beforeFile,afterFile]=process.argv.slice(2);

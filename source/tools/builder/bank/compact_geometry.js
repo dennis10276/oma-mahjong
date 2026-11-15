@@ -67,23 +67,25 @@ function isIceAdjacent(a, b) {
     return dz === 1 && dx < 2 && dy < 2;
 }
 
-function enumerateWindows(d) {
+function enumerateWindows(d, rows=7, columns=6) {
+    const width=(columns-1)*2;
+    const height=(rows-1)*2;
     const b = bbox(d.tiles);
     const pos = moveStepMap(d);
     const ci = clockStep(d);
     const spec = specialSet(d);
     const cands = [];
-    const maxWx0 = Math.max(b.minX, b.maxX - 10);
+    const maxWx0 = Math.max(b.minX, b.maxX - width);
     
-    const maxWy0 = Math.max(b.minY, b.maxY - 12);
+    const maxWy0 = Math.max(b.minY, b.maxY - height);
     for (let wx0 = b.minX; wx0 <= maxWx0; wx0++) {
-        const wx1 = wx0 + 10;
+        const wx1 = wx0 + width;
         for (let wy0 = b.minY; wy0 <= maxWy0; wy0++) {
             if (wy0 > maxWy0) continue;
             let specOut = 0, preOut = 0, totalOut = 0, parity = 0;
             for (let i = 0; i < d.tiles.length; i++) {
                 const [x, y, z] = d.tiles[i];
-                const inside = x >= wx0 && x <= wx1 && y >= wy0 && y <= wy0 + 12;
+                const inside = x >= wx0 && x <= wx1 && y >= wy0 && y <= wy0 + height;
                 if (!inside) {
                     totalOut++;
                     if (spec.has(i)) specOut++;
@@ -92,7 +94,7 @@ function enumerateWindows(d) {
                     parity++;
                 }
             }
-            cands.push({ wx0, wx1, wy0, specOut, preOut, totalOut, parity });
+            cands.push({ wx0, wx1, wy0, height, specOut, preOut, totalOut, parity });
         }
     }
     // Keep top windows under two orderings:
@@ -122,8 +124,44 @@ function enumerateWindows(d) {
 function canPlaceAt(tiles, placed, idx, cand, pos, ci, specSet, downSet, iceMap, opts) {
     const [cx, cy, cz] = cand;
     if (cx < 0 || cy < 0 || cx > 63 || cy > 63 || cz < 0 || cz > 4) return false;
-    const { wx0, wx1, wy0, allowCoverPre, allowCoverSpec, allowSingleSup, forbidHorizPre } = opts;
-    if (cx < wx0 || cx > wx1 || cy < wy0 || cy > wy0 + 12) return false;
+    const { wx0, wx1, wy0, height=12, allowCoverPre, allowCoverSpec, allowSingleSup, forbidHorizPre } = opts;
+    if (cx < wx0 || cx > wx1 || cy < wy0 || cy > wy0 + height) return false;
+    const keep=opts.preserve;
+    const roleKeep=opts.roleKeep;
+    if(roleKeep){
+        for(const rule of roleKeep.rules[idx])if(placed[rule.other]){
+            const at=tiles[rule.other];
+            if((at[2]>cz&&overlapsXY(cand,at))!==rule.above||(cz>at[2]&&overlapsXY(cand,at))!==rule.below)return false;
+            if(rule.ice&&isIceAdjacent(cand,at)!==rule.adjacent)return false;
+            if(rule.horizontal&&(sameZNeighbor(cand,at,-1)!==rule.left||sameZNeighbor(cand,at,1)!==rule.right))return false;
+        }
+        for(const [m,step]of roleKeep.opens)if(step>=0&&(m===idx||placed[m])){
+            const at=m===idx?cand:tiles[m];let left=false,right=false;
+            for(let j=0;j<tiles.length;j++)if(j!==m&&(j===idx||placed[j])&&pos[j]>=step){
+                const other=j===idx?cand:tiles[j];
+                if(other[2]>at[2]&&overlapsXY(at,other))return false;
+                left ||= sameZNeighbor(at,other,-1);right ||= sameZNeighbor(at,other,1);
+            }
+            if(left&&right)return false;
+        }
+    }
+    if(keep){
+        for(let j=0;j<tiles.length;j++){
+            if(j===idx||!placed[j])continue;
+            if(keep.core.has(j)&&((cand[2]>tiles[j][2]&&overlapsXY(cand,tiles[j]))!==keep.nb.above[j].includes(idx)))return false;
+            if(keep.core.has(idx)&&((tiles[j][2]>cand[2]&&overlapsXY(cand,tiles[j]))!==keep.nb.above[idx].includes(j)))return false;
+            if((keep.ice.has(j)||keep.ice.has(idx))&&isIceAdjacent(cand,tiles[j])!==(keep.ice.has(j)?keep.iceNb[j].includes(idx):keep.iceNb[idx].includes(j)))return false;
+            for(const [m,other,at]of[[j,idx,tiles[j]],[idx,j,cand]])if(keep.core.has(m)&&keep.nb.left[m].length&&keep.nb.right[m].length){
+                const otherAt=m===idx?tiles[j]:cand;
+                if(sameZNeighbor(at,otherAt,-1)!==keep.nb.left[m].includes(other)||sameZNeighbor(at,otherAt,1)!==keep.nb.right[m].includes(other))return false;
+            }
+        }
+        for(const m of [idx,...tiles.map((_,i)=>i).filter(i=>placed[i]&&i!==idx&&keep.core.has(i))])if(keep.core.has(m)&&(!keep.nb.left[m].length||!keep.nb.right[m].length)){
+            const at=m===idx?cand:tiles[m];let left=false,right=false;
+            for(let j=0;j<tiles.length;j++)if(j!==m&&(placed[j]||j===idx)){const other=j===idx?cand:tiles[j];left ||= sameZNeighbor(at,other,-1);right ||= sameZNeighbor(at,other,1);}
+            if(left&&right)return false;
+        }
+    }
 
     // Overlap at same z
     for (let j = 0; j < tiles.length; j++) {
@@ -141,7 +179,11 @@ function canPlaceAt(tiles, placed, idx, cand, pos, ci, specSet, downSet, iceMap,
                 // Supporter / lower tile j MUST leave AFTER idx leaves!
                 if (pos[j] <= pos[idx]) return false;
                 if (!allowCoverPre && !(opts.mustCoverDown && opts.mustCoverDown.has(j)) && ci >= 0 && pos[j] <= ci) return false;
-                if (!allowCoverSpec && specSet.has(j) && iceMap[j] == null) return false;
+                // A key may intentionally sit under its ice/cover gate. Preserve
+                // that authored link when guiding a repair, rather than making
+                // every relocated key artificially visible at the opening.
+                const retainedCover = roleKeep?.rules[idx].some(r=>r.other===j&&r.below) || (keep?.core.has(j)&&keep.nb.above[j].includes(idx));
+                if (!allowCoverSpec && specSet.has(j) && iceMap[j] == null && !retainedCover) return false;
                 if (tiles[j][2] === cz - 1) {
                     sup++;
                     if (tiles[j][0] === cx && tiles[j][1] === cy) exactCenter = true;
@@ -149,7 +191,7 @@ function canPlaceAt(tiles, placed, idx, cand, pos, ci, specSet, downSet, iceMap,
             }
         }
         if (sup === 0) return false;
-        if (sup === 1 && !exactCenter) return false;
+        if (sup === 1 && !exactCenter && !(allowSingleSup && opts.repairOffsets)) return false;
     }
 
     // Any tile strictly ABOVE cand (z_j > cz, matching L.neighbors) blocks idx until it leaves!
@@ -212,7 +254,7 @@ function canPlaceAt(tiles, placed, idx, cand, pos, ci, specSet, downSet, iceMap,
         if (earlier < iceMap[idx]) return false;
     }
 
-    return true;
+    return !opts.acceptCandidate || opts.acceptCandidate(idx,cand,tiles,placed);
 }
 
 // Find horizontal contiguous wing/row strips that extend outside [wx0..wx0+10]
@@ -329,7 +371,8 @@ function buildRestackedTiles(origD, lv, win, cfg) {
     const spec = specialSet(d);
     const downSet = new Set(d.down || []);
     const iceMap = (d.obst && d.obst.ice) || {};
-    const { wx0, wx1, wy0 } = win;
+    const { wx0, wx1, wy0, height=12 } = win;
+    const inside = ([x,y,z]) => x >= wx0 && x <= wx1 && y >= wy0 && y <= wy0 + height && (!cfg.trimOverhang || x / 2 - z * .14 >= wx0 / 2 - .001);
 
     // 1) Optional strip shifts first
     const shiftRes = cfg.useStripShift ? applyAutoStripShifts(d, wx0, wy0) : { tiles: clone(d.tiles), liftedDuringShift: new Set() };
@@ -342,7 +385,7 @@ function buildRestackedTiles(origD, lv, win, cfg) {
     const blockedPreTargets = new Set();
     for (let i = 0; i < n; i++) {
         const [x, y] = tiles[i];
-        if (x >= wx0 && x <= wx1 && y >= wy0 && y <= wy0 + 12) continue;
+        if (inside(tiles[i])) continue;
         const targets = new Set([...nbOrig.left[i], ...nbOrig.right[i]]);
         for (const m of targets) {
             if (pos[m] > pos[i]) {
@@ -358,7 +401,7 @@ function buildRestackedTiles(origD, lv, win, cfg) {
     const moveSet = new Set();
     for (let i = 0; i < n; i++) {
         const [x, y] = tiles[i];
-        if (shiftRes.liftedDuringShift.has(i) || x < wx0 || x > wx1 || y < wy0 || y > wy0 + 12) {
+        if (shiftRes.liftedDuringShift.has(i) || !inside(tiles[i])) {
             moveSet.add(i);
             placed[i] = false;
         }
@@ -422,7 +465,7 @@ function buildRestackedTiles(origD, lv, win, cfg) {
                 if (pos[i] < pos[k] && isIceAdjacent(tiles[i], tiles[k])) hurtsIce = true;
             }
             if (hurtsIce) continue;
-            const distEdge = Math.min(tiles[i][0] - wx0, wx1 - tiles[i][0], tiles[i][1] - wy0, wy0 + 12 - tiles[i][1]);
+            const distEdge = Math.min(tiles[i][0] - wx0, wx1 - tiles[i][0], tiles[i][1] - wy0, wy0 + height - tiles[i][1]);
             cands.push({ i, distEdge, j: hash32(lv, cfg.seed, i, 1, 0) });
         }
         cands.sort((a, b2) => a.distEdge - b2.distEdge || a.j - b2.j);
@@ -442,7 +485,11 @@ function buildRestackedTiles(origD, lv, win, cfg) {
         const maxZNow = currentMaxZ();
         const wantZ4 = maxZNow < 3 ? 3 : 4;
         const commonOpts = {
-            wx0, wx1, wy0,
+            wx0, wx1, wy0, height,
+            preserve:cfg.preserve,
+            roleKeep:cfg.roleKeep,
+            repairOffsets:cfg.repairOffsets,
+            acceptCandidate:cfg.acceptCandidate,
             mustCoverDown,
             allowDeferDownCover: queue.length > 0,
             remCaps: queue.filter((q) => !downSet.has(q)).length,
@@ -460,7 +507,7 @@ function buildRestackedTiles(origD, lv, win, cfg) {
                 const marginX = cz >= 4 ? 2 : cz >= 1 ? 1 : 0;
                 const marginY = 0;
                 for (let cx = wx0 + marginX; cx <= wx1; cx++) {
-                    for (let cy = wy0 + marginY; cy <= wy0 + 12; cy++) {
+                    for (let cy = wy0 + marginY; cy <= wy0 + height; cy++) {
                         // Never allow horizontal shadow overhang to widen a 7-col board
                         if (cx / 2 - cz * 0.14 < wx0 / 2 - 0.001) continue;
                         const cand = [cx, cy, cz];
@@ -513,7 +560,7 @@ function buildRestackedTiles(origD, lv, win, cfg) {
                         score -= distCenter * 0.4;
                         if (cx / 2 - cz * 0.14 < wx0 / 2 - 0.01) score -= 25;
                         if (cy / 2 * 1.24 - cz * 0.14 < wy0 / 2 * 1.24 - 0.01) score -= 25;
-                        score += hash32(lv, cfg.seed, idx, cx, cy * 17 + cz) * 4.0;
+                        score += hash32(lv, cfg.seed, idx, cx, cy * 17 + cz) * (cfg.jitter??4.0);
 
                         if (!best || score > best.score) best = { score, cand };
                     }
@@ -552,7 +599,7 @@ function buildRestackedTiles(origD, lv, win, cfg) {
                     }
                 }
                 if (bad) continue;
-                const onEdge = (tiles[v][0] === wx0 || tiles[v][0] === wx1 || tiles[v][1] === wy0 || tiles[v][1] === wy0 + 12) ? 0 : 1;
+                const onEdge = (tiles[v][0] === wx0 || tiles[v][0] === wx1 || tiles[v][1] === wy0 || tiles[v][1] === wy0 + height) ? 0 : 1;
                 vCands.push({ v, riders, score: riders.length * 100 + onEdge * 40 + pos[v] });
             }
             vCands.sort((a, b2) => a.score - b2.score);
