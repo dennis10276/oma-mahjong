@@ -1,0 +1,206 @@
+{
+  "levels": [
+    {
+      "level": 251,
+      "status": "needs placement",
+      "toPlace": 6
+    },
+    {
+      "level": 252,
+      "status": "remade",
+      "toPlace": 1
+    },
+    {
+      "level": 253,
+      "status": "needs placement",
+      "toPlace": 8
+    },
+    {
+      "level": 254,
+      "status": "remade",
+      "toPlace": 1
+    },
+    {
+      "level": 255,
+      "status": "needs placement",
+      "toPlace": 5
+    },
+    {
+      "level": 256,
+      "status": "needs placement",
+      "toPlace": 7
+    },
+    {
+      "level": 257,
+      "status": "remade",
+      "toPlace": 12
+    },
+    {
+      "level": 258,
+      "status": "needs placement",
+      "toPlace": 3
+    },
+    {
+      "level": 259,
+      "status": "needs placement",
+      "toPlace": 9
+    },
+    {
+      "level": 261,
+      "status": "needs placement",
+      "toPlace": 7
+    },
+    {
+      "level": 262,
+      "status": "needs placement",
+      "toPlace": 14
+    },
+    {
+      "level": 263,
+      "status": "needs placement",
+      "toPlace": 4
+    },
+    {
+      "level": 265,
+      "status": "needs placement",
+      "toPlace": 10
+    },
+    {
+      "level": 266,
+      "status": "needs placement",
+      "toPlace": 3
+    },
+    {
+      "level": 267,
+      "status": "needs placement",
+      "toPlace": 10
+    },
+    {
+      "level": 268,
+      "status": "needs placement",
+      "toPlace": 1
+    },
+    {
+      "level": 269,
+      "status": "needs placement",
+      "toPlace": 16
+    },
+    {
+      "level": 271,
+      "status": "needs placement",
+      "toPlace": 8
+    },
+    {
+      "level": 272,
+      "status": "needs placement",
+      "toPlace": 3
+    },
+    {
+      "level": 273,
+      "status": "needs placement",
+      "toPlace": 1
+    },
+    {
+      "level": 274,
+      "status": "remade",
+      "toPlace": 6
+    },
+    {
+      "level": 277,
+      "status": "needs placement",
+      "toPlace": 17
+    },
+    {
+      "level": 278,
+      "status": "needs placement",
+      "toPlace": 10
+    },
+    {
+      "level": 279,
+      "status": "needs placement",
+      "toPlace": 9
+    },
+    {
+      "level": 281,
+      "status": "needs placement",
+      "toPlace": 5
+    },
+    {
+      "level": 282,
+      "status": "remade",
+      "toPlace": 12
+    },
+    {
+      "level": 283,
+      "status": "needs placement",
+      "toPlace": 1
+    },
+    {
+      "level": 284,
+      "status": "remade",
+      "toPlace": 4
+    },
+    {
+      "level": 286,
+      "status": "needs placement",
+      "toPlace": 6
+    },
+    {
+      "level": 287,
+      "status": "needs placement",
+      "toPlace": 10
+    },
+    {
+      "level": 288,
+      "status": "needs placement",
+      "toPlace": 20
+    },
+    {
+      "level": 289,
+      "status": "needs placement",
+      "toPlace": 3
+    },
+    {
+      "level": 291,
+      "status": "needs placement",
+      "toPlace": 21
+    },
+    {
+      "level": 292,
+      "status": "needs placement",
+      "toPlace": 5
+    },
+    {
+      "level": 293,
+      "status": "needs placement",
+      "toPlace": 4
+    },
+    {
+      "level": 295,
+      "status": "remade",
+      "toPlace": 12
+    },
+    {
+      "level": 296,
+      "status": "needs placement",
+      "toPlace": 9
+    },
+    {
+      "level": 297,
+      "status": "needs placement",
+      "toPlace": 10
+    },
+    {
+      "level": 298,
+      "status": "needs placement",
+      "toPlace": 20
+    },
+    {
+      "level": 299,
+      "status": "remade",
+      "toPlace": 1
+    }
+  ],
+  "assetDirectory": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-narrow\\source\\build\\task19\\placement-8269",
+  "userDataDirectory": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-tasks\\results\\narrow-251-299\\placements"
+}

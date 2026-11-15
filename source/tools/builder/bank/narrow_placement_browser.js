@@ -1,0 +1,31 @@
+'use strict';
+// QA runs against a separate server/data directory on 8270, never user edits.
+const fs=require('fs'),path=require('path'),assert=require('assert/strict');
+const B=require('./narrow_placement_build'),M=require('./narrow_placement_model'),L=require('./narrow_lab'),P=require('./narrow_proof'),lib=require('../../../tests/lib');
+async function run(){
+  const root='http://127.0.0.1:8270/',rows=JSON.parse(fs.readFileSync(path.join(B.OUT,'placement-data.json'))).levels,out=path.join(P.DIR,'placement-lab');fs.mkdirSync(out,{recursive:true});
+  for(const row of rows){const r=await fetch(root+'api/save',{method:'POST',body:JSON.stringify(M.initial(row))});assert.equal(r.status,200);}
+  await lib.setup();try{
+    const make=size=>lib.phone({url:root,size,state:{name:'Placement QA',pid:'test-placement-qa',level:301,seenSp:{clock:true,clockMoves:true,ice:true,lock:true}},routes:[['**/__blank__',r=>r.fulfill({status:200,contentType:'text/html',body:'<!doctype html>'})]]});
+    const page=await make([1280,940]);await page.waitForFunction(()=>window.NarrowEditor&&document.querySelectorAll('#peLevel option').length===40);assert.equal(await page.evaluate(()=>__mj.S.theme),'sunflower');
+    for(const row of rows){await page.selectOption('#peLevel',String(row.level));await page.click('#peReset');assert.equal(await page.locator('#peTray [data-choice]').count(),row.problem.length);assert.equal(await page.locator('#peSurface [data-tile]').count(),row.base.tiles.length-row.problem.length);}
+    await page.selectOption('#peLevel','251');await page.screenshot({path:path.join(out,'desktop.png')});
+    const row=rows.find(r=>r.level===252),id=row.problem[0];await page.selectOption('#peLevel','252');await page.click('#peReset');await page.click(`[data-choice="${id}"]`);
+    const point=await page.evaluate(()=>{const b=document.querySelector('#peSurface').getBoundingClientRect(),g=NarrowEditor.geometry;return {x:b.left+g.ox+g.tw,y:b.top+g.oy};});
+    await page.mouse.click(point.x,point.y);assert.deepEqual(await page.evaluate(id=>NarrowEditor.snapshot.positions[id],id),[2,0,0]);
+    await page.click('#peUndo');assert.equal(await page.evaluate(id=>NarrowEditor.snapshot.positions[id],id),null);
+    await page.click('#peDraft');await page.waitForTimeout(350);const choice=await page.locator(`[data-choice="${id}"]`).boundingBox();await page.mouse.move(choice.x+choice.width/2,choice.y+choice.height/2);await page.mouse.down();await page.mouse.move(point.x,point.y,{steps:8});await page.mouse.up();assert.deepEqual(await page.evaluate(id=>NarrowEditor.snapshot.positions[id],id),[2,0,0]);
+    await page.click('#peDraft');await page.fill('#peNote','QA: saved lower placement');await page.click('#peSave');await page.waitForFunction(()=>document.querySelector('#peSaved').textContent==='Saved on this PC');
+    await page.reload();await page.waitForFunction(()=>window.NarrowEditor);assert.equal(await page.inputValue('#peNote'),'QA: saved lower placement');assert.deepEqual(await page.evaluate(()=>NarrowEditor.snapshot.positions),row.base.tiles);
+    await page.click('#peCheck');await page.waitForFunction(()=>document.querySelector('#peResult').textContent.includes('Trap checks pass'),null,{timeout:150000});
+    await page.screenshot({path:path.join(out,'checked.png')});
+    await page.click('#peReset');assert.match(await page.locator('#peResult').innerText(),/Changed since/);await page.click('#peDraft');
+    await page.click('#pePlay');await page.waitForFunction(()=>__mj.G?.o?.lab===290252);await page.waitForTimeout(1600);assert.equal(await page.evaluate(()=>__mj.S.theme),'sunflower');assert.deepEqual(await page.evaluate(()=>__mj.G.tiles.map(t=>[t.x,t.y,t.z])),row.base.tiles);assert.equal(await page.locator('#modal').evaluate(el=>el.classList.contains('hidden')),true);await page.screenshot({path:path.join(out,'play.png')});
+    await page.evaluate(solution=>{for(const i of solution){__mj.onTap(i);if(__mj.G.alive[i])__mj.onTap(i)}},row.base.solution);await page.waitForFunction(()=>__mj.G.done&&__mj.G.alive.every(v=>!v));await page.click('#peBack');assert.equal(await page.locator('#placementRoot').isVisible(),true);
+    const mobile=await make([392,730]);await mobile.waitForFunction(()=>window.NarrowEditor);assert.equal(await mobile.locator('#peLevel option').count(),40);await mobile.screenshot({path:path.join(out,'phone.png')});
+    assert.equal(await mobile.evaluate(()=>document.querySelector('#placementRoot').scrollWidth<=window.innerWidth+1),true);
+    if(page.errors.length||mobile.errors.length)throw Error([...page.errors,...mobile.errors].join('; '));
+    const summary={ok:true,levels:40,remade:8,unresolved:32,theme:'sunflower',allSideTrays:true,clickPlacement:true,dragPlacement:true,undo:true,diskSaveAndReload:true,liveProofPassed:true,staleVerdictInvalidated:true,actualGameWin:true,mobileViewport:[392,730],separateQaPort:8270};fs.writeFileSync(path.join(out,'browser.json'),JSON.stringify(summary,null,2)+'\n');console.log(JSON.stringify(summary));await page.ctx.close();await mobile.ctx.close();return summary;
+  }finally{await lib.teardown();}
+}
+if(require.main===module)run().catch(e=>{console.error(e);process.exitCode=1;});module.exports={run};

@@ -1,5 +1,10 @@
 # Task 19 review pack
 
+Dennis's manual [tile placement lab](http://127.0.0.1:8269/) now covers all eight
+remade and 32 unresolved ordinary boards, using Sunflower tiles. See
+[its handoff and user-data location](placement-lab/README.md). Its saved arrangements
+are separate from the accepted drafts below and from QA data.
+
 Only the root `level-*.json` records with `certificate.ok === true` and matching
 before/after design hashes are accepted drafts. No board is adopted or released.
 The six tenth levels stay exactly as released; there are no tenth-level drafts here.

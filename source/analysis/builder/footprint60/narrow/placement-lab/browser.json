@@ -1,0 +1,20 @@
+{
+  "ok": true,
+  "levels": 40,
+  "remade": 8,
+  "unresolved": 32,
+  "theme": "sunflower",
+  "allSideTrays": true,
+  "clickPlacement": true,
+  "dragPlacement": true,
+  "undo": true,
+  "diskSaveAndReload": true,
+  "liveProofPassed": true,
+  "staleVerdictInvalidated": true,
+  "actualGameWin": true,
+  "mobileViewport": [
+    392,
+    730
+  ],
+  "separateQaPort": 8270
+}
