@@ -560,7 +560,7 @@ function build(briefIn, opts = {}) {
       ...(trap ? [{ name: 'authored trap proven by the story: ' + trap.card.type, proven: true }] : []),
     ];
 
-    return {
+    const fitted = require('../builder/compact_footprint.js').compact({
       design,
       card,
       intents,
@@ -576,7 +576,9 @@ function build(briefIn, opts = {}) {
       work: null,
       workNote: 'Individual proof searches are node-bounded; aggregate node work is not measured in this mode.',
       ms,
-    };
+    }, opts.footprint);
+    if (fitted.design) return fitted;
+    fails[fitted.fail] = (fails[fitted.fail] || 0) + 1;
   }
 
   return { fail: 'noProvenVisibleChoice', fails, ms: Date.now() - t0 };

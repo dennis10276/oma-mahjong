@@ -4,6 +4,25 @@ Read this before making or judging levels. These are settled. Do not ask Dennis 
 contradicts new evidence; then say which line and why. Each line has the date Dennis decided it. Kept by the lead;
 add new decisions with a date.
 
+## Footprint and preserving the puzzle (Dennis, 2026-11-15)
+- Target **60 CSS px tile pitch on a 392 x 730 reference phone**, with visible space below the tray. No nine-row
+  boards, including the big boards. Six columns and seven rows are a useful construction envelope, not a substitute
+  for measuring the rendered bounds with layer offsets and tile sides. Prefer readable layers; keep the tile count.
+- **Make a smaller layout work; do not just reject it.** Keep the existing trap/chain, relocate surrounding tiles,
+  try multiple windows, seeds and additional relocations, and use the failed dependency checks to guide repairs.
+  Do not reduce the chain length, remove a special, change pictures, add clock spare, or silently reduce 96-tile boards.
+- **Prove the traps still work as intended after compaction.** A winning route alone is insufficient. Compare the
+  pictures, specials, deadline and route; preserve core blocking and thaw dependencies and readable bait/specials;
+  independently prove the same shortest clock route and reprice every authored wrong move with the same consequence.
+  Recheck the declared chain structure. Unknown/budget-exhausted results do not count as proof. An older board with
+  missing trap metadata requires recovering its intent evidence or complete physical rule-graph equivalence.
+- Construction now uses `tools/builder/compact_footprint.js` and `preserve_trap.js`. The separate 250–300 review
+  has 46 of 51 drafts at 58.32–63.35 px, all browser-replayed; all six 96-tile boards reach 60.58–61.93 px.
+  The range review explicitly allows a 58 px floor for roughly 60 px migration; builder/export defaults stay 60.
+  Older boards' recovered special-role contract is scoped, not a claim of complete filler-graph equivalence.
+  Five boards still need repairs. See `footprint60/README.md`; no replacements are placed or released.
+- **Do not release yet.** Dennis stopped the proposed 1.70 release on 2026-11-15. Work remains on development branches.
+
 ## Who plays
 - **The family plays the same levels** (since 1.55). The players whose results count are Dennis
   (Dennisisdebeste, the skilled player), Gerda, Mrs. Doubtfire and PUK.

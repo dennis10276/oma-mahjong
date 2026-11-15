@@ -11,6 +11,7 @@
 const fs = require('fs'), path = require('path'), vm = require('vm');
 const SRC = path.resolve(__dirname, '../../..');
 const Hard = require(path.join(SRC, 'www/hard.js')), L = require(path.join(SRC, 'www/layouts.js'));
+const Footprint = require('../footprint.js');
 
 const loadTable = text => vm.runInNewContext(text + ';HARD_LEVELS');
 const parts = text => {                       // header, JSON, tail: so the file can be written back in its own shape
@@ -18,12 +19,8 @@ const parts = text => {                       // header, JSON, tail: so the file
   if (a < 0 || b < 0) throw new Error('table text not recognised');
   return { head: text.slice(0, a), json: text.slice(a + 20, b + 1), tail: text.slice(b + 1) };
 };
-// the same tile-size formula as hard.js (tilePx there is private): reference screen 384 x 592 px of board
-function tilePx(tiles) {
-  let l = 1e9, r = -1e9, t0 = 1e9, b = -1e9;
-  for (const t of tiles) { const x = t.x / 2 - t.z * 0.14, y = t.y / 2 * 1.24 - t.z * 0.14; l = Math.min(l, x); r = Math.max(r, x + 1); t0 = Math.min(t0, y); b = Math.max(b, y + 1.24); }
-  return Math.min(384 / (r - l + 0.125), 592 / (b - t0 + 0.16));
-}
+// Reference-phone renderer fit with reserved tray space, shared with construction.
+function tilePx(tiles) { return Footprint.measure(tiles).tilePx; }
 const gameOf = d => {
   const tiles = d.tiles.map(([x, y, z]) => ({ x, y, z })), nb = L.neighbors(tiles), down = new Uint8Array(tiles.length);
   (d.down || []).forEach(i => { down[i] = 1; });
@@ -117,7 +114,6 @@ function verify(oldText, newText, designs, nums, minPx, cut) {
   if (nLast !== wantLast) err(`level count: last level ${nLast}, expected ${wantLast}`);
   if (n.ratingModels && n.ratingModels.length !== n.levels.length) err('ratingModels length differs from the level count');
   // each new level decodes to exactly the input, and its stored solution wins under the game's rules
-  const minTile = Hard.cfg().minTile, minBig = Hard.cfg().minTileBig;
   for (const lv of nums) {
     const dec = Hard.unpack(lv, n.levels[lv - n.from]), want = norm(designs[lv]);
     const got = { tiles: dec.tiles, faces: dec.faces, down: dec.down, gold: dec.gold, obst: dec.obst, clock: dec.clock, solution: dec.solution };
@@ -127,8 +123,9 @@ function verify(oldText, newText, designs, nums, minPx, cut) {
     r.solutionWins = Hard.validSolution(g, dec.solution);
     if (!r.solutionWins) err(`level ${lv}: stored solution does not win (ice/locks/tray/clock replay)`);
     r.tilePx = +tilePx(g.tiles).toFixed(2);
-    r.minTilePx = lv % 10 === 0 ? minBig : minTile;
-    if (r.tilePx < r.minTilePx) { const m = `level ${lv}: tile size ${r.tilePx}px below the game's ${r.minTilePx}px`; if (minPx && r.tilePx >= minPx) out.warnings.push(m + ' (allowed by --minpx ' + minPx + ')'); else err(m); }
+    r.minTilePx = Footprint.PROFILE.target;
+    r.footprint = Footprint.measure(g.tiles);
+    if (!r.footprint.ok) { const m = `level ${lv}: tile size ${r.tilePx}px / ${r.footprint.rows} rows fails ${Footprint.PROFILE.name} (60 px, no ninth row)`; if (minPx && r.footprint.tilePx >= minPx) out.warnings.push(m + ' (experimental dry run only, --minpx ' + minPx + ')'); else err(m); }
     r.locks = dec.obst ? dec.obst.locks.length : 0; r.keys = dec.obst ? dec.obst.keys.length : 0;
     r.ice = dec.obst ? Object.keys(dec.obst.ice).length : 0; r.down = dec.down.length; r.clock = dec.clock;
     out.levels.push(r);
@@ -166,6 +163,7 @@ function readDir(dir) {
 function main(argv) {
   const a = {}; for (let i = 0; i < argv.length; i++) if (argv[i].startsWith('--')) { const k = argv[i].slice(2); a[k] = argv[i + 1] && !argv[i + 1].startsWith('--') ? argv[++i] : true; }
   if (!a.in) { console.error('usage: node export_levels.js --in <folder> [--table file] [--out dir] [--write] [--min 250] [--minpx <px, experiments only: lowers the tile-size floor to a warning>]'); process.exit(2); }
+  if (a.write && a.minpx) throw new Error('--minpx is for experimental dry runs; it cannot replace the game table');
   const tablePath = path.resolve(a.table || path.join(SRC, 'www/levels-hard.js'));
   const { report, text } = exportTable(fs.readFileSync(tablePath, 'utf8'), readDir(path.resolve(a.in)), { min: +a.min || 250, minPx: +a.minpx || 0, designedVersion: +a['designed-version'] || 0, cut: !!a.cut });
   const outDir = path.resolve(a.out || path.join(SRC, 'build/export'));
