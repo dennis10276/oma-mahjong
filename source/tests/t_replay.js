@@ -208,7 +208,7 @@ module.exports = [
       t.eq(chunkValues(chunks(p, pid, before.aid)).length, 0, 'recording stayed local while disconnected');
       offline = false;
       await p.evaluate(() => flushReplay());
-      await click(p, '#btnHint'); await click(p, '#btnShuffle');
+      await click(p, '#btnHint'); await click(p, '#btnHint'); await click(p, '#btnShuffle'); await click(p, '#btnShuffle');
       await p.waitForFunction(() => G.usedShuffle && !G.busy, null, { timeout: 10000 });
       t.ok(await solve(p, 3000), 'winning route found');
       await p.waitForFunction(() => G.done && G.logged, null, { timeout: 10000 });

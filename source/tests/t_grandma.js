@@ -123,14 +123,14 @@ module.exports = [
       const path = await p.evaluate(() => __mj.solveNow(60000));
       for (const m of path.slice(0, 10)) { await p.evaluate(m => { const G = __mj.G; if (!G.alive[m]) return; __mj.onTap(m); if (G.alive[m]) __mj.onTap(m); }, m); await sleep(280); }
       const before = await p.evaluate(() => { const G = __mj.G, c = {}; G.tiles.forEach((t, i) => { if (G.alive[i]) c[t.face] = (c[t.face] || 0) + 1; }); return c; });
-      await click(p, '#btnShuffle'); await sleep(1300);
+      await click(p, '#btnShuffle'); await click(p, '#btnShuffle');   // first tap wakes it, second uses it await sleep(1300);
       const after = await p.evaluate(() => { const G = __mj.G, c = {}; G.tiles.forEach((t, i) => { if (G.alive[i]) c[t.face] = (c[t.face] || 0) + 1; }); return c; });
       t.eq(await p.evaluate(() => __mj.G.usedShuffle), true, 'shuffled after playing');
       t.eq(after, before, 'same pictures, new places');
       t.ok(await p.evaluate(() => !!__mj.solveNow(60000)), 'still solvable');
       const q = await t.phone({ state: { ...DENNIS, level: 16 } });
       await startLevel(q, 16); await sleep(300);
-      await click(q, '#btnShuffle'); await sleep(1200);
+      await click(q, '#btnShuffle'); await click(q, '#btnShuffle'); await sleep(1200);
       t.eq(await q.evaluate(() => __mj.G.usedShuffle), true, 'Dennis can shuffle at the start');
     },
   },
