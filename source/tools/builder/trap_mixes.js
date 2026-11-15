@@ -440,7 +440,9 @@ function build(name, brief = {}, opts = {}) {
     }
     if(!p.ok){fails[p.why]=(fails[p.why]||0)+1;continue;}
     const card={layout,shape:lay.shape,tiles:c.n,trapType:f.trapType,clock:{fewestMoves:k,spare,n:d.clock.n,tile:d.clock.i},trap:p.card,attempt};
-    return {design:d,roles:r,brief:used,card,fails,ms:Date.now()-t0};
+    const fitted=require('./compact_footprint.js').compact({design:d,roles:r,brief:used,card,fails,ms:Date.now()-t0},opts.footprint);
+    if(fitted.design)return fitted;
+    fails[fitted.fail]=(fails[fitted.fail]||0)+1;
     }finally{opts.onAttempt?.({attempt,fails:{...fails}});}
   }
   return {fail:'noProvenMix',fails,ms:Date.now()-t0};

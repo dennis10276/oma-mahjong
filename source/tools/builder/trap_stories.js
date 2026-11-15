@@ -952,7 +952,12 @@ function build(name, brief = {}, opts = {}) {
   for (const spare of spares) {
     const used = { ...brief, frame: { ...(brief.frame || {}), spare }, targets: { trayRoom: 0, maxDown: 0.2, hiddenOnWay: 0, ...(brief.targets || {}) }, story: name };
     const r = withFrozenRoles(name === 'chain' && needsFrozenRoles(brief.chain), () => VC.build(used, { tries: 40, ...opts }));
-    if (r.design) { r.brief = used; r.card.trapType = name === 'chain' ? 'chain:' + brief.chain : name; return r; }
+    if (r.design) {
+      r.brief = { ...used, ...(r.footprint?.changed ? { tiles:r.design.tiles } : {}) }; r.card.trapType = name === 'chain' ? 'chain:' + brief.chain : name;
+      const fitted = require('./compact_footprint.js').compact(r, opts.footprint);
+      if (fitted.design) return fitted;
+      last = fitted; continue;
+    }
     last = last ? { ...r, fails: { ...Object.fromEntries(Object.entries(last.fails || {}).map(([k, v]) => ['s' + spares[0] + ':' + k, v])), ...r.fails } } : r;
   }
   return last;

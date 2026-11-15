@@ -98,7 +98,8 @@ function verify(example,opts={}){
   const d=example.design,card=example.card,errors=[],checks=[],fail=x=>errors.push(x);
   if(!d||!card?.trap)return {ok:false,errors:['missingDesignOrCard']};
   const bad=checkDesign(d);if(bad)return {ok:false,errors:[bad]};
-  if(!B.LAYOUTS[card.layout]||!same(d.tiles,B.LAYOUTS[card.layout].tiles))fail('layoutMismatch');
+  const custom=card.layoutGeometry&&same(d.tiles,card.layoutGeometry)&&require('./footprint.js').measure(d).ok;
+  if(!custom&&(!B.LAYOUTS[card.layout]||!same(d.tiles,B.LAYOUTS[card.layout].tiles)))fail('layoutMismatch');
   const t=card.trap,k=card.clock.fewestMoves,spare=card.clock.spare;
   if(example.roles?.bait?.pairs?.some(([a,b])=>d.faces[a]!==d.faces[b]))fail('authoredBaitPair');
   const shape=structure(d,t);if(shape)fail('structure:'+shape);

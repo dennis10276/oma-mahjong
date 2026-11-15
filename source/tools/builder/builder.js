@@ -701,7 +701,7 @@ function build(briefIn, opts = {}) {
     const r = buildIn(c, story, brief, shape, opts, { budget, spare, fails, cap, softWork, variants });
     // a failure the work budget cut short is not a design failure: say so (the last failure stays as the cause)
     if (r.fail && WORK.out) return { fail: 'workBudget', detail: 'the work budget (' + WORK.hard + ' nodes) ran out; last failure: ' + r.fail + (r.detail ? ' (' + r.detail + ')' : ''), cause: r.fail, fails, work: WORK.used, ms: ms() };
-    return { ...r, work: WORK.used, ms: ms() };
+    return require('./compact_footprint.js').compact({ ...r, work: WORK.used, ms: ms() }, opts.footprint);
   } catch (e) {
     if (e === WALLX) return { fail: 'wallClock', detail: 'the wall-clock safety cap (' + wallMs + ' ms) was reached: a failure, never another board', fails, work: WORK.used, ms: ms() };
     throw e;
