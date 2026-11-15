@@ -319,16 +319,14 @@ body.nonum .cn { display: none; }
 
 /* hint and shuffle sit left and right of the tray, in the tray's row (Dennis 2026-11-15): they take no height from the pile */
 .traybar { position: relative; }
-.toolbar { position: absolute; inset: 0 8px 4px; display: flex; justify-content: space-between; align-items: center; pointer-events: none; }
-#game.compact .toolbar { bottom: 0; }
-.tool { --slotw: min(12.5vw, 60px, 7vh); pointer-events: auto; position: relative; width: min(64px, calc((100vw - 4 * var(--slotw) - 30px) / 2 - 14px)); height: calc(var(--slotw) * 1.24 - 2px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 2px 1px 0; background: var(--cream); border-radius: 14px; font-size: 10.5px; font-weight: 900; line-height: 1; letter-spacing: -.2px; box-shadow: 0 4px 0 var(--cream2), 0 6px 8px rgba(0,0,0,.22); }
-.tool > span { font-size: 24px; line-height: 1; }
-.tool > b { max-width: 100%; white-space: nowrap; }
-.tool:active { transform: translateY(5px); box-shadow: 0 1px 0 var(--cream2); }
-.tool .badge { position: absolute; top: -5px; right: -5px; min-width: 19px; height: 19px; font-size: 12px !important; border-radius: 13px; background: var(--pink); color: #fff; font-style: normal; font-size: 14px; display: grid; place-items: center; box-shadow: 0 2px 0 var(--pink-d); }
-.tool.used { opacity: .45; filter: grayscale(1); }
-.tool.locked { opacity: .55; filter: grayscale(.8); }
-.tool.locked .badge { background: var(--muted); box-shadow: 0 2px 0 #5c4520; font-size: 12px; }
+.toolbar { position: absolute; inset: 0 10px; display: flex; justify-content: space-between; align-items: center; pointer-events: none; }
+/* the same size and place as the home and restart buttons above them: icon only, no number; used or not yet open = grey (Dennis 2026-11-15) */
+.tool { pointer-events: auto; position: relative; width: 44px; height: 44px; display: grid; place-items: center; padding: 0; background: var(--cream); border-radius: 14px; box-shadow: 0 4px 0 var(--cream2), 0 6px 8px rgba(0,0,0,.22); }
+.tool > span { font-size: 22px; line-height: 1; }
+.tool > b, .tool .badge { display: none; }
+.tool:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--cream2); }
+.tool.used { opacity: .4; filter: grayscale(1); }
+.tool.locked { opacity: .4; filter: grayscale(1); }
 
 /* ========== 8 pop-ups ========== */
 #modal { position: fixed; inset: 0; background: rgba(10,20,15,.6); display: grid; place-items: center; z-index: 65; padding: 20px; }
