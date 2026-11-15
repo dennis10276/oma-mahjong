@@ -214,6 +214,14 @@ add new decisions with a date.
     the trap needs to be read (the lock, the ice) has to be in plain sight.
   - **1.69 is live** (released and verified 2026-11-14 evening): commit a99b338e on main, 170 of 170 tests, APK 1.69 (code 85) signed with the
     existing certificate; the website serves version 1.69 and a level table that ends at 300 with designedFrom 250.
+  - **60 px for 250-300, tidy shapes, traps untouched** (2026-11-15): "The levels 250-300 have small tile size. I want to bring it to
+    the standard we had ar around 60px without changing the levels too much especially the traps cant be changed. every 10th level
+    may be bigger and therefore smaller tile size"; "Level 250 can stay the same cause its a tenth level."; and on Codex's compact
+    draft of 250: "The shape shouldnt be weird suddenly I saw 250 (that doesnt need changing) with weirdly placed tiles".
+    So: the tens (250, 260, ... 300) stay exactly as released; a restacked pile has to look like a designed shape, not a repack.
+    Lead's note: the released piles are 7 tiles wide, which is 54.5 px on the 392 px reference; 60 px needs 6 wide (the older levels
+    are 6 wide), so about one tile in seven of every layer has to move to another place. Codex's 46 drafts
+    (`footprint60/range-250-300.json`) do that by free repacking and are not adopted.
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
   - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
     played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is
