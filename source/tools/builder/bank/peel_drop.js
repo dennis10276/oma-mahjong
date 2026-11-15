@@ -234,7 +234,7 @@ function attempt(before, v0, base, protectedFaces, special, seed = 0, opts = {})
   if (r.result !== 'win') return { why: 'finish ' + r.result };
   b.solution = r.solution;
   if (!E.replay(b, b.solution, { strict: true }).ok) return { why: 'strict replay' };
-  if (opts.playOnly) return { design: b, dropped: [...D], picturesExchanged: faces.filter((f, i) => f !== a.faces[i]).length / 2 };
+  if (opts.playOnly) return { design: b, keep, dropped: [...D], picturesExchanged: faces.filter((f, i) => f !== a.faces[i]).length / 2 };
   // the trap, compared through the tile map
   const why = [], core = [...M].sort((p, q) => p - q), coreB = core.map(mp);
   const relA = P.relations(E.game(A), core).map(r0 => r0.slice(2)), relB = P.relations(E.game(b), coreB).map(r0 => r0.slice(2));

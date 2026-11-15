@@ -20,7 +20,7 @@ function createServer({port=8269,dataDir=B.DATA,assetDir=B.OUT}={}){
       return json(res,200,{levels,checks});}
     if(req.method==='GET'&&url.pathname.startsWith('/api/check/')){const j=jobs.get(url.pathname.split('/').pop());return json(res,j?200:404,j?{id:j.id,status:j.status,result:j.result}: {error:'Check not found'});}
     if(req.method==='POST'&&url.pathname==='/api/playable'){let text='';req.on('data',c=>{text+=c;});req.on('end',()=>{try{const body=JSON.parse(text),row=rows.get(body.level);if(!row)throw Error('Level is not part of this placement lab');const saved=M.validate(row,body);
-      const r=require('./peel_drop.js').forArrangement(row.level,saved.positions,saved.erased||[],{playOnly:true});return json(res,r.design?200:400,r.design?{design:r.design,dropped:r.dropped.length,picturesExchanged:r.picturesExchanged}:{error:r.why});}catch(e){json(res,400,{error:e.message});}});return;}
+      const r=require('./peel_drop.js').forArrangement(row.level,saved.positions,saved.erased||[],{playOnly:true});return json(res,r.design?200:400,r.design?{design:r.design,keep:r.keep,dropped:r.dropped.length,picturesExchanged:r.picturesExchanged}:{error:r.why});}catch(e){json(res,400,{error:e.message});}});return;}
     if(req.method==='POST'&&['/api/save','/api/check'].includes(url.pathname)){
       let text='';req.on('data',chunk=>{text+=chunk;if(text.length>1000000)req.destroy();});req.on('end',()=>{try{
         const body=JSON.parse(text),row=rows.get(body.level);if(!row)throw Error('Level is not part of this placement lab');const saved=save(row,body);
