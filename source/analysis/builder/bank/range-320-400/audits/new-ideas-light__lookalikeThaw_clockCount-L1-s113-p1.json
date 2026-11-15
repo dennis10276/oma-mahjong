@@ -1,0 +1,117 @@
+{
+ "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-320-400\\source\\analysis\\builder\\bank\\new-ideas-light\\lookalikeThaw_clockCount-L1-s113-p1.json",
+ "dependency": {
+  "profile": "interacting-ideas-v1",
+  "ok": true,
+  "featuredIdeas": [
+   "clockCount",
+   "lookalikeChoice"
+  ],
+  "rows": [
+   {
+    "sourceIdea": "clockCount",
+    "targetIdea": "lookalikeChoice",
+    "prerequisitePath": [
+     47,
+     13
+    ],
+    "losingOffer": [
+     68,
+     71
+    ],
+    "clockN": 12,
+    "baseResult": "lose",
+    "relaxedResult": "win",
+    "change": {
+     "kind": "removeIce",
+     "tile": 47,
+     "sourceIdea": "clockCount"
+    },
+    "baseNodes": 12446,
+    "relaxedNodes": 435
+   },
+   {
+    "sourceIdea": "lookalikeChoice",
+    "targetIdea": "clockCount",
+    "prerequisitePath": [
+     13,
+     47
+    ],
+    "losingOffer": [
+     73,
+     58
+    ],
+    "clockN": 12,
+    "baseResult": "lose",
+    "relaxedResult": "win",
+    "change": {
+     "kind": "removeKeyLockPrerequisite",
+     "tile": 1,
+     "sourceIdea": "lookalikeChoice"
+    },
+    "baseNodes": 6067,
+    "relaxedNodes": 11910
+   }
+  ],
+  "strongerOpening": true,
+  "opening": {
+   "firstOffGreedy": true,
+   "greedyPrefix": false,
+   "rightFreePairs": false,
+   "preferredLosingOffers": [
+    [
+     68,
+     71
+    ],
+    [
+     73,
+     58
+    ]
+   ]
+  },
+  "interpretation": "Same-route physical prerequisite plus a bait defused at the unchanged timer; a changed clock-route budget is part of this dependency, not ruled out."
+ },
+ "readability": {
+  "profile": "clear-specials-v1",
+  "ok": false,
+  "rows": [
+   {
+    "tile": 0,
+    "kind": "ice",
+    "shown": 0.8617,
+    "clear": true
+   },
+   {
+    "tile": 47,
+    "kind": "ice",
+    "shown": 0.5133,
+    "clear": false
+   },
+   {
+    "tile": 1,
+    "kind": "lock",
+    "shown": 0.5115,
+    "clear": false
+   },
+   {
+    "tile": 13,
+    "kind": "key",
+    "shown": 0,
+    "clear": false
+   },
+   {
+    "tile": 68,
+    "kind": "key",
+    "shown": 1,
+    "clear": true
+   }
+  ]
+ },
+ "ideas": [
+  "clockCount",
+  "lookalikeChoice"
+ ],
+ "links": 5,
+ "layout": 1,
+ "source": "lookalikeThaw_clockCount"
+}

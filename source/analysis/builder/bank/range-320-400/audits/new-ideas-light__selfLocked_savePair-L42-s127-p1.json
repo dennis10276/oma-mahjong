@@ -1,0 +1,62 @@
+{
+ "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-320-400\\source\\analysis\\builder\\bank\\new-ideas-light\\selfLocked_savePair-L42-s127-p1.json",
+ "dependency": {
+  "profile": "interacting-ideas-v1",
+  "ok": false,
+  "featuredIdeas": [
+   "savePair",
+   "selfLocked"
+  ],
+  "rows": [],
+  "strongerOpening": true,
+  "opening": {
+   "firstOffGreedy": true,
+   "greedyPrefix": false,
+   "rightFreePairs": false,
+   "preferredLosingOffers": [
+    [
+     75,
+     60
+    ]
+   ]
+  },
+  "interpretation": "Same-route physical prerequisite plus a bait defused at the unchanged timer; a changed clock-route budget is part of this dependency, not ruled out."
+ },
+ "readability": {
+  "profile": "clear-specials-v1",
+  "ok": false,
+  "rows": [
+   {
+    "tile": 46,
+    "kind": "ice",
+    "shown": 1,
+    "clear": true
+   },
+   {
+    "tile": 47,
+    "kind": "lock",
+    "shown": 0,
+    "clear": false
+   },
+   {
+    "tile": 44,
+    "kind": "key",
+    "shown": 0,
+    "clear": false
+   },
+   {
+    "tile": 73,
+    "kind": "key",
+    "shown": 1,
+    "clear": true
+   }
+  ]
+ },
+ "ideas": [
+  "savePair",
+  "selfLocked"
+ ],
+ "links": 4,
+ "layout": 42,
+ "source": "selfLocked_savePair"
+}

@@ -17,6 +17,8 @@ function ideas(r){
 }
 function finish(raw,opts={}){
   const name=raw.brief.story,spare=raw.card.clock.spare,roles={...raw.roles,locks:new Set(raw.roles.locks),holderSpecials:new Set(raw.roles.holderSpecials)},notes=[];
+  const light=opts.finishProfile==='light-after-verdict',target=light?{parks:.7,parksMax:1.25,max3:.035,greedyMin:.65}:{parks:1.9,parksMax:2.6,max3:.075};
+  const meets=(feel,x)=>{const pp=+(feel.parkAt[1]+feel.parkAt[2]).toFixed(1);return !feel.lostGames&&pp>=(light?.5:1.5)&&pp<=(light?1.5:3)&&feel.waiting[3]<=(light?.05:.1)&&(!light||Tl.measure(x,{seed:977,playouts:800}).tailGreedyWin>=.65);};
   let d=structuredClone(raw.design),k=raw.card.clock.fewestMoves;
   if(M.FAMILIES[name]?.newIdea){
     const q=raw.card.trap.newLink,offers=require('./chained_new_ideas.js').candidates(name,d);
@@ -38,8 +40,8 @@ function finish(raw,opts={}){
   if(d.down.length/d.tiles.length<.23)return {fail:'faceDownTarget',notes};
   const freeze=[...new Set([...roles.bait.tiles,...d.obst.keys,...(roles.bait.repeat?.copies||[])])];
   let feel=F.expert(d,{playouts:16,seed:9}),pp=+(feel.parkAt[1]+feel.parkAt[2]).toFixed(1);
-  if(pp<1.5||pp>3||feel.waiting[3]>.1||feel.lostGames){
-    const tune=require('./bank/feel_retune.js').tuneFeel(d,{target:{parks:1.9,parksMax:2.6,max3:.075},ms:opts.tuneMs??45000,seed:opts.seed??1,freeze,validate});
+  if(!meets(feel,d)){
+    const tune=require('./bank/feel_retune.js').tuneFeel(d,{target,ms:opts.tuneMs??45000,seed:opts.seed??1,freeze,validate,tolerance:0});
     notes.push({stage:'feel',...tune,design:undefined});if(!tune.ok)return {fail:'feel',notes};d=tune.design;
   }
   rt=M.retime(d,spare);if(!rt.ok)return {fail:rt.why,notes};d=rt.design;k=rt.k;
@@ -48,16 +50,17 @@ function finish(raw,opts={}){
   d.down=d.down.filter(i=>!protectedFinal.has(i));d=Tl.addFaceDown(d,{protect:protectedFinal,target:.25,cap:.28,seed:(opts.seed??1)+53}).design;
   const proof=M.prove(name,d,roles,{k,spare,obviousnessDial:raw.brief.obviousnessDial});if(!proof.ok)return {fail:'proof:'+proof.why,notes};
   feel=F.expert(d,{playouts:16,seed:9});pp=+(feel.parkAt[1]+feel.parkAt[2]).toFixed(1);
-  if(pp<1.5||pp>3||feel.waiting[3]>.1||feel.lostGames){
-    const again=require('./bank/feel_retune.js').tuneFeel(d,{target:{parks:1.9,parksMax:2.6,max3:.075},ms:30000,seed:(opts.seed??1)+101,freeze,validate});
+  if(!meets(feel,d)){
+    const again=require('./bank/feel_retune.js').tuneFeel(d,{target,ms:30000,seed:(opts.seed??1)+101,freeze,validate,tolerance:0});
     notes.push({stage:'feelFinalRetry',...again,design:undefined});
     if(again.ok){d=again.design;rt=M.retime(d,spare);if(rt.ok){d=rt.design;k=rt.k;}}
     feel=F.expert(d,{playouts:16,seed:9});pp=+(feel.parkAt[1]+feel.parkAt[2]).toFixed(1);
-    if(pp<1.5||pp>3||feel.waiting[3]>.1||feel.lostGames)return {fail:'feelFinal',pp,feel,notes};
+    if(!meets(feel,d))return {fail:'feelFinal',pp,feel,notes};
   }
   const finalProof=M.prove(name,d,roles,{k,spare,obviousnessDial:raw.brief.obviousnessDial});if(!finalProof.ok)return {fail:'finalProof:'+finalProof.why,notes};
   const r={...raw,schema:'chained-v2',design:d,roles,notes,card:{...raw.card,clock:{fewestMoves:k,spare,n:d.clock.n,tile:d.clock.i},trap:finalProof.card,layers:Math.max(...d.tiles.map(t=>t[2]))+1,faceDownShare:d.down.length/d.tiles.length,twins:S.summary(S.closeTwins(d)),pressure:require('./verify_trap_mixes.js').storedPressure(d),tail:Tl.measure(d,{seed:977,playouts:800}),tailOccupancy:Tl.occupancy(d),feel:{...feel,pp,seed:9,playouts:16}}};
   r.card.wrongIdea=ideas(r);
+  if(light){r.card.finishProfile='light-after-verdict';r.reviewRevision={sourceFile:opts.sourceFile||name,reason:'Dennis: build 320-400 from working combined ideas, with an easy finish after the hard trap'};}
   if(r.brief.readabilityProfile)r.card.specialReadability=require('./chained_special_readability.js').measure(d);
   const v=require('./verify_chained_v2.js').verify(r);if(!v.ok)return {fail:'independentVerification',verification:v,notes};r.verification=v;return r;
 }

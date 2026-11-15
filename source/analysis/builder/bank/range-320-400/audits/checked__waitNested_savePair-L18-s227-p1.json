@@ -1,0 +1,68 @@
+{
+ "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-320-400\\source\\analysis\\builder\\bank\\new-ideas\\checked\\waitNested_savePair-L18-s227-p1.json",
+ "dependency": {
+  "profile": "interacting-ideas-v1",
+  "ok": false,
+  "featuredIdeas": [
+   "savePair",
+   "waitForTwin"
+  ],
+  "rows": [],
+  "strongerOpening": true,
+  "opening": {
+   "firstOffGreedy": true,
+   "greedyPrefix": false,
+   "rightFreePairs": false,
+   "preferredLosingOffers": [
+    [
+     52,
+     53
+    ]
+   ]
+  },
+  "interpretation": "Same-route physical prerequisite plus a bait defused at the unchanged timer; a changed clock-route budget is part of this dependency, not ruled out."
+ },
+ "readability": {
+  "profile": "clear-specials-v1",
+  "ok": false,
+  "rows": [
+   {
+    "tile": 67,
+    "kind": "ice",
+    "shown": 1,
+    "clear": true
+   },
+   {
+    "tile": 71,
+    "kind": "ice",
+    "shown": 1,
+    "clear": true
+   },
+   {
+    "tile": 51,
+    "kind": "lock",
+    "shown": 0.9957,
+    "clear": true
+   },
+   {
+    "tile": 7,
+    "kind": "key",
+    "shown": 0.6232,
+    "clear": false
+   },
+   {
+    "tile": 59,
+    "kind": "key",
+    "shown": 1,
+    "clear": true
+   }
+  ]
+ },
+ "ideas": [
+  "savePair",
+  "waitForTwin"
+ ],
+ "links": 5,
+ "layout": 18,
+ "source": "waitNested_savePair"
+}

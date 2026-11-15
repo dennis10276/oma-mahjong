@@ -7,8 +7,8 @@ if(!isMainThread&&require.main===module){
     let r;
     if(j.mode==='finish'){
       const raw=JSON.parse(fs.readFileSync(j.file));
-      const obsolete=(raw.roles.bait.sixLinks||[raw.roles.bait.six]).some(q=>q.kind==='clockCount'&&!Number.isInteger(q.parkSide));
-      r=obsolete?{fail:'obsoleteClockCountRecipe'}:require('./chained_v2_finish.js').finish(raw,{seed:j.seed,tuneMs:j.tuneMs??30000,repairMs:j.repairMs??20000});
+      const obsolete=(raw.roles.bait.sixLinks||[raw.roles.bait.six]).some(q=>q?.kind==='clockCount'&&!Number.isInteger(q.parkSide));
+      r=obsolete?{fail:'obsoleteClockCountRecipe'}:require('./chained_v2_finish.js').finish(raw,{seed:j.seed,tuneMs:j.tuneMs??30000,repairMs:j.repairMs??20000,finishProfile:j.finishProfile,sourceFile:path.basename(j.file)});
     }
     else if(j.mode==='refresh'){
       const row=JSON.parse(fs.readFileSync(j.file)),roles={...row.roles,locks:new Set(row.roles.locks),holderSpecials:new Set(row.roles.holderSpecials)};

@@ -1,0 +1,66 @@
+{
+ "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-320-400\\source\\analysis\\builder\\bank\\chained-gentle\\lookalikeWay-L14-s3-p1.json",
+ "dependency": {
+  "profile": "interacting-ideas-v1",
+  "ok": false,
+  "featuredIdeas": [
+   "lookalikeChoice"
+  ],
+  "rows": [],
+  "strongerOpening": true,
+  "opening": {
+   "firstOffGreedy": true,
+   "greedyPrefix": false,
+   "rightFreePairs": false,
+   "preferredLosingOffers": [
+    [
+     0
+    ],
+    [
+     0,
+     74
+    ]
+   ]
+  },
+  "interpretation": "Same-route physical prerequisite plus a bait defused at the unchanged timer; a changed clock-route budget is part of this dependency, not ruled out."
+ },
+ "readability": {
+  "profile": "clear-specials-v1",
+  "ok": false,
+  "rows": [
+   {
+    "tile": 44,
+    "kind": "ice",
+    "shown": 0,
+    "clear": false
+   },
+   {
+    "tile": 66,
+    "kind": "ice",
+    "shown": 1,
+    "clear": true
+   },
+   {
+    "tile": 30,
+    "kind": "lock",
+    "shown": 0.592,
+    "clear": false
+   },
+   {
+    "tile": 25,
+    "kind": "key",
+    "shown": 1,
+    "clear": true
+   },
+   {
+    "tile": 0,
+    "kind": "key",
+    "shown": 1,
+    "clear": true
+   }
+  ]
+ },
+ "links": 4,
+ "layout": 14,
+ "source": "lookalikeWay"
+}

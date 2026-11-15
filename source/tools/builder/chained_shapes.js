@@ -85,3 +85,4 @@ for(const [kind,bases]of Object.entries({
   clockCount:['roofCoverKey','roofCoverWay','roofNested','roofCoverThaw'],
 }))for(const base of bases){const f=Six.family(kind,base,SHAPES[base]);SHAPES[f.name]=f;}
 module.exports.COMBINATIONS=COMBINATIONS;
+module.exports.RANGE_COMBINATIONS=require('./range_combinations.js').register(SHAPES,Six);

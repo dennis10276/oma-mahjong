@@ -1,0 +1,87 @@
+{
+ "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-320-400\\source\\analysis\\builder\\bank\\range-320-400\\candidates\\selfLocked_savePair-L25-s601-p1.json",
+ "dependency": {
+  "profile": "interacting-ideas-v1",
+  "ok": true,
+  "featuredIdeas": [
+   "savePair",
+   "selfLocked"
+  ],
+  "rows": [
+   {
+    "sourceIdea": "selfLocked",
+    "targetIdea": "savePair",
+    "prerequisitePath": [
+     63,
+     75,
+     6,
+     64
+    ],
+    "losingOffer": [
+     51,
+     56
+    ],
+    "clockN": 10,
+    "baseResult": "lose",
+    "relaxedResult": "win",
+    "change": {
+     "kind": "removeIce",
+     "tile": 63,
+     "sourceIdea": "selfLocked"
+    },
+    "baseNodes": 5791,
+    "relaxedNodes": 236
+   }
+  ],
+  "strongerOpening": true,
+  "opening": {
+   "firstOffGreedy": true,
+   "greedyPrefix": false,
+   "rightFreePairs": false,
+   "preferredLosingOffers": [
+    [
+     51,
+     56
+    ]
+   ]
+  },
+  "interpretation": "Same-route physical prerequisite plus a bait defused at the unchanged timer; a changed clock-route budget is part of this dependency, not ruled out."
+ },
+ "readability": {
+  "profile": "clear-specials-v1",
+  "ok": true,
+  "rows": [
+   {
+    "tile": 63,
+    "kind": "ice",
+    "shown": 1,
+    "clear": true
+   },
+   {
+    "tile": 75,
+    "kind": "lock",
+    "shown": 1,
+    "clear": true
+   },
+   {
+    "tile": 6,
+    "kind": "key",
+    "shown": 1,
+    "clear": true
+   },
+   {
+    "tile": 50,
+    "kind": "key",
+    "shown": 1,
+    "clear": true
+   }
+  ]
+ },
+ "ideas": [
+  "savePair",
+  "selfLocked"
+ ],
+ "links": 4,
+ "layout": 25,
+ "source": "selfLocked_savePair"
+}

@@ -1,0 +1,99 @@
+{
+ "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-320-400\\source\\analysis\\builder\\bank\\range-320-400\\candidates\\lookalikeThaw_savePair-L19-s601-p1.json",
+ "dependency": {
+  "profile": "interacting-ideas-v1",
+  "ok": true,
+  "featuredIdeas": [
+   "lookalikeChoice",
+   "savePair"
+  ],
+  "rows": [
+   {
+    "sourceIdea": "lookalikeChoice",
+    "targetIdea": "savePair",
+    "prerequisitePath": [
+     14,
+     52,
+     58
+    ],
+    "losingOffer": [
+     74,
+     67
+    ],
+    "clockN": 14,
+    "baseResult": "lose",
+    "relaxedResult": "win",
+    "change": {
+     "kind": "removeKeyLockPrerequisite",
+     "tile": 36,
+     "sourceIdea": "lookalikeChoice"
+    },
+    "baseNodes": 6250,
+    "relaxedNodes": 339
+   }
+  ],
+  "strongerOpening": true,
+  "opening": {
+   "firstOffGreedy": true,
+   "greedyPrefix": false,
+   "rightFreePairs": false,
+   "preferredLosingOffers": [
+    [
+     64
+    ],
+    [
+     64,
+     72
+    ],
+    [
+     74,
+     67
+    ]
+   ]
+  },
+  "interpretation": "Same-route physical prerequisite plus a bait defused at the unchanged timer; a changed clock-route budget is part of this dependency, not ruled out."
+ },
+ "readability": {
+  "profile": "clear-specials-v1",
+  "ok": true,
+  "rows": [
+   {
+    "tile": 43,
+    "kind": "ice",
+    "shown": 1,
+    "clear": true
+   },
+   {
+    "tile": 52,
+    "kind": "ice",
+    "shown": 1,
+    "clear": true
+   },
+   {
+    "tile": 36,
+    "kind": "lock",
+    "shown": 0.9091,
+    "clear": true
+   },
+   {
+    "tile": 14,
+    "kind": "key",
+    "shown": 1,
+    "clear": true
+   },
+   {
+    "tile": 64,
+    "kind": "key",
+    "shown": 1,
+    "clear": true
+   }
+  ]
+ },
+ "ideas": [
+  "lookalikeChoice",
+  "savePair"
+ ],
+ "links": 5,
+ "layout": 19,
+ "source": "lookalikeThaw_savePair"
+}

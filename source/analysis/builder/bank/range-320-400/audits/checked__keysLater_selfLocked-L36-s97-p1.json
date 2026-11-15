@@ -1,0 +1,68 @@
+{
+ "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-320-400\\source\\analysis\\builder\\bank\\new-ideas\\checked\\keysLater_selfLocked-L36-s97-p1.json",
+ "dependency": {
+  "profile": "interacting-ideas-v1",
+  "ok": false,
+  "featuredIdeas": [
+   "keysLater",
+   "selfLocked"
+  ],
+  "rows": [],
+  "strongerOpening": true,
+  "opening": {
+   "firstOffGreedy": true,
+   "greedyPrefix": false,
+   "rightFreePairs": false,
+   "preferredLosingOffers": [
+    [
+     6,
+     71
+    ]
+   ]
+  },
+  "interpretation": "Same-route physical prerequisite plus a bait defused at the unchanged timer; a changed clock-route budget is part of this dependency, not ruled out."
+ },
+ "readability": {
+  "profile": "clear-specials-v1",
+  "ok": false,
+  "rows": [
+   {
+    "tile": 56,
+    "kind": "ice",
+    "shown": 0,
+    "clear": false
+   },
+   {
+    "tile": 64,
+    "kind": "ice",
+    "shown": 0,
+    "clear": false
+   },
+   {
+    "tile": 65,
+    "kind": "lock",
+    "shown": 1,
+    "clear": true
+   },
+   {
+    "tile": 6,
+    "kind": "key",
+    "shown": 1,
+    "clear": true
+   },
+   {
+    "tile": 71,
+    "kind": "key",
+    "shown": 1,
+    "clear": true
+   }
+  ]
+ },
+ "ideas": [
+  "keysLater",
+  "selfLocked"
+ ],
+ "links": 4,
+ "layout": 36,
+ "source": "keysLater_selfLocked"
+}

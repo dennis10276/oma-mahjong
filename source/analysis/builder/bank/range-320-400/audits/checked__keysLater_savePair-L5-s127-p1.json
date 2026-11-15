@@ -1,0 +1,72 @@
+{
+ "file": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-320-400\\source\\analysis\\builder\\bank\\new-ideas\\checked\\keysLater_savePair-L5-s127-p1.json",
+ "dependency": {
+  "profile": "interacting-ideas-v1",
+  "ok": false,
+  "featuredIdeas": [
+   "keysLater",
+   "savePair"
+  ],
+  "rows": [],
+  "strongerOpening": true,
+  "opening": {
+   "firstOffGreedy": true,
+   "greedyPrefix": false,
+   "rightFreePairs": false,
+   "preferredLosingOffers": [
+    [
+     1,
+     73
+    ],
+    [
+     84,
+     4
+    ]
+   ]
+  },
+  "interpretation": "Same-route physical prerequisite plus a bait defused at the unchanged timer; a changed clock-route budget is part of this dependency, not ruled out."
+ },
+ "readability": {
+  "profile": "clear-specials-v1",
+  "ok": false,
+  "rows": [
+   {
+    "tile": 75,
+    "kind": "ice",
+    "shown": 1,
+    "clear": true
+   },
+   {
+    "tile": 76,
+    "kind": "ice",
+    "shown": 0.8617,
+    "clear": true
+   },
+   {
+    "tile": 70,
+    "kind": "lock",
+    "shown": 0,
+    "clear": false
+   },
+   {
+    "tile": 1,
+    "kind": "key",
+    "shown": 1,
+    "clear": true
+   },
+   {
+    "tile": 73,
+    "kind": "key",
+    "shown": 0.6232,
+    "clear": false
+   }
+  ]
+ },
+ "ideas": [
+  "keysLater",
+  "savePair"
+ ],
+ "links": 4,
+ "layout": 5,
+ "source": "keysLater_savePair"
+}
