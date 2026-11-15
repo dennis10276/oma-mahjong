@@ -19,13 +19,15 @@ function createServer({port=8269,dataDir=B.DATA,assetDir=B.OUT}={}){
       for(const name of fs.readdirSync(path.join(dataDir,'jobs')).filter(n=>n.endsWith('.result.json')).sort()){try{const r=JSON.parse(fs.readFileSync(path.join(dataDir,'jobs',name)));if(levels[r.level]&&M.key(levels[r.level])===r.placementKey)checks[r.level]=r;}catch{}}
       return json(res,200,{levels,checks});}
     if(req.method==='GET'&&url.pathname.startsWith('/api/check/')){const j=jobs.get(url.pathname.split('/').pop());return json(res,j?200:404,j?{id:j.id,status:j.status,result:j.result}: {error:'Check not found'});}
+    if(req.method==='POST'&&url.pathname==='/api/playable'){let text='';req.on('data',c=>{text+=c;});req.on('end',()=>{try{const body=JSON.parse(text),row=rows.get(body.level);if(!row)throw Error('Level is not part of this placement lab');const saved=M.validate(row,body);
+      const r=require('./peel_drop.js').forArrangement(row.level,saved.positions,saved.erased||[],{playOnly:true});return json(res,r.design?200:400,r.design?{design:r.design,dropped:r.dropped.length,picturesExchanged:r.picturesExchanged}:{error:r.why});}catch(e){json(res,400,{error:e.message});}});return;}
     if(req.method==='POST'&&['/api/save','/api/check'].includes(url.pathname)){
       let text='';req.on('data',chunk=>{text+=chunk;if(text.length>1000000)req.destroy();});req.on('end',()=>{try{
         const body=JSON.parse(text),row=rows.get(body.level);if(!row)throw Error('Level is not part of this placement lab');const saved=save(row,body);
         if(url.pathname==='/api/save')return json(res,200,{saved,placementKey:M.key(saved)});
         const id=Date.now()+'-'+(++serial),prefix=path.join(dataDir,'jobs',id),job={id,level:row.level,status:'queued',input:prefix+'.input.json',output:prefix+'.result.json',log:prefix+'.log',placementKey:M.key(saved)};
         fs.writeFileSync(job.input,JSON.stringify({row,snapshot:saved}));jobs.set(id,job);
-        const incomplete=M.incomplete(saved.positions);
+        const incomplete=M.incomplete(saved.positions,saved.erased);
         if(incomplete){job.status='done';job.result={...incomplete,checkerVersion:2,level:row.level,placementKey:job.placementKey,checkedAt:new Date().toISOString()};fs.writeFileSync(job.output,JSON.stringify(job.result,null,2)+'\n');}
         else queue.push(job);
         json(res,202,{id,saved,placementKey:job.placementKey});next();
@@ -38,5 +40,5 @@ function createServer({port=8269,dataDir=B.DATA,assetDir=B.OUT}={}){
   });
   return {server,listen:()=>new Promise(resolve=>server.listen(port,'127.0.0.1',()=>{console.log('Placement lab http://127.0.0.1:'+server.address().port+'/ — edits '+dataDir);resolve(server.address());})),jobs};
 }
-if(require.main===module)createServer({port:+process.argv[2]||8269,...(process.argv[3]?{dataDir:path.resolve(process.argv[3])}:{})}).listen();
+if(require.main===module)createServer({port:+process.argv[2]||8269,...(process.argv[3]?{dataDir:path.resolve(process.argv[3])}:{}),...(process.argv[4]?{assetDir:path.resolve(process.argv[4])}:{})}).listen();
 module.exports={createServer};

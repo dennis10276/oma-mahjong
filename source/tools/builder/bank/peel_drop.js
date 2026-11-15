@@ -172,10 +172,10 @@ function variantsRigid(a, M, special) {
   return out.sort((p, q) => p.drop.length - q.drop.length);
 }
 
-function attempt(before, v0, base, protectedFaces, special, seed = 0) {
+function attempt(before, v0, base, protectedFaces, special, seed = 0, opts = {}) {
   const v = { ...v0, seed };
   const a0 = before.design, a = v.tiles ? { ...a0, tiles: v.tiles } : a0, n = a.tiles.length, M = base.M, D = new Set(v.drop);
-  if ([...D].some(i => M.has(i) || special.has(i))) return { why: 'trap tile on the edge' };
+  if ([...D].some(i => special.has(i) || (M.has(i) && v.name !== 'arrangement'))) return { why: 'trap tile on the edge' };
   const faces = a.faces.slice(), free = i => !D.has(i) && !M.has(i) && !special.has(i) && !protectedFaces.has(faces[i]);
   // a tile to drop that shows a trap picture first hands that picture to the nearest ordinary tile (same layer first), so the
   // trap tile keeps a twin close to where it was; the behaviour checks below decide whether that is harmless
@@ -222,8 +222,8 @@ function attempt(before, v0, base, protectedFaces, special, seed = 0) {
   const ex = ext(keep.map(i => a.tiles[i]));
   const b = { tiles: keep.map(i => [a.tiles[i][0] - ex.x0, a.tiles[i][1] - ex.y0, a.tiles[i][2]]), faces: keep.map(i => faces[i]), down: (a.down || []).filter(i => map.has(i)).map(mp), gold: (a.gold || []).filter(i => map.has(i)).map(mp),
     obst: { ice: Object.fromEntries(Object.entries(a.obst.ice || {}).map(([k, h]) => [mp(+k), h])), locks: (a.obst.locks || []).map(mp), keys: (a.obst.keys || []).map(mp) }, clock: { i: mp(a.clock.i), n: a.clock.n } };
-  const e2 = ext(b.tiles); if (e2.x1 - e2.x0 + 2 > 13) return { why: 'still wider than 6.5' }; if (e2.y1 - e2.y0 + 2 > 16) return { why: 'still nine rows' };
-  const fp = F.measure(b, { minimum: 58 }); if (!fp.ok) return { why: 'footprint ' + fp.tilePx.toFixed(1) };
+  const e2 = ext(b.tiles), fp = F.measure(b, { minimum: 58 });
+  if (!opts.playOnly) { if (e2.x1 - e2.x0 + 2 > 13) return { why: 'still wider than 6.5' }; if (e2.y1 - e2.y0 + 2 > 16) return { why: 'still nine rows' }; if (!fp.ok) return { why: 'footprint ' + fp.tilePx.toFixed(1) }; }
   // the winning route: the released route to the clock, then an exact search for the rest
   const A = before.design;
   let prefix = A.solution.slice(0, A.solution.indexOf(A.clock.i) + 1).map(mp);
@@ -234,6 +234,7 @@ function attempt(before, v0, base, protectedFaces, special, seed = 0) {
   if (r.result !== 'win') return { why: 'finish ' + r.result };
   b.solution = r.solution;
   if (!E.replay(b, b.solution, { strict: true }).ok) return { why: 'strict replay' };
+  if (opts.playOnly) return { design: b, dropped: [...D], picturesExchanged: faces.filter((f, i) => f !== a.faces[i]).length / 2 };
   // the trap, compared through the tile map
   const why = [], core = [...M].sort((p, q) => p - q), coreB = core.map(mp);
   const relA = P.relations(E.game(A), core).map(r0 => r0.slice(2)), relB = P.relations(E.game(b), coreB).map(r0 => r0.slice(2));
@@ -260,6 +261,24 @@ function attempt(before, v0, base, protectedFaces, special, seed = 0) {
   return { design: b, dropped: [...D], moved: v.moved || 0, picturesExchanged: faces.filter((f, i) => f !== a.faces[i]).length / 2, footprint: fp, prices, k, map: keep };
 }
 
+function setup(level) {
+  const before = P.original(level), a = before.design, base = P.prepare(before);
+  const special = new Set([a.clock.i, ...a.obst.keys, ...a.obst.locks, ...Object.keys(a.obst.ice || {}).map(Number)]);
+  const g0 = base.prep.g, Mg = new Set(special);
+  for (const r of special) { for (const u of g0.nb.above[r]) Mg.add(u); if (g0.iceH[r]) for (const u of g0.iceNb[r]) Mg.add(u); }
+  for (const q of ((before.card && before.card.trap && before.card.trap.baits) || [])) for (const t of q.tiles) Mg.add(t);
+  return { before, a, base, special, Mg, protectedFaces: new Set([...Mg].map(i => a.faces[i])), baseG: { ...base, M: Mg } };
+}
+// Dennis's own arrangement from the placement lab: his positions, his erased tiles. checks=false only makes it playable
+// (pictures paired, a winning route), checks=true runs every trap check.
+function forArrangement(level, positions, erased, opts = {}) {
+  const S = setup(level), T = positions.map((p, i) => p || S.a.tiles[i]), keep = T.filter((p, i) => !erased.includes(i));
+  const Mm = require('./narrow_methods.js'); if (!Mm.valid(keep)) return { why: 'Some tiles overlap or rest on nothing.' };
+  if (erased.some(i => S.special.has(i))) return { why: 'A special tile (clock, lock, key or ice) cannot be erased.' };
+  let r = null;
+  for (let sd = 0; sd < 3; sd++) { r = attempt(S.before, { name: 'arrangement', tiles: T, drop: erased.slice() }, S.baseG, S.protectedFaces, S.special, sd, opts); if (r.design || !/twins|bait|role|clock|effects|badge/i.test(r.why)) break; }
+  return r;
+}
 function one(level) {
   const before = P.original(level), a = before.design, base = P.prepare(before), f0 = F.measure(a, { minimum: 58 }), e0 = ext(a.tiles);
   if (f0.ok && e0.x1 - e0.x0 + 2 <= 13) return { level, ok: true, unchanged: true, px: f0.tilePx };
@@ -298,7 +317,7 @@ function one(level) {
   }
   return { level, ok: false, fails, before: f0.tilePx };
 }
-module.exports = { one, attempt, variants, variantsShift, variantsCut, variantsRigid };
+module.exports = { one, attempt, setup, forArrangement, variants, variantsShift, variantsCut, variantsRigid };
 if (require.main === module) {
   fs.mkdirSync(OUT, { recursive: true });
   if (arg('one', null)) {

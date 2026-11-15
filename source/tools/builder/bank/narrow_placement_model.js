@@ -36,10 +36,12 @@
     const savedLayouts={};for(const source of ['base','released'])if(input.savedLayouts?.[source]){
       const ts=input.savedLayouts[source];if(!Array.isArray(ts)||ts.length!==row.base.tiles.length||ts.some(p=>p!==null&&(!Array.isArray(p)||p.length!==3||p.some(v=>!Number.isInteger(v)||v<0||v>32)||p[2]>7)))throw Error('Saved layout is invalid');savedLayouts[source]=copy(ts);
     }
-    return {level:row.level,baseHash:row.baseHash,positions:copy(input.positions),designSource:input.designSource==='released'?'released':'base',savedLayouts,note:String(input.note||'').slice(0,4000),updatedAt:Date.now()};
+    const erased=[...new Set((Array.isArray(input.erased)?input.erased:[]).filter(i=>Number.isInteger(i)&&i>=0&&i<row.base.tiles.length))].sort((a,b)=>a-b);
+    return {level:row.level,baseHash:row.baseHash,positions:copy(input.positions),erased,designSource:input.designSource==='released'?'released':'base',savedLayouts,note:String(input.note||'').slice(0,4000),updatedAt:Date.now()};
   }
   const designFor=(row,state)=>state.designSource==='released'?row.original:row.base;
-  const key=s=>JSON.stringify(s.designSource==='released'?[s.baseHash,s.positions,'released']:[s.baseHash,s.positions]);
-  function incomplete(positions){const tiles=positions.map((p,i)=>p?null:i).filter(i=>i!=null);return tiles.length?{status:'incomplete',ok:false,message:`Place the ${tiles.length} marked tile${tiles.length===1?'':'s'} from the side tray before the complete trap and finish can be checked.\nTile numbers: ${tiles.join(', ')}.`,tiles}:null;}
-  return {copy,overlap,supported,propose,dropAt,footprint,initial,validate,key,designFor,incomplete};
+  const key=s=>JSON.stringify(s.designSource==='released'?[s.baseHash,s.positions,'released',s.erased||[]]:[s.baseHash,s.positions,s.erased||[]]);
+  const live=(positions,erased)=>positions.map((p,i)=>(erased||[]).includes(i)?null:p);
+  function incomplete(positions,erased){const tiles=positions.map((p,i)=>p||(erased||[]).includes(i)?null:i).filter(i=>i!=null);return tiles.length?{status:'incomplete',ok:false,message:`Place the ${tiles.length} marked tile${tiles.length===1?'':'s'} from the side tray before the complete trap and finish can be checked.\nTile numbers: ${tiles.join(', ')}.`,tiles}:null;}
+  return {copy,overlap,supported,propose,dropAt,footprint,initial,validate,key,designFor,incomplete,live};
 });

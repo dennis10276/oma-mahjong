@@ -2,7 +2,14 @@
 const fs=require('fs'),{Worker,isMainThread,parentPort,workerData}=require('worker_threads');
 const P=require('./narrow_proof'),E=require('../engine'),M=require('./narrow_placement_model');
 function check(row,snapshot,opts={}){
-  const s=M.validate(row,snapshot),incomplete=M.incomplete(s.positions);if(incomplete)return incomplete;
+  const s=M.validate(row,snapshot),incomplete=M.incomplete(s.positions,s.erased);if(incomplete)return incomplete;
+  if(s.erased&&s.erased.length){
+    // erased tiles (Dennis 2026-11-15): the arrangement without them, pictures paired outside the trap, then every trap check
+    const r=require('./peel_drop.js').forArrangement(row.level,s.positions,s.erased,{});
+    const plain={trapRelations:'Connections used by the trap changed.',specialRoleOrder:'The required order of the special tiles changed.',specialEffects:'Removing ice or locks no longer has the same effect on the clock route.',visibleTwins:'Extra matching pictures are visible beside each other.'};
+    if(r.design)return {status:'passed',ok:true,message:'Trap checks pass with '+r.dropped.length+' tiles erased ('+r.picturesExchanged+' picture exchanges outside the trap). The clock route, the order of the specials, their effects and the wrong moves are the same; the finish is won.',design:r.design,erased:r.dropped};
+    return {status:'failed',ok:false,message:String(r.why).split(', ').map(w=>plain[w.split(' ')[0]]||(/^baitPrice/.test(w)?'A tempting wrong move no longer loses.':/^clockMinimum/.test(w)?'The shortest way to the clock changed ('+w.replace('clockMinimum ','')+' moves).':/^footprint/.test(w)?'The tiles are still too small: '+w.replace('footprint ','')+' px (58 needed).':/wider|nine/.test(w)?'Still too wide or too tall.':w)).join(String.fromCharCode(10))};
+  }
   const design={...M.copy(M.designFor(row,s)),tiles:s.positions};
   if(!require('./narrow_methods').valid(design.tiles)){
     const bad=new Set();for(let i=0;i<design.tiles.length;i++){if(!M.supported(design.tiles.filter((_,j)=>j!==i),design.tiles[i]))bad.add(i);for(let j=0;j<i;j++)if(design.tiles[i][2]===design.tiles[j][2]&&M.overlap(design.tiles[i],design.tiles[j])){bad.add(i);bad.add(j);}}
