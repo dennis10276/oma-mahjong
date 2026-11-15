@@ -99,10 +99,45 @@ function complete(row,user,ms=240000){
       }
     }
   }
+  // Claude 2026-11-15 (Dennis: "Try that"): the trap SPLIT into the parts that do not touch each other (no tile of one part lies on,
+  // under, beside or thaws a tile of another). Each part moves as one rigid piece together with the tiles holding it up, by up to one
+  // tile, so the parts can come closer together; finish tiles in their way go low elsewhere (the packer). Inside every part nothing changes.
+  {
+    const T0=a.tiles,n=T0.length,core=[...base.M],near=(i,j)=>Math.abs(T0[i][0]-T0[j][0])<=2&&Math.abs(T0[i][1]-T0[j][1])<2&&Math.abs(T0[i][2]-T0[j][2])<=1;
+    const piece=i=>{const s=new Set([i]);for(let ch=true;ch;){ch=false;for(const p of [...s])if(T0[p][2]>0)for(let j=0;j<n;j++)if(!s.has(j)&&T0[j][2]===T0[p][2]-1&&Math.abs(T0[j][0]-T0[p][0])<2&&Math.abs(T0[j][1]-T0[p][1])<2){s.add(j);ch=true;}}return s;};
+    const comp=new Map();core.forEach(i=>comp.set(i,i));const find=i=>comp.get(i)===i?i:find(comp.get(i));
+    for(const i of core)for(const j of core)if(i<j&&near(i,j))comp.set(find(i),find(j));
+    const groups=new Map();for(const i of core){const r=find(i);if(!groups.has(r))groups.set(r,new Set());for(const t of piece(i))groups.get(r).add(t);}
+    // parts that share a holding tile are one part
+    let parts=[...groups.values()];for(let ch=true;ch;){ch=false;outer:for(let p=0;p<parts.length;p++)for(let q=p+1;q<parts.length;q++)if([...parts[p]].some(t=>parts[q].has(t))){for(const t of parts[q])parts[p].add(t);parts.splice(q,1);ch=true;break outer;}}
+    if(parts.length>=2&&parts.length<=10){
+      const X=T0.map(p=>p[0]),Y=T0.map(p=>p[1]),x0=Math.min(...X),x1=Math.max(...X),y0=Math.min(...Y),y1=Math.max(...Y),rowsCap=(y1-y0+2>16||!F.measure(a,{minimum:58}).ok)?14:16;
+      const moves=[[0,0],[1,0],[-1,0],[2,0],[-2,0],[0,1],[0,-1],[0,2],[0,-2],[1,1],[-1,1],[1,-1],[-1,-1]];
+      // few parts: every combination; many parts: random combinations, small parts moving more freely than big ones
+      const combos=[];if(parts.length<=3){combos.push([]);for(const p of parts){const nx=[];for(const c of combos)for(const m of moves)nx.push(c.concat([m]));combos.splice(0,combos.length,...nx);}}
+      else{const r=rng(row.level*31337);for(let k=0;k<6000;k++)combos.push(parts.map(p=>moves[Math.floor(r()*(p.size>12?5:moves.length))]));}
+      const inPart=new Map();parts.forEach((p,k)=>{for(const t of p)inPart.set(t,k);});
+      let made=0;
+      for(const cmb of combos){
+        if(cmb.every(m=>m[0]===0&&m[1]===0))continue;
+        const T=T0.map(p=>p.slice());for(const [t,k] of inPart){T[t][0]+=cmb[k][0];T[t][1]+=cmb[k][1];}
+        const pt=[...inPart.keys()];
+        if(pt.some(i=>pt.some(j=>i<j&&inPart.get(i)!==inPart.get(j)&&T[i][2]===T[j][2]&&M.overlap(T[i],T[j]))))continue;
+        const px=pt.map(i=>T[i][0]),py=pt.map(i=>T[i][1]),bx0=Math.min(...px),bx1=Math.max(...px),by0=Math.min(...py),by1=Math.max(...py);
+        if(bx1-bx0+2>13||by1-by0+2>rowsCap)continue;
+        const wx=Math.max(bx1-11,Math.min(bx0,Math.round((x0+x1-11)/2))),wy=Math.max(by1-rowsCap+2,Math.min(by0,Math.round((y0+y1-rowsCap+2)/2)));
+        const out=[];for(let i=0;i<n;i++){if(inPart.has(i))continue;const p=T[i];if(p[0]<wx||p[0]>wx+11||p[1]<wy||p[1]>wy+rowsCap-2||pt.some(j=>T[j][2]===p[2]&&M.overlap(T[j],p)))out.push(i);}
+        if(out.some(i=>special.has(i)))continue;
+        add(T,out,'Move the parts of the trap separately, each as one piece; finish tiles go low around them');
+        if(++made>=60)break;
+      }
+    }
+  }
   seeds.sort((u,v)=>u.moving.length-v.moving.length);
   const oldBadges=SR.measure(a).rows.filter(q=>q.clear),oldTwins=SEP.closeTwins(a),oldVisible=new Set(oldTwins.closeVisible.map(q=>q.slice(0,2).join(',')));
   function partialOK(T){const d={...a,tiles:T.map((p,i)=>p||[50+i*3,50,0])},g=E.game(d,{strict:true,reserveCuts:false}),links=P.relations(g,core);
     for(let i=0;i<oldLinks.length;i++)if(T[oldLinks[i][0]]&&T[oldLinks[i][1]]&&!same(oldLinks[i],links[i]))return false;
+    if(process.env.NARROW_TRAP==='core')return true;   // the clock route may change; the full check proves the same shortest route
     let s=E.start(g);for(const id of prefix){try{s=E.step(g,s,id);}catch{return false;}if(!s)return false;}return true;
   }
   const why={};

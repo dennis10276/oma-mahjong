@@ -3,10 +3,12 @@
   "baseHash": "ab9a5613a9505c9a48274be30e85113408bceafe1297cc64df13d8c9d110944d",
   "status": "open",
   "note": "",
-  "seeds": 0,
+  "seeds": 1,
   "tested": 0,
-  "constructed": 0,
+  "constructed": 150,
   "failures": {},
-  "packRejects": {},
-  "ms": 1165
+  "packRejects": {
+    "startBroken": 150
+  },
+  "ms": 1246
 }

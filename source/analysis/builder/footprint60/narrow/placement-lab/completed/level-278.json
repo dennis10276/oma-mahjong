@@ -3,10 +3,23 @@
   "baseHash": "e1791134256cb413e02451211bc60d33848a2e47c397bf58e50d5cc48aa3f877",
   "status": "open",
   "note": "",
-  "seeds": 0,
-  "tested": 0,
-  "constructed": 0,
-  "failures": {},
-  "packRejects": {},
-  "ms": 1191
+  "seeds": 39,
+  "tested": 197,
+  "constructed": 5850,
+  "failures": {
+    "Use the half-tile grid and a layer from 1 to 8.": 134,
+    "clockDeadline": 23,
+    "specialEffects,baitPrice:78,ownTrapProof:obvious:freeRoutePair": 1,
+    "unknown": 28,
+    "specialEffects,baitPrice:78,ownTrapProof:twoMeaningfulBaits": 1,
+    "clockMinimum,specialEffects,baitPrice:78,baitPrice:10,ownTrapProof:noProvenBait": 8,
+    "clockMinimum,specialEffects,baitPrice:78,baitPrice:10,ownTrapProof:hiddenSpecial": 2
+  },
+  "packRejects": {
+    "startBroken": 3900,
+    "small": 917,
+    "twins": 835,
+    "badge": 1
+  },
+  "ms": 54309
 }
