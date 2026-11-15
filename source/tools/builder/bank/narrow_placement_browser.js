@@ -11,7 +11,7 @@ async function run(){
     for(const row of rows){await page.selectOption('#peLevel',String(row.level));await page.click('#peReset');assert.equal(await page.locator('#peTray [data-choice]').count(),row.problem.length);assert.equal(await page.locator('#peSurface [data-tile]').count(),row.base.tiles.length-row.problem.length);}
     await page.selectOption('#peLevel','251');await page.screenshot({path:path.join(out,'desktop.png')});
     const row=rows.find(r=>r.level===252),id=row.problem[0];await page.selectOption('#peLevel','252');await page.click('#peReset');await page.click(`[data-choice="${id}"]`);
-    const point=await page.evaluate(()=>{const b=document.querySelector('#peSurface').getBoundingClientRect(),g=NarrowEditor.geometry;return {x:b.left+g.ox+g.tw,y:b.top+g.oy};});
+    const point=await page.evaluate(()=>{const b=document.querySelector('#peSurface').getBoundingClientRect(),g=NarrowEditor.geometry;return {x:b.left+g.ox+g.tw*1.5,y:b.top+g.oy+g.tw*.62};});
     await page.mouse.click(point.x,point.y);assert.deepEqual(await page.evaluate(id=>NarrowEditor.snapshot.positions[id],id),[2,0,0]);
     await page.click('#peUndo');assert.equal(await page.evaluate(id=>NarrowEditor.snapshot.positions[id],id),null);
     await page.click('#peDraft');await page.waitForTimeout(350);const choice=await page.locator(`[data-choice="${id}"]`).boundingBox();await page.mouse.move(choice.x+choice.width/2,choice.y+choice.height/2);await page.mouse.down();await page.mouse.move(point.x,point.y,{steps:8});await page.mouse.up();assert.deepEqual(await page.evaluate(id=>NarrowEditor.snapshot.positions[id],id),[2,0,0]);

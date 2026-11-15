@@ -11,7 +11,10 @@ The five already fitting boards and all tenth levels are left out. There are
 ## Using it
 
 - Pick a tile at the side, then click a position, or drag it onto the board.
-  Auto chooses the lowest supported free layer. The layer selector also permits
+  The dragged tile follows the pointer and keeps the point where it was grabbed;
+  a highlight previews the drop. Auto snaps to the nearest supported half-tile
+  position, including bridges across two adjacent tiles on the same layer.
+  Clicking an already-selected tile also permits repositioning it. The layer selector permits
   explicit placement. The half-tile grid, tile identities and face-down flags remain.
 - Blue dots identify trap tiles. **Move another tile** lets Dennis select any
   existing tile; **Return selected tile to side tray** parks it temporarily.
@@ -98,9 +101,17 @@ There are no production database writes, difficulty bots or released-table edits
 QA uses a separate server on **8270** and a separate ignored edit directory. Its
 arrangements, notes and checks are not Dennis's work. Tests cover all 40 side trays,
 click and drag placement, undo, disk save/reload, stale verdict invalidation, a live
-passing proof, real-game play/win, phone layout and Sunflower faces. Seven focused
+passing proof, real-game play/win, phone layout and Sunflower faces. Nine focused
 tests also cover server restart durability, immutable catalogues, malformed snapshots,
 geometry constraints and an actual lower placement that needs a newly proven tail.
+
+2026-11-15 drop correction: the original pointer handler inherited the entire
+position of whichever tile it hit, making half-offset bridge positions hard to
+reach. It now searches rendered slot centres and layer offsets independently of
+the hit tile. Nine unit tests and a dedicated browser regression cover the reported
+56/48 and 48/49 bridges, vertical half-offsets, moving the selected tile, grabbing
+off-centre, the moving tile preview, and save/reload. User arrangements are not
+reset or migrated by this update. Evidence: `drag-regression.json`, `dragging.png`.
 
 ```powershell
 node source/tools/builder/loop/heavy.js --cores 1 -- node --test source/tools/builder/test_narrow_placement.js

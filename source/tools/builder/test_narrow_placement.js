@@ -12,6 +12,14 @@ test('the editable footprint matches the reference-phone measurement including p
 test('auto placement uses a supported free layer and rejects floating manual placement',()=>{
   const ts=[[0,0,0],[0,0,1],null];assert.deepEqual(M.propose(ts,2,0,0,'auto'),[0,0,2]);assert.equal(M.propose(ts,2,4,0,'1'),null);assert.deepEqual(M.propose(ts,2,4,0,'auto'),[4,0,0]);
 });
+test('screen drops reach the half-offset bridges 56/48 and 48/49',()=>{
+  const row=rows.find(r=>r.level===251),s=M.initial(row),id=57;
+  for(const [a,b]of [[56,48],[48,49]]){const p=s.positions[a],q=s.positions[b],bridge=[(p[0]+q[0])/2,(p[1]+q[1])/2,p[2]+1];assert.equal(p[2],q[2]);assert.deepEqual(M.dropAt(s.positions,id,bridge[0]/2-bridge[2]*.14+.5,bridge[1]*.62-bridge[2]*.14+.62,'auto'),bridge);}
+});
+test('a selected tile can move half a tile between vertical neighbours without snapping back to itself',()=>{
+  const positions=[[5,5,0],[5,7,0],[5,9,0],[5,5,1]];
+  for(const y of [6,8])assert.deepEqual(M.dropAt(positions,3,5/2-.14+.5,y*.62-.14+.62,'auto'),[5,y,1]);
+});
 test('snapshots cannot change the board version, tile count or tile coordinate types',()=>{
   const row=rows[0],s=M.initial(row);assert.throws(()=>M.validate(row,{...s,baseHash:'wrong'}));assert.throws(()=>M.validate(row,{...s,positions:s.positions.slice(1)}));s.positions[0]=[.5,0,0];assert.throws(()=>M.validate(row,s));
 });

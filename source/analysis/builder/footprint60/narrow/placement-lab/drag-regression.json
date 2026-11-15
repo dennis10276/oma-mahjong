@@ -1,0 +1,11 @@
+{
+  "ok": true,
+  "bridge56and48": true,
+  "bridge48and49": true,
+  "offCentreGrabPreserved": true,
+  "tileFollowsPointer": true,
+  "clickMoveOnSelectedTile": true,
+  "verticalHalfOffsets": true,
+  "savedAndReloaded": true,
+  "separateQaData": true
+}

@@ -8,6 +8,21 @@
     for(const z of layer==='auto'?[0,1,2,3,4,5,6,7]:[Number(layer)]){const p=[x,y,z];if(p.some(n=>!Number.isInteger(n)||n<0)||z>7)continue;if(others.some(t=>t[2]===z&&overlap(t,p))||!supported(others,p))continue;return p;}
     return null;
   }
+  // The pointer denotes the tile centre. Search rendered half-grid positions
+  // across layers, rather than inheriting the whole position of the hit tile.
+  function dropAt(positions,id,px,py,layer){
+    const others=positions.filter((p,i)=>i!==id&&p),layers=layer==='auto'?[0,1,2,3,4,5,6,7]:[Number(layer)];let best=null;
+    for(const z of layers){
+      const idealX=(px+z*.14-.5)*2,idealY=(py+z*.14-.62)/.62;
+      for(let x=Math.floor(idealX)-1;x<=Math.ceil(idealX)+1;x++)for(let y=Math.floor(idealY)-1;y<=Math.ceil(idealY)+1;y++){
+        const p=[x,y,z];if(x<0||y<0||x>32||y>32||others.some(t=>t[2]===z&&overlap(t,p))||!supported(others,p))continue;
+        const cx=x/2-z*.14+.5,cy=y*.62-z*.14+.62,distance=(cx-px)**2+(cy-py)**2;
+        if(distance>.55**2)continue;const score=distance+z*.00001;
+        if(!best||score<best.score)best={position:p,score};
+      }
+    }
+    return best?.position||null;
+  }
   function footprint(positions){const t=positions.filter(Boolean);if(!t.length)return {tilePx:0,rows:0,ok:false};
     const l=Math.min(...t.map(p=>p[0]/2-p[2]*.14)),r=Math.max(...t.map(p=>p[0]/2-p[2]*.14+1)),top=Math.min(...t.map(p=>p[1]*.62-p[2]*.14)),bottom=Math.max(...t.map(p=>p[1]*.62-p[2]*.14+1.24));
     const w=388/(r-l+.125),den=bottom-top+.159,h=((579/den<w)?596:579)/den,px=Math.min(150,w,h),rows=(Math.max(...t.map(p=>p[1]))-Math.min(...t.map(p=>p[1])))/2+1;
@@ -21,5 +36,5 @@
     return {level:row.level,baseHash:row.baseHash,positions:copy(input.positions),note:String(input.note||'').slice(0,4000),updatedAt:Date.now()};
   }
   const key=s=>JSON.stringify([s.baseHash,s.positions]);
-  return {copy,overlap,supported,propose,footprint,initial,validate,key};
+  return {copy,overlap,supported,propose,dropAt,footprint,initial,validate,key};
 });
