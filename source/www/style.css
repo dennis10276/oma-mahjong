@@ -317,11 +317,15 @@ body.nonum .cn { display: none; }
 .tmini.arriving { visibility: hidden; }
 .tmini.ghost { position: fixed; inset: auto; z-index: 89; pointer-events: none; }
 
-.toolbar { display: flex; justify-content: center; gap: 14px; padding: 4px 14px 10px; }
-.tool { position: relative; flex: 0 1 140px; display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 6px; padding: 6px 10px; background: var(--cream); border-radius: 16px; font-size: 16px; font-weight: 900; box-shadow: 0 4px 0 var(--cream2), 0 6px 10px rgba(0,0,0,.22); }
-.tool > span { font-size: 22px; line-height: 1; }
+/* hint and shuffle sit left and right of the tray, in the tray's row (Dennis 2026-11-15): they take no height from the pile */
+.traybar { position: relative; }
+.toolbar { position: absolute; inset: 0 8px 4px; display: flex; justify-content: space-between; align-items: center; pointer-events: none; }
+#game.compact .toolbar { bottom: 0; }
+.tool { --slotw: min(12.5vw, 60px, 7vh); pointer-events: auto; position: relative; width: min(64px, calc((100vw - 4 * var(--slotw) - 30px) / 2 - 14px)); height: calc(var(--slotw) * 1.24 - 2px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 2px 1px 0; background: var(--cream); border-radius: 14px; font-size: 10.5px; font-weight: 900; line-height: 1; letter-spacing: -.2px; box-shadow: 0 4px 0 var(--cream2), 0 6px 8px rgba(0,0,0,.22); }
+.tool > span { font-size: 24px; line-height: 1; }
+.tool > b { max-width: 100%; white-space: nowrap; }
 .tool:active { transform: translateY(5px); box-shadow: 0 1px 0 var(--cream2); }
-.tool .badge { position: absolute; top: -7px; right: -5px; min-width: 22px; height: 22px; border-radius: 13px; background: var(--pink); color: #fff; font-style: normal; font-size: 14px; display: grid; place-items: center; box-shadow: 0 2px 0 var(--pink-d); }
+.tool .badge { position: absolute; top: -5px; right: -5px; min-width: 19px; height: 19px; font-size: 12px !important; border-radius: 13px; background: var(--pink); color: #fff; font-style: normal; font-size: 14px; display: grid; place-items: center; box-shadow: 0 2px 0 var(--pink-d); }
 .tool.used { opacity: .45; filter: grayscale(1); }
 .tool.locked { opacity: .55; filter: grayscale(.8); }
 .tool.locked .badge { background: var(--muted); box-shadow: 0 2px 0 #5c4520; font-size: 12px; }
