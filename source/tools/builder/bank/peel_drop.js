@@ -134,6 +134,44 @@ function variantsCut(a, M, special) {
   return out.sort((p, q) => p.drop.length - q.drop.length);
 }
 
+// RIGID HALF SHIFT (Dennis 2026-11-15: "for the trap that touches every edge try moving the trap in a smart way without changing it"):
+// the pile is split along one line; the part on one side moves half a tile towards the other, as one rigid piece: every tile in it keeps
+// the same tiles on, under and beside it. Only along the seam can something change: tiles of the two parts that now overlap, or rest on
+// nothing, are finish tiles and go (dropped in pairs); a trap tile there means this seam cannot be used. The trap itself moves whole.
+function variantsRigid(a, M, special) {
+  const n = a.tiles.length, out = [], e = ext(a.tiles), small = !F.measure(a, { minimum: 58 }).ok;
+  const needs = []; if (e.x1 - e.x0 + 2 > 13 || (small && e.x1 - e.x0 + 2 > 11)) needs.push(0); if (e.y1 - e.y0 + 2 > 16 || (small && e.y1 - e.y0 + 2 > 14)) needs.push(1);
+  const shiftOnce = (T0, gone0, ax, c, side) => {
+    // side +1: tiles with coordinate > c move -1; side -1: tiles with coordinate < c move +1
+    const T = T0.map(p => p.slice()), gone = new Set(gone0), moved = new Set();
+    T.forEach((p, i) => { if (gone.has(i)) return; if (side > 0 ? p[ax] > c : p[ax] < c) { p[ax] -= side; moved.add(i); } });
+    const live = () => [...Array(n).keys()].filter(i => !gone.has(i));
+    for (const i of live()) for (const j of live()) {
+      if (i >= j || gone.has(i) || gone.has(j) || T[i][2] !== T[j][2] || Math.abs(T[i][0] - T[j][0]) >= 2 || Math.abs(T[i][1] - T[j][1]) >= 2) continue;
+      const ti = M.has(i) || special.has(i), tj = M.has(j) || special.has(j); if (ti && tj) return null;
+      gone.add(ti ? j : tj ? i : (moved.has(i) ? j : i));
+    }
+    for (let ch = true; ch;) { ch = false; for (const j of live()) if (T[j][2] > 0 && !Mo.supported(live().filter(q => q !== j).map(q => T[q]), T[j])) { if (M.has(j) || special.has(j)) return null; gone.add(j); ch = true; } }
+    return { T, gone };
+  };
+  const lines = ax => { const vs = [...new Set(a.tiles.map(p => p[ax]))].sort((p, q) => p - q), lo = vs[0], hi = vs[vs.length - 1], cs = []; for (let c = lo; c <= hi; c++) cs.push(c); const mid = (lo + hi) / 2; return cs.sort((p, q) => Math.abs(p - mid) - Math.abs(q - mid)); };
+  const steps = []; for (const ax of needs) { const k = ax === 0 ? (e.x1 - e.x0 + 2 > 13 ? 1 : 2) : (e.y1 - e.y0 + 2 > 16 ? 2 : 2); steps.push({ ax, k }); }
+  // all ways to do the needed half shifts (up to two per axis), seams near the middle first
+  const plans = [[]];
+  for (const { ax, k } of steps) { const next = []; for (const pl of plans) for (const c of lines(ax).slice(0, 9)) for (const side of [1, -1]) { if (k === 1) next.push(pl.concat([[ax, c, side]])); else for (const c2 of lines(ax).slice(0, 9)) for (const side2 of [1, -1]) next.push(pl.concat([[ax, c, side], [ax, c2, side2]])); } plans.splice(0, plans.length, ...next.slice(0, 400)); }
+  for (const pl of plans) {
+    let T = a.tiles, gone = new Set(), ok = true;
+    for (const [ax, c, side] of pl) { const r = shiftOnce(T, gone, ax, c, side); if (!r) { ok = false; break; } T = r.T; gone = r.gone; }
+    if (!ok) continue;
+    const keep = [...Array(n).keys()].filter(i => !gone.has(i)), kt = keep.map(i => T[i]), e2 = ext(kt);
+    if (e2.x1 - e2.x0 + 2 > 13 || e2.y1 - e2.y0 + 2 > 16) continue;
+    if (!F.measure(kt, { minimum: 58 }).ok) continue;
+    out.push({ name: 'rigid half shift ' + pl.map(([ax, c, side]) => (ax ? 'row' : 'column') + ' ' + c + (side > 0 ? ' <' : ' >')).join(', '), drop: [...gone], tiles: T, moved: 0 });
+    if (out.length >= 40) break;
+  }
+  return out.sort((p, q) => p.drop.length - q.drop.length);
+}
+
 function attempt(before, v0, base, protectedFaces, special, seed = 0) {
   const v = { ...v0, seed };
   const a0 = before.design, a = v.tiles ? { ...a0, tiles: v.tiles } : a0, n = a.tiles.length, M = base.M, D = new Set(v.drop);
@@ -219,9 +257,23 @@ function one(level) {
   const protectedFaces = new Set([...Mg].map(i => a.faces[i]));
   const baseG = { ...base, M: Mg };
   const fails = {};
-  const vs = [...variantsShift(a, Mg, new Set(), special), ...variantsCut(a, Mg, special)];
+  const vs = [...variantsRigid(a, Mg, special), ...variantsShift(a, Mg, new Set(), special), ...variantsCut(a, Mg, special)];
   // a slide that makes the pile narrow enough, then one row cut out where eight rows are still too tall
   for (const v of vs.filter(v => v.name.startsWith('slide')).slice(0, 12)) for (const c of variantsCut({ ...a, tiles: v.tiles }, Mg, special).slice(0, 8)) vs.push({ name: v.name + ' + ' + c.name, tiles: c.tiles, drop: [...new Set([...v.drop, ...c.drop])], moved: v.moved });
+  // a narrow pile that is still under 58 px because the upper layers lean out over its left (or top) edge: the leaning tiles of that
+  // edge go, when they are finish tiles (the board is drawn with each layer shifted up-left)
+  const lean = v => {
+    const keep = [...Array(a.tiles.length).keys()].filter(i => !v.drop.includes(i)), T = v.tiles;
+    for (const ax of [0, 1]) {
+      const minBase = Math.min(...keep.filter(i => T[i][2] === 0).map(i => T[i][ax]));
+      const out = new Set(keep.filter(i => T[i][2] > 0 && T[i][ax] <= minBase + 1));
+      for (let ch = true; ch;) { ch = false; for (const j of keep) if (!out.has(j) && T[j][2] > 0 && !Mo.supported(keep.filter(q => q !== j && !out.has(q)).map(q => T[q]), T[j])) { out.add(j); ch = true; } }
+      if (!out.size || [...out].some(i => Mg.has(i) || special.has(i))) continue;
+      const kt = keep.filter(i => !out.has(i)).map(i => T[i]);
+      if (F.measure(kt, { minimum: 58 }).ok) vs.push({ name: v.name + ' + trim the leaning ' + (ax ? 'top' : 'left') + ' edge', tiles: T, drop: [...v.drop, ...out], moved: v.moved });
+    }
+  };
+  for (const v of vs.slice()) { const kt = v.tiles.filter((p, i) => !v.drop.includes(i)); if (!F.measure(kt, { minimum: 58 }).ok) lean(v); }
   for (const v of [...vs, ...variants(a, Mg, new Set(), special)]) {
     let r = null; for (let sd = 0; sd < 3; sd++) { r = attempt(before, v, baseG, protectedFaces, special, sd); if (r.design || /trap|footprint|wider|nine/.test(r.why)) break; }
     if (r.design) return { level, ok: true, how: v.name, dropped: r.dropped.length, moved: r.moved, picturesExchanged: r.picturesExchanged, before: f0.tilePx, footprint: r.footprint, design: r.design, prices: r.prices };
@@ -229,7 +281,7 @@ function one(level) {
   }
   return { level, ok: false, fails, before: f0.tilePx };
 }
-module.exports = { one, attempt, variants, variantsShift, variantsCut };
+module.exports = { one, attempt, variants, variantsShift, variantsCut, variantsRigid };
 if (require.main === module) {
   fs.mkdirSync(OUT, { recursive: true });
   if (arg('one', null)) {

@@ -1,6 +1,6 @@
 # Levels 251-299 at about 60 px: what each level becomes
 
-27 narrowed, 5 already large enough, 13 stay as released. The tens (250-300) stay as released.
+28 narrowed, 5 already large enough, 12 stay as released. The tens (250-300) stay as released.
 Made by `tools/builder/bank/narrow_final.js` from Codex's placement completions and Task 19 drafts; every narrowed board re-checked there.
 Nothing is released.
 
@@ -20,7 +20,7 @@ Nothing is released.
 | 263 | narrowed | 54.5 -> 61.9 | 7x7 -> 6x7 | 3 -> 3 | 14 | 0.97 | completion: Shorten the widest supporting rows; keep the upper trap intact |
 | 264 | as released (already 59.1 px) | 59.1 | 6x8 | 4 | | |  |
 | 265 | narrowed | 54.5 -> 61.9 | 7x6 -> 6x6 | 5 -> 5 | 18 | 1 | completion: Pull the base layer in by half a tile; upper layers stay |
-| 266 | as released (no certified narrow version) | 56.8 | 6x8 | 5 | | |  |
+| 266 | narrowed | 56.8 -> 63.3 | 6x8 -> 6x7 | 5 -> 5 | 6 | 0.97 | completion: Move the whole trap as one piece; finish tiles go low around it |
 | 267 | as released (no certified narrow version) | 54.5 | 7x8 | 3 | | |  |
 | 268 | narrowed | 54.5 -> 63.3 | 7x6 -> 6x6 | 4 -> 4 | 2 | 1 | completion: Previously checked low proposal |
 | 269 | narrowed | 52.7 -> 59.1 | 7x9 -> 6x8 | 5 -> 5 | 22 dropped | 0.79 | peel_drop: left+top base (0 slid, 22 dropped, 8 picture exchanges) |

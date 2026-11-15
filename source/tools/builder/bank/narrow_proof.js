@@ -43,8 +43,14 @@ function context(before){
   return {spare,roleTiles:[...(b.tiles||[]),...(b.twins||[]),...(b.wrong||[]),...Object.values(roles).filter(Number.isInteger)],roles,brief:recovered.brief,
     prove:(d,k)=>require('../trap_stories').reprove('chain',d,roles,recovered.brief,spare,k)};
 }
+// Dennis 2026-11-15: only what interconnects with the trap is fixed. With NARROW_TRAP=core the trap is the specials, the tiles that thaw
+// them, the tiles lying on them and the authored wrong moves; tiles that are only on the stored route to the clock may move (the clock
+// route, the special order and effects, the wrong moves and the own trap proof are still checked).
+function coreTrap(before,prep){const a=before.design,g=prep.g,sp=[a.clock.i,...a.obst.keys,...a.obst.locks,...Object.keys(a.obst.ice||{}).map(Number)],M=new Set(sp);
+  for(const r of sp){for(const u of g.nb.above[r])M.add(u);if(g.iceH[r])for(const u of g.iceNb[r])M.add(u);}
+  for(const q of before.card?.trap?.baits||[])for(const t of q.tiles)M.add(t);return M;}
 function prepare(before){
-  const prep=I.prepare(before),ctx=context(before),M=N.trapSet(before,prep);
+  const prep=I.prepare(before),ctx=context(before),M=process.env.NARROW_TRAP==='core'?coreTrap(before,prep):N.trapSet(before,prep);
   for(const i of ctx?.roleTiles||[])M.add(i);
   const a=before.design,k=prep.clock&&!prep.clock.unsure?prep.clock.k:null;
   if(k==null)throw Error('Released clock minimum unproven');

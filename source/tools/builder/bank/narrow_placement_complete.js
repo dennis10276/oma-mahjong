@@ -75,6 +75,30 @@ function complete(row,user,ms=240000){
     const H=wide?[band(p=>p[0]<=x0+1),band(p=>p[0]>=x1-1)]:[[]],V=tall?[band(p=>p[1]<=y0+1),band(p=>p[1]>=y1-1)]:[[]];
     for(const h of H)for(const v of V){const ids=[...new Set(h.concat(v))];if(!ids.length||ids.some(i=>base.M.has(i)||special.has(i)))continue;add(a.tiles,ids,'Peel one outer side; its tiles go low inside the outline');}
   }
+  // Claude 2026-11-15 (Dennis: "for the trap that touches every edge try moving the trap in a smart way without changing it"): the whole
+  // trap moves as one rigid piece, together with everything that holds it up, by up to one tile in each direction; the finish tiles that
+  // are then in its way, or outside a 6.5 x 8 window around it, go low into the free places (the packer below), so nothing inside the
+  // trap changes its relations.
+  {
+    const inTrap=new Set(base.M),T0=a.tiles;
+    // what holds the trap up, layer by layer, joins it
+    for(let ch=true;ch;){ch=false;for(const i of [...inTrap])if(T0[i][2]>0)for(let j=0;j<T0.length;j++)if(!inTrap.has(j)&&T0[j][2]===T0[i][2]-1&&Math.abs(T0[j][0]-T0[i][0])<2&&Math.abs(T0[j][1]-T0[i][1])<2){inTrap.add(j);ch=true;}}
+    const kx=[...inTrap].map(i=>T0[i][0]),ky=[...inTrap].map(i=>T0[i][1]),kw=Math.max(...kx)-Math.min(...kx)+2,kh=Math.max(...ky)-Math.min(...ky)+2;
+    if(kw<=13&&kh<=16){
+      const X=T0.map(p=>p[0]),Y=T0.map(p=>p[1]),x0=Math.min(...X),x1=Math.max(...X),y0=Math.min(...Y),y1=Math.max(...Y),rowsCap=(y1-y0+2>16||!F.measure(a,{minimum:58}).ok)?14:16;
+      for(const dx of [0,1,-1,2,-2])for(const dy of [0,1,-1,2,-2]){
+        const T=T0.map(p=>p.slice());for(const i of inTrap){T[i][0]+=dx;T[i][1]+=dy;}
+        const kx0=Math.min(...[...inTrap].map(i=>T[i][0])),ky0=Math.min(...[...inTrap].map(i=>T[i][1]));
+        // the window: 13 x rowsCap units around the trap, as central in the old outline as it allows
+        for(const wx of [Math.max(x0,Math.min(kx0,x1-11)),kx0-(13-kw),Math.round((x0+x1-11)/2)])for(const wy of [Math.max(y0,Math.min(ky0,y1-rowsCap+2)),ky0-(rowsCap-kh),Math.round((y0+y1-rowsCap+2)/2)]){
+          if([...inTrap].some(i=>T[i][0]<wx||T[i][0]>wx+11||T[i][1]<wy||T[i][1]>wy+rowsCap-2))continue;
+          const out=[];for(let i=0;i<T.length;i++){if(inTrap.has(i))continue;const p=T[i];if(p[0]<wx||p[0]>wx+11||p[1]<wy||p[1]>wy+rowsCap-2||[...inTrap].some(j=>T[j][2]===p[2]&&M.overlap(T[j],p)))out.push(i);}
+          if(out.some(i=>special.has(i)))continue;
+          add(T,out,'Move the whole trap as one piece; finish tiles go low around it');
+        }
+      }
+    }
+  }
   seeds.sort((u,v)=>u.moving.length-v.moving.length);
   const oldBadges=SR.measure(a).rows.filter(q=>q.clear),oldTwins=SEP.closeTwins(a),oldVisible=new Set(oldTwins.closeVisible.map(q=>q.slice(0,2).join(',')));
   function partialOK(T){const d={...a,tiles:T.map((p,i)=>p||[50+i*3,50,0])},g=E.game(d,{strict:true,reserveCuts:false}),links=P.relations(g,core);

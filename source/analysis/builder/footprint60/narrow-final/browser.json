@@ -4,8 +4,8 @@
     730
   ],
   "fakeDatabase": true,
-  "passed": 27,
-  "total": 27,
+  "passed": 28,
+  "total": 28,
   "rows": [
     {
       "level": 252,
@@ -94,6 +94,14 @@
       "tiles": 80,
       "trayGap": 52.099999999999994,
       "rows": 6
+    },
+    {
+      "level": 266,
+      "ok": true,
+      "tilePx": 63.3469387755102,
+      "tiles": 76,
+      "trayGap": 16,
+      "rows": 7
     },
     {
       "level": 268,
