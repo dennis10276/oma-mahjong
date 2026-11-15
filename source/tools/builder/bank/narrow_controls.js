@@ -10,4 +10,3 @@ const fs=require('fs'),path=require('path'),L=require('./narrow_lab'),lib=requir
  }
  const out={viewport:[392,730],ok:rows.every(r=>r.route.overlaps===0&&r.save.overlaps===0),rows};fs.writeFileSync('source/analysis/builder/footprint60/narrow/controls.json',JSON.stringify(out,null,2)+'\n');console.log(JSON.stringify(out));if(!out.ok)process.exitCode=1;await p.ctx.close();
  }finally{await lib.teardown()}})().catch(e=>{console.error(e);process.exitCode=1});
-

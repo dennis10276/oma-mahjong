@@ -1,0 +1,194 @@
+{
+  "rendererCommit": "3b188bcd",
+  "viewport": [
+    392,
+    730
+  ],
+  "fakeDatabase": true,
+  "findingsIntercepted": true,
+  "passed": 16,
+  "total": 16,
+  "routeButton": {
+    "present": true,
+    "moves": 8,
+    "clockGone": true
+  },
+  "rows": [
+    {
+      "level": 252,
+      "variant": "as released",
+      "ok": true,
+      "designHash": "2b15f80ea1f40b57aab51b9dbf7705a88986b97fc37b6381d5ac3ed680bb9f38",
+      "tilePx": 54.45614035087719,
+      "tiles": 72,
+      "rows": 8,
+      "trayGap": 30.19999999999999,
+      "screenshot": "screenshots/level-252-before.png"
+    },
+    {
+      "level": 252,
+      "variant": "narrowed",
+      "ok": true,
+      "designHash": "e8ac993318a306aaafd700a6744e8ac89f1b4ae53d6275d6a0ba6069429dc47a",
+      "tilePx": 59.13285048119854,
+      "tiles": 72,
+      "rows": 8,
+      "trayGap": 11.200000000000003,
+      "screenshot": "screenshots/level-252-after.png"
+    },
+    {
+      "level": 254,
+      "variant": "as released",
+      "ok": true,
+      "designHash": "08c0edabafbfe9a48dac675a7ce5776db690c96288767b6671ce32d8077a3d8b",
+      "tilePx": 54.45614035087719,
+      "tiles": 76,
+      "rows": 6,
+      "trayGap": 86.19999999999999,
+      "screenshot": "screenshots/level-254-before.png"
+    },
+    {
+      "level": 254,
+      "variant": "narrowed",
+      "ok": true,
+      "designHash": "05e52e566f73db3f950f270d8e355897037034c1ab588b3f98a101e29cc0984b",
+      "tilePx": 58.56603773584906,
+      "tiles": 76,
+      "rows": 6,
+      "trayGap": 69.9,
+      "screenshot": "screenshots/level-254-after.png"
+    },
+    {
+      "level": 257,
+      "variant": "as released",
+      "ok": true,
+      "designHash": "11b86e72eafdb18f08fba062d5eb00b5d7a340b2f2498212c85a4cb648b262ff",
+      "tilePx": 54.45614035087719,
+      "tiles": 74,
+      "rows": 8,
+      "trayGap": 30.19999999999999,
+      "screenshot": "screenshots/level-257-before.png"
+    },
+    {
+      "level": 257,
+      "variant": "narrowed",
+      "ok": true,
+      "designHash": "68b2d7be87c0364087c790425ed2513184510492dd628368318511db635dd8b2",
+      "tilePx": 58.32273216557393,
+      "tiles": 74,
+      "rows": 8,
+      "trayGap": 11.200000000000003,
+      "screenshot": "screenshots/level-257-after.png"
+    },
+    {
+      "level": 274,
+      "variant": "as released",
+      "ok": true,
+      "designHash": "9503d75b7aa09a637c2dbae5694d8cfcb4b59c796530496fe07c65d16b04bb88",
+      "tilePx": 54.45614035087719,
+      "tiles": 84,
+      "rows": 7,
+      "trayGap": 60.099999999999994,
+      "screenshot": "screenshots/level-274-before.png"
+    },
+    {
+      "level": 274,
+      "variant": "narrowed",
+      "ok": true,
+      "designHash": "02f5b5c498231c985f7aad254d7be1c6b3a7e0671972991a964a0b906332b431",
+      "tilePx": 58.56603773584906,
+      "tiles": 84,
+      "rows": 7,
+      "trayGap": 37.599999999999994,
+      "screenshot": "screenshots/level-274-after.png"
+    },
+    {
+      "level": 282,
+      "variant": "as released",
+      "ok": true,
+      "designHash": "5b560352bdfddb880f82e9c17c9cc1355735098713bd3035d668d0493188c125",
+      "tilePx": 54.45614035087719,
+      "tiles": 80,
+      "rows": 7,
+      "trayGap": 60.099999999999994,
+      "screenshot": "screenshots/level-282-before.png"
+    },
+    {
+      "level": 282,
+      "variant": "narrowed",
+      "ok": true,
+      "designHash": "8a31e99a77e7b3964dd7f17ed75da068b9ecc58b1bf51bd3037c68ffd026bb0b",
+      "tilePx": 60.57767369242779,
+      "tiles": 80,
+      "rows": 7,
+      "trayGap": 24.30000000000001,
+      "screenshot": "screenshots/level-282-after.png"
+    },
+    {
+      "level": 284,
+      "variant": "as released",
+      "ok": true,
+      "designHash": "3f08fdb8a1d9b040e9c392271bf60f126e9ddc71660da1aa36d9b1d03400b414",
+      "tilePx": 54.45614035087719,
+      "tiles": 80,
+      "rows": 7,
+      "trayGap": 63.900000000000006,
+      "screenshot": "screenshots/level-284-before.png"
+    },
+    {
+      "level": 284,
+      "variant": "narrowed",
+      "ok": true,
+      "designHash": "9e1b89a9b6bf277e47e7637735464dff80837a1a58e0ce9e23e6c3c6831cb4ec",
+      "tilePx": 58.56603773584906,
+      "tiles": 80,
+      "rows": 7,
+      "trayGap": 41.69999999999999,
+      "screenshot": "screenshots/level-284-after.png"
+    },
+    {
+      "level": 295,
+      "variant": "as released",
+      "ok": true,
+      "designHash": "a29a9e1260d5f77276fa25ca611119b8ab89fc8ea6e1b9cce5edfc1916c6ea40",
+      "tilePx": 54.45614035087719,
+      "tiles": 76,
+      "rows": 6,
+      "trayGap": 90.1,
+      "screenshot": "screenshots/level-295-before.png"
+    },
+    {
+      "level": 295,
+      "variant": "narrowed",
+      "ok": true,
+      "designHash": "5c54827a3a3990c1fabdc95a2b45ac953265b7cc8da86b9ee0fd806199ebc30d",
+      "tilePx": 63.3469387755102,
+      "tiles": 76,
+      "rows": 6,
+      "trayGap": 50.80000000000001,
+      "screenshot": "screenshots/level-295-after.png"
+    },
+    {
+      "level": 299,
+      "variant": "as released",
+      "ok": true,
+      "designHash": "e9b5afa1f152e09e29ff3559dc62449b838cf62e8234f93a98b1eb2afbad7046",
+      "tilePx": 54.45614035087719,
+      "tiles": 80,
+      "rows": 8,
+      "trayGap": 30.19999999999999,
+      "screenshot": "screenshots/level-299-before.png"
+    },
+    {
+      "level": 299,
+      "variant": "narrowed",
+      "ok": true,
+      "designHash": "79c768bffb39d2e5b336536fbc41f75db5fa025a3cb3992c9409aac67b7364d0",
+      "tilePx": 58.56603773584906,
+      "tiles": 80,
+      "rows": 8,
+      "trayGap": 14,
+      "screenshot": "screenshots/level-299-after.png"
+    }
+  ]
+}

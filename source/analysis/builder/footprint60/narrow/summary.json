@@ -1,0 +1,1327 @@
+{
+  "baselineCommit": "a99b338e",
+  "sourceBranch": "wip/codex-narrow",
+  "adopted": false,
+  "levelTableChanged": false,
+  "tensUntouched": [
+    250,
+    260,
+    270,
+    280,
+    290,
+    300
+  ],
+  "rows": [
+    {
+      "level": 251,
+      "outcome": "stays as released",
+      "before": 54.45614035087719,
+      "after": 54.45614035087719,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "trap crosses candidate seams; seams break support or overlap the trap; edge/strip alternatives lack support or disturb the edge",
+      "search": {
+        "level": 251,
+        "outcome": "released",
+        "before": 54.45614035087719,
+        "after": 54.45614035087719,
+        "reason": "No supported tidy geometry reaches 58 px",
+        "geometry": {
+          "trapUnsupported": 1,
+          "trapInLine": 10,
+          "trapCollides": 2,
+          "hop:specialOnEdge": 1,
+          "hop:hopUnsupported": 1,
+          "cap:trapUnsupported": 8,
+          "cap:trapCollides": 16,
+          "cap:trapInLine": 80,
+          "slab:unsupportedOrCollision": 240,
+          "rigid:unsupportedOrCollision": 48,
+          "edge:unsupportedOrCollision": 48,
+          "footprint": 4
+        },
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 252,
+      "outcome": "narrowed",
+      "before": 54.45614035087719,
+      "after": 59.13285048119853,
+      "method": "column 12 out, straight cap",
+      "restacked": 1,
+      "slid": 0,
+      "translatedAway": [
+        0,
+        0
+      ],
+      "movedCount": 1,
+      "relocatedCount": 1,
+      "facePairsChanged": 0,
+      "proof": "own trap proof holds",
+      "clockRouteKept": true,
+      "screenshots": [
+        "screenshots/level-252-before.png",
+        "screenshots/level-252-after.png"
+      ]
+    },
+    {
+      "level": 253,
+      "outcome": "stays as released",
+      "before": 54.45614035087719,
+      "after": 54.45614035087719,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "would hide a previously readable special badge",
+      "search": {
+        "level": 253,
+        "outcome": "released",
+        "before": 54.45614035087719,
+        "after": 54.45614035087719,
+        "reason": "All tested tidy proposals fail the unchanged trap checks",
+        "fails": {
+          "readableBadge": 69
+        },
+        "geometry": {
+          "trapInLine": 8,
+          "trapUnsupported": 1,
+          "px 57": 1,
+          "hop:hopUnsupported": 1,
+          "hop:specialOnEdge": 1,
+          "footprint": 52,
+          "cap:trapInLine": 64,
+          "cap:trapUnsupported": 20,
+          "slab:unsupportedOrCollision": 240,
+          "rigid:unsupportedOrCollision": 48,
+          "edge:unsupportedOrCollision": 16
+        },
+        "proposals": 69,
+        "tested": 0,
+        "ms": 2644,
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 254,
+      "outcome": "narrowed",
+      "before": 54.45614035087719,
+      "after": 58.56603773584906,
+      "method": "column 0 out, straight cap",
+      "restacked": 1,
+      "slid": 0,
+      "translatedAway": [
+        -1,
+        0
+      ],
+      "movedCount": 1,
+      "relocatedCount": 1,
+      "facePairsChanged": 0,
+      "proof": "own trap proof holds",
+      "clockRouteKept": true,
+      "screenshots": [
+        "screenshots/level-254-before.png",
+        "screenshots/level-254-after.png"
+      ]
+    },
+    {
+      "level": 255,
+      "outcome": "stays as released",
+      "before": 54.45614035087719,
+      "after": 54.45614035087719,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "trap crosses candidate seams; seams break support or overlap the trap; edge/strip alternatives lack support or disturb the edge",
+      "search": {
+        "level": 255,
+        "outcome": "released",
+        "before": 54.45614035087719,
+        "after": 54.45614035087719,
+        "reason": "No supported tidy geometry reaches 58 px",
+        "geometry": {
+          "trapUnsupported": 3,
+          "trapInLine": 10,
+          "hop:hopUnsupported": 2,
+          "cap:trapInLine": 80,
+          "cap:trapUnsupported": 24,
+          "slab:unsupportedOrCollision": 240,
+          "rigid:unsupportedOrCollision": 48,
+          "edge:unsupportedOrCollision": 16,
+          "footprint": 4
+        },
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 256,
+      "outcome": "stays as released",
+      "before": 54.45614035087719,
+      "after": 54.45614035087719,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "changes a lock/ice effect; changes an authored wrong move; brings visible twins together; no certified winning finish found",
+      "search": {
+        "level": 256,
+        "outcome": "released",
+        "before": 54.45614035087719,
+        "after": 54.45614035087719,
+        "reason": "All tested tidy proposals fail the unchanged trap checks",
+        "fails": {
+          "specialEffectChanged": 33,
+          "twins": 12,
+          "noWinningRoute": 103,
+          "baitPrice:3": 69
+        },
+        "geometry": {
+          "trapInLine": 8,
+          "hop:hopUnsupported": 2,
+          "footprint": 28,
+          "cap:trapInLine": 64,
+          "slab:unsupportedOrCollision": 240,
+          "rigid:unsupportedOrCollision": 48,
+          "edge:unsupportedOrCollision": 16
+        },
+        "proposals": 81,
+        "tested": 217,
+        "ms": 47659,
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 257,
+      "outcome": "narrowed",
+      "before": 54.45614035087719,
+      "after": 58.322732165573925,
+      "method": "column 9 out, straight cap",
+      "restacked": 9,
+      "slid": 13,
+      "translatedAway": [
+        0,
+        0
+      ],
+      "movedCount": 22,
+      "relocatedCount": 12,
+      "facePairsChanged": 0,
+      "proof": "older board: recovered special contract holds",
+      "clockRouteKept": true,
+      "screenshots": [
+        "screenshots/level-257-before.png",
+        "screenshots/level-257-after.png"
+      ]
+    },
+    {
+      "level": 258,
+      "outcome": "stays as released",
+      "before": 52.65482816503224,
+      "after": 52.65482816503224,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "would hide a previously readable special badge",
+      "search": {
+        "level": 258,
+        "outcome": "released",
+        "before": 52.65482816503224,
+        "after": 52.65482816503224,
+        "reason": "All tested tidy proposals fail the unchanged trap checks",
+        "fails": {
+          "readableBadge": 15
+        },
+        "geometry": {
+          "px 56": 2,
+          "trapInLine": 6,
+          "hop:hopUnsupported": 2,
+          "footprint": 50,
+          "cap:trapInLine": 24,
+          "slab:unsupportedOrCollision": 120,
+          "rigid:unsupportedOrCollision": 32,
+          "edge:unsupportedOrCollision": 24
+        },
+        "proposals": 15,
+        "tested": 0,
+        "ms": 895,
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 259,
+      "outcome": "stays as released",
+      "before": 54.45614035087719,
+      "after": 54.45614035087719,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "trap crosses candidate seams; seams break support or overlap the trap; edge/strip alternatives lack support or disturb the edge",
+      "search": {
+        "level": 259,
+        "outcome": "released",
+        "before": 54.45614035087719,
+        "after": 54.45614035087719,
+        "reason": "No supported tidy geometry reaches 58 px",
+        "geometry": {
+          "trapUnsupported": 4,
+          "trapInLine": 9,
+          "hop:hopUnsupported": 2,
+          "cap:trapInLine": 72,
+          "cap:trapUnsupported": 32,
+          "slab:unsupportedOrCollision": 240,
+          "rigid:unsupportedOrCollision": 48,
+          "edge:unsupportedOrCollision": 16,
+          "footprint": 4
+        },
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 260,
+      "outcome": "tenth: untouched",
+      "before": 52.65482816503224,
+      "after": 52.65482816503224,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "Tenth level frozen exactly as released"
+    },
+    {
+      "level": 261,
+      "outcome": "stays as released",
+      "before": 54.45614035087719,
+      "after": 54.45614035087719,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "trap crosses candidate seams; seams break support or overlap the trap; edge/strip alternatives lack support or disturb the edge",
+      "search": {
+        "level": 261,
+        "outcome": "released",
+        "before": 54.45614035087719,
+        "after": 54.45614035087719,
+        "reason": "No supported tidy geometry reaches 58 px",
+        "geometry": {
+          "trapInLine": 11,
+          "trapCollides": 1,
+          "trapUnsupported": 1,
+          "hop:hopUnsupported": 1,
+          "hop:specialOnEdge": 1,
+          "cap:trapInLine": 88,
+          "cap:trapCollides": 8,
+          "cap:trapUnsupported": 8,
+          "slab:unsupportedOrCollision": 240,
+          "rigid:unsupportedOrCollision": 48,
+          "edge:unsupportedOrCollision": 16,
+          "footprint": 4
+        },
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 262,
+      "outcome": "stays as released",
+      "before": 52.65482816503224,
+      "after": 52.65482816503224,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "trap crosses candidate seams; edge/strip alternatives lack support or disturb the edge",
+      "search": {
+        "level": 262,
+        "outcome": "released",
+        "before": 52.65482816503224,
+        "after": 52.65482816503224,
+        "reason": "No supported tidy geometry reaches 58 px",
+        "geometry": {
+          "trapInLine": 221,
+          "hop:hopUnsupported": 2,
+          "hop:specialOnEdge": 2,
+          "cap:trapInLine": 3536,
+          "slab:unsupportedOrCollision": 480,
+          "rigid:unsupportedOrCollision": 112,
+          "edge:unsupportedOrCollision": 96,
+          "footprint": 8
+        },
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 263,
+      "outcome": "stays as released",
+      "before": 54.45614035087719,
+      "after": 54.45614035087719,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "trap crosses candidate seams; seams break support or overlap the trap; edge/strip alternatives lack support or disturb the edge",
+      "search": {
+        "level": 263,
+        "outcome": "released",
+        "before": 54.45614035087719,
+        "after": 54.45614035087719,
+        "reason": "No supported tidy geometry reaches 58 px",
+        "geometry": {
+          "trapInLine": 10,
+          "trapUnsupported": 3,
+          "hop:specialOnEdge": 2,
+          "cap:trapInLine": 80,
+          "cap:trapUnsupported": 24,
+          "slab:unsupportedOrCollision": 240,
+          "rigid:unsupportedOrCollision": 48,
+          "edge:unsupportedOrCollision": 16,
+          "footprint": 4
+        },
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 264,
+      "outcome": "untouched: already fits",
+      "before": 59.13285048119853,
+      "after": 59.13285048119853,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "Already at least 58 px, at most eight rows",
+      "search": {
+        "level": 264,
+        "outcome": "untouched",
+        "before": 59.13285048119853,
+        "after": 59.13285048119853,
+        "reason": "Already at least 58 px and at most eight rows",
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 265,
+      "outcome": "stays as released",
+      "before": 54.45614035087719,
+      "after": 54.45614035087719,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "trap crosses candidate seams; seams break support or overlap the trap; edge/strip alternatives lack support or disturb the edge",
+      "search": {
+        "level": 265,
+        "outcome": "released",
+        "before": 54.45614035087719,
+        "after": 54.45614035087719,
+        "reason": "No supported tidy geometry reaches 58 px",
+        "geometry": {
+          "trapUnsupported": 4,
+          "trapInLine": 9,
+          "hop:hopUnsupported": 1,
+          "hop:specialOnEdge": 1,
+          "cap:trapUnsupported": 32,
+          "cap:trapInLine": 72,
+          "slab:unsupportedOrCollision": 240,
+          "rigid:unsupportedOrCollision": 48,
+          "edge:unsupportedOrCollision": 16,
+          "footprint": 4
+        },
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 266,
+      "outcome": "stays as released",
+      "before": 56.76731117249262,
+      "after": 56.76731117249262,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "edge/strip alternatives lack support or disturb the edge; rendered bounds still below 58 px",
+      "search": {
+        "level": 266,
+        "outcome": "released",
+        "before": 56.76731117249262,
+        "after": 56.76731117249262,
+        "reason": "No supported tidy geometry reaches 58 px",
+        "geometry": {
+          "nothingToNarrow": 1,
+          "footprint": 6,
+          "slab:unsupportedOrCollision": 120,
+          "rigid:unsupportedOrCollision": 28,
+          "edge:unsupportedOrCollision": 24
+        },
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 267,
+      "outcome": "stays as released",
+      "before": 54.45614035087719,
+      "after": 54.45614035087719,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "trap crosses candidate seams; seams break support or overlap the trap; edge/strip alternatives lack support or disturb the edge",
+      "search": {
+        "level": 267,
+        "outcome": "released",
+        "before": 54.45614035087719,
+        "after": 54.45614035087719,
+        "reason": "No supported tidy geometry reaches 58 px",
+        "geometry": {
+          "trapUnsupported": 2,
+          "trapInLine": 9,
+          "trapCollides": 2,
+          "hop:specialOnEdge": 1,
+          "hop:hopUnsupported": 1,
+          "cap:trapUnsupported": 16,
+          "cap:trapInLine": 72,
+          "cap:trapCollides": 16,
+          "slab:unsupportedOrCollision": 240,
+          "rigid:unsupportedOrCollision": 48,
+          "edge:unsupportedOrCollision": 16,
+          "footprint": 4
+        },
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 268,
+      "outcome": "stays as released",
+      "before": 54.45614035087719,
+      "after": 54.45614035087719,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "makes the opening too obvious; brings visible twins together",
+      "search": {
+        "level": 268,
+        "outcome": "released",
+        "before": 54.45614035087719,
+        "after": 54.45614035087719,
+        "reason": "All tested tidy proposals fail the unchanged trap checks",
+        "fails": {
+          "trapProof:obvious:greedyPrefix": 2,
+          "twins": 1
+        },
+        "geometry": {
+          "trapInLine": 8,
+          "trapUnsupported": 3,
+          "px 57": 1,
+          "hop:hopUnsupported": 1,
+          "hop:specialOnEdge": 1,
+          "footprint": 30,
+          "cap:trapUnsupported": 24,
+          "cap:trapInLine": 64,
+          "slab:unsupportedOrCollision": 240,
+          "rigid:unsupportedOrCollision": 48,
+          "edge:unsupportedOrCollision": 16
+        },
+        "proposals": 3,
+        "tested": 3,
+        "ms": 535,
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 269,
+      "outcome": "stays as released",
+      "before": 52.65482816503224,
+      "after": 52.65482816503224,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "trap crosses candidate seams; seams break support or overlap the trap; edge/strip alternatives lack support or disturb the edge",
+      "search": {
+        "level": 269,
+        "outcome": "released",
+        "before": 52.65482816503224,
+        "after": 52.65482816503224,
+        "reason": "No supported tidy geometry reaches 58 px",
+        "geometry": {
+          "trapUnsupported": 40,
+          "trapInLine": 155,
+          "hop:hopUnsupported": 4,
+          "cap:trapUnsupported": 640,
+          "cap:trapInLine": 2480,
+          "slab:unsupportedOrCollision": 480,
+          "rigid:unsupportedOrCollision": 112,
+          "edge:unsupportedOrCollision": 96,
+          "footprint": 8
+        },
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 270,
+      "outcome": "tenth: untouched",
+      "before": 52.65482816503224,
+      "after": 52.65482816503224,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "Tenth level frozen exactly as released"
+    },
+    {
+      "level": 271,
+      "outcome": "stays as released",
+      "before": 54.45614035087719,
+      "after": 54.45614035087719,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "trap crosses candidate seams; seams break support or overlap the trap; edge/strip alternatives lack support or disturb the edge",
+      "search": {
+        "level": 271,
+        "outcome": "released",
+        "before": 54.45614035087719,
+        "after": 54.45614035087719,
+        "reason": "No supported tidy geometry reaches 58 px",
+        "geometry": {
+          "trapUnsupported": 4,
+          "trapInLine": 9,
+          "hop:hopUnsupported": 1,
+          "hop:specialOnEdge": 1,
+          "cap:trapInLine": 72,
+          "cap:trapUnsupported": 32,
+          "slab:unsupportedOrCollision": 240,
+          "rigid:unsupportedOrCollision": 48,
+          "edge:unsupportedOrCollision": 16,
+          "footprint": 4
+        },
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 272,
+      "outcome": "stays as released",
+      "before": 54.00139178844815,
+      "after": 54.00139178844815,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "trap crosses candidate seams; seams break support or overlap the trap; edge/strip alternatives lack support or disturb the edge",
+      "search": {
+        "level": 272,
+        "outcome": "released",
+        "before": 54.00139178844815,
+        "after": 54.00139178844815,
+        "reason": "No supported tidy geometry reaches 58 px",
+        "geometry": {
+          "trapInLine": 9,
+          "noPlaceForCap": 3,
+          "trapCollides": 1,
+          "hop:specialOnEdge": 1,
+          "hop:hopUnsupported": 1,
+          "cap:trapInLine": 72,
+          "cap:trapUnsupported": 12,
+          "cap:noPlaceForCap": 12,
+          "cap:trapCollides": 8,
+          "slab:unsupportedOrCollision": 240,
+          "rigid:unsupportedOrCollision": 48,
+          "edge:unsupportedOrCollision": 48,
+          "footprint": 4
+        },
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 273,
+      "outcome": "stays as released",
+      "before": 52.65482816503224,
+      "after": 52.65482816503224,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "would hide a previously readable special badge",
+      "search": {
+        "level": 273,
+        "outcome": "released",
+        "before": 52.65482816503224,
+        "after": 52.65482816503224,
+        "reason": "All tested tidy proposals fail the unchanged trap checks",
+        "fails": {
+          "readableBadge": 1
+        },
+        "geometry": {
+          "noPlaceForCap": 1,
+          "trapInLine": 15,
+          "hop:specialOnEdge": 1,
+          "hop:hopUnsupported": 1,
+          "cap:noPlaceForCap": 8,
+          "cap:trapInLine": 120,
+          "slab:unsupportedOrCollision": 238,
+          "rigid:unsupportedOrCollision": 64,
+          "edge:unsupportedOrCollision": 46,
+          "footprint": 4
+        },
+        "proposals": 1,
+        "tested": 0,
+        "ms": 978,
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 274,
+      "outcome": "narrowed",
+      "before": 54.45614035087719,
+      "after": 58.56603773584906,
+      "method": "column 12 out, straight cap",
+      "restacked": 6,
+      "slid": 0,
+      "translatedAway": [
+        0,
+        0
+      ],
+      "movedCount": 6,
+      "relocatedCount": 6,
+      "facePairsChanged": 0,
+      "proof": "own trap proof holds",
+      "clockRouteKept": true,
+      "screenshots": [
+        "screenshots/level-274-before.png",
+        "screenshots/level-274-after.png"
+      ]
+    },
+    {
+      "level": 275,
+      "outcome": "untouched: already fits",
+      "before": 63.3469387755102,
+      "after": 63.3469387755102,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "Already at least 58 px, at most eight rows",
+      "search": {
+        "level": 275,
+        "outcome": "untouched",
+        "before": 63.3469387755102,
+        "after": 63.3469387755102,
+        "reason": "Already at least 58 px and at most eight rows",
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 276,
+      "outcome": "untouched: already fits",
+      "before": 58.322732165573925,
+      "after": 58.322732165573925,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "Already at least 58 px, at most eight rows",
+      "search": {
+        "level": 276,
+        "outcome": "untouched",
+        "before": 58.322732165573925,
+        "after": 58.322732165573925,
+        "reason": "Already at least 58 px and at most eight rows",
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 277,
+      "outcome": "stays as released",
+      "before": 52.65482816503224,
+      "after": 52.65482816503224,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "trap crosses candidate seams; edge/strip alternatives lack support or disturb the edge",
+      "search": {
+        "level": 277,
+        "outcome": "released",
+        "before": 52.65482816503224,
+        "after": 52.65482816503224,
+        "reason": "No supported tidy geometry reaches 58 px",
+        "geometry": {
+          "trapInLine": 221,
+          "hop:specialOnEdge": 4,
+          "cap:trapInLine": 3536,
+          "slab:unsupportedOrCollision": 480,
+          "rigid:unsupportedOrCollision": 112,
+          "edge:unsupportedOrCollision": 96,
+          "footprint": 8
+        },
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 278,
+      "outcome": "stays as released",
+      "before": 54.45614035087719,
+      "after": 54.45614035087719,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "trap crosses candidate seams; seams break support or overlap the trap; edge/strip alternatives lack support or disturb the edge",
+      "search": {
+        "level": 278,
+        "outcome": "released",
+        "before": 54.45614035087719,
+        "after": 54.45614035087719,
+        "reason": "No supported tidy geometry reaches 58 px",
+        "geometry": {
+          "trapUnsupported": 3,
+          "trapInLine": 10,
+          "hop:hopUnsupported": 1,
+          "hop:specialOnEdge": 1,
+          "cap:trapUnsupported": 24,
+          "cap:trapInLine": 80,
+          "slab:unsupportedOrCollision": 240,
+          "rigid:unsupportedOrCollision": 48,
+          "edge:unsupportedOrCollision": 16,
+          "footprint": 4
+        },
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 279,
+      "outcome": "stays as released",
+      "before": 52.65482816503224,
+      "after": 52.65482816503224,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "would hide a previously readable special badge",
+      "search": {
+        "level": 279,
+        "outcome": "released",
+        "before": 52.65482816503224,
+        "after": 52.65482816503224,
+        "reason": "All tested tidy proposals fail the unchanged trap checks",
+        "fails": {
+          "readableBadge": 114
+        },
+        "geometry": {
+          "trapUnsupported": 3,
+          "trapInLine": 108,
+          "hop:specialOnEdge": 2,
+          "hop:hopUnsupported": 2,
+          "cap:trapUnsupported": 48,
+          "cap:trapInLine": 864,
+          "footprint": 68,
+          "slab:unsupportedOrCollision": 360,
+          "rigid:unsupportedOrCollision": 80,
+          "edge:unsupportedOrCollision": 32
+        },
+        "proposals": 114,
+        "tested": 0,
+        "ms": 2406,
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 280,
+      "outcome": "tenth: untouched",
+      "before": 54.45614035087719,
+      "after": 54.45614035087719,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "Tenth level frozen exactly as released"
+    },
+    {
+      "level": 281,
+      "outcome": "stays as released",
+      "before": 52.65482816503224,
+      "after": 52.65482816503224,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "trap crosses candidate seams; seams break support or overlap the trap; edge/strip alternatives lack support or disturb the edge",
+      "search": {
+        "level": 281,
+        "outcome": "released",
+        "before": 52.65482816503224,
+        "after": 52.65482816503224,
+        "reason": "No supported tidy geometry reaches 58 px",
+        "geometry": {
+          "trapInLine": 114,
+          "trapUnsupported": 3,
+          "hop:hopUnsupported": 4,
+          "cap:trapInLine": 912,
+          "cap:trapUnsupported": 24,
+          "slab:unsupportedOrCollision": 352,
+          "rigid:unsupportedOrCollision": 80,
+          "edge:unsupportedOrCollision": 20,
+          "footprint": 34
+        },
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 282,
+      "outcome": "narrowed",
+      "before": 54.45614035087719,
+      "after": 60.57767369242779,
+      "method": "column 8 out, straight cap",
+      "restacked": 12,
+      "slid": 23,
+      "translatedAway": [
+        0,
+        0
+      ],
+      "movedCount": 35,
+      "relocatedCount": 12,
+      "facePairsChanged": 0,
+      "proof": "own trap proof holds",
+      "clockRouteKept": true,
+      "screenshots": [
+        "screenshots/level-282-before.png",
+        "screenshots/level-282-after.png"
+      ]
+    },
+    {
+      "level": 283,
+      "outcome": "stays as released",
+      "before": 54.45614035087719,
+      "after": 54.45614035087719,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "trap crosses candidate seams; seams break support or overlap the trap; edge/strip alternatives lack support or disturb the edge",
+      "search": {
+        "level": 283,
+        "outcome": "released",
+        "before": 54.45614035087719,
+        "after": 54.45614035087719,
+        "reason": "No supported tidy geometry reaches 58 px",
+        "geometry": {
+          "trapInLine": 10,
+          "trapUnsupported": 1,
+          "hop:hopUnsupported": 2,
+          "cap:trapInLine": 80,
+          "cap:trapUnsupported": 8,
+          "slab:unsupportedOrCollision": 240,
+          "rigid:unsupportedOrCollision": 48,
+          "edge:unsupportedOrCollision": 48,
+          "footprint": 4
+        },
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 284,
+      "outcome": "narrowed",
+      "before": 54.45614035087719,
+      "after": 58.56603773584906,
+      "method": "column/row out",
+      "restacked": 3,
+      "slid": 1,
+      "translatedAway": [
+        -1,
+        0
+      ],
+      "movedCount": 4,
+      "relocatedCount": 4,
+      "facePairsChanged": 1,
+      "proof": "own trap proof holds",
+      "clockRouteKept": true,
+      "screenshots": [
+        "screenshots/level-284-before.png",
+        "screenshots/level-284-after.png"
+      ]
+    },
+    {
+      "level": 285,
+      "outcome": "untouched: already fits",
+      "before": 59.13285048119853,
+      "after": 59.13285048119853,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "Already at least 58 px, at most eight rows",
+      "search": {
+        "level": 285,
+        "outcome": "untouched",
+        "before": 59.13285048119853,
+        "after": 59.13285048119853,
+        "reason": "Already at least 58 px and at most eight rows",
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 286,
+      "outcome": "stays as released",
+      "before": 54.45614035087719,
+      "after": 54.45614035087719,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "trap crosses candidate seams; seams break support or overlap the trap; edge/strip alternatives lack support or disturb the edge",
+      "search": {
+        "level": 286,
+        "outcome": "released",
+        "before": 54.45614035087719,
+        "after": 54.45614035087719,
+        "reason": "No supported tidy geometry reaches 58 px",
+        "geometry": {
+          "trapUnsupported": 1,
+          "trapInLine": 10,
+          "trapCollides": 2,
+          "hop:specialOnEdge": 2,
+          "cap:trapUnsupported": 8,
+          "cap:trapCollides": 16,
+          "cap:trapInLine": 80,
+          "slab:unsupportedOrCollision": 240,
+          "rigid:unsupportedOrCollision": 48,
+          "edge:unsupportedOrCollision": 48,
+          "footprint": 4
+        },
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 287,
+      "outcome": "stays as released",
+      "before": 54.45614035087719,
+      "after": 54.45614035087719,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "trap crosses candidate seams; seams break support or overlap the trap; edge/strip alternatives lack support or disturb the edge",
+      "search": {
+        "level": 287,
+        "outcome": "released",
+        "before": 54.45614035087719,
+        "after": 54.45614035087719,
+        "reason": "No supported tidy geometry reaches 58 px",
+        "geometry": {
+          "trapUnsupported": 2,
+          "trapInLine": 11,
+          "hop:specialOnEdge": 1,
+          "hop:hopUnsupported": 1,
+          "cap:trapUnsupported": 16,
+          "cap:trapInLine": 88,
+          "slab:unsupportedOrCollision": 240,
+          "rigid:unsupportedOrCollision": 48,
+          "edge:unsupportedOrCollision": 16,
+          "footprint": 4
+        },
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 288,
+      "outcome": "stays as released",
+      "before": 54.45614035087719,
+      "after": 54.45614035087719,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "trap crosses candidate seams; seams break support or overlap the trap; edge/strip alternatives lack support or disturb the edge",
+      "search": {
+        "level": 288,
+        "outcome": "released",
+        "before": 54.45614035087719,
+        "after": 54.45614035087719,
+        "reason": "No supported tidy geometry reaches 58 px",
+        "geometry": {
+          "trapUnsupported": 2,
+          "trapInLine": 9,
+          "px 57": 2,
+          "hop:specialOnEdge": 2,
+          "footprint": 52,
+          "cap:trapUnsupported": 24,
+          "cap:trapInLine": 72,
+          "slab:unsupportedOrCollision": 240,
+          "rigid:unsupportedOrCollision": 48,
+          "edge:unsupportedOrCollision": 16
+        },
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 289,
+      "outcome": "stays as released",
+      "before": 54.00139178844815,
+      "after": 54.00139178844815,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "trap crosses candidate seams; edge/strip alternatives lack support or disturb the edge",
+      "search": {
+        "level": 289,
+        "outcome": "released",
+        "before": 54.00139178844815,
+        "after": 54.00139178844815,
+        "reason": "No supported tidy geometry reaches 58 px",
+        "geometry": {
+          "trapInLine": 13,
+          "hop:specialOnEdge": 2,
+          "cap:trapInLine": 104,
+          "slab:unsupportedOrCollision": 240,
+          "rigid:unsupportedOrCollision": 48,
+          "edge:unsupportedOrCollision": 48,
+          "footprint": 4
+        },
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 290,
+      "outcome": "tenth: untouched",
+      "before": 52.65482816503224,
+      "after": 52.65482816503224,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "Tenth level frozen exactly as released"
+    },
+    {
+      "level": 291,
+      "outcome": "stays as released",
+      "before": 52.65482816503224,
+      "after": 52.65482816503224,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "trap crosses candidate seams; edge/strip alternatives lack support or disturb the edge",
+      "search": {
+        "level": 291,
+        "outcome": "released",
+        "before": 52.65482816503224,
+        "after": 52.65482816503224,
+        "reason": "No supported tidy geometry reaches 58 px",
+        "geometry": {
+          "trapInLine": 221,
+          "hop:specialOnEdge": 4,
+          "cap:trapInLine": 3536,
+          "slab:unsupportedOrCollision": 480,
+          "rigid:unsupportedOrCollision": 112,
+          "edge:unsupportedOrCollision": 96,
+          "footprint": 8
+        },
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 292,
+      "outcome": "stays as released",
+      "before": 54.45614035087719,
+      "after": 54.45614035087719,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "trap crosses candidate seams; seams break support or overlap the trap; edge/strip alternatives lack support or disturb the edge",
+      "search": {
+        "level": 292,
+        "outcome": "released",
+        "before": 54.45614035087719,
+        "after": 54.45614035087719,
+        "reason": "No supported tidy geometry reaches 58 px",
+        "geometry": {
+          "trapUnsupported": 2,
+          "trapInLine": 10,
+          "trapCollides": 1,
+          "hop:specialOnEdge": 1,
+          "hop:hopUnsupported": 1,
+          "cap:trapInLine": 80,
+          "cap:trapCollides": 8,
+          "cap:trapUnsupported": 16,
+          "slab:unsupportedOrCollision": 240,
+          "rigid:unsupportedOrCollision": 48,
+          "edge:unsupportedOrCollision": 16,
+          "footprint": 4
+        },
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 293,
+      "outcome": "stays as released",
+      "before": 54.45614035087719,
+      "after": 54.45614035087719,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "would hide a previously readable special badge; changes an authored wrong move",
+      "search": {
+        "level": 293,
+        "outcome": "released",
+        "before": 54.45614035087719,
+        "after": 54.45614035087719,
+        "reason": "All tested tidy proposals fail the unchanged trap checks",
+        "fails": {
+          "trapProof:trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0": 7,
+          "trapProof:trapProof:noBaitAboveControl:keyEarly:win:0:notCostly|lonelyNeighbour:win:2:notAboveControl:ctrl2": 8,
+          "trapProof:staticGates": 9,
+          "readableBadge": 20
+        },
+        "geometry": {
+          "trapUnsupported": 2,
+          "trapInLine": 7,
+          "trapCollides": 1,
+          "hop:hopUnsupported": 2,
+          "footprint": 26,
+          "cap:trapInLine": 56,
+          "cap:trapUnsupported": 16,
+          "cap:trapCollides": 8,
+          "slab:unsupportedOrCollision": 240,
+          "rigid:unsupportedOrCollision": 48,
+          "edge:unsupportedOrCollision": 16
+        },
+        "proposals": 44,
+        "tested": 24,
+        "ms": 18093,
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 294,
+      "outcome": "untouched: already fits",
+      "before": 63.3469387755102,
+      "after": 63.3469387755102,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "Already at least 58 px, at most eight rows",
+      "search": {
+        "level": 294,
+        "outcome": "untouched",
+        "before": 63.3469387755102,
+        "after": 63.3469387755102,
+        "reason": "Already at least 58 px and at most eight rows",
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 295,
+      "outcome": "narrowed",
+      "before": 54.45614035087719,
+      "after": 63.3469387755102,
+      "method": "column/row out",
+      "restacked": 12,
+      "slid": 26,
+      "translatedAway": [
+        -2,
+        0
+      ],
+      "movedCount": 38,
+      "relocatedCount": 12,
+      "facePairsChanged": 2,
+      "proof": "own trap proof holds",
+      "clockRouteKept": true,
+      "screenshots": [
+        "screenshots/level-295-before.png",
+        "screenshots/level-295-after.png"
+      ]
+    },
+    {
+      "level": 296,
+      "outcome": "stays as released",
+      "before": 52.65482816503224,
+      "after": 52.65482816503224,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "trap crosses candidate seams; edge/strip alternatives lack support or disturb the edge",
+      "search": {
+        "level": 296,
+        "outcome": "released",
+        "before": 52.65482816503224,
+        "after": 52.65482816503224,
+        "reason": "No supported tidy geometry reaches 58 px",
+        "geometry": {
+          "trapInLine": 221,
+          "hop:hopUnsupported": 2,
+          "hop:specialOnEdge": 2,
+          "cap:trapInLine": 3536,
+          "slab:unsupportedOrCollision": 480,
+          "rigid:unsupportedOrCollision": 112,
+          "edge:unsupportedOrCollision": 96,
+          "footprint": 8
+        },
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 297,
+      "outcome": "stays as released",
+      "before": 54.45614035087719,
+      "after": 54.45614035087719,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "trap crosses candidate seams; seams break support or overlap the trap; edge/strip alternatives lack support or disturb the edge",
+      "search": {
+        "level": 297,
+        "outcome": "released",
+        "before": 54.45614035087719,
+        "after": 54.45614035087719,
+        "reason": "No supported tidy geometry reaches 58 px",
+        "geometry": {
+          "trapInLine": 12,
+          "trapUnsupported": 1,
+          "hop:specialOnEdge": 2,
+          "cap:trapInLine": 96,
+          "cap:trapUnsupported": 8,
+          "slab:unsupportedOrCollision": 240,
+          "rigid:unsupportedOrCollision": 48,
+          "edge:unsupportedOrCollision": 16,
+          "footprint": 4
+        },
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 298,
+      "outcome": "stays as released",
+      "before": 54.45614035087719,
+      "after": 54.45614035087719,
+      "movedCount": 0,
+      "facePairsChanged": 0,
+      "reason": "trap crosses candidate seams; seams break support or overlap the trap; edge/strip alternatives lack support or disturb the edge",
+      "search": {
+        "level": 298,
+        "outcome": "released",
+        "before": 54.45614035087719,
+        "after": 54.45614035087719,
+        "reason": "No supported tidy geometry reaches 58 px",
+        "geometry": {
+          "trapUnsupported": 4,
+          "trapInLine": 9,
+          "hop:specialOnEdge": 2,
+          "cap:trapUnsupported": 32,
+          "cap:trapInLine": 72,
+          "slab:unsupportedOrCollision": 240,
+          "rigid:unsupportedOrCollision": 48,
+          "edge:unsupportedOrCollision": 16,
+          "footprint": 4
+        },
+        "movedCount": 0,
+        "facePairsChanged": 0
+      }
+    },
+    {
+      "level": 299,
+      "outcome": "narrowed",
+      "before": 54.45614035087719,
+      "after": 58.56603773584906,
+      "method": "column 12 out, straight cap",
+      "restacked": 1,
+      "slid": 0,
+      "translatedAway": [
+        0,
+        0
+      ],
+      "movedCount": 1,
+      "relocatedCount": 1,
+      "facePairsChanged": 0,
+      "proof": "own trap proof holds",
+      "clockRouteKept": true,
+      "screenshots": [
+        "screenshots/level-299-before.png",
+        "screenshots/level-299-after.png"
+      ]
+    }
+  ],
+  "counts": {
+    "ordinary": 45,
+    "narrowed": 8,
+    "alreadyFits": 5,
+    "keptReleased": 32
+  },
+  "browser": {
+    "passed": 16,
+    "total": 16,
+    "routeButton": {
+      "present": true,
+      "moves": 8,
+      "clockGone": true
+    },
+    "rendererCommit": "3b188bcd"
+  }
+}
