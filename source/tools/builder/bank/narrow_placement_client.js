@@ -122,7 +122,7 @@
   const back=document.createElement('button');back.id='peBack';back.textContent='Back to placement';back.hidden=true;document.body.append(back);back.onclick=()=>{
     root.hidden=false;back.hidden=true;liveView=null;
     const G=__mj.G;if(played&&played.level===row.level&&G&&G.alive){const gone=new Set(),tray=[],down=new Set();
-      G.alive.forEach((a,i)=>{const id=played.keep[i];if(id==null)return;if(!a)gone.add(id);else if(G.down&&G.down[i])down.add(id);   // still face-down in the game});
+      G.alive.forEach((a,i)=>{const id=played.keep[i];if(id==null)return;if(!a)gone.add(id);else if(G.down&&G.down[i])down.add(id);/* still face-down in the game */});
       for(const i of G.tray||[]){const id=played.keep[i];if(id!=null)tray.push(id);}
       liveView={gone,tray,down,taken:gone.size-tray.length};hint('This is the level as you left it in the game. Tiles you took are hidden'+(tray.length?'; tile'+(tray.length>1?'s ':' ')+tray.join(', ')+' wait in the tray':'')+'. Show the full layout to edit everything.');}
     render();};
