@@ -1,0 +1,11 @@
+{
+ "level": 295,
+ "ok": false,
+ "log": [
+  "greedy: no full winning route straight 5 | no full winning route straight 5",
+  "greedy-loose: no full winning route straight 5",
+  "restack: no brick spot for 5 tiles | no brick spot for 5 tiles | no brick spot for 5 tiles",
+  "trim: a special, wrong move or clock-route tile is outside: 52,59 | a special, wrong move or clock-route tile is outside: 59 | a special, wrong move or clock-route tile is outside: 52",
+  "trim-route: a special, wrong move or clock-route tile is outside: 52,59 | a special, wrong move or clock-route tile is outside: 59 | a special, wrong move or clock-route tile is outside: 52"
+ ]
+}

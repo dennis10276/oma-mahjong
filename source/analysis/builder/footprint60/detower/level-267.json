@@ -1,0 +1,11 @@
+{
+ "level": 267,
+ "ok": false,
+ "log": [
+  "greedy: specialEffects straight undefined | specialEffects straight undefined",
+  "greedy-loose: specialEffects straight undefined",
+  "restack: footprint straight 13 | footprint straight 13 | footprint straight 13",
+  "trim: a special, wrong move or clock-route tile is outside: 72,81,82,84 | a special, wrong move or clock-route tile is outside: 72,81 | a special, wrong move or clock-route tile is outside: 82,84",
+  "trim-route: a special, wrong move or clock-route tile is outside: 72,81,84 | a special, wrong move or clock-route tile is outside: 72,81 | a special, wrong move or clock-route tile is outside: 84"
+ ]
+}

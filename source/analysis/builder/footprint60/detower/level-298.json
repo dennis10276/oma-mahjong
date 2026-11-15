@@ -1,0 +1,11 @@
+{
+ "level": 298,
+ "ok": false,
+ "log": [
+  "greedy:  straight undefined |  straight undefined",
+  "greedy-loose:  straight undefined",
+  "restack: no brick spot for 5 tiles | no brick spot for 5 tiles | no brick spot for 5 tiles",
+  "trim: a special, wrong move or clock-route tile is outside: 51,56,64,76 | a special, wrong move or clock-route tile is outside: 56 | a special, wrong move or clock-route tile is outside: 51,64,76",
+  "trim-route: a special, wrong move or clock-route tile is outside: 51,56 | a special, wrong move or clock-route tile is outside: 56 | a special, wrong move or clock-route tile is outside: 51"
+ ]
+}

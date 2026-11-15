@@ -1,0 +1,11 @@
+{
+ "level": 265,
+ "ok": false,
+ "log": [
+  "greedy: specialEffects,authoredProof:trapProof:iceIdle:72:12>=12 straight undefined | specialEffects,authoredProof:trapProof:iceIdle:72:12>=12 straight undefined",
+  "greedy-loose: specialEffects,authoredProof:trapProof:iceIdle:72:12>=12 straight undefined",
+  "restack: specialEffects,authoredProof:trapProof:iceIdle:72:12>=12 straight 12 | specialEffects straight 12 | specialEffects,authoredProof:trapProof:iceIdle:72:12>=12 straight 12",
+  "trim: a special, wrong move or clock-route tile is outside: 70,71,76 | a special, wrong move or clock-route tile is outside: 70,76 | a special, wrong move or clock-route tile is outside: 71",
+  "trim-route: a special, wrong move or clock-route tile is outside: 70 | a special, wrong move or clock-route tile is outside: 70 | specialEffects,authoredProof:trapProof:iceIdle:72:12>=12 straight 0"
+ ]
+}

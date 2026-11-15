@@ -1,0 +1,11 @@
+{
+ "level": 277,
+ "ok": false,
+ "log": [
+  "greedy:  straight undefined |  straight undefined",
+  "greedy-loose:  straight undefined",
+  "restack: specialEffects,authoredProof:idle:lock:85 straight 6 |  straight 6 | specialEffects,authoredProof:idle:lock:85 straight 6",
+  "trim: a special, wrong move or clock-route tile is outside: 92,93,95 | a special, wrong move or clock-route tile is outside: 93,95 | a special, wrong move or clock-route tile is outside: 92,95",
+  "trim-route: a special, wrong move or clock-route tile is outside: 93 | a special, wrong move or clock-route tile is outside: 93 | no full winning route straight 0"
+ ]
+}

@@ -1,0 +1,11 @@
+{
+ "level": 279,
+ "ok": false,
+ "log": [
+  "greedy: specialEffects straight undefined | specialEffects straight undefined",
+  "greedy-loose: specialEffects straight undefined",
+  "restack: no brick spot for 5 tiles | no brick spot for 5 tiles | no brick spot for 5 tiles",
+  "trim: a special, wrong move or clock-route tile is outside: 42,65,67 | a special, wrong move or clock-route tile is outside: 42,65,67 | a special, wrong move or clock-route tile is outside: 42,65,67 | a special, wrong move or clock-route tile is outside: 42,67 | a special, wrong move or clock-route tile is outside: 42,67 | a special, wrong move or clock-route tile is outside: 42,67 | a special, wrong move or clock-route tile is outside: 65 | a special, wrong move or clock-route tile is outside: 42,65 | a special, wrong move or clock-route tile is outside: 42,65",
+  "trim-route: a special, wrong move or clock-route tile is outside: 42,65 | a special, wrong move or clock-route tile is outside: 42,65 | a special, wrong move or clock-route tile is outside: 42,65 | a special, wrong move or clock-route tile is outside: 42 | a special, wrong move or clock-route tile is outside: 42 | a special, wrong move or clock-route tile is outside: 42 | a special, wrong move or clock-route tile is outside: 65 | a special, wrong move or clock-route tile is outside: 42,65 | a special, wrong move or clock-route tile is outside: 42,65"
+ ]
+}

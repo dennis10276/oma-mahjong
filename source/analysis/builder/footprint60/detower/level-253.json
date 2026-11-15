@@ -1,0 +1,11 @@
+{
+ "level": 253,
+ "ok": false,
+ "log": [
+  "greedy: authoredProof:staticGates straight undefined | authoredProof:staticGates straight undefined",
+  "greedy-loose: authoredProof:staticGates straight undefined",
+  "restack: authoredProof:staticGates straight 0 | newTower straight 0 | authoredProof:staticGates straight 0",
+  "trim: a special, wrong move or clock-route tile is outside: 40,42 | authoredProof:staticGates straight 0 | a special, wrong move or clock-route tile is outside: 40,42",
+  "trim-route: a special, wrong move or clock-route tile is outside: 40,42 | authoredProof:staticGates straight 0 | a special, wrong move or clock-route tile is outside: 40,42"
+ ]
+}

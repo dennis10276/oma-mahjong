@@ -1,0 +1,11 @@
+{
+ "level": 263,
+ "ok": false,
+ "log": [
+  "greedy:  straight undefined |  straight undefined",
+  "greedy-loose:  straight undefined",
+  "restack: wrongMove:0,authoredProof:trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:2 straight 3 | wrongMove:0,authoredProof:staticGates straight 3 | wrongMove:0,authoredProof:trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:2 straight 3",
+  "trim: a special, wrong move or clock-route tile is outside: 0,75 | a special, wrong move or clock-route tile is outside: 75 | a special, wrong move or clock-route tile is outside: 0",
+  "trim-route: a special, wrong move or clock-route tile is outside: 0 | clockMinimum,specialEffects,authoredProof:staticGates straight 0 | a special, wrong move or clock-route tile is outside: 0"
+ ]
+}

@@ -1,0 +1,11 @@
+{
+ "level": 293,
+ "ok": false,
+ "log": [
+  "greedy: no full winning route straight 6 | no full winning route straight 6",
+  "greedy-loose: no full winning route straight 6",
+  "restack: no brick spot for 3 tiles | no brick spot for 3 tiles | no brick spot for 3 tiles",
+  "trim: wrongMove:73,authoredProof:trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0 straight 0 | authoredProof:trapProof:noBaitAboveControl:keyEarly:win:0:notCostly|lonelyNeighbour:win:2:notAboveControl:ctrl2 straight 0 | wrongMove:73,authoredProof:trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0 straight 0",
+  "trim-route: wrongMove:73,authoredProof:trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0 straight 0 | authoredProof:trapProof:noBaitAboveControl:keyEarly:win:0:notCostly|lonelyNeighbour:win:2:notAboveControl:ctrl2 straight 0 | wrongMove:73,authoredProof:trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0 straight 0"
+ ]
+}

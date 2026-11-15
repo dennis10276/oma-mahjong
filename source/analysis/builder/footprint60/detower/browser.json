@@ -1,0 +1,40 @@
+{
+  "viewport": [
+    392,
+    730
+  ],
+  "fakeDatabase": true,
+  "passed": 3,
+  "total": 4,
+  "rows": [
+    {
+      "level": 256,
+      "ok": true,
+      "tilePx": 61.93136472466082,
+      "tiles": 76,
+      "trayGap": 69.4,
+      "rows": 6
+    },
+    {
+      "level": 269,
+      "ok": false,
+      "error": "unexpected geometry {\"tilePx\":60.720309554519304,\"tiles\":72,\"trayGap\":3.200000000000003,\"rows\":8}"
+    },
+    {
+      "level": 274,
+      "ok": true,
+      "tilePx": 58.56603773584906,
+      "tiles": 84,
+      "trayGap": 41.69999999999999,
+      "rows": 7
+    },
+    {
+      "level": 282,
+      "ok": true,
+      "tilePx": 63.3469387755102,
+      "tiles": 80,
+      "trayGap": 20.400000000000006,
+      "rows": 7
+    }
+  ]
+}

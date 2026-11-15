@@ -1,0 +1,11 @@
+{
+ "level": 271,
+ "ok": false,
+ "log": [
+  "greedy:  straight undefined |  straight undefined",
+  "greedy-loose:  straight undefined",
+  "restack:  straight 6 |  straight 6 |  straight 6",
+  "trim: a special, wrong move or clock-route tile is outside: 66,67,72,73 | a special, wrong move or clock-route tile is outside: 66,72 | a special, wrong move or clock-route tile is outside: 67,73",
+  "trim-route: a special, wrong move or clock-route tile is outside: 66,67,73 | a special, wrong move or clock-route tile is outside: 66 | a special, wrong move or clock-route tile is outside: 67,73"
+ ]
+}
