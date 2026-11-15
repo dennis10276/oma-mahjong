@@ -16,8 +16,11 @@ add new decisions with a date.
   independently prove the same shortest clock route and reprice every authored wrong move with the same consequence.
   Recheck the declared chain structure. Unknown/budget-exhausted results do not count as proof. An older board with
   missing trap metadata requires recovering its intent evidence or complete physical rule-graph equivalence.
-- Construction now uses `tools/builder/compact_footprint.js` and `preserve_trap.js`. Three certified initial examples
-  and browser measurements are in `footprint60/README.md`; they are drafts, not placed/released replacements.
+- Construction now uses `tools/builder/compact_footprint.js` and `preserve_trap.js`. The separate 250–300 review
+  has 46 of 51 drafts at 58.32–63.35 px, all browser-replayed; all six 96-tile boards reach 60.58–61.93 px.
+  The range review explicitly allows a 58 px floor for roughly 60 px migration; builder/export defaults stay 60.
+  Older boards' recovered special-role contract is scoped, not a claim of complete filler-graph equivalence.
+  Five boards still need repairs. See `footprint60/README.md`; no replacements are placed or released.
 - **Do not release yet.** Dennis stopped the proposed 1.70 release on 2026-11-15. Work remains on development branches.
 
 ## Who plays
