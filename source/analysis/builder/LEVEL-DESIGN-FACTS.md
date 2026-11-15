@@ -227,6 +227,12 @@ add new decisions with a date.
     63.3 px, eight rows about 58.5 px, nine rows about 52 px. "Codex or gemini should be able to complete: search for more ways to
     narrow it ... Make tasks for them": `codex-tasks/TASK-19-narrow-251-299.md`, `gemini-tasks/TASK-G14-six-wide-layouts.md`.
     State: `footprint60/narrow/` (tool `bank/narrow.js`): 9 levels narrowed with no picture changed, 5 already 58 px or more.
+  - **Narrowing rules from Dennis's own edits in Codex's placement lab** (2026-11-15): "no towers please", "keep everthing as symetrical
+    as possible", "You may also just drop tiles that dont matter and are part of the finish after the trap", "Take tiles that dont effect
+    the route to clock and are mostly there for the finish after the trap", "Is 9 rows really that bad for px size?" (yes: nine rows is
+    52.7 px, eight rows 59.1 px on the reference). He summed up Codex's method as at most six wide and at most four stacked. Result
+    (`footprint60/narrow-final/README.md`): 15 of 45 narrowed with the trap and pictures unchanged, all won in the real game; 5 already fit;
+    25 stay as released. Dropping tiles was not used yet (every check still requires the same pictures).
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
   - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
     played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is
