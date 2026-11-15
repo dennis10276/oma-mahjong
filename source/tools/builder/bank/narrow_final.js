@@ -61,14 +61,17 @@ for (let lv = 251; lv <= 299; lv++) {
   }
   const cands = [], trap = require('./narrow_proof.js').prepare(before).M;
   const cf = path.join(BANK, 'narrow/placement-lab/completed', `level-${lv}.json`);
-  if (fs.existsSync(cf)) { const j = rd(cf); if (j.status === 'passed' && j.check && j.check.design) cands.push({ from: 'completion: ' + j.method, design: j.check.design, own: /Your complete layout/.test(j.method || ''), cert: j.check.certificate }); }
+  if (fs.existsSync(cf)) { const j = rd(cf); if (j.status === 'passed' && j.check && j.check.design) cands.push({ from: 'completion: ' + j.method, design: j.check.design, own: /Your complete layout/.test(j.method || ''), cert: j.check.certificate, mech: !!(j.check.certificate && (j.check.certificate.checks || []).includes('mechanicsOnly')) }); }
+  // same mechanics, other positions (MECH=1, Dennis 2026-11-15)
+  const mf = path.join(BANK, 'peel-mech', `level-${lv}.json`);
+  if (fs.existsSync(mf)) { const j = rd(mf); cands.push({ from: 'same mechanics: ' + j.how + ` (${j.dropped} dropped, ${j.picturesExchanged} picture exchanges)`, design: j.design, mech: true }); }
   const pf = path.join(BANK, 'peel-drop', `level-${lv}.json`);
   if (fs.existsSync(pf)) { const j = rd(pf); cands.push({ from: 'peel_drop: ' + j.how + ` (${j.moved || 0} slid, ${j.dropped} dropped, ${j.picturesExchanged} picture exchanges)`, design: j.design }); }
   const tf = path.join(BANK, 'narrow', `level-${lv}.json`);
   if (fs.existsSync(tf)) { const j = rd(tf), d = j.design; const capped = d.tiles.filter((p, i) => p[2] > a.tiles[i][2]).length; if (capped <= 2) cands.push({ from: 'Task 19: ' + (j.hop ? 'hop ' + j.hop : 'column/row out'), design: d }); }
   let done = false;
   for (const c of cands) {
-    const r = check(a, c.design, c.own, trap);
+    const r = check(a, c.design, c.own, c.mech ? new Set([a.clock.i, ...a.obst.keys, ...a.obst.locks, ...Object.keys(a.obst.ice).map(Number)]) : trap);
     if (!r.ok) { (row.rejected = row.rejected || []).push(c.from.slice(0, 40) + ': ' + r.why.join(', ')); continue; }
     const dm = dims(c.design.tiles), moved = c.design.tiles.length === a.tiles.length ? c.design.tiles.filter((p, i) => !same(p, a.tiles[i])).length : (a.tiles.length - c.design.tiles.length) + ' dropped';
     Object.assign(row, { outcome: 'narrowed', from: c.from, px: +r.fp.tilePx.toFixed(1), w: dm.w, h: dm.h, layers: dm.layers, moved, mirror: mirror(c.design.tiles), tiles: c.design.tiles.length, keptClockRoute: c.design.tiles.length !== a.tiles.length || same(c.design.solution.slice(0, c.design.solution.indexOf(c.design.clock.i) + 1), a.solution.slice(0, a.solution.indexOf(a.clock.i) + 1)) });

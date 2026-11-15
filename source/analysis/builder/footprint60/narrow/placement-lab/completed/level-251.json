@@ -3,27 +3,28 @@
   "baseHash": "dadcf7afbad0f1c767dd0c39c427d82bc50ef43dc2e582e046fbffe84dfee14c",
   "status": "open",
   "note": "Make a version of something like this that works. Think smartly.",
-  "seeds": 26,
-  "tested": 225,
-  "constructed": 3900,
+  "seeds": 32,
+  "tested": 338,
+  "constructed": 4800,
   "failures": {
     "clockMinimum,specialEffects,ownTrapProof:trapProof:storedRouteNotShortest": 14,
     "clockMinimum,ownTrapProof:trapProof:storedRouteNotShortest": 30,
-    "unknown": 151,
+    "unknown": 249,
     "clockMinimum,specialEffects,baitPrice:71,ownTrapProof:trapProof:noProvenBait:keyEarly:win:0": 8,
-    "clockMinimum,specialEffects,baitPrice:71,ownTrapProof:trapProof:storedRouteNotShortest": 3,
+    "clockMinimum,specialEffects,baitPrice:71,ownTrapProof:trapProof:storedRouteNotShortest": 16,
     "clockMinimum,baitPrice:71,ownTrapProof:trapProof:noProvenBait:keyEarly:win:0": 8,
     "clockMinimum,specialRoleOrder,ownTrapProof:trapProof:storedRouteNotShortest": 1,
+    "clockMinimum,specialEffects,baitPrice:71,ownTrapProof:trapProof:noProvenBait:keyEarly:win:-3": 1,
+    "clockMinimum,specialEffects,specialRoleOrder,baitPrice:71,ownTrapProof:trapProof:storedRouteNotShortest": 1,
     "clockDeadline": 4,
     "clockMinimum,specialEffects,specialRoleOrder,ownTrapProof:trapProof:storedRouteNotShortest": 5,
     "clockMinimum,specialEffects,specialRoleOrder,baitPrice:71,ownTrapProof:trapProof:noProvenBait:keyEarly:win:-1": 1
   },
   "packRejects": {
-    "startBroken": 150,
-    "twins": 827,
-    "noSpot": 2465,
-    "small": 99,
-    "badge": 134
+    "twins": 1367,
+    "noSpot": 2768,
+    "badge": 226,
+    "small": 99
   },
-  "ms": 49807
+  "ms": 53468
 }

@@ -123,7 +123,7 @@ function variantsCut(a, M, special) {
   };
   const cands = ax => { const vs = [...new Set(a.tiles.map(p => p[ax]))].sort((p, q) => p - q); const mid = (Math.min(...vs) + Math.max(...vs)) / 2; return vs.sort((p, q) => Math.abs(p - mid) - Math.abs(q - mid)); };
   const combos = axes.length === 2 ? [...cands(0).map(c => [[0, c]]), ...cands(1).map(c => [[1, c]]), ...cands(0).flatMap(c => cands(1).map(d => [[0, c], [1, d]]))] : axes.length ? cands(axes[0]).map(c => [[axes[0], c]]) : [];
-  for (const cmb of combos.slice(0, 120)) {
+  for (const cmb of combos.slice(0, process.env.MECH ? 600 : 120)) {
     let T = a.tiles, gone = new Set(), ok = true;
     for (const [ax, c] of cmb) { const r = cutOne(T, ax, c); if (!r) { ok = false; break; } T = r.T; for (const g of r.gone) gone.add(g); }
     if (!ok) continue;
@@ -238,7 +238,7 @@ function attempt(before, v0, base, protectedFaces, special, seed = 0, opts = {})
   // the trap, compared through the tile map
   const why = [], core = [...M].sort((p, q) => p - q), coreB = core.map(mp);
   const relA = P.relations(E.game(A), core).map(r0 => r0.slice(2)), relB = P.relations(E.game(b), coreB).map(r0 => r0.slice(2));
-  if (!same(relA, relB)) why.push('trapRelations');
+  if (!process.env.MECH && !same(relA, relB)) why.push('trapRelations');
   const k = P.kOf(b); if (k !== base.k) why.push('clockMinimum ' + base.k + ' -> ' + k);
   const ablB = P.ablations(b).map(([kind, i, kk]) => [kind, i, kk]), ablA = base.abl.map(([kind, i, kk]) => [kind, mp(i), kk]);
   if (!same(ablA, ablB)) why.push('specialEffects');
@@ -284,7 +284,7 @@ function one(level) {
   if (f0.ok && e0.x1 - e0.x0 + 2 <= 13) return { level, ok: true, unchanged: true, px: f0.tilePx };
   const special = new Set([a.clock.i, ...a.obst.keys, ...a.obst.locks, ...Object.keys(a.obst.ice || {}).map(Number)]);
   const g0 = base.prep.g, Mg = new Set(special);
-  for (const r of special) { for (const u of g0.nb.above[r]) Mg.add(u); if (g0.iceH[r]) for (const u of g0.iceNb[r]) Mg.add(u); }
+  if (!process.env.MECH) for (const r of special) { for (const u of g0.nb.above[r]) Mg.add(u); if (g0.iceH[r]) for (const u of g0.iceNb[r]) Mg.add(u); }
   const bt = (before.roles && before.roles.bait) || (before.card && before.card.trap && before.card.trap.bait) || {};
   for (const k of ['tiles', 'twins', 'wrong', 'single']) for (const t of (bt[k] || [])) if (Number.isInteger(t)) Mg.add(t);
   for (const p of (bt.pairs || [])) for (const t of p) Mg.add(t);

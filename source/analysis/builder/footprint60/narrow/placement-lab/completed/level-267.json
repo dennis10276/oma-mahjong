@@ -3,10 +3,21 @@
   "baseHash": "9a60644ccf25ed3c3d0793497596d402a7a03da89d634df664c8d05e25ace7c4",
   "status": "open",
   "note": "",
-  "seeds": 0,
-  "tested": 0,
-  "constructed": 0,
-  "failures": {},
-  "packRejects": {},
-  "ms": 481
+  "seeds": 12,
+  "tested": 94,
+  "constructed": 1800,
+  "failures": {
+    "clockMinimum,specialEffects,specialRoleOrder,baitPrice:84": 1,
+    "clockDeadline": 35,
+    "unknown": 56,
+    "clockMinimum,specialEffects,specialRoleOrder": 1,
+    "specialEffects,specialRoleOrder,baitPrice:84": 1
+  },
+  "packRejects": {
+    "badge": 256,
+    "twins": 1176,
+    "noSpot": 243,
+    "small": 31
+  },
+  "ms": 353526
 }

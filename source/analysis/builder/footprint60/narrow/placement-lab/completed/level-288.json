@@ -3,12 +3,20 @@
   "baseHash": "0ee83719e85c69b84c9f18c1171f8b0ae052665e7f10b1821b81670c74c50398",
   "status": "open",
   "note": "",
-  "seeds": 3,
-  "tested": 0,
-  "constructed": 450,
-  "failures": {},
-  "packRejects": {
-    "startBroken": 450
+  "seeds": 13,
+  "tested": 13,
+  "constructed": 1950,
+  "failures": {
+    "unknown": 5,
+    "clockDeadline": 6,
+    "clockMinimum,specialEffects,baitPrice:6,baitPrice:6,80,ownTrapProof:hiddenSpecial": 1,
+    "clockMinimum,specialEffects,baitPrice:51,ownTrapProof:hiddenSpecial": 1
   },
-  "ms": 810
+  "packRejects": {
+    "twins": 1129,
+    "badge": 323,
+    "noSpot": 364,
+    "small": 121
+  },
+  "ms": 66860
 }

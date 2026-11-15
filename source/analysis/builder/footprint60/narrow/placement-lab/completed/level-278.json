@@ -3,23 +3,40 @@
   "baseHash": "e1791134256cb413e02451211bc60d33848a2e47c397bf58e50d5cc48aa3f877",
   "status": "open",
   "note": "",
-  "seeds": 39,
-  "tested": 197,
-  "constructed": 5850,
+  "seeds": 51,
+  "tested": 554,
+  "constructed": 3628,
   "failures": {
-    "Use the half-tile grid and a layer from 1 to 8.": 134,
-    "clockDeadline": 23,
+    "unknown": 170,
+    "clockMinimum,specialEffects,baitPrice:78,baitPrice:10,ownTrapProof:noProvenBait": 31,
+    "clockMinimum,specialEffects,specialRoleOrder,baitPrice:78,baitPrice:10,ownTrapProof:noProvenBait": 82,
+    "Use the half-tile grid and a layer from 1 to 8.": 61,
+    "clockMinimum,specialEffects,specialRoleOrder,baitPrice:78,baitPrice:10,ownTrapProof:hiddenSpecial": 64,
+    "clockDeadline": 84,
+    "clockMinimum,specialRoleOrder,baitPrice:78,ownTrapProof:controlUnknown": 3,
+    "clockMinimum,specialEffects,specialRoleOrder,baitPrice:78": 15,
     "specialEffects,baitPrice:78,ownTrapProof:obvious:freeRoutePair": 1,
-    "unknown": 28,
+    "clockMinimum,specialEffects,specialRoleOrder,baitPrice:78,ownTrapProof:twoMeaningfulBaits": 13,
+    "specialEffects,specialRoleOrder,baitPrice:78,baitPrice:10,ownTrapProof:noProvenBait": 2,
+    "clockMinimum,specialEffects,specialRoleOrder,baitPrice:78,baitPrice:10,ownTrapProof:clockNotBait": 7,
+    "clockMinimum,specialRoleOrder,baitPrice:78,ownTrapProof:obvious:freeRoutePair": 1,
     "specialEffects,baitPrice:78,ownTrapProof:twoMeaningfulBaits": 1,
-    "clockMinimum,specialEffects,baitPrice:78,baitPrice:10,ownTrapProof:noProvenBait": 8,
-    "clockMinimum,specialEffects,baitPrice:78,baitPrice:10,ownTrapProof:hiddenSpecial": 2
+    "clockMinimum,specialEffects,specialRoleOrder,baitPrice:10,ownTrapProof:hiddenSpecial": 2,
+    "clockMinimum,specialEffects": 1,
+    "specialEffects,specialRoleOrder,baitPrice:78,baitPrice:10,ownTrapProof:hiddenSpecial": 3,
+    "clockMinimum,specialEffects,specialRoleOrder,baitPrice:78,ownTrapProof:obvious:freeRoutePair": 2,
+    "specialEffects,specialRoleOrder,baitPrice:78,baitPrice:10,ownTrapProof:clockNotBait": 4,
+    "specialEffects,specialRoleOrder,baitPrice:78,ownTrapProof:obvious:freeRoutePair": 2,
+    "clockMinimum,specialEffects,specialRoleOrder,baitPrice:10,ownTrapProof:clockNotBait": 1,
+    "clockMinimum,specialEffects,baitPrice:78,baitPrice:10,ownTrapProof:hiddenSpecial": 1,
+    "clockMinimum,specialEffects,specialRoleOrder,baitPrice:78,ownTrapProof:controlUnknown": 1,
+    "specialEffects,specialRoleOrder,baitPrice:78": 2
   },
   "packRejects": {
-    "startBroken": 3900,
-    "small": 917,
-    "twins": 835,
-    "badge": 1
+    "badge": 480,
+    "small": 731,
+    "twins": 1862,
+    "noSpot": 1
   },
-  "ms": 54309
+  "ms": 425850
 }

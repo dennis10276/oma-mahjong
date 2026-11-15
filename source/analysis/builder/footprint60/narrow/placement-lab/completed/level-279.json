@@ -3,16 +3,18 @@
   "baseHash": "6b21e45486b5293ba0ac851859f18d56f637947dc8d245086addd4c9c67fc685",
   "status": "open",
   "note": "",
-  "seeds": 36,
-  "tested": 0,
-  "constructed": 5400,
-  "failures": {},
-  "packRejects": {
-    "noSpot": 400,
-    "startBroken": 4650,
-    "small": 217,
-    "twins": 110,
-    "badge": 23
+  "seeds": 45,
+  "tested": 169,
+  "constructed": 2618,
+  "failures": {
+    "clockDeadline": 98,
+    "unknown": 71
   },
-  "ms": 9930
+  "packRejects": {
+    "twins": 704,
+    "badge": 148,
+    "small": 1269,
+    "noSpot": 328
+  },
+  "ms": 420101
 }

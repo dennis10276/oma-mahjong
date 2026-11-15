@@ -3,12 +3,22 @@
   "baseHash": "ab9a5613a9505c9a48274be30e85113408bceafe1297cc64df13d8c9d110944d",
   "status": "open",
   "note": "",
-  "seeds": 1,
-  "tested": 0,
-  "constructed": 150,
-  "failures": {},
-  "packRejects": {
-    "startBroken": 150
+  "seeds": 11,
+  "tested": 74,
+  "constructed": 1057,
+  "failures": {
+    "unknown": 35,
+    "clockDeadline": 34,
+    "specialEffects,specialRoleOrder,baitPrice:51,baitPrice:56,ownTrapProof:hiddenSpecial": 2,
+    "specialEffects,baitPrice:51,baitPrice:56,baitPrice:56,81,ownTrapProof:noProvenBait": 1,
+    "clockMinimum,specialEffects,baitPrice:56,baitPrice:56,81,ownTrapProof:wrongRepeatedPairNotBait": 1,
+    "clockMinimum,specialEffects,baitPrice:56,81,ownTrapProof:wrongRepeatedPairNotBait": 1
   },
-  "ms": 1246
+  "packRejects": {
+    "twins": 699,
+    "small": 144,
+    "noSpot": 36,
+    "badge": 104
+  },
+  "ms": 420110
 }

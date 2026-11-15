@@ -4,8 +4,8 @@
     730
   ],
   "fakeDatabase": true,
-  "passed": 30,
-  "total": 30,
+  "passed": 33,
+  "total": 33,
   "rows": [
     {
       "level": 252,
@@ -168,6 +168,14 @@
       "rows": 8
     },
     {
+      "level": 281,
+      "ok": true,
+      "tilePx": 58.56603773584906,
+      "tiles": 80,
+      "trayGap": 14,
+      "rows": 8
+    },
+    {
       "level": 282,
       "ok": true,
       "tilePx": 63.3469387755102,
@@ -208,6 +216,14 @@
       "rows": 6
     },
     {
+      "level": 289,
+      "ok": true,
+      "tilePx": 59.13285048119854,
+      "tiles": 80,
+      "trayGap": 11.200000000000003,
+      "rows": 8
+    },
+    {
       "level": 292,
       "ok": true,
       "tilePx": 61.93136472466082,
@@ -230,6 +246,14 @@
       "tiles": 72,
       "trayGap": 74,
       "rows": 6
+    },
+    {
+      "level": 296,
+      "ok": true,
+      "tilePx": 59.13285048119854,
+      "tiles": 80,
+      "trayGap": 11.200000000000003,
+      "rows": 8
     },
     {
       "level": 297,

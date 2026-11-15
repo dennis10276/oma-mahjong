@@ -11,10 +11,10 @@ function complete(row,user,ms=240000){
   const full=(T,method)=>{const key=JSON.stringify(T);if(seen.has(key))return null;seen.add(key);if(!G.valid(T)||!F.measure(T,{minimum:58}).ok)return null;tested++;let result;try{result=C.check(row,{...M.initial(row),positions:T},{prepared,tailMs:2500});}catch(e){result={status:'unknown',errors:[e.message]};}if(result.ok)return {level:row.level,baseHash:row.baseHash,status:'passed',positions:T,problem:[],method,message:'Completed from your notes: low filler placement, unchanged pictures and a proved trap and full finish.',note:user?.note||'',check:result,tested,constructed,ms:Date.now()-start};const reason=result.errors?.join(',')||result.status;failures[reason]=(failures[reason]||0)+1;return null;};
   if(user?.positions.every(Boolean)&&user.designSource!=='released'){const result=full(copy(user.positions),'Your complete layout, independently checked');if(result)return result;}
   if(row.proposal?.status==='passed'){const result=full(copy(row.proposal.positions),'Previously checked low proposal');if(result)return result;}
-  function add(T,ids,method){const tiles=copy(T),moving=[...new Set(ids)].filter(i=>!special.has(i));for(const id of moving)tiles[id]=null;
+  function add(T,ids,method){const tiles=copy(T),moving=[...new Set(ids)].filter(i=>process.env.MECH||!special.has(i));for(const id of moving)tiles[id]=null;
     // Only non-special tiles which lose support join the move. Never hand a
     // floating special to the packer and hope later filler happens to repair it.
-    for(let changed=true;changed;){changed=false;for(let i=0;i<tiles.length;i++)if(tiles[i]&&!M.supported(tiles.filter((_,j)=>j!==i),tiles[i])){if(special.has(i))return;tiles[i]=null;moving.push(i);changed=true;}}
+    for(let changed=true;changed;){changed=false;for(let i=0;i<tiles.length;i++)if(tiles[i]&&!M.supported(tiles.filter((_,j)=>j!==i),tiles[i])){if(special.has(i)&&!process.env.MECH)return;tiles[i]=null;moving.push(i);changed=true;}}
     const live=tiles.filter(Boolean);if(!live.length||!F.measure(live,{minimum:58}).ok)return;
     for(let i=0;i<tiles.length;i++)if(tiles[i])for(let j=0;j<i;j++)if(tiles[j]&&tiles[i][2]===tiles[j][2]&&M.overlap(tiles[i],tiles[j]))return;
     const key=JSON.stringify(tiles);if(seeds.some(s=>s.key===key))return;seeds.push({tiles,moving:[...new Set(moving)],method,key});
@@ -133,9 +133,16 @@ function complete(row,user,ms=240000){
       }
     }
   }
+  if(process.env.MECH){
+    const T0=a.tiles,X=T0.map(p=>p[0]),Y=T0.map(p=>p[1]),x0=Math.min(...X),x1=Math.max(...X),y0=Math.min(...Y),y1=Math.max(...Y),small=!F.measure(a,{minimum:58}).ok;
+    const wide=x1-x0+2>13||(small&&x1-x0+2>11),tall=y1-y0+2>16||(small&&y1-y0+2>14);
+    const cols=wide?[[p=>p[0]===x0&&p[2]===0],[p=>p[0]===x1&&p[2]===0],[p=>p[0]===x0&&p[2]===0,p=>p[0]===x1&&p[2]===0],[p=>p[0]<=x0+1],[p=>p[0]>=x1-1]]:[[]];
+    const rws=tall?[[p=>p[1]===y0&&p[2]===0],[p=>p[1]===y1&&p[2]===0],[p=>p[1]<=y0+1],[p=>p[1]>=y1-1]]:[[]];
+    for(const c of cols)for(const r of rws){const fs2=[...c,...r];if(!fs2.length)continue;const ids=T0.map((p,i)=>fs2.some(f=>f(p))?i:-1).filter(i=>i>=0);add(T0,ids,'Trim the outer tiles and use the middle');}
+  }
   seeds.sort((u,v)=>u.moving.length-v.moving.length);
   const oldBadges=SR.measure(a).rows.filter(q=>q.clear),oldTwins=SEP.closeTwins(a),oldVisible=new Set(oldTwins.closeVisible.map(q=>q.slice(0,2).join(',')));
-  function partialOK(T){const d={...a,tiles:T.map((p,i)=>p||[50+i*3,50,0])},g=E.game(d,{strict:true,reserveCuts:false}),links=P.relations(g,core);
+  function partialOK(T){if(process.env.MECH)return true;const d={...a,tiles:T.map((p,i)=>p||[50+i*3,50,0])},g=E.game(d,{strict:true,reserveCuts:false}),links=P.relations(g,core);
     for(let i=0;i<oldLinks.length;i++)if(T[oldLinks[i][0]]&&T[oldLinks[i][1]]&&!same(oldLinks[i],links[i]))return false;
     if(process.env.NARROW_TRAP==='core')return true;   // the clock route may change; the full check proves the same shortest route
     let s=E.start(g);for(const id of prefix){try{s=E.step(g,s,id);}catch{return false;}if(!s)return false;}return true;

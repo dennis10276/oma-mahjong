@@ -3,12 +3,14 @@
   "baseHash": "dacba06b6ede8f44d4e67d040c1ccb432d8f99999ef4515d1ccf08a36b6a7e33",
   "status": "open",
   "note": "",
-  "seeds": 1,
+  "seeds": 6,
   "tested": 0,
-  "constructed": 150,
+  "constructed": 900,
   "failures": {},
   "packRejects": {
-    "startBroken": 150
+    "twins": 596,
+    "noSpot": 114,
+    "badge": 190
   },
-  "ms": 682
+  "ms": 10826
 }

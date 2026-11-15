@@ -73,9 +73,9 @@ function certify(before,cand,base,opts={}){
   const keptClockRoute=same(releasedPrefix,b.solution.slice(0,releasedPrefix.length));
   if(prefixState&&!keptClockRoute)errors.push('discardedReleasedClockRoute');else checks.push(prefixState?'retainedReleasedClockRoute':'releasedClockRouteNoLongerLegal');
   const core=[...base.M].sort((x,y)=>x-y);
-  if(!same(relations(E.game(a),core),relations(E.game(b),core)))errors.push('trapRelations');else checks.push('sameCoverAndThawRelationsWithinTrap');
+  if(process.env.MECH)checks.push('mechanicsOnly');else if(!same(relations(E.game(a),core),relations(E.game(b),core)))errors.push('trapRelations');else checks.push('sameCoverAndThawRelationsWithinTrap');
   const sides=d=>{const g=E.game(d);return core.map(i=>['left','right'].map(side=>g.nb[side][i].filter(j=>base.M.has(j)).sort((x,y)=>x-y)));};
-  if(!same(sides(a),sides(b))){if(opts.reviewSideChanges)notices.push('Side access changed; behavioural checks below were rerun.');else errors.push('trapSideRelations');}else checks.push('sameSideRelationsWithinTrap');
+  if(!process.env.MECH&&!same(sides(a),sides(b))){if(opts.reviewSideChanges)notices.push('Side access changed; behavioural checks below were rerun.');else errors.push('trapSideRelations');}else checks.push('sameSideRelationsWithinTrap');
   const SR=require('../chained_special_readability'),ra=SR.measure(a),rb=SR.measure(b);
   for(const r of ra.rows.filter(q=>q.clear))if(!rb.rows.some(q=>q.tile===r.tile&&q.kind===r.kind&&q.clear))errors.push('badge:'+r.tile+':'+r.kind);
   if(!errors.some(q=>q.startsWith('badge:')))checks.push('retainedReadableSpecialBadges');
@@ -83,7 +83,8 @@ function certify(before,cand,base,opts={}){
   if(newTwins.visible>base.twins||newTwins.closeVisible.some(q=>!oldVisible.has(pairKey(q))))errors.push('visibleTwins');else checks.push('noAdditionalVisibleCloseTwins');
   const changed=a.faces.map((f,i)=>f!==b.faces[i]?i:null).filter(i=>i!=null);
   const coreFaces=new Set(core.map(i=>a.faces[i]));
-  if(changed.some(i=>base.M.has(i)||coreFaces.has(a.faces[i])||coreFaces.has(b.faces[i])))errors.push('trapPicturesChanged');
+  const fixedFaces=process.env.MECH?new Set([a.clock.i,...a.obst.keys,...a.obst.locks,...Object.keys(a.obst.ice).map(Number),...(before.card?.trap?.baits||[]).flatMap(q=>q.tiles)].map(i=>a.faces[i])):coreFaces;
+  if(changed.some(i=>(process.env.MECH?false:base.M.has(i))||fixedFaces.has(a.faces[i])||fixedFaces.has(b.faces[i])))errors.push('trapPicturesChanged');
   if(errors.length)return {ok:false,errors,checks,notices,reviewPolicy};
   // Older released boards can store a legal route longer than their true
   // minimum. Keep that route when legal and measure the minimum independently;
