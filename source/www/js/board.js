@@ -61,6 +61,7 @@ function begin(o, restart = false) {
   $('.toolbar').classList.toggle('gone', toolsGoneFor(o));   // (before measuring: without tools the pile gets their space)
   // shape the pile after the free space on this screen
   const wrap = $('#boardWrap');
+  disarmTool();
   $('#game').classList.remove('compact');   // the shape is measured on the ordinary screen (fitGeo may narrow the bars for the board before)
   // Levels made for this screen (1-50, 52, grandma's track) must stay the same now that hint and shuffle sit beside the tray:
   // their row under the pile was always 48 px high, so the shape is measured as if it were still there.
@@ -417,6 +418,7 @@ function showBlockers(i) {
 // ---------- tapping ----------
 let blockedTaps = 0, comboTimer;
 function onTap(i, auto = false, point = null) {
+  if (!auto) disarmTool();
   if (!G || G.done || G.introducing) return;
   if (G.busy || !G.alive[i] || (G.autoFin && !auto)) {
     replayMark('ignored', [i, auto ? 1 : 0, point, G.busy ? 'busy' : !G.alive[i] ? 'gone' : 'auto']);
@@ -667,6 +669,21 @@ function gameOver() {
 }
 
 // ---------- 💡 hint and 🔀 shuffle (once per level each) ----------
+// Hint and shuffle are earned and used at once, and they sit just below home and restart: the first tap only wakes the
+// button (it glows, the top bar says "tap again"), a second tap within 3 s uses it. A slip from home or restart costs nothing
+// (Dennis 2026-11-15). When it cannot be used (used, locked, too early, busy) the first tap says why, as before.
+let armedTool = null, armTimer = 0;
+function disarmTool() { clearTimeout(armTimer); if (armedTool) $(armedTool).classList.remove('armed'); armedTool = null; }
+function armTool(id, use, againKey) {
+  const used = id === '#btnHint' ? G && G.usedHint : G && G.usedShuffle;
+  const w = help().shuffleAfter, early = id === '#btnShuffle' && G && w && G.tiles.length - aliveCount() < w.taken && G.tray.length < w.tray;
+  if (!G || G.done || G.busy || G.autoFin || !toolsOpen() || used || early) { disarmTool(); return use(); }
+  if (armedTool === id) { disarmTool(); return use(); }
+  disarmTool(); Sound.init();
+  armedTool = id; $(id).classList.add('armed');
+  toast(tx(againKey), 3000);
+  armTimer = setTimeout(disarmTool, 3000);
+}
 function toolUsable(used, usedMsg) {
   if (!G || G.done || G.busy || G.autoFin) return false;
   Sound.init();

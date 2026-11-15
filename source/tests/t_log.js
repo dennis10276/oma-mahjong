@@ -9,8 +9,8 @@ module.exports = [
       await startLevel(p, 16);
       await fillTray(p);
       await click(p, '#sRetry'); await sleep(1200);
-      await click(p, '#btnHint'); await sleep(300);
-      await click(p, '#btnShuffle'); await sleep(1200);
+      await click(p, '#btnHint'); await click(p, '#btnHint');   // first tap wakes it, second uses it await sleep(300);
+      await click(p, '#btnShuffle'); await click(p, '#btnShuffle'); await sleep(1200);
       await solve(p, 3500);
       await click(p, '#wMenu'); await sleep(800);
       for (let i = 0; i < 4; i++) { const id = await p.evaluate(() => [...document.querySelectorAll('#modalBox button')].map(b => b.id).find(id => id && id !== 'trSee')); if (!id || await p.evaluate(() => document.querySelector('#modal').classList.contains('hidden'))) break; await click(p, '#' + id); await sleep(600); }

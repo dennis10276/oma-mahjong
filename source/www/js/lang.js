@@ -129,6 +129,8 @@ const TEXT = {
   toolsOffOk: ['Kom maar op! 💪', 'Bring it on! 💪'],
   toolsLocked: [n => `Hint en Schudden komen vrij vanaf level ${n} 🔒`, n => `Hint and Shuffle unlock at level ${n} 🔒`],
   hintUsed: ['Je hint voor dit level is al gebruikt', 'You already used your hint in this level'],
+  hintAgain: ['Tik nog eens voor je hint', 'Tap again for your hint'],
+  shuffleAgain: ['Tik nog eens om te schudden', 'Tap again to shuffle'],
   shuffleUsed: ['Je hebt in dit level al geschud', 'You already shuffled in this level'],
   noWay: ['Zo gaat het niet meer lukken… probeer 🔀 Schudden', "This won't work out any more… try 🔀 Shuffle"],
   restartTitle: ['Opnieuw beginnen?', 'Start again?'],
