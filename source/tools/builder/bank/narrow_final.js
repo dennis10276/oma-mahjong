@@ -41,12 +41,24 @@ function check(a, d, own, trap) {
   const dm = dims(d.tiles); if (dm.w > 6.5) why.push(dm.w + ' wide'); if (dm.h > 8) why.push(dm.h + ' rows');
   return { ok: !why.length, why, fp, k: k1 && k1.k };
 }
+// Dennis 2026-11-15: the boards whose trap is the whole board stay as they are, on a tenth level (smaller tiles are fine there), and the
+// big tenth-level boards, narrowed to an ordinary size, take their place. SWAP: ordinary slot -> tenth level whose board moves into it.
+const SWAP = { 262: 260, 277: 270 };
 const rows = [], pack = { baselineCommit: R.baselineCommit, made: new Date().toISOString(), rows: [] };
 for (let lv = 251; lv <= 299; lv++) {
   if (lv % 10 === 0) continue;
   const before = R.rows.find(r => r.level === lv).before, a = before.design, f0 = F.measure(a, { minimum: 58 }), d0 = dims(a.tiles);
   const row = { level: lv, source: before.source, released: { px: +f0.tilePx.toFixed(1), w: d0.w, h: d0.h, layers: d0.layers } };
   if (f0.ok) { row.outcome = 'as released (already ' + f0.tilePx.toFixed(1) + ' px)'; rows.push(row); continue; }
+  if (SWAP[lv]) {
+    const t = SWAP[lv], j = rd(path.join(BANK, 'tens-narrowed', `level-${t}.json`)), d = j.design, src = R.rows.find(r => r.level === t).before, fp = F.measure(d, { minimum: 58 }), dm = dims(d.tiles);
+    const k1 = E.clockShortest(E.game(clone(d)), { nodes: 800000, ms: 15000 }), ok = E.replay(d, d.solution, { strict: true }).ok && fp.ok && dm.w <= 6.5 && dm.h <= 8 && d.tiles.length <= 88 && k1 && !k1.unsure;
+    if (ok) {
+      Object.assign(row, { outcome: 'narrowed', from: `swap: the board of level ${t}, narrowed (${j.how}, ${j.dropped} dropped); level ${lv}'s board goes to level ${t}`, px: +fp.tilePx.toFixed(1), w: dm.w, h: dm.h, layers: dm.layers, moved: (src.design.tiles.length - d.tiles.length) + ' dropped', mirror: mirror(d.tiles), tiles: d.tiles.length });
+      pack.rows.push({ level: lv, ok: true, draft: { design: d }, footprint: fp, from: row.from, swapFrom: t });
+      rows.push(row); console.log(lv, 'swap with', t, fp.tilePx.toFixed(1), 'px', d.tiles.length, 'tiles'); continue;
+    }
+  }
   const cands = [], trap = require('./narrow_proof.js').prepare(before).M;
   const cf = path.join(BANK, 'narrow/placement-lab/completed', `level-${lv}.json`);
   if (fs.existsSync(cf)) { const j = rd(cf); if (j.status === 'passed' && j.check && j.check.design) cands.push({ from: 'completion: ' + j.method, design: j.check.design, own: /Your complete layout/.test(j.method || ''), cert: j.check.certificate }); }

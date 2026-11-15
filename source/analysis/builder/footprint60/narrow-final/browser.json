@@ -4,8 +4,8 @@
     730
   ],
   "fakeDatabase": true,
-  "passed": 28,
-  "total": 28,
+  "passed": 30,
+  "total": 30,
   "rows": [
     {
       "level": 252,
@@ -80,6 +80,14 @@
       "rows": 6
     },
     {
+      "level": 262,
+      "ok": true,
+      "tilePx": 59.13285048119854,
+      "tiles": 82,
+      "trayGap": 11.200000000000003,
+      "rows": 8
+    },
+    {
       "level": 263,
       "ok": true,
       "tilePx": 61.93136472466082,
@@ -150,6 +158,14 @@
       "tiles": 84,
       "trayGap": 41.69999999999999,
       "rows": 7
+    },
+    {
+      "level": 277,
+      "ok": true,
+      "tilePx": 58.32273216557393,
+      "tiles": 88,
+      "trayGap": 11.200000000000003,
+      "rows": 8
     },
     {
       "level": 282,

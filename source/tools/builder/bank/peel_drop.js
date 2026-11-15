@@ -18,7 +18,7 @@
 const fs = require('fs'), path = require('path'), cp = require('child_process');
 const E = require('../engine.js'), F = require('../footprint.js'), I = require('../preserve_intent.js'), P = require('./narrow_proof.js'), SEP = require('./separate.js'), Tl = require('./tail.js');
 const SR = require('../chained_special_readability.js'), V = require('../verify_trap_mixes.js'), Mo = require('./narrow_placement_model.js');
-const OUT = path.join(P.DIR, '../peel-drop');
+const OUT = process.env.PEEL_OUT ? path.resolve(process.env.PEEL_OUT) : path.join(P.DIR, '../peel-drop');
 const arg = (n, d) => { const i = process.argv.indexOf('--' + n); return i < 0 ? d : process.argv[i + 1]; };
 const clone = x => JSON.parse(JSON.stringify(x)), same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 const ext = T => { const X = T.map(p => p[0]), Y = T.map(p => p[1]); return { x0: Math.min(...X), x1: Math.max(...X), y0: Math.min(...Y), y1: Math.max(...Y) }; };
@@ -184,7 +184,24 @@ function attempt(before, v0, base, protectedFaces, special, seed = 0) {
     const t = c[(v.seed || 0) % Math.max(1, c.length)]; if (t == null) return { why: 'no ordinary tile to take a trap picture' };
     [faces[i], faces[t]] = [faces[t], faces[i]];
   }
-  // an odd count: one more loose tile (nothing on it), nearest to the edge
+  const maxTiles = +process.env.PEEL_MAXTILES || 0;
+  if (maxTiles) {
+    const onTop0 = i => a.tiles.some((q, j) => j !== i && !D.has(j) && q[2] === a.tiles[i][2] + 1 && Math.abs(q[0] - a.tiles[i][0]) < 2 && Math.abs(q[1] - a.tiles[i][1]) < 2);
+    const cx = (ext(a.tiles).x0 + ext(a.tiles).x1) / 2;
+    for (let guard = 0; n - D.size > maxTiles && guard < 40; guard++) {
+      const route = new Set(before.design.solution.slice(0, before.design.solution.indexOf(before.design.clock.i) + 1));
+      // never a tile that lies on, or beside, a tile of the clock route or the trap: dropping it would open a shorter way
+      const g0 = E.game(clone(before.design)), guard0 = new Set(); for (const j of [...route, ...M, ...special]) for (const k of ['above', 'left', 'right']) for (const u of (g0.nb[k][j] || [])) guard0.add(u);
+      const loose = [...Array(n).keys()].filter(i => !guard0.has(i) && !route.has(i) && !D.has(i) && !M.has(i) && !special.has(i) && !onTop0(i)).sort((p, q) => a.tiles[q][2] - a.tiles[p][2] || Math.abs(a.tiles[q][0] - cx) - Math.abs(a.tiles[p][0] - cx));
+      if (!loose.length) return { why: 'no loose finish tile to reach ' + maxTiles };
+      D.add(loose[0]);
+    }
+  }
+  for (const i of [...D].filter(i => protectedFaces.has(faces[i]))) {
+    const c = [...Array(n).keys()].filter(free).sort((p, q) => (Math.abs(a.tiles[p][2] - a.tiles[i][2]) * 4 + Math.hypot(a.tiles[p][0] - a.tiles[i][0], a.tiles[p][1] - a.tiles[i][1])) - (Math.abs(a.tiles[q][2] - a.tiles[i][2]) * 4 + Math.hypot(a.tiles[q][0] - a.tiles[i][0], a.tiles[q][1] - a.tiles[i][1])));
+    const t = c[(v.seed || 0) % Math.max(1, c.length)]; if (t == null) return { why: 'no ordinary tile to take a trap picture' };
+    [faces[i], faces[t]] = [faces[t], faces[i]];
+  }  // an odd count: one more loose tile (nothing on it), nearest to the edge
   if (D.size % 2) {
     const onTop = i => a.tiles.some((q, j) => j !== i && !D.has(j) && q[2] === a.tiles[i][2] + 1 && Math.abs(q[0] - a.tiles[i][0]) < 2 && Math.abs(q[1] - a.tiles[i][1]) < 2);
     const c = [...Array(n).keys()].filter(i => free(i) && !onTop(i));
@@ -213,7 +230,7 @@ function attempt(before, v0, base, protectedFaces, special, seed = 0) {
   const plays = () => { if (prefix.some(i => i == null)) return false; const g = E.game(clone({ ...b, solution: [] }), { strict: true }); let st = E.start(g); for (const t of prefix) { if (!E.legal(g, st).includes(t)) return false; st = E.step(g, st, t); if (!st) return false; } return true; };
   if (!plays()) { const cs = E.clockShortest(E.game(clone(b), { strict: true }), { nodes: 800000, ms: 10000 }); if (!cs || cs.unsure) return { why: 'clock route unproven' }; prefix = E.flatten(cs.path); }
   const rest = a.solution.filter(i => map.has(i)).map(mp).filter(i => !prefix.includes(i));
-  const x = { ...b, solution: prefix.concat(rest) }, r = Tl.cappedTail(x, 3, { peek: false, nodes: 1500000, ms: 20000 });
+  const x = { ...b, solution: prefix.concat(rest) }; let r; try { r = Tl.cappedTail(x, 3, { peek: false, nodes: 1500000, ms: 20000 }); } catch (e) { return { why: 'clock route does not play' }; }
   if (r.result !== 'win') return { why: 'finish ' + r.result };
   b.solution = r.solution;
   if (!E.replay(b, b.solution, { strict: true }).ok) return { why: 'strict replay' };
