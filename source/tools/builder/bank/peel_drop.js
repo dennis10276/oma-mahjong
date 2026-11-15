@@ -46,7 +46,8 @@ function variantsShift(a, M, protectedFaces, special) {
   const plan = [];
   const small = !F.measure(a, { minimum: 58 }).ok;
   if (e.x1 - e.x0 + 2 > 13 || (small && e.x1 - e.x0 + 2 > 11)) plan.push([[0, +1, e.x0], [0, -1, e.x1]]);
-  if (e.y1 - e.y0 + 2 > 16) plan.push([[1, +1, e.y0], [1, -1, e.y1]]);
+  // nine rows, or eight rows whose layers still make the tiles smaller than 58 px: one row less
+  if (e.y1 - e.y0 + 2 > 16 || (small && e.y1 - e.y0 + 2 > 14)) plan.push([[1, +1, e.y0], [1, -1, e.y1]]);
   const ups = (T, i, v, ax) => T.map((q, j) => q[2] === 1 && M.has(j) && Math.abs(q[ax] - v) < 2 && Math.abs(q[1 - ax] - T[i][1 - ax]) < 2 ? j : -1).filter(j => j >= 0).join(',');
   let pickOf = () => 0, lineNo = 0;
   const lo = [e.x0, e.y0], hi = [e.x1, e.y1];
@@ -69,11 +70,17 @@ function variantsShift(a, M, protectedFaces, special) {
       // keep the first option under which every tile resting on this line stays supported
       const lineSet = new Set(ids), above = T0.map((q, j) => j).filter(j => T0[j][2] === 1 && ids.some(i => Math.abs(T0[j][0] - T0[i][0]) < 2 && Math.abs(T0[j][1] - T0[i][1]) < 2));
       const good = [];
+      // Dennis 2026-11-15 (on 286 and shapes like it): a stack that loses its support may go too, when nothing in it belongs to the
+      // trap: those are finish tiles, dropped in pairs.
       for (const o of opts) {
         const T = T0.map(p => p.slice()); for (const i of o.slide) T[i][ax] += dir;
-        const live = T.filter((p, j) => !o.drop.includes(j) && p[2] === 0);
-        if (above.every(j => o.drop.includes(j) || Mo.supported(live, T[j]))) good.push(o);
+        const gone = new Set(o.drop);
+        for (let ch = true; ch;) { ch = false; for (let j = 0; j < T.length; j++) { if (gone.has(j) || T[j][2] === 0) continue;
+          const live = T.filter((p, q) => !gone.has(q) && q !== j && p[2] === T[j][2] - 1); if (!Mo.supported(live, T[j])) { gone.add(j); ch = true; } } }
+        if ([...gone].some(j => M.has(j) || special.has(j) || protectedFaces.has(a.faces[j]))) continue;
+        good.push({ ...o, drop: [...gone] });
       }
+      good.sort((p, q) => p.drop.length - q.drop.length);
       if (!good.length) return null;
       const best = good[pickOf(lineNo++, good.length)];
       for (const i of best.slide) moves.set(i, ax); drop.push(...best.drop);
@@ -82,7 +89,7 @@ function variantsShift(a, M, protectedFaces, special) {
   };
   if (!plan.length) return out;
   const per = plan.map(p => [[p[0]], [p[1]], [p[0], p[1]]]);
-  const combos = per.length === 2 ? per[0].flatMap(x => per[1].map(y => x.concat(y))) : per[0];
+  const combos = per.length === 2 ? [...per[0], ...per[1], ...per[0].flatMap(x => per[1].map(y => x.concat(y)))] : per[0];
   for (const sides of combos) {
    for (let combo = 0; combo < 24; combo++) {
     let r = combo * 2654435761 >>> 0; pickOf = (li, c) => combo === 0 ? 0 : combo <= 8 ? (li === combo - 1 ? Math.min(1, c - 1) : 0) : ((r = (Math.imul(r, 1664525) + 1013904223) >>> 0) % c); lineNo = 0;
@@ -100,12 +107,45 @@ function variantsShift(a, M, protectedFaces, special) {
   return out.sort((p, q) => p.drop.length + p.moved / 4 - q.drop.length - q.moved / 4);
 }
 
+// CUT: one whole line through the pile (a column, or a row for a pile that is too tall), every layer, goes when it holds nothing of the
+// trap; the part beyond it closes up. Tiles that then overlap or rest on nothing go too (finish tiles, dropped in pairs).
+function variantsCut(a, M, special) {
+  const n = a.tiles.length, e = ext(a.tiles), out = [], small = !F.measure(a, { minimum: 58 }).ok;
+  const axes = []; if (e.x1 - e.x0 + 2 > 13 || (small && e.x1 - e.x0 + 2 > 11)) axes.push(0); if (e.y1 - e.y0 + 2 > 16 || (small && e.y1 - e.y0 + 2 > 14)) axes.push(1);
+  const cutOne = (T0, ax, c) => {
+    const T = T0.map(p => p.slice()), gone = new Set();
+    T.forEach((p, i) => { if (p[ax] === c) gone.add(i); else if (p[ax] > c) p[ax] -= 2; });
+    const live = () => [...Array(n).keys()].filter(i => !gone.has(i));
+    for (const i of live()) for (const j of live()) if (i < j && !gone.has(i) && !gone.has(j) && T[i][2] === T[j][2] && Math.abs(T[i][0] - T[j][0]) < 2 && Math.abs(T[i][1] - T[j][1]) < 2) gone.add(M.has(j) || special.has(j) ? i : j);
+    for (let ch = true; ch;) { ch = false; for (const j of live()) if (T[j][2] > 0 && !Mo.supported(live().filter(q => q !== j).map(q => T[q]), T[j])) { gone.add(j); ch = true; } }
+    if ([...gone].some(i => M.has(i) || special.has(i))) return null;
+    return { T, gone };
+  };
+  const cands = ax => { const vs = [...new Set(a.tiles.map(p => p[ax]))].sort((p, q) => p - q); const mid = (Math.min(...vs) + Math.max(...vs)) / 2; return vs.sort((p, q) => Math.abs(p - mid) - Math.abs(q - mid)); };
+  const combos = axes.length === 2 ? [...cands(0).map(c => [[0, c]]), ...cands(1).map(c => [[1, c]]), ...cands(0).flatMap(c => cands(1).map(d => [[0, c], [1, d]]))] : axes.length ? cands(axes[0]).map(c => [[axes[0], c]]) : [];
+  for (const cmb of combos.slice(0, 120)) {
+    let T = a.tiles, gone = new Set(), ok = true;
+    for (const [ax, c] of cmb) { const r = cutOne(T, ax, c); if (!r) { ok = false; break; } T = r.T; for (const g of r.gone) gone.add(g); }
+    if (!ok) continue;
+    const keep = [...Array(n).keys()].filter(i => !gone.has(i));
+    if (keep.some(i => T[i][2] > 0 && !Mo.supported(keep.filter(j => j !== i).map(j => T[j]), T[i]))) continue;
+    out.push({ name: 'cut ' + cmb.map(([ax, c]) => (ax ? 'row ' : 'column ') + c).join(' + '), drop: [...gone], tiles: T, moved: 0 });
+  }
+  return out.sort((p, q) => p.drop.length - q.drop.length);
+}
+
 function attempt(before, v0, base, protectedFaces, special, seed = 0) {
   const v = { ...v0, seed };
   const a0 = before.design, a = v.tiles ? { ...a0, tiles: v.tiles } : a0, n = a.tiles.length, M = base.M, D = new Set(v.drop);
   if ([...D].some(i => M.has(i) || special.has(i))) return { why: 'trap tile on the edge' };
-  if ([...D].some(i => protectedFaces.has(a.faces[i]))) return { why: 'trap picture on the edge' };
   const faces = a.faces.slice(), free = i => !D.has(i) && !M.has(i) && !special.has(i) && !protectedFaces.has(faces[i]);
+  // a tile to drop that shows a trap picture first hands that picture to the nearest ordinary tile (same layer first), so the
+  // trap tile keeps a twin close to where it was; the behaviour checks below decide whether that is harmless
+  for (const i of [...D].filter(i => protectedFaces.has(faces[i]))) {
+    const c = [...Array(n).keys()].filter(free).sort((p, q) => (Math.abs(a.tiles[p][2] - a.tiles[i][2]) * 4 + Math.hypot(a.tiles[p][0] - a.tiles[i][0], a.tiles[p][1] - a.tiles[i][1])) - (Math.abs(a.tiles[q][2] - a.tiles[i][2]) * 4 + Math.hypot(a.tiles[q][0] - a.tiles[i][0], a.tiles[q][1] - a.tiles[i][1])));
+    const t = c[(v.seed || 0) % Math.max(1, c.length)]; if (t == null) return { why: 'no ordinary tile to take a trap picture' };
+    [faces[i], faces[t]] = [faces[t], faces[i]];
+  }
   // an odd count: one more loose tile (nothing on it), nearest to the edge
   if (D.size % 2) {
     const onTop = i => a.tiles.some((q, j) => j !== i && !D.has(j) && q[2] === a.tiles[i][2] + 1 && Math.abs(q[0] - a.tiles[i][0]) < 2 && Math.abs(q[1] - a.tiles[i][1]) < 2);
@@ -131,7 +171,10 @@ function attempt(before, v0, base, protectedFaces, special, seed = 0) {
   const fp = F.measure(b, { minimum: 58 }); if (!fp.ok) return { why: 'footprint ' + fp.tilePx.toFixed(1) };
   // the winning route: the released route to the clock, then an exact search for the rest
   const A = before.design;
-  const prefix = A.solution.slice(0, A.solution.indexOf(A.clock.i) + 1).map(mp), rest = a.solution.filter(i => map.has(i) && !prefix.includes(mp(i))).map(mp);
+  let prefix = A.solution.slice(0, A.solution.indexOf(A.clock.i) + 1).map(mp);
+  const plays = () => { if (prefix.some(i => i == null)) return false; const g = E.game(clone({ ...b, solution: [] }), { strict: true }); let st = E.start(g); for (const t of prefix) { if (!E.legal(g, st).includes(t)) return false; st = E.step(g, st, t); if (!st) return false; } return true; };
+  if (!plays()) { const cs = E.clockShortest(E.game(clone(b), { strict: true }), { nodes: 800000, ms: 10000 }); if (!cs || cs.unsure) return { why: 'clock route unproven' }; prefix = E.flatten(cs.path); }
+  const rest = a.solution.filter(i => map.has(i)).map(mp).filter(i => !prefix.includes(i));
   const x = { ...b, solution: prefix.concat(rest) }, r = Tl.cappedTail(x, 3, { peek: false, nodes: 1500000, ms: 20000 });
   if (r.result !== 'win') return { why: 'finish ' + r.result };
   b.solution = r.solution;
@@ -166,23 +209,34 @@ function one(level) {
   const before = P.original(level), a = before.design, base = P.prepare(before), f0 = F.measure(a, { minimum: 58 }), e0 = ext(a.tiles);
   if (f0.ok && e0.x1 - e0.x0 + 2 <= 13) return { level, ok: true, unchanged: true, px: f0.tilePx };
   const special = new Set([a.clock.i, ...a.obst.keys, ...a.obst.locks, ...Object.keys(a.obst.ice || {}).map(Number)]);
-  const protectedFaces = new Set([...base.M].map(i => a.faces[i]));
+  const g0 = base.prep.g, Mg = new Set(special);
+  for (const r of special) { for (const u of g0.nb.above[r]) Mg.add(u); if (g0.iceH[r]) for (const u of g0.iceNb[r]) Mg.add(u); }
+  const bt = (before.roles && before.roles.bait) || (before.card && before.card.trap && before.card.trap.bait) || {};
+  for (const k of ['tiles', 'twins', 'wrong', 'single']) for (const t of (bt[k] || [])) if (Number.isInteger(t)) Mg.add(t);
+  for (const p of (bt.pairs || [])) for (const t of p) Mg.add(t);
+  for (const t of ((bt.repeat && bt.repeat.copies) || [])) Mg.add(t);
+  for (const q of ((before.card && before.card.trap && before.card.trap.baits) || [])) for (const t of q.tiles) Mg.add(t);
+  const protectedFaces = new Set([...Mg].map(i => a.faces[i]));
+  const baseG = { ...base, M: Mg };
   const fails = {};
-  for (const v of [...variantsShift(a, base.M, protectedFaces, special), ...variants(a, base.M, protectedFaces, special)]) {
-    let r = null; for (let sd = 0; sd < 3; sd++) { r = attempt(before, v, base, protectedFaces, special, sd); if (r.design || /trap|footprint|wider|nine/.test(r.why)) break; }
+  const vs = [...variantsShift(a, Mg, new Set(), special), ...variantsCut(a, Mg, special)];
+  // a slide that makes the pile narrow enough, then one row cut out where eight rows are still too tall
+  for (const v of vs.filter(v => v.name.startsWith('slide')).slice(0, 12)) for (const c of variantsCut({ ...a, tiles: v.tiles }, Mg, special).slice(0, 8)) vs.push({ name: v.name + ' + ' + c.name, tiles: c.tiles, drop: [...new Set([...v.drop, ...c.drop])], moved: v.moved });
+  for (const v of [...vs, ...variants(a, Mg, new Set(), special)]) {
+    let r = null; for (let sd = 0; sd < 3; sd++) { r = attempt(before, v, baseG, protectedFaces, special, sd); if (r.design || /trap|footprint|wider|nine/.test(r.why)) break; }
     if (r.design) return { level, ok: true, how: v.name, dropped: r.dropped.length, moved: r.moved, picturesExchanged: r.picturesExchanged, before: f0.tilePx, footprint: r.footprint, design: r.design, prices: r.prices };
     const key = v.name + ' (' + v.drop.length + ')'; fails[key] = fails[key] ? fails[key] : r.why;
   }
   return { level, ok: false, fails, before: f0.tilePx };
 }
-module.exports = { one, attempt, variants };
+module.exports = { one, attempt, variants, variantsShift, variantsCut };
 if (require.main === module) {
   fs.mkdirSync(OUT, { recursive: true });
   if (arg('one', null)) {
     let r; try { r = one(+arg('one')); } catch (e) { r = { level: +arg('one'), ok: false, error: String(e.stack || e).slice(0, 400) }; }
     if (r.ok && r.design) fs.writeFileSync(path.join(OUT, `level-${r.level}.json`), JSON.stringify(r));
     const { design, ...row } = r; fs.appendFileSync(path.join(OUT, 'report.jsonl'), JSON.stringify(row) + '\n');
-    console.log(r.level, r.ok ? (r.unchanged ? 'already fits' : `NARROWED ${r.how}: ${r.before.toFixed(1)} -> ${r.footprint.tilePx.toFixed(1)} px, ${r.footprint.rows} rows, ${r.moved} tiles slid, ${r.dropped} tiles dropped, ${r.picturesExchanged} picture exchanges`) : 'no: ' + (r.error || JSON.stringify(r.fails)).slice(0, 400));
+    console.log(r.level, r.ok ? (r.unchanged ? 'already fits' : `NARROWED ${r.how}: ${r.before.toFixed(1)} -> ${r.footprint.tilePx.toFixed(1)} px, ${r.footprint.rows} rows, ${r.moved} tiles slid, ${r.dropped} tiles dropped, ${r.picturesExchanged} picture exchanges`) : 'no: ' + (r.error || JSON.stringify(r.fails)).slice(0, 1500));
   } else {
     const levels = String(arg('levels', '')).split(',').filter(Boolean), W = +arg('workers', 8); let next = 0, run = 0;
     const go = () => { while (run < W && next < levels.length) { const lv = levels[next++]; run++; const c = cp.spawn(process.execPath, [__filename, '--one', lv], { stdio: 'inherit' });

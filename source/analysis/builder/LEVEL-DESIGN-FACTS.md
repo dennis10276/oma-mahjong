@@ -238,6 +238,12 @@ add new decisions with a date.
     finish."; "The check shouldnt require the same pictures only the pictures that interconnect with the trap or are in some other way
     connected." Applied: pictures of trap tiles and every copy of them stay; a wrong move must still lose or cost more than the spare
     (the exact extra cost may change with the finish). Result: 22 of 45 narrowed (`footprint60/narrow-final/`), all won in the real game.
+  - **Mirror symmetry may go when needed; a cut-out tile may be placed in the middle** (2026-11-15): "mirror symetric can be dropped if
+    really needed to fit these shapes. Keep working on the 18 that dont fit yet. Be smart with picking tiles that you replace or rearange and
+    on 286 and shapes like tha you may place in the middle. under 58px is indeed not right yet." Applied in `bank/peel_drop.js`: the trap is
+    the specials with their thawing neighbours, covers and the wrong moves (tiles only on the route to the clock may move; the clock route,
+    special order and effects are checked after); a tile with a trap picture may be dropped after handing that picture to the nearest
+    ordinary tile; a whole column or row may be cut out and closed up. Result: 27 of 45 narrowed, all won in the real game.
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
   - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
     played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is
