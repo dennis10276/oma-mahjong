@@ -1,0 +1,1450 @@
+{
+ "level": 293,
+ "ok": false,
+ "tried": [
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no brick spot for 15 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no brick spot for 15 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no brick spot for 15 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "no brick spot for 3 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "no brick spot for 3 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "no brick spot for 3 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no brick spot for 3 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no brick spot for 3 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no brick spot for 3 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 1,
+   "why": "no brick spot for 8 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 1,
+   "why": "no brick spot for 8 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 1,
+   "why": "no brick spot for 8 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 0,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.84
+   },
+   "ok": false,
+   "errors": [
+    "wrongMove:73",
+    "authoredProof:trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0"
+   ],
+   "px": 58.3
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 0,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.84
+   },
+   "ok": false,
+   "errors": [
+    "wrongMove:73",
+    "authoredProof:trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0"
+   ],
+   "px": 58.3
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 0,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.84
+   },
+   "ok": false,
+   "errors": [
+    "wrongMove:73",
+    "authoredProof:trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0"
+   ],
+   "px": 58.3
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 2,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.84
+   },
+   "ok": false,
+   "errors": [
+    "footprint",
+    "readableBadges"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 2,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.84
+   },
+   "ok": false,
+   "errors": [
+    "footprint",
+    "readableBadges"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 2,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.84
+   },
+   "ok": false,
+   "errors": [
+    "footprint",
+    "readableBadges"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no brick spot for 8 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no brick spot for 8 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no brick spot for 8 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.84
+   }
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.84
+   }
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.84
+   }
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.84
+   },
+   "ok": false,
+   "errors": [
+    "footprint",
+    "readableBadges"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.84
+   }
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.84
+   },
+   "ok": false,
+   "errors": [
+    "footprint",
+    "readableBadges"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no brick spot for 15 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no brick spot for 15 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no brick spot for 15 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "no brick spot for 3 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "no brick spot for 3 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "no brick spot for 3 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no brick spot for 3 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no brick spot for 3 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no brick spot for 3 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 1,
+   "why": "no brick spot for 8 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 1,
+   "why": "no brick spot for 8 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 1,
+   "why": "no brick spot for 8 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 0,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.84
+   },
+   "ok": false,
+   "errors": [
+    "wrongMove:73",
+    "authoredProof:trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0"
+   ],
+   "px": 58.3
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 0,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.84
+   },
+   "ok": false,
+   "errors": [
+    "wrongMove:73",
+    "authoredProof:trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0"
+   ],
+   "px": 58.3
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 0,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.84
+   },
+   "ok": false,
+   "errors": [
+    "wrongMove:73",
+    "authoredProof:trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0"
+   ],
+   "px": 58.3
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 2,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.84
+   },
+   "ok": false,
+   "errors": [
+    "footprint",
+    "readableBadges"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 2,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.84
+   },
+   "ok": false,
+   "errors": [
+    "footprint",
+    "readableBadges"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 2,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.84
+   },
+   "ok": false,
+   "errors": [
+    "footprint",
+    "readableBadges"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no brick spot for 8 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no brick spot for 8 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no brick spot for 8 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.84
+   }
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.84
+   }
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.84
+   }
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.84
+   },
+   "ok": false,
+   "errors": [
+    "footprint",
+    "readableBadges"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.84
+   }
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.84
+   },
+   "ok": false,
+   "errors": [
+    "footprint",
+    "readableBadges"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no brick spot for 3 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no brick spot for 3 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no brick spot for 3 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no brick spot for 2 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no brick spot for 2 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no brick spot for 2 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "wrongMove:73",
+    "authoredProof:trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0"
+   ],
+   "px": 58.3
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "wrongMove:73",
+    "authoredProof:trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0"
+   ],
+   "px": 58.3
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "wrongMove:73",
+    "authoredProof:trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0"
+   ],
+   "px": 58.3
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": 1,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": 1,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": 1,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": 2,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "readableBadges"
+   ],
+   "px": 58.3
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": 2,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "readableBadges"
+   ],
+   "px": 58.3
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": 2,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no brick spot for 3 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no brick spot for 3 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no brick spot for 3 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no brick spot for 2 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no brick spot for 2 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no brick spot for 2 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "wrongMove:73",
+    "authoredProof:trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0"
+   ],
+   "px": 58.3
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "wrongMove:73",
+    "authoredProof:trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0"
+   ],
+   "px": 58.3
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "wrongMove:73",
+    "authoredProof:trapProof:noProvenBait:keyEarly:win:0|lonelyNeighbour:win:0"
+   ],
+   "px": 58.3
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": 1,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": 1,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": 1,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": 2,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "readableBadges"
+   ],
+   "px": 58.3
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": 2,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "readableBadges"
+   ],
+   "px": 58.3
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": 2,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  }
+ ]
+}

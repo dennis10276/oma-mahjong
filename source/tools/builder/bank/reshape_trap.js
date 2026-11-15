@@ -26,13 +26,13 @@ const OUT = path.resolve(__dirname, '../../../analysis/builder/footprint60/resha
 const clone = x => JSON.parse(JSON.stringify(x)), same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 const overlap = (a, b) => a[2] === b[2] && Math.abs(a[0] - b[0]) < 2 && Math.abs(a[1] - b[1]) < 2;
 
-function trapPiece(before) {
+function trapPiece(before, small) {
   const a = before.design, g = E.game(clone(a));
   const sp = [a.clock.i, ...a.obst.keys, ...a.obst.locks, ...Object.keys(a.obst.ice).map(Number)];
   const bait = (before.card?.trap?.baits || []).flatMap(b => b.tiles);
   const route = a.solution.slice(0, a.solution.indexOf(a.clock.i) + 1);
-  const core = new Set([...sp, ...bait, ...route]);
-  for (const s of [...sp, ...bait]) { for (const k of ['above', 'left', 'right']) for (const u of g.nb[k][s] || []) core.add(u); if (g.iceH && g.iceH[s]) for (const u of g.iceNb[s]) core.add(u); }
+  const core = new Set(small ? [...sp, ...bait] : [...sp, ...bait, ...route]);
+  for (const s of [...sp, ...bait]) { for (const k of small ? ['above'] : ['above', 'left', 'right']) for (const u of g.nb[k][s] || []) core.add(u); if (g.iceH && g.iceH[s]) for (const u of g.iceNb[s]) core.add(u); }
   for (let ch = true; ch;) { ch = false; for (const i of [...core]) for (const u of g.nb.above[i] || []) if (!core.has(u)) { core.add(u); ch = true; } }
   return { core, sp, bait, route };
 }
@@ -89,7 +89,7 @@ function build(before, piece, W, H, dz, shiftX, shiftY, opts = {}) {
 function shapeOk(T) { const s = D.shape(T); return s; }
 
 function run(level, opts = {}) {
-  const c = D.candidate(level), before = P.original(c.source), a = before.design, base = P.prepare(before), piece = trapPiece(before);
+  const c = D.candidate(level), before = P.original(c.source), a = before.design, base = P.prepare(before), piece = trapPiece(before, opts.small);
   const n = a.tiles.length, keep = Array.from({ length: n }, (_, i) => i), tried = [];
   const cxs = [...piece.core].map(i => a.tiles[i][0]), cys = [...piece.core].map(i => a.tiles[i][1]), czs = [...piece.core].map(i => a.tiles[i][2]);
   const pw = Math.max(...cxs) + 2 - Math.min(...cxs), ph = Math.max(...cys) + 2 - Math.min(...cys);
@@ -120,7 +120,7 @@ function run(level, opts = {}) {
 function save(r) { fs.mkdirSync(OUT, { recursive: true }); fs.writeFileSync(path.join(OUT, `level-${r.level}.json`), JSON.stringify(r, null, 1)); return r; }
 module.exports = { run, build, trapPiece };
 if (require.main === module) for (const lv of process.argv[2].split(',').map(Number)) {
-  const t0 = Date.now(), r = run(lv), last = {};
+  const t0 = Date.now(), r = run(lv, { small: process.argv.includes('--small') }), last = {};
   for (const t of r.tried) { const k = t.why || (t.errors || []).join(','); last[k] = (last[k] || 0) + 1; }
   console.log(JSON.stringify({ level: lv, ok: r.ok, shape: r.shape, px: r.px, W: r.W, dz: r.dz, piece: r.pieceSize, s: Math.round((Date.now() - t0) / 1000), why: r.ok ? undefined : last }));
 }

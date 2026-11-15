@@ -1,0 +1,450 @@
+{
+ "level": 297,
+ "ok": false,
+ "tried": [
+  {
+   "W": 12,
+   "H": 12,
+   "dz": 0,
+   "why": "trap piece 13 x 8 wider than the window"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "why": "trap piece 13 x 8 wider than the window"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 0,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 0,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 0,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": -1,
+   "sy": -1,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": -1,
+   "sy": -1,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": -1,
+   "sy": -1,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 1,
+   "sy": 0,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 1,
+   "sy": 0,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 1,
+   "sy": 0,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 1,
+   "sy": -1,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 1,
+   "sy": -1,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 1,
+   "sy": -1,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 1,
+   "sy": 1,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 1,
+   "sy": 1,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 1,
+   "sy": 1,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 1,
+   "sy": 1,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 1,
+   "sy": 1,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 1,
+   "sy": 1,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 1,
+   "sy": 0,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 1,
+   "sy": 0,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 1,
+   "sy": 0,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 1,
+   "sy": 2,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 1,
+   "sy": 2,
+   "why": "piece outside the window"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 1,
+   "sy": 2,
+   "why": "piece outside the window"
+  }
+ ]
+}

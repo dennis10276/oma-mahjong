@@ -1,0 +1,3418 @@
+{
+ "level": 262,
+ "ok": false,
+ "tried": [
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -4,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.95
+   },
+   "ok": false,
+   "errors": [
+    "footprint"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -4,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.95
+   },
+   "ok": false,
+   "errors": [
+    "footprint"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -4,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.95
+   },
+   "ok": false,
+   "errors": [
+    "footprint"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -5,
+   "why": "no brick spot for 10 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -5,
+   "why": "no brick spot for 10 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -5,
+   "why": "no brick spot for 10 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -3,
+   "why": "no brick spot for 10 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -3,
+   "why": "no brick spot for 10 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -3,
+   "why": "no brick spot for 10 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -2,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -2,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -2,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -2,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -2,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -2,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -2,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -2,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -2,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -4,
+   "why": "no brick spot for 16 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -4,
+   "why": "no brick spot for 16 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -4,
+   "why": "no brick spot for 16 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -5,
+   "why": "no brick spot for 28 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -5,
+   "why": "no brick spot for 28 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -5,
+   "why": "no brick spot for 28 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -3,
+   "why": "no brick spot for 28 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -3,
+   "why": "no brick spot for 28 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -3,
+   "why": "no brick spot for 28 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -2,
+   "sy": -4,
+   "why": "no brick spot for 14 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -2,
+   "sy": -4,
+   "why": "no brick spot for 14 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -2,
+   "sy": -4,
+   "why": "no brick spot for 14 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -2,
+   "sy": -5,
+   "why": "no brick spot for 26 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -2,
+   "sy": -5,
+   "why": "no brick spot for 26 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -2,
+   "sy": -5,
+   "why": "no brick spot for 26 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -2,
+   "sy": -3,
+   "why": "no brick spot for 26 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -2,
+   "sy": -3,
+   "why": "no brick spot for 26 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -2,
+   "sy": -3,
+   "why": "no brick spot for 26 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -4,
+   "why": "no brick spot for 15 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -4,
+   "why": "no brick spot for 15 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -4,
+   "why": "no brick spot for 15 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -5,
+   "why": "no brick spot for 27 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -5,
+   "why": "no brick spot for 27 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -5,
+   "why": "no brick spot for 27 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -3,
+   "why": "no brick spot for 27 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -3,
+   "why": "no brick spot for 27 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -3,
+   "why": "no brick spot for 27 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -4,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.95
+   },
+   "ok": false,
+   "errors": [
+    "footprint"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -4,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.95
+   },
+   "ok": false,
+   "errors": [
+    "footprint"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -4,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.95
+   },
+   "ok": false,
+   "errors": [
+    "footprint"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -5,
+   "why": "no brick spot for 10 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -5,
+   "why": "no brick spot for 10 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -5,
+   "why": "no brick spot for 10 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -3,
+   "why": "no brick spot for 10 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -3,
+   "why": "no brick spot for 10 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -3,
+   "why": "no brick spot for 10 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -2,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -2,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -2,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -2,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -2,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -2,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -2,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -2,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": -2,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -4,
+   "why": "no brick spot for 16 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -4,
+   "why": "no brick spot for 16 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -4,
+   "why": "no brick spot for 16 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -5,
+   "why": "no brick spot for 28 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -5,
+   "why": "no brick spot for 28 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -5,
+   "why": "no brick spot for 28 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -3,
+   "why": "no brick spot for 28 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -3,
+   "why": "no brick spot for 28 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -3,
+   "why": "no brick spot for 28 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -2,
+   "sy": -4,
+   "why": "no brick spot for 14 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -2,
+   "sy": -4,
+   "why": "no brick spot for 14 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -2,
+   "sy": -4,
+   "why": "no brick spot for 14 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -2,
+   "sy": -5,
+   "why": "no brick spot for 26 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -2,
+   "sy": -5,
+   "why": "no brick spot for 26 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -2,
+   "sy": -5,
+   "why": "no brick spot for 26 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -2,
+   "sy": -3,
+   "why": "no brick spot for 26 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -2,
+   "sy": -3,
+   "why": "no brick spot for 26 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": -2,
+   "sy": -3,
+   "why": "no brick spot for 26 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -4,
+   "why": "no brick spot for 15 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -4,
+   "why": "no brick spot for 15 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -4,
+   "why": "no brick spot for 15 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -5,
+   "why": "no brick spot for 27 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -5,
+   "why": "no brick spot for 27 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -5,
+   "why": "no brick spot for 27 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -3,
+   "why": "no brick spot for 27 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -3,
+   "why": "no brick spot for 27 tiles"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -3,
+   "why": "no brick spot for 27 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -4,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "wrongMove:91",
+    "authoredProof:trapProof:noProvenBait:lonelyNeighbour:win:2"
+   ],
+   "px": 58.3
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -4,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "wrongMove:91",
+    "authoredProof:trapProof:noProvenBait:lonelyNeighbour:win:2"
+   ],
+   "px": 58.3
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -4,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "wrongMove:91",
+    "authoredProof:trapProof:noProvenBait:lonelyNeighbour:win:2"
+   ],
+   "px": 58.3
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -5,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "wrongMove:91",
+    "authoredProof:trapProof:noProvenBait:lonelyNeighbour:win:1"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -5,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "authoredProof:trapProof:noBaitAboveControl:lonelyNeighbour:win:3:notAboveControl:ctrl3"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -5,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "wrongMove:91",
+    "authoredProof:trapProof:noProvenBait:lonelyNeighbour:win:1"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -3,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "authoredProof:staticGates"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -3,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "authoredProof:trapProof:noBaitAboveControl:lonelyNeighbour:lose:null:notAboveControl:ctrl4"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -3,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "authoredProof:staticGates"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -4,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "wrongMove:91",
+    "authoredProof:trapProof:noProvenBait:lonelyNeighbour:win:2"
+   ],
+   "px": 58.3
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -4,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "wrongMove:91",
+    "authoredProof:trapProof:noProvenBait:lonelyNeighbour:win:2"
+   ],
+   "px": 58.3
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -4,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "wrongMove:91",
+    "authoredProof:trapProof:noProvenBait:lonelyNeighbour:win:2"
+   ],
+   "px": 58.3
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -5,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "wrongMove:91",
+    "authoredProof:trapProof:noProvenBait:lonelyNeighbour:win:1"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -5,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "authoredProof:trapProof:noBaitAboveControl:lonelyNeighbour:lose:null:notAboveControl:ctrl4"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -5,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "wrongMove:91",
+    "authoredProof:trapProof:noProvenBait:lonelyNeighbour:win:1"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -3,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "wrongMove:91",
+    "authoredProof:trapProof:noProvenBait:lonelyNeighbour:win:2"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -3,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "wrongMove:91",
+    "authoredProof:trapProof:noProvenBait:lonelyNeighbour:win:2"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -3,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "wrongMove:91",
+    "authoredProof:trapProof:noProvenBait:lonelyNeighbour:win:2"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 1,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 1,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 1,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 1,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 1,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 1,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 1,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 1,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 1,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -4,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 1,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "footprint",
+    "readableBadges"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -4,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 1,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "footprint",
+    "readableBadges"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -4,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 1,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "footprint",
+    "readableBadges"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -5,
+   "why": "no brick spot for 16 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -5,
+   "why": "no brick spot for 16 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -5,
+   "why": "no brick spot for 16 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -3,
+   "why": "no brick spot for 16 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -3,
+   "why": "no brick spot for 16 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -3,
+   "why": "no brick spot for 16 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -4,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "footprint",
+    "readableBadges"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -4,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "footprint",
+    "readableBadges"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -4,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "footprint",
+    "readableBadges"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -5,
+   "why": "no brick spot for 15 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -5,
+   "why": "no brick spot for 15 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -5,
+   "why": "no brick spot for 15 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -3,
+   "why": "no brick spot for 15 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -3,
+   "why": "no brick spot for 15 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -3,
+   "why": "no brick spot for 15 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 1,
+   "sy": -4,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "footprint",
+    "readableBadges"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 1,
+   "sy": -4,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "footprint",
+    "readableBadges"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 1,
+   "sy": -4,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "footprint",
+    "readableBadges"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 1,
+   "sy": -5,
+   "why": "no brick spot for 14 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 1,
+   "sy": -5,
+   "why": "no brick spot for 14 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 1,
+   "sy": -5,
+   "why": "no brick spot for 14 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 1,
+   "sy": -3,
+   "why": "no brick spot for 14 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 1,
+   "sy": -3,
+   "why": "no brick spot for 14 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 1,
+   "sy": -3,
+   "why": "no brick spot for 14 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 1,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -4,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "wrongMove:91",
+    "authoredProof:trapProof:noProvenBait:lonelyNeighbour:win:2"
+   ],
+   "px": 58.3
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -4,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "wrongMove:91",
+    "authoredProof:trapProof:noProvenBait:lonelyNeighbour:win:2"
+   ],
+   "px": 58.3
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -4,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "wrongMove:91",
+    "authoredProof:trapProof:noProvenBait:lonelyNeighbour:win:2"
+   ],
+   "px": 58.3
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -5,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "wrongMove:91",
+    "authoredProof:trapProof:noProvenBait:lonelyNeighbour:win:1"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -5,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "authoredProof:trapProof:noBaitAboveControl:lonelyNeighbour:win:3:notAboveControl:ctrl3"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -5,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "wrongMove:91",
+    "authoredProof:trapProof:noProvenBait:lonelyNeighbour:win:1"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -3,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "authoredProof:staticGates"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -3,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "authoredProof:trapProof:noBaitAboveControl:lonelyNeighbour:lose:null:notAboveControl:ctrl4"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 0,
+   "sy": -3,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "authoredProof:staticGates"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -4,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "wrongMove:91",
+    "authoredProof:trapProof:noProvenBait:lonelyNeighbour:win:2"
+   ],
+   "px": 58.3
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -4,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "wrongMove:91",
+    "authoredProof:trapProof:noProvenBait:lonelyNeighbour:win:2"
+   ],
+   "px": 58.3
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -4,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "wrongMove:91",
+    "authoredProof:trapProof:noProvenBait:lonelyNeighbour:win:2"
+   ],
+   "px": 58.3
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -5,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "wrongMove:91",
+    "authoredProof:trapProof:noProvenBait:lonelyNeighbour:win:1"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -5,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "authoredProof:trapProof:noBaitAboveControl:lonelyNeighbour:lose:null:notAboveControl:ctrl4"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -5,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "wrongMove:91",
+    "authoredProof:trapProof:noProvenBait:lonelyNeighbour:win:1"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -3,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "wrongMove:91",
+    "authoredProof:trapProof:noProvenBait:lonelyNeighbour:win:2"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -3,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "wrongMove:91",
+    "authoredProof:trapProof:noProvenBait:lonelyNeighbour:win:2"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": -1,
+   "sy": -3,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "specialEffects",
+    "wrongMove:91",
+    "authoredProof:trapProof:noProvenBait:lonelyNeighbour:win:2"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 1,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 1,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 1,
+   "sy": -4,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 1,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 1,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 1,
+   "sy": -5,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 1,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 1,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -1,
+   "sx": 1,
+   "sy": -3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -4,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 1,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "footprint",
+    "readableBadges"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -4,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 1,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "footprint",
+    "readableBadges"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -4,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 1,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "footprint",
+    "readableBadges"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -5,
+   "why": "no brick spot for 16 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -5,
+   "why": "no brick spot for 16 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -5,
+   "why": "no brick spot for 16 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -3,
+   "why": "no brick spot for 16 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -3,
+   "why": "no brick spot for 16 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 0,
+   "sy": -3,
+   "why": "no brick spot for 16 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -4,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "footprint",
+    "readableBadges"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -4,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "footprint",
+    "readableBadges"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -4,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "footprint",
+    "readableBadges"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -5,
+   "why": "no brick spot for 15 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -5,
+   "why": "no brick spot for 15 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -5,
+   "why": "no brick spot for 15 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -3,
+   "why": "no brick spot for 15 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -3,
+   "why": "no brick spot for 15 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": -1,
+   "sy": -3,
+   "why": "no brick spot for 15 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 1,
+   "sy": -4,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "footprint",
+    "readableBadges"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 1,
+   "sy": -4,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "footprint",
+    "readableBadges"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 1,
+   "sy": -4,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "footprint",
+    "readableBadges"
+   ],
+   "px": 57.5
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 1,
+   "sy": -5,
+   "why": "no brick spot for 14 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 1,
+   "sy": -5,
+   "why": "no brick spot for 14 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 1,
+   "sy": -5,
+   "why": "no brick spot for 14 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 1,
+   "sy": -3,
+   "why": "no brick spot for 14 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 1,
+   "sy": -3,
+   "why": "no brick spot for 14 tiles"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": -2,
+   "sx": 1,
+   "sy": -3,
+   "why": "no brick spot for 14 tiles"
+  }
+ ]
+}

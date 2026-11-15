@@ -1,0 +1,870 @@
+{
+ "level": 255,
+ "ok": false,
+ "tried": [
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": -2,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": -2,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": -2,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": -2,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": -2,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": -2,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": -2,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": -2,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": -2,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -2,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -2,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -2,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -2,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -2,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -2,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -2,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -2,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -2,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -1,
+   "sy": 3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": -2,
+   "sy": 3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 3,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 16,
+   "dz": 0,
+   "sx": 0,
+   "sy": 3,
+   "why": "no support under the piece"
+  }
+ ]
+}

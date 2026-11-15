@@ -1,0 +1,2000 @@
+{
+ "level": 259,
+ "ok": false,
+ "tried": [
+  {
+   "W": 12,
+   "H": 12,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": 0,
+   "sx": 0,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": 0,
+   "sx": 0,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": 0,
+   "sx": 0,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": 0,
+   "sx": -1,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": 0,
+   "sx": -1,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": 0,
+   "sx": -1,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": 0,
+   "sx": 1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": 0,
+   "sx": 1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": 0,
+   "sx": 1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": 0,
+   "sx": 1,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": 0,
+   "sx": 1,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": 0,
+   "sx": 1,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": 0,
+   "sx": 1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": 0,
+   "sx": 1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": 0,
+   "sx": 1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": -1,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": -1,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": -1,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": -1,
+   "sx": 0,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": -1,
+   "sx": 0,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": -1,
+   "sx": 0,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": -1,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": -1,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": -1,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": -1,
+   "sx": -1,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.93
+   }
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": -1,
+   "sx": -1,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.93
+   }
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": -1,
+   "sx": -1,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.93
+   }
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": -1,
+   "sx": -1,
+   "sy": -1,
+   "why": "no brick spot for 17 tiles"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": -1,
+   "sx": -1,
+   "sy": -1,
+   "why": "no brick spot for 17 tiles"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": -1,
+   "sx": -1,
+   "sy": -1,
+   "why": "no brick spot for 17 tiles"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": -1,
+   "sx": -1,
+   "sy": 1,
+   "why": "no brick spot for 17 tiles"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": -1,
+   "sx": -1,
+   "sy": 1,
+   "why": "no brick spot for 17 tiles"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": -1,
+   "sx": -1,
+   "sy": 1,
+   "why": "no brick spot for 17 tiles"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": -1,
+   "sx": 1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": -1,
+   "sx": 1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": -1,
+   "sx": 1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": -1,
+   "sx": 1,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": -1,
+   "sx": 1,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": -1,
+   "sx": 1,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": -1,
+   "sx": 1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": -1,
+   "sx": 1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 12,
+   "dz": -1,
+   "sx": 1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": 1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": 1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": 1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": 1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": 1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": 1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": 1,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": 1,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": 0,
+   "sx": 1,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": -1,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": -1,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": -1,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": -1,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": -1,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": -1,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": -1,
+   "sx": 0,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": -1,
+   "sx": 0,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": -1,
+   "sx": 0,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": -1,
+   "sx": -1,
+   "sy": 1,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.93
+   }
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": -1,
+   "sx": -1,
+   "sy": 1,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.93
+   }
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": -1,
+   "sx": -1,
+   "sy": 1,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.93
+   }
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": -1,
+   "sx": -1,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.95
+   }
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": -1,
+   "sx": -1,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.95
+   }
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": -1,
+   "sx": -1,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.95
+   }
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": -1,
+   "sx": -1,
+   "sy": 2,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.95
+   }
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": -1,
+   "sx": -1,
+   "sy": 2,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.95
+   }
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": -1,
+   "sx": -1,
+   "sy": 2,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.95
+   }
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": -1,
+   "sx": 1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": -1,
+   "sx": 1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": -1,
+   "sx": 1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": -1,
+   "sx": 1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": -1,
+   "sx": 1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": -1,
+   "sx": 1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": -1,
+   "sx": 1,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": -1,
+   "sx": 1,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 12,
+   "H": 14,
+   "dz": -1,
+   "sx": 1,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 0,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 0,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 0,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": -1,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": -1,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": -1,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 1,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 1,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 1,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": 0,
+   "sx": 1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": -1,
+   "sx": 0,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": -1,
+   "sx": 0,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": -1,
+   "sx": 0,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": -1,
+   "sx": 0,
+   "sy": -1,
+   "why": "no brick spot for 10 tiles"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": -1,
+   "sx": 0,
+   "sy": -1,
+   "why": "no brick spot for 10 tiles"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": -1,
+   "sx": 0,
+   "sy": -1,
+   "why": "no brick spot for 10 tiles"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": -1,
+   "sx": 0,
+   "sy": 1,
+   "why": "no brick spot for 10 tiles"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": -1,
+   "sx": 0,
+   "sy": 1,
+   "why": "no brick spot for 10 tiles"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": -1,
+   "sx": 0,
+   "sy": 1,
+   "why": "no brick spot for 10 tiles"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": -1,
+   "sx": -1,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": -1,
+   "sx": -1,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": -1,
+   "sx": -1,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": -1,
+   "sx": -1,
+   "sy": -1,
+   "why": "no brick spot for 10 tiles"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": -1,
+   "sx": -1,
+   "sy": -1,
+   "why": "no brick spot for 10 tiles"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": -1,
+   "sx": -1,
+   "sy": -1,
+   "why": "no brick spot for 10 tiles"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": -1,
+   "sx": -1,
+   "sy": 1,
+   "why": "no brick spot for 10 tiles"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": -1,
+   "sx": -1,
+   "sy": 1,
+   "why": "no brick spot for 10 tiles"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": -1,
+   "sx": -1,
+   "sy": 1,
+   "why": "no brick spot for 10 tiles"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": -1,
+   "sx": 1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": -1,
+   "sx": 1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": -1,
+   "sx": 1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": -1,
+   "sx": 1,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": -1,
+   "sx": 1,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": -1,
+   "sx": 1,
+   "sy": -1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": -1,
+   "sx": 1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": -1,
+   "sx": 1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 12,
+   "dz": -1,
+   "sx": 1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 0,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": -1,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 1,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 1,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": 0,
+   "sx": 1,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": -1,
+   "sx": 0,
+   "sy": 1,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": -1,
+   "sx": 0,
+   "sy": 1,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": -1,
+   "sx": 0,
+   "sy": 1,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": -1,
+   "sx": 0,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": -1,
+   "sx": 0,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": -1,
+   "sx": 0,
+   "sy": 0,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": -1,
+   "sx": 0,
+   "sy": 2,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "newTower"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": -1,
+   "sx": 0,
+   "sy": 2,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": -1,
+   "sx": 0,
+   "sy": 2,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "newTower"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": -1,
+   "sx": -1,
+   "sy": 1,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": -1,
+   "sx": -1,
+   "sy": 1,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": -1,
+   "sx": -1,
+   "sy": 1,
+   "why": "no full winning route",
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   }
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": -1,
+   "sx": -1,
+   "sy": 0,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "newTower"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": -1,
+   "sx": -1,
+   "sy": 0,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "newTower"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": -1,
+   "sx": -1,
+   "sy": 0,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "newTower"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": -1,
+   "sx": -1,
+   "sy": 2,
+   "variant": {},
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "newTower"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": -1,
+   "sx": -1,
+   "sy": 2,
+   "variant": {
+    "layerW": 6
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "newTower"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": -1,
+   "sx": -1,
+   "sy": 2,
+   "variant": {
+    "centreW": 0.3
+   },
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0
+   },
+   "ok": false,
+   "errors": [
+    "newTower"
+   ],
+   "px": 58.6
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": -1,
+   "sx": 1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": -1,
+   "sx": 1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": -1,
+   "sx": 1,
+   "sy": 1,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": -1,
+   "sx": 1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": -1,
+   "sx": 1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": -1,
+   "sx": 1,
+   "sy": 0,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": -1,
+   "sx": 1,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": -1,
+   "sx": 1,
+   "sy": 2,
+   "why": "no support under the piece"
+  },
+  {
+   "W": 13,
+   "H": 14,
+   "dz": -1,
+   "sx": 1,
+   "sy": 2,
+   "why": "no support under the piece"
+  }
+ ]
+}
