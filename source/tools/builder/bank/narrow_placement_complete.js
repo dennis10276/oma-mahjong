@@ -92,8 +92,8 @@ function complete(row,user,ms=240000){
       options.sort((u,v)=>u.score-v.score);let found=false;for(const q of options.slice(0,50)){T[id]=q.p;if(partialOK(T)){found=true;break;}}if(!found){why.noSpot=(why.noSpot||0)+1;return null;}
     }
     if(!G.valid(T)){why.invalid=(why.invalid||0)+1;return null;}if(!F.measure(T,{minimum:58}).ok){why.small=(why.small||0)+1;return null;}
-    // Dennis 2026-11-15: at most six tiles wide (a half-offset seventh column counts as wider)
-    {const xs=T.map(p=>p[0]);if(Math.max(...xs)-Math.min(...xs)+2>12){why.wide=(why.wide||0)+1;return null;}}
+    // Dennis 2026-11-15: at most 6.5 tiles wide ("6.5 is okay cause we get 58.x px")
+    {const xs=T.map(p=>p[0]);if(Math.max(...xs)-Math.min(...xs)+2>13){why.wide=(why.wide||0)+1;return null;}}
     const d={...a,tiles:T},twins=SEP.closeTwins(d);if(twins.visible>oldTwins.visible||twins.closeVisible.some(q=>!oldVisible.has(q.slice(0,2).join(',')))){why.twins=(why.twins||0)+1;return null;}
     const badges=SR.measure(d);if(oldBadges.some(r=>!badges.rows.some(q=>q.tile===r.tile&&q.kind===r.kind&&q.clear))){why.badge=(why.badge||0)+1;return null;}
     return T;

@@ -233,6 +233,11 @@ add new decisions with a date.
     52.7 px, eight rows 59.1 px on the reference). He summed up Codex's method as at most six wide and at most four stacked. Result
     (`footprint60/narrow-final/README.md`): 15 of 45 narrowed with the trap and pictures unchanged, all won in the real game; 5 already fit;
     25 stay as released. Dropping tiles was not used yet (every check still requires the same pictures).
+  - **6.5 wide is fine, no nine rows, drop finish tiles, only trap pictures are fixed** (2026-11-15): "We learned that 6.5 is okay cause we
+    get 58.x px"; "really bad then yes. no 9 rows."; "Then use it. Also peel the lower layers since they will be mostly used for after trap
+    finish."; "The check shouldnt require the same pictures only the pictures that interconnect with the trap or are in some other way
+    connected." Applied: pictures of trap tiles and every copy of them stay; a wrong move must still lose or cost more than the spare
+    (the exact extra cost may change with the finish). Result: 22 of 45 narrowed (`footprint60/narrow-final/`), all won in the real game.
   - **Skilled minimum 1.75** (maximum stays 6). Dennis does not want to play levels in advance: the bot should know.
   - **Repeated-blunder check (B7) is a trigger to steer, not a rejection** (later on 2026-11-12, after Dennis
     played test puzzle 254): a puzzle where more than 0.3 of the bot's lost tries repeat a known mistake is

@@ -19,18 +19,26 @@ const rd = f => JSON.parse(fs.readFileSync(f, 'utf8')), same = (a, b) => JSON.st
 const R = rd(path.join(BANK, 'range-250-300.json'));
 const dims = t => { const xs = t.map(p => p[0]), ys = t.map(p => p[1]); return { w: (Math.max(...xs) - Math.min(...xs) + 2) / 2, h: (Math.max(...ys) - Math.min(...ys) + 2) / 2, layers: Math.max(...t.map(p => p[2])) + 1 }; };
 const mirror = t => { const xs = t.map(p => p[0]), m = Math.min(...xs) + Math.max(...xs), s = new Set(t.map(p => p.join(','))); return +(t.filter(p => s.has([m - p[0], p[1], p[2]].join(','))).length / t.length).toFixed(2); };
-function check(a, d, own) {
-  const why = [];
-  for (const k of ['faces', 'down', 'obst']) if (!same(a[k], d[k])) why.push('changed ' + k);
-  if (d.clock.i !== a.clock.i || d.clock.n !== a.clock.n) why.push('clock changed');
-  if (d.tiles.length !== a.tiles.length) why.push('tile count');
+// Dennis 2026-11-15: "The check shouldnt require the same pictures only the pictures that interconnect with the trap", "6.5 is okay",
+// dropping finish tiles allowed. For a board with the same tiles: pictures of trap tiles (and every copy of their pictures) unchanged,
+// the same pictures overall. For a board with dropped tiles (peel_drop.js, which compares the trap through its tile map): its own record.
+function check(a, d, own, trap) {
+  const why = [], dropped = d.tiles.length !== a.tiles.length;
+  if (!dropped) {
+    for (const k of ['down', 'obst']) if (!same(a[k], d[k])) why.push('changed ' + k);
+    if (d.clock.i !== a.clock.i) why.push('clock tile changed');
+    const tf = new Set([...trap].map(i => a.faces[i]));
+    if (!same(a.faces.slice().sort((x, y) => x - y), d.faces.slice().sort((x, y) => x - y))) why.push('picture counts changed');
+    if (a.faces.some((f0, i) => f0 !== d.faces[i] && (trap.has(i) || tf.has(f0) || tf.has(d.faces[i])))) why.push('trap pictures changed');
+  }
+  if (d.clock.n !== a.clock.n) why.push('clock number changed');
   if (!E.replay(d, d.solution, { strict: true }).ok) why.push('stored route does not win');
   const k0 = E.clockShortest(E.game(clone(a)), { nodes: 800000, ms: 15000 }), k1 = E.clockShortest(E.game(clone(d)), { nodes: 800000, ms: 15000 });
   if (!k0 || !k1 || k0.unsure || k1.unsure || k0.k !== k1.k) why.push('shortest clock route ' + (k0 && k0.k) + ' -> ' + (k1 && k1.k));
   const sp = new Set([d.clock.i, ...d.obst.locks, ...d.obst.keys, ...Object.keys(d.obst.ice || {}).map(Number)]);
   if ((d.down || []).some(i => sp.has(i))) why.push('special face-down');
   const fp = F.measure(d, { minimum: 58 }); if (!fp.ok) why.push('footprint ' + fp.tilePx.toFixed(1) + ' px, ' + fp.rows + ' rows');
-  const dm = dims(d.tiles); if (dm.w > 6 && !own) why.push(dm.w + ' wide');
+  const dm = dims(d.tiles); if (dm.w > 6.5) why.push(dm.w + ' wide'); if (dm.h > 8) why.push(dm.h + ' rows');
   return { ok: !why.length, why, fp, k: k1 && k1.k };
 }
 const rows = [], pack = { baselineCommit: R.baselineCommit, made: new Date().toISOString(), rows: [] };
@@ -39,17 +47,19 @@ for (let lv = 251; lv <= 299; lv++) {
   const before = R.rows.find(r => r.level === lv).before, a = before.design, f0 = F.measure(a, { minimum: 58 }), d0 = dims(a.tiles);
   const row = { level: lv, source: before.source, released: { px: +f0.tilePx.toFixed(1), w: d0.w, h: d0.h, layers: d0.layers } };
   if (f0.ok) { row.outcome = 'as released (already ' + f0.tilePx.toFixed(1) + ' px)'; rows.push(row); continue; }
-  const cands = [];
+  const cands = [], trap = require('./narrow_proof.js').prepare(before).M;
   const cf = path.join(BANK, 'narrow/placement-lab/completed', `level-${lv}.json`);
   if (fs.existsSync(cf)) { const j = rd(cf); if (j.status === 'passed' && j.check && j.check.design) cands.push({ from: 'completion: ' + j.method, design: j.check.design, own: /Your complete layout/.test(j.method || ''), cert: j.check.certificate }); }
+  const pf = path.join(BANK, 'peel-drop', `level-${lv}.json`);
+  if (fs.existsSync(pf)) { const j = rd(pf); cands.push({ from: 'peel_drop: ' + j.how + ` (${j.moved || 0} slid, ${j.dropped} dropped, ${j.picturesExchanged} picture exchanges)`, design: j.design }); }
   const tf = path.join(BANK, 'narrow', `level-${lv}.json`);
   if (fs.existsSync(tf)) { const j = rd(tf), d = j.design; const capped = d.tiles.filter((p, i) => p[2] > a.tiles[i][2]).length; if (capped <= 2) cands.push({ from: 'Task 19: ' + (j.hop ? 'hop ' + j.hop : 'column/row out'), design: d }); }
   let done = false;
   for (const c of cands) {
-    const r = check(a, c.design, c.own);
+    const r = check(a, c.design, c.own, trap);
     if (!r.ok) { (row.rejected = row.rejected || []).push(c.from.slice(0, 40) + ': ' + r.why.join(', ')); continue; }
-    const dm = dims(c.design.tiles), moved = c.design.tiles.filter((p, i) => !same(p, a.tiles[i])).length;
-    Object.assign(row, { outcome: 'narrowed', from: c.from, px: +r.fp.tilePx.toFixed(1), w: dm.w, h: dm.h, layers: dm.layers, moved, mirror: mirror(c.design.tiles), keptClockRoute: same(c.design.solution.slice(0, c.design.solution.indexOf(c.design.clock.i) + 1), a.solution.slice(0, a.solution.indexOf(a.clock.i) + 1)) });
+    const dm = dims(c.design.tiles), moved = c.design.tiles.length === a.tiles.length ? c.design.tiles.filter((p, i) => !same(p, a.tiles[i])).length : (a.tiles.length - c.design.tiles.length) + ' dropped';
+    Object.assign(row, { outcome: 'narrowed', from: c.from, px: +r.fp.tilePx.toFixed(1), w: dm.w, h: dm.h, layers: dm.layers, moved, mirror: mirror(c.design.tiles), tiles: c.design.tiles.length, keptClockRoute: c.design.tiles.length !== a.tiles.length || same(c.design.solution.slice(0, c.design.solution.indexOf(c.design.clock.i) + 1), a.solution.slice(0, a.solution.indexOf(a.clock.i) + 1)) });
     pack.rows.push({ level: lv, ok: true, draft: { design: c.design }, footprint: r.fp, from: c.from, certificate: c.cert || null });
     done = true; break;
   }
