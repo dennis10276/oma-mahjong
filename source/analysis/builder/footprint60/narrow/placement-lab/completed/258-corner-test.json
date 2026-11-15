@@ -1,0 +1,22 @@
+{
+  "status": "failed",
+  "ok": false,
+  "message": "An authored trap dependency changed: staticGates",
+  "tiles": [],
+  "errors": [
+    "ownTrapProof:staticGates"
+  ],
+  "checks": [
+    "fullStrictWin",
+    "retainedReleasedClockRoute",
+    "sameCoverAndThawRelationsWithinTrap",
+    "sameSideRelationsWithinTrap",
+    "retainedReadableSpecialBadges",
+    "noAdditionalVisibleCloseTwins",
+    "sameProvenClockMinimumAndSpare",
+    "sameProvenIceAndLockAblationEffects",
+    "sameSpecialRolePrerequisites",
+    "sameFreshlyMeasuredAuthoredBaitPrices"
+  ],
+  "notices": []
+}

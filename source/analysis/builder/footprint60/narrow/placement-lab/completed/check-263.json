@@ -1,0 +1,24 @@
+{
+  "status": "failed",
+  "ok": false,
+  "message": "A tempting wrong choice no longer has the same cost.\nAn authored trap dependency changed: trapProof:noProvenBait:keyEarly:win:1|lonelyNeighbour:win:2",
+  "tiles": [
+    0
+  ],
+  "errors": [
+    "baitPrice:0",
+    "ownTrapProof:trapProof:noProvenBait:keyEarly:win:1|lonelyNeighbour:win:2"
+  ],
+  "checks": [
+    "fullStrictWin",
+    "retainedReleasedClockRoute",
+    "sameCoverAndThawRelationsWithinTrap",
+    "sameSideRelationsWithinTrap",
+    "retainedReadableSpecialBadges",
+    "noAdditionalVisibleCloseTwins",
+    "sameProvenClockMinimumAndSpare",
+    "sameProvenIceAndLockAblationEffects",
+    "sameSpecialRolePrerequisites"
+  ],
+  "notices": []
+}

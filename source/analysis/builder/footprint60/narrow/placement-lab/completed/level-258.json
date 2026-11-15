@@ -1,0 +1,18 @@
+{
+  "level": 258,
+  "baseHash": "d5cfb7d0fe3d59abe8849e0cd9f41cfd58d8a590bcac98480414aaa8179d2f2a",
+  "status": "open",
+  "note": "Is 9 rows really that bad for px size?",
+  "seeds": 3,
+  "tested": 115,
+  "constructed": 450,
+  "failures": {
+    "trapRelations": 1,
+    "clockMinimum,baitPrice:38,ownTrapProof:trapProof:noProvenBait:lonelyNeighbour:win:-1": 98,
+    "ownTrapProof:staticGates": 7,
+    "specialEffects,ownTrapProof:staticGates": 3,
+    "baitPrice:38,ownTrapProof:trapProof:noProvenBait:lonelyNeighbour:win:1": 4,
+    "specialEffects,ownTrapProof:trapProof:idleUnproven:ice79": 2
+  },
+  "ms": 15011
+}

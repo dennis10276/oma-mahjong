@@ -79,7 +79,10 @@ function certify(before,cand,base,opts={}){
   const coreFaces=new Set(core.map(i=>a.faces[i]));
   if(changed.some(i=>base.M.has(i)||coreFaces.has(a.faces[i])||coreFaces.has(b.faces[i])))errors.push('trapPicturesChanged');
   if(errors.length)return {ok:false,errors,checks,notices,reviewPolicy};
-  const k=kOf(b);if(k!==base.k||b.solution.indexOf(b.clock.i)+1!==base.k)errors.push('clockMinimum');else checks.push('sameProvenClockMinimumAndSpare');
+  // Older released boards can store a legal route longer than their true
+  // minimum. Keep that route when legal and measure the minimum independently;
+  // authored chain proofs additionally require the stored shortest route.
+  const k=kOf(b);if(k!==base.k||(base.ctx&&b.solution.indexOf(b.clock.i)+1!==base.k))errors.push('clockMinimum');else checks.push('sameProvenClockMinimumAndSpare');
   const abl=ablations(b);if(abl.some(q=>q[2]==null)||!same(abl,base.abl))errors.push('specialEffects');else checks.push('sameProvenIceAndLockAblationEffects');
   const p=I.prepare({design:b,card:before.card});if(!same(p.roleDependencies,base.prep.roleDependencies))errors.push('specialRoleOrder');else checks.push('sameSpecialRolePrerequisites');
   const prices=[];for(const bait of before.card?.trap?.baits||[]){const V=require('../verify_trap_mixes'),old=V.reprice(a,base.k,bait.tiles,{nodes:1000000,callMs:10000}),next=V.reprice(b,base.k,bait.tiles,{nodes:1000000,callMs:10000});prices.push({tiles:bait.tiles,before:old,after:next});if(!old.exact||!next.exact||!same(old,next))errors.push('baitPrice:'+bait.tiles.join(','));}
