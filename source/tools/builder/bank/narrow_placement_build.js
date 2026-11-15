@@ -42,7 +42,16 @@ function build(){
     if(level%10===0)continue;const before=P.original(level);if(F.measure(before.design,{minimum:58}).ok)continue;
     const accepted=known.get(level),seed=accepted?{design:accepted.design,problem:accepted.relocated||accepted.moved,column:accepted.column,row:accepted.row}:seedProposal(before);
     const base=copy(seed.design),g=E.game(before.design),roles=[before.design.clock.i,...before.design.obst.keys,...before.design.obst.locks,...Object.keys(before.design.obst.ice).map(Number)];
-    levels.push({level,status:accepted?'remade':'needs placement',base,baseHash:P.hash(base),original:before.design,problem:seed.problem,trap:[...N.trapSet(before,{g,roles})],column:seed.column,row:seed.row});
+    const entry={level,status:accepted?'remade':'needs placement',base,baseHash:P.hash(base),original:before.design,problem:seed.problem,trap:[...N.trapSet(before,{g,roles})],column:seed.column,row:seed.row};
+    const revision=path.join(P.DIR,'placement-lab/improvements',`level-${level}.json`);
+    if(fs.existsSync(revision)){
+      const r=JSON.parse(fs.readFileSync(revision));
+      if(r.baseHash===entry.baseHash&&r.positions?.length===base.tiles.length&&!r.error){
+        entry.proposal={positions:r.positions,problem:r.problem,status:r.status,method:r.method,message:r.message,check:r.check,
+          review:[r.note?'Your feedback: '+r.note:'',r.method+'. '+r.message].filter(Boolean).join('\n\n')};
+      }
+    }
+    levels.push(entry);
     console.log(JSON.stringify({level,status:levels.at(-1).status,toPlace:seed.problem.length}));
   }
   // User edits live beside, never inside, this generated asset directory.

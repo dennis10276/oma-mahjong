@@ -28,13 +28,17 @@
     const w=388/(r-l+.125),den=bottom-top+.159,h=((579/den<w)?596:579)/den,px=Math.min(150,w,h),rows=(Math.max(...t.map(p=>p[1]))-Math.min(...t.map(p=>p[1])))/2+1;
     return {tilePx:px,rows,ok:px>=58&&rows<=8};
   }
-  function initial(row){return {level:row.level,baseHash:row.baseHash,positions:row.base.tiles.map((p,i)=>row.problem.includes(i)?null:p.slice()),note:'',updatedAt:0};}
+  function initial(row){return {level:row.level,baseHash:row.baseHash,positions:row.proposal?copy(row.proposal.positions):row.base.tiles.map((p,i)=>row.problem.includes(i)?null:p.slice()),note:'',updatedAt:0};}
   function validate(row,input){
     if(!input||input.level!==row.level||input.baseHash!==row.baseHash)throw Error('This layout has changed. Reload the lab before saving.');
     if(!Array.isArray(input.positions)||input.positions.length!==row.base.tiles.length)throw Error('The tile list is incomplete.');
     for(const p of input.positions)if(p!==null&&(!Array.isArray(p)||p.length!==3||p.some(v=>!Number.isInteger(v)||v<0||v>32)||p[2]>7))throw Error('Use the half-tile grid and a layer from 1 to 8.');
-    return {level:row.level,baseHash:row.baseHash,positions:copy(input.positions),note:String(input.note||'').slice(0,4000),updatedAt:Date.now()};
+    const savedLayouts={};for(const source of ['base','released'])if(input.savedLayouts?.[source]){
+      const ts=input.savedLayouts[source];if(!Array.isArray(ts)||ts.length!==row.base.tiles.length||ts.some(p=>p!==null&&(!Array.isArray(p)||p.length!==3||p.some(v=>!Number.isInteger(v)||v<0||v>32)||p[2]>7)))throw Error('Saved layout is invalid');savedLayouts[source]=copy(ts);
+    }
+    return {level:row.level,baseHash:row.baseHash,positions:copy(input.positions),designSource:input.designSource==='released'?'released':'base',savedLayouts,note:String(input.note||'').slice(0,4000),updatedAt:Date.now()};
   }
-  const key=s=>JSON.stringify([s.baseHash,s.positions]);
-  return {copy,overlap,supported,propose,dropAt,footprint,initial,validate,key};
+  const designFor=(row,state)=>state.designSource==='released'?row.original:row.base;
+  const key=s=>JSON.stringify(s.designSource==='released'?[s.baseHash,s.positions,'released']:[s.baseHash,s.positions]);
+  return {copy,overlap,supported,propose,dropAt,footprint,initial,validate,key,designFor};
 });

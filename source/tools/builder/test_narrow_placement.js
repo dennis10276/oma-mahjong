@@ -1,7 +1,7 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('fs'),path=require('path');
 const B=require('./bank/narrow_placement_build'),M=require('./bank/narrow_placement_model'),F=require('./footprint');
-const rows=JSON.parse(fs.readFileSync(path.join(B.OUT,'placement-data.json'))).levels;
+const publishedRows=JSON.parse(fs.readFileSync(path.join(B.OUT,'placement-data.json'))).levels,rows=publishedRows.map(({proposal,...row})=>row);
 test('includes all eight remade boards and all 32 unresolved ordinary boards with tiles at the side',()=>{
   assert.equal(rows.length,40);assert.equal(rows.filter(r=>r.status==='remade').length,8);assert.equal(rows.filter(r=>r.status==='needs placement').length,32);
   for(const row of rows){assert.notEqual(row.level%10,0);assert.equal(new Set(row.problem).size,row.problem.length);assert.ok(row.problem.length>0);const initial=M.initial(row);assert.equal(initial.positions.filter(p=>!p).length,row.problem.length);assert.ok(initial.positions.filter(Boolean).length>0);}
@@ -22,6 +22,23 @@ test('a selected tile can move half a tile between vertical neighbours without s
 });
 test('snapshots cannot change the board version, tile count or tile coordinate types',()=>{
   const row=rows[0],s=M.initial(row);assert.throws(()=>M.validate(row,{...s,baseHash:'wrong'}));assert.throws(()=>M.validate(row,{...s,positions:s.positions.slice(1)}));s.positions[0]=[.5,0,0];assert.throws(()=>M.validate(row,s));
+});
+
+test('released edits use the released pictures and retain both workspaces through validation',()=>{
+  const row=rows.find(r=>r.level===252),draft=M.initial(row),s={...draft,designSource:'released',positions:M.copy(row.original.tiles),savedLayouts:{base:draft.positions,released:row.original.tiles},note:'Keep this outline'};
+  const stored=M.validate(row,s);assert.deepEqual(stored.savedLayouts,s.savedLayouts);assert.equal(stored.designSource,'released');assert.equal(M.designFor(row,stored),row.original);assert.notEqual(M.key(s),M.key({...s,designSource:'base'}));assert.equal(M.key(draft),JSON.stringify([draft.baseHash,draft.positions]));
+});
+
+test('revised workspaces keep special tiles on the board and do not add filler towers',()=>{
+  for(const row of publishedRows){assert.ok(row.proposal);const s=M.initial(row),special=new Set([row.original.clock.i,...row.original.obst.keys,...row.original.obst.locks,...Object.keys(row.original.obst.ice).map(Number)]);assert.deepEqual(s.positions,row.proposal.positions);for(const id of special)assert.ok(s.positions[id],`${row.level}: special ${id} parked`);for(let i=0;i<s.positions.length;i++){const p=s.positions[i];if(p&&!special.has(i))assert.ok(p[2]<=2||p[2]<=row.original.tiles[i][2],`${row.level}: new tower ${i}`);}}
+});
+
+test('252 side-access changes are reviewed by behaviour without weakening default export certification',()=>{
+  const row=publishedRows.find(r=>r.level===252),C=require('./bank/narrow_placement_check'),P=require('./bank/narrow_proof'),s={...M.initial(row),positions:M.copy(row.proposal.positions)},result=C.check(row,s);assert.equal(result.ok,true,JSON.stringify(result));assert.ok(result.certificate.notices.length);assert.ok(result.certificate.checks.includes('sameProvenClockMinimumAndSpare'));assert.ok(result.certificate.checks.includes('sameFreshlyMeasuredAuthoredBaitPrices'));assert.ok(P.certify(P.original(252),{design:result.design},P.prepare(P.original(252))).errors.includes('trapSideRelations'));
+});
+
+test('a clock route that misses its deadline gives a specific failure instead of crashing the tail checker',()=>{
+  const row=rows.find(r=>r.level===253),fixture=JSON.parse(fs.readFileSync(path.resolve(__dirname,'../../analysis/builder/footprint60/narrow/placement-lab/improvements/deadline-regression-253.json'))),result=require('./bank/narrow_placement_check').check(row,{...M.initial(row),positions:fixture.positions});assert.equal(result.status,'failed');assert.deepEqual(result.errors,['clockDeadline']);assert.match(result.message,/14 moves.*12/);
 });
 test('checker proves a known draft with exactly its pictures and rejects overlap and unfinished arrangements',()=>{
   const row=rows.find(r=>r.level===252),C=require('./bank/narrow_placement_check'),s=M.initial(row);assert.equal(C.check(row,s).status,'incomplete');

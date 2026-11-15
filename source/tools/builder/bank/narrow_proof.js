@@ -53,8 +53,8 @@ function prepare(before){
   if(ctx){const proof=ctx.prove(a,k);if(!proof.ok)throw Error('Released authored proof: '+proof.why);base.originalProof=proof;}
   return base;
 }
-function certify(before,cand,base){
-  const a=before.design,b=cand.design,errors=[],checks=[];
+function certify(before,cand,base,opts={}){
+  const a=before.design,b=cand.design,errors=[],checks=[],notices=[],reviewPolicy=opts.reviewSideChanges?'workshop-behaviour':'strict-geometry';
   for(const key of ['down','gold','obst','clock'])if(!same(a[key],b[key]))errors.push('changed:'+key);
   if(a.tiles.length!==b.tiles.length)errors.push('tileCount');
   if(b.tiles.some(t=>t.length!==3||t.some(v=>!Number.isInteger(v)||v<0)))errors.push('invalidGrid');
@@ -69,7 +69,7 @@ function certify(before,cand,base){
   const core=[...base.M].sort((x,y)=>x-y);
   if(!same(relations(E.game(a),core),relations(E.game(b),core)))errors.push('trapRelations');else checks.push('sameCoverAndThawRelationsWithinTrap');
   const sides=d=>{const g=E.game(d);return core.map(i=>['left','right'].map(side=>g.nb[side][i].filter(j=>base.M.has(j)).sort((x,y)=>x-y)));};
-  if(!same(sides(a),sides(b)))errors.push('trapSideRelations');else checks.push('sameSideRelationsWithinTrap');
+  if(!same(sides(a),sides(b))){if(opts.reviewSideChanges)notices.push('Side access changed; behavioural checks below were rerun.');else errors.push('trapSideRelations');}else checks.push('sameSideRelationsWithinTrap');
   const SR=require('../chained_special_readability'),ra=SR.measure(a),rb=SR.measure(b);
   for(const r of ra.rows.filter(q=>q.clear))if(!rb.rows.some(q=>q.tile===r.tile&&q.kind===r.kind&&q.clear))errors.push('badge:'+r.tile+':'+r.kind);
   if(!errors.some(q=>q.startsWith('badge:')))checks.push('retainedReadableSpecialBadges');
@@ -78,7 +78,7 @@ function certify(before,cand,base){
   const changed=a.faces.map((f,i)=>f!==b.faces[i]?i:null).filter(i=>i!=null);
   const coreFaces=new Set(core.map(i=>a.faces[i]));
   if(changed.some(i=>base.M.has(i)||coreFaces.has(a.faces[i])||coreFaces.has(b.faces[i])))errors.push('trapPicturesChanged');
-  if(errors.length)return {ok:false,errors,checks};
+  if(errors.length)return {ok:false,errors,checks,notices,reviewPolicy};
   const k=kOf(b);if(k!==base.k||b.solution.indexOf(b.clock.i)+1!==base.k)errors.push('clockMinimum');else checks.push('sameProvenClockMinimumAndSpare');
   const abl=ablations(b);if(abl.some(q=>q[2]==null)||!same(abl,base.abl))errors.push('specialEffects');else checks.push('sameProvenIceAndLockAblationEffects');
   const p=I.prepare({design:b,card:before.card});if(!same(p.roleDependencies,base.prep.roleDependencies))errors.push('specialRoleOrder');else checks.push('sameSpecialRolePrerequisites');
@@ -86,7 +86,7 @@ function certify(before,cand,base){
   if(!errors.some(q=>q.startsWith('baitPrice:')))checks.push('sameFreshlyMeasuredAuthoredBaitPrices');
   let ownProof=null;if(base.ctx){ownProof=base.ctx.prove(b,base.k);if(!ownProof.ok)errors.push('ownTrapProof:'+ownProof.why);else checks.push('ownAuthoredTrapProofAndGates');}
   else checks.push('olderBoardRecoveredSpecialContract');
-  return {ok:!errors.length,errors,checks,beforeHash:hash(a),afterHash:hash(b),k,spare:a.clock.n-base.k,keptClockRoute,ablations:abl,baits:prices,ownProof:ownProof?{ok:ownProof.ok,why:ownProof.why,card:ownProof.proof?.card||ownProof.card}:null,
+  return {ok:!errors.length,errors,checks,notices,reviewPolicy,beforeHash:hash(a),afterHash:hash(b),k,spare:a.clock.n-base.k,keptClockRoute,ablations:abl,baits:prices,ownProof:ownProof?{ok:ownProof.ok,why:ownProof.why,card:ownProof.proof?.card||ownProof.card}:null,
     scope:'Preserves trap cover/thaw relations, special prerequisites/effects, authored baits and readable badges. Filler accessibility and the winning tail order may change.'};
 }
 module.exports={ROOT,DIR,original,prepare,certify,context,relations,kOf,ablations,hash};
