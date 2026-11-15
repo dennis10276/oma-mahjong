@@ -31,13 +31,15 @@
   function initial(row){return {level:row.level,baseHash:row.baseHash,positions:row.proposal?copy(row.proposal.positions):row.base.tiles.map((p,i)=>row.problem.includes(i)?null:p.slice()),note:'',updatedAt:0};}
   function validate(row,input){
     if(!input||input.level!==row.level||input.baseHash!==row.baseHash)throw Error('This layout has changed. Reload the lab before saving.');
-    if(!Array.isArray(input.positions)||input.positions.length!==row.base.tiles.length)throw Error('The tile list is incomplete.');
+    const active=input.designSource==='released'?row.original:row.base;
+    if(!Array.isArray(input.positions)||input.positions.length!==active.tiles.length)throw Error('The tile list is incomplete.');
     for(const p of input.positions)if(p!==null&&(!Array.isArray(p)||p.length!==3||p.some(v=>!Number.isInteger(v)||v<0||v>32)||p[2]>7))throw Error('Use the half-tile grid and a layer from 1 to 8.');
     const savedLayouts={};for(const source of ['base','released'])if(input.savedLayouts?.[source]){
-      const ts=input.savedLayouts[source];if(!Array.isArray(ts)||ts.length!==row.base.tiles.length||ts.some(p=>p!==null&&(!Array.isArray(p)||p.length!==3||p.some(v=>!Number.isInteger(v)||v<0||v>32)||p[2]>7)))throw Error('Saved layout is invalid');savedLayouts[source]=copy(ts);
+      const ts=input.savedLayouts[source],design=source==='released'?row.original:row.base;if(!Array.isArray(ts)||ts.length!==design.tiles.length||ts.some(p=>p!==null&&(!Array.isArray(p)||p.length!==3||p.some(v=>!Number.isInteger(v)||v<0||v>32)||p[2]>7)))throw Error('Saved layout is invalid');savedLayouts[source]=copy(ts);
     }
-    const erased=[...new Set((Array.isArray(input.erased)?input.erased:[]).filter(i=>Number.isInteger(i)&&i>=0&&i<row.base.tiles.length))].sort((a,b)=>a-b);
-    return {level:row.level,baseHash:row.baseHash,positions:copy(input.positions),erased,designSource:input.designSource==='released'?'released':'base',savedLayouts,note:String(input.note||'').slice(0,4000),updatedAt:Date.now()};
+    const erased=[...new Set((Array.isArray(input.erased)?input.erased:[]).filter(i=>Number.isInteger(i)&&i>=0&&i<active.tiles.length))].sort((a,b)=>a-b);
+    const savedErased={};for(const source of ['base','released'])if(Array.isArray(input.savedErased?.[source])){const n=(source==='released'?row.original:row.base).tiles.length;savedErased[source]=[...new Set(input.savedErased[source].filter(i=>Number.isInteger(i)&&i>=0&&i<n))].sort((a,b)=>a-b);}
+    return {level:row.level,baseHash:row.baseHash,positions:copy(input.positions),erased,designSource:input.designSource==='released'?'released':'base',savedLayouts,savedErased,note:String(input.note||'').slice(0,4000),updatedAt:Date.now()};
   }
   const designFor=(row,state)=>state.designSource==='released'?row.original:row.base;
   const key=s=>JSON.stringify(s.designSource==='released'?[s.baseHash,s.positions,'released',s.erased||[]]:[s.baseHash,s.positions,s.erased||[]]);

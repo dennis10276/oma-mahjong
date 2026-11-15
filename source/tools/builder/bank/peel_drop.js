@@ -228,9 +228,9 @@ function attempt(before, v0, base, protectedFaces, special, seed = 0, opts = {})
   const A = before.design;
   let prefix = A.solution.slice(0, A.solution.indexOf(A.clock.i) + 1).map(mp);
   const plays = () => { if (prefix.some(i => i == null)) return false; const g = E.game(clone({ ...b, solution: [] }), { strict: true }); let st = E.start(g); for (const t of prefix) { if (!E.legal(g, st).includes(t)) return false; st = E.step(g, st, t); if (!st) return false; } return true; };
-  if (!plays()) { const cs = E.clockShortest(E.game(clone(b), { strict: true }), { nodes: 800000, ms: 10000 }); if (!cs || cs.unsure) return { why: 'clock route unproven' }; prefix = E.flatten(cs.path); }
+  if (!plays()) { const cs = E.clockShortest(E.game(clone(b), { strict: true }), { nodes: opts.clockNodes??800000, ms: opts.clockMs??10000 }); if (!cs || cs.unsure) return { why: 'clock route unproven' }; prefix = E.flatten(cs.path); }
   const rest = a.solution.filter(i => map.has(i)).map(mp).filter(i => !prefix.includes(i));
-  const x = { ...b, solution: prefix.concat(rest) }; let r; try { r = Tl.cappedTail(x, 3, { peek: false, nodes: 1500000, ms: 20000 }); } catch (e) { return { why: 'clock route does not play' }; }
+  const x = { ...b, solution: prefix.concat(rest) }; let r; try { r = Tl.cappedTail(x, 3, { peek: false, nodes: opts.tailNodes??1500000, ms: opts.tailMs??20000 }); } catch (e) { return { why: 'clock route does not play' }; }
   if (r.result !== 'win') return { why: 'finish ' + r.result };
   b.solution = r.solution;
   if (!E.replay(b, b.solution, { strict: true }).ok) return { why: 'strict replay' };
@@ -242,7 +242,11 @@ function attempt(before, v0, base, protectedFaces, special, seed = 0, opts = {})
   const k = P.kOf(b); if (k !== base.k) why.push('clockMinimum ' + base.k + ' -> ' + k);
   const ablB = P.ablations(b).map(([kind, i, kk]) => [kind, i, kk]), ablA = base.abl.map(([kind, i, kk]) => [kind, mp(i), kk]);
   if (!same(ablA, ablB)) why.push('specialEffects');
-  const depsB = I.prepare({ design: b, card: before.card }).roleDependencies, depsA = base.prep.roleDependencies.map(([g, ps]) => [mp(g), ps.map(mp).sort((p, q) => p - q)]);
+  // Cards use source tile IDs. After deletion, their extra original-clock role
+  // must follow the same map as the board; otherwise an unrelated filler is
+  // accidentally added as a special prerequisite and sound moves are rejected.
+  const cardB=before.card?.trap?.mechanism?.originalClock!=null?{...before.card,trap:{...before.card.trap,mechanism:{...before.card.trap.mechanism,originalClock:mp(before.card.trap.mechanism.originalClock)}}}:before.card;
+  const depsB = I.prepare({ design: b, card: cardB }).roleDependencies, depsA = base.prep.roleDependencies.map(([g, ps]) => [mp(g), ps.map(mp).sort((p, q) => p - q)]);
   const norm = L => L.map(([g, ps]) => [g, ps.slice().sort((p, q) => p - q)]).sort((p, q) => p[0] - q[0]);
   if (!same(norm(depsA), norm(depsB))) why.push('specialRoleOrder');
   const prices = [];
@@ -257,7 +261,7 @@ function attempt(before, v0, base, protectedFaces, special, seed = 0, opts = {})
   const ra = SR.measure(A), rb = SR.measure(b);
   for (const q of ra.rows.filter(q => q.clear)) if (!rb.rows.some(z => z.tile === mp(q.tile) && z.kind === q.kind && z.clear)) why.push('badge ' + q.kind);
   if (SEP.closeTwins(b).visible > base.twins) why.push('visibleTwins');
-  if (why.length) return { why: why.join(', ') };
+  if (why.length) return { why: why.join(', '), ...(opts.keepNearMiss?{nearMiss:{design:b,keep,dropped:[...D],footprint:fp,prices,k}}:{}) };
   return { design: b, dropped: [...D], moved: v.moved || 0, picturesExchanged: faces.filter((f, i) => f !== a.faces[i]).length / 2, footprint: fp, prices, k, map: keep };
 }
 

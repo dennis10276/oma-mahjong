@@ -1,0 +1,38 @@
+'use strict';
+// Deliberate per-shape constructions. Upper trap parts move with the support
+// they need; broad central gaps take ordinary finish tiles. Every result is
+// independently checked against the released mechanics and authored baits.
+const fs=require('fs'),path=require('path'),P=require('./narrow_proof'),PD=require('./peel_drop'),Q=require('./finish_ten_proof'),E=require('../engine'),Tail=require('./tail'),SEP=require('./separate'),Match=require('./finish_ten_match'),G=require('./narrow_methods');
+const OUT=path.resolve(P.DIR,'../../finish-ten'),copy=x=>structuredClone(x);
+function recipe(level){const a=P.original(level).design,T=copy(a.tiles),set=(i,x,y,z)=>T[i]=[x,y,z];
+  if(level===267){for(const [i,x,y,z]of[[60,2,4,1],[51,5,10,0],[83,9,4,2],[61,7,10,0],[55,2,8,1],[53,4,8,1],[54,6,8,1],[49,8,8,1],[56,10,8,1],[71,2,12,1],[40,8,12,0],[72,10,12,1]])set(i,x,y,z);return {name:'Trim ordinary outer bases; rebuild the five supporting cells under the unchanged central trap; use the waist for two finish tiles',tiles:T,drop:[0,6,13,19,26,32,50,73,74,37]};}
+  if(level===288){for(const [i,x,y,z]of[[6,6,6,0],[0,4,4,1],[35,4,4,0],[16,6,4,0],[56,10,4,1],[23,9,8,0],[24,11,8,0],[52,10,8,1],[65,4,8,0],[75,4,8,1]])set(i,x,y,z);return {name:'Remove the ordinary bottom finish row; bring the right key roof inward as a supported half-offset stack and fill the middle low',tiles:T,drop:a.tiles.flatMap((p,i)=>p[1]===14?[i]:[])};}
+  if(level===279){for(const p of T)if(p[2]===0&&(p[1]===8||[4,12].includes(p[1])&&p[0]>=8))p[0]--;for(const[i,x,y,z]of[[42,8,0,0],[1,2,0,0],[41,4,0,0],[18,6,14,0]])set(i,x,y,z);return {name:'Retain every upper trap piece and picture; half-align three support rows, put the free corner key in the empty crown and move the last ninth-row filler into the crown',tiles:T,drop:[]};}
+  if(level===278){for(const p of T)if(p[2]===0&&([0,4,8].includes(p[1])&&p[0]>=10||p[1]===12))p[0]--;set(22,6,6,0);return {name:'Keep the nested lower trap intact; align its full supporting row half a tile inward and move its spare ordinary base into the middle',tiles:T,drop:[]};}
+  if(level===290){for(const i of[44,45,46,47,48,49,77])T[i][1]=0;for(const p of T)if(p[2]===0&&[6,10].includes(p[1]))p[0]--;for(const[i,x,y,z]of[[37,1,14,0],[39,3,14,0],[40,5,14,0],[41,7,14,0],[42,9,14,0],[43,11,14,0]])set(i,x,y,z);return {name:'Transplant the complete bottom key-and-clock-partner row into the crown; keep its side blocks and bring three ordinary support rows half a tile inward',tiles:T,drop:[0,1,2,3,4,11,24,38]};}
+  if(level===291){for(const p of T)if(p[2]===0&&(p[1]<=8||p[0]>=10))p[0]--;for(const[i,x,y,z]of[[81,5,11,1],[47,5,10,0],[48,5,12,0],[80,9,13,1],[82,7,13,1],[49,7,12,0],[50,7,14,0],[6,11,2,0],[13,11,0,0],[72,9,3,1],[62,6,6,2]])set(i,x,y,z);return{name:'Fold both ninth-row feet into the hollow waist, retain the left thaw-to-lock dependency, and half-align the full upper supporting rows; keep the frozen clock support below its visible badge edge',tiles:T,drop:[0,7,14,21,28,83]};}
+  if(level===298){for(const i of[25,26,49,51,64,53,76,72,62,61,63,78,77,83,31,45,38,39])T[i][1]-=4;
+    for(const[i,x,y,z]of[[17,1,10,0],[18,3,10,0],[19,6,8,0],[42,3,12,1],[55,1,12,1],[43,5,12,1],[68,4,12,0],[16,6,4,0],[56,10,4,1],[34,4,4,0],[35,4,4,1],[6,4,4,2],[65,10,12,0],[75,6,4,1],[23,9,8,0],[24,11,8,0],[52,10,8,1]])set(i,x,y,z);
+    // The fourth key picture (54) must retain BOTH covers. Removing 75 lets
+    // the wrong opening key be paired with 81 and cheaply recovered via 54.
+    for(const[i,x,y,z]of[[54,8,12,1],[65,10,12,1],[71,7,12,2],[75,9,12,2],[34,10,12,0],[23,4,4,0],[24,10,8,0],[15,6,4,0],[16,11,4,0],[56,11,4,1],[46,6,12,1],[43,6,4,1]])set(i,x,y,z);
+    // Keep the cover's left side blocked too: 68 was an ordinary-looking
+    // tile, but its side block makes the fourth key picture expensive.
+    for(const[i,x,y,z]of[[68,5,12,2],[42,4,12,1],[35,4,12,0],[6,4,4,1]])set(i,x,y,z);
+    set(55,2,12,1);set(6,3,12,2);
+    return{name:'Translate the connected clock, melt route, key roof and its intended thaw neighbour together into the waist; retain both covers over the fourth key picture and trim four finish corners',tiles:T,drop:[36,37,40,41]};}
+  return null;
+}
+function reshape251(){const r=JSON.parse(fs.readFileSync(path.join(OUT,'near-miss/level-251.json'))),d=copy(r.design),id=old=>r.keep.indexOf(old);for(const[old,p]of[[62,[5,7,0]],[74,[5,9,0]],[56,[2,13,1]],[48,[4,13,1]],[49,[6,13,1]],[57,[8,13,1]],[63,[10,13,1]],[55,[10,11,1]],[75,[10,12,2]]])d.tiles[id(old)]=p;for(let i=0;i<d.tiles.length;i++){const p=r.design.tiles[i];if(p[0]===11&&p[2]>0&&p[1]>1)d.tiles[i][0]=10;}if(!E.replay(d,d.solution,{strict:true}).ok){const t=Tail.cappedTail(d,3,{peek:false,nodes:2000000,ms:10000});if(t.result!=='win')return{level:251,ok:false,why:'finish:'+t.result};d.solution=t.solution;}const before=P.original(251),base=P.prepare(before);let cert=Q.certify(before,d,r.keep,base);if(cert.errors.some(e=>e.startsWith('authoredProof:staticGates'))){const f=Match.repairFreeDown(before,d,r.keep,base);if(f.ok){Object.assign(d,f.design);cert=Q.certify(before,d,r.keep,base);}}return {level:251,ok:cert.ok,how:'Keep the full clock bar; stagger the lower wing half a tile inward and move two ordinary finish caps into the empty middle',design:d,keep:r.keep,dropped:r.dropped,certificate:cert};}
+function reshape(level,ms=180000){if(level===251)return reshape251();const before=P.original(level),base=P.prepare(before),a=before.design,special=new Set([a.clock.i,...a.obst.keys,...a.obst.locks,...Object.keys(a.obst.ice).map(Number)]),core=new Set([...special,...(before.card?.trap?.baits||[]).flatMap(b=>b.tiles)]),faces=new Set([...core].map(i=>a.faces[i])),v=recipe(level),start=Date.now(),fails={};
+  const live=v.tiles.filter((_,i)=>!v.drop.includes(i));if(!G.valid(live)){const Mo=require('./narrow_placement_model'),bad=[];for(let i=0;i<v.tiles.length;i++)if(!v.drop.includes(i)&&!Mo.supported(live.filter(p=>p!==v.tiles[i]),v.tiles[i]))bad.push([i,v.tiles[i]]);return {level,ok:false,why:'support/overlap',unsupported:bad,recipe:v};}
+  for(let seed=0;seed<40&&Date.now()-start<ms;seed++){let r=PD.attempt(before,v,{...base,M:core},faces,special,seed,{keepNearMiss:true,clockMs:20000,clockNodes:3000000,tailMs:20000,tailNodes:3000000});
+    if(r.why==='visibleTwins'&&r.nearMiss)r={...r.nearMiss,map:r.nearMiss.keep};
+    if(!r.design){fails[r.why]=(fails[r.why]||0)+1;continue;}const keep=r.map,cert0=Q.certify(before,r.design,keep,base);let d=r.design,cert=cert0;
+    if(cert.errors.some(e=>e.startsWith('authoredProof:staticGates'))){const repair=Match.repairFreeDown(before,d,keep,base);if(repair.ok){d=repair.design;cert=Q.certify(before,d,keep,base);}}
+    if(cert.errors.length===1&&cert.errors[0]==='visibleTwins'){const freeze=keep.flatMap((old,i)=>faces.has(a.faces[old])?[i]:[]),sep=SEP.separate(d,{seed,wallMs:10000,freeze,k:base.k,validate:x=>{const c=Q.certify(before,x,keep,base);return {ok:c.ok,why:c.errors.join(',')};}});d=sep.design;cert=Q.certify(before,d,keep,base);}
+    if(cert.ok)return {level,ok:true,how:v.name,design:d,keep,dropped:r.dropped,certificate:cert,seed,ms:Date.now()-start};fails[cert.errors.join(',')]=(fails[cert.errors.join(',')]||0)+1;
+  }return {level,ok:false,how:v.name,failures:fails,ms:Date.now()-start};
+}
+if(require.main===module){fs.mkdirSync(path.join(OUT,'candidates'),{recursive:true});for(const n of(process.argv[2]||'267,288,298').split(',').map(Number)){const r=reshape(n);fs.writeFileSync(path.join(OUT,'candidates','level-'+n+'.json'),JSON.stringify(r,null,2)+'\n');console.log(JSON.stringify({...r,design:undefined,keep:undefined,certificate:undefined,recipe:undefined}));}}
+module.exports={recipe,reshape};

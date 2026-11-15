@@ -73,7 +73,8 @@ function expert(design, opts = {}) {
   let s0 = E.start(g); const ci = design.solution.indexOf(design.clock.i); for (const t of design.solution.slice(0, ci + 1)) s0 = E.step(g, s0, t);
   const hist = [0, 0, 0, 0]; let steps = 0, parks = 0, danger = 0, lost = 0, done = 0; const parkAt = [0, 0, 0]; let wrongSum = 0, wrongN = 0;
   const depth = (alive, j) => { const seen = new Set(), todo = [j]; while (todo.length) for (const k of g.nb.above[todo.pop()]) if (alive[k] && !seen.has(k)) { seen.add(k); todo.push(k); } return seen.size; };
-  const safe = s2 => E.winnable(g, s2, per).result !== 'lose';
+  let unresolvedChecks=0;
+  const verdict = s2 => {const r=E.winnable(g,s2,per).result;if(r==='unknown')unresolvedChecks++;return r;};
   const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rand() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
   for (let p = 0; p < playouts; p++) {
     let s = s0, ok = true; const h = [0, 0, 0, 0], pa = [0, 0, 0]; let st = 0, pk = 0, dg = 0, ws = 0, wn = 0;
@@ -91,9 +92,9 @@ function expert(design, opts = {}) {
       for (const cls of [matches, pairs, singles]) {
         if (!cls.length) continue;
         let bad = 0;
-        for (const acts of cls) { const s2 = tryStep(acts); if (s2 && safe(s2)) { next = s2; if (cls === singles) { pk++; pa[Math.min(2, s.tray.length)]++; } break; } bad++; }
+        for (const acts of cls) { const s2 = tryStep(acts),v=s2?verdict(s2):'lose';if(s2&&(v==='win'||!opts.requireProof&&v!=='lose')){next=s2;if(cls===singles){pk++;pa[Math.min(2,s.tray.length)]++;}break;}if(v==='lose')bad++; }
         // at a park: how many of the tiles that could be parked lose the game (a choice that matters)
-        if (cls === singles && next && cls.length > 1 && opts.wrong !== false) { let w = 0; for (const acts of cls) { const s2 = tryStep(acts); if (!s2 || !safe(s2)) w++; } ws += w / cls.length; wn++; }
+        if (cls === singles && next && cls.length > 1 && opts.wrong !== false) { let w=0,known=0;for(const acts of cls){const s2=tryStep(acts),v=s2?verdict(s2):'lose';if(!opts.requireProof||v!=='unknown'){known++;if(v==='lose')w++;}}if(known){ws+=w/known;wn++;} }
         if (first && bad) dg++;
         first = false;
         if (next) break;
@@ -105,6 +106,6 @@ function expert(design, opts = {}) {
     done++; for (let i = 0; i < 4; i++) hist[i] += h[i]; for (let i = 0; i < 3; i++) parkAt[i] += pa[i]; steps += st; parks += pk; danger += dg; wrongSum += ws; wrongN += wn;
   }
   const sh = hist.map(x => steps ? +(x / steps).toFixed(3) : 0);
-  return { games: done, lostGames: lost, waiting: sh, mean: steps ? +((hist[1] + 2 * hist[2] + 3 * hist[3]) / steps).toFixed(2) : 0, twoPlus: +(sh[2] + sh[3]).toFixed(3), parks: done ? +(parks / done).toFixed(1) : 0, parkAt: parkAt.map(x => done ? +(x / done).toFixed(1) : 0), wrongPark: wrongN ? +(wrongSum / wrongN).toFixed(2) : 0, danger: steps ? +(danger / steps).toFixed(3) : 0, decisions: done ? Math.round(steps / done) : 0 };
+  return { games: done, lostGames: lost, unresolvedChecks, requireProof:!!opts.requireProof, waiting: sh, mean: steps ? +((hist[1] + 2 * hist[2] + 3 * hist[3]) / steps).toFixed(2) : 0, twoPlus: +(sh[2] + sh[3]).toFixed(3), parks: done ? +(parks / done).toFixed(1) : 0, parkAt: parkAt.map(x => done ? +(x / done).toFixed(1) : 0), wrongPark: wrongN ? +(wrongSum / wrongN).toFixed(2) : 0, danger: steps ? +(danger / steps).toFixed(3) : 0, decisions: done ? Math.round(steps / done) : 0 };
 }
 module.exports.expert = expert;

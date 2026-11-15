@@ -1,0 +1,8 @@
+'use strict';
+// Separate natural visible offers from a uniform choice among all legal tiles.
+// This remains a structural description, not a model of a player's choices.
+const fs=require('fs'),path=require('path'),P=require('./narrow_proof'),E=require('../engine'),D=require('../loop/detour');
+const ROOT=path.resolve(P.DIR,'../../finish-ten');
+function offers(d){const g=E.game(d),s=E.start(g),moves=D.temptingMoves(g,s,{singles:true}).filter(m=>!m.peek),special=new Set([d.clock.i,...d.obst.keys]);for(const i of E.legal(g,s).filter(Number.isInteger))if(special.has(i)&&!moves.some(m=>m.take.length===1&&m.take[0]===i))moves.push({kind:i===d.clock.i?'clock':'key',take:[i]});const rows=moves.map(m=>{let x=s;try{for(const i of m.take)x=x&&E.step(g,x,i);}catch{x=null;}return{kind:m.kind,take:m.take,result:x?E.winnable(g,x,{nodes:2000000,ms:5000}).result:'lose'};});return{total:rows.length,win:rows.filter(x=>x.result==='win').length,lose:rows.filter(x=>x.result==='lose').length,unknown:rows.filter(x=>x.result==='unknown').length,rows};}
+function run(){const pack=JSON.parse(fs.readFileSync(path.join(ROOT,'proposed/pack.json'))),rows=pack.rows.map(r=>{const before=offers(P.original(r.level).design),after=offers(r.draft.design),out={level:r.level,before,after};console.log(JSON.stringify({level:r.level,before:[before.win,before.lose,before.unknown],after:[after.win,after.lose,after.unknown]}));return out;});fs.writeFileSync(path.join(ROOT,'proposed/opening-offers.json'),JSON.stringify({definition:'Free face-up pairs and visible-twin singles offered by detour.js, plus free keys/clock; no hidden peek pairs. Descriptive, not calibrated human choices.',rows},null,2)+'\n');}
+if(require.main===module)run();module.exports={offers,run};

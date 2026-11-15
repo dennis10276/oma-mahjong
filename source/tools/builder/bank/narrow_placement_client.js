@@ -1,9 +1,9 @@
 'use strict';
 (async function(){
-  const M=window.NarrowPlacement,KEY='omamj.tile-placement.v1',clone=M.copy;
+  const M=window.NarrowPlacement,clone=M.copy;
   __mj.S.level=Math.max(__mj.S.level,201);__mj.S.sunSeen=true;__mj.S.theme='sunflower';applyTheme();localStorage.setItem('omamj.v1',JSON.stringify(__mj.S));
   const [data,saved]=await Promise.all([fetch('placement-data.json').then(r=>r.json()),fetch('/api/state').then(r=>r.json())]);
-  const rows=data.levels,local=(()=>{try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch{return {}}})(),states={},checks={...saved.checks},pendingChecks=new Map();
+  const KEY=data.storageKey||'omamj.tile-placement.v1',rows=data.levels,local=(()=>{try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch{return {}}})(),states={},checks={...saved.checks},pendingChecks=new Map();
   for(const row of rows)if(row.proposal?.check?.ok&&(!checks[row.level]||!checks[row.level].checkerVersion))checks[row.level]={...row.proposal.check,checkerVersion:2,placementKey:M.key({baseHash:row.baseHash,positions:row.proposal.positions})};
   for(const row of rows){const disk=saved.levels[row.level],browser=local[row.level];states[row.level]=[disk,browser].filter(s=>s&&s.baseHash===row.baseHash).sort((a,b)=>b.updatedAt-a.updatedAt)[0]||M.initial(row);}
   let row=rows.find(r=>r.level===local.selected)||rows[0],state=states[row.level],selected=null,viewOriginal=false,pickMode=false,history=[],drag=null,geometry=null,saveTimer=null,saveChain=Promise.resolve(),change=0,zoom=1;
@@ -26,6 +26,7 @@
   let played=null,liveView=null;
   const erased=()=>(state.erased=state.erased||[]),livePos=()=>M.live(state.positions,erased());
   const activeDesign=()=>M.designFor(row,state),face=id=>Tiles.boardFace(__mj.S.theme,activeDesign().faces[id]);
+  const trap=()=>state.designSource==='released'?(row.originalTrap||row.trap):row.trap;
   function remember(){local[row.level]=state;local.selected=row.level;localStorage.setItem(KEY,JSON.stringify(local));}
   function snapshot(){return clone(state);}
   function changed(){state.updatedAt=Date.now();change++;remember();checks[row.level]=checks[row.level]||null;render();clearTimeout(saveTimer);const snap=snapshot();saveTimer=setTimeout(()=>save(snap).catch(()=>{}),300);}
@@ -48,11 +49,11 @@
     $('peLevel').value=row.level;$('peKind').textContent=state.designSource==='released'?'Editing the released starting layout':isProposal?(row.proposal.status==='passed'?'Checked proposal':state.positions.some(p=>!p)?'Unfinished proposal':'Released shape · compact version open'):'Your editable draft';
     $('peRevision').textContent=row.proposal?'Proposed revision: '+row.proposal.review:'';
     const missing=state.positions.filter((p,i)=>!p&&!erased().includes(i)).length,fp=M.footprint(livePos());$('peSize').textContent=`${fp.tilePx.toFixed(1)} px · ${fp.rows} rows${missing?' · '+missing+' to place':''}${erased().length?' · '+erased().length+' erased':''}`;$('peSize').style.color=fp.ok?'#25684c':'#a14e27';
-    $('peSelected').textContent=selected==null?'Drag any tile, or pick one at the side':`Selected: tile ${selected}${row.trap.includes(selected)?' · trap tile':''}`;
+    $('peSelected').textContent=selected==null?'Drag any tile, or pick one at the side':`Selected: tile ${selected}${trap().includes(selected)?' · trap tile':''}`;
     $('peReturn').hidden=selected==null||viewOriginal;
     $('peDraft').textContent=row.proposal?'Use improved proposal':row.status==='remade'?'Use narrowed draft':'Show proposed placement';$('peOriginal').textContent=state.designSource==='released'?'Back to my draft':'Edit released';$('pePick').classList.toggle('on',pickMode);$('peUndo').disabled=!history.length;
     $('peTrayTitle').textContent=`Tiles at the side · ${missing} left`;
-    const ids=[...new Set([...(row.proposal?.problem||row.problem),...state.positions.map((p,i)=>!p?i:null).filter(i=>i!=null),...erased(),...(selected!=null?[selected]:[])])].sort((a,b)=>Number(!!state.positions[a])-Number(!!state.positions[b])||a-b);
+    const ids=[...new Set([...(state.designSource==='released'?[]:row.proposal?.problem||row.problem),...state.positions.map((p,i)=>!p?i:null).filter(i=>i!=null),...erased(),...(selected!=null?[selected]:[])])].sort((a,b)=>Number(!!state.positions[a])-Number(!!state.positions[b])||a-b);
     const incomplete=checks[row.level]?.placementKey===M.key(state)&&checks[row.level]?.status==='incomplete';
     tray.innerHTML=ids.map(id=>`<button class="pe-choice ${state.positions[id]?'placed':incomplete?'pe-needs-placement':''} ${selected===id?'selected':''}" data-choice="${id}" title="Tile ${id}${role(id)?' · '+role(id):''}"><div class="pe-mini">${face(id)}</div><small>${id} · ${erased().includes(id)?'erased · click to restore':state.positions[id]?'placed':'side tray'}${activeDesign().down.includes(id)?' · back':''}</small></button>`).join('');
     if($('peNote')!==document.activeElement)$('peNote').value=state.note;
@@ -67,7 +68,7 @@
     surface.innerHTML=positions.map((p,id)=>({p,id})).filter(t=>t.p&&!erased().includes(t.id)&&!(liveView&&liveView.gone.has(t.id))).sort((a,b)=>a.p[2]-b.p[2]||a.p[1]-b.p[1]||a.p[0]-b.p[0]).map(({p,id})=>{
       const [x,y,z]=p,left=ox+(x/2-z*.14)*tw,top=oy+(y*.62-z*.14)*tw;
       const flagged=checks[row.level]?.placementKey===M.key(state)&&checks[row.level]?.tiles?.includes(id);
-      return `<div class="tile pe-tile ${(liveView?liveView.down.has(id):design.down.includes(id))?'back':''} ${(row.proposal?.problem||row.problem).includes(id)?'pe-problem':''} ${selected===id?'pe-selected':''}" data-tile="${id}" style="left:${left}px;top:${top}px;width:${tw-1.5}px;height:${tw*1.24-1.5}px;z-index:${z*10000+y*100+x}${flagged?';outline:4px solid #ec634a':''}"><div class="face">${Tiles.boardFace(__mj.S.theme,design.faces[id])}</div><span class="pe-id">${id}</span>${row.trap.includes(id)?'<span class="pe-trap-dot"></span>':''}${role(id)?'<span class="pe-role">'+role(id)+'</span>':''}</div>`;
+      return `<div class="tile pe-tile ${(liveView?liveView.down.has(id):design.down.includes(id))?'back':''} ${(row.proposal?.problem||row.problem).includes(id)?'pe-problem':''} ${selected===id?'pe-selected':''}" data-tile="${id}" style="left:${left}px;top:${top}px;width:${tw-1.5}px;height:${tw*1.24-1.5}px;z-index:${z*10000+y*100+x}${flagged?';outline:4px solid #ec634a':''}"><div class="face">${Tiles.boardFace(__mj.S.theme,design.faces[id])}</div><span class="pe-id">${id}</span>${trap().includes(id)?'<span class="pe-trap-dot"></span>':''}${role(id)?'<span class="pe-role">'+role(id)+'</span>':''}</div>`;
     }).join('');
   }
   function target(event,id=selected,grab=null){
@@ -101,10 +102,10 @@
   });
   root.addEventListener('pointercancel',()=>{drag=null;clearPreview();});root.addEventListener('pointerleave',()=>{if(!drag)clearPreview();});
   $('peLevel').onchange=()=>{liveView=null;clearTimeout(saveTimer);save(snapshot()).catch(()=>{});row=rows.find(r=>r.level===Number($('peLevel').value));state=states[row.level];selected=null;viewOriginal=false;pickMode=false;history=[];remember();$('peSaved').textContent=state.updatedAt?'Saved arrangement loaded':'Ready';render();};
-  $('peOriginal').onclick=()=>{beforeChange();state.savedLayouts=state.savedLayouts||{};const source=state.designSource||'base',next=source==='released'?'base':'released';state.savedLayouts[source]=clone(state.positions);state.designSource=next;state.positions=clone(state.savedLayouts[next]||(next==='released'?row.original.tiles:M.initial(row).positions));selected=null;viewOriginal=false;changed();hint(next==='released'?'The released layout is editable. Your draft is kept separately; use Back to my draft to return.':'Your draft is restored. Edits made from the released board are kept too.');};
-  $('peDraft').onclick=()=>{beforeChange();state.savedLayouts=state.savedLayouts||{};state.savedLayouts[state.designSource||'base']=clone(state.positions);state.designSource='base';state.positions=clone(row.proposal?.positions||row.base.tiles);viewOriginal=false;changed();hint(row.proposal?.message||(row.status==='remade'?'Loaded the earlier narrowed draft. Orange tiles can be moved away from its towers.':'This is only a proposed placement. It has not passed the trap checks.'));};
-  $('peReset').onclick=()=>{beforeChange();state.positions=state.designSource==='released'?clone(row.original.tiles):M.initial(row).positions;selected=null;viewOriginal=false;changed();};
-  $('peUndo').onclick=()=>{if(history.length){const prior=history.pop();state.positions=prior.positions;state.erased=prior.erased||[];state.note=prior.note;state.designSource=prior.designSource||'base';state.savedLayouts=clone(prior.savedLayouts||{});viewOriginal=false;changed();}};
+  $('peOriginal').onclick=()=>{beforeChange();state.savedLayouts=state.savedLayouts||{};const source=state.designSource||'base',next=source==='released'?'base':'released';state.savedLayouts[source]=clone(state.positions);state.savedErased=state.savedErased||{};state.savedErased[source]=clone(erased());state.designSource=next;state.positions=clone(state.savedLayouts[next]||(next==='released'?row.original.tiles:M.initial(row).positions));state.erased=clone(state.savedErased[next]||[]);selected=null;viewOriginal=false;changed();hint(next==='released'?'The released layout is editable. Your draft is kept separately; use Back to my draft to return.':'Your draft is restored. Edits made from the released board are kept too.');};
+  $('peDraft').onclick=()=>{beforeChange();state.savedLayouts=state.savedLayouts||{};state.savedLayouts[state.designSource||'base']=clone(state.positions);state.savedErased=state.savedErased||{};state.savedErased[state.designSource||'base']=clone(erased());state.erased=[];state.designSource='base';state.positions=clone(row.proposal?.positions||row.base.tiles);viewOriginal=false;changed();hint(row.proposal?.message||(row.status==='remade'?'Loaded the earlier narrowed draft. Orange tiles can be moved away from its towers.':'This is only a proposed placement. It has not passed the trap checks.'));};
+  $('peReset').onclick=()=>{beforeChange();state.erased=[];state.positions=state.designSource==='released'?clone(row.original.tiles):M.initial(row).positions;selected=null;viewOriginal=false;changed();};
+  $('peUndo').onclick=()=>{if(history.length){const prior=history.pop();state.positions=prior.positions;state.erased=prior.erased||[];state.note=prior.note;state.designSource=prior.designSource||'base';state.savedLayouts=clone(prior.savedLayouts||{});state.savedErased=clone(prior.savedErased||{});viewOriginal=false;changed();}};
   $('pePick').onclick=()=>{pickMode=true;selected=null;render();hint('Click any tile on the board to move it. Blue-marked trap tiles are included in the checks.');};
   $('peErase').onclick=()=>{if(selected==null||erased().includes(selected))return;beforeChange();state.erased=[...erased(),selected];const id=selected;selected=null;changed();hint('Tile '+id+' erased. Erase in pairs if you can; the check pairs the pictures up. Click it at the side to restore it.');};
   $('peReturn').onclick=()=>{if(selected!=null){beforeChange();state.positions[selected]=null;changed();}};
@@ -134,9 +135,7 @@
   $('pePlay').onclick=async()=>{await save().catch(()=>{});if(state.positions.some((p,i)=>!p&&!erased().includes(i)))return;
     if(erased().length){$('peResult').textContent='Making the arrangement playable…';try{const r=await fetch('/api/playable',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(snapshot())}),out=await r.json();if(!r.ok||!out.design)throw Error(out.error||out.why||'not playable');startGame(out.design,300000+row.level,'your arrangement',out.keep);}catch(e){$('peResult').textContent='Cannot play yet: '+e.message;}return;}
     const checked=checks[row.level],source=checked?.ok&&checked.placementKey===M.key(state)?checked.design:activeDesign(),design={...clone(source),tiles:clone(state.positions)},id=290000+row.level;
-    let idea=LAB_IDEAS.ideas.find(i=>i.id===id);if(!idea){idea={id,lv:row.level,title:'Your placement',tiles:design.tiles.length,idea:'Your saved arrangement',board:design};LAB_IDEAS.ideas.push(idea);}else idea.board=design;
-    __mj.S.theme='sunflower';applyTheme();if(!__mj.S.name)__mj.S.name='Placement lab';document.querySelector('#labPanel').classList.add('hidden');root.hidden=true;back.hidden=false;
-    begin({mode:'lab',lab:id,key:'X'+id,track:'',level:row.level,title:'Level '+row.level,fixedAspect:1.6,makeSpec:()=>({tiles:design.tiles.map(([x,y,z])=>({x,y,z})),kinds:new Set(design.faces).size,seed:id,diff:Layouts.difficultyFor(Layouts.effLevel(201)),made:design})});
+    startGame(design,id,'your arrangement');
   };
   window.addEventListener('resize',draw);window.addEventListener('keydown',event=>{if(event.key==='Escape'){drag=null;clearPreview();selected=null;pickMode=false;render();}});
   window.addEventListener('pagehide',()=>{remember();navigator.sendBeacon('/api/save',new Blob([JSON.stringify(snapshot())],{type:'application/json'}));});

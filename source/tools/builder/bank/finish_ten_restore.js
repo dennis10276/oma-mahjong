@@ -1,0 +1,16 @@
+'use strict';
+// Restore ordinary finish pairs where an earlier peel fell below its own
+// authored build floor. Existing specials, hidden flags and bait faces stay.
+const fs=require('fs'),path=require('path'),P=require('./narrow_proof'),R=require('./finish_ten_records'),Q=require('./finish_ten_proof'),E=require('../engine'),G=require('./narrow_methods'),Tail=require('./tail'),SEP=require('./separate');
+const OUT=path.resolve(P.DIR,'../../finish-ten'),copy=x=>structuredClone(x);
+function restore(level,wall=60000){const pack=JSON.parse(fs.readFileSync(path.resolve(P.DIR,'../narrow-final/pack.json'))),row=pack.rows.find(r=>r.level===level),before=P.original(level),a=before.design,d=row.draft.design,base=P.prepare(before),map=R.mapping(before,d,R.record(row)),keep=map.keep,add=a.tiles.map((_,i)=>i).filter(i=>!keep.includes(i)&&!a.down.includes(i)),need=72-d.tiles.length;
+  const fixed=new Set([d.clock.i,...d.obst.keys,...d.obst.locks,...Object.keys(d.obst.ice).map(Number),...d.solution.slice(0,d.solution.indexOf(d.clock.i)+1),...(before.card?.trap?.baits||[]).flatMap(b=>b.tiles.map(i=>keep.indexOf(i)))]),protectedFaces=new Set([...fixed].map(i=>d.faces[i])),cnt=Array.from({length:36},(_,f)=>d.faces.filter(x=>x===f).length),pairFaces=[];for(let f=0;f<36;f++)if(!protectedFaces.has(f))for(let j=cnt[f];j<4;j+=2)pairFaces.push(f);pairFaces.sort((x,y)=>cnt[x]-cnt[y]);
+  if(add.length<need||pairFaces.length<need/2)return {level,ok:false,why:'Insufficient ordinary source tiles or legal picture pairs'};
+  let seed=level*977;const rand=n=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed%n;},start=Date.now(),failures={},newKeep=keep.concat(add.slice(0,need));
+  const positions=[];for(let z=0;z<=1;z++)for(let y=0;y<=14;y++)for(let x=0;x<=11;x++)if(G.valid(d.tiles.concat([[x,y,z]])))positions.push([x,y,z]);
+  for(let tried=0;Date.now()-start<wall&&tried<2000;tried++){const b=copy(d),picked=[];for(let j=0;j<need;j++){const choices=positions.filter(p=>G.valid(b.tiles.concat([p])));if(!choices.length)break;const p=choices[rand(choices.length)];b.tiles.push(p);b.faces.push(pairFaces[Math.floor(j/2)]);picked.push(p);}if(picked.length<need)continue;
+    if(SEP.closeTwins(b).visible>base.twins)continue;let t;try{t=Tail.cappedTail(b,3,{peek:false,nodes:150000,ms:300});}catch(e){failures.clockRouteBlocked=(failures.clockRouteBlocked||0)+1;continue;}if(t.result!=='win'){failures['finish:'+t.result]=(failures['finish:'+t.result]||0)+1;continue;}b.solution=t.solution;const c=Q.certify(before,b,newKeep,base);if(c.ok)return {level,ok:true,how:'Restore '+need+' ordinary finish tiles in low gaps, retaining the trap and its authored build floor',design:b,keep:newKeep,restoredOriginalIds:add.slice(0,need),restoredPositions:picked,certificate:c,baselineMapInferred:map.inferred,tried,ms:Date.now()-start};failures[c.errors.join(',')]=(failures[c.errors.join(',')]||0)+1;
+  }return {level,ok:false,failures,positions:positions.length,ms:Date.now()-start};
+}
+if(require.main===module)for(const n of(process.argv[2]||'261,286').split(',').map(Number)){const r=restore(n);fs.writeFileSync(path.join(OUT,'candidates','level-'+n+'.json'),JSON.stringify(r,null,2)+'\n');console.log(JSON.stringify({...r,design:undefined,keep:undefined,certificate:undefined}));}
+module.exports={restore};

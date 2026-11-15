@@ -1,0 +1,19 @@
+'use strict';
+// Task 20 workspaces carry explicit source IDs. Recheck the exact pictures the
+// user edited, including the matched finish; never regenerate an earlier deal.
+const M=require('./narrow_placement_model'),P=require('./narrow_proof'),Q=require('./finish_ten_proof'),E=require('../engine'),Tail=require('./tail'),G=require('./narrow_methods');
+function check(row,input,{playOnly=false}={}){
+  const s=M.validate(row,input),incomplete=M.incomplete(s.positions,s.erased);if(incomplete)return incomplete;
+  const released=s.designSource==='released',source=P.original(released?row.level:row.sourceLevel||row.level),a=M.designFor(row,s),originalKeep=released?a.tiles.map((_,i)=>i):row.baseKeep,erased=new Set(s.erased),ids=a.tiles.map((_,i)=>i).filter(i=>!erased.has(i)),map=new Map(ids.map((old,i)=>[old,i])),mp=i=>map.get(i),keep=ids.map(i=>originalKeep[i]);
+  if(erased.size%2)return {status:'failed',ok:false,message:'Erase an even number of tiles so the remaining pictures can form pairs.'};
+  const fixed=new Set([a.clock.i,...a.obst.keys,...a.obst.locks,...Object.keys(a.obst.ice).map(Number),...(source.card?.trap?.baits||[]).flatMap(b=>b.tiles.map(old=>originalKeep.indexOf(old)))]);
+  if([...fixed].some(i=>erased.has(i)))return {status:'failed',ok:false,message:'A clock, special or authored wrong-choice tile was erased. Restore it before checking.'};
+  const d={...M.copy(a),tiles:ids.map(i=>s.positions[i]),faces:ids.map(i=>a.faces[i]),down:a.down.filter(i=>map.has(i)).map(mp),gold:(a.gold||[]).filter(i=>map.has(i)).map(mp),obst:{ice:Object.fromEntries(Object.entries(a.obst.ice).map(([i,h])=>[mp(+i),h])),keys:a.obst.keys.map(mp),locks:a.obst.locks.map(mp)},clock:{...a.clock,i:mp(a.clock.i)},solution:a.solution.filter(i=>map.has(i)).map(mp)};
+  if(!G.valid(d.tiles))return {status:'failed',ok:false,message:'Some tiles overlap or lack support. Your layout is saved.'};
+  if(erased.size){const protectedFaces=new Set([...fixed].map(i=>a.faces[i])),count=()=>{const c=new Map();for(const f of d.faces)c.set(f,(c.get(f)||0)+1);return c;};for(let guard=0;guard<36;guard++){const c=count(),odd=[...c].filter(([,n])=>n%2).map(([f])=>f);if(!odd.length)break;const f=odd.find(f=>!protectedFaces.has(f)),t=odd.find(t=>t!==f&&!protectedFaces.has(t));if(f==null||t==null)return {status:'failed',ok:false,message:'These erasures remove one copy of a picture needed by the trap. Restore it or erase a different ordinary pair.'};const at=d.faces.findIndex((face,i)=>face===f&&!fixed.has(ids[i]));if(at<0)return {status:'failed',ok:false,message:'The erased pictures cannot be paired without changing a trap picture.'};d.faces[at]=t;}}
+  if(!E.replay(d,d.solution,{strict:true}).ok){let tail;try{tail=Tail.cappedTail(d,3,{peek:false,nodes:1000000,ms:12000});}catch{}if(tail?.result!=='win'){const shortest=E.clockShortest(E.game(d,{strict:true}),{nodes:2000000,ms:15000});if(!shortest||shortest.unsure)return {status:'unknown',ok:false,message:'No complete clock route and finish was proved within the check budget. Your arrangement is saved.'};d.solution=E.flatten(shortest.path);}else d.solution=tail.solution;}
+  if(playOnly)return {ok:true,design:d,keep:ids,dropped:erased.size};
+  const certificate=Q.certify(source,d,keep),unknown=certificate.k==null&&certificate.errors.includes('clockMinimum')||certificate.ablations?.some(x=>x[2]==null)||certificate.prices?.some(p=>!p.after.exact);
+  return {status:certificate.ok?'passed':unknown?'unknown':'failed',ok:certificate.ok,message:certificate.ok?'Trap, shortest clock route, special order, wrong choices and complete finish all pass. The edited pictures were checked.':unknown?'Some proofs reached their budget. This is not a pass; your layout is saved.':'This layout changes a required property: '+certificate.errors.join(', ')+'. Your layout is saved.',design:d,certificate,errors:certificate.errors};
+}
+module.exports={check};

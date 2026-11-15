@@ -2,6 +2,7 @@
 const fs=require('fs'),{Worker,isMainThread,parentPort,workerData}=require('worker_threads');
 const P=require('./narrow_proof'),E=require('../engine'),M=require('./narrow_placement_model');
 function check(row,snapshot,opts={}){
+  if(row.task20)return require('./finish_ten_placement').check(row,snapshot);
   const s=M.validate(row,snapshot),incomplete=M.incomplete(s.positions,s.erased);if(incomplete)return incomplete;
   if(s.erased&&s.erased.length){
     // erased tiles (Dennis 2026-11-15): the arrangement without them, pictures paired outside the trap, then every trap check

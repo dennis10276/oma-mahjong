@@ -177,7 +177,7 @@ function price(d, take, k, opts = {}) {
   const C = opts.C || D.clockGames(d), w = opts.w || D.work(1e6, opts.wallMs ?? 12000);
   const g = C.at(d.clock.n), legal = E.legal(g,E.start(g));
   if (!take.every(i=>legal.includes(i))) return null;
-  let p;try{p = D.priceMove(C, E.start(g), { take }, { base:k, nShipMax: Math.min(19,k+3), nodes:opts.nodes ?? 180000, w });}catch{return null;}
+  let p;try{p = D.priceMove(C, E.start(g), { take }, { base:k, nShipMax: Math.min(19,k+3), nodes:opts.nodes ?? C.priceNodes ?? 180000, w });}catch{return null;}
   return { tiles: take.slice(), result:p.result, cost:p.cost, exact:p.exact, need:p.need ?? null };
 }
 const costly = (p, spare) => p && p.exact && (p.result === 'lose' || (p.result === 'win' && p.cost > spare));
@@ -269,7 +269,7 @@ function prove(name, d, roles, ctx, opts = {}) {
   const candidates = uniq([...(roles.bait.wrong || []), ...(roles.bait.keyEarly != null ? [roles.bait.keyEarly] : []),
     ...(roles.bait.keyNear != null ? [roles.bait.keyNear] : []), ...(roles.bait.keyB != null ? [roles.bait.keyB] : []),
     ...(f.mode==='earlyClock'?[d.clock.i]:[])]).map(i=>[i]).concat(roles.bait.extraMoves||[]);
-  const C = D.clockGames(d), w = D.work(3e6,opts.wallMs ?? 18000);
+  const C = D.clockGames(d), w = D.work(opts.proofNodes ?? 3e6,opts.wallMs ?? 18000);C.priceNodes=opts.priceNodes;
   const baits = candidates.map(a=>price(d,a,k,{C,w})).filter(p=>costly(p,spare));
   if (!baits.length) return {ok:false,why:'noProvenBait'};
   let newLink=null;
