@@ -1,28 +1,625 @@
 {
  "level": 261,
  "ok": false,
- "method": "cut the middle strip",
+ "method": "bands",
  "source": 261,
  "tried": [
   {
-   "strip": 6,
-   "why": "trap tile in the strip: 65"
+   "W": 12,
+   "parity": 0,
+   "cut": [
+    2,
+    0,
+    0,
+    0,
+    3,
+    0
+   ],
+   "why": "no brick spot for 1 tiles"
   },
   {
-   "strip": 5,
-   "why": "trap tile in the strip: 66"
+   "W": 12,
+   "parity": 1,
+   "cut": [
+    2,
+    0,
+    0,
+    0,
+    3,
+    0
+   ],
+   "why": "no brick spot for 1 tiles"
   },
   {
-   "strip": 7,
-   "why": "trap tile in the strip: 65"
+   "W": 12,
+   "parity": 0,
+   "cut": [
+    2,
+    0,
+    0,
+    0,
+    3,
+    0
+   ],
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.95
+   },
+   "why": "no full winning route"
   },
   {
-   "strip": 4,
-   "why": "trap tile in the strip: 42,75,66"
+   "W": 12,
+   "parity": 1,
+   "cut": [
+    2,
+    0,
+    0,
+    0,
+    3,
+    0
+   ],
+   "shape": {
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.95
+   },
+   "why": "no full winning route"
   },
   {
-   "strip": 8,
-   "why": "trap tile in the strip: 61,69"
+   "W": 12,
+   "parity": 0,
+   "cut": [
+    2,
+    0,
+    0,
+    2,
+    3,
+    0
+   ],
+   "why": "no brick spot for 4 tiles"
+  },
+  {
+   "W": 12,
+   "parity": 1,
+   "cut": [
+    2,
+    0,
+    0,
+    2,
+    3,
+    0
+   ],
+   "why": "no brick spot for 4 tiles"
+  },
+  {
+   "W": 12,
+   "parity": 0,
+   "cut": [
+    2,
+    0,
+    0,
+    2,
+    3,
+    0
+   ],
+   "why": "no brick spot for 3 tiles"
+  },
+  {
+   "W": 12,
+   "parity": 1,
+   "cut": [
+    2,
+    0,
+    0,
+    2,
+    3,
+    0
+   ],
+   "why": "no brick spot for 3 tiles"
+  },
+  {
+   "W": 12,
+   "parity": 0,
+   "cut": [
+    4,
+    0,
+    0,
+    0,
+    3,
+    0
+   ],
+   "why": "no brick spot for 3 tiles"
+  },
+  {
+   "W": 12,
+   "parity": 1,
+   "cut": [
+    4,
+    0,
+    0,
+    0,
+    3,
+    0
+   ],
+   "why": "no brick spot for 3 tiles"
+  },
+  {
+   "W": 12,
+   "parity": 0,
+   "cut": [
+    2,
+    0,
+    0,
+    0,
+    3,
+    3
+   ],
+   "why": "no brick spot for 4 tiles"
+  },
+  {
+   "W": 12,
+   "parity": 1,
+   "cut": [
+    2,
+    0,
+    0,
+    0,
+    3,
+    3
+   ],
+   "why": "no brick spot for 4 tiles"
+  },
+  {
+   "W": 12,
+   "parity": 0,
+   "cut": [
+    2,
+    0,
+    0,
+    0,
+    3,
+    3
+   ],
+   "why": "no brick spot for 4 tiles"
+  },
+  {
+   "W": 12,
+   "parity": 1,
+   "cut": [
+    2,
+    0,
+    0,
+    0,
+    3,
+    3
+   ],
+   "why": "no brick spot for 4 tiles"
+  },
+  {
+   "W": 12,
+   "parity": 0,
+   "cut": [
+    2,
+    0,
+    0,
+    0,
+    3,
+    3
+   ],
+   "why": "no brick spot for 3 tiles"
+  },
+  {
+   "W": 12,
+   "parity": 1,
+   "cut": [
+    2,
+    0,
+    0,
+    0,
+    3,
+    3
+   ],
+   "why": "no brick spot for 3 tiles"
+  },
+  {
+   "W": 13,
+   "parity": 0,
+   "cut": [
+    2,
+    0,
+    0,
+    0,
+    3,
+    0
+   ],
+   "shape": {
+    "straight": 0,
+    "stray": 1,
+    "edge": 0,
+    "mirror": 0.08
+   },
+   "why": "no full winning route"
+  },
+  {
+   "W": 13,
+   "parity": 1,
+   "cut": [
+    2,
+    0,
+    0,
+    0,
+    3,
+    0
+   ],
+   "shape": {
+    "straight": 0,
+    "stray": 1,
+    "edge": 0,
+    "mirror": 0.08
+   },
+   "why": "no full winning route"
+  },
+  {
+   "W": 13,
+   "parity": 0,
+   "cut": [
+    2,
+    0,
+    0,
+    0,
+    3,
+    0
+   ],
+   "shape": {
+    "straight": 0,
+    "stray": 1,
+    "edge": 0,
+    "mirror": 0.08
+   },
+   "why": "no full winning route"
+  },
+  {
+   "W": 13,
+   "parity": 1,
+   "cut": [
+    2,
+    0,
+    0,
+    0,
+    3,
+    0
+   ],
+   "shape": {
+    "straight": 0,
+    "stray": 1,
+    "edge": 0,
+    "mirror": 0.08
+   },
+   "why": "no full winning route"
+  },
+  {
+   "W": 13,
+   "parity": 0,
+   "cut": [
+    2,
+    0,
+    0,
+    2,
+    3,
+    0
+   ],
+   "why": "no brick spot for 2 tiles"
+  },
+  {
+   "W": 13,
+   "parity": 1,
+   "cut": [
+    2,
+    0,
+    0,
+    2,
+    3,
+    0
+   ],
+   "shape": {
+    "straight": 0,
+    "stray": 1,
+    "edge": 0,
+    "mirror": 0.08
+   },
+   "why": "no full winning route"
+  },
+  {
+   "W": 13,
+   "parity": 0,
+   "cut": [
+    2,
+    0,
+    0,
+    2,
+    3,
+    0
+   ],
+   "why": "no brick spot for 1 tiles"
+  },
+  {
+   "W": 13,
+   "parity": 1,
+   "cut": [
+    2,
+    0,
+    0,
+    2,
+    3,
+    0
+   ],
+   "loose": 7,
+   "moved": [
+    {
+     "tile": 0,
+     "from": [
+      0,
+      0,
+      0
+     ],
+     "to": [
+      5,
+      4,
+      0
+     ],
+     "face": 0
+    },
+    {
+     "tile": 58,
+     "from": [
+      1,
+      0,
+      1
+     ],
+     "to": [
+      0,
+      6,
+      0
+     ],
+     "face": 5
+    },
+    {
+     "tile": 17,
+     "from": [
+      1,
+      6,
+      0
+     ],
+     "to": [
+      4,
+      6,
+      0
+     ],
+     "face": 13
+    },
+    {
+     "tile": 44,
+     "from": [
+      2,
+      6,
+      1
+     ],
+     "to": [
+      6,
+      4,
+      1
+     ],
+     "face": 15
+    },
+    {
+     "tile": 21,
+     "from": [
+      0,
+      8,
+      0
+     ],
+     "to": [
+      7,
+      4,
+      0
+     ],
+     "face": 11
+    },
+    {
+     "tile": 50,
+     "from": [
+      1,
+      8,
+      1
+     ],
+     "to": [
+      3,
+      6,
+      1
+     ],
+     "face": 26
+    },
+    {
+     "tile": 68,
+     "from": [
+      2,
+      8,
+      2
+     ],
+     "to": [
+      1,
+      6,
+      1
+     ],
+     "face": 35
+    }
+   ],
+   "shape": {
+    "straight": 0,
+    "stray": 1,
+    "edge": 0,
+    "mirror": 0.08
+   },
+   "ok": false,
+   "errors": [
+    "authoredProof:staticGates"
+   ],
+   "footprint": 58.6
+  },
+  {
+   "W": 13,
+   "parity": 0,
+   "cut": [
+    4,
+    0,
+    0,
+    0,
+    3,
+    0
+   ],
+   "shape": {
+    "straight": 0,
+    "stray": 1,
+    "edge": 0,
+    "mirror": 0.08
+   },
+   "why": "no full winning route"
+  },
+  {
+   "W": 13,
+   "parity": 1,
+   "cut": [
+    4,
+    0,
+    0,
+    0,
+    3,
+    0
+   ],
+   "shape": {
+    "straight": 0,
+    "stray": 1,
+    "edge": 0,
+    "mirror": 0.08
+   },
+   "why": "no full winning route"
+  },
+  {
+   "W": 13,
+   "parity": 0,
+   "cut": [
+    2,
+    0,
+    0,
+    0,
+    3,
+    3
+   ],
+   "shape": {
+    "straight": 0,
+    "stray": 1,
+    "edge": 0,
+    "mirror": 0.08
+   },
+   "why": "no full winning route"
+  },
+  {
+   "W": 13,
+   "parity": 1,
+   "cut": [
+    2,
+    0,
+    0,
+    0,
+    3,
+    3
+   ],
+   "shape": {
+    "straight": 0,
+    "stray": 1,
+    "edge": 0,
+    "mirror": 0.08
+   },
+   "why": "no full winning route"
+  },
+  {
+   "W": 13,
+   "parity": 0,
+   "cut": [
+    2,
+    0,
+    0,
+    0,
+    3,
+    3
+   ],
+   "shape": {
+    "straight": 0,
+    "stray": 1,
+    "edge": 0,
+    "mirror": 0.08
+   },
+   "why": "no full winning route"
+  },
+  {
+   "W": 13,
+   "parity": 1,
+   "cut": [
+    2,
+    0,
+    0,
+    0,
+    3,
+    3
+   ],
+   "shape": {
+    "straight": 0,
+    "stray": 1,
+    "edge": 0,
+    "mirror": 0.08
+   },
+   "why": "no full winning route"
+  },
+  {
+   "W": 13,
+   "parity": 0,
+   "cut": [
+    2,
+    0,
+    0,
+    0,
+    3,
+    3
+   ],
+   "shape": {
+    "straight": 0,
+    "stray": 1,
+    "edge": 0,
+    "mirror": 0.08
+   },
+   "why": "no full winning route"
+  },
+  {
+   "W": 13,
+   "parity": 1,
+   "cut": [
+    2,
+    0,
+    0,
+    0,
+    3,
+    3
+   ],
+   "shape": {
+    "straight": 0,
+    "stray": 1,
+    "edge": 0,
+    "mirror": 0.08
+   },
+   "why": "no full winning route"
   }
  ]
 }

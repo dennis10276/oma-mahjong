@@ -1,11 +1,16 @@
 {
  "level": 297,
  "ok": false,
- "log": [
-  "greedy:  straight undefined |  straight undefined",
-  "greedy-loose:  straight undefined",
-  "restack: no brick spot for 1 tiles | no brick spot for 1 tiles | no brick spot for 1 tiles",
-  "trim: a special, wrong move or clock-route tile is outside: 24,46,51,52,61,62,70,71 | a special, wrong move or clock-route tile is outside: 46,52,61,70 | a special, wrong move or clock-route tile is outside: 24,51,62,71",
-  "trim-route: a special, wrong move or clock-route tile is outside: 24,52,62,71 | a special, wrong move or clock-route tile is outside: 52 | a special, wrong move or clock-route tile is outside: 24,62,71"
+ "method": "bands",
+ "source": 297,
+ "tried": [
+  {
+   "W": 12,
+   "why": "band 1 cannot fit without cutting a trap tile"
+  },
+  {
+   "W": 13,
+   "why": "band 1 cannot fit without cutting a trap tile"
+  }
  ]
 }

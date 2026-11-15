@@ -273,9 +273,13 @@ function bandRun(level, opts = {}) {
   const sp = [a.clock.i, ...a.obst.keys, ...a.obst.locks, ...Object.keys(a.obst.ice).map(Number)], bait = (before.card?.trap?.baits || []).flatMap(b => b.tiles);
   const g = E.game(clone(a)), core = new Set([...sp, ...bait, ...a.solution.slice(0, a.solution.indexOf(a.clock.i) + 1)]);
   for (const s of [...sp, ...bait]) { for (const k of ['above', 'left', 'right']) for (const u of g.nb[k][s] || []) core.add(u); if (g.iceH && g.iceH[s]) for (const u of g.iceNb[s]) core.add(u); }
+  const hard = new Set([...sp, ...bait]);   // relaxed: only specials and wrong moves may never be cut
   // bands: merge overlapping y-intervals
   const iv = [...new Set(a.tiles.map(t => t[1]))].sort((p, q) => p - q), bands = [];
   for (const y of iv) { const last = bands[bands.length - 1]; if (last && y < last.y1) last.y1 = Math.max(last.y1, y + 2); else bands.push({ y0: y, y1: y + 2 }); }
+  // ice counts neighbours in the rows just above and below (same layer): bands linked that way slide together
+  for (let ch = true; ch;) { ch = false; const bo = t => bands.findIndex(b => t[1] >= b.y0 && t[1] < b.y1);
+    for (const i of Object.keys(a.obst.ice).map(Number)) for (const j of g.iceNb[i] || []) { const p = bo(a.tiles[i]), q = bo(a.tiles[j]); if (p !== q) { const lo = Math.min(p, q), hi = Math.max(p, q); bands[lo].y1 = bands[hi].y1; bands.splice(lo + 1, hi - lo); ch = true; break; } } }
   const bandOf = t => bands.findIndex(b => t[1] >= b.y0 && t[1] < b.y1);
   const members = bands.map((_, k) => a.tiles.map((t, i) => bandOf(t) === k ? i : null).filter(i => i != null));
   const tried = [], ZMAX = Math.max(...a.tiles.map(t => t[2]));
@@ -285,7 +289,7 @@ function bandRun(level, opts = {}) {
     for (let tl = 0; tl <= 3; tl++) for (let tr = 0; tr <= 3; tr++) {
       const cut = new Set(ids.filter(i => a.tiles[i][0] < lo + tl || a.tiles[i][0] + 2 > hi - tr));
       for (let ch = true; ch;) { ch = false; for (const i of ids) { if (cut.has(i) || !a.tiles[i][2]) continue; const rest = ids.filter(j => !cut.has(j)).map(j => a.tiles[j]); if (!supportedAt(rest, a.tiles[i], -1)) { cut.add(i); ch = true; } } }
-      const left = ids.filter(i => !cut.has(i)); if (!left.length || [...cut].some(i => core.has(i))) continue;
+      const left = ids.filter(i => !cut.has(i)); if (!left.length || [...cut].some(i => (opts.relaxed ? hard : core).has(i))) continue;
       // groups inside the band that do not touch (any layer): their gaps may close to half a tile, nothing gains a neighbour
       const segs = []; for (const i of left.slice().sort((p, q) => a.tiles[p][0] - a.tiles[q][0])) { const t = a.tiles[i], s = segs[segs.length - 1]; if (s && t[0] <= s.hi) { s.ids.push(i); s.hi = Math.max(s.hi, t[0] + 2); } else segs.push({ ids: [i], lo: t[0], hi: t[0] + 2 }); }
       // merge groups that overlap after sorting by lo (a later tile may reach back)
@@ -301,13 +305,14 @@ function bandRun(level, opts = {}) {
       out.push({ cut: [...cut], lo: lo2, w, shift });
     }
     const best = new Map(); for (const o of out) { const key = o.cut.slice().sort((p, q) => p - q).join(','); if (!best.has(key)) best.set(key, o); }
-    return [...best.values()].sort((p, q) => p.cut.length - q.cut.length).slice(0, 4);
+    const cost = o => o.cut.length + 10 * o.cut.filter(i => core.has(i)).length;   // cut ordinary tiles before route or neighbour tiles
+    return [...best.values()].sort((p, q) => cost(p) - cost(q)).slice(0, 4);
   };
   for (const W of opts.widths || [12, 13]) {
     const opt = bands.map((_, k) => trims(k, W));
     if (opt.some(o => !o.length)) { tried.push({ W, why: 'band ' + opt.findIndex(o => !o.length) + ' cannot fit without cutting a trap tile' }); continue; }
     // combinations, fewest cut tiles first (capped)
-    let combos = [[]]; for (const o of opt) { const next = []; for (const cmb of combos) for (const x of o) next.push(cmb.concat([x])); combos = next.sort((p, q) => p.reduce((s, x) => s + x.cut.length, 0) - q.reduce((s, x) => s + x.cut.length, 0)).slice(0, 24); }
+    let combos = [[]]; for (const o of opt) { const next = []; for (const cmb of combos) for (const x of o) next.push(cmb.concat([x])); combos = next.sort((p, q) => p.reduce((s, x) => s + x.cut.length + 10 * x.cut.filter(i => core.has(i)).length, 0) - q.reduce((s, x) => s + x.cut.length + 10 * x.cut.filter(i => core.has(i)).length, 0)).slice(0, 24); }
     for (const cmb of combos.slice(0, opts.tries || 8)) for (const parity of [0, 1]) {
       const T = a.tiles.map(t => t.slice()), loose = new Set();
       cmb.forEach((o, k) => { for (const i of o.cut) { loose.add(i); T[i] = null; } let sh = Math.floor((W - o.w) / 2) - o.lo; if ((W - o.w) % 2 && parity) sh += 1; for (const i of members[k]) if (T[i]) T[i] = [T[i][0] + (o.shift.get(i) || 0) + sh, T[i][1], T[i][2]]; });
@@ -332,10 +337,10 @@ function bandRun(level, opts = {}) {
       let d = { ...clone(a), tiles: T };
       if (SEP.closeTwins(d).visible > base.twins) d = untwin(d, base.twins, new Set([...sp, ...bait])).d;
       const s1 = shape(T);
-      const sol = route(d); if (!sol) { tried.push({ ...tag, shape: strip(s1), why: 'no full winning route' }); continue; }
+      const sol = route(d); if (!sol) { tried.push({ ...tag, shape: strip(s1), why: 'no full winning route', design: process.env.DEBUG ? d : undefined }); continue; }
       d.solution = sol;
       const keep = Array.from({ length: n }, (_, i) => i), cert = Q.certify(before, d, keep, base);
-      const rec = { ...tag, loose: loose.size, moved: [...loose].map(i => ({ tile: i, from: a.tiles[i], to: T[i], face: a.faces[i] })), shape: strip(s1), ok: cert.ok && s1.straight === 0, errors: cert.errors, footprint: cert.footprint && +cert.footprint.tilePx.toFixed(1) };
+      const rec = { ...tag, design: process.env.DEBUG ? d : undefined, loose: loose.size, moved: [...loose].map(i => ({ tile: i, from: a.tiles[i], to: T[i], face: a.faces[i] })), shape: strip(s1), ok: cert.ok && s1.straight === 0, errors: cert.errors, footprint: cert.footprint && +cert.footprint.tilePx.toFixed(1) };
       tried.push(rec);
       if (rec.ok) return save({ level, ok: true, method: 'bands slid to the middle, outer tiles into the hollow', source: c.source, design: d, keep, ...rec, certificate: cert, tried });
     }

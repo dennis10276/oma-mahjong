@@ -1,28 +1,16 @@
 {
  "level": 278,
  "ok": false,
- "method": "cut the middle strip",
+ "method": "bands",
  "source": 278,
  "tried": [
   {
-   "strip": 6,
-   "why": "trap tile in the strip: 70,77,73"
+   "W": 12,
+   "why": "band 6 cannot fit without cutting a trap tile"
   },
   {
-   "strip": 5,
-   "why": "trap tile in the strip: 74,70"
-  },
-  {
-   "strip": 7,
-   "why": "trap tile in the strip: 57,73,71,78"
-  },
-  {
-   "strip": 4,
-   "why": "trap tile in the strip: 72,74"
-  },
-  {
-   "strip": 8,
-   "why": "trap tile in the strip: 62,71,78,60,75"
+   "W": 13,
+   "why": "band 6 cannot fit without cutting a trap tile"
   }
  ]
 }

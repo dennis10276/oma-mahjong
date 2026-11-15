@@ -104,6 +104,34 @@ module.exports.spots = (B, id, o = {}) => {
   for (const c of cands.slice(0, o.max || 40)) { B.st.T[id] = c.p; const r = B.prove(); out.push({ p: c.p, ok: r.ok, errors: r.errors || [r.why] }); if (r.ok && !o.all) break; }
   const good = out.find(r => r.ok); B.st.T[id] = good ? good.p : home; return { good: good && good.p, tried: out.length, out };
 };
+// load the band method's closest attempt (fewest proof errors) onto the bench: same tile ids, so every edit is relative to it
+module.exports.fromBands = (B, o = {}) => {
+  process.env.DEBUG = '1'; const r = D.bandRun(B.level, { relaxed: true, tries: o.tries || 6 });
+  const c = r.tried.filter(t => t.design && t.errors).sort((p, q) => p.errors.length - q.errors.length)[0];
+  if (!c) return null; c.design.tiles.forEach((p, i) => { B.st.T[i] = p.slice(); }); B.st.faces = c.design.faces.slice();
+  return { errors: c.errors, W: c.W, parity: c.parity, footprint: c.footprint };
+};
+// "Same spare" certificate (an option for Dennis, 2026-11-16): the trap's own geometry may make the shortest route to the
+// clock a move longer or shorter; the clock number then moves with it so the spare (clock number - shortest route) stays.
+// Everything else as Codex's certificate: geometry, footprint, strict win, badges, twins, special prerequisites; each lock
+// and ice changes the route by the same number of moves when removed; every wrong move still bites (loses, or costs more
+// than the spare); the board's own proof is run with the new route length.
+module.exports.spareCertify = (B, d, keep) => {
+  const { before, a, base } = B, Q = require(CF + 'finish_ten_proof'), I = require(CF + '../preserve_intent'), V = require(CF + '../verify_trap_mixes');
+  const k0 = base.k, spare = a.clock.n - k0, ids = new Map(keep.map((id, i) => [id, i])), mp = i => ids.get(i);
+  const k1 = P.kOf(d); if (k1 == null) return { ok: false, errors: ['clock route unproven'] };
+  const d1 = { ...d, clock: { ...d.clock, n: k1 + spare } };
+  const geo = Q.certify({ ...before, design: { ...a, clock: { ...a.clock, n: k1 + spare } } }, d1, keep, base);
+  const errors = (geo.errors || []).filter(e => !/^(clockMinimum|specialEffects|specialPrerequisites|wrongMove|authoredProof|clock$)/.test(e));
+  const abl1 = P.ablations(d1).map(([kind, i, kk]) => [kind, i, kk == null ? null : kk - k1]), abl0 = base.abl.map(([kind, i, kk]) => [kind, mp(i), kk == null ? null : kk - k0]);
+  if (JSON.stringify(abl1) !== JSON.stringify(abl0) || abl1.some(x => x[2] == null)) errors.push('specialEffects (relative)');
+  const norm = x => x.map(([i, r]) => [i, r.slice().sort((p, q) => p - q)]).sort((p, q) => p[0] - q[0]);
+  if (JSON.stringify(norm(I.prepare({ design: d1 }).roleDependencies)) !== JSON.stringify(norm(base.prep.roleDependencies.map(([i, r]) => [mp(i), r.map(mp)])))) errors.push('specialPrerequisites');
+  const bites = q => q.exact && (q.result === 'lose' || (q.result === 'win' && q.cost > spare)), prices = [];
+  for (const b of before.card?.trap?.baits || []) { const o = V.reprice(a, k0, b.tiles, { nodes: 2000000, callMs: 20000 }), n = V.reprice(d1, k1, b.tiles.map(mp), { nodes: 2000000, callMs: 20000 }); prices.push({ tiles: b.tiles, before: { result: o.result, cost: o.cost }, after: { result: n.result, cost: n.cost } }); if (!o.exact || !n.exact || bites(o) !== bites(n)) errors.push('wrongMove:' + b.tiles.join(',')); }
+  const own = Q.ownProof({ ...before, design: { ...a, clock: { ...a.clock, n: k1 + spare } } }, d1, keep, k1, { ...base, k: k1 }); if (!own.ok) errors.push('authoredProof:' + own.why);
+  return { ok: !errors.length, errors, k0, k1, clockN: [a.clock.n, k1 + spare], spare, wrongMoves: prices, design: d1 };
+};
 // what makes a board invalid: overlapping pairs and unsupported tiles (by released id)
 module.exports.problems = B => {
   const L = B.st.T.map((t, i) => B.st.dropped.has(i) ? null : t), out = [];
