@@ -77,12 +77,13 @@
     </div>
     <div class="traybar">
       <div id="tray"><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div></div>
+      <!-- hint and shuffle beside the tray, not in a row under the pile: the pile gets that row (Dennis 2026-11-15) -->
+      <div class="toolbar">
+        <button class="tool" id="btnHint"><span>💡</span><b data-t="hint">Hint</b><i class="badge">1</i></button>
+        <button class="tool" id="btnShuffle"><span>🔀</span><b data-t="shuffle">Schudden</b><i class="badge">1</i></button>
+      </div>
     </div>
     <div id="boardWrap"><div id="board"></div></div>
-    <div class="toolbar">
-      <button class="tool" id="btnHint"><span>💡</span><b data-t="hint">Hint</b><i class="badge">1</i></button>
-      <button class="tool" id="btnShuffle"><span>🔀</span><b data-t="shuffle">Schudden</b><i class="badge">1</i></button>
-    </div>
   </section>
 
   <!-- LEVELS -->
