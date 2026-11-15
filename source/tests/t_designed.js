@@ -8,7 +8,8 @@ module.exports = [
     for (const lv of [250, 266, 281, 292, 300]) {
       await startLevel(p, lv);
       const info = await p.evaluate(lv => { const d = Hard.get(lv); return { n: d.tiles.length, shown: G.tiles.length, clock: !!G.clock, ob: !!G.ob, hv: Hard.designVersion(lv) }; }, lv);
-      t.eq([info.shown, info.clock, info.ob, info.hv], [info.n, true, true, 9], 'board of level ' + lv + ' is the designed one');
+      const revision = require('../analysis/refit-251-299.json').changedLevels.includes(lv) ? 10 : 9;
+      t.eq([info.shown, info.clock, info.ob, info.hv], [info.n, true, true, revision], 'board of level ' + lv + ' is the designed one');
       await p.evaluate(lv => { for (const i of Hard.get(lv).solution) { __mj.onTap(i); if (G.alive[i]) __mj.onTap(i); } }, lv);
       await sleep(4500);
       t.ok(await p.evaluate(lv => G.done && S.stars[lv] > 0, lv), 'level ' + lv + ' is won through the actual game rules and animations');
