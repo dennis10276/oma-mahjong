@@ -1,4 +1,6 @@
-## Release candidate requested after Task 20
+## Earlier 38-board candidate (superseded)
+
+The approved swaps now produce a 42-slot candidate. See `../swap-260-280/REPORT.md` for the current plan. This file retains the earlier stage.
 
 Dennis asked whether the refitted levels can be released. A separate candidate is prepared on `wip/codex-refit-release` in `../codex-refit-release`, directly from live `a99b338e`. It contains **38 direct refits**, with live 262 and 277 retained. The five ordinary boards that already fit, every tenth level, all levels outside the selected 38, the table length and existing metadata are unchanged. No main merge, release version bump, deployment or Firebase write has occurred.
 

@@ -1,0 +1,63 @@
+{
+  "ok": true,
+  "fullGameWins": 8,
+  "rows": [
+    {
+      "level": 260,
+      "variant": "original",
+      "hash": "5f809e9433189eac9f745df72fd3bbf25a41e2778ff70c0cdab65f3d0d960a84",
+      "ok": true
+    },
+    {
+      "level": 260,
+      "variant": "revised",
+      "hash": "6228b3a2e4945269a8a467d73500474866510a4b151658a1ba7935861b8ee120",
+      "ok": true
+    },
+    {
+      "level": 262,
+      "variant": "original",
+      "hash": "6228b3a2e4945269a8a467d73500474866510a4b151658a1ba7935861b8ee120",
+      "ok": true
+    },
+    {
+      "level": 262,
+      "variant": "revised",
+      "hash": "40a0319fc4244ad8930fe024761230eee0b0ad2c748cbef42d4e85efa2c06ab7",
+      "ok": true
+    },
+    {
+      "level": 277,
+      "variant": "original",
+      "hash": "8a5a0e61259eb0b229ead049e29332d32c725a09c7c84aeb4aa394e68f3d0fd1",
+      "ok": true
+    },
+    {
+      "level": 277,
+      "variant": "revised",
+      "hash": "82024dca5edc91a546f09d7a6c25c713cf1800c7cf2069707075831cf194bd09",
+      "ok": true
+    },
+    {
+      "level": 280,
+      "variant": "original",
+      "hash": "9e9354e28a45b761ba75f3961c59bb26698a65a57fb0f2dfcba0211be24ddc93",
+      "ok": true
+    },
+    {
+      "level": 280,
+      "variant": "revised",
+      "hash": "8a5a0e61259eb0b229ead049e29332d32c725a09c7c84aeb4aa394e68f3d0fd1",
+      "ok": true
+    }
+  ],
+  "editorLevels": [
+    262,
+    277
+  ],
+  "bothEditedSourceProofsPass": true,
+  "releasedCountsSeparate": true,
+  "sunflower": true,
+  "mobileCssWidth": 392,
+  "qaFeedbackSeparate": true
+}

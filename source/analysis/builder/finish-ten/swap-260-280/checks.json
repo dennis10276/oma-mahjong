@@ -1,0 +1,31 @@
+{
+  "ok": true,
+  "approvedSwaps": [
+    [
+      262,
+      260
+    ],
+    [
+      277,
+      280
+    ]
+  ],
+  "changedSlots": 42,
+  "ordinarySlotsFit": 45,
+  "offlineSuite": {
+    "passed": 172,
+    "total": 172,
+    "seconds": 389,
+    "exitCode": 0,
+    "log": "full-tests.log"
+  },
+  "actualGamePhoneWins": 42,
+  "comparisonLabWins": 8,
+  "bothCompactEditorChecksPass": true,
+  "minimumOrdinaryTilePx": 58.56603773584906,
+  "intactMilestoneTilePx": 54.068380598992846,
+  "onlySelected42Changed": true,
+  "level270Unchanged": true,
+  "savedGamesChecked": true,
+  "published": false
+}

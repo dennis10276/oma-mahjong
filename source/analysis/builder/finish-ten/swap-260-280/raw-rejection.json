@@ -1,0 +1,10 @@
+{
+  "level": 280,
+  "ok": false,
+  "how": "Keep the connected upper clock and nested-ice chain intact; half-align its full supporting base row and remove the ordinary crown around the free bait key",
+  "failures": {
+    "authoredProof:obvious:greedyPrefix": 14,
+    "specialEffects": 26
+  },
+  "ms": 1569
+}

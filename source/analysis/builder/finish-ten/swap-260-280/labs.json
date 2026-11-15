@@ -1,0 +1,53 @@
+{
+  "comparison": {
+    "url": "http://127.0.0.1:8278/",
+    "directory": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-finish-ten\\source\\build\\finish-ten-swaps",
+    "cards": 8
+  },
+  "placement": {
+    "url": "http://127.0.0.1:8279/",
+    "directory": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-finish-ten\\source\\build\\finish-ten-swaps-placement",
+    "userData": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-tasks\\results\\finish-ten\\swap-260-280\\placements",
+    "levels": [
+      262,
+      277
+    ]
+  },
+  "levels": [
+    260,
+    262,
+    277,
+    280
+  ],
+  "hashes": [
+    {
+      "level": 260,
+      "source": 262,
+      "kind": "intact-move",
+      "hash": "6228b3a2e4945269a8a467d73500474866510a4b151658a1ba7935861b8ee120"
+    },
+    {
+      "level": 262,
+      "source": 260,
+      "kind": "compact-source",
+      "hash": "40a0319fc4244ad8930fe024761230eee0b0ad2c748cbef42d4e85efa2c06ab7"
+    },
+    {
+      "level": 277,
+      "source": 280,
+      "kind": "compact-source",
+      "hash": "82024dca5edc91a546f09d7a6c25c713cf1800c7cf2069707075831cf194bd09"
+    },
+    {
+      "level": 280,
+      "source": 277,
+      "kind": "intact-move",
+      "hash": "8a5a0e61259eb0b229ead049e29332d32c725a09c7c84aeb4aa394e68f3d0fd1"
+    }
+  ],
+  "earlierLabsFrozen": [
+    8275,
+    8276,
+    8277
+  ]
+}
