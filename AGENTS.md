@@ -40,6 +40,12 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 
 ## Levels and difficulty (decisions by Dennis, 2026-10-15)
 
+- Latest footprint decision (Dennis, 2026-11-15): work toward 60 CSS px tiles on the 392 x 730 reference phone,
+  with room below the tray and no nine-row boards, including the 96-tile boards. Actively compact the layout;
+  do not merely reject wide/tall hosts or remove tiles. Preserve the intended traps and chains and prove that
+  they still work after restacking. See `source/analysis/builder/footprint60/README.md` and
+  `source/tools/builder/compact_footprint.js`. No release is authorized (Dennis stopped the proposed 1.70).
+
 - Latest decision (2026-10-16, release 1.54): levels 1-91 stay fixed; 92-269 are reordered using
   both fitted personal players, including retries, in five-point ease bands with smoothing.
   Each complete 1.53 board is preserved exactly, with large boards every tenth level. See
