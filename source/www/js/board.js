@@ -257,10 +257,13 @@ function boardGeo(W, H) {
   }
   const depthF = 0.085;            // the tile's side, drawn right and below it
   // 2 px of room on each side (was 4 until 1.68): a pile seven tiles wide keeps 54 px tiles on a 392 px screen (Dennis 2026-11-14)
-  const twW = (W - 4) / (r - l + depthF + 0.04), twH = (H - 4) / (b - t0 + depthF * 1.4 + 0.04), tw = Math.min(150, twW, twH);
+  // At the top, 12 px between the tray and the pile: the tray's wooden edge and shadow hang 4-8 px below it, and with 2 px a
+  // tall pile's top row sat under that edge (1.69, Gerda's phone, level 219; Dennis 2026-11-15). 2 px at the bottom.
+  const TOP = 12, BOT = 2;
+  const twW = (W - 4) / (r - l + depthF + 0.04), twH = (H - TOP - BOT) / (b - t0 + depthF * 1.4 + 0.04), tw = Math.min(150, twW, twH);
   const th = tw * ratio, dz = tw * dF, d = Math.max(3, tw * depthF);
-  // centred on what is really there: even space left and right, and between the tray and the buttons below
-  const ox = (W - (r - l) * tw - d) / 2 - l * tw, oy = (H - (b - t0) * tw - d * 1.4) / 2 - t0 * tw;
+  // centred on what is really there: even space left and right, and between the tray and the buttons below (below the tray's edge)
+  const ox = (W - (r - l) * tw - d) / 2 - l * tw, oy = TOP + (H - TOP - BOT - (b - t0) * tw - d * 1.4) / 2 - t0 * tw;
   return { tw, th, dz, d, ox, oy, tall: twH < twW && twH < 150 };   // tall: the height of the pile area decides the tile size
 }
 // remember the positions (t.r, G.tw); move the tiles that are on the screen already when asked
