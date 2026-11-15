@@ -1,0 +1,181 @@
+{
+  "level": 259,
+  "sourceLevel": 259,
+  "ok": true,
+  "mapping": {
+    "keep": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75
+    ],
+    "inferred": false
+  },
+  "certificate": {
+    "ok": true,
+    "errors": [],
+    "checks": [
+      "fullStrictWin",
+      "sameClockMinimumAndSpare",
+      "sameSpecialEffects",
+      "sameSpecialPrerequisites",
+      "allAuthoredWrongMovesStillWrong",
+      "olderRecoveredSpecialContract"
+    ],
+    "k": 11,
+    "spare": 1,
+    "footprint": {
+      "ok": true,
+      "profile": "phone-near-60-v1",
+      "tilePx": 61.93136472466082,
+      "rows": 6,
+      "compact": false,
+      "target": 60,
+      "minimum": 58,
+      "limit": "width"
+    },
+    "ablations": [
+      [
+        "ice",
+        72,
+        3
+      ],
+      [
+        "lock",
+        70,
+        9
+      ]
+    ],
+    "prerequisites": [
+      [
+        52,
+        [
+          72
+        ]
+      ],
+      [
+        41,
+        []
+      ],
+      [
+        44,
+        []
+      ],
+      [
+        70,
+        [
+          41,
+          44
+        ]
+      ],
+      [
+        72,
+        []
+      ]
+    ],
+    "prices": [
+      {
+        "tiles": [
+          71
+        ],
+        "before": {
+          "tiles": [
+            71
+          ],
+          "result": "lose",
+          "need": null,
+          "cost": null,
+          "exact": true
+        },
+        "after": {
+          "tiles": [
+            71
+          ],
+          "result": "lose",
+          "need": null,
+          "cost": null,
+          "exact": true
+        }
+      }
+    ],
+    "ownProof": {
+      "ok": true,
+      "scope": "Recovered special contract; no authored role context is available for this older board."
+    },
+    "beforeHash": "c9845188f803271ab8a3b4ff286440d906557010b4bd07f6667bf8d6050bbf51",
+    "afterHash": "b04d0b61aaa9f5b91fa65f4f9b2bfb29f4ee43c7ca031d68600d2a865ebd3244",
+    "policy": "Task 20 same mechanics; geometry and non-trap finish pictures may change."
+  }
+}

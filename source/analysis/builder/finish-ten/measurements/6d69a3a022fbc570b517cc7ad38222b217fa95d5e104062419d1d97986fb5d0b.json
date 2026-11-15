@@ -1,0 +1,387 @@
+{
+  "schema": 1,
+  "hash": "6d69a3a022fbc570b517cc7ad38222b217fa95d5e104062419d1d97986fb5d0b",
+  "meta": {
+    "level": 291,
+    "variant": "released"
+  },
+  "status": "done",
+  "tiles": 84,
+  "clock": {
+    "i": 76,
+    "n": 18
+  },
+  "strictReplay": {
+    "ok": true,
+    "pairs": 0
+  },
+  "metrics": {
+    "clock": {
+      "minimum": 1,
+      "unknown": false,
+      "spare": 17,
+      "storedAt": 16
+    },
+    "opening": {
+      "singles": {
+        "win": 11,
+        "lose": 0,
+        "unknown": 1
+      },
+      "pairs": {
+        "win": 0,
+        "lose": 0,
+        "unknown": 0
+      },
+      "actions": [
+        {
+          "action": 65,
+          "result": "win"
+        },
+        {
+          "action": 66,
+          "result": "win"
+        },
+        {
+          "action": 67,
+          "result": "win"
+        },
+        {
+          "action": 68,
+          "result": "win"
+        },
+        {
+          "action": 71,
+          "result": "win"
+        },
+        {
+          "action": 74,
+          "result": "win"
+        },
+        {
+          "action": 75,
+          "result": "win"
+        },
+        {
+          "action": 76,
+          "result": "win"
+        },
+        {
+          "action": 77,
+          "result": "win"
+        },
+        {
+          "action": 80,
+          "result": "unknown"
+        },
+        {
+          "action": 81,
+          "result": "win"
+        },
+        {
+          "action": 83,
+          "result": "win"
+        }
+      ]
+    },
+    "greedy": {
+      "tailGreedyWin": 0.0215,
+      "wins": 11,
+      "playouts": 512,
+      "seed": 20261115,
+      "start": {
+        "step": 16,
+        "tray": 2,
+        "left": 68
+      },
+      "stored": {
+        "steps": 68,
+        "peakTray": 3,
+        "meanTray": 1.618,
+        "moves2plus": 39,
+        "tray2Share": 0.574
+      }
+    },
+    "feel": {
+      "win": 0,
+      "waiting": [
+        0.313,
+        0.289,
+        0.298,
+        0.1
+      ],
+      "mean": 1.19,
+      "twoPlus": 0.398,
+      "singles": 4,
+      "steps": 19
+    },
+    "expert": {
+      "games": 3,
+      "lostGames": 5,
+      "waiting": [
+        0.211,
+        0.282,
+        0.373,
+        0.134
+      ],
+      "mean": 1.43,
+      "twoPlus": 0.507,
+      "parks": 12.3,
+      "parkAt": [
+        2,
+        4.7,
+        5.7
+      ],
+      "wrongPark": 0,
+      "danger": 0.113,
+      "decisions": 47
+    },
+    "cap1": {
+      "result": "lose",
+      "cap": 1,
+      "peek": true,
+      "nodes": 0,
+      "ms": 1,
+      "startWaiting": 2
+    },
+    "cap2": {
+      "result": "win",
+      "cap": 2,
+      "peek": true,
+      "nodes": 16739,
+      "ms": 50,
+      "startWaiting": 2,
+      "episodes": 11,
+      "path": [
+        46,
+        {
+          "pair": [
+            6,
+            55
+          ]
+        },
+        70,
+        {
+          "pair": [
+            56,
+            64
+          ]
+        },
+        5,
+        63,
+        67,
+        {
+          "pair": [
+            58,
+            73
+          ]
+        },
+        {
+          "pair": [
+            26,
+            62
+          ]
+        },
+        28,
+        74,
+        72,
+        13,
+        {
+          "pair": [
+            12,
+            20
+          ]
+        },
+        75,
+        {
+          "pair": [
+            7,
+            47
+          ]
+        },
+        78,
+        {
+          "pair": [
+            21,
+            38
+          ]
+        },
+        {
+          "pair": [
+            41,
+            48
+          ]
+        },
+        42,
+        0,
+        83,
+        {
+          "pair": [
+            34,
+            51
+          ]
+        },
+        16,
+        54,
+        {
+          "pair": [
+            33,
+            77
+          ]
+        },
+        {
+          "pair": [
+            35,
+            36
+          ]
+        },
+        32,
+        69,
+        8,
+        {
+          "pair": [
+            4,
+            9
+          ]
+        },
+        {
+          "pair": [
+            3,
+            10
+          ]
+        },
+        {
+          "pair": [
+            2,
+            37
+          ]
+        },
+        1,
+        11,
+        52,
+        25,
+        17,
+        18,
+        79,
+        {
+          "pair": [
+            43,
+            53
+          ]
+        },
+        {
+          "pair": [
+            31,
+            57
+          ]
+        },
+        {
+          "pair": [
+            22,
+            29
+          ]
+        },
+        {
+          "pair": [
+            30,
+            44
+          ]
+        },
+        23,
+        39,
+        19,
+        24,
+        40,
+        45
+      ],
+      "solution": [
+        71,
+        66,
+        68,
+        81,
+        80,
+        82,
+        61,
+        50,
+        65,
+        60,
+        59,
+        49,
+        14,
+        27,
+        15,
+        76,
+        46,
+        6,
+        55,
+        70,
+        56,
+        64,
+        5,
+        63,
+        67,
+        58,
+        73,
+        26,
+        62,
+        28,
+        74,
+        72,
+        13,
+        12,
+        20,
+        75,
+        7,
+        47,
+        78,
+        21,
+        38,
+        41,
+        48,
+        42,
+        0,
+        83,
+        34,
+        51,
+        16,
+        54,
+        33,
+        77,
+        35,
+        36,
+        32,
+        69,
+        8,
+        4,
+        9,
+        3,
+        10,
+        2,
+        37,
+        1,
+        11,
+        52,
+        25,
+        17,
+        18,
+        79,
+        43,
+        53,
+        31,
+        57,
+        22,
+        29,
+        30,
+        44,
+        23,
+        39,
+        19,
+        24,
+        40,
+        45
+      ]
+    }
+  },
+  "stage": "done",
+  "ms": 1026
+}

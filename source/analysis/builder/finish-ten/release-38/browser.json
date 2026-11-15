@@ -1,0 +1,240 @@
+{
+  "ok": true,
+  "checkout": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-refit-release",
+  "actualGameWins": 38,
+  "phone": [
+    392,
+    730
+  ],
+  "minimumActualTilePx": 58.56603773584906,
+  "rows": [
+    {
+      "level": 251,
+      "ok": true,
+      "tilePx": 58.56603773584906,
+      "revision": 10
+    },
+    {
+      "level": 252,
+      "ok": true,
+      "tilePx": 60.720309554519304,
+      "revision": 10
+    },
+    {
+      "level": 253,
+      "ok": true,
+      "tilePx": 58.56603773584906,
+      "revision": 10
+    },
+    {
+      "level": 254,
+      "ok": true,
+      "tilePx": 58.56603773584906,
+      "revision": 10
+    },
+    {
+      "level": 255,
+      "ok": true,
+      "tilePx": 61.93136472466082,
+      "revision": 10
+    },
+    {
+      "level": 256,
+      "ok": true,
+      "tilePx": 61.93136472466082,
+      "revision": 10
+    },
+    {
+      "level": 257,
+      "ok": true,
+      "tilePx": 59.88844309619337,
+      "revision": 10
+    },
+    {
+      "level": 258,
+      "ok": true,
+      "tilePx": 60.720309554519304,
+      "revision": 10
+    },
+    {
+      "level": 259,
+      "ok": true,
+      "tilePx": 61.93136472466082,
+      "revision": 10
+    },
+    {
+      "level": 261,
+      "ok": true,
+      "tilePx": 58.56603773584906,
+      "revision": 10
+    },
+    {
+      "level": 263,
+      "ok": true,
+      "tilePx": 61.93136472466082,
+      "revision": 10
+    },
+    {
+      "level": 265,
+      "ok": true,
+      "tilePx": 61.93136472466082,
+      "revision": 10
+    },
+    {
+      "level": 266,
+      "ok": true,
+      "tilePx": 63.3469387755102,
+      "revision": 10
+    },
+    {
+      "level": 267,
+      "ok": true,
+      "tilePx": 59.88844309619337,
+      "revision": 10
+    },
+    {
+      "level": 268,
+      "ok": true,
+      "tilePx": 63.3469387755102,
+      "revision": 10
+    },
+    {
+      "level": 269,
+      "ok": true,
+      "tilePx": 60.720309554519304,
+      "revision": 10
+    },
+    {
+      "level": 271,
+      "ok": true,
+      "tilePx": 58.56603773584906,
+      "revision": 10
+    },
+    {
+      "level": 272,
+      "ok": true,
+      "tilePx": 60.720309554519304,
+      "revision": 10
+    },
+    {
+      "level": 273,
+      "ok": true,
+      "tilePx": 60.720309554519304,
+      "revision": 10
+    },
+    {
+      "level": 274,
+      "ok": true,
+      "tilePx": 58.56603773584906,
+      "revision": 10
+    },
+    {
+      "level": 278,
+      "ok": true,
+      "tilePx": 58.56603773584906,
+      "revision": 10
+    },
+    {
+      "level": 279,
+      "ok": true,
+      "tilePx": 58.56603773584906,
+      "revision": 10
+    },
+    {
+      "level": 281,
+      "ok": true,
+      "tilePx": 58.56603773584906,
+      "revision": 10
+    },
+    {
+      "level": 282,
+      "ok": true,
+      "tilePx": 63.3469387755102,
+      "revision": 10
+    },
+    {
+      "level": 283,
+      "ok": true,
+      "tilePx": 60.720309554519304,
+      "revision": 10
+    },
+    {
+      "level": 284,
+      "ok": true,
+      "tilePx": 58.56603773584906,
+      "revision": 10
+    },
+    {
+      "level": 286,
+      "ok": true,
+      "tilePx": 60.720309554519304,
+      "revision": 10
+    },
+    {
+      "level": 287,
+      "ok": true,
+      "tilePx": 61.93136472466082,
+      "revision": 10
+    },
+    {
+      "level": 288,
+      "ok": true,
+      "tilePx": 58.56603773584906,
+      "revision": 10
+    },
+    {
+      "level": 289,
+      "ok": true,
+      "tilePx": 60.720309554519304,
+      "revision": 10
+    },
+    {
+      "level": 291,
+      "ok": true,
+      "tilePx": 58.56603773584906,
+      "revision": 10
+    },
+    {
+      "level": 292,
+      "ok": true,
+      "tilePx": 61.93136472466082,
+      "revision": 10
+    },
+    {
+      "level": 293,
+      "ok": true,
+      "tilePx": 60.720309554519304,
+      "revision": 10
+    },
+    {
+      "level": 295,
+      "ok": true,
+      "tilePx": 58.56603773584906,
+      "revision": 10
+    },
+    {
+      "level": 296,
+      "ok": true,
+      "tilePx": 60.720309554519304,
+      "revision": 10
+    },
+    {
+      "level": 297,
+      "ok": true,
+      "tilePx": 58.56603773584906,
+      "revision": 10
+    },
+    {
+      "level": 298,
+      "ok": true,
+      "tilePx": 58.56603773584906,
+      "revision": 10
+    },
+    {
+      "level": 299,
+      "ok": true,
+      "tilePx": 58.56603773584906,
+      "revision": 10
+    }
+  ]
+}

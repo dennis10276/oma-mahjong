@@ -1,0 +1,23 @@
+{
+  "level": 251,
+  "baseHash": "6a58f91c21271f7c86ca716670bec144298db0cf1ef2aa6fb7695b1e97a5a629",
+  "status": "open",
+  "note": "These tiles dont really matter. THeyra just there on the trap. There is defeinatly a combination of 3 tiles from the upper or lower bottom layer to reomve and then move everything to the left or right. Look closely at after you clearead the trap.",
+  "seeds": 30,
+  "tested": 78,
+  "constructed": 4500,
+  "failures": {
+    "unknown": 55,
+    "clockMinimum,specialEffects,baitPrice:71,ownTrapProof:trapProof:storedRouteNotShortest": 2,
+    "clockMinimum,specialEffects,ownTrapProof:trapProof:storedRouteNotShortest": 13,
+    "clockDeadline": 3,
+    "clockMinimum,specialEffects,specialRoleOrder,ownTrapProof:trapProof:storedRouteNotShortest": 5
+  },
+  "packRejects": {
+    "twins": 1329,
+    "noSpot": 2768,
+    "badge": 226,
+    "small": 99
+  },
+  "ms": 38529
+}

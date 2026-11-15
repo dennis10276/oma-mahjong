@@ -1,0 +1,155 @@
+{
+  "ok": true,
+  "pairs": 14,
+  "fullGameWins": 28,
+  "liveOriginalsExactlyMatch169": true,
+  "sunflower": true,
+  "filter": true,
+  "phone": [
+    392,
+    730
+  ],
+  "qaFindingsIntercepted": 51,
+  "rows": [
+    {
+      "level": 256,
+      "variant": "original",
+      "ok": true
+    },
+    {
+      "level": 256,
+      "variant": "draft",
+      "ok": true
+    },
+    {
+      "level": 257,
+      "variant": "original",
+      "ok": true
+    },
+    {
+      "level": 257,
+      "variant": "draft",
+      "ok": true
+    },
+    {
+      "level": 258,
+      "variant": "original",
+      "ok": true
+    },
+    {
+      "level": 258,
+      "variant": "draft",
+      "ok": true
+    },
+    {
+      "level": 259,
+      "variant": "original",
+      "ok": true
+    },
+    {
+      "level": 259,
+      "variant": "draft",
+      "ok": true
+    },
+    {
+      "level": 261,
+      "variant": "original",
+      "ok": true
+    },
+    {
+      "level": 261,
+      "variant": "draft",
+      "ok": true
+    },
+    {
+      "level": 262,
+      "variant": "original",
+      "ok": true
+    },
+    {
+      "level": 262,
+      "variant": "draft",
+      "ok": true
+    },
+    {
+      "level": 263,
+      "variant": "original",
+      "ok": true
+    },
+    {
+      "level": 263,
+      "variant": "draft",
+      "ok": true
+    },
+    {
+      "level": 266,
+      "variant": "original",
+      "ok": true
+    },
+    {
+      "level": 266,
+      "variant": "draft",
+      "ok": true
+    },
+    {
+      "level": 277,
+      "variant": "original",
+      "ok": true
+    },
+    {
+      "level": 277,
+      "variant": "draft",
+      "ok": true
+    },
+    {
+      "level": 284,
+      "variant": "original",
+      "ok": true
+    },
+    {
+      "level": 284,
+      "variant": "draft",
+      "ok": true
+    },
+    {
+      "level": 286,
+      "variant": "original",
+      "ok": true
+    },
+    {
+      "level": 286,
+      "variant": "draft",
+      "ok": true
+    },
+    {
+      "level": 289,
+      "variant": "original",
+      "ok": true
+    },
+    {
+      "level": 289,
+      "variant": "draft",
+      "ok": true
+    },
+    {
+      "level": 292,
+      "variant": "original",
+      "ok": true
+    },
+    {
+      "level": 292,
+      "variant": "draft",
+      "ok": true
+    },
+    {
+      "level": 299,
+      "variant": "original",
+      "ok": true
+    },
+    {
+      "level": 299,
+      "variant": "draft",
+      "ok": true
+    }
+  ]
+}

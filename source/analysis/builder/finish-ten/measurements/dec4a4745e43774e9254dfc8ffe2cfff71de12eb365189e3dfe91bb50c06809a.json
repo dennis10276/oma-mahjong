@@ -1,0 +1,169 @@
+{
+  "schema": 1,
+  "hash": "dec4a4745e43774e9254dfc8ffe2cfff71de12eb365189e3dfe91bb50c06809a",
+  "meta": {
+    "level": 261,
+    "variant": "narrowed",
+    "from": "Restore 2 ordinary finish tiles in low gaps, retaining the trap and its authored build floor; ordinary finish pictures revised to restore pressure"
+  },
+  "status": "done",
+  "tiles": 72,
+  "clock": {
+    "i": 13,
+    "n": 16
+  },
+  "strictReplay": {
+    "ok": true,
+    "pairs": 0
+  },
+  "metrics": {
+    "clock": {
+      "minimum": 14,
+      "unknown": false,
+      "spare": 2,
+      "storedAt": 14
+    },
+    "opening": {
+      "singles": {
+        "win": 7,
+        "lose": 7,
+        "unknown": 0
+      },
+      "pairs": {
+        "win": 0,
+        "lose": 0,
+        "unknown": 0
+      },
+      "actions": [
+        {
+          "action": 14,
+          "result": "lose"
+        },
+        {
+          "action": 41,
+          "result": "lose"
+        },
+        {
+          "action": 50,
+          "result": "lose"
+        },
+        {
+          "action": 55,
+          "result": "win"
+        },
+        {
+          "action": 56,
+          "result": "win"
+        },
+        {
+          "action": 61,
+          "result": "win"
+        },
+        {
+          "action": 62,
+          "result": "lose"
+        },
+        {
+          "action": 63,
+          "result": "win"
+        },
+        {
+          "action": 65,
+          "result": "lose"
+        },
+        {
+          "action": 66,
+          "result": "win"
+        },
+        {
+          "action": 68,
+          "result": "win"
+        },
+        {
+          "action": 69,
+          "result": "win"
+        },
+        {
+          "action": 70,
+          "result": "lose"
+        },
+        {
+          "action": 71,
+          "result": "lose"
+        }
+      ]
+    },
+    "greedy": {
+      "tailGreedyWin": 0.3262,
+      "wins": 167,
+      "playouts": 512,
+      "seed": 20261115,
+      "start": {
+        "step": 14,
+        "tray": 2,
+        "left": 58
+      },
+      "stored": {
+        "steps": 58,
+        "peakTray": 3,
+        "meanTray": 2.259,
+        "moves2plus": 52,
+        "tray2Share": 0.897
+      }
+    },
+    "feel": {
+      "win": 0,
+      "waiting": [
+        0.401,
+        0.303,
+        0.236,
+        0.06
+      ],
+      "mean": 0.95,
+      "twoPlus": 0.296,
+      "singles": 3.1,
+      "steps": 18
+    },
+    "expert": {
+      "games": 8,
+      "lostGames": 0,
+      "unresolvedChecks": 0,
+      "requireProof": false,
+      "waiting": [
+        0.275,
+        0.295,
+        0.298,
+        0.131
+      ],
+      "mean": 1.29,
+      "twoPlus": 0.429,
+      "parks": 8.1,
+      "parkAt": [
+        2,
+        2.8,
+        3.4
+      ],
+      "wrongPark": 0,
+      "danger": 0.075,
+      "decisions": 38
+    },
+    "cap1": {
+      "result": "lose",
+      "cap": 1,
+      "peek": true,
+      "nodes": 0,
+      "ms": 0,
+      "startWaiting": 2
+    },
+    "cap2": {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 1,
+      "ms": 0,
+      "startWaiting": 2
+    }
+  },
+  "stage": "done",
+  "ms": 355
+}

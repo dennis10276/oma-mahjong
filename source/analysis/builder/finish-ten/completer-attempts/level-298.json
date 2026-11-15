@@ -1,0 +1,23 @@
+{
+  "level": 298,
+  "baseHash": "5ddfe4a2e766881fef09d20cee0451959225db3c0b9cd10ef3bb3b0c243f5eb8",
+  "status": "open",
+  "note": "",
+  "seeds": 11,
+  "tested": 52,
+  "constructed": 707,
+  "failures": {
+    "clockDeadline": 24,
+    "unknown": 24,
+    "specialEffects,specialRoleOrder,baitPrice:51,baitPrice:56,ownTrapProof:hiddenSpecial": 2,
+    "specialEffects,baitPrice:51,baitPrice:56,baitPrice:56,81,ownTrapProof:noProvenBait": 1,
+    "clockMinimum,specialEffects,baitPrice:56,baitPrice:56,81,ownTrapProof:wrongRepeatedPairNotBait": 1
+  },
+  "packRejects": {
+    "twins": 469,
+    "small": 98,
+    "noSpot": 19,
+    "badge": 69
+  },
+  "ms": 308396
+}

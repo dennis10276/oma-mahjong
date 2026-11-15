@@ -1,0 +1,218 @@
+{
+  "level": 266,
+  "sourceLevel": 266,
+  "ok": true,
+  "mapping": {
+    "keep": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75
+    ],
+    "inferred": false
+  },
+  "certificate": {
+    "ok": true,
+    "errors": [],
+    "checks": [
+      "fullStrictWin",
+      "sameClockMinimumAndSpare",
+      "sameSpecialEffects",
+      "sameSpecialPrerequisites",
+      "allAuthoredWrongMovesStillWrong",
+      "ownAuthoredProof"
+    ],
+    "k": 11,
+    "spare": 1,
+    "footprint": {
+      "ok": true,
+      "profile": "phone-near-60-v1",
+      "tilePx": 63.3469387755102,
+      "rows": 7,
+      "compact": true,
+      "target": 60,
+      "minimum": 58,
+      "limit": "width"
+    },
+    "ablations": [
+      [
+        "ice",
+        68,
+        11
+      ],
+      [
+        "ice",
+        71,
+        1
+      ],
+      [
+        "lock",
+        69,
+        1
+      ]
+    ],
+    "prerequisites": [
+      [
+        37,
+        []
+      ],
+      [
+        57,
+        [
+          68
+        ]
+      ],
+      [
+        72,
+        []
+      ],
+      [
+        69,
+        [
+          57,
+          68,
+          72
+        ]
+      ],
+      [
+        68,
+        []
+      ],
+      [
+        71,
+        [
+          57,
+          68,
+          69,
+          72
+        ]
+      ]
+    ],
+    "prices": [
+      {
+        "tiles": [
+          72
+        ],
+        "before": {
+          "tiles": [
+            72
+          ],
+          "result": "lose",
+          "need": null,
+          "cost": null,
+          "exact": true
+        },
+        "after": {
+          "tiles": [
+            72
+          ],
+          "result": "lose",
+          "need": null,
+          "cost": null,
+          "exact": true
+        }
+      },
+      {
+        "tiles": [
+          37
+        ],
+        "before": {
+          "tiles": [
+            37
+          ],
+          "result": "lose",
+          "need": null,
+          "cost": null,
+          "exact": true
+        },
+        "after": {
+          "tiles": [
+            37
+          ],
+          "result": "lose",
+          "need": null,
+          "cost": null,
+          "exact": true
+        }
+      }
+    ],
+    "ownProof": {
+      "ok": true
+    },
+    "beforeHash": "984b4345cf8f2d53879955628908d4efe2e867a1c39d7863e523cb1f430352bb",
+    "afterHash": "ae2dcc59613ada715911b68c9fa134bef7ccbf9f0009d09167951c394f88de9a",
+    "policy": "Task 20 same mechanics; geometry and non-trap finish pictures may change."
+  }
+}

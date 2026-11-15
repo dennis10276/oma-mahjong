@@ -1,0 +1,443 @@
+{
+  "level": 278,
+  "sourceLevel": 278,
+  "certificate": {
+    "ok": true,
+    "errors": [],
+    "checks": [
+      "fullStrictWin",
+      "sameClockMinimumAndSpare",
+      "sameSpecialEffects",
+      "sameSpecialPrerequisites",
+      "allAuthoredWrongMovesStillWrong",
+      "ownAuthoredProof"
+    ],
+    "k": 13,
+    "spare": 2,
+    "footprint": {
+      "ok": true,
+      "profile": "phone-near-60-v1",
+      "tilePx": 58.322732165573925,
+      "rows": 8,
+      "compact": true,
+      "target": 60,
+      "minimum": 58,
+      "limit": "height"
+    },
+    "ablations": [
+      [
+        "ice",
+        71,
+        1
+      ],
+      [
+        "ice",
+        75,
+        1
+      ],
+      [
+        "lock",
+        66,
+        11
+      ]
+    ],
+    "prerequisites": [
+      [
+        10,
+        []
+      ],
+      [
+        16,
+        []
+      ],
+      [
+        55,
+        []
+      ],
+      [
+        66,
+        [
+          16,
+          55,
+          75
+        ]
+      ],
+      [
+        71,
+        []
+      ],
+      [
+        75,
+        []
+      ]
+    ],
+    "prices": [
+      {
+        "tiles": [
+          78
+        ],
+        "before": {
+          "tiles": [
+            78
+          ],
+          "result": "lose",
+          "need": null,
+          "cost": null,
+          "exact": true
+        },
+        "after": {
+          "tiles": [
+            78
+          ],
+          "result": "lose",
+          "need": null,
+          "cost": null,
+          "exact": true
+        }
+      },
+      {
+        "tiles": [
+          10
+        ],
+        "before": {
+          "tiles": [
+            10
+          ],
+          "result": "lose",
+          "need": null,
+          "cost": null,
+          "exact": true
+        },
+        "after": {
+          "tiles": [
+            10
+          ],
+          "result": "lose",
+          "need": null,
+          "cost": null,
+          "exact": true
+        }
+      }
+    ],
+    "ownProof": {
+      "ok": true
+    },
+    "beforeHash": "5ae15d71313d3c33c2b7265eec2789ab6e700e07e7901c8c88a29a508d3d1c93",
+    "afterHash": "7afcd1ef5b9941ec6a0d9bdef58df5f71748b68dcc775a3ae5d74047b0536236",
+    "policy": "Task 20 same mechanics; geometry and non-trap finish pictures may change."
+  },
+  "mapping": {
+    "inferred": false,
+    "keep": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79
+    ]
+  },
+  "seeds": [
+    121,
+    314159,
+    2027
+  ],
+  "playoutsPerSeed": 24,
+  "before": {
+    "hash": "5ae15d71313d3c33c2b7265eec2789ab6e700e07e7901c8c88a29a508d3d1c93",
+    "clockPolicy": "shortest-strict",
+    "boundaryClockMove": 13,
+    "storedClockMove": 13,
+    "tailTiles": 67,
+    "atClock": {
+      "waiting": 3,
+      "freeTiles": 17,
+      "visibleMatches": 1,
+      "freePairs": 5
+    },
+    "samples": [
+      {
+        "games": 24,
+        "lostGames": 0,
+        "unresolvedChecks": 0,
+        "requireProof": true,
+        "waiting": [
+          0.705,
+          0.134,
+          0.108,
+          0.054
+        ],
+        "mean": 0.51,
+        "twoPlus": 0.162,
+        "parks": 3,
+        "parkAt": [
+          1,
+          1.4,
+          0.6
+        ],
+        "wrongPark": 0.07,
+        "danger": 0,
+        "decisions": 38
+      },
+      {
+        "games": 24,
+        "lostGames": 0,
+        "unresolvedChecks": 0,
+        "requireProof": true,
+        "waiting": [
+          0.681,
+          0.139,
+          0.121,
+          0.06
+        ],
+        "mean": 0.56,
+        "twoPlus": 0.181,
+        "parks": 3.4,
+        "parkAt": [
+          1,
+          1.5,
+          0.8
+        ],
+        "wrongPark": 0.08,
+        "danger": 0,
+        "decisions": 38
+      },
+      {
+        "games": 24,
+        "lostGames": 0,
+        "unresolvedChecks": 0,
+        "requireProof": true,
+        "waiting": [
+          0.671,
+          0.154,
+          0.113,
+          0.062
+        ],
+        "mean": 0.57,
+        "twoPlus": 0.175,
+        "parks": 3.4,
+        "parkAt": [
+          1,
+          1.6,
+          0.8
+        ],
+        "wrongPark": 0.08,
+        "danger": 0,
+        "decisions": 38
+      }
+    ],
+    "average": {
+      "mean": 0.5466666666666667,
+      "twoPlus": 0.17266666666666666,
+      "parks": 3.266666666666667,
+      "parksPerTenTailTiles": 0.4875621890547264,
+      "wrongPark": 0.07666666666666667,
+      "danger": 0
+    },
+    "unresolvedChecks": 0,
+    "games": 72,
+    "gamble": {
+      "gamble": 0,
+      "blindOnly": 0
+    },
+    "cap1": {
+      "result": "lose",
+      "cap": 1,
+      "peek": true,
+      "nodes": 0,
+      "ms": 0,
+      "startWaiting": 3
+    }
+  },
+  "after": {
+    "hash": "7afcd1ef5b9941ec6a0d9bdef58df5f71748b68dcc775a3ae5d74047b0536236",
+    "clockPolicy": "shortest-strict",
+    "boundaryClockMove": 13,
+    "storedClockMove": 13,
+    "tailTiles": 67,
+    "atClock": {
+      "waiting": 3,
+      "freeTiles": 21,
+      "visibleMatches": 1,
+      "freePairs": 4
+    },
+    "samples": [
+      {
+        "games": 24,
+        "lostGames": 0,
+        "unresolvedChecks": 0,
+        "requireProof": true,
+        "waiting": [
+          0.694,
+          0.217,
+          0.057,
+          0.032
+        ],
+        "mean": 0.43,
+        "twoPlus": 0.089,
+        "parks": 2.3,
+        "parkAt": [
+          1.5,
+          0.5,
+          0.2
+        ],
+        "wrongPark": 0.07,
+        "danger": 0.001,
+        "decisions": 37
+      },
+      {
+        "games": 24,
+        "lostGames": 0,
+        "unresolvedChecks": 0,
+        "requireProof": true,
+        "waiting": [
+          0.705,
+          0.202,
+          0.058,
+          0.035
+        ],
+        "mean": 0.42,
+        "twoPlus": 0.093,
+        "parks": 2.3,
+        "parkAt": [
+          1.5,
+          0.5,
+          0.3
+        ],
+        "wrongPark": 0.1,
+        "danger": 0.001,
+        "decisions": 37
+      },
+      {
+        "games": 24,
+        "lostGames": 0,
+        "unresolvedChecks": 0,
+        "requireProof": true,
+        "waiting": [
+          0.694,
+          0.212,
+          0.058,
+          0.036
+        ],
+        "mean": 0.43,
+        "twoPlus": 0.094,
+        "parks": 2.5,
+        "parkAt": [
+          1.6,
+          0.5,
+          0.3
+        ],
+        "wrongPark": 0.1,
+        "danger": 0.001,
+        "decisions": 37
+      }
+    ],
+    "average": {
+      "mean": 0.4266666666666667,
+      "twoPlus": 0.09200000000000001,
+      "parks": 2.3666666666666667,
+      "parksPerTenTailTiles": 0.35323383084577115,
+      "wrongPark": 0.09000000000000001,
+      "danger": 0.001
+    },
+    "unresolvedChecks": 0,
+    "games": 72,
+    "gamble": {
+      "gamble": 14,
+      "blindOnly": 4
+    },
+    "cap1": {
+      "result": "lose",
+      "cap": 1,
+      "peek": true,
+      "nodes": 0,
+      "ms": 0,
+      "startWaiting": 3
+    }
+  },
+  "delta": {
+    "mean": -0.12000000000000005,
+    "twoPlus": -0.08066666666666665,
+    "parks": -0.9000000000000004,
+    "parksPerTenTailTiles": -0.13432835820895528,
+    "wrongPark": 0.013333333333333336,
+    "danger": 0.001
+  },
+  "distance": 0.46839800995024883,
+  "humanWinPrediction": false,
+  "interpretation": "Independent-seed structural comparison. Winning paths use a proof oracle; neither the paths nor this distance estimate human win probability."
+}

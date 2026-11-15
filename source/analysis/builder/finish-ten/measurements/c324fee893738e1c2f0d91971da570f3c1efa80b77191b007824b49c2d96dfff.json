@@ -1,0 +1,226 @@
+{
+  "schema": 1,
+  "hash": "c324fee893738e1c2f0d91971da570f3c1efa80b77191b007824b49c2d96dfff",
+  "meta": {
+    "level": 279,
+    "variant": "narrowed",
+    "from": "Retain every upper trap piece and picture; half-align three support rows, put the free corner key in the empty crown and move the last ninth-row filler into the crown; ordinary finish pictures revised to restore pressure"
+  },
+  "status": "done",
+  "tiles": 76,
+  "clock": {
+    "i": 8,
+    "n": 12
+  },
+  "strictReplay": {
+    "ok": true,
+    "pairs": 0
+  },
+  "metrics": {
+    "clock": {
+      "minimum": 10,
+      "unknown": false,
+      "spare": 2,
+      "storedAt": 10
+    },
+    "opening": {
+      "singles": {
+        "win": 18,
+        "lose": 8,
+        "unknown": 0
+      },
+      "pairs": {
+        "win": 1,
+        "lose": 0,
+        "unknown": 0
+      },
+      "actions": [
+        {
+          "action": 0,
+          "result": "lose"
+        },
+        {
+          "action": 2,
+          "result": "win"
+        },
+        {
+          "action": 3,
+          "result": "win"
+        },
+        {
+          "action": 4,
+          "result": "win"
+        },
+        {
+          "action": 5,
+          "result": "win"
+        },
+        {
+          "action": 9,
+          "result": "win"
+        },
+        {
+          "action": 18,
+          "result": "win"
+        },
+        {
+          "action": 34,
+          "result": "win"
+        },
+        {
+          "action": 37,
+          "result": "win"
+        },
+        {
+          "action": 38,
+          "result": "lose"
+        },
+        {
+          "action": 39,
+          "result": "lose"
+        },
+        {
+          "action": 40,
+          "result": "win"
+        },
+        {
+          "action": 41,
+          "result": "lose"
+        },
+        {
+          "action": 42,
+          "result": "win"
+        },
+        {
+          "action": 58,
+          "result": "lose"
+        },
+        {
+          "action": 59,
+          "result": "win"
+        },
+        {
+          "action": 62,
+          "result": "win"
+        },
+        {
+          "action": 63,
+          "result": "win"
+        },
+        {
+          "action": 64,
+          "result": "win"
+        },
+        {
+          "action": 65,
+          "result": "lose"
+        },
+        {
+          "action": 66,
+          "result": "win"
+        },
+        {
+          "action": 67,
+          "result": "win"
+        },
+        {
+          "action": 68,
+          "result": "lose"
+        },
+        {
+          "action": 71,
+          "result": "win"
+        },
+        {
+          "action": 72,
+          "result": "lose"
+        },
+        {
+          "action": 74,
+          "result": "win"
+        },
+        {
+          "action": {
+            "pair": [
+              9,
+              34
+            ]
+          },
+          "result": "win"
+        }
+      ]
+    },
+    "greedy": {
+      "tailGreedyWin": 0.5059,
+      "wins": 259,
+      "playouts": 512,
+      "seed": 20261115,
+      "start": {
+        "step": 10,
+        "tray": 2,
+        "left": 66
+      },
+      "stored": {
+        "steps": 66,
+        "peakTray": 3,
+        "meanTray": 1.894,
+        "moves2plus": 47,
+        "tray2Share": 0.712
+      }
+    },
+    "feel": {
+      "win": 0.523,
+      "waiting": [
+        0.421,
+        0.141,
+        0.416,
+        0.022
+      ],
+      "mean": 1.04,
+      "twoPlus": 0.438,
+      "singles": 3,
+      "steps": 33
+    },
+    "expert": {
+      "games": 8,
+      "lostGames": 0,
+      "unresolvedChecks": 0,
+      "requireProof": false,
+      "waiting": [
+        0.375,
+        0.184,
+        0.423,
+        0.017
+      ],
+      "mean": 1.08,
+      "twoPlus": 0.44,
+      "parks": 2.6,
+      "parkAt": [
+        1.4,
+        0.8,
+        0.5
+      ],
+      "wrongPark": 0,
+      "danger": 0.014,
+      "decisions": 37
+    },
+    "cap1": {
+      "result": "lose",
+      "cap": 1,
+      "peek": true,
+      "nodes": 0,
+      "ms": 1,
+      "startWaiting": 2
+    },
+    "cap2": {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 2,
+      "ms": 0,
+      "startWaiting": 2
+    }
+  },
+  "stage": "done",
+  "ms": 596
+}

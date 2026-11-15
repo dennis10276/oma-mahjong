@@ -1,0 +1,196 @@
+{
+  "level": 272,
+  "sourceLevel": 272,
+  "ok": true,
+  "mapping": {
+    "keep": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83
+    ],
+    "inferred": false
+  },
+  "certificate": {
+    "ok": true,
+    "errors": [],
+    "checks": [
+      "fullStrictWin",
+      "sameClockMinimumAndSpare",
+      "sameSpecialEffects",
+      "sameSpecialPrerequisites",
+      "allAuthoredWrongMovesStillWrong",
+      "olderRecoveredSpecialContract"
+    ],
+    "k": 40,
+    "spare": 3,
+    "footprint": {
+      "ok": true,
+      "profile": "phone-near-60-v1",
+      "tilePx": 59.13285048119853,
+      "rows": 8,
+      "compact": true,
+      "target": 60,
+      "minimum": 58,
+      "limit": "height"
+    },
+    "ablations": [
+      [
+        "ice",
+        43,
+        40
+      ],
+      [
+        "ice",
+        69,
+        40
+      ],
+      [
+        "lock",
+        13,
+        30
+      ],
+      [
+        "lock",
+        41,
+        40
+      ],
+      [
+        "lock",
+        39,
+        40
+      ]
+    ],
+    "prerequisites": [
+      [
+        13,
+        [
+          18,
+          43,
+          69
+        ]
+      ],
+      [
+        18,
+        [
+          43,
+          69
+        ]
+      ],
+      [
+        43,
+        [
+          69
+        ]
+      ],
+      [
+        41,
+        [
+          18,
+          43,
+          69
+        ]
+      ],
+      [
+        39,
+        [
+          18,
+          43,
+          69
+        ]
+      ],
+      [
+        69,
+        []
+      ]
+    ],
+    "prices": [],
+    "ownProof": {
+      "ok": true,
+      "scope": "Recovered special contract; no authored role context is available for this older board."
+    },
+    "beforeHash": "d4df8ccded25b19f0dd09daebe6de6c70a72e18c025dca1a2c093465e34d6235",
+    "afterHash": "1b6ad509ddee72a69f826bb2d527e305849af2ecd7fe14ad47f45edbd9fe2fbf",
+    "policy": "Task 20 same mechanics; geometry and non-trap finish pictures may change."
+  }
+}

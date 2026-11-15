@@ -1,0 +1,39 @@
+{
+  "level": 278,
+  "baseHash": "5ae15d71313d3c33c2b7265eec2789ab6e700e07e7901c8c88a29a508d3d1c93",
+  "status": "open",
+  "note": "",
+  "seeds": 50,
+  "tested": 378,
+  "constructed": 2561,
+  "failures": {
+    "clockMinimum,specialEffects,baitPrice:78,baitPrice:10,ownTrapProof:noProvenBait": 23,
+    "clockMinimum,specialEffects,specialRoleOrder,baitPrice:78,baitPrice:10,ownTrapProof:noProvenBait": 48,
+    "Use the half-tile grid and a layer from 1 to 8.": 43,
+    "clockMinimum,specialEffects,specialRoleOrder,baitPrice:78,baitPrice:10,ownTrapProof:hiddenSpecial": 43,
+    "clockDeadline": 67,
+    "unknown": 108,
+    "clockMinimum,specialRoleOrder,baitPrice:78,ownTrapProof:controlUnknown": 2,
+    "clockMinimum,specialEffects,specialRoleOrder,baitPrice:78": 10,
+    "specialEffects,baitPrice:78,ownTrapProof:obvious:freeRoutePair": 1,
+    "clockMinimum,specialEffects,specialRoleOrder,baitPrice:78,ownTrapProof:twoMeaningfulBaits": 13,
+    "specialEffects,specialRoleOrder,baitPrice:78,baitPrice:10,ownTrapProof:noProvenBait": 2,
+    "clockMinimum,specialEffects,specialRoleOrder,baitPrice:78,baitPrice:10,ownTrapProof:clockNotBait": 3,
+    "clockMinimum,specialRoleOrder,baitPrice:78,ownTrapProof:obvious:freeRoutePair": 1,
+    "specialEffects,baitPrice:78,ownTrapProof:twoMeaningfulBaits": 1,
+    "clockMinimum,specialEffects,specialRoleOrder,baitPrice:10,ownTrapProof:hiddenSpecial": 1,
+    "clockMinimum,specialEffects": 1,
+    "specialEffects,specialRoleOrder,baitPrice:78,baitPrice:10,ownTrapProof:hiddenSpecial": 3,
+    "clockMinimum,specialEffects,specialRoleOrder,baitPrice:78,ownTrapProof:obvious:freeRoutePair": 1,
+    "specialEffects,specialRoleOrder,baitPrice:78,baitPrice:10,ownTrapProof:clockNotBait": 3,
+    "specialEffects,specialRoleOrder,baitPrice:78,ownTrapProof:obvious:freeRoutePair": 2,
+    "clockMinimum,specialEffects,baitPrice:78,baitPrice:10,ownTrapProof:hiddenSpecial": 1,
+    "clockMinimum,specialEffects,specialRoleOrder,baitPrice:78,ownTrapProof:controlUnknown": 1
+  },
+  "packRejects": {
+    "badge": 312,
+    "small": 530,
+    "twins": 1341
+  },
+  "ms": 300698
+}

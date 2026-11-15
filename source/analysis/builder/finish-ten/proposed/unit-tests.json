@@ -1,0 +1,9 @@
+{
+  "ok": true,
+  "boards": 40,
+  "roleValuesPreserved": true,
+  "variableReleasedCounts": true,
+  "unknownNeverSafe": true,
+  "allStrictWins": true,
+  "allFootprints": true
+}

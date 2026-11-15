@@ -1,0 +1,22 @@
+{
+  "level": 288,
+  "baseHash": "87fa86e0564e5896568c4c79fac2f1d78b1d430cdd350eaffc6bacab479fb030",
+  "status": "open",
+  "note": "trim and use the middle.",
+  "seeds": 13,
+  "tested": 13,
+  "constructed": 1950,
+  "failures": {
+    "unknown": 5,
+    "clockDeadline": 6,
+    "clockMinimum,specialEffects,baitPrice:6,baitPrice:6,80,ownTrapProof:hiddenSpecial": 1,
+    "clockMinimum,specialEffects,baitPrice:51,ownTrapProof:hiddenSpecial": 1
+  },
+  "packRejects": {
+    "twins": 1129,
+    "badge": 323,
+    "noSpot": 364,
+    "small": 121
+  },
+  "ms": 90333
+}

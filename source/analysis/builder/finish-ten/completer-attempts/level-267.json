@@ -1,0 +1,22 @@
+{
+  "level": 267,
+  "baseHash": "87cf79a32a5f38fe0c688630c9a98503708020e4c3dee6b81d0b152c3617ea56",
+  "status": "open",
+  "note": "Just trim it and make it inside. Look at the trap and you can move some tiles of it.",
+  "seeds": 11,
+  "tested": 67,
+  "constructed": 1112,
+  "failures": {
+    "clockMinimum,specialEffects,specialRoleOrder,baitPrice:84": 1,
+    "clockDeadline": 21,
+    "unknown": 44,
+    "clockMinimum,specialEffects,specialRoleOrder": 1
+  },
+  "packRejects": {
+    "twins": 736,
+    "badge": 114,
+    "noSpot": 167,
+    "small": 28
+  },
+  "ms": 304271
+}

@@ -1,0 +1,174 @@
+{
+  "schema": 1,
+  "hash": "0e75bee11916b6d48963e3f080a6dacb6fa6619f68e5c5634ed64c9ad3b4ff11",
+  "meta": {
+    "level": 276,
+    "variant": "released"
+  },
+  "status": "done",
+  "tiles": 76,
+  "clock": {
+    "i": 61,
+    "n": 19
+  },
+  "strictReplay": {
+    "ok": true,
+    "pairs": 0
+  },
+  "metrics": {
+    "clock": {
+      "minimum": 17,
+      "unknown": false,
+      "spare": 2,
+      "storedAt": 17
+    },
+    "opening": {
+      "singles": {
+        "win": 5,
+        "lose": 11,
+        "unknown": 0
+      },
+      "pairs": {
+        "win": 0,
+        "lose": 0,
+        "unknown": 0
+      },
+      "actions": [
+        {
+          "action": 36,
+          "result": "lose"
+        },
+        {
+          "action": 53,
+          "result": "lose"
+        },
+        {
+          "action": 54,
+          "result": "lose"
+        },
+        {
+          "action": 60,
+          "result": "lose"
+        },
+        {
+          "action": 61,
+          "result": "lose"
+        },
+        {
+          "action": 63,
+          "result": "win"
+        },
+        {
+          "action": 64,
+          "result": "lose"
+        },
+        {
+          "action": 66,
+          "result": "lose"
+        },
+        {
+          "action": 67,
+          "result": "win"
+        },
+        {
+          "action": 68,
+          "result": "win"
+        },
+        {
+          "action": 69,
+          "result": "lose"
+        },
+        {
+          "action": 71,
+          "result": "lose"
+        },
+        {
+          "action": 72,
+          "result": "lose"
+        },
+        {
+          "action": 73,
+          "result": "win"
+        },
+        {
+          "action": 74,
+          "result": "win"
+        },
+        {
+          "action": 75,
+          "result": "lose"
+        }
+      ]
+    },
+    "greedy": {
+      "tailGreedyWin": 0.5625,
+      "wins": 288,
+      "playouts": 512,
+      "seed": 20261115,
+      "start": {
+        "step": 17,
+        "tray": 3,
+        "left": 59
+      },
+      "stored": {
+        "steps": 59,
+        "peakTray": 3,
+        "meanTray": 1.576,
+        "moves2plus": 33,
+        "tray2Share": 0.559
+      }
+    },
+    "feel": {
+      "win": 0,
+      "waiting": [
+        0.767,
+        0.098,
+        0.069,
+        0.067
+      ],
+      "mean": 0.44,
+      "twoPlus": 0.136,
+      "singles": 3,
+      "steps": 30
+    },
+    "expert": {
+      "games": 8,
+      "lostGames": 0,
+      "waiting": [
+        0.732,
+        0.121,
+        0.088,
+        0.059
+      ],
+      "mean": 0.47,
+      "twoPlus": 0.147,
+      "parks": 3,
+      "parkAt": [
+        1,
+        1,
+        1
+      ],
+      "wrongPark": 0,
+      "danger": 0.029,
+      "decisions": 34
+    },
+    "cap1": {
+      "result": "lose",
+      "cap": 1,
+      "peek": true,
+      "nodes": 0,
+      "ms": 0,
+      "startWaiting": 3
+    },
+    "cap2": {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 0,
+      "ms": 0,
+      "startWaiting": 3
+    }
+  },
+  "stage": "done",
+  "ms": 369
+}

@@ -1,0 +1,178 @@
+{
+  "schema": 1,
+  "hash": "e9c664f2895ee58b17652106107ae57c087e12e94a3f0c1ff66dd44ebf433d88",
+  "meta": {
+    "level": 277,
+    "variant": "narrowed",
+    "from": "Shift the connected lower/upper finish wing half a tile (axis 1, cut 10, side 1, delta -1) while leaving its internal blocking relations intact; ordinary finish pictures revised to restore pressure",
+    "swapFrom": 270
+  },
+  "status": "done",
+  "tiles": 88,
+  "clock": {
+    "i": 55,
+    "n": 12
+  },
+  "strictReplay": {
+    "ok": true,
+    "pairs": 0
+  },
+  "metrics": {
+    "clock": {
+      "minimum": 10,
+      "unknown": false,
+      "spare": 2,
+      "storedAt": 10
+    },
+    "opening": {
+      "singles": {
+        "win": 6,
+        "lose": 10,
+        "unknown": 0
+      },
+      "pairs": {
+        "win": 0,
+        "lose": 0,
+        "unknown": 0
+      },
+      "actions": [
+        {
+          "action": 0,
+          "result": "lose"
+        },
+        {
+          "action": 5,
+          "result": "lose"
+        },
+        {
+          "action": 38,
+          "result": "win"
+        },
+        {
+          "action": 60,
+          "result": "lose"
+        },
+        {
+          "action": 61,
+          "result": "lose"
+        },
+        {
+          "action": 64,
+          "result": "win"
+        },
+        {
+          "action": 65,
+          "result": "lose"
+        },
+        {
+          "action": 76,
+          "result": "lose"
+        },
+        {
+          "action": 77,
+          "result": "win"
+        },
+        {
+          "action": 81,
+          "result": "lose"
+        },
+        {
+          "action": 82,
+          "result": "win"
+        },
+        {
+          "action": 83,
+          "result": "lose"
+        },
+        {
+          "action": 84,
+          "result": "win"
+        },
+        {
+          "action": 85,
+          "result": "win"
+        },
+        {
+          "action": 86,
+          "result": "lose"
+        },
+        {
+          "action": 87,
+          "result": "lose"
+        }
+      ]
+    },
+    "greedy": {
+      "tailGreedyWin": 0,
+      "wins": 0,
+      "playouts": 512,
+      "seed": 20261115,
+      "start": {
+        "step": 10,
+        "tray": 2,
+        "left": 78
+      },
+      "stored": {
+        "steps": 78,
+        "peakTray": 3,
+        "meanTray": 2.192,
+        "moves2plus": 67,
+        "tray2Share": 0.859
+      }
+    },
+    "feel": {
+      "win": 0,
+      "waiting": [
+        0,
+        0,
+        0.9,
+        0.1
+      ],
+      "mean": 2.1,
+      "twoPlus": 1,
+      "singles": 1,
+      "steps": 10
+    },
+    "expert": {
+      "games": 8,
+      "lostGames": 0,
+      "unresolvedChecks": 0,
+      "requireProof": false,
+      "waiting": [
+        0.02,
+        0.117,
+        0.627,
+        0.235
+      ],
+      "mean": 2.08,
+      "twoPlus": 0.862,
+      "parks": 10,
+      "parkAt": [
+        0,
+        1.8,
+        8.3
+      ],
+      "wrongPark": 0,
+      "danger": 0.13,
+      "decisions": 50
+    },
+    "cap1": {
+      "result": "lose",
+      "cap": 1,
+      "peek": true,
+      "nodes": 0,
+      "ms": 1,
+      "startWaiting": 2
+    },
+    "cap2": {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 6,
+      "ms": 1,
+      "startWaiting": 2
+    }
+  },
+  "stage": "done",
+  "ms": 173
+}

@@ -1,0 +1,15 @@
+{
+  "level": 280,
+  "ok": false,
+  "tested": 163,
+  "seedCount": 14,
+  "failures": {
+    "specialRoleOrder": 3,
+    "finish lose": 51,
+    "clockMinimum 7 -> 1, specialRoleOrder, baitPrice 0, baitPrice 75, visibleTwins": 3,
+    "specialRoleOrder, visibleTwins": 3,
+    "clock route unproven": 100,
+    "trap tile on the edge": 3
+  },
+  "ms": 33437
+}

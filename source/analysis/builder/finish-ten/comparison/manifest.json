@@ -1,0 +1,24 @@
+{
+  "lab": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-finish-ten\\source\\build\\finish-ten-comparison",
+  "port": 8275,
+  "levels": [
+    256,
+    257,
+    258,
+    259,
+    261,
+    262,
+    263,
+    266,
+    277,
+    284,
+    286,
+    289,
+    292,
+    299
+  ],
+  "cards": 28,
+  "liveCommit": "a99b338e",
+  "liveVersion": "1.69",
+  "measuredDraftsAreFrozen": true
+}

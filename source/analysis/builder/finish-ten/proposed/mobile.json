@@ -1,0 +1,11 @@
+{
+  "ok": true,
+  "viewport": [
+    392,
+    730
+  ],
+  "actualCssWidth": 392,
+  "responsiveMediaQuery": true,
+  "mobileCheckPasses": true,
+  "releaseStillHasZeroMoves": true
+}

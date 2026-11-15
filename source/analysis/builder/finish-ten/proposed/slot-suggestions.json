@@ -1,0 +1,82 @@
+[
+  {
+    "currentSlot": 262,
+    "sourceLevel": 260,
+    "proposedClock": 11,
+    "proposedSpare": 2,
+    "closest": [
+      {
+        "level": 293,
+        "score": 2.3323546406644997,
+        "clock": 11,
+        "spare": 1
+      },
+      {
+        "level": 258,
+        "score": 3.1893849436948023,
+        "clock": 10,
+        "spare": 2
+      },
+      {
+        "level": 254,
+        "score": 3.4077547960646557,
+        "clock": 10,
+        "spare": 2
+      },
+      {
+        "level": 253,
+        "score": 3.4380029923128514,
+        "clock": 10,
+        "spare": 2
+      },
+      {
+        "level": 288,
+        "score": 3.6519043421046113,
+        "clock": 11,
+        "spare": 2
+      }
+    ],
+    "currentSlotScore": 4.755675695196823,
+    "scope": "Uncalibrated structural ranking; clock difference weighted 2, spare difference 1, pressure distance and safe-opening fraction difference. This is not a human rating or an automatic reorder."
+  },
+  {
+    "currentSlot": 277,
+    "sourceLevel": 270,
+    "proposedClock": 10,
+    "proposedSpare": 2,
+    "closest": [
+      {
+        "level": 258,
+        "score": 2.862098679098678,
+        "clock": 10,
+        "spare": 2
+      },
+      {
+        "level": 254,
+        "score": 3.0996993006993008,
+        "clock": 10,
+        "spare": 2
+      },
+      {
+        "level": 253,
+        "score": 3.1299474969474965,
+        "clock": 10,
+        "spare": 2
+      },
+      {
+        "level": 279,
+        "score": 4.329032634032634,
+        "clock": 10,
+        "spare": 2
+      },
+      {
+        "level": 298,
+        "score": 4.5564685292580025,
+        "clock": 10,
+        "spare": 2
+      }
+    ],
+    "currentSlotScore": 27.405721980325755,
+    "scope": "Uncalibrated structural ranking; clock difference weighted 2, spare difference 1, pressure distance and safe-opening fraction difference. This is not a human rating or an automatic reorder."
+  }
+]

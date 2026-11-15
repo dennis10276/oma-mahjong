@@ -1,0 +1,2325 @@
+{
+  "definition": "Free face-up pairs and visible-twin singles offered by detour.js, plus free keys/clock; no hidden peek pairs. Descriptive, not calibrated human choices.",
+  "rows": [
+    {
+      "level": 251,
+      "before": {
+        "total": 1,
+        "win": 0,
+        "lose": 1,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "key",
+            "take": [
+              71
+            ],
+            "result": "lose"
+          }
+        ]
+      },
+      "after": {
+        "total": 1,
+        "win": 0,
+        "lose": 1,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "key",
+            "take": [
+              67
+            ],
+            "result": "lose"
+          }
+        ]
+      }
+    },
+    {
+      "level": 252,
+      "before": {
+        "total": 1,
+        "win": 0,
+        "lose": 1,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "key",
+            "take": [
+              29
+            ],
+            "result": "lose"
+          }
+        ]
+      },
+      "after": {
+        "total": 1,
+        "win": 0,
+        "lose": 1,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "key",
+            "take": [
+              29
+            ],
+            "result": "lose"
+          }
+        ]
+      }
+    },
+    {
+      "level": 253,
+      "before": {
+        "total": 5,
+        "win": 4,
+        "lose": 1,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              0,
+              78
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              38,
+              56
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              41,
+              79
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              69,
+              77
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "key",
+            "take": [
+              40
+            ],
+            "result": "lose"
+          }
+        ]
+      },
+      "after": {
+        "total": 5,
+        "win": 4,
+        "lose": 1,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              0,
+              74
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              1,
+              37
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              34,
+              52
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              65,
+              73
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "key",
+            "take": [
+              36
+            ],
+            "result": "lose"
+          }
+        ]
+      }
+    },
+    {
+      "level": 254,
+      "before": {
+        "total": 3,
+        "win": 3,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              30,
+              75
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              68,
+              69
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "key",
+            "take": [
+              25
+            ],
+            "result": "win"
+          }
+        ]
+      },
+      "after": {
+        "total": 3,
+        "win": 3,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              30,
+              75
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              68,
+              69
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "key",
+            "take": [
+              25
+            ],
+            "result": "win"
+          }
+        ]
+      }
+    },
+    {
+      "level": 255,
+      "before": {
+        "total": 2,
+        "win": 2,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              45,
+              73
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "single",
+            "take": [
+              74
+            ],
+            "result": "win"
+          }
+        ]
+      },
+      "after": {
+        "total": 2,
+        "win": 2,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              45,
+              73
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "single",
+            "take": [
+              74
+            ],
+            "result": "win"
+          }
+        ]
+      }
+    },
+    {
+      "level": 256,
+      "before": {
+        "total": 2,
+        "win": 2,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              0,
+              58
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              45,
+              65
+            ],
+            "result": "win"
+          }
+        ]
+      },
+      "after": {
+        "total": 2,
+        "win": 2,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              0,
+              58
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              45,
+              65
+            ],
+            "result": "win"
+          }
+        ]
+      }
+    },
+    {
+      "level": 257,
+      "before": {
+        "total": 4,
+        "win": 4,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              0,
+              29
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              2,
+              46
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              31,
+              68
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              69,
+              70
+            ],
+            "result": "win"
+          }
+        ]
+      },
+      "after": {
+        "total": 3,
+        "win": 3,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              14,
+              44
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              14,
+              46
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              44,
+              46
+            ],
+            "result": "win"
+          }
+        ]
+      }
+    },
+    {
+      "level": 258,
+      "before": {
+        "total": 0,
+        "win": 0,
+        "lose": 0,
+        "unknown": 0,
+        "rows": []
+      },
+      "after": {
+        "total": 1,
+        "win": 1,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              0,
+              71
+            ],
+            "result": "win"
+          }
+        ]
+      }
+    },
+    {
+      "level": 259,
+      "before": {
+        "total": 1,
+        "win": 1,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "key",
+            "take": [
+              44
+            ],
+            "result": "win"
+          }
+        ]
+      },
+      "after": {
+        "total": 1,
+        "win": 1,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "key",
+            "take": [
+              44
+            ],
+            "result": "win"
+          }
+        ]
+      }
+    },
+    {
+      "level": 261,
+      "before": {
+        "total": 4,
+        "win": 4,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              59,
+              72
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              59,
+              74
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              72,
+              74
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "single",
+            "take": [
+              69
+            ],
+            "result": "win"
+          }
+        ]
+      },
+      "after": {
+        "total": 2,
+        "win": 2,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              66,
+              68
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "single",
+            "take": [
+              63
+            ],
+            "result": "win"
+          }
+        ]
+      }
+    },
+    {
+      "level": 262,
+      "before": {
+        "total": 1,
+        "win": 1,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              80,
+              82
+            ],
+            "result": "win"
+          }
+        ]
+      },
+      "after": {
+        "total": 3,
+        "win": 3,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              1,
+              9
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              1,
+              75
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              9,
+              75
+            ],
+            "result": "win"
+          }
+        ]
+      }
+    },
+    {
+      "level": 263,
+      "before": {
+        "total": 3,
+        "win": 2,
+        "lose": 1,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              65,
+              75
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "single",
+            "take": [
+              67
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "key",
+            "take": [
+              0
+            ],
+            "result": "lose"
+          }
+        ]
+      },
+      "after": {
+        "total": 3,
+        "win": 2,
+        "lose": 1,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              65,
+              75
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "single",
+            "take": [
+              67
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "key",
+            "take": [
+              0
+            ],
+            "result": "lose"
+          }
+        ]
+      }
+    },
+    {
+      "level": 265,
+      "before": {
+        "total": 1,
+        "win": 1,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "single",
+            "take": [
+              71
+            ],
+            "result": "win"
+          }
+        ]
+      },
+      "after": {
+        "total": 1,
+        "win": 1,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "single",
+            "take": [
+              71
+            ],
+            "result": "win"
+          }
+        ]
+      }
+    },
+    {
+      "level": 266,
+      "before": {
+        "total": 2,
+        "win": 0,
+        "lose": 2,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "clock",
+            "take": [
+              37
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "key",
+            "take": [
+              72
+            ],
+            "result": "lose"
+          }
+        ]
+      },
+      "after": {
+        "total": 2,
+        "win": 0,
+        "lose": 2,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "clock",
+            "take": [
+              37
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "key",
+            "take": [
+              72
+            ],
+            "result": "lose"
+          }
+        ]
+      }
+    },
+    {
+      "level": 267,
+      "before": {
+        "total": 2,
+        "win": 2,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              63,
+              82
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "key",
+            "take": [
+              81
+            ],
+            "result": "win"
+          }
+        ]
+      },
+      "after": {
+        "total": 2,
+        "win": 2,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              55,
+              72
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "key",
+            "take": [
+              71
+            ],
+            "result": "win"
+          }
+        ]
+      }
+    },
+    {
+      "level": 268,
+      "before": {
+        "total": 5,
+        "win": 1,
+        "lose": 4,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              30,
+              52
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "single",
+            "take": [
+              73
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "single",
+            "take": [
+              74
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "clock",
+            "take": [
+              25
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "key",
+            "take": [
+              75
+            ],
+            "result": "lose"
+          }
+        ]
+      },
+      "after": {
+        "total": 5,
+        "win": 1,
+        "lose": 4,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              30,
+              52
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "single",
+            "take": [
+              73
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "single",
+            "take": [
+              74
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "clock",
+            "take": [
+              25
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "key",
+            "take": [
+              75
+            ],
+            "result": "lose"
+          }
+        ]
+      }
+    },
+    {
+      "level": 269,
+      "before": {
+        "total": 0,
+        "win": 0,
+        "lose": 0,
+        "unknown": 0,
+        "rows": []
+      },
+      "after": {
+        "total": 0,
+        "win": 0,
+        "lose": 0,
+        "unknown": 0,
+        "rows": []
+      }
+    },
+    {
+      "level": 271,
+      "before": {
+        "total": 5,
+        "win": 3,
+        "lose": 2,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              2,
+              45
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              3,
+              29
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "single",
+            "take": [
+              72
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "key",
+            "take": [
+              0
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "clock",
+            "take": [
+              68
+            ],
+            "result": "lose"
+          }
+        ]
+      },
+      "after": {
+        "total": 5,
+        "win": 3,
+        "lose": 2,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              2,
+              44
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              3,
+              28
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "single",
+            "take": [
+              70
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "key",
+            "take": [
+              0
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "clock",
+            "take": [
+              66
+            ],
+            "result": "lose"
+          }
+        ]
+      }
+    },
+    {
+      "level": 272,
+      "before": {
+        "total": 0,
+        "win": 0,
+        "lose": 0,
+        "unknown": 0,
+        "rows": []
+      },
+      "after": {
+        "total": 0,
+        "win": 0,
+        "lose": 0,
+        "unknown": 0,
+        "rows": []
+      }
+    },
+    {
+      "level": 273,
+      "before": {
+        "total": 0,
+        "win": 0,
+        "lose": 0,
+        "unknown": 0,
+        "rows": []
+      },
+      "after": {
+        "total": 0,
+        "win": 0,
+        "lose": 0,
+        "unknown": 0,
+        "rows": []
+      }
+    },
+    {
+      "level": 274,
+      "before": {
+        "total": 3,
+        "win": 1,
+        "lose": 2,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "single",
+            "take": [
+              73
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "clock",
+            "take": [
+              62
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "key",
+            "take": [
+              76
+            ],
+            "result": "lose"
+          }
+        ]
+      },
+      "after": {
+        "total": 3,
+        "win": 1,
+        "lose": 2,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "single",
+            "take": [
+              73
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "clock",
+            "take": [
+              62
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "key",
+            "take": [
+              76
+            ],
+            "result": "lose"
+          }
+        ]
+      }
+    },
+    {
+      "level": 277,
+      "before": {
+        "total": 1,
+        "win": 0,
+        "lose": 1,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              51,
+              53
+            ],
+            "result": "lose"
+          }
+        ]
+      },
+      "after": {
+        "total": 3,
+        "win": 2,
+        "lose": 1,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              38,
+              64
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              77,
+              84
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "key",
+            "take": [
+              65
+            ],
+            "result": "lose"
+          }
+        ]
+      }
+    },
+    {
+      "level": 278,
+      "before": {
+        "total": 6,
+        "win": 4,
+        "lose": 2,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              4,
+              48
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              5,
+              79
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "single",
+            "take": [
+              47
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "single",
+            "take": [
+              72
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "clock",
+            "take": [
+              10
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "key",
+            "take": [
+              55
+            ],
+            "result": "win"
+          }
+        ]
+      },
+      "after": {
+        "total": 5,
+        "win": 3,
+        "lose": 2,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              4,
+              8
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "single",
+            "take": [
+              47
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "single",
+            "take": [
+              72
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "clock",
+            "take": [
+              10
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "key",
+            "take": [
+              55
+            ],
+            "result": "win"
+          }
+        ]
+      }
+    },
+    {
+      "level": 279,
+      "before": {
+        "total": 5,
+        "win": 5,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              1,
+              4
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              3,
+              63
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              37,
+              66
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              62,
+              64
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "key",
+            "take": [
+              42
+            ],
+            "result": "win"
+          }
+        ]
+      },
+      "after": {
+        "total": 5,
+        "win": 5,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              2,
+              62
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              3,
+              63
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              18,
+              59
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              37,
+              66
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "key",
+            "take": [
+              42
+            ],
+            "result": "win"
+          }
+        ]
+      }
+    },
+    {
+      "level": 281,
+      "before": {
+        "total": 2,
+        "win": 1,
+        "lose": 1,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              0,
+              54
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "key",
+            "take": [
+              0
+            ],
+            "result": "win"
+          }
+        ]
+      },
+      "after": {
+        "total": 2,
+        "win": 1,
+        "lose": 1,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              0,
+              54
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "key",
+            "take": [
+              0
+            ],
+            "result": "win"
+          }
+        ]
+      }
+    },
+    {
+      "level": 282,
+      "before": {
+        "total": 5,
+        "win": 3,
+        "lose": 2,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              40,
+              43
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              56,
+              68
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              69,
+              79
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "clock",
+            "take": [
+              6
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "key",
+            "take": [
+              57
+            ],
+            "result": "lose"
+          }
+        ]
+      },
+      "after": {
+        "total": 4,
+        "win": 2,
+        "lose": 2,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              0,
+              78
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              43,
+              68
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "clock",
+            "take": [
+              6
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "key",
+            "take": [
+              57
+            ],
+            "result": "lose"
+          }
+        ]
+      }
+    },
+    {
+      "level": 283,
+      "before": {
+        "total": 2,
+        "win": 2,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              12,
+              18
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              56,
+              57
+            ],
+            "result": "win"
+          }
+        ]
+      },
+      "after": {
+        "total": 2,
+        "win": 2,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              12,
+              18
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              56,
+              57
+            ],
+            "result": "win"
+          }
+        ]
+      }
+    },
+    {
+      "level": 284,
+      "before": {
+        "total": 4,
+        "win": 2,
+        "lose": 2,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              0,
+              75
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "single",
+            "take": [
+              67
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "key",
+            "take": [
+              6
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "clock",
+            "take": [
+              63
+            ],
+            "result": "lose"
+          }
+        ]
+      },
+      "after": {
+        "total": 4,
+        "win": 2,
+        "lose": 2,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              58,
+              65
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "single",
+            "take": [
+              67
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "key",
+            "take": [
+              6
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "clock",
+            "take": [
+              63
+            ],
+            "result": "lose"
+          }
+        ]
+      }
+    },
+    {
+      "level": 286,
+      "before": {
+        "total": 3,
+        "win": 1,
+        "lose": 2,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              70,
+              72
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "key",
+            "take": [
+              74
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "clock",
+            "take": [
+              75
+            ],
+            "result": "lose"
+          }
+        ]
+      },
+      "after": {
+        "total": 3,
+        "win": 1,
+        "lose": 2,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              66,
+              69
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "key",
+            "take": [
+              60
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "clock",
+            "take": [
+              61
+            ],
+            "result": "lose"
+          }
+        ]
+      }
+    },
+    {
+      "level": 287,
+      "before": {
+        "total": 2,
+        "win": 1,
+        "lose": 1,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              41,
+              76
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              71,
+              79
+            ],
+            "result": "win"
+          }
+        ]
+      },
+      "after": {
+        "total": 3,
+        "win": 1,
+        "lose": 2,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              25,
+              26
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              41,
+              76
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              71,
+              79
+            ],
+            "result": "win"
+          }
+        ]
+      }
+    },
+    {
+      "level": 288,
+      "before": {
+        "total": 1,
+        "win": 0,
+        "lose": 1,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "key",
+            "take": [
+              6
+            ],
+            "result": "lose"
+          }
+        ]
+      },
+      "after": {
+        "total": 2,
+        "win": 1,
+        "lose": 1,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              36,
+              71
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "key",
+            "take": [
+              6
+            ],
+            "result": "lose"
+          }
+        ]
+      }
+    },
+    {
+      "level": 289,
+      "before": {
+        "total": 1,
+        "win": 0,
+        "lose": 1,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              74,
+              79
+            ],
+            "result": "lose"
+          }
+        ]
+      },
+      "after": {
+        "total": 1,
+        "win": 0,
+        "lose": 1,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              71,
+              75
+            ],
+            "result": "lose"
+          }
+        ]
+      }
+    },
+    {
+      "level": 291,
+      "before": {
+        "total": 5,
+        "win": 5,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              66,
+              81
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "single",
+            "take": [
+              68
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "single",
+            "take": [
+              75
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "single",
+            "take": [
+              77
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "clock",
+            "take": [
+              76
+            ],
+            "result": "win"
+          }
+        ]
+      },
+      "after": {
+        "total": 4,
+        "win": 4,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "single",
+            "take": [
+              63
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "single",
+            "take": [
+              70
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "single",
+            "take": [
+              72
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "clock",
+            "take": [
+              71
+            ],
+            "result": "win"
+          }
+        ]
+      }
+    },
+    {
+      "level": 292,
+      "before": {
+        "total": 3,
+        "win": 1,
+        "lose": 2,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              59,
+              67
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "single",
+            "take": [
+              61
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "key",
+            "take": [
+              53
+            ],
+            "result": "lose"
+          }
+        ]
+      },
+      "after": {
+        "total": 4,
+        "win": 1,
+        "lose": 3,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              0,
+              74
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              17,
+              66
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "single",
+            "take": [
+              61
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "key",
+            "take": [
+              53
+            ],
+            "result": "lose"
+          }
+        ]
+      }
+    },
+    {
+      "level": 293,
+      "before": {
+        "total": 4,
+        "win": 4,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              66,
+              75
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "single",
+            "take": [
+              55
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "single",
+            "take": [
+              60
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "key",
+            "take": [
+              0
+            ],
+            "result": "win"
+          }
+        ]
+      },
+      "after": {
+        "total": 4,
+        "win": 4,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              66,
+              75
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "single",
+            "take": [
+              55
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "single",
+            "take": [
+              60
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "key",
+            "take": [
+              0
+            ],
+            "result": "win"
+          }
+        ]
+      }
+    },
+    {
+      "level": 295,
+      "before": {
+        "total": 5,
+        "win": 1,
+        "lose": 4,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              53,
+              72
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              58,
+              67
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              59,
+              75
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "clock",
+            "take": [
+              45
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "key",
+            "take": [
+              75
+            ],
+            "result": "win"
+          }
+        ]
+      },
+      "after": {
+        "total": 5,
+        "win": 1,
+        "lose": 4,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              50,
+              68
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              56,
+              71
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              58,
+              70
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "clock",
+            "take": [
+              43
+            ],
+            "result": "lose"
+          },
+          {
+            "kind": "key",
+            "take": [
+              71
+            ],
+            "result": "win"
+          }
+        ]
+      }
+    },
+    {
+      "level": 296,
+      "before": {
+        "total": 3,
+        "win": 3,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "single",
+            "take": [
+              57
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "single",
+            "take": [
+              58
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "single",
+            "take": [
+              71
+            ],
+            "result": "win"
+          }
+        ]
+      },
+      "after": {
+        "total": 3,
+        "win": 3,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "single",
+            "take": [
+              57
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "single",
+            "take": [
+              58
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "single",
+            "take": [
+              71
+            ],
+            "result": "win"
+          }
+        ]
+      }
+    },
+    {
+      "level": 297,
+      "before": {
+        "total": 2,
+        "win": 2,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "single",
+            "take": [
+              70
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "single",
+            "take": [
+              78
+            ],
+            "result": "win"
+          }
+        ]
+      },
+      "after": {
+        "total": 2,
+        "win": 2,
+        "lose": 0,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "single",
+            "take": [
+              68
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "single",
+            "take": [
+              76
+            ],
+            "result": "win"
+          }
+        ]
+      }
+    },
+    {
+      "level": 298,
+      "before": {
+        "total": 3,
+        "win": 2,
+        "lose": 1,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              6,
+              74
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              42,
+              52
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "key",
+            "take": [
+              56
+            ],
+            "result": "lose"
+          }
+        ]
+      },
+      "after": {
+        "total": 3,
+        "win": 2,
+        "lose": 1,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "pair",
+            "take": [
+              0,
+              39
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "pair",
+            "take": [
+              6,
+              70
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "key",
+            "take": [
+              52
+            ],
+            "result": "lose"
+          }
+        ]
+      }
+    },
+    {
+      "level": 299,
+      "before": {
+        "total": 2,
+        "win": 1,
+        "lose": 1,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "single",
+            "take": [
+              21
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "key",
+            "take": [
+              75
+            ],
+            "result": "lose"
+          }
+        ]
+      },
+      "after": {
+        "total": 2,
+        "win": 1,
+        "lose": 1,
+        "unknown": 0,
+        "rows": [
+          {
+            "kind": "single",
+            "take": [
+              21
+            ],
+            "result": "win"
+          },
+          {
+            "kind": "key",
+            "take": [
+              73
+            ],
+            "result": "lose"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "level": 262,
+  "ok": false,
+  "tested": 248,
+  "seedCount": 49,
+  "failures": {
+    "clock route unproven": 68,
+    "clockMinimum 13 -> 9, specialEffects, specialRoleOrder, visibleTwins": 75,
+    "clock route does not play": 19,
+    "clockMinimum 13 -> 9, specialEffects, visibleTwins": 43,
+    "clockMinimum 13 -> 9, specialEffects": 33,
+    "clockMinimum 13 -> 8, specialEffects, visibleTwins": 2,
+    "trap tile on the edge": 8
+  },
+  "ms": 11849
+}

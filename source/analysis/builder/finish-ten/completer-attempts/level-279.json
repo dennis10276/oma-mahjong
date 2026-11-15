@@ -1,0 +1,20 @@
+{
+  "level": 279,
+  "baseHash": "4e062c9f9cca55f63d63f5db07101149129fc60ac15135318c134c6509c455a7",
+  "status": "open",
+  "note": "",
+  "seeds": 44,
+  "tested": 82,
+  "constructed": 1324,
+  "failures": {
+    "clockDeadline": 46,
+    "unknown": 36
+  },
+  "packRejects": {
+    "twins": 335,
+    "badge": 76,
+    "small": 672,
+    "noSpot": 159
+  },
+  "ms": 302741
+}

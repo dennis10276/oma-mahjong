@@ -1,0 +1,178 @@
+{
+  "schema": 1,
+  "hash": "679661d1f7eb816eba82a1cf13c0401e389ea2264a04ce3bbb7af33cedf0a29a",
+  "meta": {
+    "level": 291,
+    "variant": "narrowed",
+    "from": "Fold both ninth-row feet into the hollow waist, retain the left thaw-to-lock dependency, and half-align the full upper supporting rows; keep the frozen clock support below its visible badge edge; ordinary finish pictures revised to restore pressure"
+  },
+  "status": "done",
+  "tiles": 78,
+  "clock": {
+    "i": 71,
+    "n": 18
+  },
+  "strictReplay": {
+    "ok": true,
+    "pairs": 0
+  },
+  "metrics": {
+    "clock": {
+      "minimum": 1,
+      "unknown": false,
+      "spare": 17,
+      "storedAt": 1
+    },
+    "opening": {
+      "singles": {
+        "win": 12,
+        "lose": 2,
+        "unknown": 0
+      },
+      "pairs": {
+        "win": 1,
+        "lose": 0,
+        "unknown": 0
+      },
+      "actions": [
+        {
+          "action": 32,
+          "result": "lose"
+        },
+        {
+          "action": 41,
+          "result": "win"
+        },
+        {
+          "action": 57,
+          "result": "win"
+        },
+        {
+          "action": 60,
+          "result": "win"
+        },
+        {
+          "action": 61,
+          "result": "win"
+        },
+        {
+          "action": 62,
+          "result": "win"
+        },
+        {
+          "action": 63,
+          "result": "win"
+        },
+        {
+          "action": 66,
+          "result": "win"
+        },
+        {
+          "action": 69,
+          "result": "win"
+        },
+        {
+          "action": 70,
+          "result": "win"
+        },
+        {
+          "action": 71,
+          "result": "win"
+        },
+        {
+          "action": 72,
+          "result": "win"
+        },
+        {
+          "action": 75,
+          "result": "win"
+        },
+        {
+          "action": 76,
+          "result": "lose"
+        },
+        {
+          "action": {
+            "pair": [
+              69,
+              41
+            ]
+          },
+          "result": "win"
+        }
+      ]
+    },
+    "greedy": {
+      "tailGreedyWin": 0,
+      "wins": 0,
+      "playouts": 512,
+      "seed": 20261115,
+      "start": {
+        "step": 1,
+        "tray": 1,
+        "left": 77
+      },
+      "stored": {
+        "steps": 77,
+        "peakTray": 3,
+        "meanTray": 2.208,
+        "moves2plus": 66,
+        "tray2Share": 0.857
+      }
+    },
+    "feel": {
+      "win": 0,
+      "waiting": [
+        0,
+        0.546,
+        0.248,
+        0.206
+      ],
+      "mean": 1.66,
+      "twoPlus": 0.454,
+      "singles": 2.5,
+      "steps": 8
+    },
+    "expert": {
+      "games": 8,
+      "lostGames": 0,
+      "unresolvedChecks": 4,
+      "requireProof": false,
+      "waiting": [
+        0.137,
+        0.289,
+        0.353,
+        0.221
+      ],
+      "mean": 1.66,
+      "twoPlus": 0.574,
+      "parks": 11.3,
+      "parkAt": [
+        1.8,
+        3.3,
+        6.3
+      ],
+      "wrongPark": 0,
+      "danger": 0.149,
+      "decisions": 50
+    },
+    "cap1": {
+      "result": "lose",
+      "cap": 1,
+      "peek": true,
+      "nodes": 2,
+      "ms": 1,
+      "startWaiting": 1
+    },
+    "cap2": {
+      "result": "lose",
+      "cap": 2,
+      "peek": true,
+      "nodes": 342,
+      "ms": 2,
+      "startWaiting": 1
+    }
+  },
+  "stage": "done",
+  "ms": 290
+}

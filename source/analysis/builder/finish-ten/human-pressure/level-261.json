@@ -1,0 +1,220 @@
+{
+  "level": 261,
+  "before": {
+    "hash": "ded7f938e93e4dfefd297d1fcc79b85e230f321f517659416ed2d9b104171810",
+    "tailTiles": 62,
+    "atClock": {
+      "waiting": 2,
+      "freeTiles": 16,
+      "visibleMatches": 1,
+      "freePairs": 2
+    },
+    "samples": [
+      {
+        "games": 24,
+        "lostGames": 0,
+        "unresolvedChecks": 0,
+        "requireProof": true,
+        "waiting": [
+          0.189,
+          0.363,
+          0.348,
+          0.099
+        ],
+        "mean": 1.36,
+        "twoPlus": 0.447,
+        "parks": 9.5,
+        "parkAt": [
+          2,
+          4.4,
+          3.1
+        ],
+        "wrongPark": 0.22,
+        "danger": 0.056,
+        "decisions": 42
+      },
+      {
+        "games": 24,
+        "lostGames": 0,
+        "unresolvedChecks": 0,
+        "requireProof": true,
+        "waiting": [
+          0.177,
+          0.363,
+          0.366,
+          0.093
+        ],
+        "mean": 1.38,
+        "twoPlus": 0.459,
+        "parks": 9.1,
+        "parkAt": [
+          2,
+          4.3,
+          2.8
+        ],
+        "wrongPark": 0.22,
+        "danger": 0.061,
+        "decisions": 41
+      },
+      {
+        "games": 24,
+        "lostGames": 0,
+        "unresolvedChecks": 0,
+        "requireProof": true,
+        "waiting": [
+          0.185,
+          0.35,
+          0.364,
+          0.101
+        ],
+        "mean": 1.38,
+        "twoPlus": 0.465,
+        "parks": 9.3,
+        "parkAt": [
+          2,
+          4.3,
+          3
+        ],
+        "wrongPark": 0.23,
+        "danger": 0.059,
+        "decisions": 41
+      }
+    ],
+    "average": {
+      "mean": 1.3733333333333333,
+      "twoPlus": 0.457,
+      "parks": 9.3,
+      "parksPerTenTailTiles": 1.5,
+      "wrongPark": 0.22333333333333336,
+      "danger": 0.058666666666666666
+    },
+    "unresolvedChecks": 0,
+    "games": 72,
+    "gamble": {
+      "gamble": 0,
+      "blindOnly": 0
+    },
+    "cap1": {
+      "result": "lose",
+      "cap": 1,
+      "peek": true,
+      "nodes": 0,
+      "ms": 0,
+      "startWaiting": 2
+    }
+  },
+  "after": {
+    "hash": "bf166e8d812e81f08f37b867df62d990f2da8881e87d4f32a52569c1c5814714",
+    "tailTiles": 56,
+    "atClock": {
+      "waiting": 2,
+      "freeTiles": 16,
+      "visibleMatches": 0,
+      "freePairs": 3
+    },
+    "samples": [
+      {
+        "games": 24,
+        "lostGames": 0,
+        "unresolvedChecks": 0,
+        "requireProof": true,
+        "waiting": [
+          0.142,
+          0.303,
+          0.478,
+          0.077
+        ],
+        "mean": 1.49,
+        "twoPlus": 0.555,
+        "parks": 6,
+        "parkAt": [
+          1.6,
+          2.5,
+          1.9
+        ],
+        "wrongPark": 0.21,
+        "danger": 0.035,
+        "decisions": 35
+      },
+      {
+        "games": 24,
+        "lostGames": 0,
+        "unresolvedChecks": 0,
+        "requireProof": true,
+        "waiting": [
+          0.143,
+          0.323,
+          0.458,
+          0.076
+        ],
+        "mean": 1.47,
+        "twoPlus": 0.534,
+        "parks": 6.1,
+        "parkAt": [
+          1.7,
+          2.4,
+          2
+        ],
+        "wrongPark": 0.21,
+        "danger": 0.033,
+        "decisions": 35
+      },
+      {
+        "games": 24,
+        "lostGames": 0,
+        "unresolvedChecks": 0,
+        "requireProof": true,
+        "waiting": [
+          0.138,
+          0.308,
+          0.474,
+          0.08
+        ],
+        "mean": 1.5,
+        "twoPlus": 0.554,
+        "parks": 6.5,
+        "parkAt": [
+          1.6,
+          2.6,
+          2.3
+        ],
+        "wrongPark": 0.2,
+        "danger": 0.033,
+        "decisions": 36
+      }
+    ],
+    "average": {
+      "mean": 1.4866666666666666,
+      "twoPlus": 0.5476666666666666,
+      "parks": 6.2,
+      "parksPerTenTailTiles": 1.1071428571428572,
+      "wrongPark": 0.20666666666666667,
+      "danger": 0.03366666666666667
+    },
+    "unresolvedChecks": 0,
+    "games": 72,
+    "gamble": {
+      "gamble": 7,
+      "blindOnly": 0
+    },
+    "cap1": {
+      "result": "lose",
+      "cap": 1,
+      "peek": true,
+      "nodes": 0,
+      "ms": 0,
+      "startWaiting": 2
+    }
+  },
+  "delta": {
+    "mean": 0.11333333333333329,
+    "twoPlus": 0.09066666666666662,
+    "parks": -3.1000000000000005,
+    "parksPerTenTailTiles": -0.3928571428571428,
+    "wrongPark": -0.01666666666666669,
+    "danger": -0.024999999999999994
+  },
+  "signals": [],
+  "interpretation": "The initial proxy flag alone does not establish a meaningful human difficulty change.",
+  "humanWinPrediction": false
+}

@@ -1,0 +1,173 @@
+{
+  "level": 252,
+  "sourceLevel": 252,
+  "ok": true,
+  "mapping": {
+    "keep": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ],
+    "inferred": false
+  },
+  "certificate": {
+    "ok": true,
+    "errors": [],
+    "checks": [
+      "fullStrictWin",
+      "sameClockMinimumAndSpare",
+      "sameSpecialEffects",
+      "sameSpecialPrerequisites",
+      "allAuthoredWrongMovesStillWrong",
+      "ownAuthoredProof"
+    ],
+    "k": 8,
+    "spare": 2,
+    "footprint": {
+      "ok": true,
+      "profile": "phone-near-60-v1",
+      "tilePx": 59.13285048119853,
+      "rows": 8,
+      "compact": true,
+      "target": 60,
+      "minimum": 58,
+      "limit": "height"
+    },
+    "ablations": [
+      [
+        "ice",
+        40,
+        7
+      ],
+      [
+        "lock",
+        67,
+        2
+      ]
+    ],
+    "prerequisites": [
+      [
+        67,
+        [
+          13,
+          29,
+          40
+        ]
+      ],
+      [
+        13,
+        [
+          40
+        ]
+      ],
+      [
+        29,
+        []
+      ],
+      [
+        40,
+        []
+      ]
+    ],
+    "prices": [
+      {
+        "tiles": [
+          29
+        ],
+        "before": {
+          "tiles": [
+            29
+          ],
+          "result": "lose",
+          "need": null,
+          "cost": null,
+          "exact": true
+        },
+        "after": {
+          "tiles": [
+            29
+          ],
+          "result": "lose",
+          "need": null,
+          "cost": null,
+          "exact": true
+        }
+      }
+    ],
+    "ownProof": {
+      "ok": true
+    },
+    "beforeHash": "2b15f80ea1f40b57aab51b9dbf7705a88986b97fc37b6381d5ac3ed680bb9f38",
+    "afterHash": "b89e7a603c486dadf2ec8569549b0b2bf8fc43132965dd69046606f481b3a00f",
+    "policy": "Task 20 same mechanics; geometry and non-trap finish pictures may change."
+  }
+}
