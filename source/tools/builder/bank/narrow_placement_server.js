@@ -24,7 +24,11 @@ function createServer({port=8269,dataDir=B.DATA,assetDir=B.OUT}={}){
         const body=JSON.parse(text),row=rows.get(body.level);if(!row)throw Error('Level is not part of this placement lab');const saved=save(row,body);
         if(url.pathname==='/api/save')return json(res,200,{saved,placementKey:M.key(saved)});
         const id=Date.now()+'-'+(++serial),prefix=path.join(dataDir,'jobs',id),job={id,level:row.level,status:'queued',input:prefix+'.input.json',output:prefix+'.result.json',log:prefix+'.log',placementKey:M.key(saved)};
-        fs.writeFileSync(job.input,JSON.stringify({row,snapshot:saved}));jobs.set(id,job);queue.push(job);json(res,202,{id,saved,placementKey:job.placementKey});next();
+        fs.writeFileSync(job.input,JSON.stringify({row,snapshot:saved}));jobs.set(id,job);
+        const incomplete=M.incomplete(saved.positions);
+        if(incomplete){job.status='done';job.result={...incomplete,checkerVersion:2,level:row.level,placementKey:job.placementKey,checkedAt:new Date().toISOString()};fs.writeFileSync(job.output,JSON.stringify(job.result,null,2)+'\n');}
+        else queue.push(job);
+        json(res,202,{id,saved,placementKey:job.placementKey});next();
       }catch(e){json(res,400,{error:e.message});}});return;
     }
     if(!['GET','HEAD'].includes(req.method))return json(res,405,{error:'Method not allowed'});

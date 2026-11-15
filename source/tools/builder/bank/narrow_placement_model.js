@@ -40,5 +40,6 @@
   }
   const designFor=(row,state)=>state.designSource==='released'?row.original:row.base;
   const key=s=>JSON.stringify(s.designSource==='released'?[s.baseHash,s.positions,'released']:[s.baseHash,s.positions]);
-  return {copy,overlap,supported,propose,dropAt,footprint,initial,validate,key,designFor};
+  function incomplete(positions){const tiles=positions.map((p,i)=>p?null:i).filter(i=>i!=null);return tiles.length?{status:'incomplete',ok:false,message:`Place the ${tiles.length} marked tile${tiles.length===1?'':'s'} from the side tray before the complete trap and finish can be checked.\nTile numbers: ${tiles.join(', ')}.`,tiles}:null;}
+  return {copy,overlap,supported,propose,dropAt,footprint,initial,validate,key,designFor,incomplete};
 });

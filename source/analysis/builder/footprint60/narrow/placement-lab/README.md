@@ -34,6 +34,11 @@ replace those initial proposals; existing human saves are kept. No tile is delet
 - **Save & check trap / finish** runs the engine proofs. A changed placement
   invalidates the displayed verdict. A time/node limit is an unknown result, never
   a pass. Failed checks identify problem tiles where available.
+  If tiles remain at the side, the button now returns an immediate, saved
+  **incomplete** result in the same result panel, lists their tile numbers and
+  highlights their tray cards. It cannot certify the full puzzle until all tiles
+  are placed. Checking progress survives selecting tiles or switching levels;
+  other layouts remain available for checking while a job is running.
 - **Play this arrangement** opens the real game with the current positions and
   Sunflower tiles. Once a proof has found a new finish, that proven route travels
   with the playable board. Playing is separate from certification or adoption.
@@ -112,11 +117,29 @@ There are no production database writes, difficulty bots or released-table edits
 QA uses a separate server on **8270** and a separate ignored edit directory. Its
 arrangements, notes and checks are not Dennis's work. Tests cover all 40 side trays,
 click and drag placement, undo, disk save/reload, stale verdict invalidation, a live
-passing proof, real-game play/win, phone layout and Sunflower faces. Thirteen focused
+passing proof, real-game play/win, phone layout and Sunflower faces. Fourteen focused
 tests also cover server restart durability, immutable catalogues, malformed snapshots,
 geometry constraints and an actual lower placement that needs a newly proven tail.
 The current browser QA additionally moves a tile directly on the released board,
 switches between both drafts, reloads and verifies both positions and the note.
+The incomplete-check regression also verifies an immediate server result, saved
+positions/note and a durable incomplete verdict after restart. Browser coverage
+checks the visible result and missing-tile highlights, reload, and progress during
+selection and level changes, followed by an actual completed proof.
+
+2026-11-15 check-button fix: unfinished layouts previously only saved and showed
+an explanation below the board, without submitting a check. Every click now
+submits, and incomplete results appear beside the button with marked tray cards.
+The updated UI assets and per-job checker are live on 8269. Automatic approval
+review blocked a server restart (reported reason: "blocked by policy"), so the
+running server still sends incomplete checks through its existing worker queue;
+the new immediate server preflight takes effect on its next normal restart.
+QA ran on separate data on 8270. No real user layout was changed by the tests.
+
+Dennis continued editing during this fix. His real check
+`placements/jobs/1794752454956-2.result.json` completed: level 251's minimum clock
+route changed from 14 to 16 and special ablation effects differed. This is a
+completed failed check, distinct from the earlier silent incomplete-board skip.
 
 2026-11-15 drop correction: the original pointer handler inherited the entire
 position of whichever tile it hit, making half-offset bridge positions hard to

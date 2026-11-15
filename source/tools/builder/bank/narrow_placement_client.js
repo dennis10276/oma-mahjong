@@ -3,7 +3,7 @@
   const M=window.NarrowPlacement,KEY='omamj.tile-placement.v1',clone=M.copy;
   __mj.S.level=Math.max(__mj.S.level,201);__mj.S.sunSeen=true;__mj.S.theme='sunflower';applyTheme();localStorage.setItem('omamj.v1',JSON.stringify(__mj.S));
   const [data,saved]=await Promise.all([fetch('placement-data.json').then(r=>r.json()),fetch('/api/state').then(r=>r.json())]);
-  const rows=data.levels,local=(()=>{try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch{return {}}})(),states={},checks={...saved.checks};
+  const rows=data.levels,local=(()=>{try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch{return {}}})(),states={},checks={...saved.checks},pendingChecks=new Map();
   for(const row of rows)if(row.proposal?.check?.ok&&(!checks[row.level]||!checks[row.level].checkerVersion))checks[row.level]={...row.proposal.check,checkerVersion:2,placementKey:M.key({baseHash:row.baseHash,positions:row.proposal.positions})};
   for(const row of rows){const disk=saved.levels[row.level],browser=local[row.level];states[row.level]=[disk,browser].filter(s=>s&&s.baseHash===row.baseHash).sort((a,b)=>b.updatedAt-a.updatedAt)[0]||M.initial(row);}
   let row=rows.find(r=>r.level===local.selected)||rows[0],state=states[row.level],selected=null,viewOriginal=false,pickMode=false,history=[],drag=null,geometry=null,saveTimer=null,saveChain=Promise.resolve(),change=0,zoom=1;
@@ -17,6 +17,7 @@
   style.textContent+='.pe-mini{display:grid;place-items:center}.pe-mini .fi{display:block;width:100%;height:100%}.pe-mini .emo{font:32px/1 "Noto Color Emoji","Segoe UI Emoji",sans-serif}.pe-tools,.pe-notes{display:contents}.pe-tools>summary,.pe-notes>summary{display:none}@media(max-width:760px){.pe-header h1{font-size:21px!important}.pe-header p{font-size:12px}.pe-header a{font-size:11px}.pe-tools,.pe-notes{display:block}.pe-tools>summary,.pe-notes>summary{display:list-item;cursor:pointer;font-size:12px;padding:7px}.pe-tools[open]{width:100%}.pe-tools[open]>button{margin:3px}.pe-notes>summary{padding:5px 0}.pe-note-label{display:block;margin-top:3px;font-size:12px}.pe-note-label textarea{min-height:42px;max-height:70px}.pe-toolbar #peKind{display:none}.pe-toolbar{padding-top:3px;padding-bottom:5px}.pe-work{padding-top:8px}.pe-work aside{padding:8px}.pe-mini .emo{font-size:26px}}';
   document.head.append(style);document.body.append(root);
   style.textContent+='#peSurface .pe-drag-source{opacity:.23!important}#placementRoot.pe-dragging,#placementRoot.pe-dragging *{cursor:grabbing!important}#peDragTile{cursor:grabbing;will-change:left,top}';
+  style.textContent+='#peTray .pe-needs-placement{outline:3px solid #d36f28;outline-offset:-3px}#peResult.pe-fail{background:#fff0df;border-radius:7px;padding:9px;margin-top:7px}';
   const tools=document.createElement('details');tools.className='pe-tools';tools.innerHTML='<summary>Layout tools</summary>';for(const id of ['peOriginal','peDraft','peReset','peUndo','pePick','peReturn'])tools.append(root.querySelector('#'+id));root.querySelector('.pe-toolbar').append(tools);
   const notes=document.createElement('details');notes.className='pe-notes';notes.innerHTML='<summary>Add a note</summary>';const noteLabel=root.querySelector('.pe-note-label');noteLabel.before(notes);notes.append(noteLabel);
   const phoneMode=window.matchMedia('(max-width:760px)'),setMode=()=>{tools.open=notes.open=!phoneMode.matches;};setMode();phoneMode.addEventListener('change',setMode);
@@ -34,6 +35,12 @@
   function beforeChange(){history.push(snapshot());if(history.length>100)history.shift();}
   function select(id){selected=id;pickMode=false;viewOriginal=false;render();hint('Tile '+id+' selected. Click a spot, drag it, or send it back to the side tray.');}
   function role(id){const d=activeDesign(),marks=[];if(d.clock.i===id)marks.push('⏰ '+d.clock.n);if(d.obst.keys.includes(id))marks.push('🔑');if(d.obst.locks.includes(id))marks.push('🔒');if(d.obst.ice[id])marks.push('❄ '+d.obst.ice[id]);return marks.join(' ');}
+  function renderResult(){
+    const key=M.key(state),pending=pendingChecks.get(key),result=checks[row.level],valid=result&&result.placementKey===key;
+    $('peCheck').disabled=!!pending;$('peCheck').textContent=pending?'Checking…':'Save & check trap / finish';
+    $('peResult').className=pending?'':valid?(result.ok?'pe-pass':'pe-fail'):'';
+    $('peResult').textContent=pending|| (valid?result.message+(result.errors?.length?'\n'+result.errors.join(', '):''):(result?'Changed since the last check':'Not checked'));
+  }
   function render(){
     const isProposal=row.proposal&&JSON.stringify(state.positions)===JSON.stringify(row.proposal.positions);
     $('peLevel').value=row.level;$('peKind').textContent=state.designSource==='released'?'Editing the released starting layout':isProposal?(row.proposal.status==='passed'?'Checked proposal':state.positions.some(p=>!p)?'Unfinished proposal':'Released shape · compact version open'):'Your editable draft';
@@ -44,10 +51,11 @@
     $('peDraft').textContent=row.proposal?'Use improved proposal':row.status==='remade'?'Use narrowed draft':'Show proposed placement';$('peOriginal').textContent=state.designSource==='released'?'Back to my draft':'Edit released';$('pePick').classList.toggle('on',pickMode);$('peUndo').disabled=!history.length;
     $('peTrayTitle').textContent=`Tiles at the side · ${missing} left`;
     const ids=[...new Set([...(row.proposal?.problem||row.problem),...state.positions.map((p,i)=>!p?i:null).filter(i=>i!=null),...(selected!=null?[selected]:[])])].sort((a,b)=>Number(!!state.positions[a])-Number(!!state.positions[b])||a-b);
-    tray.innerHTML=ids.map(id=>`<button class="pe-choice ${state.positions[id]?'placed':''} ${selected===id?'selected':''}" data-choice="${id}" title="Tile ${id}${role(id)?' · '+role(id):''}"><div class="pe-mini">${face(id)}</div><small>${id} · ${state.positions[id]?'placed':'side tray'}${activeDesign().down.includes(id)?' · back':''}</small></button>`).join('');
+    const incomplete=checks[row.level]?.placementKey===M.key(state)&&checks[row.level]?.status==='incomplete';
+    tray.innerHTML=ids.map(id=>`<button class="pe-choice ${state.positions[id]?'placed':incomplete?'pe-needs-placement':''} ${selected===id?'selected':''}" data-choice="${id}" title="Tile ${id}${role(id)?' · '+role(id):''}"><div class="pe-mini">${face(id)}</div><small>${id} · ${state.positions[id]?'placed':'side tray'}${activeDesign().down.includes(id)?' · back':''}</small></button>`).join('');
     if($('peNote')!==document.activeElement)$('peNote').value=state.note;
     $('pePlay').disabled=missing>0;
-    const result=checks[row.level],valid=result&&result.placementKey===M.key(state);$('peResult').className=valid?(result.ok?'pe-pass':'pe-fail'):'';$('peResult').textContent=valid?result.message+(result.errors?.length?'\n'+result.errors.join(', '):''):(result?'Changed since the last check':'Not checked');
+    renderResult();
     draw();
   }
   function draw(){
@@ -101,12 +109,12 @@
   $('peNote').oninput=()=>{state.note=$('peNote').value;state.updatedAt=Date.now();remember();clearTimeout(saveTimer);const snap=snapshot();saveTimer=setTimeout(()=>save(snap).catch(()=>{}),500);};
   $('peSave').onclick=()=>{clearTimeout(saveTimer);save().catch(()=>{});};
   $('peCheck').onclick=async()=>{
-    if(state.positions.some(p=>!p)){hint('Place all the tiles from the side tray before checking. Your unfinished arrangement can still be saved.');save().catch(()=>{});return;}
-    const snap=snapshot(),level=row.level,key=M.key(snap);$('peCheck').disabled=true;$('peResult').className='';$('peResult').textContent='Saving and queuing the check…';
+    const snap=snapshot(),level=row.level,key=M.key(snap),started=Date.now();if(pendingChecks.has(key))return;pendingChecks.set(key,'Saving and queuing the check…');renderResult();
+    const record=result=>{if(!checks[level]||checks[level].placementKey!==M.key(states[level])||key===M.key(states[level]))checks[level]=result;};
     try{await save(snap);const response=await fetch('/api/check',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(snap)}),job=await response.json();if(!response.ok)throw Error(job.error);
-      let result;while(true){const reply=await fetch('/api/check/'+job.id),info=await reply.json();if(!reply.ok)throw Error('The lab restarted. Reload to see saved check results.');if(info.status==='done'){result=info.result;break;}if(row.level===level&&M.key(state)===key)$('peResult').textContent=info.status==='queued'?'Queued for checking…':'Checking trap and complete finish…';await new Promise(r=>setTimeout(r,1000));}
-      checks[level]=result;if(row.level===level)render();
-    }catch(e){if(row.level===level)$('peResult').textContent='Could not complete the check: '+e.message;}finally{$('peCheck').disabled=false;}
+      let result;while(true){const reply=await fetch('/api/check/'+job.id),info=await reply.json();if(!reply.ok)throw Error('The lab restarted. Reload to see saved check results.');if(info.status==='done'){result=info.result;break;}pendingChecks.set(key,(info.status==='queued'?'Queued for checking…':'Checking trap and complete finish…')+' '+Math.round((Date.now()-started)/1000)+' s');if(row.level===level)renderResult();await new Promise(r=>setTimeout(r,1000));}
+      record(result);
+    }catch(e){record({status:'unknown',ok:false,placementKey:key,message:'Could not complete the check: '+e.message});}finally{pendingChecks.delete(key);if(row.level===level)render();}
   };
   const back=document.createElement('button');back.id='peBack';back.textContent='Back to placement';back.hidden=true;document.body.append(back);back.onclick=()=>{root.hidden=false;back.hidden=true;render();};
   $('pePlay').onclick=async()=>{await save().catch(()=>{});if(state.positions.some(p=>!p))return;const checked=checks[row.level],source=checked?.ok&&checked.placementKey===M.key(state)?checked.design:activeDesign(),design={...clone(source),tiles:clone(state.positions)},id=290000+row.level;

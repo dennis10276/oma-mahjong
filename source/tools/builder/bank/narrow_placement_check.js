@@ -2,7 +2,7 @@
 const fs=require('fs'),{Worker,isMainThread,parentPort,workerData}=require('worker_threads');
 const P=require('./narrow_proof'),E=require('../engine'),M=require('./narrow_placement_model');
 function check(row,snapshot){
-  const s=M.validate(row,snapshot),missing=s.positions.map((p,i)=>p?null:i).filter(i=>i!=null);if(missing.length)return {status:'incomplete',ok:false,message:`Place the remaining ${missing.length} tiles first.`,tiles:missing};
+  const s=M.validate(row,snapshot),incomplete=M.incomplete(s.positions);if(incomplete)return incomplete;
   const design={...M.copy(M.designFor(row,s)),tiles:s.positions};
   if(!require('./narrow_methods').valid(design.tiles)){
     const bad=new Set();for(let i=0;i<design.tiles.length;i++){if(!M.supported(design.tiles.filter((_,j)=>j!==i),design.tiles[i]))bad.add(i);for(let j=0;j<i;j++)if(design.tiles[i][2]===design.tiles[j][2]&&M.overlap(design.tiles[i],design.tiles[j])){bad.add(i);bad.add(j);}}
