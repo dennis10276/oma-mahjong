@@ -8,7 +8,8 @@
 const fs = require('fs'), path = require('path');
 const DIR = path.resolve(__dirname, '../../../analysis/builder/bank/combo-350'), OUT = path.join(DIR, 'picked');
 const ev = {}; for (const f of fs.readdirSync(DIR).filter(f => /^eval(-\d+)?\.json$/.test(f))) Object.assign(ev, JSON.parse(fs.readFileSync(path.join(DIR, f), 'utf8')));
-const rows = Object.values(ev).filter(r => fs.existsSync(path.join(DIR, 'checked', r.file)) && r.routeOk && !r.straight);
+const hanging = f => { const T = JSON.parse(fs.readFileSync(path.join(DIR, 'checked', f), 'utf8')).design.tiles, DT = require('./detower.js'); return T.some((p, i) => !DT.supportedAt(T, p, i)); };   // a tile corner over empty space: never on a released board
+const rows = Object.values(ev).filter(r => fs.existsSync(path.join(DIR, 'checked', r.file)) && r.routeOk && !r.straight && !hanging(r.file));
 const baseOf = f => f.replace(/-L\d+-s\d+\.json$/, '');
 const strength = r => (r.ideas || []).length * 10 + (r.links || 0) * 3 + Math.min(r.biting, 14) + r.trapMoments * .5;
 const ok = r => r.pressure >= 1.3 && r.pressure <= 3 && r.biting >= 5;

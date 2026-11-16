@@ -42,6 +42,8 @@ if(!isMainThread){
       fs.writeFileSync(path.join(OUT,'raw',`${name}-L${j.layout}-s${j.seed}.json`),JSON.stringify(r));
       const tow=require('./detower.js').shape(r.design.tiles).straight;
       if(tow){parentPort.postMessage({result:{fail:'towers:'+tow}});return;}
+      const DT=require('./detower.js'),T=r.design.tiles,hang=T.filter((p,i)=>!DT.supportedAt(T,p,i)).length;   // every corner must rest on a tile one layer down (released boards always do)
+      if(hang){parentPort.postMessage({result:{fail:'hanging:'+hang}});return;}
       const raw=JSON.parse(JSON.stringify(r));
       const f=require('../chained_v2_finish.js').finish(raw,{seed:j.seed,tuneMs:30000,repairMs:20000});
       if(!f.design)r={fail:'finish:'+(f.fail||'?')};
