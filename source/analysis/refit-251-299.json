@@ -1,10 +1,18 @@
 {
-  "task": 23,
+  "task": 24,
+  "gate": 1,
+  "scope": [
+    250,
+    300
+  ],
+  "ordinaryScope": [
+    251,
+    299
+  ],
   "baseline": "a99b338e",
-  "previousCandidate": "d17984f0",
+  "previousCandidate": "b2e36c9f",
   "releaseAuthorized": false,
-  "approvedSwaps": [],
-  "deferredSwaps": [
+  "approvedSwaps": [
     [
       262,
       260
@@ -14,185 +22,57 @@
       280
     ]
   ],
-  "swapPolicy": "Each swap is atomic: compact halves still fail the trap/no-tower contract, so both pairs retain their released slots.",
-  "directRefits": 26,
-  "ordinaryRefits": 26,
+  "deferredSwaps": [],
+  "approvedIntactMoves": {
+    "260": 262,
+    "280": 277
+  },
+  "swapPolicy": "Both compact halves and both intact halves pass; apply both approved swaps atomically.",
+  "heldLevels": [],
+  "heldRows": [],
   "changedLevels": [
     251,
     252,
     253,
     254,
+    255,
     256,
     257,
     258,
+    259,
+    260,
+    261,
+    262,
     263,
+    265,
     266,
+    267,
     268,
     269,
+    271,
     272,
     273,
     274,
+    277,
+    278,
     279,
+    280,
     281,
     282,
     283,
     284,
     286,
+    287,
+    288,
     289,
     291,
+    292,
     293,
     295,
     296,
-    299
-  ],
-  "heldLevels": [
-    255,
-    259,
-    260,
-    261,
-    262,
-    265,
-    267,
-    271,
-    277,
-    278,
-    280,
-    287,
-    288,
-    292,
     297,
-    298
-  ],
-  "approvedIntactMoves": {},
-  "unchangedTens": [
-    250,
-    260,
-    270,
-    280,
-    290,
-    300
-  ],
-  "tenthTileCounts": {
-    "250": 96,
-    "260": 96,
-    "270": 96,
-    "280": 96,
-    "290": 96,
-    "300": 96
-  },
-  "heldRows": [
-    {
-      "level": 255,
-      "hash": "00d46ace3bbeb5e3f0e3326341636fbb0cce5fde9e78ccf75acd65f3d0255297",
-      "tiles": 80,
-      "px": 54.45614035087719,
-      "revision": 9
-    },
-    {
-      "level": 259,
-      "hash": "109f7f035eeb78affd86784801dd2424a6ea33325e1ff618948487d207a2d25b",
-      "tiles": 76,
-      "px": 54.45614035087719,
-      "revision": 9
-    },
-    {
-      "level": 260,
-      "hash": "2075c41a008bc460cea9e462c0410c7658268f483e05307ceee91d864f7d9d0e",
-      "tiles": 96,
-      "px": 52.65482816503224,
-      "revision": 9
-    },
-    {
-      "level": 261,
-      "hash": "e49e334b5a38dc06f1e460471508d1d5d668f0dd25100366ae81470c7040a3a7",
-      "tiles": 76,
-      "px": 54.45614035087719,
-      "revision": 9
-    },
-    {
-      "level": 262,
-      "hash": "3392ed29e4163691c00455db2ab4b047221b4e481d1623c86a0949bb8bb45caa",
-      "tiles": 84,
-      "px": 52.65482816503224,
-      "revision": 9
-    },
-    {
-      "level": 265,
-      "hash": "3d7085770ce53ed68de8459a539f61ae1530bea2d8c971af070c4640c83d1c61",
-      "tiles": 80,
-      "px": 54.45614035087719,
-      "revision": 9
-    },
-    {
-      "level": 267,
-      "hash": "706a5a2651131416aac3e855896dbbd123f5573175e161f1740d04a42ac75c2f",
-      "tiles": 88,
-      "px": 54.45614035087719,
-      "revision": 9
-    },
-    {
-      "level": 271,
-      "hash": "9d26d80415bde17350bd42cf085697d3095e39d93ce54a7fd7dae74d272d5316",
-      "tiles": 74,
-      "px": 54.45614035087719,
-      "revision": 9
-    },
-    {
-      "level": 277,
-      "hash": "95c6316d3c77325131124809e7cdf2f81ef2232b1accb0304791ce2d0b0fb3d3",
-      "tiles": 76,
-      "px": 52.65482816503224,
-      "revision": 9
-    },
-    {
-      "level": 278,
-      "hash": "2ea6e8279aff6bc21f248e971cb90b4a7bb318de1ae916cd96898cc09ff21d89",
-      "tiles": 80,
-      "px": 54.45614035087719,
-      "revision": 9
-    },
-    {
-      "level": 280,
-      "hash": "32a6a31b4db6901725147824ac34d20a25ec555ba6050edd930e1ebf45ad3c02",
-      "tiles": 96,
-      "px": 54.45614035087719,
-      "revision": 9
-    },
-    {
-      "level": 287,
-      "hash": "1d133effb0d5d336b3a6627cbc939c4a9b4acef2124bc0d75316ac318c3305f6",
-      "tiles": 80,
-      "px": 54.45614035087719,
-      "revision": 9
-    },
-    {
-      "level": 288,
-      "hash": "1199bd45598238c785ffd0518a8adf283e652c335bdaaf73b031a69b25028751",
-      "tiles": 84,
-      "px": 54.45614035087719,
-      "revision": 9
-    },
-    {
-      "level": 292,
-      "hash": "9c994398f7edb704ed2cc08ca8650fd61913f0a442d3d8d4aaa0cd893557d043",
-      "tiles": 76,
-      "px": 54.45614035087719,
-      "revision": 9
-    },
-    {
-      "level": 297,
-      "hash": "597b69f36f6e9e28c385bb5d510fc22dbc502c752fa44c02782ee18926617686",
-      "tiles": 80,
-      "px": 54.45614035087719,
-      "revision": 9
-    },
-    {
-      "level": 298,
-      "hash": "82c0f50ffc927c41f1386e2444df8c44f994f98887afea74e033dad08bb797c3",
-      "tiles": 84,
-      "px": 54.45614035087719,
-      "revision": 9
-    }
+    298,
+    299
   ],
   "rows": [
     {
@@ -201,12 +81,13 @@
       "kind": "direct-refit",
       "revision": 10,
       "tiles": 76,
+      "minimumPx": 58,
+      "px": 58.56603773584906,
+      "towers": 0,
       "beforeHash": "ae708a111937c079e9490c12ac1956bb468ab38842a292ec4eb5d7bd774077f6",
       "sourcePackedHash": "ae708a111937c079e9490c12ac1956bb468ab38842a292ec4eb5d7bd774077f6",
       "afterHash": "d23412509c37144e37bc2faab2742ba546300aadf55f3818227a14ad5755e8f4",
-      "proposalHash": "801e71da966c0b33f3d85a030e209d32e325021b4b46c4f207faf5c0947b955e",
-      "towers": 0,
-      "minimumPx": 58
+      "proposalHash": "801e71da966c0b33f3d85a030e209d32e325021b4b46c4f207faf5c0947b955e"
     },
     {
       "level": 252,
@@ -214,12 +95,13 @@
       "kind": "direct-refit",
       "revision": 10,
       "tiles": 72,
+      "minimumPx": 58,
+      "px": 59.13285048119853,
+      "towers": 0,
       "beforeHash": "2b43e1b7cf051c835c9502c5d98dd13955e975279cf60feebe9971078fbbfebe",
       "sourcePackedHash": "2b43e1b7cf051c835c9502c5d98dd13955e975279cf60feebe9971078fbbfebe",
       "afterHash": "b6a8684e5f12ae567d529a70de34049989dfd882c8d533ea234d9fe638ef7538",
-      "proposalHash": "b89e7a603c486dadf2ec8569549b0b2bf8fc43132965dd69046606f481b3a00f",
-      "towers": 0,
-      "minimumPx": 58
+      "proposalHash": "b89e7a603c486dadf2ec8569549b0b2bf8fc43132965dd69046606f481b3a00f"
     },
     {
       "level": 253,
@@ -227,12 +109,13 @@
       "kind": "tower-free-refit",
       "revision": 10,
       "tiles": 80,
+      "minimumPx": 58,
+      "px": 58.56603773584906,
+      "towers": 0,
       "beforeHash": "61fafa7445b2596713802cef46dd07fe0ea8c10a3778fbc35369d0b1d935567b",
       "sourcePackedHash": "61fafa7445b2596713802cef46dd07fe0ea8c10a3778fbc35369d0b1d935567b",
       "afterHash": "e70a68413b43bfc7db12034102edbc88ea34ef26526194e6282b0f7d66825df1",
-      "proposalHash": "b5b7838cdb809418b5b7b3dcd82fd656c52c4226f8a04521a1a058d1439737a8",
-      "towers": 0,
-      "minimumPx": 58
+      "proposalHash": "b5b7838cdb809418b5b7b3dcd82fd656c52c4226f8a04521a1a058d1439737a8"
     },
     {
       "level": 254,
@@ -240,12 +123,27 @@
       "kind": "direct-refit",
       "revision": 10,
       "tiles": 76,
+      "minimumPx": 58,
+      "px": 58.56603773584906,
+      "towers": 0,
       "beforeHash": "99a3b43cbf289fa2f45de6803f4d94ff69958750529150cd4850000f1e547c33",
       "sourcePackedHash": "99a3b43cbf289fa2f45de6803f4d94ff69958750529150cd4850000f1e547c33",
       "afterHash": "7dbb7954d78a801727071604f9cbd1430f3f8402397c4290e87e2f6887bef02a",
-      "proposalHash": "b18a2248c5881dfbc09a921b7c2d18afd4189572b29b87c94317bf8efd66da30",
+      "proposalHash": "b18a2248c5881dfbc09a921b7c2d18afd4189572b29b87c94317bf8efd66da30"
+    },
+    {
+      "level": 255,
+      "sourceLevel": 255,
+      "kind": "task24-bench-reshape",
+      "revision": 11,
+      "tiles": 80,
+      "minimumPx": 58,
+      "px": 61.93136472466082,
       "towers": 0,
-      "minimumPx": 58
+      "beforeHash": "00d46ace3bbeb5e3f0e3326341636fbb0cce5fde9e78ccf75acd65f3d0255297",
+      "sourcePackedHash": "00d46ace3bbeb5e3f0e3326341636fbb0cce5fde9e78ccf75acd65f3d0255297",
+      "afterHash": "613957a77f0fe74b674f46cd90cfd87762b4aef0ffd384a49c73bf73f6ea58e8",
+      "proposalHash": "f205e6ca0e0cc7ba86c211a220f744f842d5e6131b4d75acd3db48ba4f0451ec"
     },
     {
       "level": 256,
@@ -253,12 +151,13 @@
       "kind": "tower-free-refit",
       "revision": 10,
       "tiles": 76,
+      "minimumPx": 58,
+      "px": 63.3469387755102,
+      "towers": 0,
       "beforeHash": "0812f336fec7a74b175148f8f3c12ae0390b000db55d94d5c498b5fa4ad311ee",
       "sourcePackedHash": "0812f336fec7a74b175148f8f3c12ae0390b000db55d94d5c498b5fa4ad311ee",
       "afterHash": "8e6c09571d7efa9e25efe2aca9065cd6daee105b5b740b05e5deb2d07ab871b9",
-      "proposalHash": "870fe8720439cc4151f5413f894ea49c91fd12f9418853c0f7959a74f57504a6",
-      "towers": 0,
-      "minimumPx": 58
+      "proposalHash": "870fe8720439cc4151f5413f894ea49c91fd12f9418853c0f7959a74f57504a6"
     },
     {
       "level": 257,
@@ -266,12 +165,13 @@
       "kind": "direct-refit",
       "revision": 10,
       "tiles": 74,
+      "minimumPx": 58,
+      "px": 58.322732165573925,
+      "towers": 0,
       "beforeHash": "65df46312bb7aaaa0c77e3c037c094e5c9c0de3b36696ac24c0f931b7fc605ad",
       "sourcePackedHash": "65df46312bb7aaaa0c77e3c037c094e5c9c0de3b36696ac24c0f931b7fc605ad",
       "afterHash": "da583b6022ef3d874d6f42d405f7704a309b85959dee14196cceb88d465d8ba3",
-      "proposalHash": "3c16a45a590d399fb59a690b575f2c6a00fb22ef68300580e1229a0ccdf9138d",
-      "towers": 0,
-      "minimumPx": 58
+      "proposalHash": "3c16a45a590d399fb59a690b575f2c6a00fb22ef68300580e1229a0ccdf9138d"
     },
     {
       "level": 258,
@@ -279,25 +179,97 @@
       "kind": "direct-refit",
       "revision": 10,
       "tiles": 76,
+      "minimumPx": 58,
+      "px": 59.13285048119853,
+      "towers": 0,
       "beforeHash": "6ed1d8c965f8bdc017ca1b7222a446fe89da6e116c31b817fc833a9ae8fa9f68",
       "sourcePackedHash": "6ed1d8c965f8bdc017ca1b7222a446fe89da6e116c31b817fc833a9ae8fa9f68",
       "afterHash": "757e670d2f23709c85b23afbce171419975a48022f1549692b9db5ed7b1ed51f",
-      "proposalHash": "46ee88d405b941a1400479353f769727e6356be8bb04b38c9816d28ebe77da77",
+      "proposalHash": "46ee88d405b941a1400479353f769727e6356be8bb04b38c9816d28ebe77da77"
+    },
+    {
+      "level": 259,
+      "sourceLevel": 259,
+      "kind": "task24-bench-reshape",
+      "revision": 11,
+      "tiles": 76,
+      "minimumPx": 58,
+      "px": 59.13285048119853,
       "towers": 0,
-      "minimumPx": 58
+      "beforeHash": "109f7f035eeb78affd86784801dd2424a6ea33325e1ff618948487d207a2d25b",
+      "sourcePackedHash": "109f7f035eeb78affd86784801dd2424a6ea33325e1ff618948487d207a2d25b",
+      "afterHash": "1e04374b5811c07739a43012e5c7b48209aba534de4015b020180623bea5e3db",
+      "proposalHash": "886fd8c3e49c20b6de3a124cfd8893f5b063f33194cde2df2bc3248327e7716a"
+    },
+    {
+      "level": 260,
+      "sourceLevel": 262,
+      "kind": "approved-intact-swap",
+      "revision": 11,
+      "tiles": 84,
+      "minimumPx": 52,
+      "px": 52.65482816503224,
+      "towers": 0,
+      "beforeHash": "2075c41a008bc460cea9e462c0410c7658268f483e05307ceee91d864f7d9d0e",
+      "sourcePackedHash": "3392ed29e4163691c00455db2ab4b047221b4e481d1623c86a0949bb8bb45caa",
+      "afterHash": "3392ed29e4163691c00455db2ab4b047221b4e481d1623c86a0949bb8bb45caa",
+      "proposalHash": "6228b3a2e4945269a8a467d73500474866510a4b151658a1ba7935861b8ee120"
+    },
+    {
+      "level": 261,
+      "sourceLevel": 261,
+      "kind": "task24-bench-reshape",
+      "revision": 11,
+      "tiles": 76,
+      "minimumPx": 58,
+      "px": 58.56603773584906,
+      "towers": 0,
+      "beforeHash": "e49e334b5a38dc06f1e460471508d1d5d668f0dd25100366ae81470c7040a3a7",
+      "sourcePackedHash": "e49e334b5a38dc06f1e460471508d1d5d668f0dd25100366ae81470c7040a3a7",
+      "afterHash": "85ec8eb272d5dac375e904a7b585213b8056bd01e28828b63513d448a49bf9cf",
+      "proposalHash": "047d15cd89b25f2523211f63fd871e4420cd530b8d48024cd47bd1cbdf29195b"
+    },
+    {
+      "level": 262,
+      "sourceLevel": 260,
+      "kind": "task24-bench-reshape",
+      "revision": 11,
+      "tiles": 82,
+      "minimumPx": 58,
+      "px": 63.00877471191457,
+      "towers": 0,
+      "beforeHash": "3392ed29e4163691c00455db2ab4b047221b4e481d1623c86a0949bb8bb45caa",
+      "sourcePackedHash": "2075c41a008bc460cea9e462c0410c7658268f483e05307ceee91d864f7d9d0e",
+      "afterHash": "f21c192a8998d741f0988d04c5c9a2a5d7323e07ac34d239787cb233dc6c8225",
+      "proposalHash": "7a8d9993ebf28b4fa7b09ad7d4d6bed0fa73c37a098fcb663bd1705eac61710f"
     },
     {
       "level": 263,
       "sourceLevel": 263,
-      "kind": "tower-free-refit",
-      "revision": 10,
+      "kind": "task24-bench-reshape",
+      "revision": 11,
       "tiles": 80,
+      "minimumPx": 58,
+      "px": 63.3469387755102,
+      "towers": 0,
       "beforeHash": "2539e26df81589eee1c19fc06e736d735eabf8bda5c2eb6140bd45ca72d73a00",
       "sourcePackedHash": "2539e26df81589eee1c19fc06e736d735eabf8bda5c2eb6140bd45ca72d73a00",
-      "afterHash": "0866cec6ffab5f34d8ddc1e44e7c9f35ab08130aada1e643174a34bf4028d266",
-      "proposalHash": "276d0f24ec0af0ff993f1be5ba02bb918ff96e2d34bedba1b8365d63b6a9c488",
+      "afterHash": "dbba0f7b3be0d99cce7a616ab3e0fe862001cf67206792680076885f44c73f54",
+      "proposalHash": "d73b0f0b21f4872a9e4d3aed5ddbe0ba1916867a8f6d826b117cbb44f0f01a1c"
+    },
+    {
+      "level": 265,
+      "sourceLevel": 265,
+      "kind": "task24-bench-reshape",
+      "revision": 11,
+      "tiles": 80,
+      "minimumPx": 58,
+      "px": 63.3469387755102,
       "towers": 0,
-      "minimumPx": 58
+      "beforeHash": "3d7085770ce53ed68de8459a539f61ae1530bea2d8c971af070c4640c83d1c61",
+      "sourcePackedHash": "3d7085770ce53ed68de8459a539f61ae1530bea2d8c971af070c4640c83d1c61",
+      "afterHash": "e66705bb9d5c55949963cc1d26dcc193bb625c8b01d229d1ab94dbdc213de10b",
+      "proposalHash": "9162cc4af34e0764a43eb3efbc0a4549b03b68f137c64dd21e6ed0e29dc13f07"
     },
     {
       "level": 266,
@@ -305,12 +277,27 @@
       "kind": "direct-refit",
       "revision": 10,
       "tiles": 76,
+      "minimumPx": 58,
+      "px": 63.3469387755102,
+      "towers": 0,
       "beforeHash": "0dc2f0b9173653639e626384c1a45a916fe1c2ae4b180684109f2f4fd7a66403",
       "sourcePackedHash": "0dc2f0b9173653639e626384c1a45a916fe1c2ae4b180684109f2f4fd7a66403",
       "afterHash": "d5bfa28925561193297d2f8163890fec8d1417d89c710959d07bc172fb6f67aa",
-      "proposalHash": "fb9d5522a672ddf580c0cece833960a17eae97083f7466d52c1d7facff5f6b3e",
+      "proposalHash": "fb9d5522a672ddf580c0cece833960a17eae97083f7466d52c1d7facff5f6b3e"
+    },
+    {
+      "level": 267,
+      "sourceLevel": 267,
+      "kind": "task24-bench-reshape",
+      "revision": 11,
+      "tiles": 88,
+      "minimumPx": 58,
+      "px": 58.56603773584906,
       "towers": 0,
-      "minimumPx": 58
+      "beforeHash": "706a5a2651131416aac3e855896dbbd123f5573175e161f1740d04a42ac75c2f",
+      "sourcePackedHash": "706a5a2651131416aac3e855896dbbd123f5573175e161f1740d04a42ac75c2f",
+      "afterHash": "4a440615af0d07c5a2e74ca16fa8b1ab2b51f5db737c61cd919a5d348e187c55",
+      "proposalHash": "25504932a9aae8a54b3528993a54d69f17425980c53ff3b87e3d11a026ac228d"
     },
     {
       "level": 268,
@@ -318,25 +305,41 @@
       "kind": "direct-refit",
       "revision": 10,
       "tiles": 76,
+      "minimumPx": 58,
+      "px": 63.3469387755102,
+      "towers": 0,
       "beforeHash": "d1a1b70f9696566bd99f6068102ff41b6bd5d05f1f3879f4079cb9c98b854a0b",
       "sourcePackedHash": "d1a1b70f9696566bd99f6068102ff41b6bd5d05f1f3879f4079cb9c98b854a0b",
       "afterHash": "ddfc50584f6e2c00a940df56c7e7a60293fb563d2c0e640bd7a98e0a1ca2cb9a",
-      "proposalHash": "20cde334a09e17b7d82663ba02ef19c6b07e4bfe84229adcabc16896cfa3bc55",
-      "towers": 0,
-      "minimumPx": 58
+      "proposalHash": "20cde334a09e17b7d82663ba02ef19c6b07e4bfe84229adcabc16896cfa3bc55"
     },
     {
       "level": 269,
       "sourceLevel": 269,
-      "kind": "tower-free-refit",
-      "revision": 10,
+      "kind": "task24-bench-reshape",
+      "revision": 11,
       "tiles": 72,
+      "minimumPx": 58,
+      "px": 59.13285048119853,
+      "towers": 0,
       "beforeHash": "f18a8c5feff7ad60c2566cbd04862b0b572c7f2b226f7cf6b4a35b441abf876f",
       "sourcePackedHash": "f18a8c5feff7ad60c2566cbd04862b0b572c7f2b226f7cf6b4a35b441abf876f",
-      "afterHash": "75655b45a157cc6d068bec09613dd2f1d25f1a826b8db1900a040458c676f849",
-      "proposalHash": "6543cfe23b343c2f3114645f5e5cef85a8157a9a411d5d52512c34a33f32a6be",
+      "afterHash": "e4ae5427acf12ac7378884ee0f175283679da438e9b70d1ae0c460b1dde2cd95",
+      "proposalHash": "70c02e87aaf8ba06e88584cebd590f0c9d3110fb1261f5a23567493078aaab24"
+    },
+    {
+      "level": 271,
+      "sourceLevel": 271,
+      "kind": "task24-bench-reshape",
+      "revision": 11,
+      "tiles": 74,
+      "minimumPx": 58,
+      "px": 58.56603773584906,
       "towers": 0,
-      "minimumPx": 58
+      "beforeHash": "9d26d80415bde17350bd42cf085697d3095e39d93ce54a7fd7dae74d272d5316",
+      "sourcePackedHash": "9d26d80415bde17350bd42cf085697d3095e39d93ce54a7fd7dae74d272d5316",
+      "afterHash": "233cf8c36f51248a01764d8b9e76ef4dcaab552e83f3546dab8116d7b59d4ad5",
+      "proposalHash": "9f6661b3e9a08bd99e8724fc89ac065a3dfd4fd51c2b1dc21ac32bbadc0ef6b2"
     },
     {
       "level": 272,
@@ -344,12 +347,13 @@
       "kind": "direct-refit",
       "revision": 10,
       "tiles": 84,
+      "minimumPx": 58,
+      "px": 59.13285048119853,
+      "towers": 0,
       "beforeHash": "0e08b43c5210f827aa87d5c76d2f669ed52313ac370ba1a68a092bd0071364a8",
       "sourcePackedHash": "0e08b43c5210f827aa87d5c76d2f669ed52313ac370ba1a68a092bd0071364a8",
       "afterHash": "388d942fec51333a7683477a4444d89185f94b42615fb11918ee29f0b55921d4",
-      "proposalHash": "1b6ad509ddee72a69f826bb2d527e305849af2ecd7fe14ad47f45edbd9fe2fbf",
-      "towers": 0,
-      "minimumPx": 58
+      "proposalHash": "1b6ad509ddee72a69f826bb2d527e305849af2ecd7fe14ad47f45edbd9fe2fbf"
     },
     {
       "level": 273,
@@ -357,25 +361,55 @@
       "kind": "direct-refit",
       "revision": 10,
       "tiles": 76,
+      "minimumPx": 58,
+      "px": 59.13285048119853,
+      "towers": 0,
       "beforeHash": "9c41fd6a0c9775a21f0b62a1f5cc4f81fcec87b2dda6792f483c9ff88ae53ca2",
       "sourcePackedHash": "9c41fd6a0c9775a21f0b62a1f5cc4f81fcec87b2dda6792f483c9ff88ae53ca2",
       "afterHash": "0bad646679c9743c130b32aa5eb14ec4c49ab7d4463d366a5722dc7a3959719a",
-      "proposalHash": "21cd73762d3f2e6181168f9c3a7bb6a75f2be717205b112ce494310ce9c67a5a",
-      "towers": 0,
-      "minimumPx": 58
+      "proposalHash": "21cd73762d3f2e6181168f9c3a7bb6a75f2be717205b112ce494310ce9c67a5a"
     },
     {
       "level": 274,
       "sourceLevel": 274,
-      "kind": "tower-free-refit",
-      "revision": 10,
+      "kind": "task24-bench-reshape",
+      "revision": 11,
       "tiles": 84,
+      "minimumPx": 58,
+      "px": 58.56603773584906,
+      "towers": 0,
       "beforeHash": "0c368ee0cd7e4b3661a980dbee23db71521ad00065b4c1163eddc61023d73331",
       "sourcePackedHash": "0c368ee0cd7e4b3661a980dbee23db71521ad00065b4c1163eddc61023d73331",
-      "afterHash": "b792d06f41373ffb20287afd5f49b212db7ed0565f771918f820feaa41a8ac0f",
-      "proposalHash": "1c2f53b3bef4f57ee5dce8e8c9783c020a9ad9e98596eeb0a5c6a269a1777f00",
+      "afterHash": "378cabc4e02aede3459e82adb5eb1670e53b9a3e7471a6e487df723772fd591f",
+      "proposalHash": "c9613f75660aa0b2ed2d19b58bdcc499dbae9a3477a18465d9c8d324487a5c7e"
+    },
+    {
+      "level": 277,
+      "sourceLevel": 280,
+      "kind": "task24-bench-reshape",
+      "revision": 11,
+      "tiles": 88,
+      "minimumPx": 58,
+      "px": 59.13285048119852,
       "towers": 0,
-      "minimumPx": 58
+      "beforeHash": "95c6316d3c77325131124809e7cdf2f81ef2232b1accb0304791ce2d0b0fb3d3",
+      "sourcePackedHash": "32a6a31b4db6901725147824ac34d20a25ec555ba6050edd930e1ebf45ad3c02",
+      "afterHash": "839b26a92636cb9fde51ae49d1a7b9090006e462db381214e22ceeaf5bf3820d",
+      "proposalHash": "3efd524d69aed4cdc29414c0d6ef6698d635f2c771e1083a5bbb1a588e8317d2"
+    },
+    {
+      "level": 278,
+      "sourceLevel": 278,
+      "kind": "task24-bench-reshape",
+      "revision": 11,
+      "tiles": 80,
+      "minimumPx": 58,
+      "px": 59.13285048119852,
+      "towers": 0,
+      "beforeHash": "2ea6e8279aff6bc21f248e971cb90b4a7bb318de1ae916cd96898cc09ff21d89",
+      "sourcePackedHash": "2ea6e8279aff6bc21f248e971cb90b4a7bb318de1ae916cd96898cc09ff21d89",
+      "afterHash": "bc627041ccb00bbbbbafc63f499fcdb8fe69dc8b788d201342fee0e882b96c37",
+      "proposalHash": "a082d89c4db19b2e3e9b00254e5b494cb9551b79f7fe738b6ab6b1db0de31acb"
     },
     {
       "level": 279,
@@ -383,12 +417,27 @@
       "kind": "tower-free-refit",
       "revision": 10,
       "tiles": 76,
+      "minimumPx": 58,
+      "px": 58.56603773584906,
+      "towers": 0,
       "beforeHash": "0172e1cd3698b818d89bc7420e52dac6a98409022fb8c09995632d317fe51563",
       "sourcePackedHash": "0172e1cd3698b818d89bc7420e52dac6a98409022fb8c09995632d317fe51563",
       "afterHash": "d6b950768485c63b05c8487571f52e5fa087ce18d4d2a235e5a5311b54083acc",
-      "proposalHash": "ac51d97e984209d710b49b2acc2193b3d125e63e8123b3ddcca2befccbe1f636",
+      "proposalHash": "ac51d97e984209d710b49b2acc2193b3d125e63e8123b3ddcca2befccbe1f636"
+    },
+    {
+      "level": 280,
+      "sourceLevel": 277,
+      "kind": "approved-intact-swap",
+      "revision": 11,
+      "tiles": 76,
+      "minimumPx": 52,
+      "px": 52.65482816503224,
       "towers": 0,
-      "minimumPx": 58
+      "beforeHash": "32a6a31b4db6901725147824ac34d20a25ec555ba6050edd930e1ebf45ad3c02",
+      "sourcePackedHash": "95c6316d3c77325131124809e7cdf2f81ef2232b1accb0304791ce2d0b0fb3d3",
+      "afterHash": "95c6316d3c77325131124809e7cdf2f81ef2232b1accb0304791ce2d0b0fb3d3",
+      "proposalHash": "8a5a0e61259eb0b229ead049e29332d32c725a09c7c84aeb4aa394e68f3d0fd1"
     },
     {
       "level": 281,
@@ -396,12 +445,13 @@
       "kind": "direct-refit",
       "revision": 10,
       "tiles": 80,
+      "minimumPx": 58,
+      "px": 58.56603773584906,
+      "towers": 0,
       "beforeHash": "9e8e49805fc2f0e3a8aeb408c1c2904b589ce2d2580b475281d9546983645071",
       "sourcePackedHash": "9e8e49805fc2f0e3a8aeb408c1c2904b589ce2d2580b475281d9546983645071",
       "afterHash": "bcd3e6ee99690de217b895f08e528e01d89aebac89f51e02327fe8fafd3b345b",
-      "proposalHash": "cb939e431e0e694b6dd86130b24e7d65ecfc0866f9b847d2fd44a1b6c1d05a14",
-      "towers": 0,
-      "minimumPx": 58
+      "proposalHash": "cb939e431e0e694b6dd86130b24e7d65ecfc0866f9b847d2fd44a1b6c1d05a14"
     },
     {
       "level": 282,
@@ -409,12 +459,13 @@
       "kind": "tower-free-refit",
       "revision": 10,
       "tiles": 80,
+      "minimumPx": 58,
+      "px": 63.3469387755102,
+      "towers": 0,
       "beforeHash": "fcab7acacf8fce17a24093a1ef580994940d2fe4e659126deb32db87c6599326",
       "sourcePackedHash": "fcab7acacf8fce17a24093a1ef580994940d2fe4e659126deb32db87c6599326",
       "afterHash": "6e58c2f7d70e88bf70ca205e449ef6df85d8f7a64f5b5181fc1ef3e3c4af3762",
-      "proposalHash": "e8354b64eb58f92d89eddb73d6256818dcd43d93f4e27d65ec359205c83fbbc3",
-      "towers": 0,
-      "minimumPx": 58
+      "proposalHash": "e8354b64eb58f92d89eddb73d6256818dcd43d93f4e27d65ec359205c83fbbc3"
     },
     {
       "level": 283,
@@ -422,12 +473,13 @@
       "kind": "direct-refit",
       "revision": 10,
       "tiles": 72,
+      "minimumPx": 58,
+      "px": 59.13285048119853,
+      "towers": 0,
       "beforeHash": "7116f7e79ab46f9334837d39f8bc5492191902f469c187539be0d157637ca8ef",
       "sourcePackedHash": "7116f7e79ab46f9334837d39f8bc5492191902f469c187539be0d157637ca8ef",
       "afterHash": "dec7201a87c6e8f602d215eb32f64160283ab1ffffb50586443dffd799e21ce2",
-      "proposalHash": "468b922b494452fc7e80ef8e7c2809d99f6d6564983ec35f4d23e209641bb820",
-      "towers": 0,
-      "minimumPx": 58
+      "proposalHash": "468b922b494452fc7e80ef8e7c2809d99f6d6564983ec35f4d23e209641bb820"
     },
     {
       "level": 284,
@@ -435,12 +487,13 @@
       "kind": "direct-refit",
       "revision": 10,
       "tiles": 80,
+      "minimumPx": 58,
+      "px": 58.56603773584906,
+      "towers": 0,
       "beforeHash": "7849ab5453a4d3f9d4503cfac79b8bd4450e186c87351a6f16df2382f79bda5a",
       "sourcePackedHash": "7849ab5453a4d3f9d4503cfac79b8bd4450e186c87351a6f16df2382f79bda5a",
       "afterHash": "957e1c1cd129770cf2c8bf1fbaca1c0ded34d52db2c6b1ad5847c630a42d26f1",
-      "proposalHash": "1f21a508439f2400b9224e55dca53d1c732c96b7707dd442101b3295e0d96e36",
-      "towers": 0,
-      "minimumPx": 58
+      "proposalHash": "1f21a508439f2400b9224e55dca53d1c732c96b7707dd442101b3295e0d96e36"
     },
     {
       "level": 286,
@@ -448,12 +501,41 @@
       "kind": "direct-refit",
       "revision": 10,
       "tiles": 72,
+      "minimumPx": 58,
+      "px": 59.13285048119853,
+      "towers": 0,
       "beforeHash": "14e5cc1f6d59744792424a27639deba69e2e1b4b8364cbb9c253389e680d6c99",
       "sourcePackedHash": "14e5cc1f6d59744792424a27639deba69e2e1b4b8364cbb9c253389e680d6c99",
       "afterHash": "1448613bef9ad01b87bfd4db2171a4a8f91b8ac5c66d9d8ab3ac939bce8bc593",
-      "proposalHash": "2793fe7c1ac29efdfc4c9e120595c596ab79a320d07241caed55e4692f84df83",
+      "proposalHash": "2793fe7c1ac29efdfc4c9e120595c596ab79a320d07241caed55e4692f84df83"
+    },
+    {
+      "level": 287,
+      "sourceLevel": 287,
+      "kind": "task24-bench-reshape",
+      "revision": 11,
+      "tiles": 80,
+      "minimumPx": 58,
+      "px": 58.56603773584906,
       "towers": 0,
-      "minimumPx": 58
+      "beforeHash": "1d133effb0d5d336b3a6627cbc939c4a9b4acef2124bc0d75316ac318c3305f6",
+      "sourcePackedHash": "1d133effb0d5d336b3a6627cbc939c4a9b4acef2124bc0d75316ac318c3305f6",
+      "afterHash": "eadb1d7fc5c175695374ff43b9db6fc79d86f2f82457fd621522767abb3dedf0",
+      "proposalHash": "de7553f2f2f24f02045372fb2cce2fdb0962b6bc288e247d639a7af86ddb9641"
+    },
+    {
+      "level": 288,
+      "sourceLevel": 288,
+      "kind": "task24-bench-reshape",
+      "revision": 11,
+      "tiles": 84,
+      "minimumPx": 58,
+      "px": 58.322732165573925,
+      "towers": 0,
+      "beforeHash": "1199bd45598238c785ffd0518a8adf283e652c335bdaaf73b031a69b25028751",
+      "sourcePackedHash": "1199bd45598238c785ffd0518a8adf283e652c335bdaaf73b031a69b25028751",
+      "afterHash": "f94ca8e593d481a1142fa379f1f177df4f723e75478ed468b9adc65ab2e36382",
+      "proposalHash": "7e651f538ee5d15232d444e417f86522fcaaf8ae524c975017adca936eb369aa"
     },
     {
       "level": 289,
@@ -461,12 +543,13 @@
       "kind": "direct-refit",
       "revision": 10,
       "tiles": 80,
+      "minimumPx": 58,
+      "px": 59.13285048119853,
+      "towers": 0,
       "beforeHash": "401091c1faa9c9aa875214386634dfc5e7b59f452de9421ffc67c9c7dd1fcfa0",
       "sourcePackedHash": "401091c1faa9c9aa875214386634dfc5e7b59f452de9421ffc67c9c7dd1fcfa0",
       "afterHash": "a8195f28732497b112ac87e0ce425c2432343f190e9739b344ee5271f12ef6aa",
-      "proposalHash": "16d8d1b8eb022c1405314b9c75ccb0612beae6132b90c92ed4d541c51072d00e",
-      "towers": 0,
-      "minimumPx": 58
+      "proposalHash": "16d8d1b8eb022c1405314b9c75ccb0612beae6132b90c92ed4d541c51072d00e"
     },
     {
       "level": 291,
@@ -474,12 +557,27 @@
       "kind": "direct-refit",
       "revision": 10,
       "tiles": 78,
+      "minimumPx": 58,
+      "px": 58.56603773584906,
+      "towers": 0,
       "beforeHash": "679377eecee8a4b36b88750a89fc6bd7b7e61d9a95b0e7f5ae6eea640f4b33a9",
       "sourcePackedHash": "679377eecee8a4b36b88750a89fc6bd7b7e61d9a95b0e7f5ae6eea640f4b33a9",
       "afterHash": "a0c1d6f5c721f589368715fed779741673b845e311622f9744a5a5da8782497e",
-      "proposalHash": "679661d1f7eb816eba82a1cf13c0401e389ea2264a04ce3bbb7af33cedf0a29a",
+      "proposalHash": "679661d1f7eb816eba82a1cf13c0401e389ea2264a04ce3bbb7af33cedf0a29a"
+    },
+    {
+      "level": 292,
+      "sourceLevel": 292,
+      "kind": "task24-bench-reshape",
+      "revision": 11,
+      "tiles": 76,
+      "minimumPx": 58,
+      "px": 61.93136472466082,
       "towers": 0,
-      "minimumPx": 58
+      "beforeHash": "9c994398f7edb704ed2cc08ca8650fd61913f0a442d3d8d4aaa0cd893557d043",
+      "sourcePackedHash": "9c994398f7edb704ed2cc08ca8650fd61913f0a442d3d8d4aaa0cd893557d043",
+      "afterHash": "1c6ec621e57e682615c6bc899341cc569023592f20e98ef3f2521b18ec5b7e6d",
+      "proposalHash": "e04aa475de0eed4498ada0b577b31157bd892f394ab3368a04a5dde9b4bc5768"
     },
     {
       "level": 293,
@@ -487,12 +585,13 @@
       "kind": "tower-free-refit",
       "revision": 10,
       "tiles": 76,
+      "minimumPx": 58,
+      "px": 58.322732165573925,
+      "towers": 0,
       "beforeHash": "9962985766ee39b68225c9c14e9950971c729685eceb31eb323a548b39ebf4dd",
       "sourcePackedHash": "9962985766ee39b68225c9c14e9950971c729685eceb31eb323a548b39ebf4dd",
       "afterHash": "a3f4b5ff5f2c176e7cb355b9fae2bdbe1f39e64de91a1be131b8a24e3f9aacd1",
-      "proposalHash": "b85a2801fb8685f0808ef12e76ab1e460bd6a31d5f66a00bbf386daddc1553d5",
-      "towers": 0,
-      "minimumPx": 58
+      "proposalHash": "b85a2801fb8685f0808ef12e76ab1e460bd6a31d5f66a00bbf386daddc1553d5"
     },
     {
       "level": 295,
@@ -500,12 +599,13 @@
       "kind": "tower-free-refit",
       "revision": 10,
       "tiles": 76,
+      "minimumPx": 58,
+      "px": 63.3469387755102,
+      "towers": 0,
       "beforeHash": "1c340e9f00193a369bf124dfe44180eece7e39c71a1c4a43c7b80d81a39639f8",
       "sourcePackedHash": "1c340e9f00193a369bf124dfe44180eece7e39c71a1c4a43c7b80d81a39639f8",
       "afterHash": "d7470c0a5850e752c66f5b95886b2035d7d149318fe01bdf147fe0a82f652b94",
-      "proposalHash": "231e2f2ecd514e7df8e8ded3deefebcde1a4f20337b29dbc87a2edbfd8b20ad5",
-      "towers": 0,
-      "minimumPx": 58
+      "proposalHash": "231e2f2ecd514e7df8e8ded3deefebcde1a4f20337b29dbc87a2edbfd8b20ad5"
     },
     {
       "level": 296,
@@ -513,12 +613,41 @@
       "kind": "direct-refit",
       "revision": 10,
       "tiles": 80,
+      "minimumPx": 58,
+      "px": 59.13285048119853,
+      "towers": 0,
       "beforeHash": "b31c5ce05c14fd2a29d537b2d077434d357d07b428ddd747cec740180d395afd",
       "sourcePackedHash": "b31c5ce05c14fd2a29d537b2d077434d357d07b428ddd747cec740180d395afd",
       "afterHash": "cb62f535943dc4e290bf3f6aa1118ff4670a66b0205caae30842e8458c459291",
-      "proposalHash": "da1c6a379bac3fab302be141d9fed72c67684a8b6d173dd7e309e3be1f9a6369",
+      "proposalHash": "da1c6a379bac3fab302be141d9fed72c67684a8b6d173dd7e309e3be1f9a6369"
+    },
+    {
+      "level": 297,
+      "sourceLevel": 297,
+      "kind": "task24-bench-reshape",
+      "revision": 11,
+      "tiles": 80,
+      "minimumPx": 58,
+      "px": 58.56603773584906,
       "towers": 0,
-      "minimumPx": 58
+      "beforeHash": "597b69f36f6e9e28c385bb5d510fc22dbc502c752fa44c02782ee18926617686",
+      "sourcePackedHash": "597b69f36f6e9e28c385bb5d510fc22dbc502c752fa44c02782ee18926617686",
+      "afterHash": "844d6ebd4ee451f194a4cc9f72169a1b596af123c55119f7549812da531d5d30",
+      "proposalHash": "f87e54e0ca0ec72b38171b95de6672d7ca06e19376b829cc5b2da696ef9f8cf1"
+    },
+    {
+      "level": 298,
+      "sourceLevel": 298,
+      "kind": "task24-bench-reshape",
+      "revision": 11,
+      "tiles": 78,
+      "minimumPx": 58,
+      "px": 60.32999291426257,
+      "towers": 0,
+      "beforeHash": "82c0f50ffc927c41f1386e2444df8c44f994f98887afea74e033dad08bb797c3",
+      "sourcePackedHash": "82c0f50ffc927c41f1386e2444df8c44f994f98887afea74e033dad08bb797c3",
+      "afterHash": "d311e58d252823cdcb22f0fc8f833c4e238a53aee01062caacb9bd4f86728a48",
+      "proposalHash": "1a13b2c725f9a2a4cd6a6ac641236352df352ce1398a681a19a432824c7c0c81"
     },
     {
       "level": 299,
@@ -526,17 +655,96 @@
       "kind": "direct-refit",
       "revision": 10,
       "tiles": 78,
+      "minimumPx": 58,
+      "px": 58.56603773584906,
+      "towers": 0,
       "beforeHash": "bfee4df76c176c9fb1e47f7357e08df1ae21e7e638bc449a57a3662d34fa6e5e",
       "sourcePackedHash": "bfee4df76c176c9fb1e47f7357e08df1ae21e7e638bc449a57a3662d34fa6e5e",
       "afterHash": "aadfe75e5ef20310c38cc6f89a201e99ed5212a96aa3788bcdd12cc0c574ba37",
-      "proposalHash": "a464c57a7e8d50bcb08df02e2d5a6c7d22683d6d9bb202fc2f487bb9b46a05b9",
-      "towers": 0,
-      "minimumPx": 58
+      "proposalHash": "a464c57a7e8d50bcb08df02e2d5a6c7d22683d6d9bb202fc2f487bb9b46a05b9"
     }
   ],
+  "unchangedRows": [
+    {
+      "level": 250,
+      "hash": "fb1b2281313bf5645d24b5bbff69381352ef05ae143795f70a865383186202b9",
+      "revision": 9,
+      "tiles": 96
+    },
+    {
+      "level": 264,
+      "hash": "4d3a906e2858441a67531e512e1f8abce7cb80d4a9d42979ba030dc12f49133d",
+      "revision": 9,
+      "tiles": 76
+    },
+    {
+      "level": 270,
+      "hash": "52d7ba5c3b8e8bd5e0fba4f62a32ef606fc83b9e241a4d4a584d331f552b2b89",
+      "revision": 9,
+      "tiles": 96
+    },
+    {
+      "level": 275,
+      "hash": "6733f3487e46a3f1f7a39b37d1bf187ff9adfb997526d0600905733528528855",
+      "revision": 9,
+      "tiles": 74
+    },
+    {
+      "level": 276,
+      "hash": "7fe924eafe8a735c2a4b1e743659bf9c47b07a61bfca73fe562b1c90e3ebf482",
+      "revision": 9,
+      "tiles": 76
+    },
+    {
+      "level": 285,
+      "hash": "c92d960e0e0542a3cfb0d440a19dd51b8968155377b192a3e0d74da506e53474",
+      "revision": 9,
+      "tiles": 76
+    },
+    {
+      "level": 290,
+      "hash": "e5ea2b371aee3852e2683da6e4451fa4e59aa3df6f3bf18bebc722d7128e67ef",
+      "revision": 9,
+      "tiles": 96
+    },
+    {
+      "level": 294,
+      "hash": "9857a2056feb3cbd0cd183f366ae82b53e6df71160c7e1f24f7d0c27baa4b994",
+      "revision": 9,
+      "tiles": 74
+    },
+    {
+      "level": 300,
+      "hash": "c19a9ce62474a4ec08592e51bd51ca5e66562c6bdad6204ccbd0e3f7e51d8b42",
+      "revision": 9,
+      "tiles": 96
+    }
+  ],
+  "unchangedTens": [
+    250,
+    270,
+    290,
+    300
+  ],
+  "tenthTileCounts": {
+    "250": 96,
+    "260": 84,
+    "270": 96,
+    "280": 76,
+    "290": 96,
+    "300": 96
+  },
+  "ordinaryRefits": 40,
+  "alreadyFitting": [
+    264,
+    275,
+    276,
+    285,
+    294
+  ],
   "ok": true,
-  "roundTripStrictWins": 26,
-  "allOtherPackedRowsUnchanged": true,
+  "all251to299Refitted": true,
   "allRefitsFit": true,
-  "all251to299Refitted": false
+  "allOtherPackedRowsUnchanged": true,
+  "roundTripStrictWins": 42
 }

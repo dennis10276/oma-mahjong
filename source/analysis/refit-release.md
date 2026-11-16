@@ -1,125 +1,138 @@
-# Task 23 — tower-free candidate and shape bench
+# Task 24 — gate 1 complete; gate 2 pending
 
-2026-11-16. Nothing released. No main/Firebase changes.
+2026-11-16. Unreleased. No main, Firebase or published files changed.
 
-## Result
+Gate 1 covers 251–299 first, as Dennis requested. **45/45 ordinary slots fit**, including compact 262 and 277. All 51 boards from 250 through 300 pass their current geometry and proof checks. The approved swaps **262↔260 and 277↔280 are complete and atomic**: 260 and 280 are the exact packed former 262 and 277 rows. Five ordinary boards already fit and remain byte-identical: 264, 275, 276, 285, 294. There are 40 changed ordinary rows plus the two intact tenth-slot moves.
 
-26 ordinary refits are accepted; the five already-fitting ordinary levels remain unchanged. Thus **31 of 45 ordinary slots fit**, while **14 ordinary slots retain their released geometry**. Two additional held rows are the tenth slots in the deferred swap pairs. All 250–300 boards in this candidate have zero straight-on towers. This is not a claim that all 251–299 levels were refitted.
-
-Compared with Task 20 d17984f0, nine accepted boards are revised, 17 refits are retained, and 16 earlier proposals return to their exact released rows. The 260/262 and 277/280 swaps are deferred **atomically**, because their compact halves still fail; no duplicated source board is introduced. The earlier approval for those swaps is recorded as deferred, not silently treated as approval for a weakened board.
-
-Builder branch: wip/codex-towers (from a92ecb35). Candidate branch: wip/codex-towers-candidate (from d17984f0). Live baseline: a99b338e. Final commit IDs are in the shared codex-tasks/results/towers/COMMITS.md.
+**301–370 are still unfinished and are not in this candidate.** Gate 2 may now proceed; its source placement order is unchanged. This report does not claim Task 24 as a whole is complete.
 
 ## Validation
 
-- All 26: Task 23 geometry gate **and the unchanged Task 20 mechanics certificate**, MECH=1 NARROW_TRAP=core. Exact clock minimum/spare, special ablations/prerequisites, wrong moves, authored proof where source roles exist (recovered contract otherwise), full strict win, readable badges and twins pass. No clock-number adjustment or spareCertify used.
-- All accepted refits: 72–88 tiles, supported integer grid, zero straight stacks on every layer, at most 6.5 columns / 8 rows, reference fit >=58 px. Mixed row parities are displayed for review rather than falsely rejected as towers.
-- Real game: 26/26 wins at 392×730, minimum actual pitch 58.57 px. Lab: 26/26 wins, 126 cards across 42 slots; sunflower theme, CSS viewport 392, working clock-route button tested on 279. QA feedback/replays were intercepted.
-- Full offline release-candidate suite: **172/172 passed in 396 seconds**. Four bench regression tests pass (low-layer tower, brick support, initial free IDs/peek actions, stale saved proof).
-- Unchanged rows are byte-identical packed live rows; held saves retain generation 9, accepted refits use 10; repeats, progress and stars tested. No future 301+ builder table copied.
+- All ordinary boards: 72–88 tiles, supported integer grid, no straight-on tower at any layer, at most 6.5 columns and 8 rows, conservative reference pitch ≥58 px. Minimum conservative pitch: 58.32 px.
+- Unchanged Task 20 certificate, with Task 23 geometry gate: exact clock minimum and spare, special ablations and prerequisites, authored losing moves/costs, own authored proof, complete strict win, visible twins and readable badges. No spareCertify, changed deadline or layout catalogue.
+- No new picture deal in this pass. New boards retain original identity pictures and face-down identities; 262/277 and the retained Task 23 boards keep their already-approved compact deals. Gold identities are preserved in all 51 audits.
+- Actual candidate game: **51/51 complete wins**, sunflower, CSS viewport 392×730, minimum ordinary pitch 58.57 px. Comparison lab: **49/49 final-board wins**, all 147 cards present, three variants per slot; clock-route button tested on 278. Test feedback/replays intercepted.
+- Full offline candidate suite: **172/172 passed**. See suite.log. Save revisions, strict packed witnesses, unchanged hashes, both swaps, repeats, progress and stars checked. Earlier accepted rows retain revision 10; the 19 newly changed rows use 11; unchanged rows retain 9.
 
-## Per-level disposition
+## Per-level method and proof
 
-These are all 42 slots in the earlier candidate; the other five ordinary levels and unchanged tenth levels keep their previous rows. A fallback is a bounded-search outcome, not a mathematical impossibility proof.
+All ordinary rows below pass the same certificate. Clock columns are exact minimum + spare, not a guessed measurement or a changed clock number.
 
-| Level | Decision | Shape / reason |
-|---|---|---|
-| 251 | Tower-free refit | 76 tiles, 58.6 px, clock 14+2. Earlier certified tower-free refit retained. |
-| 252 | Tower-free refit | 72 tiles, 59.1 px, clock 8+2. Earlier certified tower-free refit retained. |
-| 253 | Tower-free refit | 80 tiles, 58.6 px, clock 10+2. Claude: bands slid inward, all 80 tiles retained. |
-| 254 | Tower-free refit | 76 tiles, 58.6 px, clock 10+2. Earlier certified tower-free refit retained. |
-| 255 | Exact released row | The compact attempt changes the clock route and special effects. |
-| 256 | Tower-free refit | 76 tiles, 63.3 px, clock 8+2. Tower-free bands; move tiles 45/75 so the original visible 45+65 finish pair stays exposed. The old saved penguin fix still had six towers. |
-| 257 | Tower-free refit | 74 tiles, 58.3 px, clock 8+3. Earlier certified tower-free refit retained. |
-| 258 | Tower-free refit | 76 tiles, 59.1 px, clock 10+2. Earlier certified tower-free refit retained. |
-| 259 | Exact released row | Trimming the staircase changes the clock route and wrong move 71. |
-| 260 | Exact released row | The 260/262 swap is deferred as a pair until compact 260 passes. |
-| 261 | Exact released row | The editor arrangement takes 17 clock moves; the clock allows 16. It also has one tower. |
-| 262 | Exact released row | Compact source 260 has not passed without towers. Both original slots stay. |
-| 263 | Tower-free refit | 80 tiles, 63.3 px, clock 13+2. Claude: inward bands and closed gaps; all 80 tiles retained. |
-| 265 | Exact released row | In the compact attempt, removing ice 72 no longer helps: the ice becomes ineffective. |
-| 266 | Tower-free refit | 76 tiles, 63.3 px, clock 11+1. Earlier certified tower-free refit retained. |
-| 267 | Exact released row | The needed trim cuts a special or wrong move in the ice/key chain. |
-| 268 | Tower-free refit | 76 tiles, 63.3 px, clock 7+1. Earlier certified tower-free refit retained. |
-| 269 | Tower-free refit | 72 tiles, 59.1 px, clock 19+0. Claude: five dropped pairs returned on brick spots; 72 tiles. |
-| 271 | Exact released row | The needed trim cuts a special or wrong move in the trap band. |
-| 272 | Tower-free refit | 84 tiles, 59.1 px, clock 40+3. Earlier certified tower-free refit retained. |
-| 273 | Tower-free refit | 76 tiles, 59.1 px, clock 24+4. Earlier certified tower-free refit retained. |
-| 274 | Tower-free refit | 84 tiles, 58.6 px, clock 9+1. Claude: outer-column tiles returned inside on brick spots. |
-| 277 | Exact released row | Compact source 280 has not passed without towers. Both original slots stay. |
-| 278 | Exact released row | Removing the left staircase exposes the clock twin early (13 moves become 1). |
-| 279 | Tower-free refit | 76 tiles, 58.6 px, clock 10+2. Claude band/row compaction plus ordinary-tile position exchanges: restores all seven visible finish pairs at the clock. Both wrong moves still cost 3. |
-| 280 | Exact released row | The 277/280 swap is deferred as a pair until compact 280 passes. |
-| 281 | Tower-free refit | 80 tiles, 58.6 px, clock 12+2. Earlier certified tower-free refit retained. |
-| 282 | Tower-free refit | 80 tiles, 63.3 px, clock 5+2. Claude: cheese tile 65 shifted half a tile off straight support. |
-| 283 | Tower-free refit | 72 tiles, 59.1 px, clock 21+3. Earlier certified tower-free refit retained. |
-| 284 | Tower-free refit | 80 tiles, 58.6 px, clock 9+2. Earlier certified tower-free refit retained. |
-| 286 | Tower-free refit | 72 tiles, 59.1 px, clock 11+2. Earlier certified tower-free refit retained. |
-| 287 | Exact released row | The needed trim cuts a special or wrong move in the top trap band. |
-| 288 | Exact released row | Tower-free attempts reached 57.5 px, below the 58 px floor. |
-| 289 | Tower-free refit | 80 tiles, 59.1 px, clock 5+1. Earlier certified tower-free refit retained. |
-| 291 | Tower-free refit | 78 tiles, 58.6 px, clock 1+17. Earlier certified tower-free refit retained. |
-| 292 | Exact released row | Moving the cheap thaw neighbor makes tempting tile 74 cost 0 instead of 3. |
-| 293 | Tower-free refit | 76 tiles, 58.3 px, clock 11+1. New: use the right-side trim, then return 20+59 and 33+67 as held brick modules. Wrong tile 73 still costs 2 and remains above its control. |
-| 295 | Tower-free refit | 76 tiles, 63.3 px, clock 7+1. Claude: inward bands and closed gaps; all 76 tiles retained. |
-| 296 | Tower-free refit | 80 tiles, 59.1 px, clock 14+3. Earlier certified tower-free refit retained. |
-| 297 | Exact released row | The needed trim cuts a special or wrong move in the trap band. |
-| 298 | Exact released row | The compact attempt remains below 58 px and obscures a special badge. |
-| 299 | Tower-free refit | 78 tiles, 58.6 px, clock 12+2. Earlier certified tower-free refit retained. |
-
-For 262/277 the retained released boards are nine rows and about 52.7 px, rather than the common 54.5 px of the seven-column/eight-row originals. They are explicit fallbacks; the tests require their original hashes/counts, not the 58 px refit rule. The source tenth boards at 260/280 also remain intact.
-
-Dennis's saved editor arrangements and notes remain untouched at port 8282. Rechecked 261: true strict clock minimum **17**, allowed **16**, plus one tower. 292 still loses its cheap second thaw beside ice 65: wrong tile 74 becomes free in clock cost (3→0). 278's removed left staircase exposes the clock twin early. 288 still has three erased editor tiles (35/65/75) that could not all return with unchanged trap holds. Its earlier complete attempt was 57.5 px. For 298, all 576 half-row slice variants failed support, footprint or tower checks; its complete seed was 57.53 px.
+| Slot | Source | Tiles | Conservative px | Clock | Method |
+|---|---|---:|---:|---:|---|
+| 250 | 250 | 96 | 52.65 | — | Already fitting; unchanged live row. |
+| 251 | 251 | 76 | 58.57 | 14 + 2 | Retained certified Task 23 shape and deal; fresh complete audit passes. |
+| 252 | 252 | 72 | 59.13 | 8 + 2 | Retained certified Task 23 shape and deal; fresh complete audit passes. |
+| 253 | 253 | 80 | 58.57 | 10 + 2 | Retained certified Task 23 shape and deal; fresh complete audit passes. |
+| 254 | 254 | 76 | 58.57 | 10 + 2 | Retained certified Task 23 shape and deal; fresh complete audit passes. |
+| 255 | 255 | 80 | 61.93 | 23 + 3 | Rebuilt the lower courses around the clock porch, moved that porch one half-row, and preserved the normal and lock-removed winning orders. All 80 tiles retained. |
+| 256 | 256 | 76 | 63.35 | 8 + 2 | Retained certified Task 23 shape and deal; fresh complete audit passes. |
+| 257 | 257 | 74 | 58.32 | 8 + 3 | Retained certified Task 23 shape and deal; fresh complete audit passes. |
+| 258 | 258 | 76 | 59.13 | 10 + 2 | Retained certified Task 23 shape and deal; fresh complete audit passes. |
+| 259 | 259 | 76 | 59.13 | 11 + 1 | Lowered the upper middle course by one layer; rebuilt ordinary supports in the source removal order. Kept the top and lower bait-mate modules. All tiles retained. |
+| 260 | 262 | 84 | 52.65 | — | Approved intact source board moved onto a tenth slot. |
+| 261 | 261 | 76 | 58.57 | 14 + 2 | Moved the right ice module inward and the buried left bait twin inward; rebuilt supports. Ordinary position exchanges restore the source finish pressure. All tiles retained. |
+| 262 | 260 | 82 | 63.01 | 11 + 2 | Compact source 260, as approved. Rebuilt the support courses around the original clock/ice modules, then balanced ordinary positions. Retains the previously approved 82-tile deal. |
+| 263 | 263 | 80 | 63.35 | 13 + 2 | Retained the Task 23 inward-band geometry and all 80 tiles. Exchanged ordinary positions to restore source finish pressure. |
+| 264 | 264 | 76 | 59.13 | 12 + 1 | Already fitting; unchanged live row. |
+| 265 | 265 | 80 | 63.35 | 12 + 1 | Lowered the top body one layer and moved the wings inward. Retained an ice-removed counter-witness while rebuilding supports; balanced ordinary positions. All tiles retained. |
+| 266 | 266 | 76 | 63.35 | 11 + 1 | Retained certified Task 23 shape and deal; fresh complete audit passes. |
+| 267 | 267 | 88 | 58.57 | 11 + 2 | Moved the left course and right ice wing by opposite half-rows; retained the full-height trap. Rebuilt supports and kept the ice-neighbour bait. All 88 tiles retained. |
+| 268 | 268 | 76 | 63.35 | 7 + 1 | Retained certified Task 23 shape and deal; fresh complete audit passes. |
+| 269 | 269 | 72 | 59.13 | 19 + 0 | Retained Task 23 brick geometry and its approved 72-tile deal. Ordinary position exchanges restore source finish pressure; no additional face-down tile becomes initially free. |
+| 270 | 270 | 96 | 52.65 | — | Already fitting; unchanged live row. |
+| 271 | 271 | 74 | 58.57 | 9 + 2 | Rebuilt the support courses around the original trap, preserving normal and ice-removed winning orders. Balanced ordinary positions after the first shape flattened the finish. All 74 tiles retained. |
+| 272 | 272 | 84 | 59.13 | 40 + 3 | Retained certified Task 23 shape and deal; fresh complete audit passes. |
+| 273 | 273 | 76 | 59.13 | 24 + 4 | Retained certified Task 23 shape and deal; fresh complete audit passes. |
+| 274 | 274 | 84 | 58.57 | 9 + 1 | Retained Task 23 compact geometry. Ordinary position exchanges restore the source finish pressure and losing park choices. All 84 tiles retained. |
+| 275 | 275 | 74 | 63.35 | 10 + 2 | Already fitting; unchanged live row. |
+| 276 | 276 | 76 | 58.32 | 17 + 2 | Already fitting; unchanged live row. |
+| 277 | 280 | 88 | 59.13 | 7 + 2 | Compact source 280, as approved. Moved three upper courses by one half-row and rebuilt the base; preserved the buried clock twin and lock-removed route. Retains the approved 88-tile deal. |
+| 278 | 278 | 80 | 59.13 | 13 + 2 | Rebuilt the six-column base around the original upper trap. Moved the key/clock porch and lifted a matching ordinary tile into a held course, retaining its clock-twin dependency. Used the ice-removed witness to assign supports; regenerated the full normal win. All 80 tiles retained. |
+| 279 | 279 | 76 | 58.57 | 10 + 2 | Retained certified Task 23 shape and deal; fresh complete audit passes. |
+| 280 | 277 | 76 | 52.65 | — | Approved intact source board moved onto a tenth slot. |
+| 281 | 281 | 80 | 58.57 | 12 + 2 | Retained certified Task 23 shape and deal; fresh complete audit passes. |
+| 282 | 282 | 80 | 63.35 | 5 + 2 | Retained certified Task 23 shape and deal; fresh complete audit passes. |
+| 283 | 283 | 72 | 59.13 | 21 + 3 | Retained certified Task 23 shape and deal; fresh complete audit passes. |
+| 284 | 284 | 80 | 58.57 | 9 + 2 | Retained certified Task 23 shape and deal; fresh complete audit passes. |
+| 285 | 285 | 76 | 59.13 | 9 + 1 | Already fitting; unchanged live row. |
+| 286 | 286 | 72 | 59.13 | 11 + 2 | Retained certified Task 23 shape and deal; fresh complete audit passes. |
+| 287 | 287 | 80 | 58.57 | 16 + 1 | Moved the upper pile by one half-row and rebuilt the base courses around the key and bait modules. All 80 tiles retained. |
+| 288 | 288 | 84 | 58.32 | 11 + 2 | Moved the ice modules inward/downward, lowered the leaning top bar, and rebuilt the base. Kept the buried bait mate; balanced ordinary positions. All 84 tiles retained. |
+| 289 | 289 | 80 | 59.13 | 5 + 1 | Retained certified Task 23 shape and deal; fresh complete audit passes. |
+| 290 | 290 | 96 | 52.65 | — | Already fitting; unchanged live row. |
+| 291 | 291 | 78 | 58.57 | 1 + 17 | Retained certified Task 23 shape and deal; fresh complete audit passes. |
+| 292 | 292 | 76 | 61.93 | 10 + 1 | Rebuilt from the original board: moved the whole upper pile left and down by half a tile and re-laid the base. Kept the top-bar held finish mate. This restores the finish choice lost by the earlier editor-based attempt. All 76 tiles retained. |
+| 293 | 293 | 76 | 58.32 | 11 + 1 | Retained certified Task 23 shape and deal; fresh complete audit passes. |
+| 294 | 294 | 74 | 63.35 | 8 + 1 | Already fitting; unchanged live row. |
+| 295 | 295 | 76 | 63.35 | 7 + 1 | Retained certified Task 23 shape and deal; fresh complete audit passes. |
+| 296 | 296 | 80 | 59.13 | 14 + 3 | Retained certified Task 23 shape and deal; fresh complete audit passes. |
+| 297 | 297 | 80 | 58.57 | 15 + 1 | Moved the upper pile one half-row; re-laid the key/bait porch and retained both buried mates beneath the same course. Balanced ordinary positions. All 80 tiles retained. |
+| 298 | 298 | 78 | 60.33 | 10 + 2 | Staggered the lower trap supports, moved the key porch to clear the badges, and retained the bait side-holders. Dropped three complete ordinary pairs (84 to 78 tiles); balanced ordinary positions. |
+| 299 | 299 | 78 | 58.57 | 12 + 2 | Retained certified Task 23 shape and deal; fresh complete audit passes. |
+| 300 | 300 | 96 | 54.46 | — | Already fitting; unchanged live row. |
 
 ## Difficulty evidence and limits
 
-No personal-player bots or human win predictions were run. The measurements use the exact clock and forced-capacity portions of finish_ten_measure.js (Tail.cappedTail), plus bounded engine proofs of available finish actions and actual visible face-up offers. Unknowns remain unknown. At the tested shortest strict clock boundary, each accepted board has the same proven one-/two-waiting-tile capacity outcomes as its released source. These facts do not establish identical human win rates.
+No personal-player bot or human win-rate prediction was run. These measurements describe proven continuations after the shortest strict clock route. Each side uses 24 winning finish samples across independent seeds 121, 314159 and 2027. Mean is average waiting-tile occupancy; two+ is the fraction of finish states with at least two waiting tiles; parks counts parking events; park/10 normalizes by remaining tile count; losing park is the fraction of tested park choices that lose. Sampling can vary even when the underlying challenge is unchanged. Unknown queries are not counted safe. Level 291 has 35 unresolved action checks on the source and 3 on the proposal; both still complete all 24 proven winning samples.
 
-The nine revised boards have the following natural visible offers (safe / losing; face-up pairs and visible-twin singles). They are described separately from uniform legal-tile counts.
+The fresh audit flags a sustained change only when absolute mean occupancy changes by ≥0.20 together with two+ changing by ≥0.10; it also flags losing-park changes ≥0.25 when both boards have at least one park on average, or a change in the proven one-slot finish outcome. All 45 ordinary boards pass these screening rules. At the older 0.15 losing-park sensitivity threshold, 256 (−0.19), 261 (+0.17) and 288 (−0.18) still show moderate choice differences; these are disclosed for review. 267 goes from zero parks to fewer than half a park per finish, so its losing-park ratio is poorly comparable. These are review thresholds, not proof of identical human difficulty. 261, 263, 269 and 274 were revised after independent checks caught changes. 292 was rebuilt again after the first certificate-passing arrangement removed losing finish choices.
 
-| Level | Opening before → after | At clock before → after |
-|---|---|---|
-| 253 | 4/0 → 4/0 | 7/0 → 7/0 |
-| 256 | 2/0 → 2/0 | 1/0 → 1/0 |
-| 263 | 2/0 → 2/0 | 1/1 → 1/2 |
-| 269 | 0/0 → 0/0 | 1/0 → 1/0 |
-| 274 | 1/0 → 1/0 | 1/4 → 1/4 |
-| 279 | 4/0 → 3/0 | 7/0 → 7/0 |
-| 282 | 3/0 → 2/0 | 1/4 → 1/3 |
-| 293 | 3/0 → 3/0 | 1/2 → 1/4 |
-| 295 | 0/3 → 0/3 | 1/3 → 1/2 |
+Remaining texture differences are shown openly: 278 has somewhat higher average occupancy; 298 parks more frequently while sustained occupancy remains close. 289 has fewer individual parks but comparable sustained waiting. Visual symmetry is imperfect on some retained boards; trap holds take priority over cosmetic symmetry. Dennis should compare the shapes without assuming the measurements decide his experience.
 
-256's lost obvious pair was a real structural warning and is restored. 279 now retains all seven safe visible finish pairs at the clock (previous compact draft had four); its opening has three safe pairs instead of four. 293 retains its one safe visible finish offer and the bait's exact cost, but exposes two additional losing visible offers. These are remaining shape/choice differences for Dennis to judge in the lab, not disguised claims of equal human difficulty. Across all 26, per-tile winning/losing/unknown counts and capacity proofs are in levels/level-N.json. The older 291 source has an unresolved bounded finish-action query; it is not counted safe. Its true clock minimum is 1, not its stale stored 16-move route.
+| Slot | Mean before → after | Two+ before → after | Parks before → after | Parks/10 before → after | Losing park before → after | One-slot finish |
+|---|---:|---:|---:|---:|---:|---|
+| 251 | 1.67 → 1.56 | 0.61 → 0.57 | 8.43 → 6.33 | 1.28 → 1.02 | 0.47 → 0.43 | lose → lose |
+| 252 | 1.23 → 1.23 | 0.42 → 0.42 | 9.47 → 9.47 | 1.48 → 1.48 | 0.25 → 0.24 | lose → lose |
+| 253 | 1.28 → 1.26 | 0.48 → 0.46 | 8.77 → 8.87 | 1.25 → 1.27 | 0.41 → 0.36 | lose → lose |
+| 254 | 1.28 → 1.47 | 0.39 → 0.46 | 8.37 → 10.03 | 1.27 → 1.52 | 0.30 → 0.37 | lose → lose |
+| 255 | 1.35 → 1.28 | 0.46 → 0.40 | 11.60 → 11.03 | 2.04 → 1.94 | 0.28 → 0.24 | lose → lose |
+| 256 | 1.35 → 1.22 | 0.44 → 0.36 | 9.77 → 8.13 | 1.44 → 1.20 | 0.39 → 0.20 | lose → lose |
+| 257 | 1.63 → 1.63 | 0.73 → 0.72 | 5.60 → 3.90 | 0.85 → 0.59 | 0.23 → 0.23 | lose → lose |
+| 258 | 1.34 → 1.40 | 0.49 → 0.49 | 10.00 → 9.60 | 1.28 → 1.45 | 0.35 → 0.38 | lose → lose |
+| 259 | 0.24 → 0.32 | 0.06 → 0.06 | 0.00 → 0.00 | 0.00 → 0.00 | 0.00 → 0.00 | lose → lose |
+| 261 | 1.34 → 1.33 | 0.43 → 0.42 | 9.00 → 8.17 | 1.45 → 1.32 | 0.23 → 0.40 | lose → lose |
+| 262 | 1.26 → 1.30 | 0.38 → 0.43 | 8.90 → 8.10 | 1.05 → 1.14 | 0.34 → 0.35 | lose → lose |
+| 263 | 1.53 → 1.51 | 0.49 → 0.48 | 11.37 → 11.60 | 1.70 → 1.73 | 0.37 → 0.32 | lose → lose |
+| 264 | 1.74 → 1.74 | 0.68 → 0.68 | 15.87 → 15.87 | 2.48 → 2.48 | 0.30 → 0.30 | lose → lose |
+| 265 | 1.45 → 1.38 | 0.49 → 0.50 | 10.07 → 10.10 | 1.48 → 1.49 | 0.24 → 0.27 | lose → lose |
+| 266 | 1.07 → 1.07 | 0.24 → 0.23 | 3.30 → 3.53 | 0.51 → 0.54 | 0.00 → 0.04 | lose → lose |
+| 267 | 0.46 → 0.36 | 0.15 → 0.08 | 0.00 → 0.47 | 0.00 → 0.06 | 0.00 → 0.28 | lose → lose |
+| 268 | 0.74 → 0.73 | 0.23 → 0.22 | 4.47 → 4.50 | 0.65 → 0.65 | 0.18 → 0.16 | lose → lose |
+| 269 | 1.11 → 1.22 | 0.45 → 0.50 | 1.40 → 1.33 | 0.22 → 0.25 | 0.00 → 0.10 | lose → lose |
+| 271 | 0.81 → 0.75 | 0.16 → 0.13 | 2.03 → 1.90 | 0.31 → 0.29 | 0.17 → 0.29 | lose → lose |
+| 272 | 1.58 → 1.65 | 0.56 → 0.57 | 9.33 → 9.77 | 2.17 → 2.27 | 0.27 → 0.33 | lose → lose |
+| 273 | 1.26 → 1.26 | 0.44 → 0.44 | 8.50 → 8.50 | 1.73 → 1.73 | 0.32 → 0.32 | lose → lose |
+| 274 | 1.19 → 1.31 | 0.49 → 0.46 | 1.90 → 2.87 | 0.25 → 0.38 | 0.06 → 0.18 | lose → lose |
+| 275 | 0.68 → 0.68 | 0.19 → 0.19 | 2.27 → 2.27 | 0.35 → 0.35 | 0.43 → 0.43 | lose → lose |
+| 276 | 0.47 → 0.47 | 0.15 → 0.15 | 3.00 → 3.00 | 0.51 → 0.51 | 0.22 → 0.22 | lose → lose |
+| 277 | 0.60 → 0.52 | 0.20 → 0.16 | 3.33 → 3.17 | 0.37 → 0.39 | 0.28 → 0.25 | lose → lose |
+| 278 | 0.51 → 0.79 | 0.16 → 0.24 | 3.03 → 3.23 | 0.45 → 0.48 | 0.07 → 0.21 | lose → lose |
+| 279 | 1.00 → 1.16 | 0.40 → 0.46 | 3.97 → 5.47 | 0.60 → 0.83 | 0.23 → 0.24 | lose → lose |
+| 281 | 0.93 → 0.91 | 0.25 → 0.30 | 3.87 → 4.03 | 0.57 → 0.59 | 0.08 → 0.21 | lose → lose |
+| 282 | 0.71 → 0.60 | 0.19 → 0.14 | 3.67 → 2.40 | 0.49 → 0.32 | 0.27 → 0.13 | lose → lose |
+| 283 | 1.49 → 1.49 | 0.51 → 0.51 | 9.93 → 9.93 | 2.03 → 2.03 | 0.18 → 0.18 | lose → lose |
+| 284 | 0.81 → 0.54 | 0.23 → 0.15 | 5.10 → 3.13 | 0.72 → 0.44 | 0.08 → 0.05 | lose → lose |
+| 285 | 1.65 → 1.65 | 0.65 → 0.65 | 2.00 → 2.00 | 0.30 → 0.30 | 0.77 → 0.77 | lose → lose |
+| 286 | 0.62 → 0.59 | 0.16 → 0.17 | 2.87 → 2.00 | 0.42 → 0.33 | 0.15 → 0.06 | lose → lose |
+| 287 | 1.49 → 1.27 | 0.52 → 0.43 | 10.17 → 9.17 | 1.59 → 1.43 | 0.33 → 0.31 | lose → lose |
+| 288 | 0.60 → 0.79 | 0.21 → 0.25 | 2.90 → 2.93 | 0.40 → 0.40 | 0.19 → 0.01 | lose → lose |
+| 289 | 1.70 → 1.85 | 0.62 → 0.67 | 21.03 → 15.40 | 2.66 → 2.05 | 0.27 → 0.39 | lose → lose |
+| 291 | 1.66 → 1.58 | 0.56 → 0.55 | 11.33 → 10.03 | 1.37 → 1.30 | 0.51 → 0.54 | lose → lose |
+| 292 | 0.77 → 0.83 | 0.24 → 0.28 | 1.03 → 1.00 | 0.16 → 0.15 | 0.82 → 0.78 | lose → lose |
+| 293 | 1.21 → 1.23 | 0.43 → 0.43 | 8.83 → 7.90 | 1.36 → 1.22 | 0.33 → 0.28 | lose → lose |
+| 294 | 0.90 → 0.90 | 0.33 → 0.33 | 2.33 → 2.33 | 0.35 → 0.35 | 0.49 → 0.49 | lose → lose |
+| 295 | 0.94 → 0.96 | 0.32 → 0.33 | 3.87 → 3.93 | 0.56 → 0.57 | 0.47 → 0.48 | lose → lose |
+| 296 | 1.58 → 1.52 | 0.55 → 0.49 | 10.10 → 11.47 | 1.55 → 1.76 | 0.35 → 0.32 | lose → lose |
+| 297 | 1.34 → 1.41 | 0.48 → 0.50 | 8.53 → 9.87 | 1.31 → 1.52 | 0.32 → 0.32 | lose → lose |
+| 298 | 0.86 → 0.95 | 0.27 → 0.28 | 2.70 → 5.03 | 0.36 → 0.74 | 0.21 → 0.19 | lose → lose |
+| 299 | 1.08 → 1.06 | 0.31 → 0.32 | 3.77 → 3.60 | 0.55 → 0.55 | 0.56 → 0.56 | lose → lose |
 
-279's global mirror score remains 0.16. The mirror search preserving trap holds and the initial free set found no certifiable improvement. 293 also has unequal band centers (global mirror score 0); its local brick modules are supported and logical, but visual symmetry remains a review limitation. The task's preference for symmetry was not used to weaken the trap.
+## Review and handoff
 
-## Bench changes
-
-- towers_proof.js adds the actual all-layer tower/grid/width/rows/tile-count/58 px gate around Task 20. The old z>2-only test is not sufficient.
-- shape_bench_tools.js: geometry, original-ID holds and initial free sets, heldSpots for a whole module (optional all-tile hold invariance), exact pressure/capacity readout, and layered SVG pictures with roles/IDs/faces. Exposed on B as geometry(), invariants(), heldSpots(), pressure(), picture().
-- B.load(record) imports a proved board and keep map. prove() caches identical input results, clears stale results on a failed proof, and save() rejects edits made after its certificate. Route/trap pictures and their other copies are protected during untwinning.
-- detower.bandRun can favor the opposite trim side and examine more trim options. This found 293's better right-side trim.
-- Fixed broken relative imports in the existing per-level bench scripts. Bounded row, mirror, module and alternate-trim investigations are retained in the towers scripts and result JSONs. No search result below the floor, weakened trap, unauthorized same-spare certificate, or unresolved proof entered the candidate.
-
-Example (from codex-towers; heavy wrapper required for pressure/proof/search):
-
-```js
-const {bench} = require('./source/tools/builder/bank/shape_bench');
-const B = bench(293).load(require('./source/analysis/builder/footprint60/bench/level-293.json'));
-B.geometry(); B.invariants();
-B.picture('board.svg');
-B.heldSpots([20, 59], {all:true, ms:10000});
-B.prove(); // calls Task 23 + Task 20; B.save('note') only after a current passing proof
-```
-
-The bench deliberately retains the Task 20 module dependency on sibling codex-finish-ten, as in Claude's handoff. Use bench(sourceLevel) with source IDs; do not load source-260 tile IDs into bench(262).
-
-## Labs and handoff
-
-- Compare live / earlier / decision for all 42: http://127.0.0.1:8283/ . Offline, sunflower, notes + moves recorded locally, Show the way to the clock. Uses the current candidate renderer (the inherited old lab snapshot drew smaller phone tiles).
-- Existing four-level placement editor, Dennis's saved notes preserved: http://127.0.0.1:8282/ . It remains an experimental editor using the older checker; its pass alone is not Task 23 adoption. Run towers_proof before accepting an editor result.
-- Earlier labs 8275–8282 remain available; no user server was killed.
-- Candidate manifest: codex-towers-candidate/source/analysis/refit-251-299.json. Packed board hashes, held hashes, save revisions and deferred pairs are explicit.
-- Proofs/pressure: codex-towers/source/analysis/builder/towers/levels/. Figures: level-N-final.svg and phone-279.png. Inputs: pack.json; output hashes bind every board.
-
-Do not merge/publish without Dennis's release approval. cc-builder-loop, cc-tray-gap and cc-refit-shapes were not edited.
+- Comparison lab: http://127.0.0.1:8284/ — live / earlier Task 23 candidate / final for every slot 251–299, sunflower, local notes and move recordings, Show the way to the clock. Labels describe versions without priming difficulty judgments.
+- Dennis's existing editor and notes at http://127.0.0.1:8282/ remain untouched. Earlier comparison at 8283 remains available.
+- Candidate: branch wip/codex-towers-candidate, source/www/levels-hard.js; manifest source/analysis/refit-251-299.json; proofs source/analysis/refit-251-299-proofs.json. Builder: wip/codex-towers, source/analysis/builder/finish-all/gate1/. Commit IDs are recorded in COMMITS.md after committing.
+- recipes.json records the final source-ID mapping, full board and solution for every changed row; audit-N.json binds each proof/pressure result to its board hash. No search needs to be repeated to recover these boards. Failed bounded searches are not impossibility claims.
+- New bench tools rebuild integer brick supports and assign original tile identities subject to prefix/full-order constraints. The bounded MILP helpers require Python with SciPy (tested with 1.17.1); replaying recipes does not. Every solver result still needs the unchanged certificate. Ordinary whole-tile position tuning preserves protected trap modules and regenerates a full strict tail witness.
+- Next: finish source 301–370 in Dennis's order, using their own trap and tiles; extend candidate table/repeat/save checks only after the boards pass. Do not merge or release without Dennis's explicit release approval.
