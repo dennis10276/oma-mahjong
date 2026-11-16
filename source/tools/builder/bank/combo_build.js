@@ -10,7 +10,22 @@ const fs=require('fs'),path=require('path'),{Worker,isMainThread,parentPort,work
 const OUT=path.resolve(__dirname,'../../../analysis/builder/bank/combo-350');
 const DATA=path.resolve(__dirname,'../../../analysis/builder/data');
 const EXTRA=[['layouts-6wide.json',1000,'six-'],['layouts-6wide-extra-72plus.json',2000,'extra-']];   // Gemini G14 (48) and Antigravity's extra (31 with 72+ tiles), 2026-11-16
-const nameOf=j=>(j.base?j.base+'_':'')+j.links.join('_');
+const nameOf=j=>(j.base||'')+(j.lookalike?'+look':'')+(j.newIdea?'+'+j.newIdea:'')+(j.links.length?(j.base?'_':'')+j.links.join('_'):'');
+// Dennis 2026-11-16: "We should chain the 37 together in different ways." A mix = one base chain (its gates and its own wrong
+// idea: waiting twin / clock roof / lookalike / two fronts / inner ice) + optionally the lookalike key pair on top (repeat),
+// + optionally one of the approved new ideas (pairedFalseMelt, sharedThawDetour, roofBeforeSide, twinChase, splitPreparation),
+// + any Task 18 links. The constructor already applies repeat, newIdea and sixIdeas as independent stages; the proof checks each.
+function registerMix(M,j,name){
+  if(M.FAMILIES[name])return;
+  const SH=require('../chained_shapes.js').SHAPES,old=SH[j.base];if(!old)throw Error('unknown base '+j.base);
+  let f=j.links.length?require('../chained_six_specs.js').compose(name,j.base,j.links,old):{...old,name,trapType:'chained:'+name};
+  const look=j.lookalike&&old.mode!=='repeatKeys'&&!old.repeat;
+  f={...f,name,repeat:f.repeat||look,signature:f.signature+(look?'; keyPair<lookalikeChoice':'')+(j.newIdea?'; route<'+j.newIdea:''),
+     links:(f.links||0)+(look?1:0)+(j.newIdea?1:0),...(j.newIdea?{newIdea:j.newIdea}:{}),mixOf:{base:j.base,lookalike:!!look,newIdea:j.newIdea||null,links:j.links}};
+  SH[name]=M.FAMILIES[name]=f;
+  M.STORIES[name]={title:name,sentence:f.see,spec:{},place:(c,b,r)=>M.place(name,c,b,r),prove:(d,r,c)=>M.prove(name,d,r,c),profile:'traps-v1'};
+  require('../builder.js').STORIES[name]=M.STORIES[name];
+}
 function setup(){
   const B=require('../builder.js');
   for(const [f,at,pre] of EXTRA)if(!B.LAYOUTS[at])JSON.parse(fs.readFileSync(path.join(DATA,f),'utf8')).forEach((l,i)=>{B.LAYOUTS[at+i]={...l,shape:pre+l.shape};});
@@ -19,7 +34,8 @@ function setup(){
 if(!isMainThread){
   try{
     const j=workerData,{M}=setup(),name=nameOf(j);
-    try{M.registerChain(name,{base:j.base||null,links:j.links});}catch(e){if(!/already registered/.test(e.message))throw e;}
+    if(j.base&&!j.lookalike&&!j.newIdea&&!j.links.length){}else if(j.base&&(j.lookalike||j.newIdea))registerMix(M,j,name);
+    else try{M.registerChain(name,{base:j.base||null,links:j.links});}catch(e){if(!/already registered/.test(e.message))throw e;}
     let r=M.build(name,{layout:j.layout,seed:j.seed,narrowSelfLock:true,obviousnessDial:2,frame:{spare:1},targets:{digBefore:[2,8],maxDown:.2}},{tries:250,wallMs:j.ms-500,onAttempt:x=>parentPort.postMessage({progress:x})});
     if(r.design){
       r.roles.locks=[...r.roles.locks];r.roles.holderSpecials=[...r.roles.holderSpecials];
