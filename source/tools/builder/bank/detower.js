@@ -17,14 +17,15 @@
    writes source/analysis/builder/footprint60/detower/level-<n>.json  */
 const fs = require('fs'), path = require('path');
 const CF = path.resolve(__dirname, '../../../../../codex-finish-ten/source/tools/builder/bank') + '/';
-const P = require(CF + 'narrow_proof'), Q = require(CF + 'finish_ten_proof'), R = require(CF + 'finish_ten_records');
+const P = require('./finish_all_sources'), Q = require(CF + 'finish_ten_proof'), R = require(CF + 'finish_ten_records');
 const G = require(CF + 'narrow_methods'), E = require(CF + '../engine'), Tl = require(CF + 'tail'), F = require(CF + '../footprint');
 const CFA = path.resolve(CF, '../../../analysis/builder/finish-ten');
-const OUT = path.resolve(__dirname, '../../../analysis/builder/footprint60/detower');
+const OUT = path.resolve(__dirname, process.env.FINISH_ALL ? '../../../analysis/builder/finish-all/same' : '../../../analysis/builder/footprint60/detower');
 const clone = x => JSON.parse(JSON.stringify(x)), same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
 // ---------- the candidate and its map to the released (source) board ----------
 function candidate(level) {
+  if(level>300){const d=P.original(level).design;return{level,source:level,d,keep:d.tiles.map((_,i)=>i)};}
   const swap = { 262: 'compact-260-final.json', 277: 'compact-280-final.json' }[level];
   if (swap) { const j = JSON.parse(fs.readFileSync(path.join(CFA, 'swap-260-280', swap))); return { level, source: j.sourceLevel || j.level, d: j.design, keep: j.keep }; }
   const pack = JSON.parse(fs.readFileSync(path.join(CFA, 'proposed/pack.json'))), row = pack.rows.find(r => r.level === level);
@@ -140,10 +141,11 @@ function untwin(d, limit, fixedT) {
 // come off together with everything that rested on them; those tiles go back inside the pile on brick spots: fully supported,
 // half-offset (never straight on one tile), on the parity its layer and row already use, nothing above the spot, no higher than
 // the released board; mirror pairs first, then low and central. Specials, wrong moves and the released route to the clock stay.
-function brickSpot(T, p) {
+function brickSpot(T, p, opts = {}) {
   if (!freeSpot(T, p, -1) || !supportedAt(T, p, -1)) return false;
   const K = new Set(T.map(t => t.join(',')));
   if (p[2] > 0 && K.has([p[0], p[1], p[2] - 1].join(','))) return false;                       // straight on a tile
+  if (opts.halfRows) return true; // supported half-row staircases (Task 24)
   const lay = T.filter(q => q[2] === p[2]);
   if (lay.length && !lay.some(q => (q[1] - p[1]) % 2 === 0)) return false;                        // a row height its layer does not use
   const row = lay.filter(q => q[1] === p[1]);
@@ -343,7 +345,7 @@ function bandRun(level, opts = {}) {
       const keep = Array.from({ length: n }, (_, i) => i), cert = Q.certify(before, d, keep, base);
       const rec = { ...tag, design: process.env.DEBUG ? d : undefined, loose: loose.size, moved: [...loose].map(i => ({ tile: i, from: a.tiles[i], to: T[i], face: a.faces[i] })), shape: strip(s1), ok: cert.ok && s1.straight === 0, errors: cert.errors, footprint: cert.footprint && +cert.footprint.tilePx.toFixed(1) };
       tried.push(rec);
-      if (rec.ok) return save({ level, ok: true, method: 'bands slid to the middle, outer tiles into the hollow', source: c.source, design: d, keep, ...rec, certificate: cert, tried });
+      if (rec.ok) return save({ level, ok: true, method: 'bands slid to the middle, outer tiles into the hollow', source: c.source, keep, ...rec, design: d, certificate: cert, tried });
     }
   }
   return save({ level, ok: false, method: 'bands', source: c.source, tried });

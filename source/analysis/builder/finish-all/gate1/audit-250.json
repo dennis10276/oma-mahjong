@@ -1,0 +1,39 @@
+{
+ "schema": 2,
+ "task": 24,
+ "gate": 1,
+ "level": 250,
+ "source": 250,
+ "kind": "unchanged",
+ "hash": "63b3610fbd34c7789b15b14bef9360430d9a0236c035f6f39a5446990bbe34d3",
+ "sourceHash": "63b3610fbd34c7789b15b14bef9360430d9a0236c035f6f39a5446990bbe34d3",
+ "ok": true,
+ "geometry": {
+  "ok": false,
+  "errors": [
+   "footprint",
+   "tileCount"
+  ],
+  "tiles": 96,
+  "width": 7,
+  "rows": 9,
+  "px": 52.65482816503224,
+  "straight": 0,
+  "stray": 0,
+  "edge": 0,
+  "mirror": 1
+ },
+ "certificate": {
+  "ok": true,
+  "checks": [
+   "exactSourceBoard"
+  ],
+  "errors": []
+ },
+ "strict": {
+  "ok": true
+ },
+ "sameIdentityPhotos": true,
+ "noNewPictureDeal": true,
+ "goldPreserved": true
+}

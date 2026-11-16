@@ -1,0 +1,399 @@
+{
+ "schema": 2,
+ "task": 24,
+ "gate": 1,
+ "level": 271,
+ "source": 271,
+ "kind": "task24-bench-reshape",
+ "hash": "9f6661b3e9a08bd99e8724fc89ac065a3dfd4fd51c2b1dc21ac32bbadc0ef6b2",
+ "sourceHash": "960862d59f8851db26b2686e2a2c30e7766f8937ac99c67915b742a472077bea",
+ "ok": true,
+ "geometry": {
+  "ok": true,
+  "errors": [],
+  "tiles": 74,
+  "width": 6.5,
+  "rows": 7.5,
+  "px": 58.56603773584906,
+  "straight": 0,
+  "stray": 2,
+  "edge": 2,
+  "mirror": 0.05
+ },
+ "certificate": {
+  "ok": true,
+  "errors": [],
+  "checks": [
+   "zeroStraightTowers",
+   "supportedIntegerGrid",
+   "72to88Tiles",
+   "6.5Columns8Rows58px",
+   "fullStrictWin",
+   "sameClockMinimumAndSpare",
+   "sameSpecialEffects",
+   "sameSpecialPrerequisites",
+   "allAuthoredWrongMovesStillWrong",
+   "ownAuthoredProof"
+  ],
+  "k": 9,
+  "spare": 2,
+  "footprint": {
+   "ok": true,
+   "profile": "phone-near-60-v1",
+   "tilePx": 58.56603773584906,
+   "rows": 7.5,
+   "compact": false,
+   "target": 60,
+   "minimum": 58,
+   "limit": "width"
+  },
+  "ablations": [
+   [
+    "ice",
+    66,
+    1
+   ],
+   [
+    "ice",
+    73,
+    1
+   ],
+   [
+    "lock",
+    62,
+    1
+   ]
+  ],
+  "prerequisites": [
+   [
+    68,
+    []
+   ],
+   [
+    67,
+    [
+     73
+    ]
+   ],
+   [
+    0,
+    []
+   ],
+   [
+    62,
+    [
+     0,
+     67,
+     73
+    ]
+   ],
+   [
+    66,
+    [
+     67,
+     73
+    ]
+   ],
+   [
+    73,
+    []
+   ]
+  ],
+  "prices": [
+   {
+    "tiles": [
+     0
+    ],
+    "before": {
+     "tiles": [
+      0
+     ],
+     "result": "lose",
+     "need": null,
+     "cost": null,
+     "exact": true
+    },
+    "after": {
+     "tiles": [
+      0
+     ],
+     "result": "lose",
+     "need": null,
+     "cost": null,
+     "exact": true
+    }
+   },
+   {
+    "tiles": [
+     68
+    ],
+    "before": {
+     "tiles": [
+      68
+     ],
+     "result": "lose",
+     "need": null,
+     "cost": null,
+     "exact": true
+    },
+    "after": {
+     "tiles": [
+      68
+     ],
+     "result": "lose",
+     "need": null,
+     "cost": null,
+     "exact": true
+    }
+   }
+  ],
+  "ownProof": {
+   "ok": true
+  },
+  "beforeHash": "960862d59f8851db26b2686e2a2c30e7766f8937ac99c67915b742a472077bea",
+  "afterHash": "9f6661b3e9a08bd99e8724fc89ac065a3dfd4fd51c2b1dc21ac32bbadc0ef6b2",
+  "policy": "Task 23 geometry + unchanged Task 20 mechanics",
+  "shape": {
+   "ok": true,
+   "errors": [],
+   "tiles": 74,
+   "width": 6.5,
+   "rows": 7.5,
+   "px": 58.56603773584906,
+   "straight": 0,
+   "stray": 2,
+   "edge": 2,
+   "mirror": 0.05
+  }
+ },
+ "strict": {
+  "ok": true
+ },
+ "sameIdentityPhotos": true,
+ "noNewPictureDeal": true,
+ "goldPreserved": true,
+ "pressure": {
+  "before": {
+   "hash": "960862d59f8851db26b2686e2a2c30e7766f8937ac99c67915b742a472077bea",
+   "clockPolicy": "shortest-strict",
+   "boundaryClockMove": 9,
+   "storedClockMove": 9,
+   "tailTiles": 65,
+   "atClock": {
+    "waiting": 3,
+    "freeTiles": 19,
+    "visibleMatches": 1,
+    "freePairs": 5
+   },
+   "samples": [
+    {
+     "games": 8,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.41,
+      0.428,
+      0.107,
+      0.055
+     ],
+     "mean": 0.81,
+     "twoPlus": 0.162,
+     "parks": 2.3,
+     "parkAt": [
+      0.5,
+      1,
+      0.8
+     ],
+     "wrongPark": 0.17,
+     "danger": 0.003,
+     "decisions": 36
+    },
+    {
+     "games": 8,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.408,
+      0.432,
+      0.108,
+      0.052
+     ],
+     "mean": 0.8,
+     "twoPlus": 0.16,
+     "parks": 1.9,
+     "parkAt": [
+      0.4,
+      1,
+      0.5
+     ],
+     "wrongPark": 0.14,
+     "danger": 0.007,
+     "decisions": 36
+    },
+    {
+     "games": 8,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.397,
+      0.449,
+      0.094,
+      0.059
+     ],
+     "mean": 0.82,
+     "twoPlus": 0.153,
+     "parks": 1.9,
+     "parkAt": [
+      0.3,
+      0.9,
+      0.8
+     ],
+     "wrongPark": 0.2,
+     "danger": 0.014,
+     "decisions": 36
+    }
+   ],
+   "average": {
+    "mean": 0.81,
+    "twoPlus": 0.15833333333333333,
+    "parks": 2.033333333333333,
+    "parksPerTenTailTiles": 0.3128205128205128,
+    "wrongPark": 0.17,
+    "danger": 0.008
+   },
+   "unresolvedChecks": 0,
+   "games": 24,
+   "gamble": {
+    "gamble": 0,
+    "blindOnly": 0
+   },
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   }
+  },
+  "after": {
+   "hash": "9f6661b3e9a08bd99e8724fc89ac065a3dfd4fd51c2b1dc21ac32bbadc0ef6b2",
+   "clockPolicy": "shortest-strict",
+   "boundaryClockMove": 9,
+   "storedClockMove": 9,
+   "tailTiles": 65,
+   "atClock": {
+    "waiting": 3,
+    "freeTiles": 18,
+    "visibleMatches": 1,
+    "freePairs": 6
+   },
+   "samples": [
+    {
+     "games": 8,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.372,
+      0.5,
+      0.08,
+      0.049
+     ],
+     "mean": 0.81,
+     "twoPlus": 0.129,
+     "parks": 2,
+     "parkAt": [
+      0.6,
+      0.6,
+      0.8
+     ],
+     "wrongPark": 0.31,
+     "danger": 0.017,
+     "decisions": 36
+    },
+    {
+     "games": 8,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.352,
+      0.495,
+      0.102,
+      0.051
+     ],
+     "mean": 0.85,
+     "twoPlus": 0.153,
+     "parks": 2.6,
+     "parkAt": [
+      0.9,
+      0.9,
+      0.9
+     ],
+     "wrongPark": 0.28,
+     "danger": 0.02,
+     "decisions": 37
+    },
+    {
+     "games": 8,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.552,
+      0.349,
+      0.06,
+      0.039
+     ],
+     "mean": 0.59,
+     "twoPlus": 0.099,
+     "parks": 1.1,
+     "parkAt": [
+      0.4,
+      0.4,
+      0.4
+     ],
+     "wrongPark": 0.27,
+     "danger": 0.011,
+     "decisions": 35
+    }
+   ],
+   "average": {
+    "mean": 0.75,
+    "twoPlus": 0.127,
+    "parks": 1.8999999999999997,
+    "parksPerTenTailTiles": 0.29230769230769227,
+    "wrongPark": 0.2866666666666667,
+    "danger": 0.016
+   },
+   "unresolvedChecks": 0,
+   "games": 24,
+   "gamble": {
+    "gamble": 1,
+    "blindOnly": 0
+   },
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   }
+  },
+  "delta": {
+   "mean": -0.06000000000000005,
+   "twoPlus": -0.031333333333333324,
+   "parks": -0.13333333333333353,
+   "parksPerTenTailTiles": -0.02051282051282055,
+   "wrongPark": 0.11666666666666667,
+   "danger": 0.008
+  },
+  "signals": [],
+  "humanWinPrediction": false
+ }
+}

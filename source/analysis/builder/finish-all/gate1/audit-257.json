@@ -1,0 +1,308 @@
+{
+ "schema": 2,
+ "task": 24,
+ "gate": 1,
+ "level": 257,
+ "source": 257,
+ "kind": "direct-refit",
+ "hash": "3c16a45a590d399fb59a690b575f2c6a00fb22ef68300580e1229a0ccdf9138d",
+ "sourceHash": "11b86e72eafdb18f08fba062d5eb00b5d7a340b2f2498212c85a4cb648b262ff",
+ "ok": true,
+ "geometry": {
+  "ok": true,
+  "errors": [],
+  "tiles": 74,
+  "width": 6,
+  "rows": 8,
+  "px": 58.322732165573925,
+  "straight": 0,
+  "stray": 0,
+  "edge": 0,
+  "mirror": 0.96
+ },
+ "certificate": {
+  "ok": true,
+  "errors": [],
+  "checks": [
+   "zeroStraightTowers",
+   "supportedIntegerGrid",
+   "72to88Tiles",
+   "6.5Columns8Rows58px",
+   "fullStrictWin",
+   "sameClockMinimumAndSpare",
+   "sameSpecialEffects",
+   "sameSpecialPrerequisites",
+   "allAuthoredWrongMovesStillWrong",
+   "olderRecoveredSpecialContract"
+  ],
+  "k": 8,
+  "spare": 3,
+  "footprint": {
+   "ok": true,
+   "profile": "phone-near-60-v1",
+   "tilePx": 58.322732165573925,
+   "rows": 8,
+   "compact": true,
+   "target": 60,
+   "minimum": 58,
+   "limit": "height"
+  },
+  "ablations": [],
+  "prerequisites": [
+   [
+    37,
+    []
+   ]
+  ],
+  "prices": [],
+  "ownProof": {
+   "ok": true,
+   "scope": "Recovered special contract; no authored role context is available for this older board."
+  },
+  "beforeHash": "11b86e72eafdb18f08fba062d5eb00b5d7a340b2f2498212c85a4cb648b262ff",
+  "afterHash": "3c16a45a590d399fb59a690b575f2c6a00fb22ef68300580e1229a0ccdf9138d",
+  "policy": "Task 23 geometry + unchanged Task 20 mechanics",
+  "shape": {
+   "ok": true,
+   "errors": [],
+   "tiles": 74,
+   "width": 6,
+   "rows": 8,
+   "px": 58.322732165573925,
+   "straight": 0,
+   "stray": 0,
+   "edge": 0,
+   "mirror": 0.96
+  }
+ },
+ "strict": {
+  "ok": true
+ },
+ "sameIdentityPhotos": false,
+ "noNewPictureDeal": true,
+ "goldPreserved": true,
+ "pressure": {
+  "before": {
+   "hash": "11b86e72eafdb18f08fba062d5eb00b5d7a340b2f2498212c85a4cb648b262ff",
+   "clockPolicy": "shortest-strict",
+   "boundaryClockMove": 8,
+   "storedClockMove": 8,
+   "tailTiles": 66,
+   "atClock": {
+    "waiting": 2,
+    "freeTiles": 17,
+    "visibleMatches": 0,
+    "freePairs": 4
+   },
+   "samples": [
+    {
+     "games": 8,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.158,
+      0.098,
+      0.666,
+      0.079
+     ],
+     "mean": 1.67,
+     "twoPlus": 0.745,
+     "parks": 5.6,
+     "parkAt": [
+      1.5,
+      1,
+      3.1
+     ],
+     "wrongPark": 0.25,
+     "danger": 0.038,
+     "decisions": 40
+    },
+    {
+     "games": 8,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.162,
+      0.102,
+      0.667,
+      0.07
+     ],
+     "mean": 1.64,
+     "twoPlus": 0.737,
+     "parks": 5.4,
+     "parkAt": [
+      1.6,
+      1,
+      2.8
+     ],
+     "wrongPark": 0.2,
+     "danger": 0.022,
+     "decisions": 39
+    },
+    {
+     "games": 8,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.179,
+      0.123,
+      0.626,
+      0.072
+     ],
+     "mean": 1.59,
+     "twoPlus": 0.698,
+     "parks": 5.8,
+     "parkAt": [
+      1.8,
+      1.1,
+      2.9
+     ],
+     "wrongPark": 0.23,
+     "danger": 0.028,
+     "decisions": 40
+    }
+   ],
+   "average": {
+    "mean": 1.633333333333333,
+    "twoPlus": 0.7266666666666666,
+    "parks": 5.6000000000000005,
+    "parksPerTenTailTiles": 0.8484848484848486,
+    "wrongPark": 0.22666666666666668,
+    "danger": 0.029333333333333333
+   },
+   "unresolvedChecks": 0,
+   "games": 24,
+   "gamble": {
+    "gamble": 5,
+    "blindOnly": 0
+   },
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 2
+   }
+  },
+  "after": {
+   "hash": "3c16a45a590d399fb59a690b575f2c6a00fb22ef68300580e1229a0ccdf9138d",
+   "clockPolicy": "shortest-strict",
+   "boundaryClockMove": 8,
+   "storedClockMove": 8,
+   "tailTiles": 66,
+   "atClock": {
+    "waiting": 2,
+    "freeTiles": 16,
+    "visibleMatches": 0,
+    "freePairs": 3
+   },
+   "samples": [
+    {
+     "games": 8,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.135,
+      0.151,
+      0.681,
+      0.033
+     ],
+     "mean": 1.61,
+     "twoPlus": 0.714,
+     "parks": 4,
+     "parkAt": [
+      1,
+      1.8,
+      1.3
+     ],
+     "wrongPark": 0.22,
+     "danger": 0.023,
+     "decisions": 38
+    },
+    {
+     "games": 8,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.137,
+      0.157,
+      0.676,
+      0.03
+     ],
+     "mean": 1.6,
+     "twoPlus": 0.706,
+     "parks": 3.4,
+     "parkAt": [
+      1,
+      1.3,
+      1.1
+     ],
+     "wrongPark": 0.23,
+     "danger": 0.02,
+     "decisions": 37
+    },
+    {
+     "games": 8,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.111,
+      0.147,
+      0.706,
+      0.036
+     ],
+     "mean": 1.67,
+     "twoPlus": 0.742,
+     "parks": 4.3,
+     "parkAt": [
+      1,
+      1.9,
+      1.4
+     ],
+     "wrongPark": 0.23,
+     "danger": 0.023,
+     "decisions": 38
+    }
+   ],
+   "average": {
+    "mean": 1.6266666666666667,
+    "twoPlus": 0.7206666666666667,
+    "parks": 3.9,
+    "parksPerTenTailTiles": 0.5909090909090909,
+    "wrongPark": 0.22666666666666668,
+    "danger": 0.022000000000000002
+   },
+   "unresolvedChecks": 0,
+   "games": 24,
+   "gamble": {
+    "gamble": 18,
+    "blindOnly": 0
+   },
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 2
+   }
+  },
+  "delta": {
+   "mean": -0.0066666666666663765,
+   "twoPlus": -0.005999999999999894,
+   "parks": -1.7000000000000006,
+   "parksPerTenTailTiles": -0.2575757575757577,
+   "wrongPark": 0,
+   "danger": -0.007333333333333331
+  },
+  "signals": [],
+  "humanWinPrediction": false
+ }
+}

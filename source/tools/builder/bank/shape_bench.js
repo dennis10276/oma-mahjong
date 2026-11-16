@@ -18,7 +18,7 @@
    CLI: MECH=1 NARROW_TRAP=core node shape_bench.js <level> [script.js]   (script gets B; without one: show + quick) */
 const fs = require('fs'), path = require('path');
 const D = require('./detower.js'), CF = D.CF;
-const P = require(CF + 'narrow_proof'), Q = require('./towers_proof'), G = require(CF + 'narrow_methods'), E = require(CF + '../engine'), F = require(CF + '../footprint'), SEP = require(CF + 'separate');
+const P = require('./finish_all_sources'), Q = require('./towers_proof'), G = require(CF + 'narrow_methods'), E = require(CF + '../engine'), F = require(CF + '../footprint'), SEP = require(CF + 'separate');
 const OUT = path.resolve(__dirname, '../../../analysis/builder/footprint60/bench');
 const clone = x => JSON.parse(JSON.stringify(x));
 

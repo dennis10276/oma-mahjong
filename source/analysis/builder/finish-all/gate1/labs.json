@@ -1,0 +1,235 @@
+{
+  "url": "http://127.0.0.1:8284/",
+  "directory": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-towers\\source\\build\\finish-all-gate1",
+  "levels": [
+    251,
+    252,
+    253,
+    254,
+    255,
+    256,
+    257,
+    258,
+    259,
+    260,
+    261,
+    262,
+    263,
+    264,
+    265,
+    266,
+    267,
+    268,
+    269,
+    270,
+    271,
+    272,
+    273,
+    274,
+    275,
+    276,
+    277,
+    278,
+    279,
+    280,
+    281,
+    282,
+    283,
+    284,
+    285,
+    286,
+    287,
+    288,
+    289,
+    290,
+    291,
+    292,
+    293,
+    294,
+    295,
+    296,
+    297,
+    298,
+    299
+  ],
+  "cards": 147,
+  "variantNames": [
+    "Current live",
+    "Earlier candidate",
+    "Final proposal"
+  ],
+  "theme": "sunflower",
+  "existingEditor": "http://127.0.0.1:8282/",
+  "existingComparison": "http://127.0.0.1:8283/",
+  "notesPreserved": true,
+  "hashes": [
+    {
+      "level": 251,
+      "hash": "801e71da966c0b33f3d85a030e209d32e325021b4b46c4f207faf5c0947b955e"
+    },
+    {
+      "level": 252,
+      "hash": "b89e7a603c486dadf2ec8569549b0b2bf8fc43132965dd69046606f481b3a00f"
+    },
+    {
+      "level": 253,
+      "hash": "b5b7838cdb809418b5b7b3dcd82fd656c52c4226f8a04521a1a058d1439737a8"
+    },
+    {
+      "level": 254,
+      "hash": "b18a2248c5881dfbc09a921b7c2d18afd4189572b29b87c94317bf8efd66da30"
+    },
+    {
+      "level": 255,
+      "hash": "f205e6ca0e0cc7ba86c211a220f744f842d5e6131b4d75acd3db48ba4f0451ec"
+    },
+    {
+      "level": 256,
+      "hash": "870fe8720439cc4151f5413f894ea49c91fd12f9418853c0f7959a74f57504a6"
+    },
+    {
+      "level": 257,
+      "hash": "3c16a45a590d399fb59a690b575f2c6a00fb22ef68300580e1229a0ccdf9138d"
+    },
+    {
+      "level": 258,
+      "hash": "46ee88d405b941a1400479353f769727e6356be8bb04b38c9816d28ebe77da77"
+    },
+    {
+      "level": 259,
+      "hash": "886fd8c3e49c20b6de3a124cfd8893f5b063f33194cde2df2bc3248327e7716a"
+    },
+    {
+      "level": 260,
+      "hash": "6228b3a2e4945269a8a467d73500474866510a4b151658a1ba7935861b8ee120"
+    },
+    {
+      "level": 261,
+      "hash": "047d15cd89b25f2523211f63fd871e4420cd530b8d48024cd47bd1cbdf29195b"
+    },
+    {
+      "level": 262,
+      "hash": "7a8d9993ebf28b4fa7b09ad7d4d6bed0fa73c37a098fcb663bd1705eac61710f"
+    },
+    {
+      "level": 263,
+      "hash": "d73b0f0b21f4872a9e4d3aed5ddbe0ba1916867a8f6d826b117cbb44f0f01a1c"
+    },
+    {
+      "level": 265,
+      "hash": "9162cc4af34e0764a43eb3efbc0a4549b03b68f137c64dd21e6ed0e29dc13f07"
+    },
+    {
+      "level": 266,
+      "hash": "fb9d5522a672ddf580c0cece833960a17eae97083f7466d52c1d7facff5f6b3e"
+    },
+    {
+      "level": 267,
+      "hash": "25504932a9aae8a54b3528993a54d69f17425980c53ff3b87e3d11a026ac228d"
+    },
+    {
+      "level": 268,
+      "hash": "20cde334a09e17b7d82663ba02ef19c6b07e4bfe84229adcabc16896cfa3bc55"
+    },
+    {
+      "level": 269,
+      "hash": "70c02e87aaf8ba06e88584cebd590f0c9d3110fb1261f5a23567493078aaab24"
+    },
+    {
+      "level": 271,
+      "hash": "9f6661b3e9a08bd99e8724fc89ac065a3dfd4fd51c2b1dc21ac32bbadc0ef6b2"
+    },
+    {
+      "level": 272,
+      "hash": "1b6ad509ddee72a69f826bb2d527e305849af2ecd7fe14ad47f45edbd9fe2fbf"
+    },
+    {
+      "level": 273,
+      "hash": "21cd73762d3f2e6181168f9c3a7bb6a75f2be717205b112ce494310ce9c67a5a"
+    },
+    {
+      "level": 274,
+      "hash": "c9613f75660aa0b2ed2d19b58bdcc499dbae9a3477a18465d9c8d324487a5c7e"
+    },
+    {
+      "level": 277,
+      "hash": "3efd524d69aed4cdc29414c0d6ef6698d635f2c771e1083a5bbb1a588e8317d2"
+    },
+    {
+      "level": 278,
+      "hash": "a082d89c4db19b2e3e9b00254e5b494cb9551b79f7fe738b6ab6b1db0de31acb"
+    },
+    {
+      "level": 279,
+      "hash": "ac51d97e984209d710b49b2acc2193b3d125e63e8123b3ddcca2befccbe1f636"
+    },
+    {
+      "level": 280,
+      "hash": "8a5a0e61259eb0b229ead049e29332d32c725a09c7c84aeb4aa394e68f3d0fd1"
+    },
+    {
+      "level": 281,
+      "hash": "cb939e431e0e694b6dd86130b24e7d65ecfc0866f9b847d2fd44a1b6c1d05a14"
+    },
+    {
+      "level": 282,
+      "hash": "e8354b64eb58f92d89eddb73d6256818dcd43d93f4e27d65ec359205c83fbbc3"
+    },
+    {
+      "level": 283,
+      "hash": "468b922b494452fc7e80ef8e7c2809d99f6d6564983ec35f4d23e209641bb820"
+    },
+    {
+      "level": 284,
+      "hash": "1f21a508439f2400b9224e55dca53d1c732c96b7707dd442101b3295e0d96e36"
+    },
+    {
+      "level": 286,
+      "hash": "2793fe7c1ac29efdfc4c9e120595c596ab79a320d07241caed55e4692f84df83"
+    },
+    {
+      "level": 287,
+      "hash": "de7553f2f2f24f02045372fb2cce2fdb0962b6bc288e247d639a7af86ddb9641"
+    },
+    {
+      "level": 288,
+      "hash": "7e651f538ee5d15232d444e417f86522fcaaf8ae524c975017adca936eb369aa"
+    },
+    {
+      "level": 289,
+      "hash": "16d8d1b8eb022c1405314b9c75ccb0612beae6132b90c92ed4d541c51072d00e"
+    },
+    {
+      "level": 291,
+      "hash": "679661d1f7eb816eba82a1cf13c0401e389ea2264a04ce3bbb7af33cedf0a29a"
+    },
+    {
+      "level": 292,
+      "hash": "e04aa475de0eed4498ada0b577b31157bd892f394ab3368a04a5dde9b4bc5768"
+    },
+    {
+      "level": 293,
+      "hash": "b85a2801fb8685f0808ef12e76ab1e460bd6a31d5f66a00bbf386daddc1553d5"
+    },
+    {
+      "level": 295,
+      "hash": "231e2f2ecd514e7df8e8ded3deefebcde1a4f20337b29dbc87a2edbfd8b20ad5"
+    },
+    {
+      "level": 296,
+      "hash": "da1c6a379bac3fab302be141d9fed72c67684a8b6d173dd7e309e3be1f9a6369"
+    },
+    {
+      "level": 297,
+      "hash": "f87e54e0ca0ec72b38171b95de6672d7ca06e19376b829cc5b2da696ef9f8cf1"
+    },
+    {
+      "level": 298,
+      "hash": "1a13b2c725f9a2a4cd6a6ac641236352df352ce1398a681a19a432824c7c0c81"
+    },
+    {
+      "level": 299,
+      "hash": "a464c57a7e8d50bcb08df02e2d5a6c7d22683d6d9bb202fc2f487bb9b46a05b9"
+    }
+  ]
+}
