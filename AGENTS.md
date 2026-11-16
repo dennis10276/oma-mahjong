@@ -40,6 +40,14 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 
 ## Levels and difficulty (decisions by Dennis, 2026-10-15)
 
+- Release 1.70 (Dennis, 2026-11-16: "is codex done with 251-299? if so, release 1.70 for the new levels 251-299 with wip/top-tools"):
+  levels 251-299 brought to about 60 px like 100-249 (every ordinary level at least 58 px on the 392 x 730 reference, at most
+  6.5 wide and 8 rows, no tile straight on one tile), each with the same trap (exact clock route and spare, special effects and
+  prerequisites, wrong moves, own proof; Codex Tasks 20-24, `source/analysis/refit-251-299.json`, `refit-release.md`); approved
+  swaps 262<->260 and 277<->280. Saved games on a changed board restart (per-board save revision, `boardVersions`); progress
+  and stars stay. Display: 12 px between the tray and the pile (1.69 left 2 px; Gerda, level 219), hint and shuffle as coins
+  beside the tray instead of a row under the pile (screen-made levels keep their shape: measured as if the old 48 px row were
+  there). Levels 301-370 (builder) are not in this release.
 - Release 1.69 (Dennis, 2026-11-14): levels 250-300 are hand-designed trap boards (ice, locks, keys and the clock
   linked in chains), placed by Dennis's own lab verdicts, without bot ratings; 96-tile boards only on levels ending
   in 0. Levels below 250 are unchanged. Saved games on 250 and up start again (generation 9: table fields
