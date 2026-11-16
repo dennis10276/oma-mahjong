@@ -35,16 +35,23 @@ function corridor(layout, o = {}) {
     const late = dig.slice(-3), early = dig.slice(0, Math.ceil(dig.length / 2));
     // buried twins for holders: outside the dig, not free at the start, not near the clock
     const buried = [...Array(n).keys()].filter(i => !dig.includes(i) && i !== c && !free0.has(i) && depth(i) >= 2 && !g.iceNb[c].includes(i));
-    for (let t = 0; t < (o.tries ?? 300) && out.length < (o.per ?? 2); t++) {
-      const L = late[Math.floor(rnd() * late.length)], F = far[Math.floor(rnd() * far.length)], faces = {}; let pic = 0;
+    const matchings = function* (ids) {                        // every pairing; with an odd count one tile is a holder (buried twin)
+      if (!ids.length) { yield []; return; }
+      if (ids.length % 2) { for (let k = 0; k < ids.length; k++) for (const m of matchings(ids.filter((_, j) => j !== k))) yield [[ids[k]], ...m]; return; }
+      const [a, ...r2] = ids; for (let k = 0; k < r2.length; k++) for (const m of matchings(r2.filter((_, j) => j !== k))) yield [[a, r2[k]], ...m];
+    };
+    const jobs = [];
+    for (const L of dig) for (const F of far.slice().sort(() => rnd() - .5).slice(0, o.farTries ?? 2)) jobs.push([L, F]);
+    for (const [L, F] of jobs) {
+      if (out.length >= (o.per ?? 2)) break;
+      let count = 0;
+      for (const m of matchings(dig.filter(i => i !== L))) {
+      if (out.length >= (o.per ?? 2) || ++count > (o.perLF ?? 4000)) break;
+      const faces = {}; let pic = 0;
       faces[L] = faces[F] = 60; faces[c] = 99;
-      // holders: two early dig tiles whose twins are buried elsewhere (they hold a slot all the way); the rest pair up inside
-      const hold = early.filter(i => i !== L).sort(() => rnd() - .5).slice(0, 1 + (rnd() < .25 ? 1 : 0)), twinOf = {};
-      const bur = buried.slice().sort(() => rnd() - .5); if (bur.length < hold.length) { W('noBuried'); continue; }
-      hold.forEach((h, k) => { faces[h] = 100 + k; twinOf[h] = bur[k]; });
-      const rest = dig.filter(i => i !== L && !hold.includes(i)).sort(() => rnd() - .5);
-      for (let k = 0; k + 1 < rest.length; k += 2) faces[rest[k]] = faces[rest[k + 1]] = pic++;
-      if (rest.length % 2) { const x = rest[rest.length - 1]; faces[x] = 120; twinOf[x] = bur[hold.length]; if (twinOf[x] == null) { W('noBuried'); continue; } }
+      const twinOf = {}, bur = buried.slice().sort(() => rnd() - .5); let hk = 0;
+      for (const p of m) { if (p.length === 2) faces[p[0]] = faces[p[1]] = pic++; else { faces[p[0]] = 100 + hk; twinOf[p[0]] = bur[hk++]; } }
+      if (Object.values(twinOf).some(x => x == null)) { W('noBuried'); continue; }
       const res = O.orders({ layout, clock: c, limit: dig.length + 2, tiles: [...dig, F], faces, down: [F], max: 30 });
       if (!res.wins.length) { W('noWin'); continue; } if (res.strictWins) { W('notForced'); continue; }
       const firsts = Object.keys(res.firstMoves).map(Number);
@@ -60,6 +67,7 @@ function corridor(layout, o = {}) {
       const p = H.prove(spec, { seed: o.seed, offersMs: 20000 });
       W(p.ok ? 'proved' : 'proveFail:' + (p.fail || p.errors[0]).replace(/d+/g, '#').slice(0, 40));
       if (p.ok) out.push({ spec, design: p.design, offers: p.offers, report: p.report });
+      }
     }
   }
   return out;
