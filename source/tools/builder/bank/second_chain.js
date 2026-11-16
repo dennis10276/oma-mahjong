@@ -17,13 +17,13 @@ const flat = a => typeof a === 'number' ? [a] : a.pair.slice();
 
 function route(d) {
   const g = E.game(d), states = []; let s = E.start(g);
-  for (const a of d.solution) { states.push(s); s = E.step(g, s, a); if (!s) return null; }
+  for (const a of d.solution) { states.push(s); try { s = E.step(g, s, a); } catch (e) { return null; } if (!s) return null; }   // an illegal stored move: the route no longer plays
   return E.won(g, s) ? { g, states } : null;
 }
 // the stored route up to the clock, then a new winning tail (stored order first, else the first move proven winnable)
 function retail(d, cpStep, nodes = 40000) {
   const g = E.game(d), w = D.work(3e6, 20000); let s = E.start(g); const sol = [];
-  for (let t = 0; t <= cpStep; t++) { s = E.step(g, s, d.solution[t]); if (!s) return null; sol.push(d.solution[t]); }
+  for (let t = 0; t <= cpStep; t++) { try { s = E.step(g, s, d.solution[t]); } catch (e) { return null; } if (!s) return null; sol.push(d.solution[t]); }
   const want = d.solution.slice(cpStep + 1).flatMap(flat), rank = new Map(want.map((i, k) => [i, k]));
   while (!E.won(g, s)) {
     const moves = E.legal(g, s).sort((a, b) => (rank.get(flat(a)[0]) ?? 999) - (rank.get(flat(b)[0]) ?? 999));
@@ -51,15 +51,17 @@ function iceOk(F, h, k) {
 /* hold: the wrong idea after the clock is 'take the free twins as they turn up'. m tiles y are held (locked behind a key pair that
    comes up mid-tail, or frozen until late); each gets a twin x that lies free early in the tail but is taken late on the stored route
    (pictures swapped among tail tiles only). Taking the x's early parks them in the tray until the hold lets go. */
-function holdTwins(d, F, rng, ob, add, used, keys, ice) {
+function holdTwins(d, F, rng, ob, add, used, keys, ice, silver = false) {
   const pick = a => a[Math.floor(rng() * a.length)], T = F.tail, faces = d.faces.slice(), span = T.length, P = F.pos, cp = F.cp;
   const cnt = {}; faces.forEach(f => cnt[f] = (cnt[f] || 0) + 1);
   let release;                                                  // route position after which the held tiles can go
-  if (!F.hasKeys && rng() < .6) { const K = keys(); if (!K) return null; ob.locks = []; add.pop(); [K.a, K.b].forEach(i => used.add(i)); release = Math.max(P[K.a], P[K.b]);
+  const L = silver ? 'locks2' : 'locks';
+  if (silver || (!F.hasKeys && rng() < .6)) { const K = keys(silver ? 2 : 1, (a, b) => { const r = Math.max(P[a], P[b]); return r >= cp + span * .25 && r <= cp + span * .75; }); if (!K) return null; ob[L] = []; add.pop(); [K.a, K.b].forEach(i => used.add(i)); release = Math.max(P[K.a], P[K.b]);
     if (release < cp + span * .25 || release > cp + span * .75) return null;
     const Y = T.filter(i => P[i] > release && !used.has(i) && cnt[faces[i]] === 2); if (Y.length < 2) return null;
     const m = 2 + (rng() < .5), ys = []; while (ys.length < Math.min(m, Y.length)) { const y = pick(Y); if (!ys.includes(y)) ys.push(y); }
-    ob.locks = ys; ys.forEach(i => used.add(i)); add.push('hold:keys ' + K.a + ',' + K.b + ' locks ' + ys.join(','));
+    ob[L] = ys; ys.forEach(i => used.add(i)); add.push('hold:' + (silver ? 'silver ' : 'keys ') + K.a + ',' + K.b + ' locks ' + ys.join(','));
+    ob._keys = [K.a, K.b];
     return twins(ys, release);
   }
   const Y = T.filter(i => !used.has(i) && cnt[faces[i]] === 2 && P[i] > cp + span * .35); if (Y.length < 2) return null;
@@ -77,28 +79,39 @@ function holdTwins(d, F, rng, ob, add, used, keys, ice) {
       const xs = early.filter(x => !used.has(x)); if (!xs.length) return null;
       const x = pick(xs); [faces[x], faces[z]] = [faces[z], faces[x]]; used.add(x);
     }
-    return { kind: 'hold', add, design: { ...clone(d), faces, obst: ob } };
+    const o2 = { ...ob }; delete o2._keys;
+    return { kind: silver ? 'hold2' : 'hold', add, keys: ob._keys, design: { ...clone(d), faces, obst: o2 } };
   }
 }
-function candidate(d, F, rng) {
+function candidate(d, F, rng, o = {}) {
   const pick = a => a[Math.floor(rng() * a.length)], ob = clone(d.obst || {}); ob.ice = ob.ice || {};
   const used = new Set(), add = [], T = F.tail;
   const ice = (h, k) => { if (used.has(h) || !iceOk(F, h, k)) return false; ob.ice[h] = k; used.add(h); add.push('ice' + k + ':' + h); return true; };
-  const kinds = F.hasKeys ? ['hold', 'hold', 'ice', 'iceIce', 'ice2'] : ['hold', 'hold', 'hold', 'ice', 'iceIce', 'ice2', 'keys', 'iceKey', 'lockedMelter', 'keysIce'];
+  // silver (Dennis 2026-11-16: a second key pair with its own locks; "getting the keys could get a chain as well"): hold2 = twins behind
+  // silver locks; hold2Ice = the same with one silver key frozen, its melters in the tail
+  const kinds = o.kinds || (F.hasKeys ? ['hold2', 'hold2', 'hold2Ice', 'hold2Ice', 'hold', 'ice', 'iceIce', 'ice2'] : ['hold2', 'hold2Ice', 'hold', 'hold', 'ice', 'iceIce', 'ice2', 'keys', 'iceKey', 'lockedMelter', 'keysIce']);
   const kind = pick(kinds);
-  const keys = () => {
-    const pairs = []; for (const a of T) for (const b of T) if (a < b && d.faces[a] === d.faces[b]) pairs.push([a, b]);
+  const keys = (set = 1, ok = () => true) => {
+    const pairs = []; for (const a of T) for (const b of T) if (a < b && d.faces[a] === d.faces[b] && !used.has(a) && !used.has(b) && ok(a, b)) pairs.push([a, b]);
     if (!pairs.length) return null;
     const [a, b] = pick(pairs), after = Math.max(F.pos[a], F.pos[b]), L = T.filter(i => F.pos[i] > after && i !== a && i !== b && !used.has(i));
     if (!L.length) return null;
     const locks = []; const n = 1 + Math.floor(rng() * Math.min(3, L.length));
     while (locks.length < n) { const l = pick(L); if (!locks.includes(l)) locks.push(l); }
-    ob.keys = [a, b]; ob.locks = locks; [a, b, ...locks].forEach(i => used.add(i)); add.push('keys:' + a + ',' + b + ' locks:' + locks.join(','));
+    if (set === 2) { ob.keys2 = [a, b]; ob.locks2 = locks; } else { ob.keys = [a, b]; ob.locks = locks; } [a, b, ...locks].forEach(i => used.add(i)); add.push('keys:' + a + ',' + b + ' locks:' + locks.join(','));
     return { a, b, locks };
   };
   let tries = 0;
   const any = k => { for (let t = 0; t < 30; t++) if (ice(pick(T), k)) return true; return false; };
   if (kind === 'hold') return holdTwins(d, F, rng, ob, add, used, keys, ice);
+  if (kind === 'hold2' || kind === 'hold2Ice') {
+    const h = holdTwins(d, F, rng, ob, add, used, keys, ice, true); if (!h || kind === 'hold2') return h;
+    // the silver key itself frozen: still frozen when the clock goes, at least 2 neighbours to melt it
+    const key = h.keys[Math.floor(rng() * 2)], k = 1 + (rng() < .5), nb = F.iceNb[key];
+    if (nb.filter(j => F.pos[j] <= F.cp).length >= k || nb.length < k + 1) return null;
+    h.design.obst.ice = { ...(h.design.obst.ice || {}), [key]: k }; h.add.push('ice' + k + ':silverKey ' + key); h.kind = 'hold2Ice';
+    return h;
+  }
   if (kind === 'ice') { any(1 + (rng() < .5)); }
   else if (kind === 'ice2') { any(1 + (rng() < .5)); any(1 + (rng() < .5)); }
   else if (kind === 'iceIce') {          // the melter of one ice is itself frozen
@@ -144,7 +157,7 @@ function second(d0, o = {}) {
   const greedy = d => Tl.measure(d, { seed: 977, playouts: o.playouts ?? 150 }).tailGreedyWin, g0 = greedy(d0);
   let best = null, tried = 0;
   for (let k = 0; k < (o.tries ?? 80) && Date.now() - t0 < (o.wallMs ?? 120000); k++) {
-    const c = candidate(d0, F, rng); const st = o.stats || (o.stats = {}); if (!c) { st.none = (st.none || 0) + 1; continue; } st[c.kind] = (st[c.kind] || 0) + 1;
+    const c = candidate(d0, F, rng, o); const st = o.stats || (o.stats = {}); if (!c) { st.none = (st.none || 0) + 1; continue; } st[c.kind] = (st[c.kind] || 0) + 1;
     const key = c.add.slice().sort().join('|'); if (seen.has(key)) continue; seen.add(key); tried++;
     for (let v = 0; v <= (o.shuffles ?? 6); v++) {     // v>0: the same specials with tail pictures swapped (2-6 swaps, key pair kept)
       const dv = v ? shuffleTail(c.design, F, rng) : c.design;
