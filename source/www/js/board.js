@@ -188,7 +188,7 @@ function clockBadge() {
   const on = clockOn(), el = on && G.tiles[G.clock.i].el;
   G.tiles.forEach((t, k) => t.el && t.el.classList.toggle('clocked', on && k === G.clock.i));
   if (!on || !el || !G.tiles[G.clock.i].r) { if (ck) ck.remove(); return; }
-  if (!ck) { ck = document.createElement('div'); ck.id = 'clockBadge'; ck.className = 'ck'; $('#board').appendChild(ck); }
+  if (!ck) { ck = document.createElement('div'); ck.id = 'clockBadge'; ck.className = 'ck'; ck.onclick = e => { e.stopPropagation(); showClock(); }; $('#board').appendChild(ck); }
   const r = G.tiles[G.clock.i].r, left = clockLeft();
   ck.innerHTML = `<span>⏰</span><b>${left}</b>`;
   // one move used: the number gives a little hop, so you see every tile counts (1.58)
@@ -765,6 +765,15 @@ function solveNow(limit = 30000) {
    move. Take the clock tile off the board in time; when the number reaches 0 while it is still
    there, the level is over. */
 const clockOn = () => !!(G && G.clock && G.alive[G.clock.i]);
+// a tap on the clock's number shows the clock through the tiles on it (Dennis 2026-11-16: "a clock sign ... you can click to show
+// the clock ... when its buried"), the way a tap on a lock shows the keys
+function showClock() {
+  if (!G || !G.clock || !G.alive[G.clock.i]) return;
+  const over = new Set(), todo = [G.clock.i];
+  while (todo.length) for (const j of G.nb.above[todo.pop()]) if (G.alive[j] && !over.has(j)) { over.add(j); todo.push(j); }
+  over.forEach(j => replay(G.tiles[j].el, 'xray', 1500));
+  replay(G.tiles[G.clock.i].el, 'obhint', 1500);
+}
 const clockLeft = () => G && G.clock ? Math.max(0, G.clock.n - G.mv) : 0;
 function clockMove(i) {
   if (!G.clock) return;
