@@ -59,3 +59,17 @@ move was the designed wrong one and he won the second try.
   7 winning first moves.
 - Verify with `orders.js` (every winning order, exact winning first moves). H1: one first move (71) out of three free ones; the
   face-down pair 70+41 forced; won in the real game.
+
+## 356 played (2026-11-16): "Cool you need the face down skill to finish it"
+5 tries, no win yet: try 1 the designed wrong start (63 beside the clock), try 2 the corner taken early, then the right opening.
+Dennis: "I need way more original ideas like this. using facedown while having 3 in tray should be used more. Like present in 1
+every 4 levels in chains." And: "In the end we want to spit out levels not just per 50."
+
+## From hand pattern to generator: gen_corridor.js
+The H1 pattern as a generator: per layout, every deep clock spot; the minimal dig from the solver (all pictures equal); every late
+tile, a couple of far free tiles as the face-down twin, every pairing of the other dig tiles (one buried holder when odd);
+`orders.js` keeps a pairing only when the face-down pair is forced, at most 2 first moves win and no free tile beside the clock
+starts a win; then `hand.js prove` on the whole board. Random sampling found nothing (the forced region is about 0.2%); the
+exhaustive pairing finds it in seconds (on 1006 it rediscovered H1's mirror: a copy, not used).
+Next: variations that keep the core and change the chain (a lock on the late tile with the keys in the dig, ice on a holder,
+silver keys), a filter against copies (same layout + mirrored clock region), and the other hand patterns.
