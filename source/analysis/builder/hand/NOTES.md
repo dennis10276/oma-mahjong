@@ -39,3 +39,23 @@ motifs for `tools/builder/bank/hand.js`, and what they teach.
 | doubleMelt | one pair touches two ices | proven: 9-move route, both lonely melters lose (ice near the surface) |
 | silverPair | the free key pair is the wrong colour | proven: 23-move route, the free silver pair at move 12 loses |
 | silverMelter | the gold key's melter is silver-locked: silver first | proven: 19-move route, early gold key loses, outside melt costs 2 |
+
+## Lab 2026-11-16 (8288): all six too easy
+Dennis: "not really, easy to spot on second dig" (freeMelt), "really easy" (doubleMelt), "very obvious path, feels forced"
+(silverPair), "your last work was better with the ice smartness" (silverMelter), "you're focused on the locks and clock anyway,
+not on random free pairs" (keyMelt), "kinda easy but rewarding" (silverWait). His moves (replay_study.js): on freeMelt his first
+move was the designed wrong one and he won the second try.
+
+## Understanding the game: slot accounting (H1, 2026-11-16)
+- Every waiting tile holds one tray slot from its take until its twin. Three slots, the 4th loses. Difficulty = the slot budget.
+- A **holder** is a tile the way forces early whose twin comes late (after the clock, or deep under it). Holders forced early leave
+  one slot for everything else; the order of the rest becomes the puzzle (H1: 71's twin after the clock, 47 waits for 10, 63 for 38).
+- The natural, goal-directed mistake is a free tile beside the clock whose twin lies UNDER it: it holds a slot the whole dig (H1: 63).
+- A face-down pair (a face-down tile + its free twin, no slot) is FORCED only when, at the moment the late tile is freed, the tray
+  is full in every order. Otherwise you take the late tile and then its free twin at once. Recipe: the late tile must come after
+  several prerequisites (a lock on it, or tiles on it), and three of those prerequisites are holders. The key pair must complete
+  before the holders fill the tray. A narrow corridor (hourglass waist) gives the room; the vase neck (1037) does not.
+- Narrowness comes from the layout (few entries to the clock), not from the pictures: on an open block (2023) any pictures leave
+  7 winning first moves.
+- Verify with `orders.js` (every winning order, exact winning first moves). H1: one first move (71) out of three free ones; the
+  face-down pair 70+41 forced; won in the real game.
