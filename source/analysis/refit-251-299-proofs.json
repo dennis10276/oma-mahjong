@@ -1,0 +1,5298 @@
+{
+  "task": 23,
+  "policy": "Task 23 geometry + unchanged Task 20 mechanics",
+  "rows": [
+    {
+      "level": 251,
+      "hash": "801e71da966c0b33f3d85a030e209d32e325021b4b46c4f207faf5c0947b955e",
+      "ok": true,
+      "shape": {
+        "ok": true,
+        "errors": [],
+        "tiles": 76,
+        "width": 6.5,
+        "rows": 8,
+        "px": 58.56603773584906,
+        "straight": 0,
+        "stray": 22,
+        "edge": 3,
+        "mirror": 0.5
+      },
+      "k": 14,
+      "spare": 2,
+      "checks": [
+        "zeroStraightTowers",
+        "supportedIntegerGrid",
+        "72to88Tiles",
+        "6.5Columns8Rows58px",
+        "fullStrictWin",
+        "sameClockMinimumAndSpare",
+        "sameSpecialEffects",
+        "sameSpecialPrerequisites",
+        "allAuthoredWrongMovesStillWrong",
+        "ownAuthoredProof"
+      ],
+      "prices": [
+        {
+          "tiles": [
+            71
+          ],
+          "before": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          },
+          "after": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          }
+        }
+      ],
+      "pressure": {
+        "before": {
+          "clock": 14,
+          "spare": 2,
+          "free": 10,
+          "atClock": {
+            "waiting": 2,
+            "free": 10,
+            "opening": {
+              "win": 10,
+              "lose": 0,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 0,
+                  "result": "win"
+                },
+                {
+                  "tile": 6,
+                  "result": "win"
+                },
+                {
+                  "tile": 49,
+                  "result": "win"
+                },
+                {
+                  "tile": 55,
+                  "result": "win"
+                },
+                {
+                  "tile": 70,
+                  "result": "win"
+                },
+                {
+                  "tile": 72,
+                  "result": "win"
+                },
+                {
+                  "tile": 73,
+                  "result": "win"
+                },
+                {
+                  "tile": 74,
+                  "result": "win"
+                },
+                {
+                  "tile": 78,
+                  "result": "win"
+                },
+                {
+                  "tile": 79,
+                  "result": "win"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "win"
+        },
+        "after": {
+          "clock": 14,
+          "spare": 2,
+          "free": 12,
+          "atClock": {
+            "waiting": 2,
+            "free": 12,
+            "opening": {
+              "win": 12,
+              "lose": 0,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 0,
+                  "result": "win"
+                },
+                {
+                  "tile": 5,
+                  "result": "win"
+                },
+                {
+                  "tile": 45,
+                  "result": "win"
+                },
+                {
+                  "tile": 51,
+                  "result": "win"
+                },
+                {
+                  "tile": 52,
+                  "result": "win"
+                },
+                {
+                  "tile": 58,
+                  "result": "win"
+                },
+                {
+                  "tile": 66,
+                  "result": "win"
+                },
+                {
+                  "tile": 68,
+                  "result": "win"
+                },
+                {
+                  "tile": 69,
+                  "result": "win"
+                },
+                {
+                  "tile": 70,
+                  "result": "win"
+                },
+                {
+                  "tile": 74,
+                  "result": "win"
+                },
+                {
+                  "tile": 75,
+                  "result": "win"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "win"
+        },
+        "signals": [],
+        "humanWinPrediction": false
+      }
+    },
+    {
+      "level": 252,
+      "hash": "b89e7a603c486dadf2ec8569549b0b2bf8fc43132965dd69046606f481b3a00f",
+      "ok": true,
+      "shape": {
+        "ok": true,
+        "errors": [],
+        "tiles": 72,
+        "width": 5,
+        "rows": 8,
+        "px": 59.13285048119853,
+        "straight": 0,
+        "stray": 0,
+        "edge": 0,
+        "mirror": 1
+      },
+      "k": 8,
+      "spare": 2,
+      "checks": [
+        "zeroStraightTowers",
+        "supportedIntegerGrid",
+        "72to88Tiles",
+        "6.5Columns8Rows58px",
+        "fullStrictWin",
+        "sameClockMinimumAndSpare",
+        "sameSpecialEffects",
+        "sameSpecialPrerequisites",
+        "allAuthoredWrongMovesStillWrong",
+        "ownAuthoredProof"
+      ],
+      "prices": [
+        {
+          "tiles": [
+            29
+          ],
+          "before": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          },
+          "after": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          }
+        }
+      ],
+      "pressure": {
+        "before": {
+          "clock": 8,
+          "spare": 2,
+          "free": 9,
+          "atClock": {
+            "waiting": 2,
+            "free": 8,
+            "opening": {
+              "win": 8,
+              "lose": 0,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 18,
+                  "result": "win"
+                },
+                {
+                  "tile": 19,
+                  "result": "win"
+                },
+                {
+                  "tile": 24,
+                  "result": "win"
+                },
+                {
+                  "tile": 33,
+                  "result": "win"
+                },
+                {
+                  "tile": 56,
+                  "result": "win"
+                },
+                {
+                  "tile": 63,
+                  "result": "win"
+                },
+                {
+                  "tile": 69,
+                  "result": "win"
+                },
+                {
+                  "tile": 70,
+                  "result": "win"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "win"
+        },
+        "after": {
+          "clock": 8,
+          "spare": 2,
+          "free": 9,
+          "atClock": {
+            "waiting": 2,
+            "free": 8,
+            "opening": {
+              "win": 8,
+              "lose": 0,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 18,
+                  "result": "win"
+                },
+                {
+                  "tile": 19,
+                  "result": "win"
+                },
+                {
+                  "tile": 24,
+                  "result": "win"
+                },
+                {
+                  "tile": 33,
+                  "result": "win"
+                },
+                {
+                  "tile": 56,
+                  "result": "win"
+                },
+                {
+                  "tile": 63,
+                  "result": "win"
+                },
+                {
+                  "tile": 69,
+                  "result": "win"
+                },
+                {
+                  "tile": 70,
+                  "result": "win"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "win"
+        },
+        "signals": [],
+        "humanWinPrediction": false
+      }
+    },
+    {
+      "level": 253,
+      "hash": "b5b7838cdb809418b5b7b3dcd82fd656c52c4226f8a04521a1a058d1439737a8",
+      "ok": true,
+      "shape": {
+        "ok": true,
+        "errors": [],
+        "tiles": 80,
+        "width": 6.5,
+        "rows": 7,
+        "px": 58.56603773584906,
+        "straight": 0,
+        "stray": 4,
+        "edge": 0,
+        "mirror": 0.15
+      },
+      "k": 10,
+      "spare": 2,
+      "checks": [
+        "zeroStraightTowers",
+        "supportedIntegerGrid",
+        "72to88Tiles",
+        "6.5Columns8Rows58px",
+        "fullStrictWin",
+        "sameClockMinimumAndSpare",
+        "sameSpecialEffects",
+        "sameSpecialPrerequisites",
+        "allAuthoredWrongMovesStillWrong",
+        "ownAuthoredProof"
+      ],
+      "prices": [
+        {
+          "tiles": [
+            40
+          ],
+          "before": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          },
+          "after": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          }
+        }
+      ],
+      "pressure": {
+        "before": {
+          "clock": 10,
+          "spare": 2,
+          "free": 14,
+          "atClock": {
+            "waiting": 2,
+            "free": 18,
+            "opening": {
+              "win": 18,
+              "lose": 0,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 0,
+                  "result": "win"
+                },
+                {
+                  "tile": 6,
+                  "result": "win"
+                },
+                {
+                  "tile": 13,
+                  "result": "win"
+                },
+                {
+                  "tile": 14,
+                  "result": "win"
+                },
+                {
+                  "tile": 17,
+                  "result": "win"
+                },
+                {
+                  "tile": 18,
+                  "result": "win"
+                },
+                {
+                  "tile": 20,
+                  "result": "win"
+                },
+                {
+                  "tile": 21,
+                  "result": "win"
+                },
+                {
+                  "tile": 25,
+                  "result": "win"
+                },
+                {
+                  "tile": 41,
+                  "result": "win"
+                },
+                {
+                  "tile": 43,
+                  "result": "win"
+                },
+                {
+                  "tile": 56,
+                  "result": "win"
+                },
+                {
+                  "tile": 57,
+                  "result": "win"
+                },
+                {
+                  "tile": 68,
+                  "result": "win"
+                },
+                {
+                  "tile": 69,
+                  "result": "win"
+                },
+                {
+                  "tile": 77,
+                  "result": "win"
+                },
+                {
+                  "tile": 78,
+                  "result": "win"
+                },
+                {
+                  "tile": 79,
+                  "result": "win"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "win"
+        },
+        "after": {
+          "clock": 10,
+          "spare": 2,
+          "free": 16,
+          "atClock": {
+            "waiting": 2,
+            "free": 19,
+            "opening": {
+              "win": 19,
+              "lose": 0,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 0,
+                  "result": "win"
+                },
+                {
+                  "tile": 6,
+                  "result": "win"
+                },
+                {
+                  "tile": 13,
+                  "result": "win"
+                },
+                {
+                  "tile": 14,
+                  "result": "win"
+                },
+                {
+                  "tile": 17,
+                  "result": "win"
+                },
+                {
+                  "tile": 20,
+                  "result": "win"
+                },
+                {
+                  "tile": 21,
+                  "result": "win"
+                },
+                {
+                  "tile": 25,
+                  "result": "win"
+                },
+                {
+                  "tile": 31,
+                  "result": "win"
+                },
+                {
+                  "tile": 41,
+                  "result": "win"
+                },
+                {
+                  "tile": 43,
+                  "result": "win"
+                },
+                {
+                  "tile": 54,
+                  "result": "win"
+                },
+                {
+                  "tile": 56,
+                  "result": "win"
+                },
+                {
+                  "tile": 57,
+                  "result": "win"
+                },
+                {
+                  "tile": 58,
+                  "result": "win"
+                },
+                {
+                  "tile": 68,
+                  "result": "win"
+                },
+                {
+                  "tile": 77,
+                  "result": "win"
+                },
+                {
+                  "tile": 78,
+                  "result": "win"
+                },
+                {
+                  "tile": 79,
+                  "result": "win"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "win"
+        },
+        "signals": [],
+        "humanWinPrediction": false
+      }
+    },
+    {
+      "level": 254,
+      "hash": "b18a2248c5881dfbc09a921b7c2d18afd4189572b29b87c94317bf8efd66da30",
+      "ok": true,
+      "shape": {
+        "ok": true,
+        "errors": [],
+        "tiles": 76,
+        "width": 6.5,
+        "rows": 6,
+        "px": 58.56603773584906,
+        "straight": 0,
+        "stray": 0,
+        "edge": 0,
+        "mirror": 0
+      },
+      "k": 10,
+      "spare": 2,
+      "checks": [
+        "zeroStraightTowers",
+        "supportedIntegerGrid",
+        "72to88Tiles",
+        "6.5Columns8Rows58px",
+        "fullStrictWin",
+        "sameClockMinimumAndSpare",
+        "sameSpecialEffects",
+        "sameSpecialPrerequisites",
+        "allAuthoredWrongMovesStillWrong",
+        "ownAuthoredProof"
+      ],
+      "prices": [
+        {
+          "tiles": [
+            71
+          ],
+          "before": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          },
+          "after": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          }
+        }
+      ],
+      "pressure": {
+        "before": {
+          "clock": 10,
+          "spare": 2,
+          "free": 11,
+          "atClock": {
+            "waiting": 2,
+            "free": 11,
+            "opening": {
+              "win": 11,
+              "lose": 0,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 0,
+                  "result": "win"
+                },
+                {
+                  "tile": 6,
+                  "result": "win"
+                },
+                {
+                  "tile": 45,
+                  "result": "win"
+                },
+                {
+                  "tile": 52,
+                  "result": "win"
+                },
+                {
+                  "tile": 59,
+                  "result": "win"
+                },
+                {
+                  "tile": 66,
+                  "result": "win"
+                },
+                {
+                  "tile": 68,
+                  "result": "win"
+                },
+                {
+                  "tile": 69,
+                  "result": "win"
+                },
+                {
+                  "tile": 71,
+                  "result": "win"
+                },
+                {
+                  "tile": 73,
+                  "result": "win"
+                },
+                {
+                  "tile": 74,
+                  "result": "win"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "win"
+        },
+        "after": {
+          "clock": 10,
+          "spare": 2,
+          "free": 10,
+          "atClock": {
+            "waiting": 2,
+            "free": 10,
+            "opening": {
+              "win": 10,
+              "lose": 0,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 0,
+                  "result": "win"
+                },
+                {
+                  "tile": 45,
+                  "result": "win"
+                },
+                {
+                  "tile": 52,
+                  "result": "win"
+                },
+                {
+                  "tile": 59,
+                  "result": "win"
+                },
+                {
+                  "tile": 66,
+                  "result": "win"
+                },
+                {
+                  "tile": 68,
+                  "result": "win"
+                },
+                {
+                  "tile": 69,
+                  "result": "win"
+                },
+                {
+                  "tile": 71,
+                  "result": "win"
+                },
+                {
+                  "tile": 73,
+                  "result": "win"
+                },
+                {
+                  "tile": 74,
+                  "result": "win"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "win"
+        },
+        "signals": [],
+        "humanWinPrediction": false
+      }
+    },
+    {
+      "level": 256,
+      "hash": "870fe8720439cc4151f5413f894ea49c91fd12f9418853c0f7959a74f57504a6",
+      "ok": true,
+      "shape": {
+        "ok": true,
+        "errors": [],
+        "tiles": 76,
+        "width": 6,
+        "rows": 6,
+        "px": 63.3469387755102,
+        "straight": 0,
+        "stray": 0,
+        "edge": 0,
+        "mirror": 0.99
+      },
+      "k": 8,
+      "spare": 2,
+      "checks": [
+        "zeroStraightTowers",
+        "supportedIntegerGrid",
+        "72to88Tiles",
+        "6.5Columns8Rows58px",
+        "fullStrictWin",
+        "sameClockMinimumAndSpare",
+        "sameSpecialEffects",
+        "sameSpecialPrerequisites",
+        "allAuthoredWrongMovesStillWrong",
+        "ownAuthoredProof"
+      ],
+      "prices": [
+        {
+          "tiles": [
+            3
+          ],
+          "before": {
+            "result": "win",
+            "cost": 3,
+            "exact": true
+          },
+          "after": {
+            "result": "win",
+            "cost": 3,
+            "exact": true
+          }
+        }
+      ],
+      "pressure": {
+        "before": {
+          "clock": 8,
+          "spare": 2,
+          "free": 8,
+          "atClock": {
+            "waiting": 2,
+            "free": 7,
+            "opening": {
+              "win": 2,
+              "lose": 5,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 3,
+                  "result": "lose"
+                },
+                {
+                  "tile": 5,
+                  "result": "lose"
+                },
+                {
+                  "tile": 45,
+                  "result": "win"
+                },
+                {
+                  "tile": 46,
+                  "result": "lose"
+                },
+                {
+                  "tile": 65,
+                  "result": "win"
+                },
+                {
+                  "tile": 74,
+                  "result": "lose"
+                },
+                {
+                  "tile": 75,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "after": {
+          "clock": 8,
+          "spare": 2,
+          "free": 11,
+          "atClock": {
+            "waiting": 2,
+            "free": 10,
+            "opening": {
+              "win": 2,
+              "lose": 8,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 3,
+                  "result": "lose"
+                },
+                {
+                  "tile": 5,
+                  "result": "lose"
+                },
+                {
+                  "tile": 45,
+                  "result": "win"
+                },
+                {
+                  "tile": 46,
+                  "result": "lose"
+                },
+                {
+                  "tile": 59,
+                  "result": "lose"
+                },
+                {
+                  "tile": 65,
+                  "result": "win"
+                },
+                {
+                  "tile": 68,
+                  "result": "lose"
+                },
+                {
+                  "tile": 72,
+                  "result": "lose"
+                },
+                {
+                  "tile": 73,
+                  "result": "lose"
+                },
+                {
+                  "tile": 74,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "signals": [],
+        "humanWinPrediction": false
+      }
+    },
+    {
+      "level": 257,
+      "hash": "3c16a45a590d399fb59a690b575f2c6a00fb22ef68300580e1229a0ccdf9138d",
+      "ok": true,
+      "shape": {
+        "ok": true,
+        "errors": [],
+        "tiles": 74,
+        "width": 6,
+        "rows": 8,
+        "px": 58.322732165573925,
+        "straight": 0,
+        "stray": 0,
+        "edge": 0,
+        "mirror": 0.96
+      },
+      "k": 8,
+      "spare": 3,
+      "checks": [
+        "zeroStraightTowers",
+        "supportedIntegerGrid",
+        "72to88Tiles",
+        "6.5Columns8Rows58px",
+        "fullStrictWin",
+        "sameClockMinimumAndSpare",
+        "sameSpecialEffects",
+        "sameSpecialPrerequisites",
+        "allAuthoredWrongMovesStillWrong",
+        "olderRecoveredSpecialContract"
+      ],
+      "prices": [],
+      "pressure": {
+        "before": {
+          "clock": 8,
+          "spare": 3,
+          "free": 17,
+          "atClock": {
+            "waiting": 2,
+            "free": 17,
+            "opening": {
+              "win": 9,
+              "lose": 8,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 0,
+                  "result": "win"
+                },
+                {
+                  "tile": 1,
+                  "result": "lose"
+                },
+                {
+                  "tile": 2,
+                  "result": "win"
+                },
+                {
+                  "tile": 3,
+                  "result": "lose"
+                },
+                {
+                  "tile": 4,
+                  "result": "lose"
+                },
+                {
+                  "tile": 5,
+                  "result": "lose"
+                },
+                {
+                  "tile": 16,
+                  "result": "win"
+                },
+                {
+                  "tile": 29,
+                  "result": "win"
+                },
+                {
+                  "tile": 31,
+                  "result": "win"
+                },
+                {
+                  "tile": 44,
+                  "result": "lose"
+                },
+                {
+                  "tile": 45,
+                  "result": "lose"
+                },
+                {
+                  "tile": 46,
+                  "result": "win"
+                },
+                {
+                  "tile": 47,
+                  "result": "lose"
+                },
+                {
+                  "tile": 68,
+                  "result": "win"
+                },
+                {
+                  "tile": 69,
+                  "result": "win"
+                },
+                {
+                  "tile": 70,
+                  "result": "win"
+                },
+                {
+                  "tile": 72,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "after": {
+          "clock": 8,
+          "spare": 3,
+          "free": 16,
+          "atClock": {
+            "waiting": 2,
+            "free": 16,
+            "opening": {
+              "win": 8,
+              "lose": 8,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 1,
+                  "result": "lose"
+                },
+                {
+                  "tile": 14,
+                  "result": "win"
+                },
+                {
+                  "tile": 16,
+                  "result": "lose"
+                },
+                {
+                  "tile": 27,
+                  "result": "win"
+                },
+                {
+                  "tile": 31,
+                  "result": "lose"
+                },
+                {
+                  "tile": 44,
+                  "result": "win"
+                },
+                {
+                  "tile": 45,
+                  "result": "lose"
+                },
+                {
+                  "tile": 46,
+                  "result": "win"
+                },
+                {
+                  "tile": 59,
+                  "result": "win"
+                },
+                {
+                  "tile": 62,
+                  "result": "win"
+                },
+                {
+                  "tile": 64,
+                  "result": "lose"
+                },
+                {
+                  "tile": 66,
+                  "result": "lose"
+                },
+                {
+                  "tile": 68,
+                  "result": "lose"
+                },
+                {
+                  "tile": 69,
+                  "result": "lose"
+                },
+                {
+                  "tile": 70,
+                  "result": "win"
+                },
+                {
+                  "tile": 72,
+                  "result": "win"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "signals": [],
+        "humanWinPrediction": false
+      }
+    },
+    {
+      "level": 258,
+      "hash": "46ee88d405b941a1400479353f769727e6356be8bb04b38c9816d28ebe77da77",
+      "ok": true,
+      "shape": {
+        "ok": true,
+        "errors": [],
+        "tiles": 76,
+        "width": 5.5,
+        "rows": 8,
+        "px": 59.13285048119853,
+        "straight": 0,
+        "stray": 1,
+        "edge": 0,
+        "mirror": 0
+      },
+      "k": 10,
+      "spare": 2,
+      "checks": [
+        "zeroStraightTowers",
+        "supportedIntegerGrid",
+        "72to88Tiles",
+        "6.5Columns8Rows58px",
+        "fullStrictWin",
+        "sameClockMinimumAndSpare",
+        "sameSpecialEffects",
+        "sameSpecialPrerequisites",
+        "allAuthoredWrongMovesStillWrong",
+        "ownAuthoredProof"
+      ],
+      "prices": [
+        {
+          "tiles": [
+            38
+          ],
+          "before": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          },
+          "after": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          }
+        }
+      ],
+      "pressure": {
+        "before": {
+          "clock": 10,
+          "spare": 2,
+          "free": 11,
+          "atClock": {
+            "waiting": 2,
+            "free": 14,
+            "opening": {
+              "win": 14,
+              "lose": 0,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 0,
+                  "result": "win"
+                },
+                {
+                  "tile": 5,
+                  "result": "win"
+                },
+                {
+                  "tile": 20,
+                  "result": "win"
+                },
+                {
+                  "tile": 22,
+                  "result": "win"
+                },
+                {
+                  "tile": 38,
+                  "result": "win"
+                },
+                {
+                  "tile": 49,
+                  "result": "win"
+                },
+                {
+                  "tile": 63,
+                  "result": "win"
+                },
+                {
+                  "tile": 67,
+                  "result": "win"
+                },
+                {
+                  "tile": 71,
+                  "result": "win"
+                },
+                {
+                  "tile": 74,
+                  "result": "win"
+                },
+                {
+                  "tile": 78,
+                  "result": "win"
+                },
+                {
+                  "tile": 85,
+                  "result": "win"
+                },
+                {
+                  "tile": 86,
+                  "result": "win"
+                },
+                {
+                  "tile": 87,
+                  "result": "win"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "win"
+        },
+        "after": {
+          "clock": 10,
+          "spare": 2,
+          "free": 11,
+          "atClock": {
+            "waiting": 2,
+            "free": 14,
+            "opening": {
+              "win": 14,
+              "lose": 0,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 0,
+                  "result": "win"
+                },
+                {
+                  "tile": 6,
+                  "result": "win"
+                },
+                {
+                  "tile": 16,
+                  "result": "win"
+                },
+                {
+                  "tile": 18,
+                  "result": "win"
+                },
+                {
+                  "tile": 33,
+                  "result": "win"
+                },
+                {
+                  "tile": 42,
+                  "result": "win"
+                },
+                {
+                  "tile": 55,
+                  "result": "win"
+                },
+                {
+                  "tile": 56,
+                  "result": "win"
+                },
+                {
+                  "tile": 58,
+                  "result": "win"
+                },
+                {
+                  "tile": 62,
+                  "result": "win"
+                },
+                {
+                  "tile": 65,
+                  "result": "win"
+                },
+                {
+                  "tile": 71,
+                  "result": "win"
+                },
+                {
+                  "tile": 74,
+                  "result": "win"
+                },
+                {
+                  "tile": 75,
+                  "result": "win"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "win"
+        },
+        "signals": [],
+        "humanWinPrediction": false
+      }
+    },
+    {
+      "level": 263,
+      "hash": "276d0f24ec0af0ff993f1be5ba02bb918ff96e2d34bedba1b8365d63b6a9c488",
+      "ok": true,
+      "shape": {
+        "ok": true,
+        "errors": [],
+        "tiles": 80,
+        "width": 6,
+        "rows": 7,
+        "px": 63.3469387755102,
+        "straight": 0,
+        "stray": 0,
+        "edge": 0,
+        "mirror": 1
+      },
+      "k": 13,
+      "spare": 2,
+      "checks": [
+        "zeroStraightTowers",
+        "supportedIntegerGrid",
+        "72to88Tiles",
+        "6.5Columns8Rows58px",
+        "fullStrictWin",
+        "sameClockMinimumAndSpare",
+        "sameSpecialEffects",
+        "sameSpecialPrerequisites",
+        "allAuthoredWrongMovesStillWrong",
+        "ownAuthoredProof"
+      ],
+      "prices": [
+        {
+          "tiles": [
+            0
+          ],
+          "before": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          },
+          "after": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          }
+        }
+      ],
+      "pressure": {
+        "before": {
+          "clock": 13,
+          "spare": 2,
+          "free": 11,
+          "atClock": {
+            "waiting": 3,
+            "free": 15,
+            "opening": {
+              "win": 1,
+              "lose": 14,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 1,
+                  "result": "lose"
+                },
+                {
+                  "tile": 6,
+                  "result": "lose"
+                },
+                {
+                  "tile": 17,
+                  "result": "lose"
+                },
+                {
+                  "tile": 42,
+                  "result": "lose"
+                },
+                {
+                  "tile": 44,
+                  "result": "lose"
+                },
+                {
+                  "tile": 47,
+                  "result": "lose"
+                },
+                {
+                  "tile": 48,
+                  "result": "lose"
+                },
+                {
+                  "tile": 50,
+                  "result": "win"
+                },
+                {
+                  "tile": 57,
+                  "result": "lose"
+                },
+                {
+                  "tile": 59,
+                  "result": "lose"
+                },
+                {
+                  "tile": 63,
+                  "result": "lose"
+                },
+                {
+                  "tile": 64,
+                  "result": "lose"
+                },
+                {
+                  "tile": 74,
+                  "result": "lose"
+                },
+                {
+                  "tile": 76,
+                  "result": "lose"
+                },
+                {
+                  "tile": 78,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "after": {
+          "clock": 13,
+          "spare": 2,
+          "free": 13,
+          "atClock": {
+            "waiting": 3,
+            "free": 17,
+            "opening": {
+              "win": 1,
+              "lose": 16,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 1,
+                  "result": "lose"
+                },
+                {
+                  "tile": 5,
+                  "result": "lose"
+                },
+                {
+                  "tile": 17,
+                  "result": "lose"
+                },
+                {
+                  "tile": 42,
+                  "result": "lose"
+                },
+                {
+                  "tile": 44,
+                  "result": "lose"
+                },
+                {
+                  "tile": 47,
+                  "result": "lose"
+                },
+                {
+                  "tile": 48,
+                  "result": "lose"
+                },
+                {
+                  "tile": 50,
+                  "result": "win"
+                },
+                {
+                  "tile": 57,
+                  "result": "lose"
+                },
+                {
+                  "tile": 58,
+                  "result": "lose"
+                },
+                {
+                  "tile": 59,
+                  "result": "lose"
+                },
+                {
+                  "tile": 63,
+                  "result": "lose"
+                },
+                {
+                  "tile": 64,
+                  "result": "lose"
+                },
+                {
+                  "tile": 74,
+                  "result": "lose"
+                },
+                {
+                  "tile": 76,
+                  "result": "lose"
+                },
+                {
+                  "tile": 77,
+                  "result": "lose"
+                },
+                {
+                  "tile": 78,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "signals": [],
+        "humanWinPrediction": false
+      }
+    },
+    {
+      "level": 266,
+      "hash": "fb9d5522a672ddf580c0cece833960a17eae97083f7466d52c1d7facff5f6b3e",
+      "ok": true,
+      "shape": {
+        "ok": true,
+        "errors": [],
+        "tiles": 76,
+        "width": 6,
+        "rows": 7,
+        "px": 63.3469387755102,
+        "straight": 0,
+        "stray": 1,
+        "edge": 0,
+        "mirror": 0.97
+      },
+      "k": 11,
+      "spare": 1,
+      "checks": [
+        "zeroStraightTowers",
+        "supportedIntegerGrid",
+        "72to88Tiles",
+        "6.5Columns8Rows58px",
+        "fullStrictWin",
+        "sameClockMinimumAndSpare",
+        "sameSpecialEffects",
+        "sameSpecialPrerequisites",
+        "allAuthoredWrongMovesStillWrong",
+        "ownAuthoredProof"
+      ],
+      "prices": [
+        {
+          "tiles": [
+            72
+          ],
+          "before": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          },
+          "after": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          }
+        },
+        {
+          "tiles": [
+            37
+          ],
+          "before": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          },
+          "after": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          }
+        }
+      ],
+      "pressure": {
+        "before": {
+          "clock": 11,
+          "spare": 1,
+          "free": 8,
+          "atClock": {
+            "waiting": 3,
+            "free": 15,
+            "opening": {
+              "win": 1,
+              "lose": 14,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 7,
+                  "result": "lose"
+                },
+                {
+                  "tile": 8,
+                  "result": "lose"
+                },
+                {
+                  "tile": 31,
+                  "result": "lose"
+                },
+                {
+                  "tile": 32,
+                  "result": "lose"
+                },
+                {
+                  "tile": 40,
+                  "result": "lose"
+                },
+                {
+                  "tile": 45,
+                  "result": "lose"
+                },
+                {
+                  "tile": 46,
+                  "result": "lose"
+                },
+                {
+                  "tile": 58,
+                  "result": "lose"
+                },
+                {
+                  "tile": 59,
+                  "result": "lose"
+                },
+                {
+                  "tile": 63,
+                  "result": "lose"
+                },
+                {
+                  "tile": 64,
+                  "result": "lose"
+                },
+                {
+                  "tile": 65,
+                  "result": "lose"
+                },
+                {
+                  "tile": 66,
+                  "result": "lose"
+                },
+                {
+                  "tile": 67,
+                  "result": "lose"
+                },
+                {
+                  "tile": 71,
+                  "result": "win"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "after": {
+          "clock": 11,
+          "spare": 1,
+          "free": 13,
+          "atClock": {
+            "waiting": 3,
+            "free": 20,
+            "opening": {
+              "win": 1,
+              "lose": 19,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 7,
+                  "result": "lose"
+                },
+                {
+                  "tile": 8,
+                  "result": "lose"
+                },
+                {
+                  "tile": 27,
+                  "result": "lose"
+                },
+                {
+                  "tile": 28,
+                  "result": "lose"
+                },
+                {
+                  "tile": 29,
+                  "result": "lose"
+                },
+                {
+                  "tile": 31,
+                  "result": "lose"
+                },
+                {
+                  "tile": 32,
+                  "result": "lose"
+                },
+                {
+                  "tile": 40,
+                  "result": "lose"
+                },
+                {
+                  "tile": 45,
+                  "result": "lose"
+                },
+                {
+                  "tile": 46,
+                  "result": "lose"
+                },
+                {
+                  "tile": 47,
+                  "result": "lose"
+                },
+                {
+                  "tile": 48,
+                  "result": "lose"
+                },
+                {
+                  "tile": 58,
+                  "result": "lose"
+                },
+                {
+                  "tile": 59,
+                  "result": "lose"
+                },
+                {
+                  "tile": 63,
+                  "result": "lose"
+                },
+                {
+                  "tile": 64,
+                  "result": "lose"
+                },
+                {
+                  "tile": 65,
+                  "result": "lose"
+                },
+                {
+                  "tile": 66,
+                  "result": "lose"
+                },
+                {
+                  "tile": 67,
+                  "result": "lose"
+                },
+                {
+                  "tile": 71,
+                  "result": "win"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "signals": [],
+        "humanWinPrediction": false
+      }
+    },
+    {
+      "level": 268,
+      "hash": "20cde334a09e17b7d82663ba02ef19c6b07e4bfe84229adcabc16896cfa3bc55",
+      "ok": true,
+      "shape": {
+        "ok": true,
+        "errors": [],
+        "tiles": 76,
+        "width": 6,
+        "rows": 6,
+        "px": 63.3469387755102,
+        "straight": 0,
+        "stray": 0,
+        "edge": 0,
+        "mirror": 1
+      },
+      "k": 7,
+      "spare": 1,
+      "checks": [
+        "zeroStraightTowers",
+        "supportedIntegerGrid",
+        "72to88Tiles",
+        "6.5Columns8Rows58px",
+        "fullStrictWin",
+        "sameClockMinimumAndSpare",
+        "sameSpecialEffects",
+        "sameSpecialPrerequisites",
+        "allAuthoredWrongMovesStillWrong",
+        "ownAuthoredProof"
+      ],
+      "prices": [
+        {
+          "tiles": [
+            70
+          ],
+          "before": {
+            "result": "win",
+            "cost": 2,
+            "exact": true
+          },
+          "after": {
+            "result": "win",
+            "cost": 2,
+            "exact": true
+          }
+        },
+        {
+          "tiles": [
+            75
+          ],
+          "before": {
+            "result": "win",
+            "cost": 2,
+            "exact": true
+          },
+          "after": {
+            "result": "win",
+            "cost": 2,
+            "exact": true
+          }
+        },
+        {
+          "tiles": [
+            25
+          ],
+          "before": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          },
+          "after": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          }
+        }
+      ],
+      "pressure": {
+        "before": {
+          "clock": 7,
+          "spare": 1,
+          "free": 11,
+          "atClock": {
+            "waiting": 3,
+            "free": 10,
+            "opening": {
+              "win": 1,
+              "lose": 9,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 0,
+                  "result": "lose"
+                },
+                {
+                  "tile": 24,
+                  "result": "lose"
+                },
+                {
+                  "tile": 30,
+                  "result": "lose"
+                },
+                {
+                  "tile": 52,
+                  "result": "lose"
+                },
+                {
+                  "tile": 58,
+                  "result": "lose"
+                },
+                {
+                  "tile": 68,
+                  "result": "lose"
+                },
+                {
+                  "tile": 70,
+                  "result": "lose"
+                },
+                {
+                  "tile": 71,
+                  "result": "win"
+                },
+                {
+                  "tile": 74,
+                  "result": "lose"
+                },
+                {
+                  "tile": 75,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "after": {
+          "clock": 7,
+          "spare": 1,
+          "free": 11,
+          "atClock": {
+            "waiting": 3,
+            "free": 10,
+            "opening": {
+              "win": 1,
+              "lose": 9,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 0,
+                  "result": "lose"
+                },
+                {
+                  "tile": 24,
+                  "result": "lose"
+                },
+                {
+                  "tile": 30,
+                  "result": "lose"
+                },
+                {
+                  "tile": 52,
+                  "result": "lose"
+                },
+                {
+                  "tile": 58,
+                  "result": "lose"
+                },
+                {
+                  "tile": 68,
+                  "result": "lose"
+                },
+                {
+                  "tile": 70,
+                  "result": "lose"
+                },
+                {
+                  "tile": 71,
+                  "result": "win"
+                },
+                {
+                  "tile": 74,
+                  "result": "lose"
+                },
+                {
+                  "tile": 75,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "signals": [],
+        "humanWinPrediction": false
+      }
+    },
+    {
+      "level": 269,
+      "hash": "6543cfe23b343c2f3114645f5e5cef85a8157a9a411d5d52512c34a33f32a6be",
+      "ok": true,
+      "shape": {
+        "ok": true,
+        "errors": [],
+        "tiles": 72,
+        "width": 6,
+        "rows": 8,
+        "px": 59.13285048119853,
+        "straight": 0,
+        "stray": 1,
+        "edge": 0,
+        "mirror": 0.85
+      },
+      "k": 19,
+      "spare": 0,
+      "checks": [
+        "zeroStraightTowers",
+        "supportedIntegerGrid",
+        "72to88Tiles",
+        "6.5Columns8Rows58px",
+        "fullStrictWin",
+        "sameClockMinimumAndSpare",
+        "sameSpecialEffects",
+        "sameSpecialPrerequisites",
+        "allAuthoredWrongMovesStillWrong",
+        "olderRecoveredSpecialContract"
+      ],
+      "prices": [],
+      "pressure": {
+        "before": {
+          "clock": 19,
+          "spare": 0,
+          "free": 14,
+          "atClock": {
+            "waiting": 3,
+            "free": 15,
+            "opening": {
+              "win": 1,
+              "lose": 14,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 0,
+                  "result": "lose"
+                },
+                {
+                  "tile": 1,
+                  "result": "lose"
+                },
+                {
+                  "tile": 43,
+                  "result": "lose"
+                },
+                {
+                  "tile": 44,
+                  "result": "lose"
+                },
+                {
+                  "tile": 48,
+                  "result": "lose"
+                },
+                {
+                  "tile": 56,
+                  "result": "lose"
+                },
+                {
+                  "tile": 62,
+                  "result": "win"
+                },
+                {
+                  "tile": 63,
+                  "result": "lose"
+                },
+                {
+                  "tile": 64,
+                  "result": "lose"
+                },
+                {
+                  "tile": 66,
+                  "result": "lose"
+                },
+                {
+                  "tile": 67,
+                  "result": "lose"
+                },
+                {
+                  "tile": 68,
+                  "result": "lose"
+                },
+                {
+                  "tile": 70,
+                  "result": "lose"
+                },
+                {
+                  "tile": 76,
+                  "result": "lose"
+                },
+                {
+                  "tile": 79,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "after": {
+          "clock": 19,
+          "spare": 0,
+          "free": 15,
+          "atClock": {
+            "waiting": 3,
+            "free": 19,
+            "opening": {
+              "win": 1,
+              "lose": 18,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 0,
+                  "result": "lose"
+                },
+                {
+                  "tile": 26,
+                  "result": "lose"
+                },
+                {
+                  "tile": 27,
+                  "result": "lose"
+                },
+                {
+                  "tile": 31,
+                  "result": "lose"
+                },
+                {
+                  "tile": 34,
+                  "result": "lose"
+                },
+                {
+                  "tile": 35,
+                  "result": "lose"
+                },
+                {
+                  "tile": 37,
+                  "result": "lose"
+                },
+                {
+                  "tile": 38,
+                  "result": "lose"
+                },
+                {
+                  "tile": 41,
+                  "result": "lose"
+                },
+                {
+                  "tile": 43,
+                  "result": "lose"
+                },
+                {
+                  "tile": 44,
+                  "result": "lose"
+                },
+                {
+                  "tile": 47,
+                  "result": "lose"
+                },
+                {
+                  "tile": 48,
+                  "result": "win"
+                },
+                {
+                  "tile": 49,
+                  "result": "lose"
+                },
+                {
+                  "tile": 50,
+                  "result": "lose"
+                },
+                {
+                  "tile": 51,
+                  "result": "lose"
+                },
+                {
+                  "tile": 63,
+                  "result": "lose"
+                },
+                {
+                  "tile": 68,
+                  "result": "lose"
+                },
+                {
+                  "tile": 71,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "signals": [],
+        "humanWinPrediction": false
+      }
+    },
+    {
+      "level": 272,
+      "hash": "1b6ad509ddee72a69f826bb2d527e305849af2ecd7fe14ad47f45edbd9fe2fbf",
+      "ok": true,
+      "shape": {
+        "ok": true,
+        "errors": [],
+        "tiles": 84,
+        "width": 6,
+        "rows": 8,
+        "px": 59.13285048119853,
+        "straight": 0,
+        "stray": 2,
+        "edge": 0,
+        "mirror": 1
+      },
+      "k": 40,
+      "spare": 3,
+      "checks": [
+        "zeroStraightTowers",
+        "supportedIntegerGrid",
+        "72to88Tiles",
+        "6.5Columns8Rows58px",
+        "fullStrictWin",
+        "sameClockMinimumAndSpare",
+        "sameSpecialEffects",
+        "sameSpecialPrerequisites",
+        "allAuthoredWrongMovesStillWrong",
+        "olderRecoveredSpecialContract"
+      ],
+      "prices": [],
+      "pressure": {
+        "before": {
+          "clock": 41,
+          "spare": 2,
+          "free": 8,
+          "atClock": {
+            "waiting": 1,
+            "free": 11,
+            "opening": {
+              "win": 11,
+              "lose": 0,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 11,
+                  "result": "win"
+                },
+                {
+                  "tile": 14,
+                  "result": "win"
+                },
+                {
+                  "tile": 35,
+                  "result": "win"
+                },
+                {
+                  "tile": 37,
+                  "result": "win"
+                },
+                {
+                  "tile": 39,
+                  "result": "win"
+                },
+                {
+                  "tile": 41,
+                  "result": "win"
+                },
+                {
+                  "tile": 44,
+                  "result": "win"
+                },
+                {
+                  "tile": 50,
+                  "result": "win"
+                },
+                {
+                  "tile": 53,
+                  "result": "win"
+                },
+                {
+                  "tile": 61,
+                  "result": "win"
+                },
+                {
+                  "tile": 66,
+                  "result": "win"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "win"
+        },
+        "after": {
+          "clock": 41,
+          "spare": 2,
+          "free": 10,
+          "atClock": {
+            "waiting": 1,
+            "free": 10,
+            "opening": {
+              "win": 10,
+              "lose": 0,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 11,
+                  "result": "win"
+                },
+                {
+                  "tile": 14,
+                  "result": "win"
+                },
+                {
+                  "tile": 20,
+                  "result": "win"
+                },
+                {
+                  "tile": 35,
+                  "result": "win"
+                },
+                {
+                  "tile": 37,
+                  "result": "win"
+                },
+                {
+                  "tile": 39,
+                  "result": "win"
+                },
+                {
+                  "tile": 53,
+                  "result": "win"
+                },
+                {
+                  "tile": 60,
+                  "result": "win"
+                },
+                {
+                  "tile": 61,
+                  "result": "win"
+                },
+                {
+                  "tile": 66,
+                  "result": "win"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "win"
+        },
+        "signals": [],
+        "humanWinPrediction": false
+      }
+    },
+    {
+      "level": 273,
+      "hash": "21cd73762d3f2e6181168f9c3a7bb6a75f2be717205b112ce494310ce9c67a5a",
+      "ok": true,
+      "shape": {
+        "ok": true,
+        "errors": [],
+        "tiles": 76,
+        "width": 5,
+        "rows": 8,
+        "px": 59.13285048119853,
+        "straight": 0,
+        "stray": 0,
+        "edge": 0,
+        "mirror": 0.99
+      },
+      "k": 24,
+      "spare": 4,
+      "checks": [
+        "zeroStraightTowers",
+        "supportedIntegerGrid",
+        "72to88Tiles",
+        "6.5Columns8Rows58px",
+        "fullStrictWin",
+        "sameClockMinimumAndSpare",
+        "sameSpecialEffects",
+        "sameSpecialPrerequisites",
+        "allAuthoredWrongMovesStillWrong",
+        "olderRecoveredSpecialContract"
+      ],
+      "prices": [],
+      "pressure": {
+        "before": {
+          "clock": 27,
+          "spare": 1,
+          "free": 3,
+          "atClock": {
+            "waiting": 3,
+            "free": 15,
+            "opening": {
+              "win": 1,
+              "lose": 14,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 0,
+                  "result": "lose"
+                },
+                {
+                  "tile": 1,
+                  "result": "lose"
+                },
+                {
+                  "tile": 2,
+                  "result": "lose"
+                },
+                {
+                  "tile": 4,
+                  "result": "lose"
+                },
+                {
+                  "tile": 8,
+                  "result": "lose"
+                },
+                {
+                  "tile": 11,
+                  "result": "lose"
+                },
+                {
+                  "tile": 12,
+                  "result": "lose"
+                },
+                {
+                  "tile": 21,
+                  "result": "lose"
+                },
+                {
+                  "tile": 32,
+                  "result": "lose"
+                },
+                {
+                  "tile": 44,
+                  "result": "lose"
+                },
+                {
+                  "tile": 53,
+                  "result": "win"
+                },
+                {
+                  "tile": 58,
+                  "result": "lose"
+                },
+                {
+                  "tile": 64,
+                  "result": "lose"
+                },
+                {
+                  "tile": 68,
+                  "result": "lose"
+                },
+                {
+                  "tile": 70,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "after": {
+          "clock": 27,
+          "spare": 1,
+          "free": 3,
+          "atClock": {
+            "waiting": 3,
+            "free": 15,
+            "opening": {
+              "win": 1,
+              "lose": 14,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 0,
+                  "result": "lose"
+                },
+                {
+                  "tile": 1,
+                  "result": "lose"
+                },
+                {
+                  "tile": 2,
+                  "result": "lose"
+                },
+                {
+                  "tile": 4,
+                  "result": "lose"
+                },
+                {
+                  "tile": 8,
+                  "result": "lose"
+                },
+                {
+                  "tile": 11,
+                  "result": "lose"
+                },
+                {
+                  "tile": 12,
+                  "result": "lose"
+                },
+                {
+                  "tile": 21,
+                  "result": "lose"
+                },
+                {
+                  "tile": 32,
+                  "result": "lose"
+                },
+                {
+                  "tile": 44,
+                  "result": "lose"
+                },
+                {
+                  "tile": 53,
+                  "result": "win"
+                },
+                {
+                  "tile": 58,
+                  "result": "lose"
+                },
+                {
+                  "tile": 64,
+                  "result": "lose"
+                },
+                {
+                  "tile": 68,
+                  "result": "lose"
+                },
+                {
+                  "tile": 70,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "signals": [],
+        "humanWinPrediction": false
+      }
+    },
+    {
+      "level": 274,
+      "hash": "1c2f53b3bef4f57ee5dce8e8c9783c020a9ad9e98596eeb0a5c6a269a1777f00",
+      "ok": true,
+      "shape": {
+        "ok": true,
+        "errors": [],
+        "tiles": 84,
+        "width": 6.5,
+        "rows": 7,
+        "px": 58.56603773584906,
+        "straight": 0,
+        "stray": 0,
+        "edge": 0,
+        "mirror": 0
+      },
+      "k": 9,
+      "spare": 1,
+      "checks": [
+        "zeroStraightTowers",
+        "supportedIntegerGrid",
+        "72to88Tiles",
+        "6.5Columns8Rows58px",
+        "fullStrictWin",
+        "sameClockMinimumAndSpare",
+        "sameSpecialEffects",
+        "sameSpecialPrerequisites",
+        "allAuthoredWrongMovesStillWrong",
+        "ownAuthoredProof"
+      ],
+      "prices": [
+        {
+          "tiles": [
+            76
+          ],
+          "before": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          },
+          "after": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          }
+        },
+        {
+          "tiles": [
+            62
+          ],
+          "before": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          },
+          "after": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          }
+        }
+      ],
+      "pressure": {
+        "before": {
+          "clock": 9,
+          "spare": 1,
+          "free": 12,
+          "atClock": {
+            "waiting": 3,
+            "free": 18,
+            "opening": {
+              "win": 1,
+              "lose": 17,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 12,
+                  "result": "lose"
+                },
+                {
+                  "tile": 36,
+                  "result": "lose"
+                },
+                {
+                  "tile": 37,
+                  "result": "lose"
+                },
+                {
+                  "tile": 38,
+                  "result": "lose"
+                },
+                {
+                  "tile": 46,
+                  "result": "lose"
+                },
+                {
+                  "tile": 53,
+                  "result": "lose"
+                },
+                {
+                  "tile": 54,
+                  "result": "win"
+                },
+                {
+                  "tile": 57,
+                  "result": "lose"
+                },
+                {
+                  "tile": 61,
+                  "result": "lose"
+                },
+                {
+                  "tile": 63,
+                  "result": "lose"
+                },
+                {
+                  "tile": 69,
+                  "result": "lose"
+                },
+                {
+                  "tile": 70,
+                  "result": "lose"
+                },
+                {
+                  "tile": 71,
+                  "result": "lose"
+                },
+                {
+                  "tile": 75,
+                  "result": "lose"
+                },
+                {
+                  "tile": 77,
+                  "result": "lose"
+                },
+                {
+                  "tile": 79,
+                  "result": "lose"
+                },
+                {
+                  "tile": 82,
+                  "result": "lose"
+                },
+                {
+                  "tile": 83,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "after": {
+          "clock": 9,
+          "spare": 1,
+          "free": 14,
+          "atClock": {
+            "waiting": 3,
+            "free": 18,
+            "opening": {
+              "win": 1,
+              "lose": 17,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 37,
+                  "result": "lose"
+                },
+                {
+                  "tile": 38,
+                  "result": "lose"
+                },
+                {
+                  "tile": 43,
+                  "result": "lose"
+                },
+                {
+                  "tile": 45,
+                  "result": "lose"
+                },
+                {
+                  "tile": 46,
+                  "result": "lose"
+                },
+                {
+                  "tile": 53,
+                  "result": "lose"
+                },
+                {
+                  "tile": 54,
+                  "result": "win"
+                },
+                {
+                  "tile": 57,
+                  "result": "lose"
+                },
+                {
+                  "tile": 61,
+                  "result": "lose"
+                },
+                {
+                  "tile": 63,
+                  "result": "lose"
+                },
+                {
+                  "tile": 69,
+                  "result": "lose"
+                },
+                {
+                  "tile": 70,
+                  "result": "lose"
+                },
+                {
+                  "tile": 71,
+                  "result": "lose"
+                },
+                {
+                  "tile": 75,
+                  "result": "lose"
+                },
+                {
+                  "tile": 77,
+                  "result": "lose"
+                },
+                {
+                  "tile": 79,
+                  "result": "lose"
+                },
+                {
+                  "tile": 82,
+                  "result": "lose"
+                },
+                {
+                  "tile": 83,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "signals": [],
+        "humanWinPrediction": false
+      }
+    },
+    {
+      "level": 279,
+      "hash": "ac51d97e984209d710b49b2acc2193b3d125e63e8123b3ddcca2befccbe1f636",
+      "ok": true,
+      "shape": {
+        "ok": true,
+        "errors": [],
+        "tiles": 76,
+        "width": 6.5,
+        "rows": 8,
+        "px": 58.56603773584906,
+        "straight": 0,
+        "stray": 1,
+        "edge": 0,
+        "mirror": 0.16
+      },
+      "k": 10,
+      "spare": 2,
+      "checks": [
+        "zeroStraightTowers",
+        "supportedIntegerGrid",
+        "72to88Tiles",
+        "6.5Columns8Rows58px",
+        "fullStrictWin",
+        "sameClockMinimumAndSpare",
+        "sameSpecialEffects",
+        "sameSpecialPrerequisites",
+        "allAuthoredWrongMovesStillWrong",
+        "ownAuthoredProof"
+      ],
+      "prices": [
+        {
+          "tiles": [
+            65
+          ],
+          "before": {
+            "result": "win",
+            "cost": 3,
+            "exact": true
+          },
+          "after": {
+            "result": "win",
+            "cost": 3,
+            "exact": true
+          }
+        },
+        {
+          "tiles": [
+            42,
+            58
+          ],
+          "before": {
+            "result": "win",
+            "cost": 3,
+            "exact": true
+          },
+          "after": {
+            "result": "win",
+            "cost": 3,
+            "exact": true
+          }
+        }
+      ],
+      "pressure": {
+        "before": {
+          "clock": 10,
+          "spare": 2,
+          "free": 24,
+          "atClock": {
+            "waiting": 2,
+            "free": 27,
+            "opening": {
+              "win": 15,
+              "lose": 12,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 0,
+                  "result": "lose"
+                },
+                {
+                  "tile": 1,
+                  "result": "win"
+                },
+                {
+                  "tile": 2,
+                  "result": "win"
+                },
+                {
+                  "tile": 3,
+                  "result": "win"
+                },
+                {
+                  "tile": 4,
+                  "result": "win"
+                },
+                {
+                  "tile": 5,
+                  "result": "lose"
+                },
+                {
+                  "tile": 12,
+                  "result": "win"
+                },
+                {
+                  "tile": 30,
+                  "result": "win"
+                },
+                {
+                  "tile": 37,
+                  "result": "win"
+                },
+                {
+                  "tile": 38,
+                  "result": "lose"
+                },
+                {
+                  "tile": 39,
+                  "result": "lose"
+                },
+                {
+                  "tile": 40,
+                  "result": "lose"
+                },
+                {
+                  "tile": 41,
+                  "result": "lose"
+                },
+                {
+                  "tile": 48,
+                  "result": "win"
+                },
+                {
+                  "tile": 50,
+                  "result": "win"
+                },
+                {
+                  "tile": 57,
+                  "result": "lose"
+                },
+                {
+                  "tile": 58,
+                  "result": "lose"
+                },
+                {
+                  "tile": 59,
+                  "result": "lose"
+                },
+                {
+                  "tile": 62,
+                  "result": "win"
+                },
+                {
+                  "tile": 63,
+                  "result": "win"
+                },
+                {
+                  "tile": 64,
+                  "result": "win"
+                },
+                {
+                  "tile": 65,
+                  "result": "lose"
+                },
+                {
+                  "tile": 66,
+                  "result": "win"
+                },
+                {
+                  "tile": 68,
+                  "result": "win"
+                },
+                {
+                  "tile": 72,
+                  "result": "lose"
+                },
+                {
+                  "tile": 74,
+                  "result": "win"
+                },
+                {
+                  "tile": 75,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "after": {
+          "clock": 10,
+          "spare": 2,
+          "free": 19,
+          "atClock": {
+            "waiting": 2,
+            "free": 22,
+            "opening": {
+              "win": 15,
+              "lose": 7,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 1,
+                  "result": "win"
+                },
+                {
+                  "tile": 2,
+                  "result": "win"
+                },
+                {
+                  "tile": 3,
+                  "result": "win"
+                },
+                {
+                  "tile": 4,
+                  "result": "win"
+                },
+                {
+                  "tile": 5,
+                  "result": "lose"
+                },
+                {
+                  "tile": 12,
+                  "result": "win"
+                },
+                {
+                  "tile": 30,
+                  "result": "win"
+                },
+                {
+                  "tile": 37,
+                  "result": "win"
+                },
+                {
+                  "tile": 41,
+                  "result": "lose"
+                },
+                {
+                  "tile": 48,
+                  "result": "win"
+                },
+                {
+                  "tile": 50,
+                  "result": "win"
+                },
+                {
+                  "tile": 58,
+                  "result": "lose"
+                },
+                {
+                  "tile": 59,
+                  "result": "lose"
+                },
+                {
+                  "tile": 62,
+                  "result": "win"
+                },
+                {
+                  "tile": 63,
+                  "result": "win"
+                },
+                {
+                  "tile": 64,
+                  "result": "win"
+                },
+                {
+                  "tile": 65,
+                  "result": "lose"
+                },
+                {
+                  "tile": 66,
+                  "result": "win"
+                },
+                {
+                  "tile": 68,
+                  "result": "win"
+                },
+                {
+                  "tile": 72,
+                  "result": "lose"
+                },
+                {
+                  "tile": 74,
+                  "result": "win"
+                },
+                {
+                  "tile": 75,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "signals": [],
+        "humanWinPrediction": false
+      }
+    },
+    {
+      "level": 281,
+      "hash": "cb939e431e0e694b6dd86130b24e7d65ecfc0866f9b847d2fd44a1b6c1d05a14",
+      "ok": true,
+      "shape": {
+        "ok": true,
+        "errors": [],
+        "tiles": 80,
+        "width": 6.5,
+        "rows": 8,
+        "px": 58.56603773584906,
+        "straight": 0,
+        "stray": 0,
+        "edge": 0,
+        "mirror": 0
+      },
+      "k": 12,
+      "spare": 2,
+      "checks": [
+        "zeroStraightTowers",
+        "supportedIntegerGrid",
+        "72to88Tiles",
+        "6.5Columns8Rows58px",
+        "fullStrictWin",
+        "sameClockMinimumAndSpare",
+        "sameSpecialEffects",
+        "sameSpecialPrerequisites",
+        "allAuthoredWrongMovesStillWrong",
+        "ownAuthoredProof"
+      ],
+      "prices": [
+        {
+          "tiles": [
+            34
+          ],
+          "before": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          },
+          "after": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          }
+        },
+        {
+          "tiles": [
+            0,
+            54
+          ],
+          "before": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          },
+          "after": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          }
+        }
+      ],
+      "pressure": {
+        "before": {
+          "clock": 12,
+          "spare": 2,
+          "free": 12,
+          "atClock": {
+            "waiting": 2,
+            "free": 12,
+            "opening": {
+              "win": 6,
+              "lose": 6,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 29,
+                  "result": "win"
+                },
+                {
+                  "tile": 34,
+                  "result": "lose"
+                },
+                {
+                  "tile": 51,
+                  "result": "win"
+                },
+                {
+                  "tile": 53,
+                  "result": "lose"
+                },
+                {
+                  "tile": 54,
+                  "result": "lose"
+                },
+                {
+                  "tile": 55,
+                  "result": "lose"
+                },
+                {
+                  "tile": 56,
+                  "result": "win"
+                },
+                {
+                  "tile": 61,
+                  "result": "win"
+                },
+                {
+                  "tile": 62,
+                  "result": "win"
+                },
+                {
+                  "tile": 68,
+                  "result": "lose"
+                },
+                {
+                  "tile": 76,
+                  "result": "lose"
+                },
+                {
+                  "tile": 78,
+                  "result": "win"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "after": {
+          "clock": 12,
+          "spare": 2,
+          "free": 15,
+          "atClock": {
+            "waiting": 2,
+            "free": 15,
+            "opening": {
+              "win": 7,
+              "lose": 8,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 14,
+                  "result": "lose"
+                },
+                {
+                  "tile": 29,
+                  "result": "win"
+                },
+                {
+                  "tile": 34,
+                  "result": "lose"
+                },
+                {
+                  "tile": 51,
+                  "result": "win"
+                },
+                {
+                  "tile": 53,
+                  "result": "win"
+                },
+                {
+                  "tile": 54,
+                  "result": "lose"
+                },
+                {
+                  "tile": 55,
+                  "result": "lose"
+                },
+                {
+                  "tile": 56,
+                  "result": "win"
+                },
+                {
+                  "tile": 57,
+                  "result": "lose"
+                },
+                {
+                  "tile": 58,
+                  "result": "lose"
+                },
+                {
+                  "tile": 61,
+                  "result": "win"
+                },
+                {
+                  "tile": 62,
+                  "result": "win"
+                },
+                {
+                  "tile": 68,
+                  "result": "lose"
+                },
+                {
+                  "tile": 76,
+                  "result": "lose"
+                },
+                {
+                  "tile": 78,
+                  "result": "win"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "signals": [],
+        "humanWinPrediction": false
+      }
+    },
+    {
+      "level": 282,
+      "hash": "e8354b64eb58f92d89eddb73d6256818dcd43d93f4e27d65ec359205c83fbbc3",
+      "ok": true,
+      "shape": {
+        "ok": true,
+        "errors": [],
+        "tiles": 80,
+        "width": 6,
+        "rows": 7,
+        "px": 63.3469387755102,
+        "straight": 0,
+        "stray": 0,
+        "edge": 0,
+        "mirror": 0.99
+      },
+      "k": 5,
+      "spare": 2,
+      "checks": [
+        "zeroStraightTowers",
+        "supportedIntegerGrid",
+        "72to88Tiles",
+        "6.5Columns8Rows58px",
+        "fullStrictWin",
+        "sameClockMinimumAndSpare",
+        "sameSpecialEffects",
+        "sameSpecialPrerequisites",
+        "allAuthoredWrongMovesStillWrong",
+        "ownAuthoredProof"
+      ],
+      "prices": [
+        {
+          "tiles": [
+            57
+          ],
+          "before": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          },
+          "after": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          }
+        },
+        {
+          "tiles": [
+            6
+          ],
+          "before": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          },
+          "after": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          }
+        }
+      ],
+      "pressure": {
+        "before": {
+          "clock": 5,
+          "spare": 2,
+          "free": 15,
+          "atClock": {
+            "waiting": 3,
+            "free": 15,
+            "opening": {
+              "win": 1,
+              "lose": 14,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 0,
+                  "result": "lose"
+                },
+                {
+                  "tile": 17,
+                  "result": "lose"
+                },
+                {
+                  "tile": 18,
+                  "result": "lose"
+                },
+                {
+                  "tile": 39,
+                  "result": "lose"
+                },
+                {
+                  "tile": 40,
+                  "result": "lose"
+                },
+                {
+                  "tile": 41,
+                  "result": "lose"
+                },
+                {
+                  "tile": 43,
+                  "result": "lose"
+                },
+                {
+                  "tile": 44,
+                  "result": "win"
+                },
+                {
+                  "tile": 56,
+                  "result": "lose"
+                },
+                {
+                  "tile": 57,
+                  "result": "lose"
+                },
+                {
+                  "tile": 68,
+                  "result": "lose"
+                },
+                {
+                  "tile": 69,
+                  "result": "lose"
+                },
+                {
+                  "tile": 77,
+                  "result": "lose"
+                },
+                {
+                  "tile": 78,
+                  "result": "lose"
+                },
+                {
+                  "tile": 79,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "after": {
+          "clock": 5,
+          "spare": 2,
+          "free": 15,
+          "atClock": {
+            "waiting": 3,
+            "free": 15,
+            "opening": {
+              "win": 1,
+              "lose": 14,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 0,
+                  "result": "lose"
+                },
+                {
+                  "tile": 25,
+                  "result": "lose"
+                },
+                {
+                  "tile": 38,
+                  "result": "win"
+                },
+                {
+                  "tile": 39,
+                  "result": "lose"
+                },
+                {
+                  "tile": 40,
+                  "result": "lose"
+                },
+                {
+                  "tile": 41,
+                  "result": "lose"
+                },
+                {
+                  "tile": 43,
+                  "result": "lose"
+                },
+                {
+                  "tile": 56,
+                  "result": "lose"
+                },
+                {
+                  "tile": 57,
+                  "result": "lose"
+                },
+                {
+                  "tile": 65,
+                  "result": "lose"
+                },
+                {
+                  "tile": 67,
+                  "result": "lose"
+                },
+                {
+                  "tile": 68,
+                  "result": "lose"
+                },
+                {
+                  "tile": 69,
+                  "result": "lose"
+                },
+                {
+                  "tile": 74,
+                  "result": "lose"
+                },
+                {
+                  "tile": 78,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "signals": [],
+        "humanWinPrediction": false
+      }
+    },
+    {
+      "level": 283,
+      "hash": "468b922b494452fc7e80ef8e7c2809d99f6d6564983ec35f4d23e209641bb820",
+      "ok": true,
+      "shape": {
+        "ok": true,
+        "errors": [],
+        "tiles": 72,
+        "width": 6,
+        "rows": 8,
+        "px": 59.13285048119853,
+        "straight": 0,
+        "stray": 0,
+        "edge": 0,
+        "mirror": 0.54
+      },
+      "k": 21,
+      "spare": 3,
+      "checks": [
+        "zeroStraightTowers",
+        "supportedIntegerGrid",
+        "72to88Tiles",
+        "6.5Columns8Rows58px",
+        "fullStrictWin",
+        "sameClockMinimumAndSpare",
+        "sameSpecialEffects",
+        "sameSpecialPrerequisites",
+        "allAuthoredWrongMovesStillWrong",
+        "olderRecoveredSpecialContract"
+      ],
+      "prices": [],
+      "pressure": {
+        "before": {
+          "clock": 23,
+          "spare": 1,
+          "free": 9,
+          "atClock": {
+            "waiting": 3,
+            "free": 10,
+            "opening": {
+              "win": 1,
+              "lose": 9,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 17,
+                  "result": "lose"
+                },
+                {
+                  "tile": 29,
+                  "result": "lose"
+                },
+                {
+                  "tile": 33,
+                  "result": "lose"
+                },
+                {
+                  "tile": 46,
+                  "result": "lose"
+                },
+                {
+                  "tile": 47,
+                  "result": "lose"
+                },
+                {
+                  "tile": 49,
+                  "result": "lose"
+                },
+                {
+                  "tile": 50,
+                  "result": "lose"
+                },
+                {
+                  "tile": 51,
+                  "result": "lose"
+                },
+                {
+                  "tile": 52,
+                  "result": "lose"
+                },
+                {
+                  "tile": 62,
+                  "result": "win"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "after": {
+          "clock": 23,
+          "spare": 1,
+          "free": 9,
+          "atClock": {
+            "waiting": 3,
+            "free": 10,
+            "opening": {
+              "win": 1,
+              "lose": 9,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 17,
+                  "result": "lose"
+                },
+                {
+                  "tile": 29,
+                  "result": "lose"
+                },
+                {
+                  "tile": 33,
+                  "result": "lose"
+                },
+                {
+                  "tile": 46,
+                  "result": "lose"
+                },
+                {
+                  "tile": 47,
+                  "result": "lose"
+                },
+                {
+                  "tile": 49,
+                  "result": "lose"
+                },
+                {
+                  "tile": 50,
+                  "result": "lose"
+                },
+                {
+                  "tile": 51,
+                  "result": "lose"
+                },
+                {
+                  "tile": 52,
+                  "result": "lose"
+                },
+                {
+                  "tile": 62,
+                  "result": "win"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "signals": [],
+        "humanWinPrediction": false
+      }
+    },
+    {
+      "level": 284,
+      "hash": "1f21a508439f2400b9224e55dca53d1c732c96b7707dd442101b3295e0d96e36",
+      "ok": true,
+      "shape": {
+        "ok": true,
+        "errors": [],
+        "tiles": 80,
+        "width": 6.5,
+        "rows": 7,
+        "px": 58.56603773584906,
+        "straight": 0,
+        "stray": 0,
+        "edge": 0,
+        "mirror": 0
+      },
+      "k": 9,
+      "spare": 2,
+      "checks": [
+        "zeroStraightTowers",
+        "supportedIntegerGrid",
+        "72to88Tiles",
+        "6.5Columns8Rows58px",
+        "fullStrictWin",
+        "sameClockMinimumAndSpare",
+        "sameSpecialEffects",
+        "sameSpecialPrerequisites",
+        "allAuthoredWrongMovesStillWrong",
+        "ownAuthoredProof"
+      ],
+      "prices": [
+        {
+          "tiles": [
+            6
+          ],
+          "before": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          },
+          "after": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          }
+        },
+        {
+          "tiles": [
+            63
+          ],
+          "before": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          },
+          "after": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          }
+        }
+      ],
+      "pressure": {
+        "before": {
+          "clock": 9,
+          "spare": 2,
+          "free": 12,
+          "atClock": {
+            "waiting": 3,
+            "free": 13,
+            "opening": {
+              "win": 1,
+              "lose": 12,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 0,
+                  "result": "lose"
+                },
+                {
+                  "tile": 5,
+                  "result": "lose"
+                },
+                {
+                  "tile": 38,
+                  "result": "lose"
+                },
+                {
+                  "tile": 48,
+                  "result": "lose"
+                },
+                {
+                  "tile": 50,
+                  "result": "lose"
+                },
+                {
+                  "tile": 56,
+                  "result": "win"
+                },
+                {
+                  "tile": 57,
+                  "result": "lose"
+                },
+                {
+                  "tile": 64,
+                  "result": "lose"
+                },
+                {
+                  "tile": 65,
+                  "result": "lose"
+                },
+                {
+                  "tile": 66,
+                  "result": "lose"
+                },
+                {
+                  "tile": 69,
+                  "result": "lose"
+                },
+                {
+                  "tile": 75,
+                  "result": "lose"
+                },
+                {
+                  "tile": 76,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "after": {
+          "clock": 9,
+          "spare": 2,
+          "free": 14,
+          "atClock": {
+            "waiting": 3,
+            "free": 18,
+            "opening": {
+              "win": 2,
+              "lose": 16,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 1,
+                  "result": "lose"
+                },
+                {
+                  "tile": 5,
+                  "result": "lose"
+                },
+                {
+                  "tile": 7,
+                  "result": "lose"
+                },
+                {
+                  "tile": 17,
+                  "result": "win"
+                },
+                {
+                  "tile": 38,
+                  "result": "lose"
+                },
+                {
+                  "tile": 42,
+                  "result": "win"
+                },
+                {
+                  "tile": 48,
+                  "result": "lose"
+                },
+                {
+                  "tile": 50,
+                  "result": "lose"
+                },
+                {
+                  "tile": 52,
+                  "result": "lose"
+                },
+                {
+                  "tile": 57,
+                  "result": "lose"
+                },
+                {
+                  "tile": 58,
+                  "result": "lose"
+                },
+                {
+                  "tile": 64,
+                  "result": "lose"
+                },
+                {
+                  "tile": 65,
+                  "result": "lose"
+                },
+                {
+                  "tile": 66,
+                  "result": "lose"
+                },
+                {
+                  "tile": 69,
+                  "result": "lose"
+                },
+                {
+                  "tile": 75,
+                  "result": "lose"
+                },
+                {
+                  "tile": 76,
+                  "result": "lose"
+                },
+                {
+                  "tile": 77,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "signals": [],
+        "humanWinPrediction": false
+      }
+    },
+    {
+      "level": 286,
+      "hash": "2793fe7c1ac29efdfc4c9e120595c596ab79a320d07241caed55e4692f84df83",
+      "ok": true,
+      "shape": {
+        "ok": true,
+        "errors": [],
+        "tiles": 72,
+        "width": 6,
+        "rows": 8,
+        "px": 59.13285048119853,
+        "straight": 0,
+        "stray": 1,
+        "edge": 0,
+        "mirror": 0.96
+      },
+      "k": 11,
+      "spare": 2,
+      "checks": [
+        "zeroStraightTowers",
+        "supportedIntegerGrid",
+        "72to88Tiles",
+        "6.5Columns8Rows58px",
+        "fullStrictWin",
+        "sameClockMinimumAndSpare",
+        "sameSpecialEffects",
+        "sameSpecialPrerequisites",
+        "allAuthoredWrongMovesStillWrong",
+        "ownAuthoredProof"
+      ],
+      "prices": [
+        {
+          "tiles": [
+            74
+          ],
+          "before": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          },
+          "after": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          }
+        },
+        {
+          "tiles": [
+            75
+          ],
+          "before": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          },
+          "after": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          }
+        }
+      ],
+      "pressure": {
+        "before": {
+          "clock": 11,
+          "spare": 2,
+          "free": 10,
+          "atClock": {
+            "waiting": 3,
+            "free": 11,
+            "opening": {
+              "win": 1,
+              "lose": 10,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 0,
+                  "result": "lose"
+                },
+                {
+                  "tile": 5,
+                  "result": "lose"
+                },
+                {
+                  "tile": 13,
+                  "result": "lose"
+                },
+                {
+                  "tile": 52,
+                  "result": "win"
+                },
+                {
+                  "tile": 62,
+                  "result": "lose"
+                },
+                {
+                  "tile": 63,
+                  "result": "lose"
+                },
+                {
+                  "tile": 70,
+                  "result": "lose"
+                },
+                {
+                  "tile": 71,
+                  "result": "lose"
+                },
+                {
+                  "tile": 72,
+                  "result": "lose"
+                },
+                {
+                  "tile": 78,
+                  "result": "lose"
+                },
+                {
+                  "tile": 79,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "after": {
+          "clock": 11,
+          "spare": 2,
+          "free": 14,
+          "atClock": {
+            "waiting": 3,
+            "free": 16,
+            "opening": {
+              "win": 1,
+              "lose": 15,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 0,
+                  "result": "lose"
+                },
+                {
+                  "tile": 4,
+                  "result": "lose"
+                },
+                {
+                  "tile": 11,
+                  "result": "lose"
+                },
+                {
+                  "tile": 42,
+                  "result": "win"
+                },
+                {
+                  "tile": 50,
+                  "result": "lose"
+                },
+                {
+                  "tile": 51,
+                  "result": "lose"
+                },
+                {
+                  "tile": 54,
+                  "result": "lose"
+                },
+                {
+                  "tile": 56,
+                  "result": "lose"
+                },
+                {
+                  "tile": 58,
+                  "result": "lose"
+                },
+                {
+                  "tile": 65,
+                  "result": "lose"
+                },
+                {
+                  "tile": 66,
+                  "result": "lose"
+                },
+                {
+                  "tile": 67,
+                  "result": "lose"
+                },
+                {
+                  "tile": 68,
+                  "result": "lose"
+                },
+                {
+                  "tile": 69,
+                  "result": "lose"
+                },
+                {
+                  "tile": 70,
+                  "result": "lose"
+                },
+                {
+                  "tile": 71,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "signals": [],
+        "humanWinPrediction": false
+      }
+    },
+    {
+      "level": 289,
+      "hash": "16d8d1b8eb022c1405314b9c75ccb0612beae6132b90c92ed4d541c51072d00e",
+      "ok": true,
+      "shape": {
+        "ok": true,
+        "errors": [],
+        "tiles": 80,
+        "width": 6,
+        "rows": 8,
+        "px": 59.13285048119853,
+        "straight": 0,
+        "stray": 0,
+        "edge": 0,
+        "mirror": 0.99
+      },
+      "k": 5,
+      "spare": 1,
+      "checks": [
+        "zeroStraightTowers",
+        "supportedIntegerGrid",
+        "72to88Tiles",
+        "6.5Columns8Rows58px",
+        "fullStrictWin",
+        "sameClockMinimumAndSpare",
+        "sameSpecialEffects",
+        "sameSpecialPrerequisites",
+        "allAuthoredWrongMovesStillWrong",
+        "olderRecoveredSpecialContract"
+      ],
+      "prices": [],
+      "pressure": {
+        "before": {
+          "clock": 5,
+          "spare": 1,
+          "free": 7,
+          "atClock": {
+            "waiting": 3,
+            "free": 7,
+            "opening": {
+              "win": 1,
+              "lose": 6,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 34,
+                  "result": "win"
+                },
+                {
+                  "tile": 74,
+                  "result": "lose"
+                },
+                {
+                  "tile": 75,
+                  "result": "lose"
+                },
+                {
+                  "tile": 78,
+                  "result": "lose"
+                },
+                {
+                  "tile": 79,
+                  "result": "lose"
+                },
+                {
+                  "tile": 80,
+                  "result": "lose"
+                },
+                {
+                  "tile": 83,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "after": {
+          "clock": 5,
+          "spare": 1,
+          "free": 7,
+          "atClock": {
+            "waiting": 3,
+            "free": 7,
+            "opening": {
+              "win": 1,
+              "lose": 6,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 32,
+                  "result": "win"
+                },
+                {
+                  "tile": 69,
+                  "result": "lose"
+                },
+                {
+                  "tile": 71,
+                  "result": "lose"
+                },
+                {
+                  "tile": 72,
+                  "result": "lose"
+                },
+                {
+                  "tile": 75,
+                  "result": "lose"
+                },
+                {
+                  "tile": 76,
+                  "result": "lose"
+                },
+                {
+                  "tile": 79,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "signals": [],
+        "humanWinPrediction": false
+      }
+    },
+    {
+      "level": 291,
+      "hash": "679661d1f7eb816eba82a1cf13c0401e389ea2264a04ce3bbb7af33cedf0a29a",
+      "ok": true,
+      "shape": {
+        "ok": true,
+        "errors": [],
+        "tiles": 78,
+        "width": 6.5,
+        "rows": 8,
+        "px": 58.56603773584906,
+        "straight": 0,
+        "stray": 1,
+        "edge": 9,
+        "mirror": 0.15
+      },
+      "k": 1,
+      "spare": 17,
+      "checks": [
+        "zeroStraightTowers",
+        "supportedIntegerGrid",
+        "72to88Tiles",
+        "6.5Columns8Rows58px",
+        "fullStrictWin",
+        "sameClockMinimumAndSpare",
+        "sameSpecialEffects",
+        "sameSpecialPrerequisites",
+        "allAuthoredWrongMovesStillWrong",
+        "olderRecoveredSpecialContract"
+      ],
+      "prices": [],
+      "pressure": {
+        "before": {
+          "clock": 1,
+          "spare": 17,
+          "free": 12,
+          "atClock": {
+            "waiting": 1,
+            "free": 14,
+            "opening": {
+              "win": 12,
+              "lose": 1,
+              "unknown": 1,
+              "actions": [
+                {
+                  "tile": 6,
+                  "result": "win"
+                },
+                {
+                  "tile": 65,
+                  "result": "win"
+                },
+                {
+                  "tile": 66,
+                  "result": "win"
+                },
+                {
+                  "tile": 67,
+                  "result": "win"
+                },
+                {
+                  "tile": 68,
+                  "result": "win"
+                },
+                {
+                  "tile": 70,
+                  "result": "win"
+                },
+                {
+                  "tile": 71,
+                  "result": "lose"
+                },
+                {
+                  "tile": 72,
+                  "result": "win"
+                },
+                {
+                  "tile": 74,
+                  "result": "win"
+                },
+                {
+                  "tile": 75,
+                  "result": "win"
+                },
+                {
+                  "tile": 77,
+                  "result": "win"
+                },
+                {
+                  "tile": 80,
+                  "result": "unknown"
+                },
+                {
+                  "tile": 81,
+                  "result": "win"
+                },
+                {
+                  "tile": 83,
+                  "result": "win"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "after": {
+          "clock": 1,
+          "spare": 17,
+          "free": 14,
+          "atClock": {
+            "waiting": 1,
+            "free": 16,
+            "opening": {
+              "win": 12,
+              "lose": 4,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 5,
+                  "result": "win"
+                },
+                {
+                  "tile": 11,
+                  "result": "lose"
+                },
+                {
+                  "tile": 32,
+                  "result": "lose"
+                },
+                {
+                  "tile": 41,
+                  "result": "win"
+                },
+                {
+                  "tile": 57,
+                  "result": "win"
+                },
+                {
+                  "tile": 60,
+                  "result": "win"
+                },
+                {
+                  "tile": 61,
+                  "result": "win"
+                },
+                {
+                  "tile": 62,
+                  "result": "win"
+                },
+                {
+                  "tile": 63,
+                  "result": "win"
+                },
+                {
+                  "tile": 65,
+                  "result": "lose"
+                },
+                {
+                  "tile": 66,
+                  "result": "win"
+                },
+                {
+                  "tile": 69,
+                  "result": "win"
+                },
+                {
+                  "tile": 70,
+                  "result": "win"
+                },
+                {
+                  "tile": 72,
+                  "result": "win"
+                },
+                {
+                  "tile": 75,
+                  "result": "win"
+                },
+                {
+                  "tile": 76,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "signals": [],
+        "humanWinPrediction": false
+      }
+    },
+    {
+      "level": 293,
+      "hash": "b85a2801fb8685f0808ef12e76ab1e460bd6a31d5f66a00bbf386daddc1553d5",
+      "ok": true,
+      "shape": {
+        "ok": true,
+        "errors": [],
+        "tiles": 76,
+        "width": 6.5,
+        "rows": 8,
+        "px": 58.322732165573925,
+        "straight": 0,
+        "stray": 0,
+        "edge": 0,
+        "mirror": 0
+      },
+      "k": 11,
+      "spare": 1,
+      "checks": [
+        "zeroStraightTowers",
+        "supportedIntegerGrid",
+        "72to88Tiles",
+        "6.5Columns8Rows58px",
+        "fullStrictWin",
+        "sameClockMinimumAndSpare",
+        "sameSpecialEffects",
+        "sameSpecialPrerequisites",
+        "allAuthoredWrongMovesStillWrong",
+        "ownAuthoredProof"
+      ],
+      "prices": [
+        {
+          "tiles": [
+            73
+          ],
+          "before": {
+            "result": "win",
+            "cost": 2,
+            "exact": true
+          },
+          "after": {
+            "result": "win",
+            "cost": 2,
+            "exact": true
+          }
+        }
+      ],
+      "pressure": {
+        "before": {
+          "clock": 11,
+          "spare": 1,
+          "free": 18,
+          "atClock": {
+            "waiting": 3,
+            "free": 18,
+            "opening": {
+              "win": 1,
+              "lose": 17,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 1,
+                  "result": "lose"
+                },
+                {
+                  "tile": 2,
+                  "result": "lose"
+                },
+                {
+                  "tile": 3,
+                  "result": "lose"
+                },
+                {
+                  "tile": 5,
+                  "result": "lose"
+                },
+                {
+                  "tile": 26,
+                  "result": "lose"
+                },
+                {
+                  "tile": 42,
+                  "result": "lose"
+                },
+                {
+                  "tile": 46,
+                  "result": "lose"
+                },
+                {
+                  "tile": 47,
+                  "result": "lose"
+                },
+                {
+                  "tile": 54,
+                  "result": "lose"
+                },
+                {
+                  "tile": 58,
+                  "result": "lose"
+                },
+                {
+                  "tile": 59,
+                  "result": "lose"
+                },
+                {
+                  "tile": 61,
+                  "result": "lose"
+                },
+                {
+                  "tile": 66,
+                  "result": "win"
+                },
+                {
+                  "tile": 67,
+                  "result": "lose"
+                },
+                {
+                  "tile": 68,
+                  "result": "lose"
+                },
+                {
+                  "tile": 69,
+                  "result": "lose"
+                },
+                {
+                  "tile": 73,
+                  "result": "lose"
+                },
+                {
+                  "tile": 74,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "after": {
+          "clock": 11,
+          "spare": 1,
+          "free": 17,
+          "atClock": {
+            "waiting": 3,
+            "free": 18,
+            "opening": {
+              "win": 1,
+              "lose": 17,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 1,
+                  "result": "lose"
+                },
+                {
+                  "tile": 3,
+                  "result": "lose"
+                },
+                {
+                  "tile": 5,
+                  "result": "lose"
+                },
+                {
+                  "tile": 26,
+                  "result": "lose"
+                },
+                {
+                  "tile": 42,
+                  "result": "lose"
+                },
+                {
+                  "tile": 46,
+                  "result": "lose"
+                },
+                {
+                  "tile": 47,
+                  "result": "lose"
+                },
+                {
+                  "tile": 54,
+                  "result": "lose"
+                },
+                {
+                  "tile": 57,
+                  "result": "lose"
+                },
+                {
+                  "tile": 58,
+                  "result": "lose"
+                },
+                {
+                  "tile": 59,
+                  "result": "lose"
+                },
+                {
+                  "tile": 61,
+                  "result": "lose"
+                },
+                {
+                  "tile": 66,
+                  "result": "win"
+                },
+                {
+                  "tile": 67,
+                  "result": "lose"
+                },
+                {
+                  "tile": 68,
+                  "result": "lose"
+                },
+                {
+                  "tile": 69,
+                  "result": "lose"
+                },
+                {
+                  "tile": 73,
+                  "result": "lose"
+                },
+                {
+                  "tile": 74,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "signals": [],
+        "humanWinPrediction": false
+      }
+    },
+    {
+      "level": 295,
+      "hash": "231e2f2ecd514e7df8e8ded3deefebcde1a4f20337b29dbc87a2edbfd8b20ad5",
+      "ok": true,
+      "shape": {
+        "ok": true,
+        "errors": [],
+        "tiles": 76,
+        "width": 6,
+        "rows": 6,
+        "px": 63.3469387755102,
+        "straight": 0,
+        "stray": 0,
+        "edge": 0,
+        "mirror": 0.96
+      },
+      "k": 7,
+      "spare": 1,
+      "checks": [
+        "zeroStraightTowers",
+        "supportedIntegerGrid",
+        "72to88Tiles",
+        "6.5Columns8Rows58px",
+        "fullStrictWin",
+        "sameClockMinimumAndSpare",
+        "sameSpecialEffects",
+        "sameSpecialPrerequisites",
+        "allAuthoredWrongMovesStillWrong",
+        "ownAuthoredProof"
+      ],
+      "prices": [
+        {
+          "tiles": [
+            45
+          ],
+          "before": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          },
+          "after": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          }
+        },
+        {
+          "tiles": [
+            75,
+            59
+          ],
+          "before": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          },
+          "after": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          }
+        }
+      ],
+      "pressure": {
+        "before": {
+          "clock": 7,
+          "spare": 1,
+          "free": 12,
+          "atClock": {
+            "waiting": 3,
+            "free": 17,
+            "opening": {
+              "win": 1,
+              "lose": 16,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 7,
+                  "result": "lose"
+                },
+                {
+                  "tile": 13,
+                  "result": "lose"
+                },
+                {
+                  "tile": 17,
+                  "result": "lose"
+                },
+                {
+                  "tile": 18,
+                  "result": "lose"
+                },
+                {
+                  "tile": 19,
+                  "result": "lose"
+                },
+                {
+                  "tile": 20,
+                  "result": "lose"
+                },
+                {
+                  "tile": 53,
+                  "result": "lose"
+                },
+                {
+                  "tile": 58,
+                  "result": "lose"
+                },
+                {
+                  "tile": 59,
+                  "result": "lose"
+                },
+                {
+                  "tile": 66,
+                  "result": "lose"
+                },
+                {
+                  "tile": 67,
+                  "result": "lose"
+                },
+                {
+                  "tile": 68,
+                  "result": "lose"
+                },
+                {
+                  "tile": 69,
+                  "result": "lose"
+                },
+                {
+                  "tile": 71,
+                  "result": "win"
+                },
+                {
+                  "tile": 72,
+                  "result": "lose"
+                },
+                {
+                  "tile": 73,
+                  "result": "lose"
+                },
+                {
+                  "tile": 74,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "after": {
+          "clock": 7,
+          "spare": 1,
+          "free": 13,
+          "atClock": {
+            "waiting": 3,
+            "free": 17,
+            "opening": {
+              "win": 1,
+              "lose": 16,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 7,
+                  "result": "lose"
+                },
+                {
+                  "tile": 13,
+                  "result": "lose"
+                },
+                {
+                  "tile": 17,
+                  "result": "lose"
+                },
+                {
+                  "tile": 20,
+                  "result": "lose"
+                },
+                {
+                  "tile": 51,
+                  "result": "lose"
+                },
+                {
+                  "tile": 53,
+                  "result": "lose"
+                },
+                {
+                  "tile": 56,
+                  "result": "lose"
+                },
+                {
+                  "tile": 59,
+                  "result": "lose"
+                },
+                {
+                  "tile": 61,
+                  "result": "lose"
+                },
+                {
+                  "tile": 66,
+                  "result": "lose"
+                },
+                {
+                  "tile": 67,
+                  "result": "lose"
+                },
+                {
+                  "tile": 68,
+                  "result": "lose"
+                },
+                {
+                  "tile": 69,
+                  "result": "lose"
+                },
+                {
+                  "tile": 71,
+                  "result": "win"
+                },
+                {
+                  "tile": 72,
+                  "result": "lose"
+                },
+                {
+                  "tile": 73,
+                  "result": "lose"
+                },
+                {
+                  "tile": 74,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "signals": [],
+        "humanWinPrediction": false
+      }
+    },
+    {
+      "level": 296,
+      "hash": "da1c6a379bac3fab302be141d9fed72c67684a8b6d173dd7e309e3be1f9a6369",
+      "ok": true,
+      "shape": {
+        "ok": true,
+        "errors": [],
+        "tiles": 80,
+        "width": 6,
+        "rows": 8,
+        "px": 59.13285048119853,
+        "straight": 0,
+        "stray": 0,
+        "edge": 0,
+        "mirror": 0.84
+      },
+      "k": 14,
+      "spare": 3,
+      "checks": [
+        "zeroStraightTowers",
+        "supportedIntegerGrid",
+        "72to88Tiles",
+        "6.5Columns8Rows58px",
+        "fullStrictWin",
+        "sameClockMinimumAndSpare",
+        "sameSpecialEffects",
+        "sameSpecialPrerequisites",
+        "allAuthoredWrongMovesStillWrong",
+        "olderRecoveredSpecialContract"
+      ],
+      "prices": [],
+      "pressure": {
+        "before": {
+          "clock": 15,
+          "spare": 2,
+          "free": 7,
+          "atClock": {
+            "waiting": 3,
+            "free": 16,
+            "opening": {
+              "win": 1,
+              "lose": 15,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 12,
+                  "result": "lose"
+                },
+                {
+                  "tile": 18,
+                  "result": "lose"
+                },
+                {
+                  "tile": 19,
+                  "result": "lose"
+                },
+                {
+                  "tile": 25,
+                  "result": "lose"
+                },
+                {
+                  "tile": 40,
+                  "result": "lose"
+                },
+                {
+                  "tile": 48,
+                  "result": "win"
+                },
+                {
+                  "tile": 49,
+                  "result": "lose"
+                },
+                {
+                  "tile": 51,
+                  "result": "lose"
+                },
+                {
+                  "tile": 54,
+                  "result": "lose"
+                },
+                {
+                  "tile": 59,
+                  "result": "lose"
+                },
+                {
+                  "tile": 64,
+                  "result": "lose"
+                },
+                {
+                  "tile": 65,
+                  "result": "lose"
+                },
+                {
+                  "tile": 67,
+                  "result": "lose"
+                },
+                {
+                  "tile": 69,
+                  "result": "lose"
+                },
+                {
+                  "tile": 70,
+                  "result": "lose"
+                },
+                {
+                  "tile": 77,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "after": {
+          "clock": 15,
+          "spare": 2,
+          "free": 11,
+          "atClock": {
+            "waiting": 3,
+            "free": 20,
+            "opening": {
+              "win": 2,
+              "lose": 18,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 0,
+                  "result": "lose"
+                },
+                {
+                  "tile": 1,
+                  "result": "lose"
+                },
+                {
+                  "tile": 12,
+                  "result": "lose"
+                },
+                {
+                  "tile": 19,
+                  "result": "lose"
+                },
+                {
+                  "tile": 25,
+                  "result": "lose"
+                },
+                {
+                  "tile": 40,
+                  "result": "lose"
+                },
+                {
+                  "tile": 47,
+                  "result": "win"
+                },
+                {
+                  "tile": 48,
+                  "result": "win"
+                },
+                {
+                  "tile": 49,
+                  "result": "lose"
+                },
+                {
+                  "tile": 51,
+                  "result": "lose"
+                },
+                {
+                  "tile": 54,
+                  "result": "lose"
+                },
+                {
+                  "tile": 56,
+                  "result": "lose"
+                },
+                {
+                  "tile": 59,
+                  "result": "lose"
+                },
+                {
+                  "tile": 62,
+                  "result": "lose"
+                },
+                {
+                  "tile": 64,
+                  "result": "lose"
+                },
+                {
+                  "tile": 65,
+                  "result": "lose"
+                },
+                {
+                  "tile": 67,
+                  "result": "lose"
+                },
+                {
+                  "tile": 69,
+                  "result": "lose"
+                },
+                {
+                  "tile": 70,
+                  "result": "lose"
+                },
+                {
+                  "tile": 77,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "signals": [],
+        "humanWinPrediction": false
+      }
+    },
+    {
+      "level": 299,
+      "hash": "a464c57a7e8d50bcb08df02e2d5a6c7d22683d6d9bb202fc2f487bb9b46a05b9",
+      "ok": true,
+      "shape": {
+        "ok": true,
+        "errors": [],
+        "tiles": 78,
+        "width": 6.5,
+        "rows": 8,
+        "px": 58.56603773584906,
+        "straight": 0,
+        "stray": 1,
+        "edge": 0,
+        "mirror": 0
+      },
+      "k": 12,
+      "spare": 2,
+      "checks": [
+        "zeroStraightTowers",
+        "supportedIntegerGrid",
+        "72to88Tiles",
+        "6.5Columns8Rows58px",
+        "fullStrictWin",
+        "sameClockMinimumAndSpare",
+        "sameSpecialEffects",
+        "sameSpecialPrerequisites",
+        "allAuthoredWrongMovesStillWrong",
+        "ownAuthoredProof"
+      ],
+      "prices": [
+        {
+          "tiles": [
+            72
+          ],
+          "before": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          },
+          "after": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          }
+        },
+        {
+          "tiles": [
+            75
+          ],
+          "before": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          },
+          "after": {
+            "result": "lose",
+            "cost": null,
+            "exact": true
+          }
+        }
+      ],
+      "pressure": {
+        "before": {
+          "clock": 12,
+          "spare": 2,
+          "free": 11,
+          "atClock": {
+            "waiting": 2,
+            "free": 13,
+            "opening": {
+              "win": 4,
+              "lose": 9,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 2,
+                  "result": "lose"
+                },
+                {
+                  "tile": 3,
+                  "result": "lose"
+                },
+                {
+                  "tile": 5,
+                  "result": "lose"
+                },
+                {
+                  "tile": 27,
+                  "result": "lose"
+                },
+                {
+                  "tile": 28,
+                  "result": "lose"
+                },
+                {
+                  "tile": 33,
+                  "result": "win"
+                },
+                {
+                  "tile": 50,
+                  "result": "win"
+                },
+                {
+                  "tile": 57,
+                  "result": "lose"
+                },
+                {
+                  "tile": 62,
+                  "result": "lose"
+                },
+                {
+                  "tile": 69,
+                  "result": "win"
+                },
+                {
+                  "tile": 72,
+                  "result": "lose"
+                },
+                {
+                  "tile": 77,
+                  "result": "win"
+                },
+                {
+                  "tile": 78,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "after": {
+          "clock": 12,
+          "spare": 2,
+          "free": 10,
+          "atClock": {
+            "waiting": 2,
+            "free": 12,
+            "opening": {
+              "win": 4,
+              "lose": 8,
+              "unknown": 0,
+              "actions": [
+                {
+                  "tile": 2,
+                  "result": "lose"
+                },
+                {
+                  "tile": 3,
+                  "result": "lose"
+                },
+                {
+                  "tile": 5,
+                  "result": "lose"
+                },
+                {
+                  "tile": 27,
+                  "result": "lose"
+                },
+                {
+                  "tile": 31,
+                  "result": "win"
+                },
+                {
+                  "tile": 48,
+                  "result": "win"
+                },
+                {
+                  "tile": 55,
+                  "result": "lose"
+                },
+                {
+                  "tile": 60,
+                  "result": "lose"
+                },
+                {
+                  "tile": 67,
+                  "result": "win"
+                },
+                {
+                  "tile": 70,
+                  "result": "lose"
+                },
+                {
+                  "tile": 75,
+                  "result": "win"
+                },
+                {
+                  "tile": 76,
+                  "result": "lose"
+                }
+              ]
+            }
+          },
+          "cap1": "lose",
+          "cap2": "lose"
+        },
+        "signals": [],
+        "humanWinPrediction": false
+      }
+    }
+  ]
+}
