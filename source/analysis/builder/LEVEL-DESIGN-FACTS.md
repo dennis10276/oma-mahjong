@@ -319,3 +319,11 @@ add new decisions with a date.
   (`codex-tasks/`) and Gemini (`gemini-tasks/`), reviews and merges their work, and makes the final level changes.
   Codex may fix anything it finds (2026-11-07).
   - Codex continues the builder work from Claude's results on `wip/cc-builder-loop` (2026-11-08); G5 for Gemini focuses on better puzzle construction. No review agents; CPU-heavy runs remain serialized.
+  - **Every level about 60 px, like 100-250; towers out** (2026-11-16): "No towers", "make it as mirrored as possible"; "Yes we need all
+    levels to fit 60 px rougly just like 100-250 so the new ones should too. Check 300 as well". Measured standard (live table, 392 x 730):
+    100-249 ordinary median 59.1 px (3 of 135 under 58), their tens median 52.7 px. So ordinary levels at least 58 px; tens like
+    100-249's tens. 300 (54.5 px, 96 tiles) and the other tens fit. Towers = a tile straight on one tile (the released boards have none;
+    22 of Codex's 42 narrowed boards do). Fixed tower-free with the same trap: 253, 256, 263, 269 (back to 72 tiles), 274, 279, 282, 295.
+    The rest of 251-299 and all of 301-370 (placed 2026-11-14, built before the 60 px decision: 11 of 70 at 58 px) go to Codex:
+    `codex-tasks/TASK-23-towers-and-bench.md`, with Claude's shape bench (`bank/shape_bench.js`: understand the clock route and its
+    dependencies first, Dennis: "You should understand the exact clock route and its dependencies before trying stuff").
