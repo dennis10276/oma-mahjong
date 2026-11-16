@@ -6,7 +6,7 @@ const fs = require('fs'), path = require('path'), F = require('../footprint.js')
 const DIR = path.resolve(__dirname, '../../../analysis/builder/hand');
 const names = process.argv.slice(3).length ? process.argv.slice(3) : fs.readdirSync(DIR).filter(f => f.endsWith('.board.json')).map(f => f.replace('.board.json', ''));
 const ideas = names.map((n, k) => {
-  const j = JSON.parse(fs.readFileSync(path.join(DIR, n + '.board.json'), 'utf8')), d = j.design, sp = { ...j.spec, ...require(path.join(DIR, n + '.js')) };
+  const j = JSON.parse(fs.readFileSync(path.join(DIR, n + '.board.json'), 'utf8')), d = j.design, sp = { ...j.spec, ...(fs.existsSync(path.join(DIR, n + '.js')) ? require(path.join(DIR, n + '.js')) : {}) };
   const px = F.measure(d, { minimum: 58 }).tilePx, k0 = d.solution.indexOf(d.clock.i) + 1;
   return { id: 950000 + k, lv: 350 + k, title: (sp.title || n) + ' · ' + px.toFixed(1) + ' px', kind: 'hand',
     idea: (sp.idea || '') + ` Clock in ${d.clock.n} (${k0} needed). ${j.offers ? j.offers.biting + ' of ' + j.offers.tempting + ' tempting moves on the way lose.' : ''}`,

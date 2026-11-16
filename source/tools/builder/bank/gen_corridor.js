@@ -33,6 +33,10 @@ function corridor(layout, o = {}) {
     W('clockTried');
     // late tiles: the dig's last half
     const late = dig.slice(-3), early = dig.slice(0, Math.ceil(dig.length / 2));
+    // tiles the clock releases: free once the dig and the clock are gone, not before (the clock variant's holders find their twins there)
+    const gone = new Uint8Array(n).fill(1); for (const i of [...dig, c]) gone[i] = 0;
+    const freeAfter = new Set(E.legal(g, { alive: gone, tray: [], moves: 0, clockTaken: true }).filter(x => typeof x === 'number'));
+    const released = [...freeAfter].filter(i => !free0.has(i));
     // buried twins for holders: outside the dig, not free at the start, not near the clock
     const buried = [...Array(n).keys()].filter(i => !dig.includes(i) && i !== c && !free0.has(i) && depth(i) >= 2 && !g.iceNb[c].includes(i));
     const matchings = function* (ids) {                        // every pairing; with an odd count one tile is a holder (buried twin)
@@ -41,28 +45,34 @@ function corridor(layout, o = {}) {
       const [a, ...r2] = ids; for (let k = 0; k < r2.length; k++) for (const m of matchings(r2.filter((_, j) => j !== k))) yield [[a, r2[k]], ...m];
     };
     const jobs = [];
-    for (const L of dig) for (const F of far.slice().sort(() => rnd() - .5).slice(0, o.farTries ?? 2)) jobs.push([L, F]);
+    // o.clockPeek: the late tile is the clock itself ("the clock goes to the tray too": at the full tray its face-down twin is the way)
+    for (const L of o.clockPeek ? [c] : dig) for (const F of far.slice().sort(() => rnd() - .5).slice(0, o.farTries ?? 2)) jobs.push([L, F]);
     for (const [L, F] of jobs) {
       if (out.length >= (o.per ?? 2)) break;
       let count = 0;
-      for (const m of matchings(dig.filter(i => i !== L))) {
+      // clockPeek: the clock's last blockers (the dig's last 2-3 tiles) are holders with buried twins, so the tray is full when the
+      // clock frees in every order; the rest of the dig pairs up
+      const tailHold = o.clockPeek ? dig.slice(-3) : [];
+      for (const m0 of matchings(dig.filter(i => i !== L && !tailHold.includes(i)))) {
+      const m = [...m0, ...tailHold.map(i => [i])];
       if (out.length >= (o.per ?? 2) || ++count > (o.perLF ?? 4000)) break;
       const faces = {}; let pic = 0;
-      faces[L] = faces[F] = 60; faces[c] = 99;
-      const twinOf = {}, bur = buried.slice().sort(() => rnd() - .5); let hk = 0;
-      for (const p of m) { if (p.length === 2) faces[p[0]] = faces[p[1]] = pic++; else { faces[p[0]] = 100 + hk; twinOf[p[0]] = bur[hk++]; } }
+      faces[c] = 99; faces[L] = faces[F] = 60;
+      const twinOf = {}, bur = (o.clockPeek ? [...released.sort(() => rnd() - .5), ...buried.filter(i => !released.includes(i)).sort(() => rnd() - .5)] : buried.slice().sort(() => rnd() - .5)); let hk = 0;
+      for (const p of (o.clockPeek ? m : m)) { if (p.length === 2) faces[p[0]] = faces[p[1]] = pic++; else { faces[p[0]] = 100 + hk; twinOf[p[0]] = bur[hk++]; } }
       if (Object.values(twinOf).some(x => x == null)) { W('noBuried'); continue; }
       const res = O.orders({ layout, clock: c, limit: dig.length + 2, tiles: [...dig, F], faces, down: [F], max: 30 });
       if (!res.wins.length) { W('noWin'); continue; } if (res.strictWins) { W('notForced'); continue; }
       const firsts = Object.keys(res.firstMoves).map(Number);
-      if (firsts.length > (o.firsts ?? 2) || firsts.some(i => near.includes(i))) { W('wideStart'); continue; }
+      if (!o.clockPeek && (firsts.length > (o.firsts ?? 2) || firsts.some(i => near.includes(i)))) { W('wideStart'); continue; }   // the clock variant's trap is at the end
       // the board: labels from the faces, the route = a winning order, then fill + exact proof on the whole board
       const pairs = {}; for (const [i, f] of Object.entries(faces)) (pairs['p' + f] = pairs['p' + f] || []).push(+i);
       for (const [h, tw] of Object.entries(twinOf)) pairs['p' + faces[h]].push(tw);
       const win = res.wins[0].map(x => typeof x === 'string' ? x.slice(1, -1).split('+').map(Number) : x);
       const spec = { layout, exact: true, peek: true, peekNeeded: true, spare: 1, clock: c, route: win, downTiles: [F], pairs,
         baits: [...near, F].map(i => ({ at: 1, take: [i], why: i === F ? 'take the face-down twin early' : 'start beside the clock' })).filter(b => free0.has(b.take[0])),
-        title: 'Face-down twin at a full tray', idea: `The clock lies deep (${dig.length + 2} moves); the dig fills the tray, and a face-down tile far away is the twin you need.`,
+        title: L === c ? 'The clock goes to the tray too' : 'Face-down twin at a full tray',
+        idea: L === c ? `The clock lies deep; the dig leaves the tray full, so the clock itself would be the 4th tile. Its twin is a face-down tile far away: take them together.` : `The clock lies deep (${dig.length + 2} moves); the dig fills the tray, and a face-down tile far away is the twin you need.`,
         digPairs: 0.3, pressure: 1.8, pattern: 'corridor', gen: { L, F, near, firsts } };
       const p = H.prove(spec, { seed: o.seed, offersMs: 20000 });
       W(p.ok ? 'proved' : 'proveFail:' + (p.fail || p.errors[0]).replace(/d+/g, '#').slice(0, 40));
@@ -95,8 +105,8 @@ module.exports = { corridor };
 if (require.main === module) {
   const dir = path.resolve(arg('out', 'corridor-out')); fs.mkdirSync(dir, { recursive: true });
   for (const lay of arg('layouts', '1006').split(',').map(Number)) {
-    const why = {}, res = corridor(lay, { per: +arg('per', 2), tries: +arg('tries', 300), seed: +arg('seed', 1), why, lock: arg('lock', null) });
-    for (const b of res) { const f = path.join(dir, `${lay}-c${b.spec.clock}-s${arg('seed', 1)}.board.json`); fs.writeFileSync(f, JSON.stringify(b, null, 1)); console.log('wrote', f, '| firsts', b.spec.gen.firsts.join(','), '| route', b.spec.route.flat().length); }
+    const why = {}, res = corridor(lay, { per: +arg('per', 2), tries: +arg('tries', 300), seed: +arg('seed', 1), why, lock: arg('lock', null), clockPeek: process.argv.includes('--clock-peek') });
+    for (const b of res) { const f = path.join(dir, `${lay}-c${b.spec.clock}-L${b.spec.gen.L}-s${arg("seed", 1)}.board.json`); fs.writeFileSync(f, JSON.stringify(b, null, 1)); console.log('wrote', f, '| firsts', b.spec.gen.firsts.join(','), '| route', b.spec.route.flat().length); }
     if (!res.length) console.log('layout', lay, ': none');
     console.log(JSON.stringify(why));
   }

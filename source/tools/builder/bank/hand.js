@@ -139,8 +139,11 @@ function prove(spec, o = {}) {
   let d = f.design; const out = [], errors = [];
   if (spec.refilled) out.push('refilled ' + spec.refilled + 'x along a shorter way');
   if (k == null) errors.push('clock minimum unproven');
-  else if (k !== spec.route.flat().length) errors.push(`clock minimum ${k} but the route has ${spec.route.flat().length} (shortest: ${JSON.stringify(cs.path.slice(0, 30))})`);
-  d.clock.n = (k ?? spec.route.flat().length) + (spec.spare ?? 1);
+  // the clock inside the last face-down pair: the solver counts the clock's move, the game's validator both tiles (validSolution:
+  // the pair's second tile must come before the deadline), so the clock number counts both
+  const last = spec.route[spec.route.length - 1], clockPair = Array.isArray(last) && last.includes(spec.clock), routeK = spec.route.flat().length;
+  if (k != null && k !== routeK && !(clockPair && k === routeK - 1)) errors.push(`clock minimum ${k} but the route has ${routeK} (shortest: ${JSON.stringify(cs.path.slice(0, 30))})`);
+  d.clock.n = (k == null ? routeK : clockPair ? Math.max(k, routeK) : k) + (spec.spare ?? 1);
   if (spec.peek) {   // is a face-down pair needed? the strict rules (no peeking) must not reach the clock in time
     const st = E.clockShortest(E.game(clone(d), { strict: true }), { nodes: 3e6, ms: 60000 }), ks = st && !st.unsure ? E.flatten(st.path).indexOf(d.clock.i) + 1 : null;
     out.push('without face-down pairs: ' + (ks == null ? 'no way to the clock' : ks + ' moves'));
