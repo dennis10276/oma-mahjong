@@ -4,7 +4,7 @@
 module.exports = {
   title: "The gold key waits for silver",
   idea: "One gold key carries a silver lock. A silver key is frozen; the way melts it. Taking the free gold key early, or melting from outside, costs.",
-  layout: [1006, 1004, 1020, 1000, 2023, 2021, 2022, 1008, 1037, 1038, 1035, 1041, 2024, 2025, 2026, 23, 1023, 1036, 1040],
+  layout: [1004, 1020, 1000, 2023, 2021, 2022, 1008, 1037, 1038, 1035, 1041, 2024, 2025, 2026, 23, 1023, 1036, 1040],
   vars: ['C', 'K1', 'K2', 'S1', 'S2', 'M', 'O'],
   rel: [['deep', 'C', 3], ['iceNb', 'M', 'S2'], ['iceNb', 'O', 'S2'], ['far', 'K1', 'C'], ['far', 'K2', 'C'], ['far', 'S1', 'S2'], ['far', 'K1', 'K2'],
         ['notOn', 'S2', 'M'], ['notOn', 'S2', 'O'], ['notOn', 'M', 'O'], ['notOn', 'K2', 'K1'], ['notOn', 'S2', 'K1']],
