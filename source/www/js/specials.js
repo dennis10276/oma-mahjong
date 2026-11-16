@@ -135,14 +135,23 @@ function obMarker(i) {
   if (G.ob && !G.ob.unlocked2 && G.ob.keys2.includes(i)) return 'key2';
   return '';
 }
-const obHTML = (kind, marker = '') => kind ? `<div class="ob" data-k="${kind}"${kind.startsWith('ice') && marker ? ` data-marker="${marker}"` : ''}></div>` : '';
+// a second sign on a special: what a frozen tile is underneath (key/lock), or that a locked tile is itself a key (silver/gold crossing)
+const markerOk = (kind, marker) => !!marker && (kind.startsWith('ice') || (kind.startsWith('lock') && marker.startsWith('key')));
+const obHTML = (kind, marker = '') => kind ? `<div class="ob" data-k="${kind}"${markerOk(kind, marker) ? ` data-marker="${marker}"` : ''}></div>` : '';
+// the marker to paint: for a locked tile its key role (it is a key of the other set), else obMarker
+function obSign(i) {
+  if (!G.ob || frozen(i) || !lockedT(i)) return obMarker(i);
+  if (!G.ob.unlocked && G.ob.keys.includes(i)) return 'key';
+  if (!G.ob.unlocked2 && G.ob.keys2.includes(i)) return 'key2';
+  return '';
+}
 function paintOb(el, kind, marker) {
   const ov = el.querySelector('.ob');
   if (!kind) { if (ov) ov.remove(); }
   else if (!ov) el.insertAdjacentHTML('beforeend', obHTML(kind, marker));
   else {
     ov.dataset.k = kind;
-    if (kind.startsWith('ice') && marker) ov.dataset.marker = marker;
+    if (markerOk(kind, marker)) ov.dataset.marker = marker;
     else delete ov.dataset.marker;
   }
 }

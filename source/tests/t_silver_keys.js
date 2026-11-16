@@ -46,4 +46,19 @@ module.exports = [
     const saved = await p.evaluate(() => { saveCur(); return JSON.parse(localStorage.getItem(CUR)).ob; });
     t.eq([saved.unlocked2, saved.keys2.length], [true, 2], 'the saved game keeps the silver set');
   } },
+  { name: 'silver keys: a silver key under a gold lock shows both signs (gold lock, silver key)', async run(t, { startLevel, sleep }) {
+    const p = await t.phone({ state: DENNIS });
+    await startLevel(p, 300);
+    const r = await p.evaluate(() => {
+      const ok = i => G.alive[i] && !G.down[i] && __mj.canTake(i);
+      const free = G.tiles.map((x, i) => i).filter(i => ok(i) && G.tiles[i].face < 100 && !G.ob.keys.includes(i) && !G.ob.locks.has(i));
+      const [a, b, x] = free, f = G.tiles[a].face, w = G.tiles.findIndex((y, k) => k !== a && k !== b && y.face === f);
+      G.tiles[w].face = G.tiles[b].face; G.tiles[b].face = f;
+      const ob = obState(); setObstacles({ ...ob, locks: [...ob.locks, b], locks2: [x], keys2: [a, b] });
+      G.tiles.forEach((y, i) => decorate(i));
+      const el = G.tiles[b].el.querySelector('.ob');
+      return { kind: el && el.dataset.k, marker: el && el.dataset.marker };
+    });
+    t.eq(r, { kind: 'lock', marker: 'key2' }, 'gold lock with the silver key sign');
+  } },
 ];

@@ -179,7 +179,7 @@ function decorate(i) {
   el.classList.toggle('gold', G.gold.has(i));
   el.classList.toggle('sp-joker', t.face === JOKER);
   // Ice keeps its overlay, with the key/lock badge above it when both apply.
-  paintOb(el, obKind(i), obMarker(i));
+  paintOb(el, obKind(i), obSign(i));
   if (G.clock && G.clock.i === i) clockBadge();
 }
 // the alarm clock: a badge with the moves left, above everything (so tiles on top never hide it)
@@ -224,7 +224,7 @@ function renderBoard(enter) {
   for (const i of order) {
     const t = G.tiles[i], r = t.r, k = obKind(i);
     const cls = 'tile' + (G.alive[i] ? '' : ' hidden') + (G.down[i] && G.peek !== i ? ' back' : '') + (G.gold.has(i) ? ' gold' : '') + (t.face === JOKER ? ' sp-joker' : '') + (G.alive[i] && !free(i) ? ' blocked' : '');
-    const html = `<div class="${cls}" data-i="${i}" style="left:${r.l}px;top:${r.t}px;width:${r.w.toFixed(1)}px;height:${r.h.toFixed(1)}px;z-index:${r.zi % 10000}"><div class="face">${Tiles.boardFace(S.theme, t.face)}</div>${obHTML(k, obMarker(i))}</div>`;
+    const html = `<div class="${cls}" data-i="${i}" style="left:${r.l}px;top:${r.t}px;width:${r.w.toFixed(1)}px;height:${r.h.toFixed(1)}px;z-index:${r.zi % 10000}"><div class="face">${Tiles.boardFace(S.theme, t.face)}</div>${obHTML(k, obSign(i))}</div>`;
     if (!layers.has(t.z)) layers.set(t.z, []);
     layers.get(t.z).push([i, html]);
   }
