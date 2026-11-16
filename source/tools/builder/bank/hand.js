@@ -138,12 +138,13 @@ function prove(spec, o = {}) {
   }
   let d = f.design; const out = [], errors = [];
   if (spec.refilled) out.push('refilled ' + spec.refilled + 'x along a shorter way');
-  if (k == null) errors.push('clock minimum unproven');
+  if (k == null && !spec.clockN) errors.push('clock minimum unproven');
   // the clock inside the last face-down pair: the solver counts the clock's move, the game's validator both tiles (validSolution:
   // the pair's second tile must come before the deadline), so the clock number counts both
   const last = spec.route[spec.route.length - 1], clockPair = Array.isArray(last) && last.includes(spec.clock), routeK = spec.route.flat().length;
-  if (k != null && k !== routeK && !(clockPair && k === routeK - 1)) errors.push(`clock minimum ${k} but the route has ${routeK} (shortest: ${JSON.stringify(cs.path.slice(0, 30))})`);
-  d.clock.n = (k == null ? routeK : clockPair ? Math.max(k, routeK) : k) + (spec.spare ?? 1);
+  if (spec.clockN) out.push(`clock number set by design: ${spec.clockN} (shortest way ${k})`);   // a loose clock on purpose ("don't take the clock yet")
+  else if (k != null && k !== routeK && !(clockPair && k === routeK - 1)) errors.push(`clock minimum ${k} but the route has ${routeK} (shortest: ${JSON.stringify(cs.path.slice(0, 30))})`);
+  d.clock.n = spec.clockN || ((k == null ? routeK : clockPair ? Math.max(k, routeK) : k) + (spec.spare ?? 1));
   if (spec.parkTile != null && k != null) {   // "park the twin": with that tile's picture made unmatchable, the clock is out of reach
     const dn = clone(d); dn.faces[spec.parkTile] = 977; dn.clock.n = 99;
     const st = E.clockShortest(E.game(dn, { strict: true }), { nodes: 3e6, ms: 60000 }), kn = st && !st.unsure ? E.flatten(st.path).indexOf(d.clock.i) + 1 : null;
