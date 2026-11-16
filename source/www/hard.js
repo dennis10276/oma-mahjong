@@ -250,15 +250,24 @@ const Hard = (() => {
   function validSolution(g, path) {
     if (!path || path.length !== g.tiles.length) return false;
     const initial = new Uint8Array(g.tiles.length).fill(1), alive = initial.slice(), tray = [];
+    const can = i => Number.isInteger(i) && alive[i] && (g.rules ? L.takeable(i, alive, g.nb, g.rules, initial) : L.isFree(i, alive, g.nb));
     let clockTaken = !g.clock;
     for (let move = 0; move < path.length; move++) {
       const i = path[move];
-      if (!Number.isInteger(i) || !alive[i] || !(g.rules ? L.takeable(i, alive, g.nb, g.rules, initial) : L.isFree(i, alive, g.nb))) return false;
+      if (!can(i)) return false;
       if (!clockTaken && move >= g.clock.n) return false;
+      const q = tray.indexOf(g.faces[i]);
+      if (q < 0 && tray.length >= SLOTS - 1) {
+        const j = path[move + 1];
+        if (!(g.down && j !== i && can(j) && g.faces[j] === g.faces[i] && (g.down[i] || g.down[j]))) return false;
+        if (!clockTaken && move + 1 >= g.clock.n) return false;
+        alive[i] = 0; alive[j] = 0;
+        if (g.clock && (i === g.clock.i || j === g.clock.i)) clockTaken = true;
+        move++; continue;
+      }
       alive[i] = 0;
       if (g.clock && i === g.clock.i) clockTaken = true;
-      const q = tray.indexOf(g.faces[i]); if (q >= 0) tray.splice(q, 1); else tray.push(g.faces[i]);
-      if (tray.length >= SLOTS) return false;
+      if (q >= 0) tray.splice(q, 1); else tray.push(g.faces[i]);
     }
     return clockTaken && tray.length === 0;
   }
