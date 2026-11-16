@@ -5,8 +5,8 @@
 const fs = require('fs'), path = require('path');
 const dir = path.resolve(process.argv[2] || path.join(__dirname, '../../../analysis/builder/bank/combo-350/checked'));
 const F = require('../footprint.js'), Dt = require('./detower.js'), { offers } = require('./trap_offers.js'), { expert } = require('./feel.js');
-const outF = path.join(dir, '..', 'eval.json'), old = fs.existsSync(outF) ? JSON.parse(fs.readFileSync(outF, 'utf8')) : {};
-for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
+const shard = (process.argv[3] || '0/1').split('/').map(Number), outF = path.join(dir, '..', shard[1] > 1 ? `eval-${shard[0]}.json` : 'eval.json'), old = fs.existsSync(outF) ? JSON.parse(fs.readFileSync(outF, 'utf8')) : {};
+for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort().filter((f, i) => i % shard[1] === shard[0])) {
   if (old[f]) continue;
   const r = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')), d = r.design, t = r.card && r.card.trap || {};
   const fp = F.measure(d, { minimum: d.tiles.length >= 96 ? 52 : 58 }), sh = Dt.strip(Dt.shape(d.tiles));
