@@ -182,25 +182,24 @@ function decorate(i) {
   paintOb(el, obKind(i), obSign(i));
   if (G.clock && G.clock.i === i) clockBadge();
 }
-// the alarm clock: a badge with the moves left, above everything (so tiles on top never hide it)
+// the alarm clock: the moves left in the top bar, next to the score (Dennis 2026-11-16: "The clock badge is in the way of the pile
+// ... move it to the top or somewhere away from the pile and it could light up"). The clock tile keeps its orange glow on the pile;
+// a tap on the number lights it up and shows the clock through the tiles on it.
 function clockBadge() {
   let ck = $('#clockBadge');
   const on = clockOn(), el = on && G.tiles[G.clock.i].el;
   G.tiles.forEach((t, k) => t.el && t.el.classList.toggle('clocked', on && k === G.clock.i));
-  if (!on || !el || !G.tiles[G.clock.i].r) { if (ck) ck.remove(); return; }
-  if (!ck) { ck = document.createElement('div'); ck.id = 'clockBadge'; ck.className = 'ck'; ck.onclick = e => { e.stopPropagation(); showClock(); }; $('#board').appendChild(ck); }
-  const r = G.tiles[G.clock.i].r, left = clockLeft();
+  if (!on || !el) { if (ck) ck.remove(); return; }
+  if (!ck) {
+    ck = document.createElement('button'); ck.id = 'clockBadge'; ck.className = 'chip ck'; ck.setAttribute('aria-label', 'clock');
+    ck.onclick = e => { e.stopPropagation(); showClock(); replay(ck, 'lit', 1500); };
+    const bar = $('#game .topbar'), score = $('#score'); bar.insertBefore(ck, score);
+  }
+  const left = clockLeft();
   ck.innerHTML = `<span>⏰</span><b>${left}</b>`;
   // one move used: the number gives a little hop, so you see every tile counts (1.58)
-  if (+ck.dataset.n > left) try { ck.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.4)', offset: .35 }, { transform: 'scale(1)' }], { duration: 380, easing: 'ease-out' }); } catch (e) { }
+  if (+ck.dataset.n > left) try { ck.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.3)', offset: .35 }, { transform: 'scale(1)' }], { duration: 380, easing: 'ease-out' }); } catch (e) { }
   ck.dataset.n = left;
-  ck.style.fontSize = (G.tw * 0.24).toFixed(1) + 'px';
-  // the timer stays whole: a clock in the top row or at the right edge used to push it out of the board, where it was cut off
-  const bd = $('#board'), bw = bd.clientWidth, bh = bd.clientHeight, cw = ck.offsetWidth, ch = ck.offsetHeight;
-  let x = r.l + r.w * 0.55, y = r.t - r.h * 0.16;
-  if (bw && cw) x = Math.max(2, Math.min(x, bw - cw - 2));
-  if (bh && ch) y = Math.max(2, Math.min(y, bh - ch - 2));
-  ck.style.left = x.toFixed(1) + 'px'; ck.style.top = y.toFixed(1) + 'px';
   ck.classList.toggle('urgent', left <= 5);
 }
 const setFace = i => { G.tiles[i].el.querySelector('.face').innerHTML = Tiles.boardFace(S.theme, faceOf(i)); decorate(i); };
