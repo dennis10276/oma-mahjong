@@ -1,0 +1,69 @@
+layer 0   x 0..13 (6.5 wide)
+  0             K00     n01     .02     .20
+  2                 t03     K04
+  4     .05     .06     .07     .08     .09     .33
+  6         .10     .11     .12     .13
+  8 .14     .15     .16     .17     .18     .19
+ 10     .21     .22     .23     .24     .25     .26
+ 12 .27     .28     .29     .30     .31     .32
+ 14 .34     .35     .36     .37     .38     .39
+layer 1   x 0..13 (6.5 wide)
+  0                                 .59
+  2                     I63
+  4         R60     t52     t53     .61     .67
+  6             .46     .43     .47
+  8     .58     .48     .40     .41     .49
+ 10         .54     .44     t42     C45     R55
+ 12     .66     .56     .50     .51     .57
+ 14     .68     .64     .62     .65     .69
+layer 2   x 0..13 (6.5 wide)
+  8                 .74     t70     B73
+ 10                     t72     I71
+ 12                         t75
+{"tiles":76,"valid":true,"towers":0,"stray":0,"edge":0,"mirror":0,"wide":6.5,"rows":8,"px":58.3,"fits":true}
+== clock route (this board) ==
+1. take 60 [f17] -> frees 5(uncovered) 52(side opened) | tray f17
+2. take 52 [f13] -> frees 53(side opened) | ice 63 1/2 | tray f17,f13
+3. take 53 [f14] -> frees 61(side opened) 63(thawed) | ice 63 2/2 | tray f17,f13,f14
+4. take 63 [f17] -> frees 3(uncovered) 4(uncovered) | tray f13,f14
+5. take 0 [f35] -> frees 1(side opened) | tray f13,f14,f35
+6. take 4 [f35] | ice 63 3/2 | tray f13,f14
+7. take 55 [f29] -> frees 26(uncovered) | tray f13,f14,f29
+8. take 72 [f13] | ice 71 1/2 | tray f14,f29
+9. take 75 [f4] -> frees 71(thawed) | ice 71 2/2 | tray f14,f29,f4
+10. take 71 [f29] -> frees 45(uncovered) | tray f14,f4
+11. take 45 [f10] = CLOCK -> frees 42(side opened) | ice 71 3/2 | tray f14,f4,f10
+== what holds the clock ==
+CLOCK 45: under 71 | sides L42 R55 | keys 4,0
+  on 71: ice: 2 of 42,45,70,72,73,75
+  side 42: under 71,72 | sides L44 R45
+    on 71: ice: 2 of 42,45,70,72,73,75
+    on 72: free
+    side 44: under 72 | sides L54 R42
+      on 72: free
+      side 54: free
+      side 42: under 71,72 | sides L44 R45
+    side 45: under 71 | sides L42 R55 | keys 4,0
+  side 55: free
+  key 4: under 63
+    on 63: ice: 2 of 3,4,52,53
+  key 0: free
+== wrong move 73 (lonelyNeighbour, released: win cost 2) ==
+  73 [f7] twins 36
+    twin 36: under 62,64 | sides L35 R37
+      on 62: sides L64 R65
+        side 64: sides L68 R62
+        side 65: sides L62 R69
+      on 64: sides L68 R62
+        side 68: free
+        side 62: sides L64 R65
+      side 35: under 64,68 | sides L34 R36
+        on 64: sides L68 R62
+        on 68: free
+        side 34: under 68
+        side 36: under 62,64 | sides L35 R37
+      side 37: under 62,65 | sides L36 R38
+        on 62: sides L64 R65
+        on 65: sides L62 R69
+        side 36: under 62,64 | sides L35 R37
+        side 38: under 65,69 | sides L37 R39

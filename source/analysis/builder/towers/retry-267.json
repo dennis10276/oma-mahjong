@@ -1,0 +1,10 @@
+{
+  "level": 267,
+  "ok": false,
+  "attempts": [
+    {
+      "W": 13,
+      "why": "band 2 cannot fit without cutting a trap tile"
+    }
+  ]
+}

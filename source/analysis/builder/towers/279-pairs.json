@@ -1,0 +1,52 @@
+[
+  {
+    "targets": [
+      1,
+      4,
+      3,
+      68
+    ],
+    "partners": [
+      41,
+      40,
+      57,
+      69
+    ],
+    "result": {
+      "ok": true,
+      "errors": [],
+      "towers": 0,
+      "px": 58.6,
+      "k": 10,
+      "wrongMoves": [
+        {
+          "tiles": [
+            65
+          ],
+          "before": {
+            "result": "win",
+            "cost": 3
+          },
+          "after": {
+            "result": "win",
+            "cost": 3
+          }
+        },
+        {
+          "tiles": [
+            42,
+            58
+          ],
+          "before": {
+            "result": "win",
+            "cost": 3
+          },
+          "after": {
+            "result": "win",
+            "cost": 3
+          }
+        }
+      ]
+    }
+  }
+]

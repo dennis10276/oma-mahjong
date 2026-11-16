@@ -1,0 +1,55 @@
+layer 0   x 0..14 (7 wide)
+  0     .00     .01     .02     .03     .04     .05
+  2 .06     .07     .08     .09     .10     .11     .12
+  4     .13     .14     .15     .16     .17     .18
+  6 .19     .20     .21     .22     .23     .24     .25
+  8             .26     .27     .28     .29
+ 10                         .30
+layer 1   x 0..14 (7 wide)
+  2     R48     K41     n46     .47     .42     .49
+  4         .33     .35     .43     .36     .34
+  6     .37     .31     .39     .40     .32     .38
+  8                 K44     n50     .45
+layer 2   x 0..14 (7 wide)
+  2         c60                             .59
+  4             .51     .57     n58     C52
+  6         .54     .55     .61     .56     .53
+layer 3   x 0..14 (7 wide)
+  4                 .64     t68     t65
+  6             .62     .66     .67     .63
+layer 4   x 0..14 (7 wide)
+  4                     B71     I72
+  6                 .69     t73     L70
+layer 5   x 0..14 (7 wide)
+  6                     R74     c75
+{"tiles":76,"valid":true,"towers":0,"stray":0,"edge":0,"mirror":1,"wide":7,"rows":6,"px":54.5,"fits":false}
+== clock route (this board) ==
+1. take 60 [f22] -> frees 48(uncovered) | tray f22
+2. take 48 [f12] -> frees 6(uncovered) 41(side opened) | tray f22,f12
+3. take 75 [f12] | tray f22
+4. take 44 [f29] -> frees 26(uncovered) 50(side opened) | tray f22,f29
+5. take 41 [f29] -> frees 46(side opened) 70(unlocked) | tray f22
+6. take 70 [f8] -> frees 63(uncovered) | ice 72 1/2 | tray f22,f8
+7. take 74 [f28] -> frees 69(uncovered) 73(uncovered) | tray f22,f8,f28
+8. take 73 [f22] -> frees 72(thawed) | ice 72 2/2 | tray f8,f28
+9. take 72 [f1] -> frees 65(uncovered) | tray f8,f28,f1
+10. take 65 [f28] -> frees 52(uncovered) | ice 72 3/2 | tray f8,f1
+11. take 52 [f15] = CLOCK -> frees 34(uncovered) | tray f8,f1,f15
+== what holds the clock ==
+CLOCK 52: under 65
+  on 65: under 72
+    on 72: ice: 2 of 65,68,70,71,73
+== wrong move 71 (lonelyNeighbour, released: lose) ==
+  71 [f2] twins 28
+    twin 28: under 45,50 | sides L27 R29
+      on 45: free
+      on 50: sides L44 R45
+        side 44: free
+        side 45: free
+      side 27: under 44,50 | sides L26 R28
+        on 44: free
+        on 50: sides L44 R45
+        side 26: under 44
+        side 28: under 45,50 | sides L27 R29
+      side 29: under 45
+        on 45: free

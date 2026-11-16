@@ -1,0 +1,26 @@
+{
+  "level": 298,
+  "found": false,
+  "seed": {
+    "ok": false,
+    "errors": [
+      "footprint"
+    ],
+    "tiles": 84,
+    "width": 6,
+    "rows": 8,
+    "px": 57.534511053190464,
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.94
+  },
+  "filtered": {
+    "supportOrOverlap": 400,
+    "footprint": 520,
+    "towers": 107
+  },
+  "count": 0,
+  "ms": 83,
+  "attempts": []
+}

@@ -1,0 +1,261 @@
+{
+  "schema": 3,
+  "level": 251,
+  "source": 251,
+  "ok": true,
+  "geometry": {
+    "ok": true,
+    "errors": [],
+    "tiles": 76,
+    "width": 6.5,
+    "rows": 8,
+    "px": 58.56603773584906,
+    "straight": 0,
+    "stray": 22,
+    "edge": 3,
+    "mirror": 0.5
+  },
+  "certificate": {
+    "ok": true,
+    "errors": [],
+    "checks": [
+      "zeroStraightTowers",
+      "supportedIntegerGrid",
+      "72to88Tiles",
+      "6.5Columns8Rows58px",
+      "fullStrictWin",
+      "sameClockMinimumAndSpare",
+      "sameSpecialEffects",
+      "sameSpecialPrerequisites",
+      "allAuthoredWrongMovesStillWrong",
+      "ownAuthoredProof"
+    ],
+    "k": 14,
+    "spare": 2,
+    "footprint": {
+      "ok": true,
+      "profile": "phone-near-60-v1",
+      "tilePx": 58.56603773584906,
+      "rows": 8,
+      "compact": true,
+      "target": 60,
+      "minimum": 58,
+      "limit": "width"
+    },
+    "ablations": [
+      [
+        "ice",
+        48,
+        11
+      ],
+      [
+        "lock",
+        54,
+        9
+      ]
+    ],
+    "prerequisites": [
+      [
+        48,
+        [
+          38,
+          54,
+          67
+        ]
+      ],
+      [
+        38,
+        []
+      ],
+      [
+        67,
+        []
+      ],
+      [
+        54,
+        [
+          38,
+          67
+        ]
+      ]
+    ],
+    "prices": [
+      {
+        "tiles": [
+          71
+        ],
+        "before": {
+          "tiles": [
+            71
+          ],
+          "result": "lose",
+          "need": null,
+          "cost": null,
+          "exact": true
+        },
+        "after": {
+          "tiles": [
+            67
+          ],
+          "result": "lose",
+          "need": null,
+          "cost": null,
+          "exact": true
+        }
+      }
+    ],
+    "ownProof": {
+      "ok": true
+    },
+    "beforeHash": "6a58f91c21271f7c86ca716670bec144298db0cf1ef2aa6fb7695b1e97a5a629",
+    "afterHash": "801e71da966c0b33f3d85a030e209d32e325021b4b46c4f207faf5c0947b955e",
+    "policy": "Task 23 geometry + unchanged Task 20 mechanics",
+    "shape": {
+      "ok": true,
+      "errors": [],
+      "tiles": 76,
+      "width": 6.5,
+      "rows": 8,
+      "px": 58.56603773584906,
+      "straight": 0,
+      "stray": 22,
+      "edge": 3,
+      "mirror": 0.5
+    }
+  },
+  "routePictures": [],
+  "routePictureScope": "Earlier approved Task 20 pictures retained unchanged",
+  "pressure": {
+    "before": {
+      "clock": 14,
+      "spare": 2,
+      "free": 10,
+      "atClock": {
+        "waiting": 2,
+        "free": 10,
+        "opening": {
+          "win": 10,
+          "lose": 0,
+          "unknown": 0,
+          "actions": [
+            {
+              "tile": 0,
+              "result": "win"
+            },
+            {
+              "tile": 6,
+              "result": "win"
+            },
+            {
+              "tile": 49,
+              "result": "win"
+            },
+            {
+              "tile": 55,
+              "result": "win"
+            },
+            {
+              "tile": 70,
+              "result": "win"
+            },
+            {
+              "tile": 72,
+              "result": "win"
+            },
+            {
+              "tile": 73,
+              "result": "win"
+            },
+            {
+              "tile": 74,
+              "result": "win"
+            },
+            {
+              "tile": 78,
+              "result": "win"
+            },
+            {
+              "tile": 79,
+              "result": "win"
+            }
+          ]
+        }
+      },
+      "cap1": "lose",
+      "cap2": "win"
+    },
+    "after": {
+      "clock": 14,
+      "spare": 2,
+      "free": 12,
+      "atClock": {
+        "waiting": 2,
+        "free": 12,
+        "opening": {
+          "win": 12,
+          "lose": 0,
+          "unknown": 0,
+          "actions": [
+            {
+              "tile": 0,
+              "result": "win"
+            },
+            {
+              "tile": 5,
+              "result": "win"
+            },
+            {
+              "tile": 45,
+              "result": "win"
+            },
+            {
+              "tile": 51,
+              "result": "win"
+            },
+            {
+              "tile": 52,
+              "result": "win"
+            },
+            {
+              "tile": 58,
+              "result": "win"
+            },
+            {
+              "tile": 66,
+              "result": "win"
+            },
+            {
+              "tile": 68,
+              "result": "win"
+            },
+            {
+              "tile": 69,
+              "result": "win"
+            },
+            {
+              "tile": 70,
+              "result": "win"
+            },
+            {
+              "tile": 74,
+              "result": "win"
+            },
+            {
+              "tile": 75,
+              "result": "win"
+            }
+          ]
+        }
+      },
+      "cap1": "lose",
+      "cap2": "win"
+    },
+    "signals": [],
+    "humanWinPrediction": false
+  },
+  "strict": {
+    "ok": true,
+    "pairs": 0
+  },
+  "hash": "801e71da966c0b33f3d85a030e209d32e325021b4b46c4f207faf5c0947b955e"
+}

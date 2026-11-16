@@ -4,7 +4,7 @@ module.exports = (B, S) => {
   const fs = require('fs'), sv = JSON.parse(fs.readFileSync('../codex-tasks/results/narrow-251-299/placements-4/level-292.json'));
   sv.positions.forEach((p, i) => { if (p) B.st.T[i] = p.slice(); });
   const I = B.st.T[65], isNb = p => { const dx = Math.abs(p[0] - I[0]), dy = Math.abs(p[1] - I[1]), dz = Math.abs(p[2] - I[2]); return dz === 0 ? (dx <= 2 && dy <= 2 && (dx < 2 || dy < 2)) : (dz === 1 && dx < 2 && dy < 2); };
-  const D = require('../../tools/builder/bank/detower.js');
+  const D = require('../detower.js');
   const movable = [60, 44, 17, 30, 59, 72, 68, 69, 67, 75, 54, 58, 50, 31, 32, 33, 34];
   for (const id of movable) {
     const home = B.st.T[id], cur = B.st.T.filter((t, i) => i !== id), spots = [];

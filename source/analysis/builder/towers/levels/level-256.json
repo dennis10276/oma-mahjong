@@ -1,0 +1,226 @@
+{
+  "schema": 3,
+  "level": 256,
+  "source": 256,
+  "ok": true,
+  "geometry": {
+    "ok": true,
+    "errors": [],
+    "tiles": 76,
+    "width": 6,
+    "rows": 6,
+    "px": 63.3469387755102,
+    "straight": 0,
+    "stray": 0,
+    "edge": 0,
+    "mirror": 0.99
+  },
+  "certificate": {
+    "ok": true,
+    "errors": [],
+    "checks": [
+      "zeroStraightTowers",
+      "supportedIntegerGrid",
+      "72to88Tiles",
+      "6.5Columns8Rows58px",
+      "fullStrictWin",
+      "sameClockMinimumAndSpare",
+      "sameSpecialEffects",
+      "sameSpecialPrerequisites",
+      "allAuthoredWrongMovesStillWrong",
+      "ownAuthoredProof"
+    ],
+    "k": 8,
+    "spare": 2,
+    "footprint": {
+      "ok": true,
+      "profile": "phone-near-60-v1",
+      "tilePx": 63.3469387755102,
+      "rows": 6,
+      "compact": false,
+      "target": 60,
+      "minimum": 58,
+      "limit": "width"
+    },
+    "ablations": [
+      [
+        "ice",
+        1,
+        6
+      ],
+      [
+        "ice",
+        2,
+        2
+      ]
+    ],
+    "prerequisites": [
+      [
+        2,
+        []
+      ],
+      [
+        1,
+        []
+      ]
+    ],
+    "prices": [
+      {
+        "tiles": [
+          3
+        ],
+        "before": {
+          "tiles": [
+            3
+          ],
+          "result": "win",
+          "need": 11,
+          "cost": 3,
+          "exact": true
+        },
+        "after": {
+          "tiles": [
+            3
+          ],
+          "result": "win",
+          "need": 11,
+          "cost": 3,
+          "exact": true
+        }
+      }
+    ],
+    "ownProof": {
+      "ok": true
+    },
+    "beforeHash": "6b3e1e99ec7d3853957c2283b5ed25c848788d0860d1e7591ec0c67c927b7822",
+    "afterHash": "870fe8720439cc4151f5413f894ea49c91fd12f9418853c0f7959a74f57504a6",
+    "policy": "Task 23 geometry + unchanged Task 20 mechanics",
+    "shape": {
+      "ok": true,
+      "errors": [],
+      "tiles": 76,
+      "width": 6,
+      "rows": 6,
+      "px": 63.3469387755102,
+      "straight": 0,
+      "stray": 0,
+      "edge": 0,
+      "mirror": 0.99
+    }
+  },
+  "routePictures": [],
+  "routePictureScope": "Task 23 edits preserve source route pictures",
+  "pressure": {
+    "before": {
+      "clock": 8,
+      "spare": 2,
+      "free": 8,
+      "atClock": {
+        "waiting": 2,
+        "free": 7,
+        "opening": {
+          "win": 2,
+          "lose": 5,
+          "unknown": 0,
+          "actions": [
+            {
+              "tile": 3,
+              "result": "lose"
+            },
+            {
+              "tile": 5,
+              "result": "lose"
+            },
+            {
+              "tile": 45,
+              "result": "win"
+            },
+            {
+              "tile": 46,
+              "result": "lose"
+            },
+            {
+              "tile": 65,
+              "result": "win"
+            },
+            {
+              "tile": 74,
+              "result": "lose"
+            },
+            {
+              "tile": 75,
+              "result": "lose"
+            }
+          ]
+        }
+      },
+      "cap1": "lose",
+      "cap2": "lose"
+    },
+    "after": {
+      "clock": 8,
+      "spare": 2,
+      "free": 11,
+      "atClock": {
+        "waiting": 2,
+        "free": 10,
+        "opening": {
+          "win": 2,
+          "lose": 8,
+          "unknown": 0,
+          "actions": [
+            {
+              "tile": 3,
+              "result": "lose"
+            },
+            {
+              "tile": 5,
+              "result": "lose"
+            },
+            {
+              "tile": 45,
+              "result": "win"
+            },
+            {
+              "tile": 46,
+              "result": "lose"
+            },
+            {
+              "tile": 59,
+              "result": "lose"
+            },
+            {
+              "tile": 65,
+              "result": "win"
+            },
+            {
+              "tile": 68,
+              "result": "lose"
+            },
+            {
+              "tile": 72,
+              "result": "lose"
+            },
+            {
+              "tile": 73,
+              "result": "lose"
+            },
+            {
+              "tile": 74,
+              "result": "lose"
+            }
+          ]
+        }
+      },
+      "cap1": "lose",
+      "cap2": "lose"
+    },
+    "signals": [],
+    "humanWinPrediction": false
+  },
+  "strict": {
+    "ok": true,
+    "pairs": 0
+  },
+  "hash": "870fe8720439cc4151f5413f894ea49c91fd12f9418853c0f7959a74f57504a6"
+}

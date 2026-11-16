@@ -1,0 +1,48 @@
+layer 0   x 0..13 (6.5 wide)
+  0     .00     .01     .02     .03     .04     .05
+  2     .07     .08     .09     .10     .11     .12
+  4 .13     .14         .06             .15     .16
+  6     .17     .18     .58             C19     n20
+  8 t21     K22         .31     .69     .23     .24
+ 10     .25     .26     .27     .28     .29     .30
+ 12     .32     .33     .34     .35     .36     .37
+layer 1   x 0..13 (6.5 wide)
+  0                 .56                     .57
+  2         .48     .50     .53     .51     .49
+  4     K40                                 .41
+  6         t38                             L39
+  8     I42                                 .43
+ 10         t44     .46     .52     .47     .45
+ 12         .54                     .55     .59
+layer 2   x 0..13 (6.5 wide)
+  2             .62     .64     .65     .63
+ 10             R60     .66     .67     .61
+ 12                                     .68
+layer 3   x 0..13 (6.5 wide)
+  2                 .72     .75     .73
+ 10                 R70     .74     .71
+layer 4   x 0..13 (6.5 wide)
+  2                     .78     .79
+ 10                     R76     .77
+{"tiles":80,"valid":true,"towers":0,"stray":4,"edge":0,"mirror":0.15,"wide":6.5,"rows":7,"px":58.6,"fits":true}
+== clock route (this board) ==
+1. take 76 [f18] -> frees 70(uncovered) | tray f18
+2. take 70 [f20] -> frees 60(uncovered) | tray f18,f20
+3. take 60 [f23] -> frees 44(uncovered) | tray f18,f20,f23
+4. take 44 [f18] -> frees 25(uncovered) | ice 42 1/2 | tray f20,f23
+5. take 38 [f34] -> frees 17(uncovered) 42(thawed) | ice 42 2/2 | tray f20,f23,f34
+6. take 42 [f20] -> frees 21(uncovered) 22(uncovered) | tray f23,f34
+7. take 22 [f1] | ice 42 3/2 | tray f23,f34,f1
+8. take 40 [f1] -> frees 13(uncovered) 14(uncovered) 39(unlocked) | tray f23,f34
+9. take 39 [f4] -> frees 19(uncovered) 20(uncovered) | tray f23,f34,f4
+10. take 19 [f23] = CLOCK | tray f34,f4
+== what holds the clock ==
+CLOCK 19: under 39
+  on 39: keys 22,40
+    key 22: under 42
+      on 42: ice: 2 of 21,22,38,44
+    key 40: free
+== wrong move 40 (keyEarly, released: lose) ==
+  40 [f1] twins 22
+    twin 22: under 42
+      on 42: ice: 2 of 21,22,38,44

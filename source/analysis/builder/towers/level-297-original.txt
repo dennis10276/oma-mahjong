@@ -1,0 +1,53 @@
+layer 0   x 0..14 (7 wide)
+  0 .00     .01     .02     .03     .04     .05     .06
+  2     .07     .08     .09     .10     .11     .12
+  4 .13     .14     .15     .16     .17     .18     .19
+  6     .20     .21                     t22     K23
+  8 C24     n25                             .26     .27
+ 10     .28     .29                     .30     .31
+layer 1   x 0..14 (7 wide)
+  0     .49     .47     .39     .40     .48     .50
+  2         .43     .35     .34     .36     .44
+  4     .45     .37     .32     .33     t38     t46
+  6         .41                             I42
+  8     c51                                     B52
+layer 2   x 0..14 (7 wide)
+  0         .66     .64     .60     .63     .65
+  2             .59     .57     .56     .58
+  4         K62     t55     .53     R54     R61
+layer 3   x 0..14 (7 wide)
+  0             .77     .75     .74     .76
+  2                 t73     .69     .72
+  4             I71     t68     R67     R70
+layer 4   x 0..14 (7 wide)
+  0                         .79
+  4                         R78
+{"tiles":80,"valid":true,"towers":0,"stray":0,"edge":0,"mirror":1,"wide":7,"rows":6,"px":54.5,"fits":false}
+== clock route (this board) ==
+1. take 73 [f14] -> frees 59(uncovered) 69(side opened) | ice 71 1/2 | tray f14
+2. take 78 [f13] | tray f14,f13
+3. take 70 [f28] -> frees 61(uncovered) 67(side opened) | tray f14,f13,f28
+4. take 67 [f14] -> frees 68(side opened) | tray f13,f28
+5. take 68 [f35] -> frees 71(side opened,thawed) | ice 71 2/2 | tray f13,f28,f35
+6. take 71 [f28] -> frees 62(uncovered) | tray f13,f35
+7. take 51 [f0] -> frees 25(uncovered) | tray f13,f35,f0
+8. take 61 [f0] -> frees 46(uncovered) 54(side opened) | tray f13,f35
+9. take 46 [f12] -> frees 19(uncovered) | ice 42 1/2 | tray f13,f35,f12
+10. take 54 [f35] -> frees 38(uncovered) 53(side opened) | tray f13,f12
+11. take 38 [f32] -> frees 42(thawed) | ice 42 2/2 | tray f13,f12,f32
+12. take 42 [f13] -> frees 22(uncovered) 23(uncovered) | tray f12,f32
+13. take 23 [f17] | ice 42 3/2 | tray f12,f32,f17
+14. take 62 [f17] -> frees 24(unlocked) 45(uncovered) 55(side opened) | ice 71 3/2 | tray f12,f32
+15. take 24 [f20] = CLOCK | tray f12,f32,f20
+== what holds the clock ==
+CLOCK 24: under 51 | keys 62,23
+  on 51: free
+  key 62: under 71
+    on 71: ice: 2 of 55,62,68,73
+  key 23: under 42
+    on 42: ice: 2 of 22,23,38,46,52
+== wrong move 52 (lonelyNeighbour, released: lose) ==
+  52 [f16] twins 12
+    twin 12: under 44
+      on 44: under 58
+        on 58: under 72

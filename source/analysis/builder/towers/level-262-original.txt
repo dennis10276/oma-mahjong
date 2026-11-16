@@ -1,0 +1,97 @@
+layer 0   x 0..14 (7 wide)
+  0                 t00     I01     t02
+  2                 t03     t04     .05
+  4                 I06     t07     .08
+  6 .09     .10     t11     I12     t13     t14     .15
+  8 .16     t17     I18     t19     t20     I21     t22
+ 10 .23     .24     t25     t26     t27     t28     .29
+ 12                 .30     t31     t32
+ 14                 t33     t34     t35
+ 16                 t36     t37     I38
+layer 1   x 0..14 (7 wide)
+  1                     t59     t60
+  3                     t53     t54
+  5                     t43     t44
+  7     R55     t45     t39     t40     t46     t56
+  9     K57     t49     t41     I42     C50     t58
+ 11                     .47     t48
+ 13                     t51     I52
+ 15                     I61     t62
+layer 2   x 0..14 (7 wide)
+  2                         I73
+  4                         K69
+  6                         t64
+  8         t71     I66     t63     t65     c70
+ 10                         t67
+ 12                         t68
+ 14                         t72
+layer 3   x 0..14 (7 wide)
+  3                         t79
+  5                         t76
+  7                         I75
+  9                         t74
+ 11                         .77
+ 13                         c78
+layer 4   x 0..14 (7 wide)
+  4                         c83
+  8                         t80
+ 10                         c81
+ 12                         c82
+{"tiles":84,"valid":true,"towers":0,"stray":0,"edge":0,"mirror":1,"wide":7,"rows":9,"px":52.7,"fits":false}
+== clock route (this board) ==
+1. take 71 [f17] -> frees 55(uncovered) 57(uncovered) 66(side opened,thawed) | ice 66 1/1 | tray f17
+2. take 57 [f32] -> frees 23(uncovered) | tray f17,f32
+3. take 83 [f11] -> frees 76(uncovered) 79(uncovered) | tray f17,f32,f11
+4. take 79 [f11] -> frees 73(uncovered,thawed) | ice 73 1/1 | tray f17,f32
+5. take 76 [f31] -> frees 69(uncovered) | ice 75 1/1 | tray f17,f32,f31
+6. take 69 [f32] | ice 73 2/1 | tray f17,f31
+7. take 70 [f13] -> frees 56(uncovered) 58(uncovered) 65(side opened) | tray f17,f31,f13
+8. take 56 [f13] -> frees 15(uncovered) | ice 21 1/1 | tray f17,f31
+9. take 65 [f4] -> frees 46(uncovered) | ice 42 1/1 | tray f17,f31,f4
+10. take 81 [f31] | tray f17,f4
+11. take 58 [f6] -> frees 22(uncovered) 29(uncovered) 50(side opened) | ice 21 2/1 | tray f17,f4,f6
+12. take 55 [f17] -> frees 9(uncovered) 16(uncovered) | tray f4,f6
+13. take 50 [f35] = CLOCK | ice 21 3/1 ice 42 2/1 | tray f4,f6,f35
+== what holds the clock ==
+CLOCK 50: under 65,70 | sides L42 R58 | keys 57,69
+  on 65: sides L63 R70
+    side 63: under 74,75,80 | sides L66 R65
+      on 74: under 80,81
+      on 75: under 80 | ice: 1 of 63,64,74,76,80
+      on 80: free
+      side 66: sides L71 R63 | ice: 1 of 39,41,45,49,63,71
+      side 65: sides L63 R70
+    side 70: free
+  on 70: free
+  side 42: under 63,65,67,74,80,81 | sides L41 R50 | ice: 1 of 19,20,26,27,40,41,48,50,63,65,67
+    on 63: under 74,75,80 | sides L66 R65
+    on 65: sides L63 R70
+    on 67: under 74,77,81
+      on 74: under 80,81
+      on 77: under 81,82
+      on 81: free
+    on 74: under 80,81
+      on 80: free
+      on 81: free
+    on 80: free
+    on 81: free
+    side 41: under 63,66,67,74,80,81 | sides L49 R42
+      on 63: under 74,75,80 | sides L66 R65
+      on 66: sides L71 R63 | ice: 1 of 39,41,45,49,63,71
+      on 67: under 74,77,81
+      on 74: under 80,81
+      on 80: free
+      on 81: free
+      side 49: under 66,71 | sides L57 R41
+      side 42: under 63,65,67,74,80,81 | sides L41 R50 | ice: 1 of 19,20,26,27,40,41,48,50,63,65,67
+    side 50: under 65,70 | sides L42 R58 | keys 57,69
+  side 58: under 70
+    on 70: free
+  key 57: under 71
+    on 71: free
+  key 69: under 76,79,83
+    on 76: under 83
+      on 83: free
+    on 79: under 83
+      on 83: free
+    on 83: free

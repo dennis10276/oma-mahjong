@@ -1,0 +1,8 @@
+'use strict';
+// Describe actual visible offers, not a uniform human choosing random tile IDs.
+const fs=require('fs'),path=require('path'),D=require('./detower'),E=require(D.CF+'../engine'),P=require(D.CF+'narrow_proof'),Detour=require(D.CF+'../loop/detour');
+const OUT=path.resolve(__dirname,'../../../analysis/builder/towers'),p=JSON.parse(fs.readFileSync(path.join(OUT,'pack.json')));
+function offers(d,atClock){const g=E.game(d,{strict:true});let s=E.start(g);if(atClock){const cs=E.clockShortest(g,{nodes:1000000,ms:10000});if(!cs||cs.unsure)return{unknown:true};const prefix=E.flatten(cs.path);for(const i of prefix.slice(0,prefix.indexOf(d.clock.i)+1))s=E.step(g,s,i);}
+ const moves=Detour.temptingMoves(g,s,{singles:true}).filter(m=>!m.peek),rows=moves.map(m=>{let st=s;try{for(const i of m.take)st=st&&E.step(g,st,i);}catch{st=null;}return{kind:m.kind,take:m.take,result:st?E.winnable(g,st,{nodes:500000,ms:1500}).result:'lose'};});
+ const summary={win:0,lose:0,unknown:0};rows.forEach(r=>summary[r.result]++);return{...summary,rows};}
+for(const row of p.rows.filter(r=>p.overrides.includes(r.level))){const before=P.original(row.level).design,r={level:row.level,definition:'Visible face-up pairs and visible-twin singles; bounded engine proofs; no personal player or human win prediction.',before:{start:offers(before,false),clock:offers(before,true)},after:{start:offers(row.board,false),clock:offers(row.board,true)}};fs.writeFileSync(path.join(OUT,`offers-${row.level}.json`),JSON.stringify(r,null,2));console.log(JSON.stringify({level:row.level,before:[r.before.start.win,r.before.start.lose,r.before.clock.win,r.before.clock.lose],after:[r.after.start.win,r.after.start.lose,r.after.clock.win,r.after.clock.lose]}));}

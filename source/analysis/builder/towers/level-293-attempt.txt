@@ -1,0 +1,39 @@
+layer 0   x 0..12 (6 wide)
+  0             K00     n01     .02     .27
+  2 .58             t03     K04             .66
+  4     .05     .06     .07     .08     .09
+  6 .14     .10     .11     .12     .13     .21
+  8 .15     .16     .17     .18     .19     .20
+ 10     .22     .23     .24     .25     .26
+ 12 .28     .29     .30     .31     .32     .33
+ 14 .34     .35     .36     .37     .38     .39
+layer 1   x 0..12 (6 wide)
+  2                     I63
+  4         R60     t52     t53     .61
+  6     .54     .46     .43     .47
+  8     .48     .40     .41     .49     .59
+ 10         .44     t42     C45     R55
+ 12     .56     .50     .51     .57     .67
+ 14     .68     .64     .62     .65     .69
+layer 2   x 0..12 (6 wide)
+  8         .74     t70     B73
+ 10             t72     I71
+ 12                 t75
+{"tiles":76,"valid":true,"towers":0,"stray":0,"edge":0,"mirror":0.93,"wide":6,"rows":8,"px":59.1,"fits":true}
+{"ok":false,"changed":[2,10,13,14,15,21,22,27,28,44,46,48,54,56,58,66],"freed":[21,27,56],"held":[2,46]}
+2 (.): {"on":[],"l":[1],"r":[],"ice":null,"keys":null}  ->  {"on":[],"l":[1],"r":[27],"ice":null,"keys":null}
+10 (.): {"on":[46],"l":[],"r":[11],"ice":null,"keys":null}  ->  {"on":[46,54],"l":[14],"r":[11],"ice":null,"keys":null}
+13 (.): {"on":[47],"l":[12],"r":[],"ice":null,"keys":null}  ->  {"on":[47],"l":[12],"r":[21],"ice":null,"keys":null}
+14 (.): {"on":[58],"l":[],"r":[15],"ice":null,"keys":null}  ->  {"on":[54],"l":[],"r":[10],"ice":null,"keys":null}
+15 (.): {"on":[48,58],"l":[14],"r":[16],"ice":null,"keys":null}  ->  {"on":[48],"l":[],"r":[16],"ice":null,"keys":null}
+21 (.): {"on":[54],"l":[],"r":[22],"ice":null,"keys":null}  ->  {"on":[],"l":[13],"r":[],"ice":null,"keys":null}
+22 (.): {"on":[44,54],"l":[21],"r":[23],"ice":null,"keys":null}  ->  {"on":[44],"l":[],"r":[23],"ice":null,"keys":null}
+27 (.): {"on":[66],"l":[],"r":[28],"ice":null,"keys":null}  ->  {"on":[],"l":[2],"r":[],"ice":null,"keys":null}
+28 (.): {"on":[56,66],"l":[27],"r":[29],"ice":null,"keys":null}  ->  {"on":[56],"l":[],"r":[29],"ice":null,"keys":null}
+44 (.): {"on":[72],"l":[54],"r":[42],"ice":null,"keys":null}  ->  {"on":[72],"l":[],"r":[42],"ice":null,"keys":null}
+46 (.): {"on":[],"l":[],"r":[43],"ice":null,"keys":null}  ->  {"on":[],"l":[54],"r":[43],"ice":null,"keys":null}
+48 (.): {"on":[74],"l":[58],"r":[40],"ice":null,"keys":null}  ->  {"on":[74],"l":[],"r":[40],"ice":null,"keys":null}
+54 (.): {"on":[],"l":[],"r":[44],"ice":null,"keys":null}  ->  {"on":[],"l":[],"r":[46],"ice":null,"keys":null}
+56 (.): {"on":[],"l":[66],"r":[50],"ice":null,"keys":null}  ->  {"on":[],"l":[],"r":[50],"ice":null,"keys":null}
+58 (.): {"on":[],"l":[],"r":[48],"ice":null,"keys":null}  ->  {"on":[],"l":[],"r":[],"ice":null,"keys":null}
+66 (.): {"on":[],"l":[],"r":[56],"ice":null,"keys":null}  ->  {"on":[],"l":[],"r":[],"ice":null,"keys":null}

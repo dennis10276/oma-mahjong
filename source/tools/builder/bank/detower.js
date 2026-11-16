@@ -306,7 +306,8 @@ function bandRun(level, opts = {}) {
     }
     const best = new Map(); for (const o of out) { const key = o.cut.slice().sort((p, q) => p - q).join(','); if (!best.has(key)) best.set(key, o); }
     const cost = o => o.cut.length + 10 * o.cut.filter(i => core.has(i)).length;   // cut ordinary tiles before route or neighbour tiles
-    return [...best.values()].sort((p, q) => cost(p) - cost(q)).slice(0, 4);
+    const side = o => o.cut.reduce((sum,i) => sum + a.tiles[i][0], 0);
+    return [...best.values()].sort((p, q) => cost(p) - cost(q) || (opts.trimOrder === 'right' ? side(q)-side(p) : 0)).slice(0, opts.trimOptions || 4);
   };
   for (const W of opts.widths || [12, 13]) {
     const opt = bands.map((_, k) => trims(k, W));

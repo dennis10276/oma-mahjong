@@ -1,0 +1,84 @@
+{
+  "level": 256,
+  "definition": "Visible face-up pairs and visible-twin singles; bounded engine proofs; no personal player or human win prediction.",
+  "before": {
+    "start": {
+      "win": 2,
+      "lose": 0,
+      "unknown": 0,
+      "rows": [
+        {
+          "kind": "pair",
+          "take": [
+            0,
+            58
+          ],
+          "result": "win"
+        },
+        {
+          "kind": "pair",
+          "take": [
+            45,
+            65
+          ],
+          "result": "win"
+        }
+      ]
+    },
+    "clock": {
+      "win": 1,
+      "lose": 0,
+      "unknown": 0,
+      "rows": [
+        {
+          "kind": "pair",
+          "take": [
+            45,
+            65
+          ],
+          "result": "win"
+        }
+      ]
+    }
+  },
+  "after": {
+    "start": {
+      "win": 2,
+      "lose": 0,
+      "unknown": 0,
+      "rows": [
+        {
+          "kind": "pair",
+          "take": [
+            0,
+            58
+          ],
+          "result": "win"
+        },
+        {
+          "kind": "pair",
+          "take": [
+            45,
+            65
+          ],
+          "result": "win"
+        }
+      ]
+    },
+    "clock": {
+      "win": 1,
+      "lose": 0,
+      "unknown": 0,
+      "rows": [
+        {
+          "kind": "pair",
+          "take": [
+            45,
+            65
+          ],
+          "result": "win"
+        }
+      ]
+    }
+  }
+}

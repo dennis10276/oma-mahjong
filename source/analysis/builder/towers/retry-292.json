@@ -1,0 +1,288 @@
+{
+  "level": 292,
+  "ok": false,
+  "attempts": [
+    {
+      "W": 13,
+      "cut": [
+        3,
+        0,
+        2,
+        0
+      ],
+      "errors": [
+        "wrongMove:74",
+        "authoredProof:twoMeaningfulBaits"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        3,
+        0,
+        2,
+        0
+      ],
+      "errors": [
+        "wrongMove:74",
+        "authoredProof:twoMeaningfulBaits"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        3,
+        0,
+        2,
+        0
+      ],
+      "why": "no full winning route"
+    },
+    {
+      "W": 13,
+      "cut": [
+        3,
+        0,
+        2,
+        0
+      ],
+      "why": "no full winning route"
+    },
+    {
+      "W": 13,
+      "cut": [
+        3,
+        0,
+        2,
+        1
+      ],
+      "errors": [
+        "wrongMove:74",
+        "authoredProof:twoMeaningfulBaits"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        3,
+        0,
+        2,
+        1
+      ],
+      "errors": [
+        "wrongMove:74",
+        "authoredProof:repeatChoiceChanged"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        3,
+        0,
+        2,
+        1
+      ],
+      "errors": [
+        "wrongMove:74",
+        "authoredProof:twoMeaningfulBaits"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        3,
+        0,
+        2,
+        1
+      ],
+      "errors": [
+        "wrongMove:74",
+        "authoredProof:repeatChoiceChanged"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        3,
+        0,
+        2,
+        1
+      ],
+      "why": "no full winning route"
+    },
+    {
+      "W": 13,
+      "cut": [
+        3,
+        0,
+        2,
+        1
+      ],
+      "why": "no full winning route"
+    },
+    {
+      "W": 13,
+      "cut": [
+        3,
+        0,
+        2,
+        1
+      ],
+      "why": "no full winning route"
+    },
+    {
+      "W": 13,
+      "cut": [
+        3,
+        0,
+        2,
+        1
+      ],
+      "why": "no full winning route"
+    },
+    {
+      "W": 13,
+      "cut": [
+        3,
+        0,
+        2,
+        2
+      ],
+      "errors": [
+        "wrongMove:74",
+        "authoredProof:twoMeaningfulBaits"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        3,
+        0,
+        2,
+        2
+      ],
+      "errors": [
+        "wrongMove:74",
+        "authoredProof:repeatChoiceChanged"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        3,
+        0,
+        2,
+        2
+      ],
+      "why": "no full winning route"
+    },
+    {
+      "W": 13,
+      "cut": [
+        3,
+        0,
+        2,
+        2
+      ],
+      "why": "no full winning route"
+    },
+    {
+      "W": 13,
+      "cut": [
+        3,
+        0,
+        4,
+        0
+      ],
+      "errors": [
+        "wrongMove:74",
+        "authoredProof:twoMeaningfulBaits"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        3,
+        0,
+        4,
+        0
+      ],
+      "errors": [
+        "wrongMove:74",
+        "authoredProof:baitPairChanged"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        3,
+        0,
+        4,
+        0
+      ],
+      "why": "no full winning route"
+    },
+    {
+      "W": 13,
+      "cut": [
+        3,
+        0,
+        4,
+        0
+      ],
+      "why": "no full winning route"
+    },
+    {
+      "W": 13,
+      "cut": [
+        3,
+        0,
+        2,
+        3
+      ],
+      "errors": [
+        "wrongMove:74",
+        "authoredProof:twoMeaningfulBaits"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        3,
+        0,
+        2,
+        3
+      ],
+      "errors": [
+        "wrongMove:74",
+        "authoredProof:repeatChoiceChanged"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        3,
+        0,
+        2,
+        3
+      ],
+      "errors": [
+        "wrongMove:74",
+        "authoredProof:twoMeaningfulBaits"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        3,
+        0,
+        2,
+        3
+      ],
+      "errors": [
+        "wrongMove:74",
+        "authoredProof:repeatChoiceChanged"
+      ]
+    }
+  ]
+}

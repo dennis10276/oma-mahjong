@@ -1,0 +1,97 @@
+layer 0   x 0..12 (6 wide)
+  0 .01     .02     .03     .04     .05     .06
+  2 .07     .08     .09     .10     .11     .12
+  4 t13     K14             .00     .15     .16
+  6 .17     .18     .27     .58     .19     .20
+  8 .21     .22     .23     .24     .25     .26
+ 10 .28     .29     .30     .31     .32     .33
+layer 1   x 0..12 (6 wide)
+  0     .56     .54     .55     .57     B59
+  2     t46     .42     .36     .43     .47
+  4     I52                     .67     .53
+  6     t44             .51             C45
+  8     .50     .38     .34     .35     .39
+ 10     .48     .40     .37     .41     .49
+layer 2   x 0..12 (6 wide)
+  0         K75     n73     .74
+  2         R70     .66     .65     .69
+  8         .68     .62     .60     .61
+ 10         .72     .64     n63     L71
+{"tiles":76,"valid":true,"towers":0,"stray":0,"edge":0,"mirror":0.96,"wide":6,"rows":6,"px":63.3,"fits":true}
+== clock route (this board) ==
+1. take 70 [f18] -> frees 46(uncovered) 66(side opened) | tray f18
+2. take 44 [f5] -> frees 17(uncovered) | ice 52 1/2 | tray f18,f5
+3. take 46 [f5] -> frees 7(uncovered) 52(thawed) | ice 52 2/2 | tray f18
+4. take 52 [f17] -> frees 13(uncovered) 14(uncovered) | tray f18,f17
+5. take 14 [f30] | ice 52 3/2 | tray f18,f17,f30
+6. take 75 [f30] -> frees 56(uncovered) 71(unlocked) 73(side opened) | tray f18,f17
+7. take 45 [f19] = CLOCK -> frees 20(uncovered) | tray f18,f17,f19
+== what holds the clock ==
+CLOCK 45: free
+== wrong move 45 (, released: lose) ==
+  45 [f19] twins 71
+    twin 71: keys 14,75
+      key 14: under 52
+        on 52: ice: 2 of 13,14,44,46
+      key 75: free
+== wrong move 75+59 (, released: lose) ==
+  75 [f30] twins 14,31,59
+    twin 14: under 52
+      on 52: ice: 2 of 13,14,44,46
+    twin 31: under 37,41,63 | sides L30 R32
+      on 37: under 63,64 | sides L40 R41
+        on 63: sides L64 R71
+        on 64: sides L72 R63
+        side 40: under 64,72 | sides L48 R37
+        side 41: under 63,71 | sides L37 R49
+      on 41: under 63,71 | sides L37 R49
+        on 63: sides L64 R71
+        on 71: keys 14,75
+        side 37: under 63,64 | sides L40 R41
+        side 49: under 71
+      on 63: sides L64 R71
+        side 64: sides L72 R63
+        side 71: keys 14,75
+      side 30: under 37,40,64 | sides L29 R31
+        on 37: under 63,64 | sides L40 R41
+        on 40: under 64,72 | sides L48 R37
+        on 64: sides L72 R63
+        side 29: under 40,48,72 | sides L28 R30
+        side 31: under 37,41,63 | sides L30 R32
+      side 32: under 41,49,71 | sides L31 R33
+        on 41: under 63,71 | sides L37 R49
+        on 49: under 71
+        on 71: keys 14,75
+        side 31: under 37,41,63 | sides L30 R32
+        side 33: under 49
+    twin 59: free
+  59 [f30] twins 14,31,75
+    twin 14: under 52
+      on 52: ice: 2 of 13,14,44,46
+    twin 31: under 37,41,63 | sides L30 R32
+      on 37: under 63,64 | sides L40 R41
+        on 63: sides L64 R71
+        on 64: sides L72 R63
+        side 40: under 64,72 | sides L48 R37
+        side 41: under 63,71 | sides L37 R49
+      on 41: under 63,71 | sides L37 R49
+        on 63: sides L64 R71
+        on 71: keys 14,75
+        side 37: under 63,64 | sides L40 R41
+        side 49: under 71
+      on 63: sides L64 R71
+        side 64: sides L72 R63
+        side 71: keys 14,75
+      side 30: under 37,40,64 | sides L29 R31
+        on 37: under 63,64 | sides L40 R41
+        on 40: under 64,72 | sides L48 R37
+        on 64: sides L72 R63
+        side 29: under 40,48,72 | sides L28 R30
+        side 31: under 37,41,63 | sides L30 R32
+      side 32: under 41,49,71 | sides L31 R33
+        on 41: under 63,71 | sides L37 R49
+        on 49: under 71
+        on 71: keys 14,75
+        side 31: under 37,41,63 | sides L30 R32
+        side 33: under 49
+    twin 75: free

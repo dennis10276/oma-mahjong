@@ -1,0 +1,43 @@
+layer 0   x 0..12 (6 wide)
+  0 .00     .01     .02     .03     n05     C06
+  2     .07     .08     .09     .10     .12
+  4 .13     .14     .11     .04     .15     .16
+  6     .17     .18     .29     .19     .20
+  8 K21     t22     .51     .35     .23     .24
+ 10     .25     .26     .27     .28     .30
+ 12 t31     t32     .33     .34     .36     .37
+layer 1   x 0..12 (6 wide)
+  0             .56     .73     K57
+  2         .48     .50     .53     .49
+  4     .40     .71     .47     .77     .41
+  6         t38     .65             .39
+  8     I42             .67             .43
+ 10         t44     .46     .52     .45
+ 12     I58     L54     .79     .55     .59
+layer 2   x 0..12 (6 wide)
+  2             .62     .64     .63
+ 10             R60     .66     .61
+ 12         t69                     .68
+layer 3   x 0..12 (6 wide)
+  2                 .72     .75
+ 10                 R70     .74
+layer 4   x 0..12 (6 wide)
+  2                     .78
+ 10                     R76
+{"tiles":80,"valid":true,"towers":0,"stray":0,"edge":0,"mirror":0.99,"wide":6,"rows":7,"px":63.3,"fits":true}
+== clock route (this board) ==
+1. take 76 [f35] -> frees 70(uncovered) 74(uncovered) | tray f35
+2. take 70 [f17] -> frees 60(uncovered) | tray f35,f17
+3. take 60 [f14] -> frees 44(uncovered) | tray f35,f17,f14
+4. take 44 [f35] -> frees 25(uncovered) | ice 42 1/2 ice 58 1/2 | tray f17,f14
+5. take 6 [f0] = CLOCK | tray f17,f14,f0
+== what holds the clock ==
+CLOCK 6: free
+== wrong move 57 (, released: lose) ==
+  57 [f23] twins 21
+    twin 21: under 42
+      on 42: ice: 2 of 21,22,38,44
+== wrong move 6 (, released: lose) ==
+  6 [f0] twins 58
+    twin 58: under 69 | ice: 2 of 31,32,44,54,69
+      on 69: free

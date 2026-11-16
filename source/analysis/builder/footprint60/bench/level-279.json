@@ -2,7 +2,7 @@
  "level": 279,
  "ok": true,
  "method": "reshaped by hand on the bench",
- "note": "279: rows slid to the middle (6 wide), top row moved into the pile without touching the trap (8 rows)",
+ "note": "All original visible finish pairs restored by moving ordinary tiles; route and trap pictures unchanged",
  "edits": [],
  "design": {
   "tiles": [
@@ -12,7 +12,7 @@
     0
    ],
    [
-    7,
+    0,
     14,
     0
    ],
@@ -22,13 +22,13 @@
     0
    ],
    [
-    2,
-    0,
-    0
+    6,
+    4,
+    1
    ],
    [
-    8,
-    0,
+    10,
+    12,
     0
    ],
    [
@@ -207,12 +207,12 @@
     0
    ],
    [
-    10,
-    12,
+    8,
+    0,
     0
    ],
    [
-    0,
+    7,
     14,
     0
    ],
@@ -292,9 +292,9 @@
     1
    ],
    [
-    6,
-    4,
-    1
+    2,
+    0,
+    0
    ],
    [
     3,
@@ -347,14 +347,14 @@
     2
    ],
    [
-    4,
-    0,
-    0
-   ],
-   [
     3,
     6,
     2
+   ],
+   [
+    4,
+    0,
+    0
    ],
    [
     7,
@@ -388,7 +388,7 @@
    ]
   ],
   "faces": [
-   27,
+   26,
    4,
    23,
    16,
@@ -399,7 +399,7 @@
    17,
    1,
    9,
-   26,
+   27,
    23,
    2,
    6,
@@ -515,6 +515,8 @@
    42,
    54,
    8,
+   1,
+   4,
    2,
    12,
    3,
@@ -523,22 +525,14 @@
    75,
    30,
    48,
+   29,
+   39,
    37,
    66,
    31,
    38,
-   0,
-   59,
    50,
    68,
-   11,
-   40,
-   1,
-   4,
-   29,
-   39,
-   44,
-   69,
    60,
    74,
    47,
@@ -547,40 +541,46 @@
    58,
    24,
    32,
-   23,
-   25,
    27,
    49,
    33,
    41,
    62,
    64,
-   9,
-   34,
-   5,
-   35,
    26,
    36,
+   0,
+   5,
+   40,
+   9,
+   11,
+   59,
+   34,
+   35,
+   44,
+   69,
+   23,
+   25,
    10,
-   18,
-   72,
-   46,
-   17,
-   65,
-   6,
-   7,
+   14,
    52,
    22,
+   65,
+   7,
+   6,
+   72,
+   18,
+   46,
+   17,
    43,
    56,
+   15,
    16,
    51,
    19,
    21,
    20,
-   57,
-   14,
-   15
+   57
   ]
  },
  "keep": [
@@ -792,7 +792,7 @@
    "ok": true
   },
   "beforeHash": "4e062c9f9cca55f63d63f5db07101149129fc60ac15135318c134c6509c455a7",
-  "afterHash": "48057282f87325da25fea839cd9f02bcc08d1b4e62facd0253b8bb69d3e1f755",
+  "afterHash": "ac51d97e984209d710b49b2acc2193b3d125e63e8123b3ddcca2befccbe1f636",
   "policy": "Task 20 same mechanics; geometry and non-trap finish pictures may change."
  }
 }

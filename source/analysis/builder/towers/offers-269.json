@@ -1,0 +1,48 @@
+{
+  "level": 269,
+  "definition": "Visible face-up pairs and visible-twin singles; bounded engine proofs; no personal player or human win prediction.",
+  "before": {
+    "start": {
+      "win": 0,
+      "lose": 0,
+      "unknown": 0,
+      "rows": []
+    },
+    "clock": {
+      "win": 1,
+      "lose": 0,
+      "unknown": 0,
+      "rows": [
+        {
+          "kind": "match",
+          "take": [
+            62
+          ],
+          "result": "win"
+        }
+      ]
+    }
+  },
+  "after": {
+    "start": {
+      "win": 0,
+      "lose": 0,
+      "unknown": 0,
+      "rows": []
+    },
+    "clock": {
+      "win": 1,
+      "lose": 0,
+      "unknown": 0,
+      "rows": [
+        {
+          "kind": "match",
+          "take": [
+            48
+          ],
+          "result": "win"
+        }
+      ]
+    }
+  }
+}

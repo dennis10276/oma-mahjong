@@ -2,7 +2,7 @@
 // Wrong move 73 (lonely neighbour of ice 71): twin 36 deep under 62/64. Bands: 6 wide x 8 rows, no trap dependency changed,
 // route plays; but the two keys (same picture) end up diagonal neighbours. Slide row 0 (key 0's row) so they are apart again.
 module.exports = (B, S) => {
-  const D = require('../../tools/builder/bank/detower.js'), SEP = require(D.CF + 'separate');
+  const D = require('../detower.js'), SEP = require(D.CF + 'separate');
   S.fromBands(B);
   const row0 = B.ids(t => t[1] === Math.min(...B.st.T.map(q => q[1])));
   console.log('row 0', row0.join(','), 'key 0 at', JSON.stringify(B.st.T[0]), 'key 4 at', JSON.stringify(B.st.T[4]));

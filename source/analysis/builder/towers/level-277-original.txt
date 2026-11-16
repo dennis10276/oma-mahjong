@@ -1,0 +1,90 @@
+layer 0   x 0..14 (7 wide)
+  0 .00     t01     I02     t03     t04     I05     t06
+  2 t07     I08     t09     I10     t11     t12     R13
+  4         t14     .15     t16     I17     t18
+  6                 t19     I20     t21
+  8                 I22     t23     t24
+ 10                 t25     I26     I27
+ 12         .28     t29     I30     K31     R32
+ 14 K33     t34     n35     C36     I37     t38     I39
+ 16 t40     I41     t42     .43     t44     I45     t46
+layer 1   x 0..14 (7 wide)
+  1     t67     t65     t73     t74     t66     L68
+  3             L55     t59     L60     t56
+  5                     t51     L52
+  7                     t49     t50
+  9                     t47     t48
+ 11                     t53     I54
+ 13             .57     t61     t62     t58
+ 15     t71     t63     c69     L70     t64     L72
+layer 2   x 0..14 (7 wide)
+  8                         .75
+{"tiles":76,"valid":true,"towers":0,"stray":1,"edge":0,"mirror":1,"wide":7,"rows":9,"px":52.7,"fits":false}
+== clock route (this board) ==
+1. take 58 [f28] -> frees 32(uncovered) 62(side opened) | ice 37 1/1 | tray f28
+2. take 62 [f35] -> frees 54(thawed) 61(side opened) | ice 30 1/1 ice 37 2/1 ice 54 1/1 | tray f28,f35
+3. take 61 [f35] | ice 30 2/1 | tray f28
+4. take 54 [f2] | ice 26 1/1 ice 27 1/1 ice 30 3/1 | tray f28,f2
+5. take 71 [f8] -> frees 33(uncovered) 40(uncovered) 63(side opened) | ice 41 1/1 | tray f28,f2,f8
+6. take 32 [f28] -> frees 31(side opened) | tray f2,f8
+7. take 31 [f31] | ice 27 2/1 ice 30 4/1 ice 37 3/1 ice 54 2/1 | tray f2,f8,f31
+8. take 33 [f31] -> frees 52(unlocked) 55(unlocked) 68(unlocked) 72(unlocked) | tray f2,f8
+9. take 68 [f19] -> frees 6(uncovered) 13(uncovered) 66(side opened) | ice 5 1/2 | tray f2,f8,f19
+10. take 72 [f19] -> frees 39(uncovered,thawed) 46(uncovered) 64(side opened) | ice 39 1/1 ice 45 1/1 | tray f2,f8
+11. take 56 [f20] -> frees 18(uncovered) 60(side opened) | ice 17 1/1 | tray f2,f8,f20
+12. take 64 [f20] -> frees 70(side opened) | ice 37 4/1 ice 45 2/1 | tray f2,f8
+13. take 70 [f26] -> frees 69(side opened) | ice 37 5/1 | tray f2,f8,f26
+14. take 39 [f26] -> frees 38(side opened) | tray f2,f8
+15. take 46 [f1] -> frees 45(side opened,thawed) | ice 39 2/1 ice 45 3/1 | tray f2,f8,f1
+16. take 13 [f1] | tray f2,f8
+17. take 38 [f13] -> frees 37(side opened,thawed) | ice 37 6/1 ice 39 3/1 ice 45 4/1 | tray f2,f8,f13
+18. take 45 [f8] -> frees 44(side opened) | tray f2,f13
+19. take 37 [f16] | tray f2,f13,f16
+20. take 63 [f16] | ice 41 2/1 | tray f2,f13
+21. take 69 [f17] -> frees 36(uncovered) | tray f2,f13,f17
+22. take 60 [f2] -> frees 59(side opened) | ice 10 1/1 ice 17 2/1 | tray f13,f17
+23. take 36 [f10] = CLOCK | ice 30 5/1 ice 37 7/1 | tray f13,f17,f10
+== what holds the clock ==
+CLOCK 36: under 61,62,69,70 | sides L35 R37
+  on 61: sides L57 R62
+    side 57: free
+    side 62: sides L61 R58
+      side 61: sides L57 R62
+      side 58: free
+  on 62: sides L61 R58
+  on 69: sides L63 R70
+    side 63: sides L71 R69
+      side 71: free
+      side 69: sides L63 R70
+    side 70: sides L69 R64 | keys 31,33
+      side 69: sides L63 R70
+      side 64: sides L70 R72
+      key 31: under 54,58,62 | sides L30 R32
+      key 33: under 71
+  on 70: sides L69 R64 | keys 31,33
+  side 35: under 57,61,63,69 | sides L34 R36
+    on 57: free
+    on 61: sides L57 R62
+    on 63: sides L71 R69
+    on 69: sides L63 R70
+    side 34: under 57,63,71 | sides L33 R35
+      on 57: free
+      on 63: sides L71 R69
+      on 71: free
+      side 33: under 71
+      side 35: under 57,61,63,69 | sides L34 R36
+    side 36: under 61,62,69,70 | sides L35 R37
+  side 37: under 58,62,64,70 | sides L36 R38 | ice: 1 of 31,36,38,44,58,62,64,70
+    on 58: free
+    on 62: sides L61 R58
+    on 64: sides L70 R72
+      side 70: sides L69 R64 | keys 31,33
+      side 72: keys 31,33
+    on 70: sides L69 R64 | keys 31,33
+    side 36: under 61,62,69,70 | sides L35 R37
+    side 38: under 58,64,72 | sides L37 R39
+      on 58: free
+      on 64: sides L70 R72
+      on 72: keys 31,33
+      side 37: under 58,62,64,70 | sides L36 R38 | ice: 1 of 31,36,38,44,58,62,64,70
+      side 39: under 72 | ice: 1 of 38,46,72

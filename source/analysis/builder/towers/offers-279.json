@@ -1,0 +1,204 @@
+{
+  "level": 279,
+  "definition": "Visible face-up pairs and visible-twin singles; bounded engine proofs; no personal player or human win prediction.",
+  "before": {
+    "start": {
+      "win": 4,
+      "lose": 0,
+      "unknown": 0,
+      "rows": [
+        {
+          "kind": "pair",
+          "take": [
+            1,
+            4
+          ],
+          "result": "win"
+        },
+        {
+          "kind": "pair",
+          "take": [
+            3,
+            63
+          ],
+          "result": "win"
+        },
+        {
+          "kind": "pair",
+          "take": [
+            37,
+            66
+          ],
+          "result": "win"
+        },
+        {
+          "kind": "pair",
+          "take": [
+            62,
+            64
+          ],
+          "result": "win"
+        }
+      ]
+    },
+    "clock": {
+      "win": 7,
+      "lose": 0,
+      "unknown": 0,
+      "rows": [
+        {
+          "kind": "pair",
+          "take": [
+            1,
+            4
+          ],
+          "result": "win"
+        },
+        {
+          "kind": "pair",
+          "take": [
+            2,
+            12
+          ],
+          "result": "win"
+        },
+        {
+          "kind": "pair",
+          "take": [
+            3,
+            63
+          ],
+          "result": "win"
+        },
+        {
+          "kind": "pair",
+          "take": [
+            30,
+            48
+          ],
+          "result": "win"
+        },
+        {
+          "kind": "pair",
+          "take": [
+            37,
+            66
+          ],
+          "result": "win"
+        },
+        {
+          "kind": "pair",
+          "take": [
+            50,
+            68
+          ],
+          "result": "win"
+        },
+        {
+          "kind": "pair",
+          "take": [
+            62,
+            64
+          ],
+          "result": "win"
+        }
+      ]
+    }
+  },
+  "after": {
+    "start": {
+      "win": 3,
+      "lose": 0,
+      "unknown": 0,
+      "rows": [
+        {
+          "kind": "pair",
+          "take": [
+            1,
+            4
+          ],
+          "result": "win"
+        },
+        {
+          "kind": "pair",
+          "take": [
+            37,
+            66
+          ],
+          "result": "win"
+        },
+        {
+          "kind": "pair",
+          "take": [
+            62,
+            64
+          ],
+          "result": "win"
+        }
+      ]
+    },
+    "clock": {
+      "win": 7,
+      "lose": 0,
+      "unknown": 0,
+      "rows": [
+        {
+          "kind": "pair",
+          "take": [
+            1,
+            4
+          ],
+          "result": "win"
+        },
+        {
+          "kind": "pair",
+          "take": [
+            2,
+            12
+          ],
+          "result": "win"
+        },
+        {
+          "kind": "pair",
+          "take": [
+            3,
+            63
+          ],
+          "result": "win"
+        },
+        {
+          "kind": "pair",
+          "take": [
+            30,
+            48
+          ],
+          "result": "win"
+        },
+        {
+          "kind": "pair",
+          "take": [
+            37,
+            66
+          ],
+          "result": "win"
+        },
+        {
+          "kind": "pair",
+          "take": [
+            50,
+            68
+          ],
+          "result": "win"
+        },
+        {
+          "kind": "pair",
+          "take": [
+            62,
+            64
+          ],
+          "result": "win"
+        }
+      ]
+    }
+  }
+}

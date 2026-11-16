@@ -1,7 +1,7 @@
 // 279: band attempt (6 wide, mechanics pass) still has 9 rows; the top row holds only ordinary tiles 00, 01, 72, 68:
 // move them to free brick spots below it (mirror pairs first, low first), then prove.
 module.exports = (B, S) => {
-  const D = require('../../tools/builder/bank/detower.js');
+  const D = require('../detower.js');
   S.fromBands(B);
   const lx = t => t[0] / 2 - t[2] * 0.14, ly = t => t[1] / 2 * 1.24 - t[2] * 0.14;
   for (const id of [0, 1, 72, 68]) {

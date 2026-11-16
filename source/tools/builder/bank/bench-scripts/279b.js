@@ -1,6 +1,6 @@
 // 279: as 279.js, but every candidate spot is checked for the clock route length (must stay as released) before it is taken.
 module.exports = (B, S) => {
-  const D = require('../../tools/builder/bank/detower.js'), P = require(D.CF + 'narrow_proof');
+  const D = require('../detower.js'), P = require(D.CF + 'narrow_proof');
   S.fromBands(B);
   const kOf = () => P.kOf(B.design().d), k0 = B.base.k, top = [0, 1, 72, 68];
   console.log('k after bands', kOf(), 'released', k0);

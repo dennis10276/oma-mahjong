@@ -18,7 +18,7 @@
    CLI: MECH=1 NARROW_TRAP=core node shape_bench.js <level> [script.js]   (script gets B; without one: show + quick) */
 const fs = require('fs'), path = require('path');
 const D = require('./detower.js'), CF = D.CF;
-const P = require(CF + 'narrow_proof'), Q = require(CF + 'finish_ten_proof'), G = require(CF + 'narrow_methods'), E = require(CF + '../engine'), F = require(CF + '../footprint'), SEP = require(CF + 'separate');
+const P = require(CF + 'narrow_proof'), Q = require('./towers_proof'), G = require(CF + 'narrow_methods'), E = require(CF + '../engine'), F = require(CF + '../footprint'), SEP = require(CF + 'separate');
 const OUT = path.resolve(__dirname, '../../../analysis/builder/footprint60/bench');
 const clone = x => JSON.parse(JSON.stringify(x));
 
@@ -31,7 +31,7 @@ function bench(level) {
   for (const r of route) if (role[r] === '.' || role[r] === 'n') role[r] = 'R';
   for (const b of bait) role[b] = 'B';
   for (const k of a.obst.keys) role[k] = 'K'; for (const l of a.obst.locks) role[l] = 'L'; for (const i of Object.keys(a.obst.ice).map(Number)) role[i] = 'I'; role[a.clock.i] = 'C';
-  const st = { T: a.tiles.map(t => t.slice()), faces: a.faces.slice(), dropped: new Set(), log: [] };
+  const st = { T: a.tiles.map(t => t.slice()), faces: a.faces.slice(), dropped: new Set(), log: [] }, proofs = new Map();
   const live = () => st.T.map((t, i) => st.dropped.has(i) ? null : t);
   const B = {
     level, before, a, base, role, st,
@@ -70,24 +70,39 @@ function bench(level) {
       return r;
     },
     prove() {
+      const input = JSON.stringify(B.design());
+      if (proofs.has(input)) { B.last = clone(proofs.get(input)); return clone(B.last.r); }
+      B.last = null;
       const { d, keep } = B.design(); if (!G.valid(d.tiles)) return { ok: false, why: 'geometry: overlap or unsupported' };
-      if (SEP.closeTwins(d).visible > base.twins) { const u = D.untwin(d, base.twins, new Set(keep.map((id, k) => role[id] !== '.' ? k : null).filter(x => x != null))); d.faces = u.d.faces; }
+      const geometry = require('./shape_bench_tools').geometry(d);
+      if (!geometry.ok) return { ok: false, errors: geometry.errors, geometry };
+      if (SEP.closeTwins(d).visible > base.twins) {
+        const protectedFaces = new Set(keep.filter(id => role[id] !== '.').map(id => a.faces[id]));
+        const fixed = new Set(keep.map((id,k) => role[id] !== '.' || protectedFaces.has(a.faces[id]) ? k : null).filter(x => x != null));
+        d.faces = D.untwin(d, base.twins, fixed).d.faces;
+      }
       const sol = D.route(d); if (!sol) return { ok: false, why: 'no full winning route (clock route or finish)', quick: B.quick() };
       d.solution = sol;
       const cert = Q.certify(before, d, keep, base);
       const r = { ok: cert.ok && D.shape(d.tiles).straight === 0, errors: cert.errors, towers: D.shape(d.tiles).straight, px: cert.footprint && +cert.footprint.tilePx.toFixed(1), k: cert.k };
       if (cert.prices) r.wrongMoves = cert.prices.map(p => ({ tiles: p.tiles, before: p.before && { result: p.before.result, cost: p.before.cost }, after: p.after && { result: p.after.result, cost: p.after.cost } }));
-      B.last = { d, keep, cert, r };
+      B.last = { d, keep, cert, r, input };
+      proofs.set(input, clone(B.last));
       return r;
     },
     save(note) {
       if (!B.last || !B.last.r.ok) throw Error('prove first');
+      if (B.last.input !== JSON.stringify(B.design())) throw Error('board changed after proof; prove again');
       fs.mkdirSync(OUT, { recursive: true });
       const { d, keep, cert } = B.last;
       fs.writeFileSync(path.join(OUT, `level-${level}.json`), JSON.stringify({ level, ok: true, method: 'reshaped by hand on the bench', note, edits: st.log, design: d, keep, shape: D.strip(D.shape(d.tiles)), px: cert.footprint && +cert.footprint.tilePx.toFixed(1), certificate: cert }, null, 1));
       return path.join(OUT, `level-${level}.json`);
     }
   };
+  B.load = record => { const d = record.design || record.d, keep = record.keep || d.tiles.map((_, i) => i); st.dropped = new Set(a.tiles.map((_, i) => i).filter(i => !keep.includes(i))); keep.forEach((id, i) => { st.T[id] = d.tiles[i].slice(); st.faces[id] = d.faces[i]; }); B.last = null; return B; };
+  for (const name of ['invariants','heldSpots','picture']) B[name] = (...args) => require('./shape_bench_tools')[name](B, ...args);
+  B.geometry = () => require('./shape_bench_tools').geometry(B.design().d);
+  B.pressure = opts => require('./shape_bench_tools').pressure(B.design().d, opts);
   return B;
 }
 module.exports = { bench };

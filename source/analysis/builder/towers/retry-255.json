@@ -1,0 +1,336 @@
+{
+  "level": 255,
+  "ok": false,
+  "attempts": [
+    {
+      "W": 13,
+      "cut": [
+        0,
+        0,
+        5,
+        0,
+        0
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        0,
+        5,
+        0,
+        0
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        2,
+        5,
+        0,
+        0
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        2,
+        5,
+        0,
+        0
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        0,
+        5,
+        0,
+        0
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        0,
+        5,
+        0,
+        0
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        1,
+        0,
+        5,
+        0,
+        0
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        1,
+        0,
+        5,
+        0,
+        0
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        0,
+        5,
+        0,
+        2
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        0,
+        5,
+        0,
+        2
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        0,
+        5,
+        2,
+        0
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        0,
+        5,
+        2,
+        0
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        2,
+        5,
+        0,
+        0
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        2,
+        5,
+        0,
+        0
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        2,
+        5,
+        0,
+        0
+      ],
+      "why": "no full winning route"
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        2,
+        5,
+        0,
+        0
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        1,
+        2,
+        5,
+        0,
+        0
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        1,
+        2,
+        5,
+        0,
+        0
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        2,
+        5,
+        0,
+        2
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        2,
+        5,
+        0,
+        2
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        2,
+        5,
+        2,
+        0
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        2,
+        5,
+        2,
+        0
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        4,
+        5,
+        0,
+        0
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        4,
+        5,
+        0,
+        0
+      ],
+      "why": "no full winning route"
+    }
+  ]
+}

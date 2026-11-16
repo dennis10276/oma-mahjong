@@ -1,0 +1,438 @@
+{
+  "level": 278,
+  "ok": false,
+  "attempts": [
+    {
+      "W": 13,
+      "cut": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        4
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects",
+        "wrongMove:78",
+        "wrongMove:10",
+        "authoredProof:clockNotBait"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        4
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects",
+        "wrongMove:78",
+        "wrongMove:10",
+        "authoredProof:clockNotBait"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        4
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects",
+        "wrongMove:78",
+        "wrongMove:10",
+        "authoredProof:clockNotBait"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        4
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects",
+        "wrongMove:78",
+        "wrongMove:10",
+        "authoredProof:clockNotBait"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        4
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects",
+        "wrongMove:78",
+        "wrongMove:10",
+        "authoredProof:clockNotBait"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        4
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects",
+        "wrongMove:78",
+        "wrongMove:10",
+        "authoredProof:clockNotBait"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        4
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects",
+        "wrongMove:78",
+        "wrongMove:10",
+        "authoredProof:clockNotBait"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        4
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects",
+        "wrongMove:78",
+        "wrongMove:10",
+        "authoredProof:clockNotBait"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        0,
+        0,
+        0,
+        2,
+        4
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects",
+        "wrongMove:78",
+        "wrongMove:10",
+        "authoredProof:clockNotBait"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        0,
+        0,
+        0,
+        2,
+        4
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects",
+        "wrongMove:78",
+        "wrongMove:10",
+        "authoredProof:clockNotBait"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        1,
+        0,
+        1,
+        0,
+        4
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects",
+        "wrongMove:78",
+        "wrongMove:10",
+        "authoredProof:clockNotBait"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        1,
+        0,
+        1,
+        0,
+        4
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects",
+        "wrongMove:78",
+        "wrongMove:10",
+        "authoredProof:clockNotBait"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        1,
+        0,
+        1,
+        0,
+        4
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects",
+        "wrongMove:78",
+        "wrongMove:10",
+        "authoredProof:clockNotBait"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        1,
+        0,
+        1,
+        0,
+        4
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects",
+        "wrongMove:78",
+        "wrongMove:10",
+        "authoredProof:clockNotBait"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        0,
+        2,
+        0,
+        0,
+        4
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects",
+        "wrongMove:78",
+        "wrongMove:10",
+        "authoredProof:clockNotBait"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        0,
+        2,
+        0,
+        0,
+        4
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects",
+        "wrongMove:78",
+        "wrongMove:10",
+        "authoredProof:clockNotBait"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        0,
+        2,
+        0,
+        0,
+        4
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects",
+        "wrongMove:78",
+        "wrongMove:10",
+        "authoredProof:clockNotBait"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        0,
+        2,
+        0,
+        0,
+        4
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects",
+        "wrongMove:78",
+        "wrongMove:10",
+        "authoredProof:clockNotBait"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        4
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects",
+        "wrongMove:78",
+        "wrongMove:10",
+        "authoredProof:clockNotBait"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        4
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects",
+        "wrongMove:78",
+        "wrongMove:10",
+        "authoredProof:clockNotBait"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        4
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects",
+        "wrongMove:78",
+        "wrongMove:10",
+        "authoredProof:clockNotBait"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        4
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects",
+        "wrongMove:78",
+        "wrongMove:10",
+        "authoredProof:clockNotBait"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        0,
+        0,
+        1,
+        2,
+        4
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects",
+        "wrongMove:78",
+        "wrongMove:10",
+        "authoredProof:clockNotBait"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        0,
+        0,
+        0,
+        1,
+        2,
+        4
+      ],
+      "errors": [
+        "clockMinimum",
+        "specialEffects",
+        "wrongMove:78",
+        "wrongMove:10",
+        "authoredProof:clockNotBait"
+      ]
+    }
+  ]
+}

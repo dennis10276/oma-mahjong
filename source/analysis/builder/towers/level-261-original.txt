@@ -1,0 +1,47 @@
+layer 0   x 0..14 (7 wide)
+  0 .00     .01     .02     .03     .04     .05     .06
+  2     .07     .08     .09     .10     .11     .12
+  4 n13     C14                             .15     .16
+  6     .17     .18                     K19     t20
+  8 .21     .22     .23     .24     .25     .26     .27
+ 10     .28     .29     .30     .31     .32     .33
+layer 1   x 0..14 (7 wide)
+  0     .58     .56     .54     .55     .57     .59
+  2         K46     t42     .36     .43     .47
+  4     L52                                     B53
+  6         .44                             I45
+  8     .50     .38     .34     .35     t39     t51
+ 10         .48     .40     .37     .41     .49
+layer 2   x 0..14 (7 wide)
+  0                 t75     .73     .74
+  2             I70     t66     R65     R69
+  8         .68     .62     .60     R61     R67
+ 10             .72     .64     .63     .71
+{"tiles":76,"valid":true,"towers":0,"stray":0,"edge":0,"mirror":1,"wide":7,"rows":6,"px":54.5,"fits":false}
+== clock route (this board) ==
+1. take 67 [f27] -> frees 51(uncovered) 61(side opened) | tray f27
+2. take 51 [f19] -> frees 27(uncovered) | ice 45 1/2 | tray f27,f19
+3. take 75 [f30] -> frees 73(side opened) | ice 70 1/2 | tray f27,f19,f30
+4. take 61 [f19] -> frees 39(uncovered) 60(side opened) | tray f27,f30
+5. take 39 [f27] -> frees 45(thawed) | ice 45 2/2 | tray f30
+6. take 45 [f12] -> frees 19(uncovered) 20(uncovered) | tray f30,f12
+7. take 19 [f3] | ice 45 3/2 | tray f30,f12,f3
+8. take 69 [f12] -> frees 47(uncovered) 65(side opened) | tray f30,f3
+9. take 65 [f30] -> frees 66(side opened) | tray f3
+10. take 66 [f6] -> frees 70(side opened,thawed) | ice 70 2/2 | tray f3,f6
+11. take 70 [f20] -> frees 46(uncovered) | tray f3,f6,f20
+12. take 46 [f3] -> frees 7(uncovered) 42(side opened) 52(unlocked) | ice 70 3/2 | tray f6,f20
+13. take 52 [f9] -> frees 13(uncovered) 14(uncovered) | tray f6,f20,f9
+14. take 14 [f6] = CLOCK | tray f20,f9
+== what holds the clock ==
+CLOCK 14: under 52
+  on 52: keys 46,19
+    key 46: under 70
+      on 70: ice: 2 of 42,46,66,75
+    key 19: under 45
+      on 45: ice: 2 of 19,20,39,51,53
+== wrong move 53 (lonelyNeighbour, released: lose) ==
+  53 [f11] twins 21
+    twin 21: under 50
+      on 50: under 68
+        on 68: free

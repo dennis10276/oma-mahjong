@@ -1,0 +1,5 @@
+'use strict';
+const fs=require('fs'),path=require('path'),{Worker,isMainThread,parentPort,workerData}=require('worker_threads');
+const OUT=path.resolve(__dirname,'../../../analysis/builder/towers');
+if(!isMainThread){const D=require('./detower');process.env.DEBUG='1';const r=D.bandRun(workerData,{relaxed:true,widths:[13],trimOrder:'right',trimOptions:16,tries:12});parentPort.postMessage({level:workerData,ok:r.ok,attempts:(r.tried||[]).map(t=>({W:t.W,cut:t.cut,errors:t.errors,why:t.why})),result:r.ok?r:undefined});}
+else (async()=>{const list=process.argv.slice(2).map(Number);let next=0;await Promise.all(Array.from({length:3},async()=>{while(next<list.length){const lv=list[next++],r=await new Promise(resolve=>{const w=new Worker(__filename,{workerData:lv});let done=false;const end=x=>{if(done)return;done=true;clearTimeout(timer);w.terminate();resolve(x);},timer=setTimeout(()=>end({level:lv,ok:false,timeout:true}),120000);w.on('message',end);w.on('error',e=>end({level:lv,error:e.message}));});fs.writeFileSync(path.join(OUT,`retry-${lv}.json`),JSON.stringify(r,null,2));console.log(JSON.stringify(r.result?{level:lv,ok:true}:r));}}));})();

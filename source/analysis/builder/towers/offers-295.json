@@ -1,0 +1,138 @@
+{
+  "level": 295,
+  "definition": "Visible face-up pairs and visible-twin singles; bounded engine proofs; no personal player or human win prediction.",
+  "before": {
+    "start": {
+      "win": 0,
+      "lose": 3,
+      "unknown": 0,
+      "rows": [
+        {
+          "kind": "pair",
+          "take": [
+            53,
+            72
+          ],
+          "result": "lose"
+        },
+        {
+          "kind": "pair",
+          "take": [
+            58,
+            67
+          ],
+          "result": "lose"
+        },
+        {
+          "kind": "pair",
+          "take": [
+            59,
+            75
+          ],
+          "result": "lose"
+        }
+      ]
+    },
+    "clock": {
+      "win": 1,
+      "lose": 3,
+      "unknown": 0,
+      "rows": [
+        {
+          "kind": "match",
+          "take": [
+            71
+          ],
+          "result": "win"
+        },
+        {
+          "kind": "pair",
+          "take": [
+            18,
+            73
+          ],
+          "result": "lose"
+        },
+        {
+          "kind": "pair",
+          "take": [
+            53,
+            72
+          ],
+          "result": "lose"
+        },
+        {
+          "kind": "pair",
+          "take": [
+            58,
+            67
+          ],
+          "result": "lose"
+        }
+      ]
+    }
+  },
+  "after": {
+    "start": {
+      "win": 0,
+      "lose": 3,
+      "unknown": 0,
+      "rows": [
+        {
+          "kind": "pair",
+          "take": [
+            53,
+            72
+          ],
+          "result": "lose"
+        },
+        {
+          "kind": "pair",
+          "take": [
+            59,
+            75
+          ],
+          "result": "lose"
+        },
+        {
+          "kind": "pair",
+          "take": [
+            61,
+            74
+          ],
+          "result": "lose"
+        }
+      ]
+    },
+    "clock": {
+      "win": 1,
+      "lose": 2,
+      "unknown": 0,
+      "rows": [
+        {
+          "kind": "match",
+          "take": [
+            71
+          ],
+          "result": "win"
+        },
+        {
+          "kind": "pair",
+          "take": [
+            53,
+            72
+          ],
+          "result": "lose"
+        },
+        {
+          "kind": "pair",
+          "take": [
+            61,
+            74
+          ],
+          "result": "lose"
+        }
+      ]
+    }
+  }
+}

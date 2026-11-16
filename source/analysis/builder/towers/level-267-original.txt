@@ -1,0 +1,46 @@
+layer 0   x 0..14 (7 wide)
+  0 .00     .01     .02     .03     .04     .05     .06
+  2     .07     .08     .09     .10     .11     .12
+  4 .13     .14     .15     .16     .17     .18     .19
+  6     .20     .21     .22     .23     .24     .25
+  8 .26     .27     .28     .29     .30     .31     .32
+ 10     .33     .34                     .35     .36
+ 12 .37     .38                             K39     t40
+ 14     .41     .42                     .43     .44
+layer 1   x 0..14 (7 wide)
+  0     .73     .69     .75     .76     .70     .74
+  2         .64     .66     .68     .67     .65
+  4     .60     .51     .58     .59     .52     .61
+  6         C47     t45     .57     .46     .48
+  8     .55     t49     t53     .54     .50     .56
+ 10         .62                             t63
+ 12     .71                                     I72
+ 14         .77                             t78
+layer 2   x 0..14 (7 wide)
+  4         B84                             .83
+  6             I80                     .79
+  8         t82     I85     t87     R86     K81
+{"tiles":88,"valid":true,"towers":0,"stray":0,"edge":0,"mirror":1,"wide":7,"rows":8,"px":54.5,"fits":false}
+== clock route (this board) ==
+1. take 81 [f7] -> frees 56(uncovered) 86(side opened) | tray f7
+2. take 63 [f31] -> frees 35(uncovered) 36(uncovered) | ice 72 1/2 | tray f7,f31
+3. take 82 [f31] -> frees 55(uncovered) | ice 80 1/2 ice 85 1/2 | tray f7
+4. take 78 [f3] -> frees 43(uncovered) 44(uncovered) 72(thawed) | ice 72 2/2 | tray f7,f3
+5. take 72 [f27] -> frees 39(uncovered) 40(uncovered) | tray f7,f3,f27
+6. take 39 [f7] | ice 72 3/2 | tray f3,f27
+7. take 86 [f29] -> frees 87(side opened) | tray f3,f27,f29
+8. take 87 [f3] -> frees 85(side opened,thawed) | ice 85 2/2 | tray f27,f29
+9. take 85 [f27] -> frees 80(thawed) | ice 80 2/2 | tray f29
+10. take 80 [f6] -> frees 47(uncovered) | ice 85 3/2 | tray f29,f6
+11. take 47 [f21] = CLOCK -> frees 20(uncovered) 45(side opened) | ice 80 3/2 | tray f29,f6,f21
+== what holds the clock ==
+CLOCK 47: under 80 | keys 39,81
+  on 80: ice: 2 of 45,47,82,84,85
+  key 39: under 72
+    on 72: ice: 2 of 39,40,63,78
+  key 81: free
+== wrong move 84 (lonelyNeighbour, released: lose) ==
+  84 [f20] twins 25
+    twin 25: under 48
+      on 48: under 79
+        on 79: free

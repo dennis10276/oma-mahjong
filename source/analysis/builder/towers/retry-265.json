@@ -1,0 +1,309 @@
+{
+  "level": 265,
+  "ok": false,
+  "attempts": [
+    {
+      "W": 13,
+      "cut": [
+        8,
+        0,
+        0,
+        0
+      ],
+      "errors": [
+        "specialEffects",
+        "authoredProof:trapProof:iceIdle:72:12>=12"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        8,
+        0,
+        0,
+        0
+      ],
+      "errors": [
+        "specialEffects",
+        "authoredProof:trapProof:iceIdle:72:12>=12"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        8,
+        0,
+        0,
+        1
+      ],
+      "errors": [
+        "specialEffects",
+        "authoredProof:trapProof:iceIdle:72:12>=12"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        8,
+        0,
+        0,
+        1
+      ],
+      "errors": [
+        "specialEffects",
+        "authoredProof:trapProof:iceIdle:72:12>=12"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        8,
+        0,
+        0,
+        1
+      ],
+      "errors": [
+        "specialEffects",
+        "authoredProof:trapProof:iceIdle:72:12>=12"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        8,
+        0,
+        0,
+        1
+      ],
+      "errors": [
+        "specialEffects",
+        "authoredProof:trapProof:iceIdle:72:12>=12"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        8,
+        0,
+        0,
+        2
+      ],
+      "errors": [
+        "specialEffects",
+        "authoredProof:trapProof:iceIdle:72:12>=12"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        8,
+        0,
+        0,
+        2
+      ],
+      "errors": [
+        "specialEffects",
+        "authoredProof:trapProof:iceIdle:72:12>=12"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        8,
+        0,
+        0,
+        2
+      ],
+      "errors": [
+        "specialEffects",
+        "authoredProof:trapProof:iceIdle:72:12>=12"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        8,
+        0,
+        0,
+        2
+      ],
+      "errors": [
+        "specialEffects",
+        "authoredProof:trapProof:iceIdle:72:12>=12"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        8,
+        0,
+        0,
+        2
+      ],
+      "errors": [
+        "specialEffects",
+        "authoredProof:trapProof:iceIdle:72:12>=12"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        8,
+        0,
+        0,
+        2
+      ],
+      "errors": [
+        "specialEffects",
+        "authoredProof:trapProof:iceIdle:72:12>=12"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        8,
+        0,
+        2,
+        0
+      ],
+      "errors": [
+        "specialEffects",
+        "authoredProof:trapProof:iceIdle:72:12>=12"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        8,
+        0,
+        2,
+        0
+      ],
+      "why": "no full winning route"
+    },
+    {
+      "W": 13,
+      "cut": [
+        8,
+        0,
+        2,
+        0
+      ],
+      "errors": [
+        "specialEffects",
+        "authoredProof:trapProof:iceIdle:72:12>=12"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        8,
+        0,
+        2,
+        0
+      ],
+      "errors": [
+        "specialEffects",
+        "authoredProof:trapProof:iceIdle:72:12>=12"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        8,
+        2,
+        0,
+        0
+      ],
+      "errors": [
+        "specialEffects",
+        "authoredProof:trapProof:iceIdle:72:12>=12"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        8,
+        2,
+        0,
+        0
+      ],
+      "why": "no full winning route"
+    },
+    {
+      "W": 13,
+      "cut": [
+        8,
+        0,
+        0,
+        3
+      ],
+      "errors": [
+        "specialEffects",
+        "authoredProof:trapProof:iceIdle:72:12>=12"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        8,
+        0,
+        0,
+        3
+      ],
+      "errors": [
+        "specialEffects",
+        "authoredProof:trapProof:iceIdle:72:12>=12"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        8,
+        0,
+        0,
+        3
+      ],
+      "errors": [
+        "specialEffects",
+        "authoredProof:trapProof:iceIdle:72:12>=12"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        8,
+        0,
+        0,
+        3
+      ],
+      "errors": [
+        "specialEffects",
+        "authoredProof:trapProof:iceIdle:72:12>=12"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        8,
+        0,
+        2,
+        1
+      ],
+      "errors": [
+        "specialEffects",
+        "authoredProof:trapProof:iceIdle:72:12>=12"
+      ]
+    },
+    {
+      "W": 13,
+      "cut": [
+        8,
+        0,
+        2,
+        1
+      ],
+      "why": "no full winning route"
+    }
+  ]
+}
