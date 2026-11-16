@@ -249,7 +249,7 @@ function cutMiddleRun(level, opts = {}) {
     if (left.length) { tried.push({ strip: s, loose: loose.size, why: 'no brick spot for ' + left.length + ' tiles' }); continue; }
     if (!G.valid(T)) { tried.push({ strip: s, why: 'invalid geometry' }); continue; }
     let d = { ...clone(a), tiles: T };
-    if (SEP.closeTwins(d).visible > base.twins) d = untwin(d, base.twins, new Set([...sp, ...bait])).d;
+    if (SEP.closeTwins(d).visible > base.twins) d = untwin(d, base.twins, new Set([...sp, ...bait, ...a.solution.slice(0, a.solution.indexOf(a.clock.i) + 1)])).d;
     const s1 = shape(T);
     const sol = route(d); if (!sol) { tried.push({ strip: s, loose: loose.size, shape: strip(s1), why: 'no full winning route' }); continue; }
     d.solution = sol;
@@ -335,7 +335,7 @@ function bandRun(level, opts = {}) {
       if (left.length) { tried.push({ ...tag, why: 'no brick spot for ' + left.length + ' tiles' }); continue; }
       if (!G.valid(T)) { tried.push({ ...tag, why: 'invalid geometry' }); continue; }
       let d = { ...clone(a), tiles: T };
-      if (SEP.closeTwins(d).visible > base.twins) d = untwin(d, base.twins, new Set([...sp, ...bait])).d;
+      if (SEP.closeTwins(d).visible > base.twins) d = untwin(d, base.twins, new Set([...sp, ...bait, ...a.solution.slice(0, a.solution.indexOf(a.clock.i) + 1)])).d;
       const s1 = shape(T);
       const sol = route(d); if (!sol) { tried.push({ ...tag, shape: strip(s1), why: 'no full winning route', design: process.env.DEBUG ? d : undefined }); continue; }
       d.solution = sol;
