@@ -43,13 +43,17 @@ function capped(design, cap, opts = {}) {
     do {
       const prev = req.size;
       for (const i of req) {
-        if (g.lockT[i]) for (const j of g.keys) add(j);
+        if (g.lockT[i] & 1) for (const j of g.keys) add(j);
+        if (g.lockT[i] & 2) for (const j of g.keys2 || []) add(j);
         if (g.iceH[i]) {
           const nb = g.iceNb[i], accounted = nb.filter(j => !alive[j] || req.has(j)).length, need = g.iceH[i] - accounted;
           if (need > 0) {
             const optional = nb.filter(j => alive[j] && !req.has(j));
             if (optional.length === need) for (const j of optional) add(j);
-            if (optional.filter(j => !g.lockT[j]).length < need) for (const j of g.keys) add(j);
+            if (optional.filter(j => !g.lockT[j]).length < need) {   // a locked neighbour is needed: its keys, when only one set locks them
+              const sets = optional.reduce((m, j) => m | g.lockT[j], 0);
+              if (sets === 1) for (const j of g.keys) add(j); else if (sets === 2) for (const j of g.keys2 || []) add(j);
+            }
           }
         }
       }

@@ -51,15 +51,18 @@ function game(d, o = {}) {
   const nb = L.neighbors(tiles), iceNb = L.iceNeighbors(tiles), ob = d.obst || {};
   const ice = {}; for (const k in ob.ice || {}) if (ob.ice[k] > 0) ice[+k] = ob.ice[k];
   const keys = (ob.keys || []).slice(), locks = keys.length && (ob.locks || []).length ? new Set(ob.locks) : null;
-  const rules = Object.keys(ice).length || locks ? { iceNb, ice, locks, keys } : null;
+  // the silver key set (Dennis 2026-11-16): its own pair and locks; lockT/isKey are bit masks (1 gold, 2 silver)
+  const keys2 = (ob.keys2 || []).slice(), locks2 = keys2.length && (ob.locks2 || []).length ? new Set(ob.locks2) : null;
+  const rules = Object.keys(ice).length || locks || locks2 ? { iceNb, ice, locks, keys, ...(locks2 ? { locks2, keys2 } : {}) } : null;
   const clock = d.clock && Number.isInteger(d.clock.i) && d.clock.i >= 0 && d.clock.i < n ? { i: d.clock.i, n: d.clock.n } : null;
   const down = new Uint8Array(n); for (const i of d.down || []) down[i] = 1;
   const below = tiles.map(() => []), iceRev = tiles.map(() => []), iceH = new Int8Array(n), lockT = new Uint8Array(n), isKey = new Uint8Array(n);
   for (let i = 0; i < n; i++) for (const j of nb.above[i]) below[j].push(i);
   for (const k in ice) { iceH[k] = ice[k]; for (const j of iceNb[k]) iceRev[j].push(+k); }
-  if (locks) { for (const i of locks) lockT[i] = 1; for (const k of keys) isKey[k] = 1; }
+  if (locks) { for (const i of locks) lockT[i] |= 1; for (const k of keys) isKey[k] |= 1; }
+  if (locks2) { for (const i of locks2) lockT[i] |= 2; for (const k of keys2) isKey[k] |= 2; }
   const g = { design: d, signature, n, tiles, nb, iceNb, rules, faces: d.faces.slice(), clock, down, peek: !o.strict, after, mode, solution: d.solution,
-    below, iceRev, iceH, lockT, isKey, keys: locks ? keys : [], words: (n + 15) >> 4, dead: new Set(), win: new Map() };
+    below, iceRev, iceH, lockT, isKey, keys: locks ? keys : [], keys2: locks2 ? keys2 : [], words: (n + 15) >> 4, dead: new Set(), win: new Map() };
   g.faceTiles=new Map();g.faces.forEach((f,i)=>g.faceTiles.set(f,(g.faceTiles.get(f)||[]).concat(i)));
   g.lb = clock ? makeLowerBound(g, clock.i) : null;
   g.reserveCuts = o.reserveCuts===false?[]:Reserve.compile(g);
@@ -73,7 +76,9 @@ function game(d, o = {}) {
   if (clock) {
     const st = [clock.i];
     while (st.length) for (const j of nb.above[st.pop()]) if (!g.toClock[j]) { g.toClock[j] = 1; st.push(j); }
-    if (lockT[clock.i] || [...Array(n).keys()].some(i => g.toClock[i] && lockT[i])) for (const k of g.keys) g.toClock[k] = 1;
+    const onWay = lockT[clock.i] | [...Array(n).keys()].reduce((m, i) => m | (g.toClock[i] ? lockT[i] : 0), 0);
+    if (onWay & 1) for (const k of g.keys) g.toClock[k] = 1;
+    if (onWay & 2) for (const k of g.keys2) g.toClock[k] = 1;
     if (iceH[clock.i]) for (const j of iceNb[clock.i]) g.toClock[j] = 1;
   }
   store.set(d, g);
@@ -123,25 +128,26 @@ class Ctx {
   constructor(g, alive, trayFaces, moves) {
     const n = g.n, a = this.alive = Uint8Array.from(alive);
     this.g = g; this.up = new Int16Array(n); this.lc = new Int16Array(n); this.rc = new Int16Array(n); this.gone = new Int16Array(n);
-    this.w = new Uint16Array(g.words); this.keysLeft = 0; this.left = 0;
+    this.w = new Uint16Array(g.words); this.keysLeft = 0; this.keysLeft2 = 0; this.left = 0;
     for (let i = 0; i < n; i++) {
       for (const j of g.nb.above[i]) if (a[j]) this.up[i]++;
       for (const j of g.nb.left[i]) if (a[j]) this.lc[i]++;
       for (const j of g.nb.right[i]) if (a[j]) this.rc[i]++;
       if (g.iceH[i]) for (const j of g.iceNb[i]) if (!a[j]) this.gone[i]++;
-      if (a[i]) { this.w[i >> 4] |= 1 << (i & 15); this.left++; if (g.isKey[i]) this.keysLeft++; }
+      if (a[i]) { this.w[i >> 4] |= 1 << (i & 15); this.left++; if (g.isKey[i] & 1) this.keysLeft++; if (g.isKey[i] & 2) this.keysLeft2++; }
     }
     this.tray = trayFaces.slice(); this.moves = moves; this.clockAlive = !!g.clock && !!a[g.clock.i];
   }
   static of(g, s) { return new Ctx(g, s.alive, s.tray.map(t => g.faces[t]), s.moves); }
-  ok(i) { const g = this.g; return this.alive[i] === 1 && this.up[i] === 0 && (this.lc[i] === 0 || this.rc[i] === 0) && (g.iceH[i] === 0 || this.gone[i] >= g.iceH[i]) && (g.lockT[i] === 0 || this.keysLeft === 0); }
+  ok(i) { const g = this.g; return this.alive[i] === 1 && this.up[i] === 0 && (this.lc[i] === 0 || this.rc[i] === 0) && (g.iceH[i] === 0 || this.gone[i] >= g.iceH[i]) && (!(g.lockT[i] & 1) || this.keysLeft === 0) && (!(g.lockT[i] & 2) || this.keysLeft2 === 0); }
   rm(i) {
     const g = this.g; this.alive[i] = 0; this.w[i >> 4] ^= 1 << (i & 15); this.left--; this.moves++;
     for (const j of g.below[i]) this.up[j]--;
     for (const j of g.nb.right[i]) this.lc[j]--;
     for (const j of g.nb.left[i]) this.rc[j]--;
     for (const j of g.iceRev[i]) this.gone[j]++;
-    if (g.isKey[i]) this.keysLeft--;
+    if (g.isKey[i] & 1) this.keysLeft--;
+    if (g.isKey[i] & 2) this.keysLeft2--;
     if (g.clock && i === g.clock.i) this.clockAlive = false;
   }
   put(i) {
@@ -150,7 +156,8 @@ class Ctx {
     for (const j of g.nb.right[i]) this.lc[j]++;
     for (const j of g.nb.left[i]) this.rc[j]++;
     for (const j of g.iceRev[i]) this.gone[j]--;
-    if (g.isKey[i]) this.keysLeft++;
+    if (g.isKey[i] & 1) this.keysLeft++;
+    if (g.isKey[i] & 2) this.keysLeft2++;
     if (g.clock && i === g.clock.i) this.clockAlive = true;
   }
   apply(c) {                                   // returns undo info (1 matched, 0 parked, 2 pair)
@@ -407,7 +414,7 @@ function replay(d, flat, o = {}) {
   return { ok: true, pairs };
 }
 
-module.exports = { replay, flatten, game, start, legal, step, won, winnable, clockShortest, classify, traps, longest, clockSearch, kindOf, DEF, SLOTS };
+module.exports = { replay, flatten, game, start, legal, step, won, winnable, clockShortest, classify, traps, longest, clockSearch, kindOf, DEF, SLOTS, _Ctx: Ctx };   // _Ctx: tests only
 
 // ---------- benchmark: node source/tools/builder/engine.js (cold: a fresh game, empty caches, per timing) ----------
 if (require.main === module) {

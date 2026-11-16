@@ -18,7 +18,8 @@ function makeLowerBound(g, ci) {
     return [...out];
   });
   return alive => {
-    const required = new Set(), rules = g.rules, keysLeft = rules && (rules.keys || []).some(i => alive[i]);
+    const required = new Set(), rules = g.rules, keysLeft = rules && (rules.keys || []).some(i => alive[i]), keysLeft2 = rules && (rules.keys2 || []).some(i => alive[i]);
+    const lockedSets = j => (keysLeft && rules.locks?.has(j) ? 1 : 0) | (keysLeft2 && rules.locks2?.has(j) ? 2 : 0);   // the silver set too
     let changed = false;
     const add = i => { for (const j of [i, ...ancestors[i]]) if (alive[j] && !required.has(j)) { required.add(j); changed = true; } };
     add(ci);
@@ -26,6 +27,7 @@ function makeLowerBound(g, ci) {
       changed = false;
       for (const i of required) {
         if (keysLeft && rules.locks?.has(i)) for (const key of rules.keys) add(key);
+        if (keysLeft2 && rules.locks2?.has(i)) for (const key of rules.keys2) add(key);
         const need = rules?.ice?.[i] || 0;
         if (!need) continue;
         const neighbours = rules.iceNb[i], gone = neighbours.filter(j => !alive[j]).length;
@@ -36,8 +38,10 @@ function makeLowerBound(g, ci) {
         if (optional.length === remaining) for (const j of optional) add(j);
         // If every sufficient thaw needs a locked neighbour, its keys are
         // mandatory too. Count the dependency, not a guessed route.
-        if (keysLeft && optional.filter(j => !rules.locks?.has(j)).length < remaining)
-          for (const key of rules.keys) add(key);
+        if ((keysLeft || keysLeft2) && optional.filter(j => !lockedSets(j)).length < remaining) {
+          const sets = optional.reduce((m, j) => m | lockedSets(j), 0);   // only when one set locks them all is it known which keys
+          if (sets === 1) for (const key of rules.keys) add(key); else if (sets === 2) for (const key of rules.keys2) add(key);
+        }
       }
     } while (changed);
     const side = name => {

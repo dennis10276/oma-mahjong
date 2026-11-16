@@ -57,6 +57,7 @@ const Hard = (() => {
       let v = up + Math.min(side(-1), side(1));
       if (rules && rules.ice && rules.ice[j]) { let gone = 0; for (const q of rules.iceNb[j]) if (alive0[q] && !alive[q]) gone++; v += Math.max(0, rules.ice[j] - gone); }
       if (rules && rules.locks && rules.locks.has(j)) for (const k of rules.keys) if (alive[k]) v += 1 + up;
+      if (rules && rules.locks2 && rules.locks2.has(j)) for (const k of rules.keys2) if (alive[k]) v += 1 + up;
       memo[j] = v + 1;
       return v;
     }
@@ -106,7 +107,7 @@ const Hard = (() => {
       if (rules) {
         const ice = {};
         for (const k in rules.ice) { let gone = 0; for (const q of rules.iceNb[k]) if (alive0[q] && !alive[q]) gone++; const h = rules.ice[k] - gone; if (h > 0) ice[k] = h; }
-        ru = { iceNb: rules.iceNb, ice, locks: rules.locks, keys: rules.keys };
+        ru = { iceNb: rules.iceNb, ice, locks: rules.locks, keys: rules.keys, locks2: rules.locks2, keys2: rules.keys2 };
       }
       const path = L.solve(tiles, nb, faces, alive, trayT, 3000, ru);
       if (!path || (clock && alive[clock.i] && path.indexOf(clock.i) >= clock.n - moves)) return [];   // no way found: play on by feel
@@ -487,14 +488,15 @@ const Hard = (() => {
     const ob = d.obst || {};
     return [d.tiles.map(([x, y, z]) => e1(x) + e1(y) + e1(z)).join(''), d.faces.map(e1).join(''), d.down.map(e2).join(''), (d.gold || []).map(e2).join(''),
       Object.entries(ob.ice || {}).map(([i, h]) => e2(+i) + e1(h)).join(''), (ob.locks || []).map(e2).join(''), (ob.keys || []).map(e2).join(''),
-      d.clock ? [d.clock.i, d.clock.n] : 0, d.info.rate, d.info.strong, d.solution ? d.solution.map(e2).join('') : ''];
+      d.clock ? [d.clock.i, d.clock.n] : 0, d.info.rate, d.info.strong, d.solution ? d.solution.map(e2).join('') : '',
+      ...((ob.keys2 || []).length ? [(ob.locks2 || []).map(e2).join(''), ob.keys2.map(e2).join('')] : [])];   // the silver key set, only when present
   }
   function unpack(level, r) {
-    const [t, f, dn, g, ice, locks, keys, ck, rate, strong, proof] = r;
+    const [t, f, dn, g, ice, locks, keys, ck, rate, strong, proof, locks2, keys2] = r;
     const tiles = []; for (let i = 0; i < t.length; i += 3) tiles.push([d1(t, i), d1(t, i + 1), d1(t, i + 2)]);
     const faces = []; for (let i = 0; i < f.length; i++) faces.push(d1(f, i));
     const iceO = {}; for (let i = 0; i < ice.length; i += 3) iceO[d2(ice, i)] = d1(ice, i + 2);
-    const obst = ice || keys ? { ice: iceO, locks: list2(locks), keys: list2(keys) } : null;
+    const obst = ice || keys || keys2 ? { ice: iceO, locks: list2(locks), keys: list2(keys), ...(keys2 ? { locks2: list2(locks2), keys2: list2(keys2) } : {}) } : null;
     return { level, tiles, faces, down: list2(dn), gold: list2(g), obst, clock: ck ? { i: ck[0], n: ck[1] } : null, solution: proof ? list2(proof) : null, info: { rate, strong } };
   }
   const table = () => (typeof HARD_LEVELS !== 'undefined' ? HARD_LEVELS : null);

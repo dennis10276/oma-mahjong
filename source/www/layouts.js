@@ -361,7 +361,8 @@ const Layouts = (() => {
     for (const j of rules.iceNb[i]) if (alive0[j] && !alive[j]) gone++;
     return gone < h;
   }
-  const lockedIn = (i, alive, rules) => !!(rules.locks && rules.locks.has(i) && rules.keys.some(k => alive[k]));
+  const lockedIn = (i, alive, rules) => !!((rules.locks && rules.locks.has(i) && rules.keys.some(k => alive[k])) ||
+    (rules.locks2 && rules.locks2.has(i) && rules.keys2.some(k => alive[k])));   // the silver key set (Dennis 2026-11-16)
   function takeable(i, alive, nb, rules, alive0) {
     return isFree(i, alive, nb) && !frozenIn(i, alive, rules, alive0) && !lockedIn(i, alive, rules);
   }
