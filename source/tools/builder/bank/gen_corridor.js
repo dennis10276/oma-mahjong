@@ -66,7 +66,26 @@ function corridor(layout, o = {}) {
         digPairs: 0.3, pressure: 1.8, pattern: 'corridor', gen: { L, F, near, firsts } };
       const p = H.prove(spec, { seed: o.seed, offersMs: 20000 });
       W(p.ok ? 'proved' : 'proveFail:' + (p.fail || p.errors[0]).replace(/d+/g, '#').slice(0, 40));
-      if (p.ok) out.push({ spec, design: p.design, offers: p.offers, report: p.report });
+      if (!p.ok) continue;
+      // chain variation: a lock on the late tile, the keys an inside pair of the dig taken before it (gold, or silver when asked)
+      let chosen = { spec, design: p.design, offers: p.offers, report: p.report };
+      if (o.lock) {
+        const before = new Set(res.wins[0].slice(0, res.wins[0].findIndex(x => typeof x === 'string')).filter(x => typeof x === 'number'));
+        const keyPairs = Object.values(pairs).filter(ids => ids.length === 2 && ids.every(i => before.has(i)));
+        for (const kp of keyPairs.sort(() => rnd() - .5)) {
+          const silver = o.lock === 'silver' || (o.lock === 'mix' && rnd() < .5);
+          const lk = silver ? { locks2: [L], keys2: kp } : { locks: [L], keys: kp };
+          const r2 = O.orders({ layout, clock: c, limit: dig.length + 2, tiles: [...dig, F], faces, down: [F], max: 30, ...lk });
+          const f2 = Object.keys(r2.firstMoves).map(Number);
+          if (!r2.wins.length || r2.strictWins || f2.length > (o.firsts ?? 2) || f2.some(i => near.includes(i))) { W('lockVariantFails'); continue; }
+          const spec2 = { ...spec, ...lk, route: r2.wins[0].map(x => typeof x === 'string' ? x.slice(1, -1).split('+').map(Number) : x),
+            title: (silver ? 'Silver' : 'Gold') + ' lock: the face-down pair opens the way', idea: spec.idea + ' The tile that needs the face-down twin is ' + (silver ? 'silver' : 'gold') + '-locked; its keys are part of the dig.', gen: { ...spec.gen, keys: kp, silver } };
+          const p2 = H.prove(spec2, { seed: o.seed, offersMs: 20000 });
+          W(p2.ok ? 'lockVariant' : 'lockProveFail');
+          if (p2.ok) { chosen = { spec: spec2, design: p2.design, offers: p2.offers, report: p2.report }; break; }
+        }
+      }
+      out.push(chosen);
       }
     }
   }
@@ -76,7 +95,7 @@ module.exports = { corridor };
 if (require.main === module) {
   const dir = path.resolve(arg('out', 'corridor-out')); fs.mkdirSync(dir, { recursive: true });
   for (const lay of arg('layouts', '1006').split(',').map(Number)) {
-    const why = {}, res = corridor(lay, { per: +arg('per', 2), tries: +arg('tries', 300), seed: +arg('seed', 1), why });
+    const why = {}, res = corridor(lay, { per: +arg('per', 2), tries: +arg('tries', 300), seed: +arg('seed', 1), why, lock: arg('lock', null) });
     for (const b of res) { const f = path.join(dir, `${lay}-c${b.spec.clock}-s${arg('seed', 1)}.board.json`); fs.writeFileSync(f, JSON.stringify(b, null, 1)); console.log('wrote', f, '| firsts', b.spec.gen.firsts.join(','), '| route', b.spec.route.flat().length); }
     if (!res.length) console.log('layout', lay, ': none');
     console.log(JSON.stringify(why));
