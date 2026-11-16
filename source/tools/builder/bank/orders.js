@@ -37,7 +37,20 @@ function orders(o) {
     go(init.slice(), [], 0, []); return wins;
   };
   const wins = run(true), first = {};
-  for (const w of wins) first[w[0]] = (first[w[0]] || 0) + 1;
+  // the first moves, exact: each one played, then a fresh search from there (the state memo of one run would hide orders)
+  const init0 = init.slice();
+  for (const i of T.filter(i => can(i, init0))) {
+    const a = init0.slice(); a[i] = 0; const sub = [];
+    const memo = new Set(), go = (a, tray, moves) => {
+      if (sub.length) return; if (!a[o.clock]) { sub.push(1); return; } if (moves >= limit) return;
+      const key = T.map(j => a[j]).join('') + '|' + tray.slice().sort().join(','); if (memo.has(key)) return; memo.add(key);
+      const fr = T.filter(j => can(j, a));
+      for (const j of fr) { const a2 = a.slice(); a2[j] = 0; const q = tray.indexOf(face[j]), t2 = q >= 0 ? tray.filter((_, k) => k !== q) : tray.concat(face[j]); if (t2.length <= 3) go(a2, t2, moves + 1); }
+      for (let x = 0; x < fr.length; x++) for (let y = x + 1; y < fr.length; y++) { const p = fr[x], q2 = fr[y]; if (face[p] !== face[q2] || !(down.has(p) || down.has(q2)) || tray.includes(face[p])) continue; const a2 = a.slice(); a2[p] = a2[q2] = 0; go(a2, tray, moves + 2); }
+    };
+    go(a, [face[i]], 1);
+    if (sub.length) first[i] = (wins.filter(w => w[0] === i).length) || 1;
+  }
   return { wins, firstMoves: first, free0: T.filter(i => can(i, init)), strictWins: o.peek === false ? null : run(false).length, shortest: wins.length ? Math.min(...wins.map(w => w.reduce((m, x) => m + (typeof x === 'string' ? 2 : 1), 0))) : null };
 }
 module.exports = { orders };
