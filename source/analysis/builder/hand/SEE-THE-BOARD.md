@@ -35,6 +35,11 @@ Playwright for pictures and labs:
 - `node hand.js design|prove <spec.js>` - a hand design (spec format in the hand.js header; motifs in
   `source/analysis/builder/hand/*.js`). `exact: true` uses the route as written; route items `[a, b]` are face-down pairs
   (`peek: true`, `downTiles`, `peekNeeded`). Proves the exact clock minimum, each intended wrong move, all tempting moves.
+- `node orders.js <spec.js> [--all]` - EVERY winning order to the clock over the tiles you name (faces, ice, gold/silver
+  locks, face-down pairs `[a+b]`), the first moves that can still win, and the count without face-down pairs. The core check
+  of a hand design: few winning first moves, the natural goal-directed start loses. Search pictures over a fixed structure
+  with it (example: H1 in `analysis/builder/hand/h1.js`: only the far corner 71 starts a win; at the full tray the face-down
+  corner 70 is 41's twin).
 - `node hand_lab.js <ideas.js> <names...>` then `node ../../lab/build_lab.js <dir> <ideas.js>` (from a copy with the
   wip/second-key www), served with `MECH=1 node lab_server.js <dir> <port>` (saves ratings and every tap).
 - `node replay_study.js <lab-dir>` - Dennis's tries: taps, where he left the route, the move after which the clock was lost,
