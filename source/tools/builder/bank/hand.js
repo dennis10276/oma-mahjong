@@ -49,6 +49,7 @@ function fill(spec, tiles, seed = 1) {
     const free = pics.slice(labels.length), faces = label.map(k => k == null ? -1 : faceOf[k]);
     let nextPic = 0; const newPic = () => free[nextPic++ % free.length];
     const g = E.game({ tiles, faces: faces.map(f => f < 0 ? 999 : f), down: [], obst, clock: { i: spec.clock, n: 999 }, solution: [] }, { strict: true });
+    const gP = E.game({ tiles, faces: faces.map(f => f < 0 ? 999 : f), down: spec.downTiles || [], obst, clock: { i: spec.clock, n: 999 }, solution: [] });   // the game's rules: face-down pairs
     let s = E.start(g); const sol = [], open = [];    // open: tray tiles whose twin is not chosen yet
     const want = spec.pressure ?? 1.4;
     // an unlabelled tile gets its picture when taken: the twin of an open tray tile, or a new picture (it waits)
@@ -64,6 +65,12 @@ function fill(spec, tiles, seed = 1) {
     const take = i => { const was = s.tray.includes(i); s = E.step({ ...g, faces }, s, i); sol.push(i); if (s && single.has(i) && s.tray.includes(i) && !was) open.push(i); };
     let ok = true;
     for (const i of spec.route) {
+      if (Array.isArray(i)) {   // a face-down pair: both tiles go together, no tray slot
+        const [a, b] = i; if (!E.legal(g, s).includes(a) || !E.legal(g, s).includes(b)) { ok = false; break; }
+        if (faces[a] < 0 && faces[b] < 0) faces[a] = faces[b] = newPic(); else if (faces[a] < 0) faces[a] = faces[b]; else if (faces[b] < 0) faces[b] = faces[a];
+        if (faces[a] !== faces[b] || s.tray.some(t => faces[t] === faces[a])) { ok = false; break; }
+        s = E.step({ ...gP, faces }, s, { pair: [a, b] }); sol.push(a, b); if (!s) { ok = false; break; } continue;
+      }
       if (!E.legal(g, s).includes(i) || !assign(i, spec.digPairs ?? .7)) { ok = false; break; }
       take(i); if (!s) { ok = false; break; }
     }
@@ -85,8 +92,9 @@ function fill(spec, tiles, seed = 1) {
     if (!ok || !s || s.tray.length || open.length) continue;
     // face-down tiles among the filled ones (never a special, a labelled tile, or a tile free at the start)
     const g0 = E.game({ tiles, faces, down: [], obst, clock: { i: spec.clock, n: 999 }, solution: sol }, { strict: true }), start = new Set(E.legal(g0, E.start(g0)));
-    const cand = [...Array(n).keys()].filter(i => label[i] == null && !special.has(i) && !start.has(i)).sort(() => rnd() - .5);
-    const down = cand.slice(0, Math.round(n * (spec.down ?? 0.24))).sort((a, b) => a - b);
+    const chosen = new Set(spec.downTiles || []), routeSet = new Set(spec.route.flat());
+    const cand = [...Array(n).keys()].filter(i => label[i] == null && !special.has(i) && !start.has(i) && !chosen.has(i) && !(spec.downTiles && routeSet.has(i))).sort(() => rnd() - .5);
+    const down = [...chosen, ...cand.slice(0, Math.max(0, Math.round(n * (spec.down ?? 0.24)) - chosen.size))].sort((a, b) => a - b);
     return { design: { tiles, faces, down, gold: [], obst, clock: { i: spec.clock, n: 999 }, solution: sol }, label, attempt };
   }
   return { fail: 'no fill found (route tray too tight?)' };
@@ -115,7 +123,7 @@ function expand(spec, tiles) {
 }
 function prove(spec, o = {}) {
   const L = layouts(), lay = L[spec.layout]; if (!lay) throw Error('unknown layout ' + spec.layout);
-  const tiles = lay.tiles.map(t => t.slice(0, 3)), ex = expand(spec, tiles);
+  const tiles = lay.tiles.map(t => t.slice(0, 3)), ex = spec.exact ? { route: spec.route, goalAt: spec.route.map((_, k) => k) } : expand(spec, tiles);
   if (ex.fail) return { ok: false, fail: ex.fail };
   const goals = spec.route; spec = { ...spec, route: ex.route, goals, goalAt: ex.goalAt };
   // fill along the route; when the solver finds a shorter way to the clock, refill along that way (the trap stays the designer's)
@@ -123,19 +131,24 @@ function prove(spec, o = {}) {
   for (let round = 0; round < 4; round++) {
     f = fill(spec, tiles, o.seed ?? spec.seed ?? 1);
     if (f.fail) return { ok: false, fail: f.fail };
-    cs = E.clockShortest(E.game(clone(f.design), { strict: true }), { nodes: 3e6, ms: 60000 });
+    cs = E.clockShortest(E.game(clone(f.design), spec.peek ? {} : { strict: true }), { nodes: 3e6, ms: 60000 });
     k = cs && !cs.unsure ? E.flatten(cs.path).indexOf(f.design.clock.i) + 1 : null;
-    if (k == null || k >= spec.route.length) break;
+    if (k == null || k >= spec.route.flat().length || spec.exact) break;
     spec = { ...spec, route: E.flatten(cs.path).slice(0, k), goalAt: spec.goalAt.map(() => 0), refilled: (spec.refilled || 0) + 1 };
   }
   let d = f.design; const out = [], errors = [];
   if (spec.refilled) out.push('refilled ' + spec.refilled + 'x along a shorter way');
   if (k == null) errors.push('clock minimum unproven');
-  else if (k !== spec.route.length) errors.push(`clock minimum ${k} but the route has ${spec.route.length} (shortest: ${E.flatten(cs.path).slice(0, k).join(' ')})`);
-  d.clock.n = (k ?? spec.route.length) + (spec.spare ?? 1);
+  else if (k !== spec.route.flat().length) errors.push(`clock minimum ${k} but the route has ${spec.route.flat().length} (shortest: ${JSON.stringify(cs.path.slice(0, 30))})`);
+  d.clock.n = (k ?? spec.route.flat().length) + (spec.spare ?? 1);
+  if (spec.peek) {   // is a face-down pair needed? the strict rules (no peeking) must not reach the clock in time
+    const st = E.clockShortest(E.game(clone(d), { strict: true }), { nodes: 3e6, ms: 60000 }), ks = st && !st.unsure ? E.flatten(st.path).indexOf(d.clock.i) + 1 : null;
+    out.push('without face-down pairs: ' + (ks == null ? 'no way to the clock' : ks + ' moves'));
+    if (spec.peekNeeded && ks != null && ks <= d.clock.n) errors.push('the clock is reachable without a face-down pair');
+  }
   // twins apart (Dennis 2026-11-13: "Pairs are too much together. Too obvious."): the trap's own pairs are frozen; the stored
   // solution must still replay and the clock minimum stay k (separate.js default validation)
-  if (k != null && spec.separate !== false) {
+  if (k != null && spec.separate !== false && !spec.peek) {
     const frozen = Object.values(spec.pairs || {}).flat();
     try { const sp = require('./separate.js').separate(d, { seed: o.seed ?? 1, wallMs: o.separateMs ?? 40000, freeze: frozen, k }); d = sp.design; const a = sp.after || {};
       out.push(`twins apart: close ${sp.before?.close?.length ?? '?'} -> ${a.close?.length ?? '?'}, visible at the start ${sp.before?.closeVisible?.length ?? '?'} -> ${a.closeVisible?.length ?? '?'}`);
@@ -143,13 +156,15 @@ function prove(spec, o = {}) {
       if (stray.length > 1) errors.push('visible close twins at the start: ' + stray.length);   // one is allowed (the route may need it)
     } catch (e) { out.push('twins apart failed: ' + e.message); }
   }
-  const gS = E.game(clone(d), { strict: true }); let s = E.start(gS);
+  if (spec.peek) { global.Layouts = global.Layouts || require('../../../www/layouts.js'); if (!require('../../../www/hard.js').validSolution(E.game(clone(d)), d.solution)) errors.push('stored solution fails (game rules)'); }
+  else { const gS = E.game(clone(d), { strict: true }); let s = E.start(gS);
   for (const a of d.solution) { s = E.step(gS, s, a); if (!s) { errors.push('stored solution fails'); break; } }
-  if (s && !E.won(gS, s)) errors.push('stored solution does not win');
+  if (s && !E.won(gS, s)) errors.push('stored solution does not win'); }
   out.push('clock ' + d.clock.i + ' in ' + d.clock.n + ' (minimum ' + k + ', spare ' + (spec.spare ?? 1) + ')');
-  out.push(...SB.explainRoute(d, spec.route).lines);
+  if (spec.peek) { const gP = E.game(clone(d)); let t = E.start(gP); spec.route.forEach((a, n) => { const act = Array.isArray(a) ? { pair: a } : a; try { t = E.step(gP, t, act); } catch (e) { t = null; } out.push(`${n + 1}. ${Array.isArray(a) ? 'face-down pair ' + a.join('+') : 'take ' + a}${a === d.clock.i ? ' = CLOCK' : ''} | tray ${t ? t.tray.join(',') : 'LOST'}`); }); }
+  else out.push(...SB.explainRoute(d, spec.route).lines);
   // the designer's wrong moves
-  const C = D.clockGames(d), states = []; let t = E.start(C.free); for (const a of spec.route) { states.push(t); t = E.step(C.free, t, a); }
+  const C = D.clockGames(d), states = []; let t = E.start(C.free); for (const a of spec.route) { states.push(t); t = E.step(C.free, t, Array.isArray(a) ? { pair: a } : a); }
   const w = D.work(4e6, 120000);
   for (const b of spec.baits || []) {
     // at: a goal number (the position before that goal's dig), or 'auto': the first moment on the route all its tiles are free
@@ -230,7 +245,12 @@ function design(spec, o = {}) {
 module.exports = { layouts, show, fill, prove, place, bind, design, expand };
 if (require.main === module) {
   const [cmd, a] = process.argv.slice(2), seed = +(process.argv[process.argv.indexOf('--seed') + 1] || 0) || undefined;
-  if (cmd === 'show') { const l = layouts()[+a]; console.log(l.shape || l.base || '', l.tiles.length, 'tiles'); console.log(show(l.tiles)); }
+  if (cmd === 'info') {   // every tile: position, what lies on it, its side neighbours, its ice neighbours (layout id or board.json)
+    const d = /.json$/.test(a) ? JSON.parse(fs.readFileSync(a, 'utf8')).design : { tiles: layouts()[+a].tiles.map(t => t.slice(0, 3)) };
+    const g = E.game({ tiles: d.tiles, faces: d.tiles.map(() => 0), down: [], obst: {}, clock: null, solution: [] }, { strict: true }), free = new Set(E.legal(g, E.start(g)));
+    d.tiles.forEach((t, i) => console.log(`${i} xyz ${t.join(',')}${free.has(i) ? ' FREE' : ''} | on: ${g.nb.above[i].join(' ') || '-'} | L: ${g.nb.left[i].join(' ') || '-'} R: ${g.nb.right[i].join(' ') || '-'} | ice: ${g.iceNb[i].join(' ')}${d.faces ? ' | p' + d.faces[i] : ''}`));
+  }
+  else if (cmd === 'show') { const l = layouts()[+a]; console.log(l.shape || l.base || '', l.tiles.length, 'tiles'); console.log(show(l.tiles)); }
   else if (cmd === 'design') {
     const spec = require(path.resolve(a)), r = design(spec, { seed });
     console.log(r.report || ''); console.log(r.ok ? 'OK ' + JSON.stringify(r.spec.placement) : 'NOT OK'); console.log('tried:', JSON.stringify(r.tried.reduce((m, x) => (m[x] = (m[x] || 0) + 1, m), {})));
