@@ -11,7 +11,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Mahjong">
-<link rel="stylesheet" href="v/1.69/style.css" id="css">
+<link rel="stylesheet" href="v/1.70/style.css" id="css">
 <script>
   // if anything fails to load, say so instead of showing a dead screen
   window.addEventListener('error', function (e) {
@@ -77,12 +77,13 @@
     </div>
     <div class="traybar">
       <div id="tray"><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div></div>
+      <!-- hint and shuffle beside the tray, not in a row under the pile: the pile gets that row (Dennis 2026-11-15) -->
+      <div class="toolbar">
+        <button class="tool" id="btnHint"><span>💡</span><b data-t="hint">Hint</b><i class="badge">1</i></button>
+        <button class="tool" id="btnShuffle"><span>🔀</span><b data-t="shuffle">Schudden</b><i class="badge">1</i></button>
+      </div>
     </div>
     <div id="boardWrap"><div id="board"></div></div>
-    <div class="toolbar">
-      <button class="tool" id="btnHint"><span>💡</span><b data-t="hint">Hint</b><i class="badge">1</i></button>
-      <button class="tool" id="btnShuffle"><span>🔀</span><b data-t="shuffle">Schudden</b><i class="badge">1</i></button>
-    </div>
   </section>
 
   <!-- LEVELS -->
@@ -154,7 +155,7 @@
    and keeps them on the phone. On start we use that downloaded version when it is newer
    than the one built into the app; if it does not start properly, we fall back at once. */
 (function () {
-  var BUILT = '1.69', KEY = 'omamj.code', FILES = ['v/1.69/tiles.js', 'v/1.69/audio.js', 'v/1.69/layouts.js', 'v/1.69/hard.js', 'v/1.69/levels-hard.js', 'v/1.69/levels-early.js', 'v/1.69/coach-clips.js', 'v/1.69/js/rules.js', 'v/1.69/js/lang.js', 'v/1.69/js/core.js', 'v/1.69/js/fx.js', 'v/1.69/js/update.js', 'v/1.69/js/screens.js', 'v/1.69/js/board.js', 'v/1.69/js/help.js', 'v/1.69/js/specials.js', 'v/1.69/js/coach.js', 'v/1.69/js/pro.js', 'v/1.69/js/rewards.js', 'v/1.69/js/telemetry.js', 'v/1.69/js/social.js', 'v/1.69/js/hearts.js', 'v/1.69/js/stories.js', 'v/1.69/js/village.js', 'v/1.69/js/win.js', 'v/1.69/js/main.js'];
+  var BUILT = '1.70', KEY = 'omamj.code', FILES = ['v/1.70/tiles.js', 'v/1.70/audio.js', 'v/1.70/layouts.js', 'v/1.70/hard.js', 'v/1.70/levels-hard.js', 'v/1.70/levels-early.js', 'v/1.70/coach-clips.js', 'v/1.70/js/rules.js', 'v/1.70/js/lang.js', 'v/1.70/js/core.js', 'v/1.70/js/fx.js', 'v/1.70/js/update.js', 'v/1.70/js/screens.js', 'v/1.70/js/board.js', 'v/1.70/js/help.js', 'v/1.70/js/specials.js', 'v/1.70/js/coach.js', 'v/1.70/js/pro.js', 'v/1.70/js/rewards.js', 'v/1.70/js/telemetry.js', 'v/1.70/js/social.js', 'v/1.70/js/hearts.js', 'v/1.70/js/stories.js', 'v/1.70/js/village.js', 'v/1.70/js/win.js', 'v/1.70/js/main.js'];
   function newer(a, b) { a = String(a).split('.'); b = String(b).split('.'); for (var i = 0; i < Math.max(a.length, b.length); i++) { var x = +a[i] || 0, y = +b[i] || 0; if (x !== y) return x > y; } return false; }
   function builtIn() { FILES.forEach(function (f) { var s = document.createElement('script'); s.src = f; s.async = false; document.body.appendChild(s); }); }
   var c = null;

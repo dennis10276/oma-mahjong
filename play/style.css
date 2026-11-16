@@ -317,14 +317,28 @@ body.nonum .cn { display: none; }
 .tmini.arriving { visibility: hidden; }
 .tmini.ghost { position: fixed; inset: auto; z-index: 89; pointer-events: none; }
 
-.toolbar { display: flex; justify-content: center; gap: 14px; padding: 4px 14px 10px; }
-.tool { position: relative; flex: 0 1 140px; display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 6px; padding: 6px 10px; background: var(--cream); border-radius: 16px; font-size: 16px; font-weight: 900; box-shadow: 0 4px 0 var(--cream2), 0 6px 10px rgba(0,0,0,.22); }
-.tool > span { font-size: 22px; line-height: 1; }
-.tool:active { transform: translateY(5px); box-shadow: 0 1px 0 var(--cream2); }
-.tool .badge { position: absolute; top: -7px; right: -5px; min-width: 22px; height: 22px; border-radius: 13px; background: var(--pink); color: #fff; font-style: normal; font-size: 14px; display: grid; place-items: center; box-shadow: 0 2px 0 var(--pink-d); }
-.tool.used { opacity: .45; filter: grayscale(1); }
-.tool.locked { opacity: .55; filter: grayscale(.8); }
-.tool.locked .badge { background: var(--muted); box-shadow: 0 2px 0 #5c4520; font-size: 12px; }
+/* hint and shuffle sit left and right of the tray, in the tray's row (Dennis 2026-11-15): they take no height from the pile */
+.traybar { position: relative; }
+/* hint and shuffle: gold coins, earned with 3 stars on every level so far (Dennis 2026-11-15). Against slips from home and restart
+   just above them: they line up with the bottom of the tray (more room under home/restart), their top and bottom 8 px do not react to taps
+   (the hit area is the ::before below that strip), a first tap only wakes the coin (board.js armTool), and they are round, not square. */
+.toolbar { position: absolute; inset: 0 10px 4px; display: flex; justify-content: space-between; align-items: flex-end; pointer-events: none; }
+#game.compact .toolbar { bottom: 0; }
+.tool { pointer-events: none; position: relative; width: 44px; height: 44px; display: grid; place-items: center; padding: 0; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff4b8 0 12%, #ffd84d 34%, #f2b01e 70%, #c98a00 100%);
+  box-shadow: inset 0 0 0 2px rgba(255,248,210,.85), inset 0 -3px 5px rgba(150,90,0,.45), 0 3px 0 #a86f00, 0 6px 10px rgba(0,0,0,.3); transition: transform .12s; }
+.tool::before { content: ''; position: absolute; inset: 8px -6px; pointer-events: auto; }   /* no taps on the top and bottom 8 px: slips from home/restart above and from the pile below */
+.tool > span { font-size: 22px; line-height: 1; filter: drop-shadow(0 1px 0 rgba(255,255,255,.6)); }
+.tool > b, .tool .badge { display: none; }
+.tool:active { transform: translateY(3px); box-shadow: inset 0 0 0 2px rgba(255,248,210,.85), inset 0 -3px 5px rgba(150,90,0,.45), 0 0 0 #a86f00, 0 2px 4px rgba(0,0,0,.3); }
+/* woken by a first tap: a warm glow that breathes until the second tap (or 3 s) */
+.tool.armed { transform: scale(1.12); animation: toolArmed 1s ease-in-out infinite; }
+@keyframes toolArmed { 0%, 100% { box-shadow: inset 0 0 0 2px rgba(255,248,210,.95), 0 3px 0 #a86f00, 0 0 0 3px #fff3c4, 0 0 14px 6px rgba(255,200,40,.75); } 50% { box-shadow: inset 0 0 0 2px rgba(255,248,210,.95), 0 3px 0 #a86f00, 0 0 0 5px #fff3c4, 0 0 22px 10px rgba(255,200,40,.9); } }
+/* used in this level: a plain grey coin */
+.tool.locked { visibility: hidden; }   /* not earned: not shown (as before) */
+.tool.used { background: radial-gradient(circle at 35% 30%, #f2f0ea, #c9c4b8 70%, #a9a396); box-shadow: inset 0 0 0 2px rgba(255,255,255,.6), 0 2px 0 #8c867a, 0 4px 6px rgba(0,0,0,.2); }
+.tool.used > span { opacity: .35; filter: grayscale(1); }
+@media (prefers-reduced-motion: reduce) { .tool.armed { animation: none; box-shadow: inset 0 0 0 2px rgba(255,248,210,.95), 0 3px 0 #a86f00, 0 0 0 4px #fff3c4, 0 0 18px 8px rgba(255,200,40,.85); } }
 
 /* ========== 8 pop-ups ========== */
 #modal { position: fixed; inset: 0; background: rgba(10,20,15,.6); display: grid; place-items: center; z-index: 65; padding: 20px; }
