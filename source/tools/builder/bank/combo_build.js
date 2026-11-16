@@ -1,0 +1,55 @@
+'use strict';
+/* 350-370: chains that combine several wrong ideas (Dennis 2026-11-16: "combine all the ideas together in chains from 350+ and you
+   can add the gemini layouts if they feel good"). Base chain (one wrong idea of its own: lookalike / waiting twin / clock roof) plus
+   two or more Task 18 link kinds (three of a kind, the melter's twin under the ice, count the clock), on Gemini's six-wide layouts
+   (data/layouts-6wide.json, wip/gemini-six-wide 106be26f) placed after the old catalogue (layout index 1000 + i).
+     node source/tools/builder/bank/combo_build.js --jobs <jobs.json> [--workers 3] [--ms 60000] [--minutes 20]
+   jobs: [{ base, links:[..], layout, seed }]; output: analysis/builder/bank/combo-350/{raw,checked,runs}. Build -> finish (feel 1.5-3
+   pressure parks) -> independent verify (verify_chained_v2.js); only verified boards go to checked/. */
+const fs=require('fs'),path=require('path'),{Worker,isMainThread,parentPort,workerData}=require('worker_threads');
+const OUT=path.resolve(__dirname,'../../../analysis/builder/bank/combo-350');
+const DATA=path.resolve(__dirname,'../../../analysis/builder/data');
+const EXTRA=[['layouts-6wide.json',1000,'six-'],['layouts-6wide-extra-72plus.json',2000,'extra-']];   // Gemini G14 (48) and Antigravity's extra (31 with 72+ tiles), 2026-11-16
+const nameOf=j=>(j.base?j.base+'_':'')+j.links.join('_');
+function setup(){
+  const B=require('../builder.js');
+  for(const [f,at,pre] of EXTRA)if(!B.LAYOUTS[at])JSON.parse(fs.readFileSync(path.join(DATA,f),'utf8')).forEach((l,i)=>{B.LAYOUTS[at+i]={...l,shape:pre+l.shape};});
+  return {B,M:require('../trap_mixes.js')};
+}
+if(!isMainThread){
+  try{
+    const j=workerData,{M}=setup(),name=nameOf(j);
+    try{M.registerChain(name,{base:j.base||null,links:j.links});}catch(e){if(!/already registered/.test(e.message))throw e;}
+    let r=M.build(name,{layout:j.layout,seed:j.seed,narrowSelfLock:true,obviousnessDial:2,frame:{spare:1},targets:{digBefore:[2,8],maxDown:.2}},{tries:250,wallMs:j.ms-500,onAttempt:x=>parentPort.postMessage({progress:x})});
+    if(r.design){
+      r.roles.locks=[...r.roles.locks];r.roles.holderSpecials=[...r.roles.holderSpecials];
+      fs.writeFileSync(path.join(OUT,'raw',`${name}-L${j.layout}-s${j.seed}.json`),JSON.stringify(r));
+      const tow=require('./detower.js').shape(r.design.tiles).straight;
+      if(tow){parentPort.postMessage({result:{fail:'towers:'+tow}});return;}
+      const raw=JSON.parse(JSON.stringify(r));
+      const f=require('../chained_v2_finish.js').finish(raw,{seed:j.seed,tuneMs:30000,repairMs:20000});
+      if(!f.design)r={fail:'finish:'+(f.fail||'?')};
+      else{const v=require('../verify_chained_v2.js').verify(f);r=v.ok?f:{fail:'verify',errors:v.errors};if(v.ok)f.verification=v;}
+    }
+    parentPort.postMessage({result:r});
+  }catch(e){parentPort.postMessage({result:{fail:'exception',detail:e.stack}});}
+}
+function job(j){return new Promise(res=>{let done=false,progress;const w=new Worker(__filename,{workerData:j});
+  const end=r=>{if(done)return;done=true;clearTimeout(t);w.terminate();res({...r,progress});};
+  const t=setTimeout(()=>end({fail:'hardWall'}),j.ms+90000);
+  w.on('message',m=>m.progress?progress=m.progress:end(m.result));w.on('error',e=>end({fail:'exception',detail:e.stack}));w.on('exit',c=>end({fail:'exit:'+c}));});}
+async function main(){
+  const a=process.argv.slice(2),arg=(n,d)=>{const i=a.indexOf('--'+n);return i<0?d:a[i+1];};
+  for(const p of ['raw','checked','runs'])fs.mkdirSync(path.join(OUT,p),{recursive:true});
+  const jobs=JSON.parse(fs.readFileSync(arg('jobs'),'utf8')),workers=+arg('workers',3),ms=+arg('ms',60000),until=Date.now()+ +arg('minutes',20)*60000;
+  const log=path.join(OUT,'runs',`build-${Date.now()}.jsonl`);let cur=0;
+  await Promise.all(Array.from({length:workers},async()=>{while(cur<jobs.length&&Date.now()<until){
+    const j={seed:1,...jobs[cur++],ms},name=nameOf(j),file=`${name}-L${j.layout}-s${j.seed}.json`;
+    if(fs.existsSync(path.join(OUT,'checked',file)))continue;
+    const r=await job(j),row={name,layout:j.layout,seed:j.seed,ok:!!r.design,fail:r.fail,errors:r.errors,detail:r.detail&&r.detail.slice(0,300),fails:r.progress&&(r.progress.fails||r.progress),wall:r.wall};
+    if(r.design)fs.writeFileSync(path.join(OUT,'checked',file),JSON.stringify(r));
+    fs.appendFileSync(log,JSON.stringify(row)+'\n');console.log(JSON.stringify(row));
+  }}));
+}
+if(isMainThread&&require.main===module)main();
+module.exports={setup,nameOf};

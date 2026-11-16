@@ -31,12 +31,39 @@ function place(kind,c,r,brief,rng){
   }else if(kind==='selfLocked'){
     const hosts=shuffle(Object.keys(r.ice).map(Number),rng);
     const lonePool=all.filter(i=>c.free0[i]&&!special.has(i)&&shown(i));
-    outer:for(const host of hosts)for(const lone of shuffle(c.inb[host].filter(i=>lonePool.includes(i)&&!P.includes(i)),rng)){
+    // brief.narrowSelfLock (Claude 2026-11-16, narrow six-wide piles): the lone may also be a dig tile that the dig takes AFTER
+    // the host (the verifier's loneNotLast rule allows it); on a 6-wide pile the dig uses every free neighbour of the ice.
+    const after=i=>brief.narrowSelfLock&&P.includes(i)&&P.includes(host0)&&P.indexOf(i)>P.indexOf(host0);let host0=null;
+    outer:for(const host of hosts)for(const lone of shuffle(c.inb[host0=host].filter(i=>lonePool.includes(i)&&(!P.includes(i)||after(i))),rng)){
       const twin=shuffle(all.filter(i=>ordinary(i)&&shown(i)&&!P.includes(i)&&c.above[i].has(host)&&i!==lone&&!geo.close[i][lone]),rng)[0];
       if(twin==null)continue;
       q={kind,host,lone,twin,take:[lone],visible:[host,lone,twin]};
       const old=b.wrong.indexOf(lone);if(old>=0){const oldTwin=b.twins[old];b.pairs=b.pairs.filter(p=>!p.includes(lone));b.wrong.splice(old,1);b.twins.splice(old,1);b.tiles=b.tiles.filter(i=>i!==oldTwin);}
       b.pairs.push([lone,twin]);b.wrong.push(lone);b.twins.push(twin);break outer;
+    }
+    // brief.narrowSelfLock: no free neighbour of the ice is left off the dig, so re-plan the dig with one of them kept aside
+    // (taken out of every tile's ice neighbours for the planner), then look for the twin under the ice again.
+    if(!q&&brief.narrowSelfLock)outer2:for(const host of hosts)for(const lone of shuffle(c.inb[host].filter(i=>lonePool.includes(i)&&P.includes(i)&&!(b.wrong||[]).includes(i)),rng)){
+      const ex=new Set([...(b.wrong||[]),lone]),P2=B.planDig({...c,inb:c.inb.map(a=>a.filter(j=>!ex.has(j)))},r,rng);
+      if(!P2||!P2.includes(host)||P2.includes(lone)||(b.wrong||[]).some(i=>P2.includes(i)))continue;
+      const twin=shuffle(all.filter(i=>ordinary(i)&&shown(i)&&!P2.includes(i)&&c.above[i].has(host)&&i!==lone&&!geo.close[i][lone]),rng)[0];
+      if(twin==null)continue;
+      P=P2;q={kind,host,lone,twin,take:[lone],visible:[host,lone,twin],replanned:true};
+      b.pairs.push([lone,twin]);b.wrong.push(lone);b.twins.push(twin);break outer2;
+    }
+    // ...and if the base's ice tiles have no such spot, the link brings its own ice: a dig tile with a free neighbour (kept off
+    // the re-planned dig) and a readable twin under it, not touching that neighbour; the new ice must stay on the clock's dig.
+    if(!q&&brief.narrowSelfLock){
+      const gate=[r.clock,...r.keys,...r.locks,...Object.keys(r.ice).map(Number)];   // a tile over the clock or a special: the dig must take it
+      const cands=shuffle(P.filter(h=>ordinary(h)&&shown(h)&&!r.ice[h]&&h!==r.clock&&gate.some(s=>c.above[s].has(h))),rng).slice(0,40);
+      outer3:for(const host of cands)for(const lone of shuffle(c.inb[host].filter(i=>lonePool.includes(i)&&!(b.wrong||[]).includes(i)&&!b.tiles.includes(i)),rng)){
+        const twin=shuffle(all.filter(i=>ordinary(i)&&shown(i)&&c.above[i].has(host)&&i!==lone&&!geo.close[i][lone]&&!b.tiles.includes(i)),rng)[0];
+        const ice={...r.ice,[host]:2},ex=new Set([...(b.wrong||[]),lone]);
+        const P2=B.planDig({...c,inb:c.inb.map(a=>a.filter(j=>!ex.has(j)))},{...r,ice},rng);
+        if(!P2||!P2.includes(host)||P2.includes(lone)||P2.includes(twin)||(b.wrong||[]).some(i=>P2.includes(i)))continue;
+        r.ice=ice;P=P2;q={kind,host,lone,twin,take:[lone],visible:[host,lone,twin],ownIce:true};
+        b.pairs.push([lone,twin]);b.wrong.push(lone);b.twins.push(twin);break outer3;
+      }
     }
   }else if(kind==='freeMelt'){
     const need=brief.targets?.freeMeltNeed??2;
