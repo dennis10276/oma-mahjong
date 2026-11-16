@@ -327,3 +327,7 @@ add new decisions with a date.
     The rest of 251-299 and all of 301-370 (placed 2026-11-14, built before the 60 px decision: 11 of 70 at 58 px) go to Codex:
     `codex-tasks/TASK-23-towers-and-bench.md`, with Claude's shape bench (`bank/shape_bench.js`: understand the clock route and its
     dependencies first, Dennis: "You should understand the exact clock route and its dependencies before trying stuff").
+  - **1.70 is live** (2026-11-16, Dennis: "is codex done with 251-299? if so, release 1.70 for the new levels 251-299 with
+    wip/top-tools"): main 97dc6221, 173/173 tests, APK 1.70 (code 86). Levels 251-299 at about 60 px with the same traps (Codex
+    Task 24 gate 1, candidate fc0859fc: 45/45 ordinary levels fit, swaps 262<->260 and 277<->280 done), 12 px between tray and
+    pile, hint/shuffle as coins (wip/top-tools). 301-370 (gate 2) not yet in the game.
