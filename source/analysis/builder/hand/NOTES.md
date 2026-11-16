@@ -73,3 +73,9 @@ starts a win; then `hand.js prove` on the whole board. Random sampling found not
 exhaustive pairing finds it in seconds (on 1006 it rediscovered H1's mirror: a copy, not used).
 Next: variations that keep the core and change the chain (a lock on the late tile with the keys in the dig, ice on a holder,
 silver keys), a filter against copies (same layout + mirrored clock region), and the other hand patterns.
+
+## "Park the twin early" is impossible (proved 2026-11-17)
+If the tray has room to park a far visible twin F before the late tile L, it has room for L itself: take L, then F right after
+(free), same moves, same slots. So parking a visible twin is never forced (gen_corridor --park: 0 boards with real parking in
+~130k pairings on 3 layouts, and the argument above says why). Only a face-down twin changes the slot count, because a
+face-down pair uses no slot: that is what makes the full-tray face-down pair a real mechanic.
