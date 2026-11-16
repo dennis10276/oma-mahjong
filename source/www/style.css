@@ -637,6 +637,15 @@ body.sunny .how-tray .hm, body.sunny .lesson-slot .lesson-tile { background: lin
 .tile .ob[data-marker]::before { position: absolute; left: -4%; top: -6%; line-height: 1; font-size: calc(var(--fs, 30px) * .46); filter: drop-shadow(0 1px 1px rgba(0,0,0,.35)); }
 .tile .ob[data-marker="key"]::before { content: '🔑'; }
 .tile .ob[data-marker="lock"]::before { content: '🔒'; }
+/* the silver key set (levels 350+): same signs, silver instead of gold */
+.tile .ob[data-k="lock2"] { background: rgba(40,50,62,.22); box-shadow: inset 0 0 0 4px #8796a6; }
+.tile .ob[data-k="lock2"]::after { content: '🔒'; right: -4%; bottom: -3%; font-size: calc(var(--fs, 30px) * .62); filter: grayscale(1) brightness(1.35) drop-shadow(0 2px 3px rgba(0,0,0,.5)); }
+.tile .ob[data-k="key2"] { box-shadow: inset 0 0 0 3px #a9b6c3, 0 0 10px 2px rgba(200,215,230,.75); }
+.tile .ob[data-k="key2"]::after { content: '🔑'; left: -4%; top: -6%; font-size: calc(var(--fs, 30px) * .46); filter: grayscale(1) brightness(1.35); }
+.tile .ob[data-marker="key2"]::before { content: '🔑'; filter: grayscale(1) brightness(1.35); }
+.tile .ob[data-marker="lock2"]::before { content: '🔒'; filter: grayscale(1) brightness(1.35); }
+.silver { filter: grayscale(1) brightness(1.35); }
+.tile .ob-open.ob-silver { filter: grayscale(1) brightness(1.35) drop-shadow(0 2px 3px rgba(0,0,0,.45)); }
 /* the alarm clock: a badge with the moves left (red and pulsing for the last 5) */
 #board .tile.clocked { box-shadow: 0 0 0 3px #ff7a2f, 0 0 12px 3px rgba(255,122,47,.6); }
 #clockBadge { position: absolute; z-index: 1999999; display: flex; align-items: center; gap: 1px; padding: 1px 6px 1px 3px; border-radius: 99px; background: #fff3e6; border: 2px solid #ff7a2f; box-shadow: 0 2px 5px rgba(0,0,0,.4); line-height: 1.15; pointer-events: none; }

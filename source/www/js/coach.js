@@ -66,7 +66,8 @@ function czLine(st, faces, line) {
 /* Ice and locks, as in specials.js: ob = { need: {tile: hits}, locks, keys, unlocked } from the start of
    the try, inb = Layouts.iceNeighbors. Ice melts as tiles around it leave; locks open when both keys are gone. */
 function czIceLeft(s, ob, inb, i) { const n = ob && ob.need[i]; if (!n) return 0; let gone = 0; for (const j of inb[i]) if (!s.a[j]) gone++; return Math.max(0, n - gone); }
-const czLocked = (s, ob, i) => !!(ob && ob.locks.includes(i) && !ob.unlocked && ob.keys.some(k => s.a[k]));
+const czLocked = (s, ob, i) => !!(ob && ((ob.locks.includes(i) && !ob.unlocked && ob.keys.some(k => s.a[k])) ||
+  ((ob.locks2 || []).includes(i) && !ob.unlocked2 && ob.keys2.some(k => s.a[k]))));   // the silver set (keys2/locks2) too
 const czTakeable = (s, nb, ob, inb, i) => !!s.a[i] && Layouts.isFree(i, s.a, nb) && !czIceLeft(s, ob, inb, i) && !czLocked(s, ob, i);
 function czObKind(s, ob, inb, i) {
   if (!ob) return '';
@@ -76,8 +77,9 @@ function czObKind(s, ob, inb, i) {
 }
 function czObMarker(s, ob, i) {
   if (!ob) return '';
-  if (czLocked(s, ob, i)) return 'lock';
+  if (czLocked(s, ob, i)) return ob.locks.includes(i) && !ob.unlocked && ob.keys.some(k => s.a[k]) ? 'lock' : 'lock2';
   if (!ob.unlocked && ob.keys.includes(i) && ob.keys.some(k => s.a[k])) return 'key';
+  if (ob.keys2 && !ob.unlocked2 && ob.keys2.includes(i) && ob.keys2.some(k => s.a[k])) return 'key2';
   return '';
 }
 
@@ -469,7 +471,7 @@ const czSeenBefore = z => { const m = czMemory.get(z.key); return m && m.sig ===
 function coachNote(i) {
   if (!G) return;
   if (!G.cz) { czFold(czOpen); G.cz = czOpen = { key: G.key, faces: G.tiles.map((t, k) => faceOf(k)), tiles: G.tiles.map(t => [t.x, t.y, t.z]), nb: G.nb, start: { a: Array.from(G.alive), d: Array.from(G.down), p: G.peek, tray: G.tray.map(faceOf), ck: G.clock && G.alive[G.clock.i] ? { i: G.clock.i, left: clockLeft() } : null },
-    ob: G.ob ? { need: { ...G.ob.need }, locks: [...G.ob.locks], keys: G.ob.keys.slice(), unlocked: G.ob.unlocked } : null, taps: [] }; }
+    ob: G.ob ? { need: { ...G.ob.need }, locks: [...G.ob.locks], keys: G.ob.keys.slice(), unlocked: G.ob.unlocked, locks2: [...G.ob.locks2], keys2: G.ob.keys2.slice(), unlocked2: G.ob.unlocked2 } : null, taps: [] }; }
   G.cz.taps.push(i);
 }
 const coachForget = () => { if (G && G.cz) { czFold(G.cz); G.cz = czOpen = null; } };

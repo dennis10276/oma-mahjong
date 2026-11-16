@@ -96,8 +96,9 @@ function jokerLeftover() {
 }
 
 /* ---------- ice and lock & key ----------
-   G.ob = { need: {tile: hits}, left: {tile: hits still needed}, locks: Set, keys: [a, b], unlocked }.
-   Ice melts when tiles around it leave the board; locks open when both key tiles are gone. */
+   G.ob = { need: {tile: hits}, left: {tile: hits still needed}, locks: Set, keys: [a, b], unlocked,
+            locks2: Set, keys2: [a, b], unlocked2 } (the silver set, Dennis 2026-11-16: "Yes we can make a second key pair with its own locks").
+   Ice melts when tiles around it leave the board; locks open when both key tiles of their own set are gone. */
 function addObstacles(o, spec) {
   if (o.obstDone) return;
   o.obstDone = true; o.obst = null;
@@ -109,15 +110,19 @@ function addObstacles(o, spec) {
 function setObstacles(ob) {
   G.ob = null; G.inb = null;
   const need = ob && (ob.need || ob.ice);
-  if (!ob || (!Object.keys(need || {}).length && !(ob.keys || []).length)) return;
-  G.ob = { need: { ...need }, left: { ...(ob.left || need) }, locks: new Set(ob.locks || []), keys: ob.keys || [], unlocked: !!ob.unlocked || !(ob.keys || []).length };
+  if (!ob || (!Object.keys(need || {}).length && !(ob.keys || []).length && !(ob.keys2 || []).length)) return;
+  G.ob = { need: { ...need }, left: { ...(ob.left || need) }, locks: new Set(ob.locks || []), keys: ob.keys || [], unlocked: !!ob.unlocked || !(ob.keys || []).length,
+    locks2: new Set(ob.locks2 || []), keys2: ob.keys2 || [], unlocked2: !!ob.unlocked2 || !(ob.keys2 || []).length };
   G.inb = Layouts.iceNeighbors(G.tiles);
 }
-const obState = () => G.ob ? { need: G.ob.need, left: G.ob.left, locks: [...G.ob.locks], keys: G.ob.keys, unlocked: G.ob.unlocked } : null;
+const obState = () => G.ob ? { need: G.ob.need, left: G.ob.left, locks: [...G.ob.locks], keys: G.ob.keys, unlocked: G.ob.unlocked,
+  ...(G.ob.keys2.length ? { locks2: [...G.ob.locks2], keys2: G.ob.keys2, unlocked2: G.ob.unlocked2 } : {}) } : null;
 const frozen = i => !!(G.ob && G.ob.left[i] > 0);
-const lockedT = i => !!(G.ob && !G.ob.unlocked && G.ob.locks.has(i));
+const lockedBy = i => !G.ob ? 0 : !G.ob.unlocked && G.ob.locks.has(i) ? 1 : !G.ob.unlocked2 && G.ob.locks2.has(i) ? 2 : 0;   // which set still locks it
+const lockedT = i => lockedBy(i) > 0;
 const canTake = i => free(i) && !frozen(i) && !lockedT(i);
-const obRules = () => G.ob ? { iceNb: G.inb, ice: G.ob.left, locks: G.ob.unlocked ? null : G.ob.locks, keys: G.ob.keys } : null;
+const obRules = () => G.ob ? { iceNb: G.inb, ice: G.ob.left, locks: G.ob.unlocked ? null : G.ob.locks, keys: G.ob.keys,
+  locks2: G.ob.unlocked2 || !G.ob.locks2.size ? null : G.ob.locks2, keys2: G.ob.keys2 } : null;
 function obKind(i) {
   if (!G.ob) return '';
   if (frozen(i)) return G.ob.left[i] > 1 ? 'ice2' : 'ice';
@@ -125,8 +130,9 @@ function obKind(i) {
 }
 // The key/lock role is still visible while frozen; obKind keeps its ice-first meaning.
 function obMarker(i) {
-  if (lockedT(i)) return 'lock';
+  const by = lockedBy(i); if (by) return by === 2 ? 'lock2' : 'lock';
   if (G.ob && !G.ob.unlocked && G.ob.keys.includes(i)) return 'key';
+  if (G.ob && !G.ob.unlocked2 && G.ob.keys2.includes(i)) return 'key2';
   return '';
 }
 const obHTML = (kind, marker = '') => kind ? `<div class="ob" data-k="${kind}"${kind.startsWith('ice') && marker ? ` data-marker="${marker}"` : ''}></div>` : '';
@@ -145,18 +151,19 @@ function crackFx(i) {
   const f = document.createElement('div'); f.className = 'ob-crack'; el.appendChild(f);
   setTimeout(() => f.remove(), 600);
 }
-function unlockAll() {
-  G.ob.unlocked = true;
-  G.ob.locks.forEach(i => {
+function unlockAll(set = 1) {
+  const two = set === 2, locks = two ? G.ob.locks2 : G.ob.locks;
+  if (two) G.ob.unlocked2 = true; else G.ob.unlocked = true;
+  locks.forEach(i => {
     decorate(i);
     if (!G.alive[i]) return;
     // the lock springs open on the tile itself (1.58), so it is clear which tiles are free now
-    const el = G.tiles[i].el, o = document.createElement('div'); o.className = 'ob-open'; o.textContent = '🔓';
+    const el = G.tiles[i].el, o = document.createElement('div'); o.className = 'ob-open' + (two ? ' ob-silver' : ''); o.textContent = '🔓';
     el.appendChild(o); setTimeout(() => o.remove(), 1100);
     const c = centerOf(el); FX.emoji(c.x, c.y, ['🔓', '✨'], 6);
   });
-  G.ob.keys.forEach(decorate);
-  praise(tx('locksOpen')); Sound.unlock(); bumpStat('unlocks');
+  (two ? G.ob.keys2 : G.ob.keys).forEach(decorate);
+  praise(tx(two ? 'locksOpen2' : 'locksOpen')); Sound.unlock(); bumpStat('unlocks');
 }
 function updateObstacles() {
   if (!G || !G.ob) return;
@@ -175,24 +182,25 @@ function updateObstacles() {
       if (!left) praise(tx('iceMelted')); else toast(tx('iceCrack'), 1600);
     }
   }
-  if (!ob.unlocked && ob.keys.length && ob.keys.every(k => !G.alive[k])) unlockAll();
+  if (!ob.unlocked && ob.keys.length && ob.keys.every(k => !G.alive[k])) unlockAll(1);
+  if (!ob.unlocked2 && ob.keys2.length && ob.keys2.every(k => !G.alive[k])) unlockAll(2);
 }
 // a tap on a frozen or locked tile: say what to do, and show it
 function obBlocked(i) {
   replay(G.tiles[i].el, 'shake');
   Sound.blocked(); buzz(30);
   const ice = frozen(i);
-  toast(ice ? tx(G.ob.left[i] > 1 ? 'iceThick' : 'iceThin') : tx('lockedTap'), 2600);
+  toast(ice ? tx(G.ob.left[i] > 1 ? 'iceThick' : 'iceThin') : tx(lockedBy(i) === 2 ? 'lockedTap2' : 'lockedTap'), 2600);
   if (ice) showThaw(i);
-  else showKeys();
+  else showKeys(lockedBy(i));
 }
 function showThaw(i) { G.inb[i].filter(j => G.alive[j]).forEach(j => replay(G.tiles[j].el, 'obhint', 1300)); }
 // the key tiles wiggle: they open the locks (also when the tapped locked tile is still covered;
 // Dennis 2026-10-30: "when you click a locked tile even when buried I want the keys to shake")
 // A key under the pile shows through it: every tile lying on top of it turns see-through for a moment
 // (Dennis 2026-10-30: "I can't see the other key under the pile ... I want to see it through the pile").
-function showKeys() {
-  const keys = G.ob.keys.filter(k => G.alive[k]), over = new Set(), todo = [...keys];
+function showKeys(set = 1) {
+  const keys = (set === 2 ? G.ob.keys2 : G.ob.keys).filter(k => G.alive[k]), over = new Set(), todo = [...keys];
   while (todo.length) for (const j of G.nb.above[todo.pop()]) if (G.alive[j] && !over.has(j)) { over.add(j); todo.push(j); }
   over.forEach(j => replay(G.tiles[j].el, 'xray', 1500));
   keys.forEach(j => replay(G.tiles[j].el, 'obhint', 1500));
@@ -207,13 +215,17 @@ function obRelief() {
   if (Object.keys(G.ob.left).some(k => G.ob.left[k] > 0)) {
     Object.keys(G.ob.left).forEach(k => { if (G.ob.left[k] > 0) { G.ob.left[k] = 0; decorate(+k); crackFx(+k); } });
     praise(tx('iceSun')); Sound.unlock();
-  } else if (!G.ob.unlocked) unlockAll();
+  } else if (!G.ob.unlocked) unlockAll(1);
+  else if (!G.ob.unlocked2) unlockAll(2);
   saveCur();
 }
 // shuffling: the two key tiles must keep the same picture
 function keepKeysPaired(faces) {
-  if (!G.ob || G.ob.unlocked || !G.ob.keys.length) return;
-  const [a, b] = G.ob.keys;
+  if (!G.ob) return;
+  if (!G.ob.unlocked && G.ob.keys.length) keepPair(faces, G.ob.keys);
+  if (!G.ob.unlocked2 && G.ob.keys2.length) keepPair(faces, G.ob.keys2);
+}
+function keepPair(faces, [a, b]) {
   if (!G.alive[a] && !G.alive[b]) return;
   const ref = G.alive[a] && G.alive[b] ? a : (G.alive[a] ? b : a), adj = ref === a ? b : a;
   const fRef = G.alive[ref] ? faces[ref] : faceOf(ref);
@@ -225,6 +237,7 @@ function keepKeysPaired(faces) {
 const NEW_TILES = {
   gold: { has: () => G.gold.size > 0, ico: '✨' },
   lock: { has: () => !!(G.ob && G.ob.keys.length), ico: '🔒' },
+  lock2: { has: () => !!(G.ob && G.ob.keys2.length), ico: '<span class="silver">🔑🔒</span>' },
   ice: { has: () => !!(G.ob && Object.keys(G.ob.need).length), ico: '🧊' },
   joker2: { has: () => G.tiles.some(t => t.face === JOKER), ico: '🃏' },
   trayPair: { has: () => G.down.some(Boolean), first: () => G.o.mode === 'level' && G.o.level === 50, ico: '🀄' },
@@ -475,7 +488,7 @@ function newTileIntro(after = null) {
   if (!G || G.done) return false;
   const k = Object.keys(NEW_TILES).find(k => !S.seenSp[k] && NEW_TILES[k].has() && (!NEW_TILES[k].first || NEW_TILES[k].first()));
   if (!k) return false;
-  if (k !== 'joker2' && k !== 'gold') { showTileLesson(k, after, false, 'intro', true); return true; }
+  if (k !== 'joker2' && k !== 'gold' && k !== 'lock2') { showTileLesson(k, after, false, 'intro', true); return true; }   // the silver set: a short note (no film lesson of its own)
   const t = NEW_TILES[k];
   openModal(`<div class="nt-ico">${t.ico}</div><h2>${tx('newTile', tx('nt_' + k))}</h2><p>${tx('nt_' + k + '_text')}</p>
     <button class="big-btn play" id="ntGo"><span class="bb-text"><b>${tx('lessonContinue')}</b></span></button>`, false);

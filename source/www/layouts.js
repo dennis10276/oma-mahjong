@@ -345,6 +345,8 @@ const Layouts = (() => {
      Ice: a frozen tile can only be taken after `h` of the tiles around it (next to it, above or
      below it) have left the board. Lock: a locked tile can only be taken once both tiles of the
      key pair have left the board. rules = { iceNb, ice: {i: hits}, locks: Set|null, keys: [a, b] };
+     A second, silver key set (Dennis 2026-11-16, levels 350+) works the same with its own pair: locks2: Set|null, keys2: [a, b].
+     A silver key may itself sit under a gold lock (or the other way round): one set has to open before the other.
      the ice count starts from alive0 (the board when the rules were made). */
   function iceNeighbors(tiles) {
     return tiles.map((a, i) => tiles.map((b, j) => j).filter(j => {
@@ -361,7 +363,8 @@ const Layouts = (() => {
     for (const j of rules.iceNb[i]) if (alive0[j] && !alive[j]) gone++;
     return gone < h;
   }
-  const lockedIn = (i, alive, rules) => !!(rules.locks && rules.locks.has(i) && rules.keys.some(k => alive[k]));
+  const lockedIn = (i, alive, rules) => !!((rules.locks && rules.locks.has(i) && rules.keys.some(k => alive[k])) ||
+    (rules.locks2 && rules.locks2.has(i) && rules.keys2.some(k => alive[k])));
   function takeable(i, alive, nb, rules, alive0) {
     return isFree(i, alive, nb) && !frozenIn(i, alive, rules, alive0) && !lockedIn(i, alive, rules);
   }
