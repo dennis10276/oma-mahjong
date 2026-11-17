@@ -46,7 +46,7 @@ function corridor(layout, o = {}) {
     };
     const jobs = [];
     // o.clockPeek: the late tile is the clock itself ("the clock goes to the tray too": at the full tray its face-down twin is the way)
-    const Lok = L => !o.iceClock || g.iceNb[c].includes(L);   // the frozen-clock variant: the late tile must melt the clock
+    const Lok = L => (!o.iceClock || g.iceNb[c].includes(L)) && (!o.roofEscape || g.nb.above[c].includes(L));   // frozen clock: the late tile melts it; roof escape: the late tile lies on the clock
     for (const L of (o.clockPeek ? [c] : dig).filter(Lok)) for (const F of far.slice().sort(() => rnd() - .5).slice(0, o.farTries ?? 2)) jobs.push([L, F]);
     // o.escape: 'cover' (F lies under one free tile R; R's twin is a free tile far away), 'ice' (F frozen 1; its free neighbour M melts it;
     // M's twin is far), 'silver' (F silver-locked; the silver keys are two free tiles far apart): each is a visible pair, which needs a free
@@ -93,7 +93,7 @@ function corridor(layout, o = {}) {
       const spec = { layout, exact: true, peek: !o.park, peekNeeded: !o.park, spare: 1, clock: c, route: win, downTiles: downs, pairs, ...(iceC ? { ice: iceC } : {}), ...(prep.locks2 ? { locks2: prep.locks2, keys2: prep.keys2 } : {}),
         baits: o.park ? [] : [...near, F].map(i => ({ at: 1, take: [i], why: i === F ? 'take the face-down twin early' : 'start beside the clock' })).filter(b => free0.has(b.take[0])),
         ...(o.park ? { parkTile: F } : {}),
-        title: o.escape ? { cover: 'Uncover the escape first', ice: 'Melt the escape first', silver: 'Unlock the escape first' }[o.escape] : o.bothDown ? 'Both are face-down' : o.iceClock ? 'The face-down pair melts' : o.park ? (L === c ? 'Park the twin of the clock' : 'Park the twin early') : L === c ? 'The clock goes to the tray too' : 'Face-down twin at a full tray',
+        title: o.roofEscape ? 'The escape lies on the clock' : o.escape ? { cover: 'Uncover the escape first', ice: 'Melt the escape first', silver: 'Unlock the escape first' }[o.escape] : o.bothDown ? 'Both are face-down' : o.iceClock ? 'The face-down pair melts' : o.park ? (L === c ? 'Park the twin of the clock' : 'Park the twin early') : L === c ? 'The clock goes to the tray too' : 'Face-down twin at a full tray',
         idea: o.bothDown ? 'At the full tray the tile you need is face-down, and so is its twin far away: turn one over, find the other back.' : o.iceClock ? 'The clock is frozen; at the full tray the only way on is a face-down pair, and its tile beside the clock is the last melter of the clock.' : o.park ? `The dig fills the tray; the tile you then need is the 4th unless its twin, a free tile far away, already waits. Take that unrelated tile early and let it wait.` : L === c ? `The clock lies deep; the dig leaves the tray full, so the clock itself would be the 4th tile. Its twin is a face-down tile far away: take them together.` : `The clock lies deep (${dig.length + 2} moves); the dig fills the tray, and a face-down tile far away is the twin you need.`,
         digPairs: 0.3, pressure: 1.8, pattern: o.park ? 'park' : 'corridor', gen: { L, F, near, firsts } };
       const p = H.prove(spec, { seed: o.seed, offersMs: 20000 });
@@ -127,7 +127,7 @@ module.exports = { corridor };
 if (require.main === module) {
   const dir = path.resolve(arg('out', 'corridor-out')); fs.mkdirSync(dir, { recursive: true });
   for (const lay of arg('layouts', '1006').split(',').map(Number)) {
-    const why = {}, res = corridor(lay, { per: +arg('per', 2), tries: +arg('tries', 300), seed: +arg('seed', 1), why, lock: arg('lock', null), clockPeek: process.argv.includes('--clock-peek'), park: process.argv.includes('--park'), bothDown: process.argv.includes('--both-down'), iceClock: process.argv.includes('--ice-clock'), escape: arg('escape', null) });
+    const why = {}, res = corridor(lay, { per: +arg('per', 2), tries: +arg('tries', 300), seed: +arg('seed', 1), why, lock: arg('lock', null), clockPeek: process.argv.includes('--clock-peek'), park: process.argv.includes('--park'), bothDown: process.argv.includes('--both-down'), iceClock: process.argv.includes('--ice-clock'), escape: arg('escape', null), roofEscape: process.argv.includes('--roof-escape') });
     for (const b of res) { const f = path.join(dir, `${lay}-c${b.spec.clock}-L${b.spec.gen.L}-s${arg("seed", 1)}.board.json`); fs.writeFileSync(f, JSON.stringify(b, null, 1)); console.log('wrote', f, '| firsts', b.spec.gen.firsts.join(','), '| route', b.spec.route.flat().length); }
     if (!res.length) console.log('layout', lay, ': none');
     console.log(JSON.stringify(why));

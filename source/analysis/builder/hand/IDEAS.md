@@ -35,3 +35,12 @@ Earlier "too easy" boards (lab 2026-11-16) count as ideas but need a harder boar
 
 Rules found on the way (NOTES.md): parking a visible twin is never forced; tiles never become unavailable again, so "do it
 while you can" exists only for moves that need a free slot for a moment (a visible pair at a full tray) or for the clock's moves.
+| 27 | The ice ladder | the frozen clock's melters are frozen too; only one thaw chain fits | i27 | parked: too open on 2026 (many first moves) |
+| 29 | The twin is behind both colours | free clock; twin under gold lock; a gold key carries a silver lock | i29 | DONE |
+| 36 | The escape lies on the clock | the tile that needs the face-down twin is the clock's own roof | gen roofesc | proven on 1006 (H1's layout: copy risk), other layouts running |
+| 39 | Gold opens the way to melt silver | the frozen silver key's melters are gold-locked; a gold key lies under the free silver key | i39 | DONE |
+| 40 | One colour at a time | the clock is locked twice; one free key of each colour taken early leaves two waiting | i40 | DONE |
+| 43 | The twin melts the clock | the frozen clock's last melter is its own twin; take it and later the clock matches it | i43 | DONE (18 deep) |
+| 46 | Start at the far edge | pure order: only far first moves win; beside the clock fills the tray | i46 | running |
+| 47 | The melting pair | the clock's two side tiles are a pair: take both (one side would do) to finish the melt slot-free | i47 | DONE |
+| - | (dropped) Look before you dig | after the wrong side the right side's tile still matches: no wrong move | - | dropped |
