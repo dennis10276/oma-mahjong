@@ -1,0 +1,85 @@
+{
+ "ok": true,
+ "rows": [
+  {
+   "tile": 10,
+   "face": 16,
+   "before": [
+    46
+   ],
+   "after": [
+    46
+   ]
+  },
+  {
+   "tile": 26,
+   "face": 10,
+   "before": [
+    10,
+    67,
+    46
+   ],
+   "after": [
+    10,
+    67,
+    46
+   ]
+  },
+  {
+   "tile": 33,
+   "face": 17,
+   "before": [
+    67
+   ],
+   "after": [
+    67
+   ]
+  },
+  {
+   "tile": 43,
+   "face": 10,
+   "before": [],
+   "after": []
+  },
+  {
+   "tile": 46,
+   "face": 18,
+   "before": [],
+   "after": []
+  },
+  {
+   "tile": 47,
+   "face": 18,
+   "before": [],
+   "after": []
+  },
+  {
+   "tile": 64,
+   "face": 17,
+   "before": [],
+   "after": []
+  },
+  {
+   "tile": 67,
+   "face": 16,
+   "before": [],
+   "after": []
+  },
+  {
+   "tile": 74,
+   "face": 31,
+   "before": [],
+   "after": []
+  },
+  {
+   "tile": 75,
+   "face": 31,
+   "before": [],
+   "after": []
+  }
+ ],
+ "changed": [],
+ "sourceHash": "27e817d1a96303ddedad84bbf4ebb60dbaab5c8183720949f0fc6dbc8e8af6ca",
+ "hash": "067d2cc19421d1097f950c17b570c05126e7fb563768967f670f82cef4c2ffd8",
+ "policy": "Same pinned-special physical prerequisites for the original control-picture identities; no tray or clock budget is assumed."
+}

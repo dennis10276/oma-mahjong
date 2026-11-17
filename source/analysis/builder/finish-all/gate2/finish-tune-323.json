@@ -1,0 +1,92 @@
+{
+ "level": 323,
+ "target": {
+  "pressureParks": 5,
+  "tolerance": 0.5,
+  "maxThree": 0.25,
+  "metric": "feel.expert parkAt[1] + parkAt[2] per complete winning finish",
+  "policy": "Task 24 update: about 5 for tier 1–2; about 2 for harder single ideas and two-idea chains. Only the finish may move."
+ },
+ "met": true,
+ "training": {
+  "pressureParks": 5,
+  "mean": 1.17,
+  "twoPlus": 0.307,
+  "three": 0.079,
+  "parks": 6,
+  "wrongPark": 0,
+  "games": 5,
+  "lostGames": 0,
+  "unresolvedChecks": 0,
+  "samples": [
+   {
+    "games": 5,
+    "lostGames": 0,
+    "unresolvedChecks": 0,
+    "requireProof": true,
+    "waiting": [
+     0.219,
+     0.474,
+     0.228,
+     0.079
+    ],
+    "mean": 1.17,
+    "twoPlus": 0.307,
+    "parks": 6,
+    "parkAt": [
+     1,
+     2.6,
+     2.4
+    ],
+    "wrongPark": 0,
+    "danger": 0.07,
+    "decisions": 43
+   }
+  ]
+ },
+ "edits": [
+  [
+   52,
+   3
+  ],
+  [
+   18,
+   19
+  ],
+  [
+   12,
+   29
+  ],
+  [
+   33,
+   0
+  ],
+  [
+   53,
+   7
+  ],
+  [
+   23,
+   9
+  ],
+  [
+   45,
+   6
+  ]
+ ],
+ "trials": 51,
+ "trace": [
+  {
+   "swap": [
+    0,
+    78
+   ],
+   "errors": [
+    "clockMinimum",
+    "wrongMove:4,72",
+    "authoredProof:wrongRepeatedPairNotBait"
+   ]
+  }
+ ],
+ "ms": 11458
+}

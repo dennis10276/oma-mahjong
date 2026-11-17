@@ -1,0 +1,111 @@
+{
+ "ok": true,
+ "rows": [
+  {
+   "tile": 7,
+   "face": 4,
+   "before": [],
+   "after": []
+  },
+  {
+   "tile": 14,
+   "face": 9,
+   "before": [
+    53,
+    52
+   ],
+   "after": [
+    53,
+    52
+   ]
+  },
+  {
+   "tile": 30,
+   "face": 3,
+   "before": [
+    14,
+    53,
+    52
+   ],
+   "after": [
+    14,
+    53,
+    52
+   ]
+  },
+  {
+   "tile": 37,
+   "face": 34,
+   "before": [],
+   "after": []
+  },
+  {
+   "tile": 48,
+   "face": 9,
+   "before": [],
+   "after": []
+  },
+  {
+   "tile": 49,
+   "face": 14,
+   "before": [],
+   "after": []
+  },
+  {
+   "tile": 52,
+   "face": 4,
+   "before": [
+    53
+   ],
+   "after": [
+    53
+   ]
+  },
+  {
+   "tile": 53,
+   "face": 9,
+   "before": [],
+   "after": []
+  },
+  {
+   "tile": 58,
+   "face": 14,
+   "before": [],
+   "after": []
+  },
+  {
+   "tile": 59,
+   "face": 3,
+   "before": [],
+   "after": []
+  },
+  {
+   "tile": 67,
+   "face": 14,
+   "before": [],
+   "after": []
+  },
+  {
+   "tile": 71,
+   "face": 14,
+   "before": [],
+   "after": []
+  },
+  {
+   "tile": 73,
+   "face": 34,
+   "before": [],
+   "after": []
+  },
+  {
+   "tile": 74,
+   "face": 9,
+   "before": [],
+   "after": []
+  }
+ ],
+ "changed": [],
+ "sourceHash": "335be482a4b72f958dd9987e63d2bdb9b10e088e119b35dd5be8e410aa66c3ea",
+ "hash": "a5944bda924c98249c9af004c73d1ac053bc041a33f678662b133ae87e01f727",
+ "policy": "Same pinned-special physical prerequisites for the original control-picture identities; no tray or clock budget is assumed."
+}

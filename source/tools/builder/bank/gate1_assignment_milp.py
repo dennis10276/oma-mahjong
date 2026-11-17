@@ -10,10 +10,11 @@ fixed={int(i):p for i,p in j['fixed']};var={};cost=[];lb=[];ub=[]
 down=set(j['down']);free=set(j['free']);oldfree=set(j['oldFree']);pairs=[]
 for i,id in enumerate(ids):
  for p,t in enumerate(sites):
+  if str(id) in j.get('allowedSites',{}) and p not in j['allowedSites'][str(id)]:continue
   if id in fixed and fixed[id]!=p:continue
   if id not in fixed and p in fixed.values():continue
   if t[2]>2 and t[2]>j['original'][i][2]:continue
-  if id in down and p in free and not j.get('allowDownFree',False):continue
+  if id in down and p in free and id not in oldfree and not j.get('allowDownFree',False):continue
   var[i,p]=len(cost);pairs.append((i,p))
   orig=j['original'][i]
   c=sum(abs(orig[k]-t[k])*(1 if k<2 else 2) for k in range(3))*.1
@@ -35,6 +36,10 @@ def subtract(a,b):
 for qi,q in enumerate(j['ranks']):
  R=[ranks(q,p) for p in range(n)]
  limit=(j.get('prefixLimits') or [None]*len(j['ranks']))[qi]
+ if qi==0:
+  for tile,need,neighbors in j.get('iceOrders',[]):
+   if limit is None or q[tile]<limit:
+    row({v:1 for (i,p),v in var.items() if p in neighbors and q[ids[i]]<q[tile]},need)
  P=[{v:n+1 for (i,pp),v in var.items() if pp==p and q[ids[i]]<limit} for p in range(n)] if limit is not None else None
  def activate(v,p):
   if P is not None:

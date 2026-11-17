@@ -1,0 +1,97 @@
+{
+ "level": 328,
+ "hash": "aa8ebf6d919016791299d263c908a981543fb1abb00d58bce70d2db4cf61c1a0",
+ "sourceHash": "74a9f1cbe121306367df7e19d14390ac49219ce1baa63ee7c6acc1197c52d15f",
+ "target": {
+  "pressureParks": 2,
+  "tolerance": 0.5,
+  "maxThree": 0.25,
+  "metric": "feel.expert parkAt[1] + parkAt[2] per complete winning finish",
+  "policy": "Task 24 update: about 5 for tier 1–2; about 2 for harder single ideas and two-idea chains. Only the finish may move."
+ },
+ "met": true,
+ "after": {
+  "pressureParks": 1.5666666666666667,
+  "mean": 0.7399999999999999,
+  "twoPlus": 0.23466666666666666,
+  "three": 0.09433333333333332,
+  "parks": 2.566666666666667,
+  "wrongPark": 0.16666666666666666,
+  "games": 24,
+  "lostGames": 0,
+  "unresolvedChecks": 0,
+  "samples": [
+   {
+    "games": 8,
+    "lostGames": 0,
+    "unresolvedChecks": 0,
+    "requireProof": true,
+    "waiting": [
+     0.565,
+     0.19,
+     0.15,
+     0.095
+    ],
+    "mean": 0.78,
+    "twoPlus": 0.245,
+    "parks": 2.8,
+    "parkAt": [
+     1,
+     1,
+     0.8
+    ],
+    "wrongPark": 0.16,
+    "danger": 0.003,
+    "decisions": 37
+   },
+   {
+    "games": 8,
+    "lostGames": 0,
+    "unresolvedChecks": 0,
+    "requireProof": true,
+    "waiting": [
+     0.64,
+     0.159,
+     0.118,
+     0.083
+    ],
+    "mean": 0.64,
+    "twoPlus": 0.201,
+    "parks": 2.1,
+    "parkAt": [
+     1,
+     0.6,
+     0.5
+    ],
+    "wrongPark": 0.13,
+    "danger": 0.01,
+    "decisions": 36
+   },
+   {
+    "games": 8,
+    "lostGames": 0,
+    "unresolvedChecks": 0,
+    "requireProof": true,
+    "waiting": [
+     0.565,
+     0.177,
+     0.153,
+     0.105
+    ],
+    "mean": 0.8,
+    "twoPlus": 0.258,
+    "parks": 2.8,
+    "parkAt": [
+     1,
+     0.8,
+     1
+    ],
+    "wrongPark": 0.21,
+    "danger": 0.01,
+    "decisions": 37
+   }
+  ]
+ },
+ "completeWinningSamples": 24,
+ "humanWinPrediction": false
+}

@@ -64,9 +64,14 @@ function route(d) {
   if (!plays()) { const cs = E.clockShortest(E.game(clone(d), { strict: true }), { nodes: 1000000, ms: 15000 }); if (!cs || cs.unsure) return null; const f = E.flatten(cs.path); prefix = f.slice(0, f.indexOf(d.clock.i) + 1); if (!prefix.length || !plays()) return null; }
   const ci2 = prefix.length - 1;
   const x = { ...d, solution: prefix.concat(d.solution.filter(i => !prefix.includes(i))) }; void ci2;
-  let r; try { r = Tl.cappedTail(x, 3, { peek: false, nodes: 1500000, ms: 20000 }); } catch (e) { return null; }
-  if (!r || r.result !== 'win') return null;
-  return E.replay({ ...d, solution: r.solution }, r.solution, { strict: true }).ok ? r.solution : null;
+  let r; try { r = Tl.cappedTail(x, 3, { peek: false, nodes: 1500000, ms: 20000 }); } catch (e) { /* Try another clock route below. */ }
+  if (r?.result === 'win' && E.replay(d, r.solution, { strict: true }).ok) return r.solution;
+  // A legal stored opening can stop the clock and still strand its matching
+  // picture. Search for a different complete win before rejecting the shape.
+  const cs = E.clockShortest(E.game(clone(d), { strict: true }), { nodes: 1000000, ms: 15000 });
+  if (!cs || cs.unsure) return null;
+  const full = E.flatten(cs.path);
+  return E.replay(d, full, { strict: true }).ok && full.length === d.tiles.length ? full : null;
 }
 
 function run(level, opts = {}) {

@@ -46,9 +46,11 @@ if job.get('softFixed',False):
  for p in job['fixed']:
   if tuple(p) in index:cost[index[tuple(p)]]-=1000
 cost+=np.array([((i*17+job.get('seed',0)*13)%29)*.0001 for i in range(n)])
-earlier=set()
-for p0 in job.get('prefix',[])+[None]+job.get('free',[]):
- if p0 is None:earlier=set();continue
+earlier=set();initial_free_phase=False
+actions=job.get('prefix',[])+sum((['reset']+q for q in job.get('prefixes',[])),[])+[None]+job.get('free',[])
+for p0 in actions:
+ if p0=='reset':earlier=set();initial_free_phase=False;continue
+ if p0 is None:earlier=set();initial_free_phase=True;continue
  p=tuple(p0)
  if p not in index:
   json.dump({'ok':False,'why':'prefix position excluded','position':p0},open(sys.argv[2],'w'));sys.exit()
@@ -62,7 +64,7 @@ for p0 in job.get('prefix',[])+[None]+job.get('free',[]):
   b=len(cost);cost=np.append(cost,0);lb=np.append(lb,0);ub=np.append(ub,1)
   v={i:1 for i in left};v[b]=-len(left);row(v,hi=0)
   v={i:1 for i in right};v[b]=len(right);row(v,hi=len(right))
- if p0 not in job.get('free',[]):earlier.add(p)
+ if not initial_free_phase:earlier.add(p)
 A=coo_matrix((vv,(rr,cc)),shape=(len(lower),len(cost))).tocsc()
 with warnings.catch_warnings():
  warnings.simplefilter('ignore',RuntimeWarning)

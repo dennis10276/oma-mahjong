@@ -1,0 +1,583 @@
+{
+ "schema": 4,
+ "task": 24,
+ "gate": 2,
+ "level": 333,
+ "source": 333,
+ "kind": "Rebuilt this level support courses around its retained trap roles; original pictures and face-down identities retained; finish tile positions tuned to Dennis’s pressure target; finish tile positions tuned to Dennis’s pressure target; finish tile positions tuned to Dennis’s pressure target",
+ "hash": "d667ed918813078d3929f947612f3f2e44b17a80793e29c1531cdf6d680310cb",
+ "sourceHash": "f6842f1ab2307e8e86f5391655e1abe208dfc8195d8bac1c9c0eed65c2bbc41c",
+ "ok": true,
+ "geometry": {
+  "ok": true,
+  "errors": [],
+  "tiles": 88,
+  "width": 6,
+  "rows": 8,
+  "px": 59.13285048119853,
+  "straight": 0,
+  "stray": 1,
+  "edge": 0,
+  "mirror": 0.99
+ },
+ "certificate": {
+  "ok": true,
+  "errors": [],
+  "checks": [
+   "zeroStraightTowers",
+   "supportedIntegerGrid",
+   "72to88Tiles",
+   "6.5Columns8Rows58px",
+   "fullStrictWin",
+   "sameClockMinimumAndSpare",
+   "sameSpecialEffects",
+   "sameSpecialPrerequisites",
+   "allAuthoredWrongMovesStillWrong",
+   "ownAuthoredProof"
+  ],
+  "k": 9,
+  "spare": 2,
+  "footprint": {
+   "ok": true,
+   "profile": "phone-near-60-v1",
+   "tilePx": 59.13285048119853,
+   "rows": 8,
+   "compact": true,
+   "target": 60,
+   "minimum": 58,
+   "limit": "height"
+  },
+  "ablations": [
+   [
+    "ice",
+    78,
+    1
+   ],
+   [
+    "lock",
+    60,
+    1
+   ]
+  ],
+  "prerequisites": [
+   [
+    79,
+    []
+   ],
+   [
+    65,
+    [
+     78
+    ]
+   ],
+   [
+    83,
+    []
+   ],
+   [
+    60,
+    [
+     65,
+     78,
+     83
+    ]
+   ],
+   [
+    78,
+    []
+   ]
+  ],
+  "prices": [
+   {
+    "tiles": [
+     83
+    ],
+    "before": {
+     "tiles": [
+      83
+     ],
+     "result": "lose",
+     "need": null,
+     "cost": null,
+     "exact": true
+    },
+    "after": {
+     "tiles": [
+      83
+     ],
+     "result": "lose",
+     "need": null,
+     "cost": null,
+     "exact": true
+    }
+   },
+   {
+    "tiles": [
+     79
+    ],
+    "before": {
+     "tiles": [
+      79
+     ],
+     "result": "lose",
+     "need": null,
+     "cost": null,
+     "exact": true
+    },
+    "after": {
+     "tiles": [
+      79
+     ],
+     "result": "lose",
+     "need": null,
+     "cost": null,
+     "exact": true
+    }
+   },
+   {
+    "tiles": [
+     83,
+     0
+    ],
+    "before": {
+     "tiles": [
+      83,
+      0
+     ],
+     "result": "lose",
+     "need": null,
+     "cost": null,
+     "exact": true
+    },
+    "after": {
+     "tiles": [
+      83,
+      0
+     ],
+     "result": "lose",
+     "need": null,
+     "cost": null,
+     "exact": true
+    }
+   }
+  ],
+  "ownProof": {
+   "ok": true
+  },
+  "beforeHash": "f6842f1ab2307e8e86f5391655e1abe208dfc8195d8bac1c9c0eed65c2bbc41c",
+  "afterHash": "d667ed918813078d3929f947612f3f2e44b17a80793e29c1531cdf6d680310cb",
+  "policy": "Task 23 geometry + unchanged Task 20 mechanics",
+  "shape": {
+   "ok": true,
+   "errors": [],
+   "tiles": 88,
+   "width": 6,
+   "rows": 8,
+   "px": 59.13285048119853,
+   "straight": 0,
+   "stray": 1,
+   "edge": 0,
+   "mirror": 0.99
+  }
+ },
+ "strict": {
+  "ok": true
+ },
+ "sameIdentityPhotos": true,
+ "noNewPictureDeal": true,
+ "goldPreserved": true,
+ "pressure": {
+  "before": {
+   "hash": "f6842f1ab2307e8e86f5391655e1abe208dfc8195d8bac1c9c0eed65c2bbc41c",
+   "clockPolicy": "shortest-strict",
+   "boundaryClockMove": 9,
+   "storedClockMove": 9,
+   "tailTiles": 79,
+   "atClock": {
+    "waiting": 3,
+    "freeTiles": 16,
+    "visibleMatches": 1,
+    "freePairs": 3
+   },
+   "samples": [
+    {
+     "games": 8,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.507,
+      0.404,
+      0.066,
+      0.023
+     ],
+     "mean": 0.6,
+     "twoPlus": 0.089,
+     "parks": 2.6,
+     "parkAt": [
+      1,
+      1.6,
+      0
+     ],
+     "wrongPark": 0,
+     "danger": 0,
+     "decisions": 44
+    },
+    {
+     "games": 8,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.494,
+      0.385,
+      0.093,
+      0.028
+     ],
+     "mean": 0.65,
+     "twoPlus": 0.121,
+     "parks": 3.5,
+     "parkAt": [
+      1,
+      2.3,
+      0.3
+     ],
+     "wrongPark": 0.1,
+     "danger": 0.006,
+     "decisions": 45
+    },
+    {
+     "games": 8,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.528,
+      0.381,
+      0.068,
+      0.023
+     ],
+     "mean": 0.59,
+     "twoPlus": 0.091,
+     "parks": 3,
+     "parkAt": [
+      1,
+      2,
+      0
+     ],
+     "wrongPark": 0,
+     "danger": 0,
+     "decisions": 44
+    }
+   ],
+   "average": {
+    "mean": 0.6133333333333333,
+    "twoPlus": 0.10033333333333333,
+    "parks": 3.033333333333333,
+    "parksPerTenTailTiles": 0.38396624472573837,
+    "wrongPark": 0.03333333333333333,
+    "danger": 0.002
+   },
+   "unresolvedChecks": 0,
+   "games": 24,
+   "gamble": {
+    "gamble": 0,
+    "blindOnly": 0
+   },
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 1,
+    "startWaiting": 3
+   }
+  },
+  "after": {
+   "hash": "d667ed918813078d3929f947612f3f2e44b17a80793e29c1531cdf6d680310cb",
+   "clockPolicy": "shortest-strict",
+   "boundaryClockMove": 9,
+   "storedClockMove": 9,
+   "tailTiles": 79,
+   "atClock": {
+    "waiting": 3,
+    "freeTiles": 18,
+    "visibleMatches": 1,
+    "freePairs": 4
+   },
+   "samples": [
+    {
+     "games": 8,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.164,
+      0.535,
+      0.195,
+      0.106
+     ],
+     "mean": 1.24,
+     "twoPlus": 0.301,
+     "parks": 7.1,
+     "parkAt": [
+      1.8,
+      2.5,
+      2.9
+     ],
+     "wrongPark": 0.15,
+     "danger": 0.031,
+     "decisions": 48
+    },
+    {
+     "games": 8,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.14,
+      0.548,
+      0.192,
+      0.119
+     ],
+     "mean": 1.29,
+     "twoPlus": 0.311,
+     "parks": 7.1,
+     "parkAt": [
+      1.9,
+      2.5,
+      2.8
+     ],
+     "wrongPark": 0.11,
+     "danger": 0.029,
+     "decisions": 48
+    },
+    {
+     "games": 8,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.112,
+      0.586,
+      0.185,
+      0.117
+     ],
+     "mean": 1.31,
+     "twoPlus": 0.302,
+     "parks": 7,
+     "parkAt": [
+      1.9,
+      2.1,
+      3
+     ],
+     "wrongPark": 0.14,
+     "danger": 0.029,
+     "decisions": 48
+    }
+   ],
+   "average": {
+    "mean": 1.28,
+    "twoPlus": 0.30466666666666664,
+    "parks": 7.066666666666666,
+    "parksPerTenTailTiles": 0.8945147679324893,
+    "wrongPark": 0.13333333333333333,
+    "danger": 0.029666666666666664
+   },
+   "unresolvedChecks": 0,
+   "games": 24,
+   "gamble": {
+    "gamble": 13,
+    "blindOnly": 0
+   },
+   "cap1": {
+    "result": "lose",
+    "cap": 1,
+    "peek": true,
+    "nodes": 0,
+    "ms": 0,
+    "startWaiting": 3
+   }
+  },
+  "delta": {
+   "mean": 0.6666666666666667,
+   "twoPlus": 0.2043333333333333,
+   "parks": 4.033333333333333,
+   "parksPerTenTailTiles": 0.5105485232067509,
+   "wrongPark": 0.1,
+   "danger": 0.027666666666666666
+  },
+  "signals": [
+   "sustained pressure increased"
+  ],
+  "humanWinPrediction": false
+ },
+ "validatorHash": "17694ab2c2f6a5fbf40c916d54a166d4743a9ae97842097d91f0b5086d335915",
+ "controlGates": {
+  "ok": true,
+  "rows": [
+   {
+    "tile": 0,
+    "face": 14,
+    "before": [],
+    "after": []
+   },
+   {
+    "tile": 60,
+    "face": 23,
+    "before": [
+     65,
+     83,
+     78
+    ],
+    "after": [
+     65,
+     83,
+     78
+    ]
+   },
+   {
+    "tile": 65,
+    "face": 14,
+    "before": [
+     78
+    ],
+    "after": [
+     78
+    ]
+   },
+   {
+    "tile": 72,
+    "face": 14,
+    "before": [],
+    "after": []
+   },
+   {
+    "tile": 78,
+    "face": 11,
+    "before": [],
+    "after": []
+   },
+   {
+    "tile": 79,
+    "face": 23,
+    "before": [],
+    "after": []
+   },
+   {
+    "tile": 83,
+    "face": 14,
+    "before": [],
+    "after": []
+   },
+   {
+    "tile": 86,
+    "face": 11,
+    "before": [],
+    "after": []
+   }
+  ],
+  "changed": [],
+  "sourceHash": "f6842f1ab2307e8e86f5391655e1abe208dfc8195d8bac1c9c0eed65c2bbc41c",
+  "hash": "d667ed918813078d3929f947612f3f2e44b17a80793e29c1531cdf6d680310cb",
+  "policy": "Same pinned-special physical prerequisites for the original control-picture identities; no tray or clock budget is assumed."
+ },
+ "finishPressure": {
+  "level": 333,
+  "hash": "d667ed918813078d3929f947612f3f2e44b17a80793e29c1531cdf6d680310cb",
+  "sourceHash": "f6842f1ab2307e8e86f5391655e1abe208dfc8195d8bac1c9c0eed65c2bbc41c",
+  "target": {
+   "pressureParks": 5,
+   "tolerance": 0.5,
+   "maxThree": 0.25,
+   "metric": "feel.expert parkAt[1] + parkAt[2] per complete winning finish",
+   "policy": "Task 24 update: about 5 for tier 1–2; about 2 for harder single ideas and two-idea chains. Only the finish may move."
+  },
+  "met": true,
+  "after": {
+   "pressureParks": 5.266666666666667,
+   "mean": 1.28,
+   "twoPlus": 0.30466666666666664,
+   "three": 0.11399999999999999,
+   "parks": 7.066666666666666,
+   "wrongPark": 0.13333333333333333,
+   "games": 24,
+   "lostGames": 0,
+   "unresolvedChecks": 0,
+   "samples": [
+    {
+     "games": 8,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.164,
+      0.535,
+      0.195,
+      0.106
+     ],
+     "mean": 1.24,
+     "twoPlus": 0.301,
+     "parks": 7.1,
+     "parkAt": [
+      1.8,
+      2.5,
+      2.9
+     ],
+     "wrongPark": 0.15,
+     "danger": 0.031,
+     "decisions": 48
+    },
+    {
+     "games": 8,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.14,
+      0.548,
+      0.192,
+      0.119
+     ],
+     "mean": 1.29,
+     "twoPlus": 0.311,
+     "parks": 7.1,
+     "parkAt": [
+      1.9,
+      2.5,
+      2.8
+     ],
+     "wrongPark": 0.11,
+     "danger": 0.029,
+     "decisions": 48
+    },
+    {
+     "games": 8,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.112,
+      0.586,
+      0.185,
+      0.117
+     ],
+     "mean": 1.31,
+     "twoPlus": 0.302,
+     "parks": 7,
+     "parkAt": [
+      1.9,
+      2.1,
+      3
+     ],
+     "wrongPark": 0.14,
+     "danger": 0.029,
+     "decisions": 48
+    }
+   ]
+  },
+  "completeWinningSamples": 24,
+  "humanWinPrediction": false
+ },
+ "finishTargetMet": true
+}

@@ -1,0 +1,69 @@
+{
+ "ok": true,
+ "rows": [
+  {
+   "tile": 22,
+   "face": 22,
+   "before": [
+    47
+   ],
+   "after": [
+    47
+   ]
+  },
+  {
+   "tile": 27,
+   "face": 24,
+   "before": [],
+   "after": []
+  },
+  {
+   "tile": 47,
+   "face": 24,
+   "before": [],
+   "after": []
+  },
+  {
+   "tile": 61,
+   "face": 33,
+   "before": [],
+   "after": []
+  },
+  {
+   "tile": 62,
+   "face": 22,
+   "before": [],
+   "after": []
+  },
+  {
+   "tile": 71,
+   "face": 22,
+   "before": [],
+   "after": []
+  },
+  {
+   "tile": 78,
+   "face": 22,
+   "before": [],
+   "after": []
+  },
+  {
+   "tile": 80,
+   "face": 33,
+   "before": [
+    22,
+    62,
+    47
+   ],
+   "after": [
+    22,
+    62,
+    47
+   ]
+  }
+ ],
+ "changed": [],
+ "sourceHash": "e1858ee82d424d8ab6725e31bdce7a9749636a9a72c8f25c97823172de9a74eb",
+ "hash": "f862657369ee321a0996e728623c8e094f3f089b0c1515bc90476d7dd7996c20",
+ "policy": "Same pinned-special physical prerequisites for the original control-picture identities; no tray or clock budget is assumed."
+}

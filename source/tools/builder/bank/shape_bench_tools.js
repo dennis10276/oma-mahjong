@@ -3,16 +3,16 @@
 const fs = require('fs'), D = require('./detower'), CF = D.CF;
 const E = require(CF + '../engine'), F = require(CF + '../footprint'), G = require(CF + 'narrow_methods');
 const clone = x => structuredClone(x), same = (a,b) => JSON.stringify(a) === JSON.stringify(b);
-function geometry(d) {
-  const T=d.tiles, xs=T.map(t=>t[0]), ys=T.map(t=>t[1]), shape=D.strip(D.shape(T)), fp=F.measure(d,{minimum:58});
+function geometry(d, opts={}) {
+  const T=d.tiles, xs=T.map(t=>t[0]), ys=T.map(t=>t[1]), shape=D.strip(D.shape(T)), fp=F.measure(d,{minimum:opts.tenth?53.5:58});
   const width=(Math.max(...xs)-Math.min(...xs)+2)/2, rows=(Math.max(...ys)-Math.min(...ys)+2)/2, errors=[];
   if(T.some(t=>t.length!==3||t.some(x=>!Number.isInteger(x)||x<0)))errors.push('grid');
   if(!G.valid(T))errors.push('supportOrOverlap');
   if(shape.straight)errors.push('towers');
   // Mixed brick parities can be deliberate (including released boards). Keep
   // this diagnostic visible; integer coordinates and support are hard gates.
-  if(width>6.5||rows>8||!fp.ok)errors.push('footprint');
-  if(T.length<72||T.length>88||T.length%2)errors.push('tileCount');
+  if((!opts.tenth&&(width>6.5||rows>8))||!fp.ok)errors.push('footprint');
+  if(opts.tenth?T.length!==96:T.length<72||T.length>88||T.length%2)errors.push('tileCount');
   return {ok:!errors.length,errors,tiles:T.length,width,rows,px:fp.tilePx,...shape};
 }
 function relations(d,keep=d.tiles.map((_,i)=>i)) {

@@ -1,0 +1,60 @@
+{
+ "level": 346,
+ "target": {
+  "pressureParks": 2,
+  "tolerance": 0.5,
+  "maxThree": 0.25,
+  "metric": "feel.expert parkAt[1] + parkAt[2] per complete winning finish",
+  "policy": "Task 24 update: about 5 for tier 1–2; about 2 for harder single ideas and two-idea chains. Only the finish may move."
+ },
+ "met": true,
+ "training": {
+  "pressureParks": 1.7999999999999998,
+  "mean": 0.64,
+  "twoPlus": 0.165,
+  "three": 0.021,
+  "parks": 3.4,
+  "wrongPark": 0,
+  "games": 5,
+  "lostGames": 0,
+  "unresolvedChecks": 0,
+  "samples": [
+   {
+    "games": 5,
+    "lostGames": 0,
+    "unresolvedChecks": 0,
+    "requireProof": true,
+    "waiting": [
+     0.545,
+     0.289,
+     0.144,
+     0.021
+    ],
+    "mean": 0.64,
+    "twoPlus": 0.165,
+    "parks": 3.4,
+    "parkAt": [
+     1.6,
+     1.4,
+     0.4
+    ],
+    "wrongPark": 0,
+    "danger": 0,
+    "decisions": 37
+   }
+  ]
+ },
+ "edits": [
+  [
+   67,
+   4
+  ],
+  [
+   72,
+   28
+  ]
+ ],
+ "trials": 15,
+ "trace": [],
+ "ms": 4245
+}

@@ -4,6 +4,7 @@ const CF=path.resolve(__dirname,'../../../../../codex-finish-ten/source/tools/bu
 const BANK=path.resolve(__dirname,'../../../analysis/builder/bank');
 function original(level){
  if(level<=300)return P.original(level);
+ if(level===302){const file=path.resolve(__dirname,'../../../analysis/builder/finish-all/gate2/context-302.json');if(fs.existsSync(file))return JSON.parse(fs.readFileSync(file));}
  const placed=JSON.parse(fs.readFileSync(path.join(BANK,`placed-all/level-${level}.json`))),stem=placed.source.replace(/^(chained|two) /,'');
  const dirs=placed.source.startsWith('two ')?['new-ideas-light','new-ideas/examples','new-ideas/checked']:['chained-gentle','chained-v2/examples','chained-v1/examples'];
  const file=dirs.map(dir=>path.join(BANK,dir,stem+'.json')).find(fs.existsSync);

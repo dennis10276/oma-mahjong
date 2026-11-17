@@ -1,0 +1,384 @@
+{
+ "schema": 4,
+ "level": 310,
+ "source": 310,
+ "kind": "Shortened this level’s own base triangle by one row; re-laid only its tip tiles on supported offset courses, keeping all 96 identities; finish tile positions tuned to Dennis’s pressure target",
+ "hash": "167a22a49469117db9180efb07a492682743cd2134b8e2ae46c14865c75a0f08",
+ "sourceHash": "9a80afeb8781e65d0123b03a6dee7f50fbec6267e97e4f91fcc6e1a8325bb1e9",
+ "certificate": {
+  "ok": true,
+  "errors": [],
+  "checks": [
+   "fullStrictWin",
+   "sameClockMinimumAndSpare",
+   "sameSpecialEffects",
+   "sameSpecialPrerequisites",
+   "allAuthoredWrongMovesStillWrong",
+   "ownAuthoredProof"
+  ],
+  "k": 13,
+  "spare": 1,
+  "footprint": {
+   "ok": true,
+   "profile": "phone-near-60-v1",
+   "tilePx": 54.45614035087719,
+   "rows": 8,
+   "compact": false,
+   "target": 60,
+   "minimum": 53.5,
+   "limit": "width"
+  },
+  "ablations": [
+   [
+    "ice",
+    78,
+    9
+   ],
+   [
+    "ice",
+    85,
+    11
+   ],
+   [
+    "lock",
+    65,
+    7
+   ]
+  ],
+  "prerequisites": [
+   [
+    65,
+    [
+     2,
+     56,
+     78,
+     85
+    ]
+   ],
+   [
+    56,
+    [
+     78
+    ]
+   ],
+   [
+    2,
+    []
+   ],
+   [
+    78,
+    []
+   ],
+   [
+    85,
+    []
+   ]
+  ],
+  "prices": [
+   {
+    "tiles": [
+     91
+    ],
+    "before": {
+     "tiles": [
+      91
+     ],
+     "result": "lose",
+     "need": null,
+     "cost": null,
+     "exact": true
+    },
+    "after": {
+     "tiles": [
+      91
+     ],
+     "result": "lose",
+     "need": null,
+     "cost": null,
+     "exact": true
+    }
+   },
+   {
+    "tiles": [
+     2
+    ],
+    "before": {
+     "tiles": [
+      2
+     ],
+     "result": "win",
+     "need": 15,
+     "cost": 2,
+     "exact": true
+    },
+    "after": {
+     "tiles": [
+      2
+     ],
+     "result": "win",
+     "need": 15,
+     "cost": 2,
+     "exact": true
+    }
+   },
+   {
+    "tiles": [
+     2,
+     82
+    ],
+    "before": {
+     "tiles": [
+      2,
+      82
+     ],
+     "result": "win",
+     "need": 15,
+     "cost": 2,
+     "exact": true
+    },
+    "after": {
+     "tiles": [
+      2,
+      82
+     ],
+     "result": "win",
+     "need": 15,
+     "cost": 2,
+     "exact": true
+    }
+   }
+  ],
+  "ownProof": {
+   "ok": true
+  },
+  "beforeHash": "9a80afeb8781e65d0123b03a6dee7f50fbec6267e97e4f91fcc6e1a8325bb1e9",
+  "afterHash": "167a22a49469117db9180efb07a492682743cd2134b8e2ae46c14865c75a0f08",
+  "policy": "Task 20 same mechanics; geometry and non-trap finish pictures may change."
+ },
+ "geometry": {
+  "ok": true,
+  "errors": [],
+  "tiles": 96,
+  "width": 7,
+  "rows": 8,
+  "px": 54.45614035087719,
+  "straight": 0,
+  "stray": 0,
+  "edge": 0,
+  "mirror": 1
+ },
+ "strict": {
+  "ok": true
+ },
+ "ok": true,
+ "validatorHash": "17694ab2c2f6a5fbf40c916d54a166d4743a9ae97842097d91f0b5086d335915",
+ "gate": 2,
+ "controlGates": {
+  "ok": true,
+  "rows": [
+   {
+    "tile": 2,
+    "face": 27,
+    "before": [],
+    "after": []
+   },
+   {
+    "tile": 15,
+    "face": 27,
+    "before": [
+     65,
+     56,
+     2,
+     78,
+     85
+    ],
+    "after": [
+     65,
+     56,
+     2,
+     78,
+     85
+    ]
+   },
+   {
+    "tile": 27,
+    "face": 31,
+    "before": [],
+    "after": []
+   },
+   {
+    "tile": 56,
+    "face": 27,
+    "before": [
+     78
+    ],
+    "after": [
+     78
+    ]
+   },
+   {
+    "tile": 65,
+    "face": 12,
+    "before": [
+     56,
+     2,
+     78,
+     85
+    ],
+    "after": [
+     56,
+     2,
+     78,
+     85
+    ]
+   },
+   {
+    "tile": 74,
+    "face": 12,
+    "before": [],
+    "after": []
+   },
+   {
+    "tile": 78,
+    "face": 0,
+    "before": [],
+    "after": []
+   },
+   {
+    "tile": 82,
+    "face": 27,
+    "before": [],
+    "after": []
+   },
+   {
+    "tile": 85,
+    "face": 11,
+    "before": [],
+    "after": []
+   },
+   {
+    "tile": 89,
+    "face": 11,
+    "before": [],
+    "after": []
+   },
+   {
+    "tile": 91,
+    "face": 31,
+    "before": [],
+    "after": []
+   },
+   {
+    "tile": 94,
+    "face": 0,
+    "before": [],
+    "after": []
+   }
+  ],
+  "changed": [],
+  "sourceHash": "9a80afeb8781e65d0123b03a6dee7f50fbec6267e97e4f91fcc6e1a8325bb1e9",
+  "hash": "167a22a49469117db9180efb07a492682743cd2134b8e2ae46c14865c75a0f08",
+  "policy": "Same pinned-special physical prerequisites for the original control-picture identities; no tray or clock budget is assumed."
+ },
+ "sameIdentityPhotos": true,
+ "goldPreserved": true,
+ "noNewPictureDeal": true,
+ "finishPressure": {
+  "level": 310,
+  "hash": "167a22a49469117db9180efb07a492682743cd2134b8e2ae46c14865c75a0f08",
+  "sourceHash": "9a80afeb8781e65d0123b03a6dee7f50fbec6267e97e4f91fcc6e1a8325bb1e9",
+  "target": {
+   "pressureParks": 2,
+   "tolerance": 0.5,
+   "maxThree": 0.25,
+   "metric": "feel.expert parkAt[1] + parkAt[2] per complete winning finish",
+   "policy": "Task 24 update: about 5 for tier 1–2; about 2 for harder single ideas and two-idea chains. Only the finish may move."
+  },
+  "met": true,
+  "after": {
+   "pressureParks": 2.1,
+   "mean": 0.9533333333333333,
+   "twoPlus": 0.21033333333333334,
+   "three": 0.06766666666666667,
+   "parks": 2.4,
+   "wrongPark": 0.34,
+   "games": 24,
+   "lostGames": 0,
+   "unresolvedChecks": 0,
+   "samples": [
+    {
+     "games": 8,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.321,
+      0.447,
+      0.148,
+      0.084
+     ],
+     "mean": 0.99,
+     "twoPlus": 0.232,
+     "parks": 3.4,
+     "parkAt": [
+      0.5,
+      1.1,
+      1.8
+     ],
+     "wrongPark": 0.27,
+     "danger": 0.022,
+     "decisions": 46
+    },
+    {
+     "games": 8,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.344,
+      0.507,
+      0.104,
+      0.045
+     ],
+     "mean": 0.85,
+     "twoPlus": 0.149,
+     "parks": 1.4,
+     "parkAt": [
+      0.3,
+      0.8,
+      0.4
+     ],
+     "wrongPark": 0.28,
+     "danger": 0.006,
+     "decisions": 44
+    },
+    {
+     "games": 8,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.303,
+      0.446,
+      0.176,
+      0.074
+     ],
+     "mean": 1.02,
+     "twoPlus": 0.25,
+     "parks": 2.4,
+     "parkAt": [
+      0.1,
+      1.1,
+      1.1
+     ],
+     "wrongPark": 0.47,
+     "danger": 0.019,
+     "decisions": 45
+    }
+   ]
+  },
+  "completeWinningSamples": 24,
+  "humanWinPrediction": false
+ },
+ "finishTargetMet": true
+}
