@@ -1,6 +1,6 @@
 module.exports = {
  "id": "i90",
- "title": "The escape is the key pair",
+ "title": "The escape is silver-locked and a gold key",
  "idea": "The clock is gold-locked; its keys are the tile you need at the full tray and its face-down twin far away. The pair that saves the tray also opens the clock.",
  "layout": 1022,
  "block": [

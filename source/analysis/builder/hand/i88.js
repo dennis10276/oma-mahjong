@@ -1,6 +1,6 @@
 module.exports = {
  "id": "i88",
- "title": "The escape opens silver, silver opens gold",
+ "title": "Uncover the escape, then the key chain",
  "idea": "The face-down pair at the full tray is the silver key pair; silver frees a gold key further down, and the gold keys open the clock.",
  "layout": 1012,
  "block": [

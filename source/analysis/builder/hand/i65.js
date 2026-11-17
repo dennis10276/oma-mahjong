@@ -1,6 +1,6 @@
 module.exports = {
  "id": "i65",
- "title": "Don't take the clock: its twin needs the escape",
+ "title": "Free clock + both face-down",
  "idea": "The clock is free, but its twin lies at the bottom of a dig that fills the tray and needs a face-down escape. Taken first, the clock takes the slot that plan needs.",
  "layout": 1000,
  "block": [

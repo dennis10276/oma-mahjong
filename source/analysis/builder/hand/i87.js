@@ -1,6 +1,6 @@
 module.exports = {
  "id": "i87",
- "title": "The escape is the key pair",
+ "title": "Melt the escape, which is the key pair",
  "idea": "The clock is gold-locked; its keys are the tile you need at the full tray and its face-down twin far away. The pair that saves the tray also opens the clock.",
  "layout": 1042,
  "block": [

@@ -1,6 +1,6 @@
 module.exports = {
  "id": "i83",
- "title": "The silver key belongs to the second half",
+ "title": "Save the escape, then silver (two chains)",
  "idea": "After the clock a silver chain begins; one silver key is free from the start, the other appears only when the clock is gone. Taken early, the free key waits through the whole first chain.",
  "layout": 1022,
  "block": [
