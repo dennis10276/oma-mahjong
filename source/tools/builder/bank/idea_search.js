@@ -36,7 +36,8 @@ function search(idea, o = {}) {
     for (const ts of idea.tests) {
       const q = { layout: idea.layout, clock: ts.target ?? idea.target, limit: ts.limit ?? idea.limit, tiles: ts.tiles || idea.block, faces,
         down: ts.down ?? idea.down ?? [], ice: idea.ice, locks: idea.locks, keys: idea.keys, locks2: idea.locks2, keys2: idea.keys2,
-        tray0: (ts.tray0 || []).map(l => code[l]), gone: ts.gone, max: 20, peek: ts.peek !== false };
+        tray0: ts.goneFaces ? (() => { const tr = []; for (const i of ts.gone) { const f = faces[i], q = tr.indexOf(f); if (q >= 0) tr.splice(q, 1); else tr.push(f); } return tr; })() : (ts.tray0 || []).map(l => code[l]),   // goneFaces: the tray holds whatever pictures the gone tiles have in this candidate
+        gone: ts.gone, max: 20, peek: ts.peek !== false };
       const res = O.orders(q); results[ts.name] = res;
       const got = res.wins.length ? 'win' : 'none';
       if (got !== ts.expect) { ok = false; W(ts.name + ':' + got); break; }
