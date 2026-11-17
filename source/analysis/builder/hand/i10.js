@@ -5,6 +5,6 @@ module.exports = {
   idea: 'The clock is frozen and the tray fills on the way. At the full tray a face-down pair is the only way on - and its tile next to the clock is the last melter the clock needs.',
   layout: 1034, block: [72, 83, 70, 69, 52, 6, 48, 7, 45, 80], target: 8, limit: 12,
   fixed: { 7: 'X', 80: 'X' }, down: [80], inside: [2, 4], ice: { 8: 3 },
-  tests: [{ name: 'dig', expect: 'win', peekForced: true, firsts: 2 }],
+  tests: [{ name: 'dig', expect: 'win', peekForced: true, firsts: 4 }],
   hand: { clock: 8, peek: true, peekNeeded: true, spare: 1, routeTest: 'dig', downTiles: [80] },
 };

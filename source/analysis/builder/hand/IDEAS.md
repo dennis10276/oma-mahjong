@@ -48,6 +48,23 @@ corridor). "too easy" = Dennis's lab verdict of 2026-11-16; such ideas need a ha
 | 60 | The silver key belongs to the second half | gold chain to the clock, silver chain after it; the free silver key taken early waits | i60 | DONE (two chains) |
 | 62 | Free clock, silver-locked escape | free clock + escape behind silver | i62 | DONE |
 | 63 | Free clock, gold-locked escape | free clock + escape behind gold | i63 | DONE |
+| 65 | Free clock, both face-down | free clock + both tiles of the escape face-down | i65 | DONE |
+| 67 | Free clock, save the escape | free clock + the easy face-down pair spends the escape | i67 | DONE |
+| 68 | Free clock, the escape on the clock | free clock + the escape's partner is the old clock's roof | i68 | DONE |
+| 71 | Escape, then silver | face-down escape to the clock; a silver chain after it, its free key taken early waits | i71 | DONE (two chains) |
+| 72 | Both face-down, then silver | | i72 | DONE (two chains) |
+| 73 | Uncover the escape, then silver | | i73 | DONE (two chains) |
+| 75 | Gold-locked escape, then silver | | i75 | DONE (two chains) |
+| 77 | The escape is the key pair | the clock's gold keys are the face-down pair itself (the key sign shows on the back) | i77 | DONE |
+| 79 | The escape opens silver, silver opens gold | face-down pair = silver keys; silver frees a gold key; gold opens the clock | i79 | DONE (spare board i79b) |
+| 81 | Escape and gold keys in the dig, then silver | | i81 | DONE (two chains) |
+| 83 | Save the escape, then silver | | i83 | DONE (two chains) |
+| 84 | Both face-down keys | both tiles of the escape are face-down and are the clock's gold keys | i84 | DONE |
+| 85 | Uncover the escape, which is the key pair | | i85 | DONE |
+| 87 | Melt the escape, which is the key pair | | i87 | DONE |
+| 88 | Uncover the escape, then the key chain | | i88 | DONE |
+| 89 | Save the escape, which is the key pair | | i89 | DONE |
+| 90 | The escape is silver-locked and a gold key | crossing: silver keys open the escape, the escape opens the clock | i90 | DONE |
 
 ## Dropped or parked (with the reason)
 - Mixed keys: the game matches equal pictures by itself - no wrong move exists.
@@ -59,4 +76,5 @@ corridor). "too easy" = Dennis's lab verdict of 2026-11-16; such ideas need a ha
   silver (the waiting tile always fits), 53 The keys thaw each other (search too slow), 61 Free clock + frozen escape (slack),
   64 The clock melts the silver key (on 1032 the side tile melts it anyway).
 
-Count: 30 single ideas + 4 combinations = 34 of 50.
+Count: 32 single ideas (with 77 and 79) + 19 combinations / two-chain boards = 51 proven. Failed combinations (slack: the wrong
+move still wins): 61, 66, 70, 74, 76, 80, 82, 86.
