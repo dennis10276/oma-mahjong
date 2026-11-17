@@ -1,11 +1,74 @@
-// Idea 31 "Unlock the escape first" (vase, layout 1003, four layers). At the full tray the way on is a face-down pair: a late dig tile and
-// its face-down twin 74 on top. But 74 is silver-locked, and the silver keys (85, 81) are a visible pair: taking them needs a free slot
-// for a moment - do it before the tray fills.
 module.exports = {
-  id: 'i31', title: 'Unlock the escape first',
-  idea: 'At the full tray a face-down twin is the way on, but it is silver-locked. The silver keys are a pair that needs a free slot: take them before the tray fills.',
-  layout: 1003, block: [79, 77, 80, 66, 59, 58, 46, 10, 36, 11, 34, 74, 85, 81], target: 12, limit: 16,
-  fixed: { 34: 'X', 74: 'X', 85: 'S', 81: 'S' }, down: [74], locks2: [74], keys2: [85, 81], inside: [3, 5],
-  tests: [{ name: 'dig', expect: 'win', peekForced: true, firsts: 4 }],
-  hand: { clock: 12, peek: true, peekNeeded: true, spare: 1, routeTest: 'dig', downTiles: [74] },
+ "id": "i31",
+ "title": "Unlock the escape first",
+ "idea": "At the full tray a face-down twin is the way on, but it is silver-locked; the silver keys are a pair that needs a free slot. Open it before the tray fills.",
+ "layout": 1022,
+ "block": [
+  63,
+  45,
+  61,
+  39,
+  49,
+  13,
+  70,
+  56,
+  53,
+  37,
+  69,
+  54,
+  33,
+  12,
+  0,
+  1
+ ],
+ "target": 11,
+ "limit": 17,
+ "fixed": {
+  "0": "silver",
+  "1": "silver",
+  "11": "p99",
+  "12": "p5",
+  "13": "p2",
+  "33": "p1",
+  "37": "p4",
+  "39": "p3",
+  "45": "p3",
+  "49": "p4",
+  "53": "p60",
+  "54": "p0",
+  "56": "p60",
+  "61": "p5",
+  "63": "p2",
+  "69": "p1",
+  "70": "p0"
+ },
+ "free": [],
+ "down": [
+  53
+ ],
+ "locks2": [
+  53
+ ],
+ "keys2": [
+  0,
+  1
+ ],
+ "tests": [
+  {
+   "name": "dig",
+   "expect": "win",
+   "peekForced": true
+  }
+ ],
+ "hand": {
+  "clock": 11,
+  "peek": true,
+  "peekNeeded": true,
+  "spare": 1,
+  "routeTest": "dig",
+  "downTiles": [
+   53
+  ],
+  "baits": []
+ }
 };
