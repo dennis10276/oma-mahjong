@@ -15,7 +15,8 @@ function orders(o) {
   const nb = L.neighbors(tiles.map(([x, y, z]) => ({ x, y, z }))), iceNb = L.iceNeighbors(tiles.map(([x, y, z]) => ({ x, y, z })));
   const rules = { iceNb, ice: o.ice || {}, locks: (o.locks || []).length ? new Set(o.locks) : null, keys: o.keys || [],
     locks2: (o.locks2 || []).length ? new Set(o.locks2) : null, keys2: o.keys2 || [] };
-  const init = new Uint8Array(n).fill(1), T = o.tiles.concat(o.clock), down = new Set(o.down || []), face = o.faces, limit = o.limit;
+  const gone = o.gone || [], init = new Uint8Array(n).fill(1); for (const i of gone) init[i] = 0;   // gone: tiles already taken (pictures in tray0, moves counted)
+  const T = o.tiles.filter(i => !gone.includes(i)).concat(o.clock), down = new Set(o.down || []), face = o.faces, limit = o.limit;
   const can = (i, a) => a[i] && L.takeable(i, a, nb, rules, init);
   const run = peek => {
     const wins = [], memo = new Set();
@@ -34,7 +35,7 @@ function orders(o) {
         const a2 = a.slice(); a2[i] = a2[j] = 0; go(a2, tray, moves + 2, [...path, '[' + i + '+' + j + ']']);
       }
     };
-    go(init.slice(), (o.tray0 || []).slice(), 0, []); return wins;   // tray0: pictures already waiting at the start
+    go(init.slice(), (o.tray0 || []).slice(), gone.length, []); return wins;   // tray0: pictures already waiting at the start
   };
   const wins = run(true), first = {};
   // the first moves, exact: each one played, then a fresh search from there (the state memo of one run would hide orders)
@@ -48,7 +49,7 @@ function orders(o) {
       for (const j of fr) { const a2 = a.slice(); a2[j] = 0; const q = tray.indexOf(face[j]), t2 = q >= 0 ? tray.filter((_, k) => k !== q) : tray.concat(face[j]); if (t2.length <= 3) go(a2, t2, moves + 1); }
       for (let x = 0; x < fr.length; x++) for (let y = x + 1; y < fr.length; y++) { const p = fr[x], q2 = fr[y]; if (face[p] !== face[q2] || !(down.has(p) || down.has(q2)) || tray.includes(face[p])) continue; const a2 = a.slice(); a2[p] = a2[q2] = 0; go(a2, tray, moves + 2); }
     };
-    { const q = (o.tray0 || []).indexOf(face[i]), t0 = (o.tray0 || []).slice(); if (q >= 0) t0.splice(q, 1); else t0.push(face[i]); if (t0.length <= 3) go(a, t0, 1); }
+    { const q = (o.tray0 || []).indexOf(face[i]), t0 = (o.tray0 || []).slice(); if (q >= 0) t0.splice(q, 1); else t0.push(face[i]); if (t0.length <= 3) go(a, t0, 1 + gone.length); }
     if (sub.length) first[i] = (wins.filter(w => w[0] === i).length) || 1;
   }
   return { wins, firstMoves: first, free0: T.filter(i => can(i, init)), strictWins: o.peek === false ? null : run(false).length, shortest: wins.length ? Math.min(...wins.map(w => w.reduce((m, x) => m + (typeof x === 'string' ? 2 : 1), 0))) : null };
