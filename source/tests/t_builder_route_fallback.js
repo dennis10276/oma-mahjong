@@ -1,4 +1,5 @@
 'use strict';
+function run(){
 // A legal but fatal early clock tap must not rule out another winning opening.
 const assert=require('assert/strict'),D=require('../tools/builder/bank/detower'),P=require('../tools/builder/bank/finish_all_sources'),E=require(D.CF+'../engine');
 for(const level of[266,319,337]){
@@ -14,3 +15,6 @@ for(const level of[266,319,337]){
  assert.ok(route.indexOf(d.clock.i)>0);
  console.log(level,'recovered a full win after rejecting a legal fatal clock opening');
 }
+}
+if(require.main===module)run();
+module.exports=[{name:"builder bench: recover a full win after a fatal legal clock opening",cpu:true,run}];

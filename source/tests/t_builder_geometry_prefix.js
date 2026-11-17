@@ -1,4 +1,5 @@
 'use strict';
+function run(){
 const fs=require('fs'),path=require('path'),cp=require('child_process'),assert=require('assert/strict');
 const dir=path.resolve(__dirname,'../build/test-geometry-prefix');fs.mkdirSync(dir,{recursive:true});
 const input=path.join(dir,'input.json'),output=path.join(dir,'output.json');
@@ -13,3 +14,6 @@ cp.execFileSync('python',[path.resolve(__dirname,'../tools/builder/bank/gate1_ge
 job.prefixes=[[[2,0,0]]];fs.writeFileSync(input,JSON.stringify(job));
 cp.execFileSync('python',[path.resolve(__dirname,'../tools/builder/bank/gate1_geometry_milp.py'),input,output],{windowsHide:true});assert.equal(JSON.parse(fs.readFileSync(output)).ok,false);
 console.log('Removed prefix tile no longer blocks later route, even when initially free.');
+}
+if(require.main===module)run();
+module.exports=[{name:"builder bench: independent normal and counterfactual openings",cpu:true,run}];

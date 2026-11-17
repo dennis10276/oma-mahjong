@@ -1,0 +1,16 @@
+'use strict';
+const fs=require('fs'),path=require('path'),crypto=require('crypto'),T=require('./shape_bench_tools');
+const root=path.resolve(__dirname,'../../..'),out=path.join(root,'analysis/builder/finish-all/gate2'),dir=path.join(root,'build/finish-all-comparison'),base=path.join(root,'build/finish-all-gate2');
+const readIdeas=folder=>JSON.parse(fs.readFileSync(path.join(folder,'lab-ideas.js'),'utf8').replace(/^const LAB_IDEAS = /,'').replace(/;\s*$/,''));
+const first=readIdeas(path.join(root,'build/finish-all-gate1')),second=readIdeas(base),progress=JSON.parse(fs.readFileSync(path.join(out,'progress.json'))),passed=new Set(progress.rows.filter(r=>r.checksPass).map(r=>r.level));
+const ideas=first.ideas.map(it=>{const r=structuredClone(it),shape=T.geometry(r.board,{tenth:r.lv%10===0});r.title={original:'Before 1.70',earlier:'Earlier draft',revised:'Live 1.70'}[r.variant];r.idea=`${r.board.tiles.length} tiles · ${shape.px.toFixed(1)} px on the reference phone.\n`+{original:'The historical board before the refit.',earlier:'The earlier candidate, retained for comparison.',revised:'The refit released in version 1.70.'}[r.variant];return r;}).concat(second.ideas.map(it=>({...it,title:it.variant==='revised'?(passed.has(it.lv)?'Validated draft':'Draft · checks pending'):it.title})));
+const identity=d=>crypto.createHash('sha256').update(JSON.stringify([d.tiles,d.faces,d.down,d.gold||[],d.obst,d.clock])).digest('hex'),seen=new Map();
+for(const it of ideas){if(seen.has(it.id))throw Error('Duplicate comparison ID '+it.id);seen.set(it.id,identity(it.board));}
+if(fs.existsSync(path.join(dir,'lab-ideas.js')))for(const it of readIdeas(dir).ideas)if(seen.has(it.id)&&seen.get(it.id)!==identity(it.board))throw Error('A feedback ID changed puzzle '+it.id);
+fs.mkdirSync(dir,{recursive:true});fs.cpSync(base,dir,{recursive:true});
+const data={...second,heading:'Levels 251–349 · comparison',intro:`251–299: before / earlier / live 1.70. 301–349: planned source / current draft. ${passed.size}/49 Gate 2 boards pass the current checks. Gate 2 is not released.`,ideas};
+fs.writeFileSync(path.join(dir,'lab-ideas.js'),'const LAB_IDEAS = '+JSON.stringify(data)+';\n');
+const levels=[...new Set(ideas.map(i=>i.lv))].sort((a,b)=>a-b),oldLevels=JSON.stringify(Array.from({length:49},(_,i)=>301+i));
+for(const f of ['index.html','lab.html']){let h=fs.readFileSync(path.join(dir,f),'utf8');if(!h.includes(oldLevels+'.map(function(n)'))throw Error('Missing level selector');h=h.replace(oldLevels+'.map(function(n)',JSON.stringify(levels)+'.map(function(n)').replace("var selected='302'","var selected='251'").replace("a.textContent=' Gate 1 comparison ↗'","a.textContent=' Historical Gate 1 notes ↗'");fs.writeFileSync(path.join(dir,f),h);}
+const result={url:'http://127.0.0.1:8290/',directory:dir,levels:levels.length,cards:ideas.length,gate1:49,gate2Sources:49,gate2Drafts:second.ideas.filter(i=>i.variant==='revised').length,gate2Passed:passed.size,identities:ideas.map(it=>({id:it.id,level:it.lv,variant:it.variant,hash:identity(it.board)}))};
+fs.writeFileSync(path.join(out,'combined-lab.json'),JSON.stringify(result,null,1));console.log(JSON.stringify({url:result.url,cards:result.cards,levels:result.levels,validatedDrafts:result.gate2Passed}));

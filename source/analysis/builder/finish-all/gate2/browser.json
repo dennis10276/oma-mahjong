@@ -8,7 +8,7 @@
   ],
   "sunflower": true,
   "sources": 49,
-  "drafts": 44,
+  "drafts": 49,
   "feedbackIntercepted": true,
   "rows": [
     {
@@ -659,6 +659,41 @@
       "level": 348,
       "variant": "revised",
       "hash": "9c4f5e627648d93fec9d2e051cfc98db31c39f954079532a003c2c4f8f3f1d18",
+      "pitch": 58.56603773584906,
+      "ok": true
+    },
+    {
+      "level": 327,
+      "variant": "revised",
+      "hash": "d88968d0aa1cc6ac1d6af9f6443c8c76737aedfc466e98263cffde1149db57fd",
+      "pitch": 58.56603773584906,
+      "ok": true
+    },
+    {
+      "level": 343,
+      "variant": "revised",
+      "hash": "ad0a31e3598a2394adea250d8fcf364ca9f7dfa7b5f1104d6f89811dc837aa23",
+      "pitch": 58.56603773584906,
+      "ok": true
+    },
+    {
+      "level": 341,
+      "variant": "revised",
+      "hash": "ef90233007c5859a3eb314e4346125abaac56347354ad016044b44961ebe2788",
+      "pitch": 58.56603773584906,
+      "ok": true
+    },
+    {
+      "level": 321,
+      "variant": "revised",
+      "hash": "75c505338a228be9879d9068afd30b5351b399edbe4934748690b8848dad5047",
+      "pitch": 58.56603773584906,
+      "ok": true
+    },
+    {
+      "level": 336,
+      "variant": "revised",
+      "hash": "368b43833db49caeef31da23aa53be9c5b893f243db19c989a12108e80c19ed8",
       "pitch": 58.56603773584906,
       "ok": true
     }

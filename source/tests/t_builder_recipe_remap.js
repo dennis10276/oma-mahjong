@@ -1,4 +1,5 @@
 'use strict';
+function run(){
 const assert=require('assert/strict'),P=require('../tools/builder/bank/finish_all_sources'),D=require('../tools/builder/bank/detower'),Q=require('../tools/builder/bank/finish_all_mechanics'),Six=require(D.CF+'../chained_six_facts'),E=require(D.CF+'../engine');
 const frozen=require(D.CF+'finish_ten_proof');
 for(let level=301;level<=349;level++){const before=P.original(level),d=before.design,keep=d.tiles.map((_,i)=>i);assert.deepEqual(Q.remapRoles(before.roles,keep,d),frozen.remapRoles(before.roles,keep,d),'identity map changed '+level);}
@@ -14,3 +15,6 @@ for(const level of[322,338]){
  }
  console.log(level,'two-idea evidence survives identity-only renumbering');
 }
+}
+if(require.main===module)run();
+module.exports=[{name:"builder bench: two-idea identity remapping",cpu:true,run}];

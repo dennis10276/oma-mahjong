@@ -11,6 +11,7 @@ for i,(x,y,z) in enumerate(p):
  for dx in (0,1):
   for dy in (0,1):s.add(z3.Implies(v[i],z3.Or([v[k] for k in cells.get((x+dx,y+dy,z-1),[])])))
  if (x,y,z-1) in index:s.add(z3.Not(z3.And(v[i],v[index[x,y,z-1]])))
+for z,limit in j.get('highLimits',[]):s.add(z3.PbLe([(v[i],1) for i,t in enumerate(p) if t[2]>=z],limit))
 labels=[];meaning={}
 for k,t in enumerate(j.get('hardFixed',[]) if j.get('softFixed') else j['fixed']):
  a=z3.Bool('fixed'+str(k));labels.append(a);meaning[str(a)]=t;s.add(z3.Implies(a,v[index[tuple(t)]]) if tuple(t) in index else z3.Not(a))
@@ -27,7 +28,10 @@ if '--prefix' in sys.argv:
   s.add(z3.Implies(a,z3.And(v[index[key]],z3.Not(z3.Or(above)),z3.Not(z3.And(z3.Or(left),z3.Or(right))))))
   if not initial_free_phase:earlier.add(key)
 if '--count' in sys.argv:s.add(z3.PbEq([(a,1) for a in v],j['count']))
+if '--at-most' in sys.argv:s.add(z3.PbLe([(a,1) for a in v],j['count']))
+if '--at-least' in sys.argv:s.add(z3.PbGe([(a,1) for a in v],j['count']))
 t0=time.time();r=s.check(labels);out={'result':str(r),'ms':round((time.time()-t0)*1000)}
+if r==z3.sat:out['tiles']=sum(1 for a in v if z3.is_true(s.model().eval(a)))
 if r==z3.unsat:
  core=list(s.unsat_core());s.set(timeout=1000)
  for a in list(core):

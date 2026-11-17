@@ -1,0 +1,197 @@
+{
+ "level": 321,
+ "target": {
+  "pressureParks": 2,
+  "tolerance": 0.5,
+  "maxThree": 0.25,
+  "metric": "feel.expert parkAt[1] + parkAt[2] per complete winning finish",
+  "policy": "Task 24 update: about 5 for tier 1–2; about 2 for harder single ideas and two-idea chains. Only the finish may move.",
+  "maxWrongPark": 0.25666666666666665,
+  "choicePolicy": "Prefer finish pressure without increasing the source losing-park fraction by more than .15; .25 remains the independent review flag."
+ },
+ "met": true,
+ "training": {
+  "pressureParks": 2.1833333333333336,
+  "mean": 1.5216666666666667,
+  "twoPlus": 0.5695,
+  "three": 0.010833333333333334,
+  "parks": 2.25,
+  "wrongPark": 0.034999999999999996,
+  "games": 24,
+  "lostGames": 0,
+  "unresolvedChecks": 0,
+  "samples": [
+   {
+    "games": 4,
+    "lostGames": 0,
+    "unresolvedChecks": 0,
+    "requireProof": true,
+    "waiting": [
+     0.059,
+     0.331,
+     0.61,
+     0
+    ],
+    "mean": 1.55,
+    "twoPlus": 0.61,
+    "parks": 2,
+    "parkAt": [
+     0,
+     2,
+     0
+    ],
+    "wrongPark": 0,
+    "danger": 0,
+    "decisions": 34
+   },
+   {
+    "games": 4,
+    "lostGames": 0,
+    "unresolvedChecks": 0,
+    "requireProof": true,
+    "waiting": [
+     0.051,
+     0.384,
+     0.536,
+     0.029
+    ],
+    "mean": 1.54,
+    "twoPlus": 0.565,
+    "parks": 2.5,
+    "parkAt": [
+     0,
+     2,
+     0.5
+    ],
+    "wrongPark": 0.12,
+    "danger": 0.007,
+    "decisions": 35
+   },
+   {
+    "games": 4,
+    "lostGames": 0,
+    "unresolvedChecks": 0,
+    "requireProof": true,
+    "waiting": [
+     0.051,
+     0.338,
+     0.61,
+     0
+    ],
+    "mean": 1.56,
+    "twoPlus": 0.61,
+    "parks": 2,
+    "parkAt": [
+     0,
+     2,
+     0
+    ],
+    "wrongPark": 0,
+    "danger": 0,
+    "decisions": 34
+   },
+   {
+    "games": 4,
+    "lostGames": 0,
+    "unresolvedChecks": 0,
+    "requireProof": true,
+    "waiting": [
+     0.059,
+     0.353,
+     0.588,
+     0
+    ],
+    "mean": 1.53,
+    "twoPlus": 0.588,
+    "parks": 2,
+    "parkAt": [
+     0,
+     2,
+     0
+    ],
+    "wrongPark": 0,
+    "danger": 0,
+    "decisions": 34
+   },
+   {
+    "games": 4,
+    "lostGames": 0,
+    "unresolvedChecks": 0,
+    "requireProof": true,
+    "waiting": [
+     0.072,
+     0.391,
+     0.522,
+     0.014
+    ],
+    "mean": 1.48,
+    "twoPlus": 0.536,
+    "parks": 2.5,
+    "parkAt": [
+     0.3,
+     2,
+     0.3
+    ],
+    "wrongPark": 0.07,
+    "danger": 0.007,
+    "decisions": 35
+   },
+   {
+    "games": 4,
+    "lostGames": 0,
+    "unresolvedChecks": 0,
+    "requireProof": true,
+    "waiting": [
+     0.058,
+     0.435,
+     0.486,
+     0.022
+    ],
+    "mean": 1.47,
+    "twoPlus": 0.508,
+    "parks": 2.5,
+    "parkAt": [
+     0.3,
+     2,
+     0.3
+    ],
+    "wrongPark": 0.02,
+    "danger": 0,
+    "decisions": 35
+   }
+  ]
+ },
+ "edits": [
+  [
+   35,
+   29
+  ],
+  [
+   8,
+   62
+  ],
+  [
+   8,
+   53
+  ],
+  [
+   13,
+   27
+  ],
+  [
+   18,
+   19
+  ],
+  [
+   11,
+   34
+  ],
+  [
+   31,
+   78
+  ]
+ ],
+ "trials": 125,
+ "trace": [],
+ "ms": 11777
+}

@@ -1,0 +1,1320 @@
+{
+ "level": 343,
+ "source": 343,
+ "ok": true,
+ "design": {
+  "tiles": [
+   [
+    3,
+    5,
+    1
+   ],
+   [
+    10,
+    11,
+    1
+   ],
+   [
+    6,
+    10,
+    2
+   ],
+   [
+    4,
+    2,
+    0
+   ],
+   [
+    6,
+    2,
+    0
+   ],
+   [
+    8,
+    2,
+    0
+   ],
+   [
+    6,
+    0,
+    0
+   ],
+   [
+    6,
+    4,
+    0
+   ],
+   [
+    6,
+    8,
+    2
+   ],
+   [
+    0,
+    4,
+    0
+   ],
+   [
+    4,
+    6,
+    2
+   ],
+   [
+    10,
+    14,
+    0
+   ],
+   [
+    4,
+    4,
+    0
+   ],
+   [
+    11,
+    8,
+    0
+   ],
+   [
+    9,
+    6,
+    0
+   ],
+   [
+    11,
+    6,
+    0
+   ],
+   [
+    1,
+    8,
+    0
+   ],
+   [
+    3,
+    8,
+    0
+   ],
+   [
+    3,
+    6,
+    0
+   ],
+   [
+    5,
+    7,
+    1
+   ],
+   [
+    7,
+    8,
+    0
+   ],
+   [
+    9,
+    8,
+    0
+   ],
+   [
+    9,
+    9,
+    1
+   ],
+   [
+    1,
+    6,
+    0
+   ],
+   [
+    1,
+    10,
+    0
+   ],
+   [
+    3,
+    10,
+    0
+   ],
+   [
+    7,
+    10,
+    0
+   ],
+   [
+    9,
+    10,
+    0
+   ],
+   [
+    4,
+    14,
+    0
+   ],
+   [
+    11,
+    10,
+    0
+   ],
+   [
+    1,
+    9,
+    1
+   ],
+   [
+    5,
+    8,
+    0
+   ],
+   [
+    8,
+    11,
+    1
+   ],
+   [
+    10,
+    4,
+    0
+   ],
+   [
+    5,
+    10,
+    0
+   ],
+   [
+    8,
+    14,
+    0
+   ],
+   [
+    6,
+    14,
+    0
+   ],
+   [
+    6,
+    12,
+    2
+   ],
+   [
+    5,
+    6,
+    0
+   ],
+   [
+    7,
+    7,
+    1
+   ],
+   [
+    8,
+    4,
+    0
+   ],
+   [
+    5,
+    9,
+    1
+   ],
+   [
+    7,
+    9,
+    1
+   ],
+   [
+    3,
+    7,
+    1
+   ],
+   [
+    7,
+    5,
+    1
+   ],
+   [
+    5,
+    5,
+    1
+   ],
+   [
+    2,
+    4,
+    0
+   ],
+   [
+    4,
+    0,
+    0
+   ],
+   [
+    9,
+    7,
+    1
+   ],
+   [
+    3,
+    9,
+    1
+   ],
+   [
+    7,
+    6,
+    0
+   ],
+   [
+    5,
+    3,
+    1
+   ],
+   [
+    7,
+    3,
+    1
+   ],
+   [
+    6,
+    12,
+    0
+   ],
+   [
+    10,
+    12,
+    0
+   ],
+   [
+    1,
+    7,
+    1
+   ],
+   [
+    11,
+    9,
+    1
+   ],
+   [
+    4,
+    12,
+    0
+   ],
+   [
+    11,
+    7,
+    1
+   ],
+   [
+    5,
+    1,
+    1
+   ],
+   [
+    7,
+    1,
+    1
+   ],
+   [
+    6,
+    13,
+    1
+   ],
+   [
+    8,
+    12,
+    0
+   ],
+   [
+    6,
+    11,
+    1
+   ],
+   [
+    6,
+    6,
+    2
+   ],
+   [
+    8,
+    0,
+    0
+   ],
+   [
+    8,
+    8,
+    2
+   ],
+   [
+    4,
+    8,
+    2
+   ],
+   [
+    6,
+    4,
+    2
+   ],
+   [
+    10,
+    13,
+    1
+   ],
+   [
+    10,
+    8,
+    2
+   ],
+   [
+    2,
+    8,
+    2
+   ],
+   [
+    8,
+    13,
+    1
+   ],
+   [
+    6,
+    2,
+    2
+   ],
+   [
+    6,
+    7,
+    3
+   ],
+   [
+    4,
+    7,
+    3
+   ],
+   [
+    6,
+    9,
+    3
+   ],
+   [
+    6,
+    5,
+    3
+   ],
+   [
+    6,
+    3,
+    3
+   ],
+   [
+    6,
+    11,
+    3
+   ],
+   [
+    6,
+    8,
+    4
+   ],
+   [
+    6,
+    6,
+    4
+   ],
+   [
+    6,
+    10,
+    4
+   ],
+   [
+    9,
+    12,
+    2
+   ]
+  ],
+  "faces": [
+   4,
+   30,
+   26,
+   2,
+   1,
+   35,
+   16,
+   35,
+   12,
+   8,
+   33,
+   23,
+   13,
+   19,
+   24,
+   32,
+   11,
+   24,
+   18,
+   16,
+   6,
+   3,
+   23,
+   28,
+   33,
+   19,
+   6,
+   22,
+   19,
+   27,
+   24,
+   18,
+   16,
+   12,
+   22,
+   13,
+   33,
+   31,
+   20,
+   3,
+   24,
+   1,
+   7,
+   7,
+   8,
+   16,
+   9,
+   11,
+   9,
+   29,
+   34,
+   30,
+   25,
+   11,
+   19,
+   17,
+   21,
+   5,
+   31,
+   14,
+   21,
+   20,
+   0,
+   2,
+   11,
+   34,
+   32,
+   0,
+   5,
+   0,
+   29,
+   27,
+   14,
+   29,
+   26,
+   25,
+   4,
+   0,
+   17,
+   33,
+   29,
+   10,
+   10,
+   28
+  ],
+  "down": [
+   0,
+   7,
+   8,
+   11,
+   12,
+   13,
+   14,
+   15,
+   18,
+   19,
+   20,
+   21,
+   22,
+   25,
+   26,
+   27,
+   29,
+   36,
+   53,
+   58,
+   63
+  ],
+  "gold": [],
+  "obst": {
+   "ice": {
+    "60": 2
+   },
+   "locks": [
+    59
+   ],
+   "keys": [
+    23,
+    83
+   ]
+  },
+  "clock": {
+   "i": 60,
+   "n": 10
+  },
+  "solution": [
+   71,
+   55,
+   23,
+   83,
+   78,
+   73,
+   70,
+   59,
+   60,
+   56,
+   1,
+   29,
+   69,
+   72,
+   28,
+   54,
+   81,
+   82,
+   77,
+   65,
+   6,
+   32,
+   57,
+   68,
+   51,
+   52,
+   75,
+   10,
+   79,
+   0,
+   37,
+   58,
+   15,
+   66,
+   11,
+   22,
+   62,
+   67,
+   80,
+   76,
+   2,
+   74,
+   3,
+   63,
+   8,
+   33,
+   30,
+   49,
+   4,
+   41,
+   16,
+   47,
+   42,
+   43,
+   17,
+   9,
+   46,
+   48,
+   64,
+   44,
+   14,
+   40,
+   19,
+   45,
+   5,
+   7,
+   18,
+   31,
+   12,
+   35,
+   38,
+   61,
+   53,
+   13,
+   21,
+   39,
+   50,
+   20,
+   24,
+   25,
+   36,
+   27,
+   26,
+   34
+  ]
+ },
+ "keep": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  22,
+  23,
+  24,
+  25,
+  26,
+  27,
+  28,
+  29,
+  30,
+  31,
+  32,
+  33,
+  34,
+  35,
+  36,
+  37,
+  38,
+  39,
+  40,
+  41,
+  42,
+  43,
+  44,
+  45,
+  46,
+  47,
+  48,
+  49,
+  50,
+  51,
+  52,
+  53,
+  54,
+  55,
+  56,
+  57,
+  58,
+  59,
+  60,
+  61,
+  62,
+  63,
+  64,
+  65,
+  66,
+  67,
+  68,
+  69,
+  70,
+  71,
+  72,
+  73,
+  74,
+  75,
+  76,
+  77,
+  78,
+  79,
+  80,
+  81,
+  82,
+  83
+ ],
+ "shape": {
+  "ok": true,
+  "errors": [],
+  "tiles": 84,
+  "width": 6.5,
+  "rows": 8,
+  "px": 58.56603773584906,
+  "straight": 0,
+  "stray": 2,
+  "edge": 5,
+  "mirror": 0
+ },
+ "certificate": {
+  "ok": true,
+  "errors": [],
+  "checks": [
+   "zeroStraightTowers",
+   "supportedIntegerGrid",
+   "72to88Tiles",
+   "6.5Columns8Rows58px",
+   "fullStrictWin",
+   "sameClockMinimumAndSpare",
+   "sameSpecialEffects",
+   "sameSpecialPrerequisites",
+   "allAuthoredWrongMovesStillWrong",
+   "ownAuthoredProof"
+  ],
+  "k": 9,
+  "spare": 1,
+  "footprint": {
+   "ok": true,
+   "profile": "phone-near-60-v1",
+   "tilePx": 58.56603773584906,
+   "rows": 8,
+   "compact": true,
+   "target": 60,
+   "minimum": 58,
+   "limit": "width"
+  },
+  "ablations": [
+   [
+    "ice",
+    60,
+    3
+   ],
+   [
+    "lock",
+    59,
+    5
+   ]
+  ],
+  "prerequisites": [
+   [
+    60,
+    []
+   ],
+   [
+    23,
+    []
+   ],
+   [
+    83,
+    []
+   ],
+   [
+    59,
+    [
+     23,
+     83
+    ]
+   ]
+  ],
+  "prices": [
+   {
+    "tiles": [
+     81,
+     82
+    ],
+    "before": {
+     "tiles": [
+      81,
+      82
+     ],
+     "result": "win",
+     "need": 11,
+     "cost": 2,
+     "exact": true
+    },
+    "after": {
+     "tiles": [
+      81,
+      82
+     ],
+     "result": "win",
+     "need": 11,
+     "cost": 2,
+     "exact": true
+    }
+   },
+   {
+    "tiles": [
+     70,
+     80
+    ],
+    "before": {
+     "tiles": [
+      70,
+      80
+     ],
+     "result": "win",
+     "need": 12,
+     "cost": 3,
+     "exact": true
+    },
+    "after": {
+     "tiles": [
+      70,
+      80
+     ],
+     "result": "lose",
+     "need": null,
+     "cost": null,
+     "exact": true
+    }
+   }
+  ],
+  "ownProof": {
+   "ok": true
+  },
+  "beforeHash": "358fd1cdaa4b077a66485733ae5d6e984b3aa847b31988ce5852ce604927c823",
+  "afterHash": "ad0a31e3598a2394adea250d8fcf364ca9f7dfa7b5f1104d6f89811dc837aa23",
+  "policy": "Task 23 geometry + unchanged Task 20 mechanics",
+  "shape": {
+   "ok": true,
+   "errors": [],
+   "tiles": 84,
+   "width": 6.5,
+   "rows": 8,
+   "px": 58.56603773584906,
+   "straight": 0,
+   "stray": 2,
+   "edge": 5,
+   "mirror": 0
+  }
+ },
+ "controlGates": {
+  "ok": true,
+  "rows": [
+   {
+    "tile": 23,
+    "face": 28,
+    "before": [],
+    "after": []
+   },
+   {
+    "tile": 49,
+    "face": 29,
+    "before": [],
+    "after": []
+   },
+   {
+    "tile": 56,
+    "face": 21,
+    "before": [],
+    "after": []
+   },
+   {
+    "tile": 59,
+    "face": 14,
+    "before": [
+     23,
+     83
+    ],
+    "after": [
+     23,
+     83
+    ]
+   },
+   {
+    "tile": 60,
+    "face": 21,
+    "before": [],
+    "after": []
+   },
+   {
+    "tile": 70,
+    "face": 29,
+    "before": [],
+    "after": []
+   },
+   {
+    "tile": 72,
+    "face": 14,
+    "before": [
+     83
+    ],
+    "after": [
+     83
+    ]
+   },
+   {
+    "tile": 73,
+    "face": 29,
+    "before": [],
+    "after": []
+   },
+   {
+    "tile": 80,
+    "face": 29,
+    "before": [],
+    "after": []
+   },
+   {
+    "tile": 81,
+    "face": 10,
+    "before": [],
+    "after": []
+   },
+   {
+    "tile": 82,
+    "face": 10,
+    "before": [],
+    "after": []
+   },
+   {
+    "tile": 83,
+    "face": 28,
+    "before": [],
+    "after": []
+   }
+  ],
+  "changed": [],
+  "sourceHash": "358fd1cdaa4b077a66485733ae5d6e984b3aa847b31988ce5852ce604927c823",
+  "hash": "92f9f3e3bd117a66b86b1e0f86a8c465fc4e38d360b90d36003f37b491f74dfc",
+  "policy": "Same pinned-special physical prerequisites for the original control-picture identities; no tray or clock budget is assumed."
+ },
+ "method": "Staggered the original side columns and the key roof supports inside the narrow frame, preserving every special-picture copy’s prerequisite; retained all 84 identities; finish positions tuned to the requested pressure",
+ "recipe": {
+  "relocate": {
+   "23": [
+    1,
+    6,
+    0
+   ],
+   "29": [
+    11,
+    10,
+    0
+   ],
+   "45": [
+    6,
+    11,
+    1
+   ],
+   "53": [
+    6,
+    13,
+    1
+   ],
+   "55": [
+    1,
+    7,
+    1
+   ],
+   "57": [
+    1,
+    9,
+    1
+   ],
+   "69": [
+    10,
+    13,
+    1
+   ],
+   "83": [
+    9,
+    12,
+    2
+   ]
+  },
+  "hardIds": [
+   49,
+   56,
+   29,
+   52,
+   67,
+   69,
+   57
+  ],
+  "assignmentGatePhotos": [
+   0
+  ],
+  "iceGuard": false,
+  "x0": 0,
+  "y0": 0,
+  "left": 0,
+  "protectPhotos": true,
+  "guard": false,
+  "prefix": true,
+  "badgeGuard": true,
+  "baitFree": true,
+  "hardSpecialsOnly": true,
+  "hardBaits": true,
+  "softFixed": true,
+  "assignmentFixed": "prefix-specials-baits",
+  "assignmentIceOrders": true,
+  "assignmentGates": true,
+  "orders": 1,
+  "rankPrefix": 9,
+  "seconds": 30,
+  "assignSeconds": 35,
+  "ms": 100000
+ },
+ "sourceHash": "358fd1cdaa4b077a66485733ae5d6e984b3aa847b31988ce5852ce604927c823",
+ "fixed": [
+  60,
+  23,
+  83,
+  59,
+  81,
+  82,
+  70,
+  80,
+  71,
+  55,
+  78,
+  73,
+  49,
+  56,
+  72,
+  1,
+  2,
+  4,
+  5,
+  52,
+  67,
+  41,
+  79,
+  0,
+  51,
+  3,
+  68,
+  63,
+  65,
+  75,
+  77,
+  74,
+  76,
+  29,
+  45,
+  53,
+  57,
+  69
+ ],
+ "attempts": [
+  {
+   "x0": 0,
+   "y0": 0,
+   "stage": "certificate",
+   "ok": true,
+   "errors": [],
+   "changedGates": []
+  }
+ ],
+ "x0": 0,
+ "y0": 0,
+ "finishTune": {
+  "target": {
+   "pressureParks": 2,
+   "tolerance": 0.5,
+   "maxThree": 0.25,
+   "metric": "feel.expert parkAt[1] + parkAt[2] per complete winning finish",
+   "policy": "Task 24 update: about 5 for tier 1–2; about 2 for harder single ideas and two-idea chains. Only the finish may move.",
+   "maxWrongPark": 0.21666666666666667,
+   "choicePolicy": "Prefer finish pressure without increasing the source losing-park fraction by more than .15; .25 remains the independent review flag."
+  },
+  "training": {
+   "pressureParks": 2.116666666666667,
+   "mean": 0.9833333333333333,
+   "twoPlus": 0.28683333333333333,
+   "three": 0.04850000000000001,
+   "parks": 3.983333333333333,
+   "wrongPark": 0.09833333333333334,
+   "games": 24,
+   "lostGames": 0,
+   "unresolvedChecks": 0,
+   "samples": [
+    {
+     "games": 4,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.368,
+      0.322,
+      0.257,
+      0.053
+     ],
+     "mean": 0.99,
+     "twoPlus": 0.31,
+     "parks": 3.8,
+     "parkAt": [
+      1.8,
+      1.3,
+      0.8
+     ],
+     "wrongPark": 0.19,
+     "danger": 0.012,
+     "decisions": 43
+    },
+    {
+     "games": 4,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.341,
+      0.429,
+      0.188,
+      0.041
+     ],
+     "mean": 0.93,
+     "twoPlus": 0.229,
+     "parks": 3.5,
+     "parkAt": [
+      2,
+      1.3,
+      0.3
+     ],
+     "wrongPark": 0.04,
+     "danger": 0,
+     "decisions": 43
+    },
+    {
+     "games": 4,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.347,
+      0.37,
+      0.225,
+      0.058
+     ],
+     "mean": 0.99,
+     "twoPlus": 0.283,
+     "parks": 4.3,
+     "parkAt": [
+      1.8,
+      1.5,
+      1
+     ],
+     "wrongPark": 0.2,
+     "danger": 0.023,
+     "decisions": 43
+    },
+    {
+     "games": 4,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.398,
+      0.327,
+      0.234,
+      0.041
+     ],
+     "mean": 0.92,
+     "twoPlus": 0.275,
+     "parks": 3.8,
+     "parkAt": [
+      2,
+      1.5,
+      0.3
+     ],
+     "wrongPark": 0.03,
+     "danger": 0.006,
+     "decisions": 43
+    },
+    {
+     "games": 4,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.305,
+      0.351,
+      0.282,
+      0.063
+     ],
+     "mean": 1.1,
+     "twoPlus": 0.345,
+     "parks": 4.5,
+     "parkAt": [
+      2,
+      1.8,
+      0.8
+     ],
+     "wrongPark": 0.09,
+     "danger": 0,
+     "decisions": 44
+    },
+    {
+     "games": 4,
+     "lostGames": 0,
+     "unresolvedChecks": 0,
+     "requireProof": true,
+     "waiting": [
+      0.343,
+      0.378,
+      0.244,
+      0.035
+     ],
+     "mean": 0.97,
+     "twoPlus": 0.279,
+     "parks": 4,
+     "parkAt": [
+      2,
+      1.8,
+      0.3
+     ],
+     "wrongPark": 0.04,
+     "danger": 0,
+     "decisions": 43
+    }
+   ]
+  },
+  "trainingSeeds": [
+   5,
+   71,
+   977,
+   9,
+   6337,
+   10007
+  ],
+  "trainingPlayouts": 4,
+  "edits": [
+   [
+    63,
+    40
+   ],
+   [
+    1,
+    46
+   ],
+   [
+    6,
+    46
+   ],
+   [
+    33,
+    28
+   ],
+   [
+    11,
+    38
+   ],
+   [
+    40,
+    8
+   ],
+   [
+    65,
+    2
+   ],
+   [
+    22,
+    1
+   ],
+   [
+    63,
+    22
+   ],
+   [
+    50,
+    22
+   ],
+   [
+    57,
+    30
+   ],
+   [
+    0,
+    47
+   ],
+   [
+    38,
+    12
+   ]
+  ],
+  "trials": 74,
+  "ms": 7160
+ }
+}

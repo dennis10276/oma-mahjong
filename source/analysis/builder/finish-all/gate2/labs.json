@@ -2,8 +2,8 @@
   "url": "http://127.0.0.1:8285/",
   "directory": "C:\\Users\\den_k\\Idea\\OmasMahjong\\codex-towers\\source\\build\\finish-all-gate2",
   "sourceBoards": 49,
-  "draftBoards": 44,
-  "cards": 93,
+  "draftBoards": 49,
+  "cards": 98,
   "drafts": [
     {
       "level": 301,
@@ -86,6 +86,10 @@
       "hash": "183849d79aa573d8cf2efa49babea67824ba2dfbacd2ab484a8f1996c8ff37cc"
     },
     {
+      "level": 321,
+      "hash": "75c505338a228be9879d9068afd30b5351b399edbe4934748690b8848dad5047"
+    },
+    {
       "level": 322,
       "hash": "9a821819817faa9374163d0ab26775824d19bf49a43bba935a912143c15a2d2b"
     },
@@ -104,6 +108,10 @@
     {
       "level": 326,
       "hash": "9b33eda1fb8f0f2c7e28ae03162b402ed44aa644c80f8e5939b5e14d6afec244"
+    },
+    {
+      "level": 327,
+      "hash": "d88968d0aa1cc6ac1d6af9f6443c8c76737aedfc466e98263cffde1149db57fd"
     },
     {
       "level": 328,
@@ -138,6 +146,10 @@
       "hash": "e24ba792cec89a86e6cca26103b8ab10fcd43bab70370a4173c0c1950eb753f1"
     },
     {
+      "level": 336,
+      "hash": "368b43833db49caeef31da23aa53be9c5b893f243db19c989a12108e80c19ed8"
+    },
+    {
       "level": 337,
       "hash": "b64b3f940ec5e7c16b69363e915de7b9a0c98bdfd43b10da31d90b3d925f1668"
     },
@@ -154,8 +166,16 @@
       "hash": "bda9129a31edff8a1ffb7d387886a70fdf60b0c79539d16aa2e1be649391c044"
     },
     {
+      "level": 341,
+      "hash": "ef90233007c5859a3eb314e4346125abaac56347354ad016044b44961ebe2788"
+    },
+    {
       "level": 342,
       "hash": "8f032537624bbcde7ac0819ee4c498038b28ea420a62b8a78ded7fcbd28b8066"
+    },
+    {
+      "level": 343,
+      "hash": "ad0a31e3598a2394adea250d8fcf364ca9f7dfa7b5f1104d6f89811dc837aa23"
     },
     {
       "level": 344,

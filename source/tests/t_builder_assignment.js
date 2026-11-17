@@ -1,4 +1,5 @@
 'use strict';
+function run(){
 const fs=require('fs'),path=require('path'),cp=require('child_process'),assert=require('assert/strict'),dir=path.resolve(__dirname,'../build/test-assignment');fs.mkdirSync(dir,{recursive:true});
 function solve(name,job){const input=path.join(dir,name+'.json'),output=path.join(dir,name+'-out.json');fs.writeFileSync(input,JSON.stringify({...job,seconds:5}));cp.execFileSync('python',[path.resolve(__dirname,'../tools/builder/bank/gate1_assignment_milp.py'),input,output],{windowsHide:true});const r=JSON.parse(fs.readFileSync(output));assert.equal(r.ok,true,JSON.stringify(r));return new Map(r.assignment);}
 const three=[[0,0,0],[2,0,0],[1,0,1]];
@@ -8,3 +9,6 @@ assert.ok([1,2].some(i=>assignment.get(i)===1),'a melting neighbor must precede 
 const masked=solve('pinned-special-masks',{ids:[0,1],tiles:four.slice(0,2),fixed:[],original:four.slice(0,2),faces:[0,1],down:[],free:[0,1],oldFree:[0,1],oldDepth:[0,0],ranks:[],above:[[],[]],left:[[],[]],right:[[],[]],closeVisible:[],allowedSites:{0:[1],1:[0]}});
 assert.equal(masked.get(0),1);assert.equal(masked.get(1),0);
 console.log('Existing free face-down identities are allowed; ice is melted before its ordered tap.');
+}
+if(require.main===module)run();
+module.exports=[{name:"builder bench: pinned-special assignment masks and thaw order",cpu:true,run}];
