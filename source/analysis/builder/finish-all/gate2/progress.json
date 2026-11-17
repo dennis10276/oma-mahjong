@@ -8,8 +8,38 @@
   "gameVersion": "1.70",
   "gate1Passed": true,
   "gate1Released": true,
-  "gate2Passed": false,
-  "complete": false,
+  "gate2Passed": true,
+  "complete": true,
+  "candidatePacked": true,
+  "candidateValidation": {
+    "ok": true,
+    "scope": [
+      301,
+      349
+    ],
+    "sourceProofCommit": "9799afafde2a954893d02f344191ef1801bfa184",
+    "candidateCommit": "6bdf6ddff164b4744a22b82fbf09a8ef459c0e19",
+    "tableHash": "401c9b52ea73a0871a214eaaf948fe439cc6a095fab6d14ecf6ace1e04a73d03",
+    "suite": {
+      "passed": 175,
+      "total": 175,
+      "seconds": 1082,
+      "offline": true
+    },
+    "actualPackedGameWins": 49,
+    "sourceLabWins": 49,
+    "draftLabWins": 49,
+    "combinedUi": true,
+    "earlierRowsAndSaveRevisionsPreservedThrough": 300,
+    "revision": 12,
+    "repeat": {
+      "from": 150,
+      "span": 200,
+      "starts": 350,
+      "revision": 12
+    },
+    "releaseAuthorized": false
+  },
   "sourceGameWins": 49,
   "draftGameWins": 49,
   "trapReady": 49,

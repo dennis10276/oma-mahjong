@@ -6,7 +6,8 @@
  "gate1": 49,
  "gate2Sources": 49,
  "gate2Drafts": 49,
- "gate2Passed": 49,
+ "gate2Passed": true,
+ "validatedDrafts": 49,
  "identities": [
   {
    "id": 2402510,

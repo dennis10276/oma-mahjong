@@ -1,10 +1,10 @@
-# Task 24 — progress through 349
+# Task 24 — completed through 349
 
 Dennis: **“Reshape only untill 349. 350 and up will get remade.”** Only 301–349 is being adopted in gate 2. No gate 2 release is authorized.
 
-Gate 1 passed and was released as **1.70**, main **97dc6221**, including candidate **fc0859fc** and the top-tools update. Its 250–300 rows and save revisions remain unchanged. The candidate branch was fast-forwarded to that released main and still ends at 300. Gate 2 has not been packed into it.
+Gate 1 passed and was released as **1.70**, main **97dc6221**, including candidate **fc0859fc** and the top-tools update. Its 250–300 rows and save revisions remain unchanged. The candidate branch is based on that released main and now contains all 49 reviewed rows through 349. New authored rows and the changed repeat cycle use save revision 12; every earlier row and save revision through 300 is preserved. The repeat span is 150–349 (200 boards), preserving tenth-level alignment. No authored 350+ rows are included.
 
-Gate 2 remains **in progress**: 49/49 boards have current supported-shape, frozen mechanics and control-picture dependency proofs; 49/49 also pass the latest finish target, current game win and losing-choice review. 45/45 ordinary slots meet all checks. 49/49 sources and 49 current drafts have actual game wins using the 1.70 game at 392 × 730 in sunflower theme.
+Gate 2 is **complete for review**: 49/49 boards have current supported-shape, frozen mechanics and control-picture dependency proofs; 49/49 also pass the latest finish target, current game win and losing-choice review. 45/45 ordinary slots meet all checks. 49/49 sources and 49 current drafts have actual game wins using the 1.70 game at 392 × 730 in sunflower theme.
 
 ## Review
 
@@ -132,4 +132,8 @@ Finish target review uses 24 complete proved-winning samples (seeds 121, 314159,
 | 348 | 0.48 → 0.61 | 0.12 → 0.14 | 0.00 → 0.11 | — |
 | 349 | 0.93 → 1.24 | 0.27 → 0.45 | 0.14 → 0.30 | sustained pressure increased |
 
-Remaining work is explicit in progress.json. Bounded failures do not prove impossibility. The table extension, save/repeat checks, combined comparison lab, full suite and adoption commit wait for all 301–349 requirements. Gate 1’s frozen report and its 51 actual-game wins / 172 passing tests remain in finish-all/gate1/.
+All 49 packed candidate rows also won in the actual game at 392 × 730, in sunflower theme. The full offline suite passed 175/175; it covers earlier-board hashes, revision 12 save invalidation/resume, the full 200-board repeat span, mirrored complete witnesses and tenth alignment. The combined lab selector, clock-route button and full level 336 play were checked with feedback intercepted. Gate 2 remains unreleased. Gate 1’s frozen evidence remains in finish-all/gate1/.
+
+Level 336 keeps clock minimum 13, both ice-removed minima 13 / 11 and lock-removed minimum 7. Its three authored wrong moves still need 15 (cost 2) before and after the reshape. Its 72 original identities fit at 58.57 px without towers; only complete ordinary finish pairs were removed. Its final requested finish pressure is 2.00.
+
+When adding authored boards after 349, use a new save revision above 12 and recheck the repeat span. Current source-proof commit: 9799afafde2a954893d02f344191ef1801bfa184. Candidate adoption and final evidence commits are listed in COMMITS.md.

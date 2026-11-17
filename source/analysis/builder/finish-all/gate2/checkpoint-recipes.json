@@ -3,7 +3,7 @@
   301,
   349
  ],
- "complete": false,
+ "complete": true,
  "accepted": 49,
  "remaining": [],
  "policy": "Each identity keeps its source picture and down flag. Positions and solution IDs are sufficient to reproduce these checkpoint puzzles from the frozen source.",

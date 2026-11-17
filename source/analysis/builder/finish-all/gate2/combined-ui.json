@@ -1,0 +1,19 @@
+{
+ "ok": true,
+ "url": "http://127.0.0.1:8290/",
+ "viewport": [
+  392,
+  730
+ ],
+ "cards": 245,
+ "levels": 98,
+ "selectorChecks": [
+  251,
+  299,
+  336,
+  349
+ ],
+ "clockRoute336": true,
+ "fullWin336": true,
+ "feedbackIntercepted": true
+}

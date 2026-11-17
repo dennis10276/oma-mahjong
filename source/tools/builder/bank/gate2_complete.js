@@ -1,0 +1,10 @@
+'use strict';
+const fs=require('fs'),path=require('path'),crypto=require('crypto'),cp=require('child_process'),assert=require('assert/strict'),P=require('./finish_all_sources');
+const OUT=path.resolve(__dirname,'../../../analysis/builder/finish-all/gate2'),CAND=path.resolve(__dirname,'../../../../../codex-towers-candidate');
+function run(){const read=f=>JSON.parse(fs.readFileSync(path.join(OUT,f))),candidate=read('candidate.json'),packed=read('packed-game.json'),ui=read('combined-ui.json'),log=fs.readFileSync(path.join(CAND,'source/analysis/gate2-suite.log'),'utf8'),match=log.match(/(\d+)\/(\d+) tests passed in (\d+)s \(offline/),tableHash=crypto.createHash('sha256').update(fs.readFileSync(path.join(CAND,'source/www/levels-hard.js'))).digest('hex');
+ assert.ok(match,'Full offline suite must finish');assert.equal(+match[1],+match[2]);assert.ok(+match[2]>=174);assert.ok(!log.includes('✗ FAIL'));assert.ok(packed.ok&&packed.rows.length===49);assert.equal(packed.tableHash,tableHash);assert.ok(ui.ok&&ui.clockRoute336&&ui.fullWin336);
+ for(const row of candidate.rows){const record=read(`level-${row.level}.json`),audit=read(`audit-${row.level}.json`),pressure=read(`finish-pressure-${row.level}.json`);assert.equal(P.hash(record.design),row.designHash);assert.ok(audit.ok&&audit.hash===row.designHash&&pressure.met&&pressure.hash===row.designHash);assert.ok(packed.rows.some(p=>p.level===row.level&&p.packedHash===row.packedHash&&p.ok));}
+ const result={ok:true,scope:[301,349],sourceProofCommit:candidate.builderCommit,candidateCommit:cp.execFileSync('git',['rev-parse','HEAD'],{cwd:CAND,encoding:'utf8'}).trim(),tableHash,suite:{passed:+match[1],total:+match[2],seconds:+match[3],offline:true},actualPackedGameWins:49,sourceLabWins:49,draftLabWins:49,combinedUi:true,earlierRowsAndSaveRevisionsPreservedThrough:300,revision:12,repeat:{from:150,span:200,starts:350,revision:12},releaseAuthorized:false};
+ fs.writeFileSync(path.join(OUT,'candidate-validation.json'),JSON.stringify(result,null,2));require('./gate2_status').run();console.log(JSON.stringify(result));return result;
+}
+if(require.main===module)run();module.exports={run};
