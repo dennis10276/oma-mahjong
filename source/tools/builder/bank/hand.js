@@ -93,7 +93,11 @@ function fill(spec, tiles, seed = 1) {
     // face-down tiles among the filled ones (never a special, a labelled tile, or a tile free at the start)
     const g0 = E.game({ tiles, faces, down: [], obst, clock: { i: spec.clock, n: 999 }, solution: sol }, { strict: true }), start = new Set(E.legal(g0, E.start(g0)));
     const chosen = new Set(spec.downTiles || []), routeSet = new Set(spec.route.flat());
-    const cand = [...Array(n).keys()].filter(i => label[i] == null && !special.has(i) && !start.has(i) && !chosen.has(i) && !(spec.downTiles && routeSet.has(i))).sort(() => rnd() - .5);
+    // peek designs: no extra face-down tile may be free before the clock (it would be a second escape); only tiles that open later
+    let early = new Set();
+    if (spec.peek) { const gE = E.game({ tiles, faces, down: [], obst, clock: { i: spec.clock, n: 999 }, solution: sol }, { strict: true }); let st = E.start(gE);
+      const ck = sol.indexOf(spec.clock); for (let t = 0; t <= ck && st; t++) { E.legal(gE, st).forEach(x => typeof x === 'number' && early.add(x)); st = E.step(gE, st, sol[t]); } }
+    const cand = [...Array(n).keys()].filter(i => label[i] == null && !special.has(i) && !start.has(i) && !chosen.has(i) && !early.has(i) && !(spec.downTiles && routeSet.has(i))).sort(() => rnd() - .5);
     const down = [...chosen, ...cand.slice(0, Math.max(0, Math.round(n * (spec.down ?? 0.24)) - chosen.size))].sort((a, b) => a - b);
     return { design: { tiles, faces, down, gold: [], obst, clock: { i: spec.clock, n: 999 }, solution: sol }, label, attempt };
   }
@@ -175,16 +179,16 @@ function prove(spec, o = {}) {
   else out.push(...SB.explainRoute(d, spec.route).lines);
   // the designer's wrong moves
   const C = D.clockGames(d), states = []; let t = E.start(C.free); for (const a of spec.route) { states.push(t); t = E.step(C.free, t, Array.isArray(a) ? { pair: a } : a); }
-  const w = D.work(4e6, 120000);
+  const w = D.work(2e7, 300000);
   for (const b of spec.baits || []) {
     // at: a goal number (the position before that goal's dig), or 'auto': the first moment on the route all its tiles are free
     const freeAt = t => states[t] && b.take.every(i => E.legal(C.free, states[t]).includes(i));
     const at = b.at === 'auto' ? states.findIndex((_, t) => freeAt(t)) : spec.goalAt[b.at - 1];
     if (at < 0 || !freeAt(at)) { errors.push('bait ' + b.take.join('+') + ' never free'); out.push('bait ' + b.take.join('+') + ': not free then'); continue; }
-    const st = states[at], p = D.priceMove(C, st, { take: b.take }, { nShipMax: d.clock.n + 6, nodes: 200000, w });
+    const st = states[at], p = D.priceMove(C, st, { take: b.take }, { nShipMax: d.clock.n + 6, nodes: 1500000, w });
     const bites = p.result === 'lose' || (p.need != null && p.need > d.clock.n);
     out.push(`bait at route move ${at + 1} take ${b.take.join('+')}: ${p.result}${p.need != null ? ' needs ' + p.need : ''} -> ${bites ? 'BITES' : 'harmless'} (${b.why || ''})`);
-    if (!bites) errors.push('bait ' + b.take.join('+') + ' does not bite');
+    if (!bites) errors.push('bait ' + b.take.join('+') + (p.result === 'unknown' ? ' unproven (search budget)' : ' does not bite'));
   }
   let offers = null;
   try { offers = require('./trap_offers.js').offers(d, { wallMs: o.offersMs ?? 90000 }); out.push(`tempting moves on the way: ${offers.tempting}, biting ${offers.biting}, trap moments ${offers.trapMoments}`); } catch (e) { out.push('offers: ' + e.message); }

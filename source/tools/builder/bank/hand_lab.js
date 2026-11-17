@@ -8,7 +8,7 @@ const names = process.argv.slice(3).length ? process.argv.slice(3) : fs.readdirS
 const ideas = names.map((n, k) => {
   const j = JSON.parse(fs.readFileSync(path.join(DIR, n + '.board.json'), 'utf8')), d = j.design, sp = { ...j.spec, ...(fs.existsSync(path.join(DIR, n + '.js')) ? require(path.join(DIR, n + '.js')) : {}) };
   const px = F.measure(d, { minimum: 58 }).tilePx, k0 = d.solution.indexOf(d.clock.i) + 1;
-  return { id: 950000 + k, lv: 350 + k, title: (sp.title || n) + ' · ' + px.toFixed(1) + ' px', kind: 'hand',
+  return { id: (+process.env.LAB_BASE || 950000) + k, lv: (+process.env.LAB_LV || 350) + k, title: (sp.title || n) + ' · ' + px.toFixed(1) + ' px', kind: 'hand',
     idea: (sp.idea || '') + ` Clock in ${d.clock.n} (${k0} needed). ${j.offers ? j.offers.biting + ' of ' + j.offers.tempting + ' tempting moves on the way lose.' : ''}`,
     tiles: d.tiles.length, board: { tiles: d.tiles, faces: d.faces, down: d.down, gold: d.gold || [], obst: d.obst, clock: d.clock, solution: d.solution },
     shape: { towers: DT.shape(d.tiles).straight } };
