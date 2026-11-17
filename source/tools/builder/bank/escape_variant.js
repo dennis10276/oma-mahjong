@@ -50,7 +50,18 @@ if (kind === 'ice') {
   if (rel.length < 2 || S1 == null) throw Error('the clock releases fewer than two tiles');
   const [S2, G] = rel; fixed[S1] = fixed[S2] = 'silver'; extra = [S1, S2, G]; specials = { locks2: [G], keys2: [S1, S2], tailGoal: G };
   title = 'The silver key belongs to the second half'; idea = 'After the clock a silver chain begins; one silver key is free from the start, the other appears only when the clock is gone. Taken early, the free key waits through the whole first chain.';
-} else throw Error('kind: ice | silver | gold | freeclock | silvertail');
+} else if (kind === 'keyescape') {
+  // the clock is gold-locked and its keys ARE the face-down pair: the move that saves the tray also opens the clock
+  specials = { locks: [s.clock], keys: [L, F] };
+  title = 'The escape is the key pair'; idea = 'The clock is gold-locked; its keys are the tile you need at the full tray and its face-down twin far away. The pair that saves the tray also opens the clock.';
+} else if (kind === 'keychain') {
+  // the face-down pair is the SILVER key pair; a gold key further down the dig carries the silver lock; the gold keys open the clock
+  const after = s.route.slice(s.route.indexOf(pairStep) + 1).filter(x => typeof x === 'number' && x !== s.clock);
+  const kp = Object.values(s.pairs).find(ids => ids.length === 2 && ids.every(i => after.includes(i)));
+  if (!kp) throw Error('no dig pair after the face-down pair');
+  specials = { locks2: [kp[1]], keys2: [L, F], locks: [s.clock], keys: kp };
+  title = 'The escape opens silver, silver opens gold'; idea = 'The face-down pair at the full tray is the silver key pair; silver frees a gold key further down, and the gold keys open the clock.';
+} else throw Error('kind: ice | silver | gold | freeclock | silvertail | keyescape | keychain');
 const fc = specials.freeClock; delete specials.freeClock; const tg = specials.tailGoal; delete specials.tailGoal;
 // keep the base board's own specials (ice, gold and silver locks) under the new ones
 for (const k of ['ice', 'locks', 'keys', 'locks2', 'keys2']) if (s[k] && specials[k] == null) specials[k] = s[k];
