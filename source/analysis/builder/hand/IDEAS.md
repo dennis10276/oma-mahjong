@@ -78,3 +78,25 @@ corridor). "too easy" = Dennis's lab verdict of 2026-11-16; such ideas need a ha
 
 Count: 32 single ideas (with 77 and 79) + 19 combinations / two-chain boards = 51 proven. Failed combinations (slack: the wrong
 move still wins): 61, 66, 70, 74, 76, 80, 82, 86.
+
+## New families (Dennis 2026-11-17: "make 10 family ideas more. combinations dont count as new")
+Each one is a single new wrong idea, not two old ones together. Lab on port 8292 (scratchpad lab-families, levels 450-458);
+all nine stored solutions win in the real game (second-key www).
+| # | family | the wrong idea / the hidden reason | board | proof |
+|---|---|---|---|---|
+| F1 | Keys before the lid | "dig straight to the clock": the lid is gold-locked and the keys are at the other end; the dig's tiles wait while you fetch them | f1 (1000) | clock 20 (min 19); digging to the lid first needs 23 |
+| F2 | The clock is face-down | "I'm stuck at three": the clock itself turns over and goes with its free twin, no slot; taking that twin early only makes it wait | f2 (1011) | clock 14 (min 13); without the face-down pair 25; twin first loses |
+| F4 | The clock closes the pair | "avoid the tower whose top tile waits all the way": its top is the clock's twin, and the clock closes that pair at the end; the other tower leaves no room for the clock | f4 (1011) | clock 16 (min 15); the other tower first loses |
+| F5 | The escape is too slow | "the face-down pair will save me": it does, but costs three moves (uncover 61, 48, then the pair) - one free tile from the other tower at the right moment keeps the tray from filling | f5 (1011) | clock 13 (min 12); the left way alone: no win in 13, with the escape 14 |
+| F6 | Don't rush the clock | "reach the clock": the short way gets there in time with three tiles waiting whose twins are buried - stuck right after the clock; the other way leaves room | f6 (1011) | clock 12 (both ways 12); tail_check: all 100 short-way orders lost after the clock |
+| F7 | Trust the full tray | "clear the tray first to be safe": the tray goes to three four times and the next dig tile always matches; the clearing move is one the clock lacks (spare 0) | f7 (1000) | clock 11 (min 11); clearing with 70 first needs 12 |
+| F8 | The twin is beside the clock | "its twin is right there": the twin lies uncovered beside the clock but is boxed in until the clock goes; the tile waits the whole left way | f8 (1011) | clock 14 (min 13); the left way alone no win; 2nd left move needs 17 |
+| F9 | The bridge melts from both ends | "dig one tower": the frozen clock's only melters are its two bridge partners, one under each tower, and the towers' tiles are twins of each other - dig both in step | f9 (1011) | clock 26 (min 25); one tower first loses; 16 of 16 tempting moves bite |
+| F10 | Melt before the lid | F1's ice cousin: the lid is frozen 5, the dig melts it 4 times, the 5th melt (34 under 56) must come first | f10 (1000) | clock 16 (min 15); digging first needs 19 |
+
+Dropped: F3 "The keys pair across colours" (each gold key's twin a silver key) - it reduces to taking a free key early (the worn-out
+early-key trap). Jokers (a joker also pulls its target's twin out of the pile, even buried) would give real new families, but
+jokers are gone after level 50 by the rules (jokersGoneFrom) - Dennis's call. Tool added: tail_check.js (is the level lost after the
+clock for every order over some tiles), orders.js/idea_search.js `trayMax` (a win must leave room after the clock).
+Note: F2/F4-F6/F8/F9 all use layout 1011's bridge (an H with two towers): spread them out or move them to other layouts before a
+release range.

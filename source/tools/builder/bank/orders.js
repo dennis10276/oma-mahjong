@@ -5,7 +5,7 @@
      O.orders({ layout, tiles: [ids that may be taken], faces: {id: picture}, clock, limit, ice, locks, keys, locks2, keys2, down: [ids] })
        -> { wins: [[moves...]], firstMoves: {id: count}, free0: [...], strictWins }
    Only the listed tiles can be taken (the others stay on the board); each listed tile without a twin in the list waits until after
-   the clock. Rules as the game: tray at most 3 waiting, ice, gold and silver locks, and a face-down tile with a free twin go
+   the clock (trayMax: only wins with at most that many tiles waiting after the clock). Rules as the game: tray at most 3 waiting, ice, gold and silver locks, and a face-down tile with a free twin go
    together without a slot ("[a+b]", two clock moves). strictWins: the same without face-down pairs. */
 const E = require('../engine.js'), H = require('./hand.js');
 global.Layouts = global.Layouts || require('../../../www/layouts.js');
@@ -21,7 +21,7 @@ function orders(o) {
   const run = peek => {
     const wins = [], memo = new Set();
     const go = (a, tray, moves, path) => {
-      if (!a[o.clock]) { wins.push(path); return; }
+      if (!a[o.clock]) { if (o.trayMax == null || tray.length <= o.trayMax) wins.push(path); return; }   // trayMax: room left after the clock
       if (moves >= limit || wins.length >= (o.max ?? 400)) return;
       const key = T.map(i => a[i]).join('') + '|' + tray.slice().sort().join(',');
       if (!o.all && memo.has(key)) return; memo.add(key);
@@ -43,7 +43,7 @@ function orders(o) {
   for (const i of T.filter(i => can(i, init0))) {
     const a = init0.slice(); a[i] = 0; const sub = [];
     const memo = new Set(), go = (a, tray, moves) => {
-      if (sub.length) return; if (!a[o.clock]) { sub.push(1); return; } if (moves >= limit) return;
+      if (sub.length) return; if (!a[o.clock]) { if (o.trayMax == null || tray.length <= o.trayMax) sub.push(1); return; } if (moves >= limit) return;
       const key = T.map(j => a[j]).join('') + '|' + tray.slice().sort().join(','); if (memo.has(key)) return; memo.add(key);
       const fr = T.filter(j => can(j, a));
       for (const j of fr) { const a2 = a.slice(); a2[j] = 0; const q = tray.indexOf(face[j]), t2 = q >= 0 ? tray.filter((_, k) => k !== q) : tray.concat(face[j]); if (t2.length <= 3) go(a2, t2, moves + 1); }
