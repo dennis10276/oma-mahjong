@@ -43,6 +43,8 @@ if (kind === 'ice') {
   title = "Don't take the clock: its twin needs the escape"; idea = 'The clock is free, but its twin lies at the bottom of a dig that fills the tray and needs a face-down escape. Taken first, the clock takes the slot that plan needs.';
 } else throw Error('kind: ice | silver | gold | freeclock');
 const fc = specials.freeClock; delete specials.freeClock;
+// keep the base board's own specials (ice, gold and silver locks) under the new ones
+for (const k of ['ice', 'locks', 'keys', 'locks2', 'keys2']) if (s[k] && specials[k] == null) specials[k] = s[k];
 const spec = { id, title, idea, layout: lay, block: [...new Set([...s.route.flat().filter(i => i !== s.clock), ...extra])], target: s.clock,
   limit: s.route.flat().length + extra.length, fixed, free: [], down: s.downTiles, ...specials,
   tests: [{ name: 'dig', expect: 'win', peekForced: true }, ...(fc != null ? [{ name: 'clockFirst', expect: 'none', gone: [fc], tray0: ['clockTwin'] }] : [])],
