@@ -57,8 +57,11 @@ function search(idea, o = {}) {
     }
     if (short) { W('noDeepTwins'); continue; }
     const res = results[idea.hand.routeTest];
-    const route = [...res.wins[0].map(x => typeof x === 'string' ? x.slice(1, -1).split('+').map(Number) : x), ...(idea.hand.routeSuffix || [])];
-    const spec = { ...idea.hand, title: idea.title, idea: idea.idea, layout: idea.layout, exact: true, route, pairs,
+    let route = [...res.wins[0].map(x => typeof x === 'string' ? x.slice(1, -1).split('+').map(Number) : x), ...(idea.hand.routeSuffix || [])], tail;
+    // a second chain: the winning order runs past the clock (target after it): the route ends at the clock, the rest is the fixed tail
+    const ck = route.findIndex(x => x === idea.hand.clock || (Array.isArray(x) && x.includes(idea.hand.clock)));
+    if (idea.hand.secondChain && ck >= 0) { tail = route.slice(ck + 1); route = route.slice(0, ck + 1); }
+    const spec = { ...idea.hand, title: idea.title, idea: idea.idea, layout: idea.layout, exact: true, route, ...(tail ? { tail } : {}), pairs,
       ice: idea.ice, locks: idea.locks, keys: idea.keys, locks2: idea.locks2, keys2: idea.keys2, digPairs: .3, pressure: idea.hand.pressure ?? 1.6 };
     const p = H.prove(spec, { seed: o.seed, offersMs: 20000 });
     W(p.ok ? 'proved' : 'proveFail:' + (p.fail || p.errors[0]).replace(/\d+/g, '#').slice(0, 50));

@@ -48,7 +48,19 @@ function corridor(layout, o = {}) {
     // o.clockPeek: the late tile is the clock itself ("the clock goes to the tray too": at the full tray its face-down twin is the way)
     const Lok = L => !o.iceClock || g.iceNb[c].includes(L);   // the frozen-clock variant: the late tile must melt the clock
     for (const L of (o.clockPeek ? [c] : dig).filter(Lok)) for (const F of far.slice().sort(() => rnd() - .5).slice(0, o.farTries ?? 2)) jobs.push([L, F]);
+    // o.escape: 'cover' (F lies under one free tile R; R's twin is a free tile far away), 'ice' (F frozen 1; its free neighbour M melts it;
+    // M's twin is far), 'silver' (F silver-locked; the silver keys are two free tiles far apart): each is a visible pair, which needs a free
+    // slot for a moment, so it has to happen before the tray fills
+    const prepOf = F => {
+      if (!o.escape) return { extra: [], faces: {} };
+      const others = [...free0].filter(i => !dig.includes(i) && i !== F && i !== c);
+      if (o.escape === 'cover') { const R = g.nb.above[F][0]; const R2 = others.find(i => i !== R && Math.abs(tiles[i][0] - tiles[R][0]) + Math.abs(tiles[i][1] - tiles[R][1]) >= 6); return R2 == null ? null : { extra: [R, R2], faces: { [R]: 70, [R2]: 70 } }; }
+      if (o.escape === 'ice') { const M = g.iceNb[F].find(i => free0.has(i) && !dig.includes(i)); const M2 = M != null && others.find(i => i !== M && Math.abs(tiles[i][0] - tiles[M][0]) + Math.abs(tiles[i][1] - tiles[M][1]) >= 6); return M == null || M2 == null ? null : { extra: [M, M2], faces: { [M]: 70, [M2]: 70 }, ice: { [F]: 1 } }; }
+      if (o.escape === 'silver') { const ks = others.filter(i => Math.abs(tiles[i][0] - tiles[F][0]) + Math.abs(tiles[i][1] - tiles[F][1]) >= 4); if (ks.length < 2) return null; const S1 = ks[0], S2 = ks.find(i => Math.abs(tiles[i][0] - tiles[S1][0]) + Math.abs(tiles[i][1] - tiles[S1][1]) >= 6); return S2 == null ? null : { extra: [S1, S2], faces: { [S1]: 70, [S2]: 70 }, locks2: [F], keys2: [S1, S2] }; }
+    };
+    if (o.escape === 'cover') { jobs.length = 0; const cov = [...Array(n).keys()].filter(i => !dig.includes(i) && i !== c && g.nb.above[i].length === 1 && free0.has(g.nb.above[i][0]) && !dig.includes(g.nb.above[i][0]) && (!g.nb.left[i].length || !g.nb.right[i].length) && Math.abs(tiles[i][0] - tiles[c][0]) + Math.abs(tiles[i][1] - tiles[c][1]) >= 6); for (const L of dig) for (const F of cov.slice(0, o.farTries ?? 2)) jobs.push([L, F]); }
     for (const [L, F] of jobs) {
+      const prep = prepOf(F); if (!prep) { W('noPrep'); continue; }
       if (out.length >= (o.per ?? 2)) break;
       let count = 0;
       // clockPeek: the clock's last blockers (the dig's last 2-3 tiles) are holders with buried twins, so the tray is full when the
@@ -58,12 +70,12 @@ function corridor(layout, o = {}) {
       const m = [...m0, ...tailHold.map(i => [i])];
       if (out.length >= (o.per ?? 2) || ++count > (o.perLF ?? 4000)) break;
       const faces = {}; let pic = 0;
-      faces[c] = 99; faces[L] = faces[F] = 60;
+      faces[c] = 99; faces[L] = faces[F] = 60; Object.assign(faces, prep.faces);
       const twinOf = {}, bur = (o.clockPeek ? [...released.sort(() => rnd() - .5), ...buried.filter(i => !released.includes(i)).sort(() => rnd() - .5)] : buried.slice().sort(() => rnd() - .5)); let hk = 0;
       for (const p of (o.clockPeek ? m : m)) { if (p.length === 2) faces[p[0]] = faces[p[1]] = pic++; else { faces[p[0]] = 100 + hk; twinOf[p[0]] = bur[hk++]; } }
       if (Object.values(twinOf).some(x => x == null)) { W('noBuried'); continue; }
-      const downs = o.park ? [] : o.bothDown ? [F, L] : [F], iceC = o.iceClock ? { [c]: g.iceNb[c].filter(i => dig.includes(i)).length } : undefined;
-      const res = O.orders({ layout, clock: c, limit: dig.length + 2, tiles: [...dig, F], faces, down: downs, ice: iceC, max: 30, peek: !o.park });
+      const downs = o.park ? [] : o.bothDown ? [F, L] : [F], iceC = o.iceClock ? { [c]: g.iceNb[c].filter(i => dig.includes(i)).length } : prep.ice;
+      const res = O.orders({ layout, clock: c, limit: dig.length + 2 + prep.extra.length, tiles: [...dig, F, ...prep.extra], faces, down: downs, ice: iceC, locks2: prep.locks2, keys2: prep.keys2, max: 30, peek: !o.park });
       if (!res.wins.length) { W('noWin'); continue; }
       if (o.park) {   // "park the twin early": without F no way to the clock; F is taken before the dig fills the tray
         const no = O.orders({ layout, clock: c, limit: dig.length + 2, tiles: dig, faces, down: [], max: 5, peek: false });
@@ -78,10 +90,10 @@ function corridor(layout, o = {}) {
       const pairs = {}; for (const [i, f] of Object.entries(faces)) (pairs['p' + f] = pairs['p' + f] || []).push(+i);
       for (const [h, tw] of Object.entries(twinOf)) pairs['p' + faces[h]].push(tw);
       const win = res.wins[0].map(x => typeof x === 'string' ? x.slice(1, -1).split('+').map(Number) : x);
-      const spec = { layout, exact: true, peek: !o.park, peekNeeded: !o.park, spare: 1, clock: c, route: win, downTiles: downs, pairs, ...(iceC ? { ice: iceC } : {}),
+      const spec = { layout, exact: true, peek: !o.park, peekNeeded: !o.park, spare: 1, clock: c, route: win, downTiles: downs, pairs, ...(iceC ? { ice: iceC } : {}), ...(prep.locks2 ? { locks2: prep.locks2, keys2: prep.keys2 } : {}),
         baits: o.park ? [] : [...near, F].map(i => ({ at: 1, take: [i], why: i === F ? 'take the face-down twin early' : 'start beside the clock' })).filter(b => free0.has(b.take[0])),
         ...(o.park ? { parkTile: F } : {}),
-        title: o.bothDown ? 'Both are face-down' : o.iceClock ? 'The face-down pair melts' : o.park ? (L === c ? 'Park the twin of the clock' : 'Park the twin early') : L === c ? 'The clock goes to the tray too' : 'Face-down twin at a full tray',
+        title: o.escape ? { cover: 'Uncover the escape first', ice: 'Melt the escape first', silver: 'Unlock the escape first' }[o.escape] : o.bothDown ? 'Both are face-down' : o.iceClock ? 'The face-down pair melts' : o.park ? (L === c ? 'Park the twin of the clock' : 'Park the twin early') : L === c ? 'The clock goes to the tray too' : 'Face-down twin at a full tray',
         idea: o.bothDown ? 'At the full tray the tile you need is face-down, and so is its twin far away: turn one over, find the other back.' : o.iceClock ? 'The clock is frozen; at the full tray the only way on is a face-down pair, and its tile beside the clock is the last melter of the clock.' : o.park ? `The dig fills the tray; the tile you then need is the 4th unless its twin, a free tile far away, already waits. Take that unrelated tile early and let it wait.` : L === c ? `The clock lies deep; the dig leaves the tray full, so the clock itself would be the 4th tile. Its twin is a face-down tile far away: take them together.` : `The clock lies deep (${dig.length + 2} moves); the dig fills the tray, and a face-down tile far away is the twin you need.`,
         digPairs: 0.3, pressure: 1.8, pattern: o.park ? 'park' : 'corridor', gen: { L, F, near, firsts } };
       const p = H.prove(spec, { seed: o.seed, offersMs: 20000 });
@@ -115,7 +127,7 @@ module.exports = { corridor };
 if (require.main === module) {
   const dir = path.resolve(arg('out', 'corridor-out')); fs.mkdirSync(dir, { recursive: true });
   for (const lay of arg('layouts', '1006').split(',').map(Number)) {
-    const why = {}, res = corridor(lay, { per: +arg('per', 2), tries: +arg('tries', 300), seed: +arg('seed', 1), why, lock: arg('lock', null), clockPeek: process.argv.includes('--clock-peek'), park: process.argv.includes('--park'), bothDown: process.argv.includes('--both-down'), iceClock: process.argv.includes('--ice-clock') });
+    const why = {}, res = corridor(lay, { per: +arg('per', 2), tries: +arg('tries', 300), seed: +arg('seed', 1), why, lock: arg('lock', null), clockPeek: process.argv.includes('--clock-peek'), park: process.argv.includes('--park'), bothDown: process.argv.includes('--both-down'), iceClock: process.argv.includes('--ice-clock'), escape: arg('escape', null) });
     for (const b of res) { const f = path.join(dir, `${lay}-c${b.spec.clock}-L${b.spec.gen.L}-s${arg("seed", 1)}.board.json`); fs.writeFileSync(f, JSON.stringify(b, null, 1)); console.log('wrote', f, '| firsts', b.spec.gen.firsts.join(','), '| route', b.spec.route.flat().length); }
     if (!res.length) console.log('layout', lay, ': none');
     console.log(JSON.stringify(why));

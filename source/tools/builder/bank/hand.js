@@ -64,7 +64,7 @@ function fill(spec, tiles, seed = 1) {
     };
     const take = i => { const was = s.tray.includes(i); s = E.step({ ...g, faces }, s, i); sol.push(i); if (s && single.has(i) && s.tray.includes(i) && !was) open.push(i); };
     let ok = true;
-    for (const i of spec.route) {
+    for (const i of [...spec.route, ...(spec.tail || [])]) {   // tail: a fixed order after the clock (a second chain)
       if (Array.isArray(i)) {   // a face-down pair: both tiles go together, no tray slot
         const [a, b] = i; if (!E.legal(g, s).includes(a) || !E.legal(g, s).includes(b)) { ok = false; break; }
         if (faces[a] < 0 && faces[b] < 0) faces[a] = faces[b] = newPic(); else if (faces[a] < 0) faces[a] = faces[b]; else if (faces[b] < 0) faces[b] = faces[a];
