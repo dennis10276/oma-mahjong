@@ -35,11 +35,19 @@ if (kind === 'ice') {
   if (!kp) throw Error('no dig pair before the face-down pair');
   specials = { locks: [F], keys: kp };
   title = 'The escape is gold-locked'; idea = 'At the full tray a face-down twin is the way on, but it is gold-locked; its keys are two tiles of the dig - take them as a pair before the tray fills.';
-} else throw Error('kind: ice | silver | gold');
+} else if (kind === 'freeclock') {
+  // the corridor's old clock tile becomes the twin T; a free tile far away is the new clock, with T's picture (fixed clock number)
+  const T = s.clock, C = spare.find(i => dist(i, T) >= 6); if (C == null) throw Error('no free far tile for the clock');
+  const lab = Object.keys(s.pairs).find(k => s.pairs[k].includes(T)); for (const i of s.pairs[lab]) delete fixed[i]; fixed[T] = fixed[C] = 'clockTwin';
+  specials = { freeClock: C };
+  title = "Don't take the clock: its twin needs the escape"; idea = 'The clock is free, but its twin lies at the bottom of a dig that fills the tray and needs a face-down escape. Taken first, the clock takes the slot that plan needs.';
+} else throw Error('kind: ice | silver | gold | freeclock');
+const fc = specials.freeClock; delete specials.freeClock;
 const spec = { id, title, idea, layout: lay, block: [...new Set([...s.route.flat().filter(i => i !== s.clock), ...extra])], target: s.clock,
   limit: s.route.flat().length + extra.length, fixed, free: [], down: s.downTiles, ...specials,
-  tests: [{ name: 'dig', expect: 'win', peekForced: true }],
-  hand: { clock: s.clock, peek: true, peekNeeded: true, spare: 1, routeTest: 'dig', downTiles: s.downTiles, baits: [] } };
+  tests: [{ name: 'dig', expect: 'win', peekForced: true }, ...(fc != null ? [{ name: 'clockFirst', expect: 'none', gone: [fc], tray0: ['clockTwin'] }] : [])],
+  hand: fc != null ? { clock: fc, clockN: s.route.flat().length + 2, peek: true, spare: 1, routeTest: 'dig', routeSuffix: [fc], downTiles: s.downTiles, baits: [{ at: 1, take: [fc], why: 'take the free clock first' }] }
+    : { clock: s.clock, peek: true, peekNeeded: true, spare: 1, routeTest: 'dig', downTiles: s.downTiles, baits: [] } };
 fs.writeFileSync(path.resolve(__dirname, '../../../analysis/builder/hand', id + '.js'), 'module.exports = ' + JSON.stringify(spec, null, 1) + ';\n');
 const r = I.search(spec, { tries: 1, debug: true });
 if (r.ok) { fs.writeFileSync(path.resolve(__dirname, '../../../analysis/builder/hand', id + '.board.json'), JSON.stringify({ spec: r.spec, design: r.design, offers: r.offers }, null, 1)); console.log('OK', id, JSON.stringify(specials), '|', r.report.split('\n').filter(l => /clock |without/.test(l)).join(' | ')); }
