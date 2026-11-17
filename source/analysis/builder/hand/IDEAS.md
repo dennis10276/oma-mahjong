@@ -113,3 +113,27 @@ levels 460-462); stored solutions win in the real game.
 | N1 | The circle | "take N to melt the wall": the wall F's only melters are N and M, and M is boxed in between F and the clock - F needs M, M needs F. The short way can never open; go round | 3001 Alcove (open left middle so nothing else touches F) | clock 8 (min 7); test 'loop': no win via the left at any length; N first loses |
 | N2 | Break the circle | after N1, "the loop is closed, go round": round fills the tray. F has a third melter, V, straight above it in the next row (ice reaches the row above, sides do not): A, V, N melt F | 3002 Terrace (row A V B above the loop) | clock 9 (min 8); route A V N F M S P C; going round (S, R) loses |
 | N3 | The icicle | "keep room after the clock" (F6's lesson) / "take the short way": a frozen column hangs under the clock, each tile melted only by the one above; its pictures are R, R2 and the clock's twin. The right way arrives full and the icicle melts into the tray; the short way's tiles have buried twins | 3003 Icicle | clockN 8; tail_check: all 124 short-way orders lost after the clock, right way alive; only X7/X9 are side-by-side twins (the right way needs them to pair); real game: short way stuck with no safe move, right way: the icicle's first tile matches |
+
+## Buried chains (Dennis 2026-11-17 after lab-three "Soo easy": "Make all the new ideas like that. then a lab"; and: "good levels
+## are levels where many different wrong paths looks good for a long time. Then to realize AHA i missed this detail several times")
+Every new idea rebuilt as a 60-70 tile board on its own hand-made layout (custom_layouts.js, ids 3101-3112; no straight stacks,
+every upper corner supported), the idea's key tiles hidden under covers until you have committed, a lock/key chain on top, the
+clock 11-20. Proven by hand.js; wrong paths measured by hope.js (points of no return whose false hope lasts 5+ moves) and the best
+of several seeds kept (best_of.js); after-clock traps also by tail_check (now inside idea_search: `tailLose`). Lab port 8294
+(scratchpad lab-buried, levels 470-480) with NO titles or explanations on the cards (NOHINT=1 in hand_lab.js) - the earlier labs
+showed the trap's name and solution above the Play button. All 11 stored solutions win in the real game.
+| lv | board | idea | layout | clock | specials | long wrong paths |
+|---|---|---|---|---|---|---|
+| 470 | b1 | The circle | 3101 Keep | 18 | ice, gold lock+keys | 6 |
+| 471 | b2 | Break the circle | 3102 Lattice | 14 | ice, gold lock+keys | 3 |
+| 472 | b3 | The icicle (short way dies after the clock) | 3103 Drip | 16 | ice, gold lock+keys | tail |
+| 473 | b4 | Keys before the lid | 3104 Well | 19 | gold lock+keys | 7 |
+| 474 | b5 | Melt before the lid | 3105 Ridge | 20 | ice, silver lock+keys | 6 |
+| 475 | b6 | The clock is face-down | 3106 Hill | 20 | face-down clock, gold lock+keys | 7 |
+| 476 | b7 | Trust the full tray (spare 0) | 3107 Steps | 15 | gold lock+keys | 14 |
+| 477 | b8 | The clock closes the pair | 3108 Gate | 11 | silver lock+keys | 3 |
+| 478 | b10 | Don't rush the clock (short way dies after) | 3110 Pier | 19 | gold lock+keys | tail |
+| 479 | b11 | The twin is beside the clock | 3111 Arch | 16 | gold lock+keys | 4 |
+| 480 | b12 | The bridge melts from both ends | 3112 Span | 18 | ice, silver lock+keys | 5 |
+Not done: b9 "The escape is too slow" (layout 3109 Shelf) - no picture set where the short way needs relief, one plain tile gives
+it and the face-down escape is too slow; three redesigns failed (the short way is only 9 moves, too few tiles to hold the pressure).

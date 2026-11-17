@@ -186,7 +186,8 @@ function prove(spec, o = {}) {
   for (const b of spec.baits || []) {
     // at: a goal number (the position before that goal's dig), or 'auto': the first moment on the route all its tiles are free
     const freeAt = t => states[t] && b.take.every(i => E.legal(C.free, states[t]).includes(i));
-    const at = b.at === 'auto' ? states.findIndex((_, t) => freeAt(t)) : spec.goalAt[b.at - 1];
+    // 'full': the first moment on the route with two or more tiles waiting (the cautious player clears the tray there)
+    const at = b.at === 'auto' ? states.findIndex((_, t) => freeAt(t)) : b.at === 'full' ? states.findIndex((st, t) => st && st.tray.length >= 2 && freeAt(t)) : spec.goalAt[b.at - 1];
     if (at < 0 || !freeAt(at)) { errors.push('bait ' + b.take.join('+') + ' never free'); out.push('bait ' + b.take.join('+') + ': not free then'); continue; }
     const st = states[at], p = D.priceMove(C, st, { take: b.take }, { nShipMax: d.clock.n + 6, nodes: 1500000, w });
     const bites = p.result === 'lose' || (p.need != null && p.need > d.clock.n);

@@ -13,7 +13,8 @@
      ice, locks, keys, locks2, keys2, down: specials and face-down tiles (orders.js / hand.js meaning),
      tests: [{ name, expect: 'win' | 'none', tray0: ['label'...], peek: bool, tiles: [ids] (default block), firsts: max,
                                      trayMax: n (a win leaves at most n waiting after the clock) }],
-     hand: { clock, clockN, spare, peek, peekNeeded, routeTest: test name, routeSuffix: [...], baits: [...], downTiles } }
+     hand: { clock, clockN, spare, peek, peekNeeded, routeTest: test name, routeSuffix: [...], baits: [...], downTiles },
+     tailLose: { tiles, limit } (optional: every order over these tiles that reaches the clock must be lost after it, tail_check.js) }
    A picture set passes when every test gets its expected result. Then each block tile whose twin is outside the block gets a deep
    twin (a tile outside the block that lies under 2+ tiles), the route is a winning order of `routeTest` (+ suffix), and hand.js
    proves the whole board (exact clock, stored solution, the baits). Writes analysis/builder/hand/<id>.board.json. */
@@ -51,7 +52,9 @@ function search(idea, o = {}) {
     const groups = {}; for (const [i, f] of Object.entries(faces)) (groups[f] = groups[f] || []).push(+i);
     // deep twins: under 2+ tiles, none of them in the block (the dig must never uncover a twin and release a waiting tile)
     const over = i => { const s2 = new Set(), st = [i]; while (st.length) for (const j of g.nb.above[st.pop()]) if (!s2.has(j)) { s2.add(j); st.push(j); } return s2; };
-    const deep = [...Array(n).keys()].filter(i => !block.has(i) && depth(i) >= 2 && fixed[i] == null && i !== idea.hand.clock && !(idea.hand.downTiles || []).includes(i) && ![...over(i)].some(j => block.has(j) || j === idea.target)).sort(() => rnd() - .5);
+    const deepOk = (i, dmin) => !block.has(i) && depth(i) >= dmin && fixed[i] == null && i !== idea.hand.clock && !(idea.hand.downTiles || []).includes(i) && ![...over(i)].some(j => block.has(j) || j === idea.target);
+    // under 2+ tiles first, then under 1 (small layouts run out of deep spots)
+    const cand = [...Array(n).keys()], deep = [...cand.filter(i => deepOk(i, 2)).sort(() => rnd() - .5), ...cand.filter(i => deepOk(i, 1) && depth(i) < 2).sort(() => rnd() - .5)];
     const pairs = {}; let d = 0, short = false;
     for (const [f, ids] of Object.entries(groups)) {
       if (ids.length % 2) { if (d >= deep.length) { short = true; break; } ids.push(deep[d++]); }
@@ -59,7 +62,8 @@ function search(idea, o = {}) {
     }
     if (short) { W('noDeepTwins'); continue; }
     const res = results[idea.hand.routeTest];
-    let route = [...res.wins[0].map(x => typeof x === 'string' ? x.slice(1, -1).split('+').map(Number) : x), ...(idea.hand.routeSuffix || [])], tail;
+    const len = w => w.reduce((m, x) => m + (typeof x === 'string' ? 2 : 1), 0), best = res.wins.slice().sort((p, q) => len(p) - len(q))[0];   // the shortest win found (the first can be long on big blocks)
+    let route = [...best.map(x => typeof x === 'string' ? x.slice(1, -1).split('+').map(Number) : x), ...(idea.hand.routeSuffix || [])], tail;
     // a second chain: the winning order runs past the clock (target after it): the route ends at the clock, the rest is the fixed tail
     const ck = route.findIndex(x => x === idea.hand.clock || (Array.isArray(x) && x.includes(idea.hand.clock)));
     if (idea.hand.secondChain && ck >= 0) { tail = route.slice(ck + 1); route = route.slice(0, ck + 1); }
@@ -67,6 +71,11 @@ function search(idea, o = {}) {
       ice: idea.ice, locks: idea.locks, keys: idea.keys, locks2: idea.locks2, keys2: idea.keys2, digPairs: .3, pressure: idea.hand.pressure ?? 1.6 };
     const p = H.prove(spec, { seed: o.seed, offersMs: 20000 });
     W(p.ok ? 'proved' : 'proveFail:' + (p.fail || p.errors[0]).replace(/\d+/g, '#').slice(0, 50));
+    if (p.ok && idea.tailLose) {   // tailLose: { tiles, limit } - every order over these tiles that takes the clock must be lost after it
+      const tc = require('./tail_check.js').check({ spec, design: p.design }, idea.tailLose.tiles, idea.tailLose.limit, { stopAtWinnable: true, budget: 5e5 });
+      if (!(tc.lost > 0 && !tc.won && !tc.unk)) { W('tailWinnable'); continue; }
+      W('tailLost');
+    }
     if (p.ok) return { ok: true, spec, design: p.design, offers: p.offers, report: p.report, why, tries: t + 1 };
     if (o.debug && p.report) { o.lastReport = p.report; o.lastSpec = spec; }
   }
