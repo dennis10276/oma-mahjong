@@ -41,15 +41,24 @@ if (kind === 'ice') {
   const lab = Object.keys(s.pairs).find(k => s.pairs[k].includes(T)); for (const i of s.pairs[lab]) delete fixed[i]; fixed[T] = fixed[C] = 'clockTwin';
   specials = { freeClock: C };
   title = "Don't take the clock: its twin needs the escape"; idea = 'The clock is free, but its twin lies at the bottom of a dig that fills the tray and needs a face-down escape. Taken first, the clock takes the slot that plan needs.';
-} else throw Error('kind: ice | silver | gold | freeclock');
-const fc = specials.freeClock; delete specials.freeClock;
+} else if (kind === 'silvertail') {
+  // a second chain after the clock: two tiles the clock releases (free only once the dig and the clock are gone) - S2 a silver key,
+  // G silver-locked; the other silver key S1 lies free from the start. Taking S1 early makes it wait through the whole first chain.
+  const gone = new Uint8Array(tiles.length).fill(1); for (const i of [...s.route.flat(), s.clock]) gone[i] = 0;
+  const after = new Set(E.legal(g, { alive: gone, tray: [], moves: 0, clockTaken: true }).filter(x => typeof x === 'number'));
+  const rel = [...after].filter(i => !free0.has(i) && !used.has(i)); const S1 = spare.find(i => !rel.includes(i));
+  if (rel.length < 2 || S1 == null) throw Error('the clock releases fewer than two tiles');
+  const [S2, G] = rel; fixed[S1] = fixed[S2] = 'silver'; extra = [S1, S2, G]; specials = { locks2: [G], keys2: [S1, S2], tailGoal: G };
+  title = 'The silver key belongs to the second half'; idea = 'After the clock a silver chain begins; one silver key is free from the start, the other appears only when the clock is gone. Taken early, the free key waits through the whole first chain.';
+} else throw Error('kind: ice | silver | gold | freeclock | silvertail');
+const fc = specials.freeClock; delete specials.freeClock; const tg = specials.tailGoal; delete specials.tailGoal;
 // keep the base board's own specials (ice, gold and silver locks) under the new ones
 for (const k of ['ice', 'locks', 'keys', 'locks2', 'keys2']) if (s[k] && specials[k] == null) specials[k] = s[k];
-const spec = { id, title, idea, layout: lay, block: [...new Set([...s.route.flat().filter(i => i !== s.clock), ...extra])], target: s.clock,
+const spec = { id, title, idea, layout: lay, block: [...new Set([...s.route.flat().filter(i => tg != null || i !== s.clock), ...extra])].filter(i => i !== tg), target: tg != null ? tg : s.clock,
   limit: s.route.flat().length + extra.length, fixed, free: [], down: s.downTiles, ...specials,
-  tests: [{ name: 'dig', expect: 'win', peekForced: true }, ...(fc != null ? [{ name: 'clockFirst', expect: 'none', gone: [fc], tray0: ['clockTwin'] }] : [])],
+  tests: [{ name: 'dig', expect: 'win', peekForced: tg == null }, ...(tg != null ? [{ name: 'silverFirst', expect: 'none', gone: [extra[0]], tray0: ['silver'] }] : []), ...(fc != null ? [{ name: 'clockFirst', expect: 'none', gone: [fc], tray0: ['clockTwin'] }] : [])],
   hand: fc != null ? { clock: fc, clockN: s.route.flat().length + 2, peek: true, spare: 1, routeTest: 'dig', routeSuffix: [fc], downTiles: s.downTiles, baits: [{ at: 1, take: [fc], why: 'take the free clock first' }] }
-    : { clock: s.clock, peek: true, peekNeeded: true, spare: 1, routeTest: 'dig', downTiles: s.downTiles, baits: [] } };
+    : { clock: s.clock, peek: true, peekNeeded: true, spare: 1, routeTest: 'dig', downTiles: s.downTiles, ...(tg != null ? { secondChain: true, baits: [{ at: 1, take: [extra[0]], why: 'take the free silver key now' }] } : { baits: [] }) } };
 fs.writeFileSync(path.resolve(__dirname, '../../../analysis/builder/hand', id + '.js'), 'module.exports = ' + JSON.stringify(spec, null, 1) + ';\n');
 const r = I.search(spec, { tries: 1, debug: true });
 if (r.ok) { fs.writeFileSync(path.resolve(__dirname, '../../../analysis/builder/hand', id + '.board.json'), JSON.stringify({ spec: r.spec, design: r.design, offers: r.offers }, null, 1)); console.log('OK', id, JSON.stringify(specials), '|', r.report.split('\n').filter(l => /clock |without/.test(l)).join(' | ')); }
