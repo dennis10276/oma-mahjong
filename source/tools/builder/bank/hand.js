@@ -23,6 +23,9 @@ function layouts() {
   for (const [f, o] of [['layouts-6wide.json', 1000], ['layouts-6wide-extra-72plus.json', 2000]]) {
     const j = JSON.parse(fs.readFileSync(path.join(DATA, f), 'utf8')); (Array.isArray(j) ? j : j.layouts).forEach((l, i) => { L[o + i] = l; });
   }
+  // hand-made layouts for single traps (Dennis 2026-11-17: "You may change the layouts to the needs of the trap"): ids 3000+
+  const cust = path.resolve(__dirname, '../../../analysis/builder/hand/layouts-custom.json');
+  if (fs.existsSync(cust)) for (const [id, l] of Object.entries(JSON.parse(fs.readFileSync(cust, 'utf8')))) L[id] = l;
   return L;
 }
 function show(tiles, mark = {}) {

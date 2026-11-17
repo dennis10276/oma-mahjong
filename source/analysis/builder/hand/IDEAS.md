@@ -100,3 +100,16 @@ jokers are gone after level 50 by the rules (jokersGoneFrom) - Dennis's call. To
 clock for every order over some tiles), orders.js/idea_search.js `trayMax` (a win must leave room after the clock).
 Note: F2/F4-F6/F8/F9 all use layout 1011's bridge (an H with two towers): spread them out or move them to other layouts before a
 release range.
+
+## Three ideas on hand-made layouts (Dennis 2026-11-17: "Use more variety of layouts and give me 3 new ideas you really thought
+## about. You may change the layouts to the needs of the trap")
+How they were found: a trap is a wrong set of tiles, a wrong order, wasted moves, or stuck after the clock - and until now always
+because of slots or clock moves. The one reason never used: the short way is *impossible* (a loop), not just expensive. N1/N2 build
+that; N3 gives the clock a second job (it thaws). Layouts in layouts-custom.json (custom_layouts.js writes and checks them; hand.js
+loads ids 3000+); every upper tile half off the ones below (no straight stacks, towers 0). Lab port 8293 (scratchpad lab-three,
+levels 460-462); stored solutions win in the real game.
+| # | idea | the wrong idea / why | layout | proof |
+|---|---|---|---|---|
+| N1 | The circle | "take N to melt the wall": the wall F's only melters are N and M, and M is boxed in between F and the clock - F needs M, M needs F. The short way can never open; go round | 3001 Alcove (open left middle so nothing else touches F) | clock 8 (min 7); test 'loop': no win via the left at any length; N first loses |
+| N2 | Break the circle | after N1, "the loop is closed, go round": round fills the tray. F has a third melter, V, straight above it in the next row (ice reaches the row above, sides do not): A, V, N melt F | 3002 Terrace (row A V B above the loop) | clock 9 (min 8); route A V N F M S P C; going round (S, R) loses |
+| N3 | The icicle | "keep room after the clock" (F6's lesson) / "take the short way": a frozen column hangs under the clock, each tile melted only by the one above; its pictures are R, R2 and the clock's twin. The right way arrives full and the icicle melts into the tray; the short way's tiles have buried twins | 3003 Icicle | clockN 8; tail_check: all 40 short-way orders lost after the clock, right way alive; real game: short way stuck with no safe move, right way: the icicle's first tile matches |
