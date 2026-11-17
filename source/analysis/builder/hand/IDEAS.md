@@ -2,7 +2,7 @@
 
 Each idea is a hidden reason why a natural, goal-directed move wastes clock moves or tray slots, or a hidden resource that saves
 them (slot accounting, NOTES.md). A row is DONE when a hand board is proven (hand.js) - file `<id>.js` / `<id>.board.json` here.
-Earlier "too easy" boards (lab 2026-11-16) count as ideas but need a harder board before they go to a level.
+Earlier "too easy" boards (lab 2026-11-16) count as ideas but need a harder board before they go to i17 | DONE || DONE || DONE || DONE || DONE (the escape lies under a pair: uncover it while a slot is free) |level.
 
 | # | idea | hidden link | board | status |
 |---|---|---|---|---|
@@ -17,12 +17,21 @@ Earlier "too easy" boards (lab 2026-11-16) count as ideas but need a harder boar
 | 9 | The clock goes to the tray too | at the end the tray is full: the clock's face-down twin | - | open (full-board forcing) |
 | 10 | The face-down pair melts | the face-down pair you must use also melts the frozen clock | - | open |
 | 11 | Both are face-down | the needed tile and its twin are both face-down | - | open |
-| 12 | Clear the pair while you have a slot | at a full tray a visible pair is dead (its first tile is the 4th) | - | open |
+| 12 | Uncover the escape first | the face-down escape lies under a tile whose twin is far: a visible pair needs a free slot | - | open |
 | 13 | The silver keys melt the gold key | double duty across the colours | - | open |
 | 14 | Crossing | the visible silver key carries a gold lock: dig gold first | - | open |
 | 15 | The roof melts it, the outside costs slots | outside melters are singles that fill the tray late | - | open |
 | 16 | The long way is the only way | one side of the clock is short but slot-hungry, the other long but pairs | - | open |
 | 17 | The twin is under the lock | the clock's twin lies under a locked tile: the free clock waits for the keys | - | open |
-| 18 | Mixed keys | a gold and a silver key share a picture: match across the colours | - | open |
+| 18 | (dropped) Mixed keys | the game matches equal pictures by itself: no wrong move exists | - | dropped |
 | 19 | Which face-down pair | at a full tray two face-down pairs exist; only one opens the way (spare 1) | - | open |
 | 20 | The melter is the clock's roof | the frozen key melts only from the clock's roof: dig the roof early | - | open |
+| 21 | The clock melts the silver key | after the clock: the clock was the last melter of a silver key (second chain) | - | open |
+| 22 | The clock's twin is behind silver | the free clock waits; its twin lies under a silver-locked tile | i22 | DONE |
+| 23 | The clock's twin is frozen | the free clock waits; its twin is frozen 3 | i23 | DONE |
+| 30 | Melt the escape first | the face-down escape is frozen; melting it is a visible pair (needs a free slot) | i30 | running |
+| 31 | Unlock the escape first | the face-down escape is silver-locked; the silver keys are a visible pair | i31 | running |
+| 34 | You don't need the keys | the clock's short side is gold-locked; the keys route is shorter in tiles but all of them wait | i34 | DONE |
+
+Rules found on the way (NOTES.md): parking a visible twin is never forced; tiles never become unavailable again, so "do it
+while you can" exists only for moves that need a free slot for a moment (a visible pair at a full tray) or for the clock's moves.
