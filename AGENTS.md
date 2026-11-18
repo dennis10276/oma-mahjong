@@ -40,6 +40,12 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 
 ## Levels and difficulty (decisions by Dennis, 2026-10-15)
 
+- Release 1.71 approved by Dennis on 2026-11-18: "You may release 1.71 with these new reshaped levels".
+  Adds the validated authored boards 301-349, reshaped with their clock limits, traps, special effects and
+  prerequisites preserved. Ordinary boards fit at least 58 px on the 392 x 730 reference phone; tenth levels
+  use the approved smaller-tile exception. Levels through 300 and their save revisions stay unchanged.
+  New boards and repeats use revision 12; repeats now span 150-349. No authored 350+ boards are included.
+  Evidence: `source/analysis/refit-301-349.json`, builder `9799afaf`, candidate `6bdf6ddf`.
 - Release 1.70 (Dennis, 2026-11-16: "is codex done with 251-299? if so, release 1.70 for the new levels 251-299 with wip/top-tools"):
   levels 251-299 brought to about 60 px like 100-249 (every ordinary level at least 58 px on the 392 x 730 reference, at most
   6.5 wide and 8 rows, no tile straight on one tile), each with the same trap (exact clock route and spare, special effects and
