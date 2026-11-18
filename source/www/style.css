@@ -647,7 +647,17 @@ body.sunny .how-tray .hm, body.sunny .lesson-slot .lesson-tile { background: lin
 .silver { filter: grayscale(1) brightness(1.35); }
 .tile .ob-open.ob-silver { filter: grayscale(1) brightness(1.35) drop-shadow(0 2px 3px rgba(0,0,0,.45)); }
 /* the alarm clock: a badge with the moves left (red and pulsing for the last 5) */
-#board .tile.clocked { box-shadow: 0 0 0 3px #ff7a2f, 0 0 12px 3px rgba(255,122,47,.6); }
+#board .tile.clocked { box-shadow: inset 0 0 0 3px #ff4a1c, 0 0 0 3px #ff5a24, 0 0 12px 3px rgba(255,80,30,.6); }
+/* clocks ON the tile: top-right and bottom-left (key sits top-left, lock/ice bottom-right) and a light red wash, so any visible part says clock */
+.tile .ckm { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 3; background: linear-gradient(160deg, rgba(255,70,30,.10), rgba(255,70,30,.22)); }
+.tile .ckm::before, .tile .ckm::after { content: '⏰'; position: absolute; line-height: 1; font-size: calc(var(--fs, 30px) * .54); filter: drop-shadow(0 1px 2px rgba(120,20,0,.55)); }
+.tile .ckm::before { right: -5%; top: -6%; }
+.tile .ckm::after { left: -5%; bottom: -5%; }
+/* a tap on the clock button: the clock tile comes up over the pile and flashes red */
+#board .tile.cklit { z-index: 1000002 !important; animation: ckTileLit .4s ease-in-out 5 alternate; }
+#board .tile.cklit .ckm { background: rgba(255,40,20,.35); }
+@keyframes ckTileLit { from { transform: scale(1); box-shadow: inset 0 0 0 4px #ff2a1a, 0 0 0 4px #ff2a1a, 0 0 14px 6px rgba(255,30,10,.75); }
+  to { transform: scale(1.08); box-shadow: inset 0 0 0 6px #ff1a0a, 0 0 0 7px #ff2a1a, 0 0 34px 16px rgba(255,20,0,.95); } }
 #clockBadge { display: flex; align-items: center; gap: 2px; padding: 3px 9px 3px 6px; font-size: 17px; background: #fff3e6; border: 2px solid #ff7a2f; color: #b23c00; box-shadow: 0 2px 4px rgba(0,0,0,.3); line-height: 1.15; cursor: pointer; font-family: inherit; }
 #clockBadge.lit { animation: ckLit 1.5s ease; }
 @keyframes ckLit { 0%, 100% { box-shadow: 0 2px 4px rgba(0,0,0,.3); } 20%, 60% { box-shadow: 0 0 0 4px #ffd27a, 0 0 18px 6px rgba(255,170,60,.9); background: #ffe2b8; } }

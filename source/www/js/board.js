@@ -188,7 +188,14 @@ function decorate(i) {
 function clockBadge() {
   let ck = $('#clockBadge');
   const on = clockOn(), el = on && G.tiles[G.clock.i].el;
-  G.tiles.forEach((t, k) => t.el && t.el.classList.toggle('clocked', on && k === G.clock.i));
+  // the clock tile carries clocks on the tile itself, in the two corners the key and lock signs leave free, and a red rim all
+  // round, so even a corner of it peeking out says "clock" (Dennis 2026-11-17: "maybe still put a clock but ON the tile")
+  G.tiles.forEach((t, k) => {
+    if (!t.el) return;
+    const me = on && k === G.clock.i, m = t.el.querySelector('.ckm');
+    t.el.classList.toggle('clocked', me);
+    if (me && !m) t.el.insertAdjacentHTML('beforeend', '<div class="ckm"></div>'); else if (!me && m) m.remove();
+  });
   if (!on || !el) { if (ck) ck.remove(); return; }
   if (!ck) {
     ck = document.createElement('button'); ck.id = 'clockBadge'; ck.className = 'chip ck'; ck.setAttribute('aria-label', 'clock');
@@ -770,8 +777,9 @@ function showClock() {
   if (!G || !G.clock || !G.alive[G.clock.i]) return;
   const over = new Set(), todo = [G.clock.i];
   while (todo.length) for (const j of G.nb.above[todo.pop()]) if (G.alive[j] && !over.has(j)) { over.add(j); todo.push(j); }
-  over.forEach(j => replay(G.tiles[j].el, 'xray', 1500));
-  replay(G.tiles[G.clock.i].el, 'obhint', 1500);
+  over.forEach(j => replay(G.tiles[j].el, 'xray', 2000));
+  // the clock tile comes up above the pile and flashes red (Dennis 2026-11-17: "the tile should light up in red more")
+  replay(G.tiles[G.clock.i].el, 'cklit', 2000);
 }
 const clockLeft = () => G && G.clock ? Math.max(0, G.clock.n - G.mv) : 0;
 function clockMove(i) {

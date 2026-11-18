@@ -8,7 +8,7 @@ module.exports = [
     const before = await p.evaluate(() => ({ badge: !!document.getElementById('clockBadge'), on: G.nb.above[G.clock.i].filter(j => G.alive[j]).length }));
     t.ok(before.badge, 'the clock has its badge');
     await p.click('#clockBadge'); await sleep(150);
-    const r = await p.evaluate(() => ({ hint: G.tiles[G.clock.i].el.classList.contains('obhint'), xray: G.nb.above[G.clock.i].filter(j => G.alive[j] && G.tiles[j].el.classList.contains('xray')).length, mv: G.mv }));
-    t.eq([r.hint, r.xray, r.mv], [true, before.on, 0], 'clock wiggles, every tile on it is see-through, no move used');
+    const r = await p.evaluate(() => ({ hint: G.tiles[G.clock.i].el.classList.contains('cklit'), mark: !!G.tiles[G.clock.i].el.querySelector('.ckm'), xray: G.nb.above[G.clock.i].filter(j => G.alive[j] && G.tiles[j].el.classList.contains('xray')).length, mv: G.mv }));
+    t.eq([r.hint, r.mark, r.xray, r.mv], [true, true, before.on, 0], 'clock tile lights up red with its clock signs, every tile on it is see-through, no move used');
   } },
 ];
