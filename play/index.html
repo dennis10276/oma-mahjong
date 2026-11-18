@@ -11,7 +11,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Mahjong">
-<link rel="stylesheet" href="v/1.70/style.css" id="css">
+<link rel="stylesheet" href="v/1.71/style.css" id="css">
 <script>
   // if anything fails to load, say so instead of showing a dead screen
   window.addEventListener('error', function (e) {
@@ -155,7 +155,7 @@
    and keeps them on the phone. On start we use that downloaded version when it is newer
    than the one built into the app; if it does not start properly, we fall back at once. */
 (function () {
-  var BUILT = '1.70', KEY = 'omamj.code', FILES = ['v/1.70/tiles.js', 'v/1.70/audio.js', 'v/1.70/layouts.js', 'v/1.70/hard.js', 'v/1.70/levels-hard.js', 'v/1.70/levels-early.js', 'v/1.70/coach-clips.js', 'v/1.70/js/rules.js', 'v/1.70/js/lang.js', 'v/1.70/js/core.js', 'v/1.70/js/fx.js', 'v/1.70/js/update.js', 'v/1.70/js/screens.js', 'v/1.70/js/board.js', 'v/1.70/js/help.js', 'v/1.70/js/specials.js', 'v/1.70/js/coach.js', 'v/1.70/js/pro.js', 'v/1.70/js/rewards.js', 'v/1.70/js/telemetry.js', 'v/1.70/js/social.js', 'v/1.70/js/hearts.js', 'v/1.70/js/stories.js', 'v/1.70/js/village.js', 'v/1.70/js/win.js', 'v/1.70/js/main.js'];
+  var BUILT = '1.71', KEY = 'omamj.code', FILES = ['v/1.71/tiles.js', 'v/1.71/audio.js', 'v/1.71/layouts.js', 'v/1.71/hard.js', 'v/1.71/levels-hard.js', 'v/1.71/levels-early.js', 'v/1.71/coach-clips.js', 'v/1.71/js/rules.js', 'v/1.71/js/lang.js', 'v/1.71/js/core.js', 'v/1.71/js/fx.js', 'v/1.71/js/update.js', 'v/1.71/js/screens.js', 'v/1.71/js/board.js', 'v/1.71/js/help.js', 'v/1.71/js/specials.js', 'v/1.71/js/coach.js', 'v/1.71/js/pro.js', 'v/1.71/js/rewards.js', 'v/1.71/js/telemetry.js', 'v/1.71/js/social.js', 'v/1.71/js/hearts.js', 'v/1.71/js/stories.js', 'v/1.71/js/village.js', 'v/1.71/js/win.js', 'v/1.71/js/main.js'];
   function newer(a, b) { a = String(a).split('.'); b = String(b).split('.'); for (var i = 0; i < Math.max(a.length, b.length); i++) { var x = +a[i] || 0, y = +b[i] || 0; if (x !== y) return x > y; } return false; }
   function builtIn() { FILES.forEach(function (f) { var s = document.createElement('script'); s.src = f; s.async = false; document.body.appendChild(s); }); }
   var c = null;

@@ -511,6 +511,8 @@ const Hard = (() => {
   // Reordering 92+ must not discard a saved game on an unchanged earlier board.
   const designVersion = level => {
     const T = table();
+    // Extending the repeat span changes every board past the authored table.
+    if (T && Number.isInteger(T.repeatVersion) && level > T.from + T.levels.length - 1) return T.repeatVersion;
     // Refits invalidate only their own saved layouts, including mirrored
     // repetitions. Unchanged boards keep their existing save generation.
     if (T && T.boardVersions) {

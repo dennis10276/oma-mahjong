@@ -511,6 +511,18 @@ const Hard = (() => {
   // Reordering 92+ must not discard a saved game on an unchanged earlier board.
   const designVersion = level => {
     const T = table();
+    // Extending the repeat span changes every board past the authored table.
+    if (T && Number.isInteger(T.repeatVersion) && level > T.from + T.levels.length - 1) return T.repeatVersion;
+    // Refits invalidate only their own saved layouts, including mirrored
+    // repetitions. Unchanged boards keep their existing save generation.
+    if (T && T.boardVersions) {
+      const last = T.from + T.levels.length - 1;
+      const base = level > last ? T.cycleFrom + (level - T.cycleFrom) % (last - T.cycleFrom + 1) : level;
+      if (Number.isInteger(T.boardVersions[base])) return T.boardVersions[base];
+    }
+    // Levels from designedFrom on were replaced by hand-designed boards (1.69: 250 and up, which also changes every repeated
+    // level past the end of the table): a game saved on the old board of such a level starts again.
+    if (T && T.designedFrom && level >= T.designedFrom) return T.designedVersion;
     return T && T.reorderFrom && level < T.reorderFrom ? T.previousVersion : GENV;
   };
   // Packed chances travel with each board, including their original calibration model.
