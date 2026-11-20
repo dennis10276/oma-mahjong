@@ -118,6 +118,12 @@ Object.assign(defs, {
   // piles open S (silver-locked), the right side's top.
   3112: { name: 'Span', named: N3112, rest: minus([...pile(0, [2, 6, 8]), [0, 4, 0], [2, 4, 0], [8, 4, 0], [10, 4, 0], [1, 4, 1], [9, 4, 1], [0, 8, 0], [2, 8, 0], [8, 8, 0], [10, 8, 0], [1, 8, 1], [9, 8, 1], ...pile(10, [2, 4, 8]), [5, 1, 1], [5, 11, 1]], N3112) },   // the piles' middle roof tiles are plain here
 });
+// 3113 "Dale" - One move late, in a pair (Dennis 2026-11-20: the clock as half of a face-down pair may be one move past its number,
+// "Allow it as a trick"). Hill mirrored (the notch on the left): the clock C face-up deep on the floor; when it goes, its left
+// neighbour R loses its last cover and frees. The clock's twin T is face-down in the far corner (top left).
+const mirror = t => [10 - t[0], t[1], t[2]];
+defs[3113] = { name: 'Dale', named: { C: [6, 6, 0], R: [4, 6, 0], T: [0, 0, 0], LK: [5, 5, 1], K1: [9, 3, 1], K2: [1, 9, 1] },
+  rest: defs[3106].rest.map(mirror).filter(t => !['6,6,0', '4,6,0', '0,0,0', '5,5,1', '9,3,1', '1,9,1'].includes(t.join(','))) };
 const out = {}, report = [];
 for (const [id, d] of Object.entries(defs)) {
   const tiles = [...d.rest], idx = {};

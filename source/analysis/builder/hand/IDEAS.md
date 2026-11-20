@@ -141,3 +141,6 @@ it and the face-down escape is too slow; three redesigns failed (the short way i
 **Thick ice (2026-11-20, MECHANICS.md):** the game used to show ice 3+ as ❄️❄️ and say "2". Dennis: "Show the real number" -
 wip/second-key 6696c25c shows ❄️3 / ❄️4 and the count in the texts. Boards b1, b2, b5, b12, f10, i10, i13, i23, i43, i47 (ice 3-5)
 are fair only in a lab built from that commit.
+
+## One move late, in a pair (Dennis 2026-11-20: the clock in a face-down pair may end one move past its number, "Allow it as a trick")
+| 481 (chain 12 of lab-buried) | b13 | layout 3113 "Dale" (Hill mirrored) | clock 18, gold lock+keys, face-down twin in the far corner | at the pair 17 moves made, the badge says 1 left, the tray is full: the clock alone is a 4th tile, clock + face-down twin look like 2 moves for 1 - but they are one action. Without face-down pairs 24; the old validator rule calls the stored solution too late, the new one in time (late_clock.js). Wins in the real game. |
