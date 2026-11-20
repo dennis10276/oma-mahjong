@@ -33,6 +33,8 @@ http.createServer((q, r) => {
     return;
   }
   if (p === '/') p = '/lab.html';
+  // /phone: the lab in a phone-sized frame (same origin, so ratings and taps save as usual)
+  if (p === '/phone' || p === '/phone.html') { r.writeHead(200, { 'Content-Type': T['.html'], 'Cache-Control': 'no-store' }); return fs.createReadStream(path.join(__dirname, 'phone.html')).pipe(r); }
   const f = path.join(dir, path.normalize(p));
   if (!f.startsWith(dir) || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { r.writeHead(404); return r.end(); }
   const ext = path.extname(f);

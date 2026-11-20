@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lab on a phone</title>
+<!-- The lab inside a phone-sized frame (Dennis 2026-11-20 "play labs on the same view on my screen as on the phone").
+     Same origin as lab.html, so ratings and taps save exactly as before. Served by lab_server.js at /phone. -->
+<style>
+ :root { --bg: #1d1f24; --fg: #ddd; --btn: #2e323a; --on: #4b7bd8; }
+ html, body { margin: 0; height: 100%; background: var(--bg); color: var(--fg); font: 14px system-ui, sans-serif; overflow: hidden; }
+ #bar { position: fixed; top: 0; left: 0; right: 0; height: 40px; display: flex; gap: 6px; align-items: center; justify-content: center; }
+ #bar button { background: var(--btn); color: var(--fg); border: 0; border-radius: 6px; padding: 6px 10px; cursor: pointer; font: inherit; }
+ #bar button.on { background: var(--on); color: #fff; }
+ #stage { position: absolute; top: 44px; left: 0; right: 0; bottom: 8px; display: flex; justify-content: center; align-items: flex-start; }
+ #phone { transform-origin: top center; border: 10px solid #000; border-radius: 34px; overflow: hidden; box-shadow: 0 8px 40px #0008; background: #000; }
+ #phone iframe { display: block; border: 0; }
+</style></head><body>
+<div id="bar"></div>
+<div id="stage"><div id="phone"><iframe id="f" src="lab.html"></iframe></div></div>
+<script>
+const SIZES = [['Small 360×780', 360, 780], ['Normal 393×852', 393, 852], ['Big 412×915', 412, 915], ['Old 375×667', 375, 667]];
+let pick = 1; try { const v = localStorage.getItem('omamj.lab.phone'); if (v !== null && SIZES[+v]) pick = +v; } catch (e) {}
+const bar = document.getElementById('bar'), ph = document.getElementById('phone'), f = document.getElementById('f');
+SIZES.forEach(([t], i) => { const b = document.createElement('button'); b.textContent = t; b.onclick = () => { pick = i; try { localStorage.setItem('omamj.lab.phone', i); } catch (e) {} fit(); }; bar.appendChild(b); });
+function fit() {
+  const [, w, h] = SIZES[pick]; f.width = w; f.height = h;
+  [...bar.children].forEach((b, i) => b.classList.toggle('on', i === pick));
+  // shrink the whole phone to fit the window, never enlarge (the picture stays as sharp as the phone's)
+  const s = Math.min(1, (innerHeight - 52) / (h + 20), (innerWidth - 16) / (w + 20));
+  ph.style.transform = s < 1 ? `scale(${s})` : '';
+}
+addEventListener('resize', fit); fit();
+</script>
+</body></html>
