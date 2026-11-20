@@ -1,3 +1,5 @@
+> Moved: the current rulebook is hub/rules/level-design.md (private repo oma-mahjong-hub). This file is kept as history.
+
 # Level design: facts and Dennis's decisions
 
 Read this before making or judging levels. These are settled. Do not ask Dennis again unless something here
