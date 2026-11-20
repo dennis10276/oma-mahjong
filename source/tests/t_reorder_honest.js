@@ -13,7 +13,7 @@ module.exports = [
     // from 250 the table holds hand-designed trap boards (1.69); the re-ordered boards that sat on 250-269 are retired
     const DESIGNED = now.designedFrom || Infinity, last = now.from + now.levels.length - 1;
     t.ok(now.levels.length >= before.levels.length, 'no level lost');
-    t.eq([now.designedFrom, now.designedVersion, H.designVersion(249), H.designVersion(250), H.designVersion(last + 1)], [250, 9, now.v, 9, 12], 'designed levels and every repeat past the table use their own saved-game generation');
+    t.eq([now.designedFrom, now.designedVersion, H.designVersion(249), H.designVersion(250), H.designVersion(last + 1)], [250, 9, now.v, 9, 13], 'designed levels and every repeat past the table use their own saved-game generation');
     t.eq(now.v, H.GENV, 'table and runtime generation agree');
     t.eq(report.moves.length, 178, 'all 92–269 boards covered');
     t.eq(new Set(report.moves.map(m => m.was)).size, 178, 'no reused source board');

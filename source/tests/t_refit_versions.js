@@ -8,7 +8,7 @@ module.exports=[{name:'gate 1: all ordinary boards fit; swaps are atomic and sav
  for(const row of manifest.unchangedRows){t.eq(hash(T.levels[row.level-T.from]),row.hash,'unchanged live row '+row.level);t.eq(H.designVersion(row.level),9,'unchanged save resumes '+row.level);}
  for(let n=250;n<=300;n++){const tiles=H.get(n).tiles,positions=new Set(tiles.map(p=>p.join(',')));t.ok(!tiles.some(([x,y,z])=>z>0&&positions.has([x,y,z-1].join(','))),'no straight tower '+n);if(n%10){const xs=tiles.map(p=>p[0]),ys=tiles.map(p=>p[1]);t.ok(tiles.length>=72&&tiles.length<=88&&tiles.length%2===0,'ordinary count '+n);t.ok(Math.max(...xs)-Math.min(...xs)+2<=13&&Math.max(...ys)-Math.min(...ys)+2<=16,'ordinary footprint '+n);}}
  for(const n of[250,270,290,300])t.eq(H.designVersion(n),9,'unchanged tenth revision '+n);for(const n of[260,262,277,280])t.eq(H.designVersion(n),11,'swapped revision '+n);for(const n of[91,92,249])t.eq(H.designVersion(n),n<92?7:8,'earlier save revision '+n);
- const last=T.from+T.levels.length-1;t.eq(last,349,'gate 2 table ends at 349');for(let n=last+1;n<=last+250;n++){const base=T.cycleFrom+(n-T.cycleFrom)%(last-T.cycleFrom+1);t.eq(H.designVersion(n),12,'repeat revision '+n);}
+ const last=T.from+T.levels.length-1;t.eq(last,349,'gate 2 table ends at 349');for(let n=last+1;n<=last+250;n++){const base=T.cycleFrom+(n-T.cycleFrom)%(last-T.cycleFrom+1);t.eq(H.designVersion(n),13,'repeat revision '+n);}
  }finally{global.HARD_LEVELS=previous;}
 }},{name:'gate 1: changed boards restart old saves; current and unchanged saves resume; progress stays',async run(t,{startLevel}){
  const p=await t.phone({state:{name:'Refit QA',pid:'test-refit-save',level:301,stars:{251:2,270:3},seenSp:{clock:true,clockMoves:true,ice:true,lock:true}}});

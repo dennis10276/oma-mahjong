@@ -40,6 +40,14 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 
 ## Levels and difficulty (decisions by Dennis, 2026-10-15)
 
+- Release 1.72 approved by Dennis on 2026-11-20: "release it but only 314 and up. Cause thats what I played already on live".
+  Repeated trap ideas get more tray pressure after the trap ("Before we said easy after trap when first time to see the idea
+  which I would like to keep. But I see repeated ideas but no increased tray pressure on them"): in 314-349 every level whose
+  ideas all appeared before gets 5 pressure parks after the clock (idea seen 1-2 times) or 8 (3+), measured with the builder's
+  feel.js expert. First appearances (315, 325) and everything through 313 are unchanged. Only pictures of tiles taken after the
+  clock changed: tiles, face-down tiles, specials, clocks and every picture on the route to the clock are identical to 1.71; each
+  board keeps its exact clock minimum, its strict witness and every losing move on the way to the clock. Changed boards (34) and
+  all repeats past 349 use save revision 13. Evidence: `source/analysis/repeat-pressure-314-349.json`, builder `4cb8d603`.
 - Release 1.71 approved by Dennis on 2026-11-18: "You may release 1.71 with these new reshaped levels".
   Adds the validated authored boards 301-349, reshaped with their clock limits, traps, special effects and
   prerequisites preserved. Ordinary boards fit at least 58 px on the 392 x 730 reference phone; tenth levels
