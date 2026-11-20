@@ -24,11 +24,11 @@ function sampleProcesses() {
   const ps = `
 $a = @{}; Get-Process node,python -ErrorAction SilentlyContinue | ForEach-Object { $a[$_.Id] = $_.CPU }
 Start-Sleep -Milliseconds 3000
-$cmd = @{}; Get-CimInstance Win32_Process -Filter "Name='node.exe' or Name='python.exe'" | ForEach-Object { $cmd[[int]$_.ProcessId] = $_.CommandLine }
+$cmd = @{}; $par = @{}; Get-CimInstance Win32_Process -Filter "Name='node.exe' or Name='python.exe'" | ForEach-Object { $cmd[[int]$_.ProcessId] = $_.CommandLine; $par[[int]$_.ProcessId] = [int]$_.ParentProcessId }
 $load = (Get-CimInstance Win32_Processor | Measure-Object LoadPercentage -Average).Average
 $rows = Get-Process node,python -ErrorAction SilentlyContinue | ForEach-Object {
   $before = $a[$_.Id]; if ($null -eq $before) { $before = 0 }
-  [pscustomobject]@{ pid = $_.Id; cores = [math]::Round(($_.CPU - $before) / 3, 2); cmd = [string]$cmd[$_.Id] }
+  [pscustomobject]@{ pid = $_.Id; ppid = $par[[int]$_.Id]; cores = [math]::Round(($_.CPU - $before) / 3, 2); cmd = [string]$cmd[$_.Id] }
 }
 @{ load = $load; procs = @($rows) } | ConvertTo-Json -Depth 4 -Compress`;
   const out = execFileSync('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command', ps], { encoding: 'utf8' });
@@ -74,13 +74,11 @@ function main() {
   if (otherCores > 1) reasons.push(`other node/python jobs use ${otherCores.toFixed(1)} cores`);
   if (logs.length) reasons.push(`recent logs: ${logs.map((l) => `${l.file} (${l.agoS}s ago)`).join(', ')}`);
   if (s.load > 60) reasons.push(`CPU load ${s.load}%`);
-  // Claude's heavy-job lock (heavy.js). Seen from another worktree it always means busy.
-  const lock = path.join(ROOT, 'cc-builder-loop', 'source', 'build', 'heavy.lock');
-  if (path.resolve(HERE) !== path.resolve(ROOT, 'cc-builder-loop') && fs.existsSync(lock)) {
-    let owner = '?';
-    try { owner = JSON.parse(fs.readFileSync(path.join(lock, 'owner.json'), 'utf8')).label; } catch { /* being written */ }
-    reasons.push(`Claude's heavy job is running (${owner})`);
-  }
+  // The shared core budget (heavy.js, 2026-11-13): busy only when every budgeted core is reserved.
+  try {
+    const H = require('./heavy.js'), resv = H.reservations(), used = resv.reduce((t, r) => t + r.cores, 0);
+    if (used >= H.BUDGET) reasons.push(`all ${H.BUDGET} budgeted cores are reserved (${resv.map(r => r.label + ':' + r.cores).join(', ')})`);
+  } catch (e) { /* older checkout */ }
   const verdict = { busy: reasons.length > 0, load: s.load, otherCores: +otherCores.toFixed(2), reasons,
     others: others.slice(0, 8).map((p) => ({ pid: p.pid, cores: p.cores, cmd: p.cmd.slice(0, 160) })) };
   if (process.argv.includes('--json')) console.log(JSON.stringify(verdict, null, 2));
@@ -92,4 +90,4 @@ function main() {
 }
 
 if (require.main === module) main();
-module.exports = { activeBuilderJobs };
+module.exports = { activeBuilderJobs, sampleProcesses };
