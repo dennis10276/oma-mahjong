@@ -206,4 +206,94 @@ module.exports = [
       t.ok(await solve(q), 'and it can be cleared');
     },
   },
+  {
+    name: 'grandma level 145 and 146: 145 stays as released (save resumes); 146 gets eased deal with c2 revision',
+    async run(t, { startLevel, sleep, FakeDB }) {
+      const db = new FakeDB({ scores: {}, plays: { 'test-cfg-oma': { a: { k: 'cfg', t: 1, super: false, levels: true } } } });
+      const p = await t.phone({ state: { ...OMA, level: 150 }, db });
+      await p.evaluate(() => loadCfg());
+
+      // Level 145: 1.61 released deal (40% face-down, hv: null); OmaHanny's save resumes undisturbed
+      await startLevel(p, 145);
+      const info145 = await p.evaluate(() => {
+        const G = __mj.G, cur = JSON.parse(localStorage.getItem('omamj.cur'));
+        const i = G.tiles.findIndex((_, idx) => G.alive[idx] && !G.down[idx] && __mj.canTake(idx));
+        __mj.onTap(i);
+        return {
+          track: G.o.track,
+          down: cur.down.reduce((a, b) => a + b, 0),
+          n: G.tiles.length,
+          hv: cur && cur.hv,
+          faces: G.tiles.map(x => x.face),
+        };
+      });
+      await sleep(500);
+      t.eq(info145.track, 'care', 'grandma plays care track at 145');
+      t.eq(info145.hv, null, 'level 145 keeps released hv: null');
+      t.eq(info145.down, 31, 'level 145 keeps 40% face-down (31 of 78 tiles)');
+      // mid-game save on 145 resumes across reopening the app
+      await p.reload(); await p.waitForFunction(() => window.__mjReady); await p.evaluate(() => loadCfg()); await sleep(300);
+      await startLevel(p, 145, false);
+      const resumed145 = await p.evaluate(() => ({
+        alive: __mj.G.alive.reduce((a, b) => a + b, 0),
+        faces: __mj.G.tiles.map(x => x.face),
+      }));
+      t.eq(resumed145.alive, info145.n - 1, 'level 145 save resumed mid-board');
+      t.eq(resumed145.faces, info145.faces, 'level 145 save kept the released deal');
+
+      // Level 146: eased catch-up deal starts here (-5% face-down = 35%, hv: c2)
+      await startLevel(p, 146);
+      const info146 = await p.evaluate(() => {
+        const G = __mj.G, cur = JSON.parse(localStorage.getItem('omamj.cur'));
+        const i = G.tiles.findIndex((_, idx) => G.alive[idx] && !G.down[idx] && __mj.canTake(idx));
+        __mj.onTap(i);
+        return {
+          track: G.o.track,
+          ez: G.ez,
+          down: cur.down.reduce((a, b) => a + b, 0),
+          expectedDown: Math.round(G.tiles.length * 0.35),
+          n: G.tiles.length,
+          hv: cur && cur.hv,
+          faces: G.tiles.map(x => x.face),
+        };
+      });
+      await sleep(500);
+      t.eq(info146.track, 'care', 'grandma plays care track at 146');
+      t.eq(info146.hv, 'c2', 'level 146 stamped with catch-up revision c2');
+      t.eq(info146.down, info146.expectedDown, 'level 146 has 35% face-down tiles');
+
+      // level 146 save resumes across reopening
+      await p.reload(); await p.waitForFunction(() => window.__mjReady); await p.evaluate(() => loadCfg()); await sleep(300);
+      await startLevel(p, 146, false);
+      const resumed146 = await p.evaluate(() => ({
+        alive: __mj.G.alive.reduce((a, b) => a + b, 0),
+        faces: __mj.G.tiles.map(x => x.face),
+      }));
+      t.eq(resumed146.alive, info146.n - 1, 'level 146 save resumed mid-board');
+      t.eq(resumed146.faces, info146.faces, 'level 146 save kept the same deal');
+
+      // pre-revision save (hv: null) on level 146 is discarded for the fresh eased deal
+      await p.evaluate(() => {
+        __mj.G.done = true;   // keep pagehide from overwriting
+        const c = JSON.parse(localStorage.getItem('omamj.cur'));
+        c.hv = null;
+        c.alive[0] = 0; c.alive[1] = 0;
+        c.faces = c.faces.slice().reverse();
+        localStorage.setItem('omamj.cur', JSON.stringify(c));
+      });
+      await p.reload(); await p.waitForFunction(() => window.__mjReady); await p.evaluate(() => loadCfg()); await sleep(300);
+      await startLevel(p, 146, false);
+      const reset146 = await p.evaluate(() => {
+        const cur = JSON.parse(localStorage.getItem('omamj.cur'));
+        return {
+          alive: __mj.G.alive.reduce((a, b) => a + b, 0),
+          faces: __mj.G.tiles.map(x => x.face),
+          hv: cur && cur.hv,
+        };
+      });
+      t.eq(reset146.alive, info146.n, 'level 146 pre-revision save starts fresh');
+      t.eq(reset146.faces, info146.faces, 'fresh board deals the eased deal');
+      t.eq(reset146.hv, 'c2', 'new save stamped with c2');
+    },
+  },
 ];

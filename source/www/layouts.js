@@ -249,12 +249,13 @@ const Layouts = (() => {
   const careEff = level => level <= 6 ? level : 6 + (level - 6) / 4;
   const careDownN = level => level < 10 ? 0 : Math.min(6, 2 + Math.floor((level - 10) / 15));
   const careRate = level => level <= 50 ? 0.88 : Math.max(0.75, 0.88 - (level - 50) * 0.0026);
-  /* Catching up with the family (decision Dennis 2026-10-24, release 1.61): she plays well now, so
-     from level 119 her face-down tiles follow the family's rule (any tile, a share of the pile) and
-     her deals aim at the family's first-try target, both climbing evenly from where she was at 118
-     (8% face-down, 75% first try) to the family's values (40%, 42%) at level 143. Pile sizes stay
-     hers. Levels 1-118 are not changed (her stars and recordings). */
+  /* Catching up with the family (decision Dennis 2026-10-24, release 1.61): from level 119 her face-down
+     tiles follow the family's rule and climb evenly from 8% / 75% at 118 to the family's 40% / 42% at 143.
+     Eased after 145 (decision Dennis 2026-11-14): levels 1-145 stay as released (Dennis helps her past 145);
+     from level 146 her face-down share is 5% lower (35%), deal target is 46% and up, and tray pressure
+     (open/rare) is eased back a notch. Pile sizes stay hers. Levels 1-118 are not changed (her stars and recordings). */
   const CARE_CATCHUP = { from: 119, full: 143, down0: 0.08, rate0: 0.75 };
+  const CARE_EASE = { from: 146, downOff: 0.05, minRate: 0.46, open: 0.68, rare: 0.68, maxOpen: 0.75 };
   const careCatchup = level => level < CARE_CATCHUP.from ? null
     : Math.min(1, (level - CARE_CATCHUP.from + 1) / (CARE_CATCHUP.full - CARE_CATCHUP.from + 1));
   const familyDiff = level => difficultyFor(effLevel(level));
@@ -270,8 +271,21 @@ const Layouts = (() => {
     const res = buildPiles(level * 7919 + 999331, target, layersFor(e), aspect, level);
     const d = difficultyFor(e);
     const c = careCatchup(level), fam = familyDiff(level), mix = (a, b) => a + (b - a) * c;
-    const diff = c == null ? { ...d, down: 0, downN: careDownN(level), target: Math.max(d.target, careRate(level)) }
-      : { ...d, down: mix(CARE_CATCHUP.down0, fam.down), target: mix(CARE_CATCHUP.rate0, fam.target) };
+    let diff;
+    if (c == null) {
+      diff = { ...d, down: 0, downN: careDownN(level), target: Math.max(d.target, careRate(level)) };
+    } else if (level < CARE_EASE.from) {
+      diff = { ...d, down: mix(CARE_CATCHUP.down0, fam.down), target: mix(CARE_CATCHUP.rate0, fam.target) };
+    } else {
+      diff = {
+        ...d,
+        down: +(fam.down - CARE_EASE.downOff).toFixed(4),
+        target: Math.max(CARE_EASE.minRate, fam.target),
+        open: Math.min(d.open, CARE_EASE.open),
+        rare: Math.min(d.rare, CARE_EASE.rare),
+        maxOpen: CARE_EASE.maxOpen,
+      };
+    }
     return { ...res, kinds: kindsFor(res.tiles.length / 2, e, diff), seed: level * 104729 + 333, diff, track: 'care',
       ptsScale: normalTarget(level, scale) / res.tiles.length };
   }
@@ -518,6 +532,8 @@ const Layouts = (() => {
   function makeDeal(spec, tries = 24, noLimit = false) {
     const tiles = spec.tiles, nb = neighbors(tiles), target = spec.diff.target;
     let best = null, open = spec.diff.open, cap = spec.diff.cap, kinds = spec.kinds;
+    const maxOpen = spec.diff.maxOpen == null ? 1 : spec.diff.maxOpen;
+    const scoreOf = w => maxOpen < 1 && w < target ? (target - w) * 1.5 : Math.abs(w - target);
     const t0 = Date.now();   // a time limit, so a slow phone never waits long before a level starts
     for (let round = 0; round < 7; round++) {
       const diff = { ...spec.diff, open, cap };
@@ -527,20 +543,20 @@ const Layouts = (() => {
         const pf = pairFacesFor(tiles.length / 2, kinds, r);
         const faces = deal(tiles, nb, pf, r, diff);
         const w = botWinRate(tiles, nb, faces, 24, spec.seed + k + round * 101);
-        const score = Math.abs(w - target);
+        const score = scoreOf(w);
         if (!roundBest || score < roundBest.score) roundBest = { faces, w, score };
         if (score < 0.04) break;
       }
       // the best of many noisy estimates is usually a lucky one: measure it properly before trusting it
       roundBest.w = botWinRate(tiles, nb, roundBest.faces, 400, spec.seed + 5555 + round);
-      roundBest.score = Math.abs(roundBest.w - target);
+      roundBest.score = scoreOf(roundBest.w);
       if (!best || roundBest.score < best.score) best = roundBest;
       if (best.score < 0.06 || (!noLimit && Date.now() - t0 > 400)) break;
       // tune the dealing for the next round
       // when the dealing is already at its limit: fewer different pictures (easier) or more (harder)
       const pairs = tiles.length / 2;
       if (roundBest.w < target) { if (open === 0) kinds = Math.max(4, Math.round(kinds * 0.85)); open = Math.max(0, open - 0.22); if (open === 0) cap = Math.max(2, cap - 1); }
-      else { if (open === 1) kinds = Math.min(36, pairs, Math.round(kinds * 1.15) + 1); open = Math.min(1, open + 0.22); }
+      else { if (open === 1) kinds = Math.min(36, pairs, Math.round(kinds * 1.15) + 1); open = Math.min(maxOpen, open + (maxOpen < 1 ? 0.15 : 0.22)); }
     }
     const r2 = rng(spec.seed + 777);
     if (spec.diff.downN !== undefined) {

@@ -41,8 +41,8 @@ function startDaily(k) {
   const tr = levelTrack();
   begin({ mode: 'daily', date: k, key: 'D' + k, track: tr, title: tx('dailyTitle', d.getDate(), monthName(d.getMonth()).slice(0, 3)), fixedAspect: sameShape(tr), makeSpec: a => Layouts.forDate(dnum(k), a, 1, tr) });
 }
-// which version of a ready-made level a saved board belongs to (designed: its design version, early: the table's)
-const boardVer = o => o.mode !== 'level' ? null : Hard.applies(o.level, o.track) ? Hard.designVersion(o.level) : Hard.appliesEarly(o.level, o.track) ? 'e' + Hard.earlyV() : null;
+// which version of a ready-made level a saved board belongs to (designed: its design version, early: the table's, grandma 146+: deal revision)
+const boardVer = o => o.mode !== 'level' ? null : Hard.applies(o.level, o.track) ? Hard.designVersion(o.level) : Hard.appliesEarly(o.level, o.track) ? 'e' + Hard.earlyV() : (o.track === 'care' && o.level >= 146) ? 'c2' : null;
 
 /* o = the level (kept between tries, so "Opnieuw" gives the same deal); restart = a new try */
 function begin(o, restart = false) {
@@ -68,8 +68,9 @@ function begin(o, restart = false) {
   if (cur && cur.rp && previousReplay && cur.rp.id === previousReplay.id &&
       JSON.stringify(cur.rp.last) === JSON.stringify(previousReplay.last)) cur.rp = previousReplay;
   const sameTrack = cur && (cur.tr || '') === (o.track || '') &&
-    (o.mode !== 'level' || (Hard.applies(o.level, o.track) ? o.level < RULES.hard.rebuildFrom || cur.hv === Hard.designVersion(o.level) : !Hard.appliesEarly(o.level, o.track) || cur.hv == null || cur.hv === boardVer(o)));
-  // (a save from before the table (no hv) resumes when its screen shape and tile count fit the level)
+    (o.mode !== 'level' || (Hard.applies(o.level, o.track) ? o.level < RULES.hard.rebuildFrom || cur.hv === Hard.designVersion(o.level) : Hard.appliesEarly(o.level, o.track) ? (cur.hv == null || cur.hv === boardVer(o)) : (o.track !== 'care' || o.level < 146 || cur.hv === boardVer(o))));
+  // (a save from before the table (no hv) resumes when its screen shape and tile count fit the level;
+  // grandma 146+ deals carry a revision tag so eased deals replace an old mid-level save)
   // A new hard-level design starts fresh; earlier levels and grandma's saved boards still resume.
   const ez = cur && cur.key === o.key && sameTrack ? (cur.ez || 0) : easeFor(o.key);
   if (!o.spec || (o.ez || 0) !== ez) {

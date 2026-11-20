@@ -77,11 +77,14 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
   for shape 1.6 (`RULES.levels.aspect`). Grandma's own track still follows her screen. The
   extra-large tiles setting is removed (it changed the level). Keep the table: changing it changes
   levels people are playing.
-- Grandma catches up with the family (Dennis, 2026-10-24; from 1.61): her own track keeps levels 1-118
-  exactly as they were. From 119 her face-down tiles follow the family's rule (any tile, a share of
-  the pile, both twins possible) and her deal target follows the family's; both climb evenly from
-  8% / 75% at 118 to the family's 40% / 42% at 143 (`CARE_CATCHUP` in `www/layouts.js`). Her pile
-  sizes stay her own. Long term Dennis wants her fully at family level, maybe ~100 levels on.
+- Grandma catches up with the family (Dennis, 2026-10-24; from 1.61; eased from 146 Dennis 2026-11-14):
+  her own track keeps levels 1-145 exactly as they were released in 1.61 (levels 1-118 original care
+  settings, 119-143 climb evenly to family 40% face-down / 42% target, levels 144-145 at family values;
+  Dennis helps her past 145). From level 146 her face-down share is 5% lower (35% vs family 40%), deal
+  first-try win target is 46% and up (46% vs family 42%), and tray pressure is held a notch gentler than
+  the family track (`open: 0.68`, `rare: 0.68`, `maxOpen: 0.75` in `CARE_EASE` in `www/layouts.js`).
+  Her pile sizes stay her own. Saved boards on grandma 146+ carry revision tag `'c2'` in `www/js/board.js`,
+  while levels 1-145 keep `hv: null` so OmaHanny's live saved board on 145 resumes undisturbed.
 
 ## Predictions on the dashboard
 

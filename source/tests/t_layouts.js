@@ -138,25 +138,44 @@ module.exports = [
     },
   },
   {
-    name: 'grandma catches up from level 119: family face-down share and first-try target by 143',
+    name: 'grandma catches up from level 119, eased from 146: 35% face-down, 46%+ target, eased tray pressure',
     async run(t) {
       const bad = [];
       t.eq(Layouts.careCatchup(118), null, 'level 118 and below unchanged');
+      t.eq(Layouts.careCatchup(119), 1 / 25, 'climb starts evenly at 119');
+      t.eq(Layouts.careCatchup(143), 1, 'reaches full family values at 143');
       const at = lv => Layouts.forLevel(lv, 1.6, 1, 'care').diff;
-      t.ok(at(118).downN === 6 && at(119).downN === undefined, 'from 119 a share of the pile instead of a few on top');
-      let prev = at(118);
+      const d118 = at(118);
+      t.ok(d118.downN === 6 && d118.open === 0.9 && d118.rare === 0.9, 'level 118 untouched', d118);
+      t.ok(at(119).downN === undefined, 'from 119 a share of the pile instead of a few on top');
+      let prev = d118;
       for (let lv = 119; lv <= 143; lv++) {
         const d = at(lv), fam = Layouts.difficultyFor(Layouts.effLevel(lv));
-        if (lv > 119 && (d.down < prev.down - 1e-9 || d.target > prev.target + 1e-9)) bad.push(`L${lv}: not steadily harder`);
+        if (lv > 119 && (d.down < prev.down - 1e-9 || d.target > prev.target + 1e-9)) bad.push(`L${lv}: not steadily moving to target`);
         if (d.down > fam.down + 1e-9 || d.target < fam.target - 1e-9) bad.push(`L${lv}: harder than the family`);
         prev = d;
       }
-      for (const lv of [143, 150, 200]) {
+      for (const lv of [143, 144, 145]) {
         const d = at(lv), fam = Layouts.difficultyFor(Layouts.effLevel(lv));
         if (Math.abs(d.down - fam.down) > 1e-9 || Math.abs(d.target - fam.target) > 1e-9) bad.push(`L${lv}: not the family's values`);
+        if (d.open !== fam.open || d.rare !== fam.rare || d.maxOpen !== undefined) bad.push(`L${lv}: 143..145 should stay at 1.61 family settings`);
       }
-      const spec = Layouts.forLevel(143, 1.6, 1, 'care'), deal = Layouts.makeDeal(spec, 24, true), nb = Layouts.neighbors(spec.tiles);
-      if (!deal.down.some(i => nb.above[i].length)) bad.push('L143: no face-down tile under another one (family rule: anywhere)');
+      const spec145 = Layouts.forLevel(145, 1.7, 1, 'care'), deal145 = Layouts.makeDeal(spec145, 24, true);
+      if (deal145.down.length !== 31) bad.push(`L145: expected 31 face-down tiles, got ${deal145.down.length}`);
+      for (const lv of [146, 150, 200]) {
+        const spec = Layouts.forLevel(lv, 1.6, 1, 'care'), d = spec.diff;
+        const fam = Layouts.difficultyFor(Layouts.effLevel(lv));
+        if (Math.abs(d.down - +(fam.down - 0.05).toFixed(4)) > 1e-9) bad.push(`L${lv}: expected 35% face-down, got ${d.down}`);
+        if (Math.abs(d.target - 0.46) > 1e-9) bad.push(`L${lv}: expected 46% target, got ${d.target}`);
+        if (d.open !== 0.68 || d.rare !== 0.68 || d.maxOpen !== 0.75) bad.push(`L${lv}: tray pressure not eased`, d);
+        if (d.downN !== undefined) bad.push(`L${lv}: unexpected downN`);
+        if (spec.tiles.length > 96) bad.push(`L${lv}: pile larger than 96`);
+      }
+      const spec146 = Layouts.forLevel(146, 1.6, 1, 'care'), deal146 = Layouts.makeDeal(spec146, 24, true), nb146 = Layouts.neighbors(spec146.tiles);
+      const sol146 = Layouts.solve(spec146.tiles, nb146, deal146.faces, new Uint8Array(spec146.tiles.length).fill(1), [], 200000);
+      if (deal146.down.length !== Math.round(spec146.tiles.length * 0.35)) bad.push(`L146: expected ${Math.round(spec146.tiles.length * 0.35)} face-down tiles, got ${deal146.down.length}`);
+      if (!sol146 || sol146.length !== spec146.tiles.length) bad.push('L146: not solvable');
+      if (deal146.w < 0.44) bad.push(`L146: deal win rate too low (${deal146.w})`);
       t.eq(bad, [], 'levels 119-200');
     },
   },
