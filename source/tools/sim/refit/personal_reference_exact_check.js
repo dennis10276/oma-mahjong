@@ -7,11 +7,20 @@ const { verifySupport } = require('./public_belief_support.js');
 const { verifyReferencePaths } = require('./personal_public_belief_verify.js');
 const root = path.resolve(__dirname, '../../..'), hash = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
 
-function main(directory) {
+function main(directory, variant = 'continuation') {
+  assert(['continuation', 'information-revision', 'pressure'].includes(variant));
   const parent = path.resolve(directory), parentBytes = fs.readFileSync(path.join(parent, 'report.json')), parentReport = JSON.parse(parentBytes);
-  const profiles = { baseline: { ...REFERENCE_PARAMETERS, continuationPruning: false, safeInformationEscape: false },
+  const profiles = variant === 'continuation' ? { baseline: { ...REFERENCE_PARAMETERS, continuationPruning: false, safeInformationEscape: false },
     continuation128: { ...REFERENCE_PARAMETERS, continuationPruning: true, safeInformationEscape: false },
-    combined: { ...REFERENCE_PARAMETERS, continuationPruning: true, safeInformationEscape: true } };
+    combined: { ...REFERENCE_PARAMETERS, continuationPruning: true, safeInformationEscape: true } }
+    : variant === 'pressure' ? { baseline: { ...REFERENCE_PARAMETERS, continuationPruning: false, safeInformationEscape: false },
+      pressureOne: { ...REFERENCE_PARAMETERS, goalRecovery: true, goalRecoveryMin: 1 },
+      pressureTwo: { ...REFERENCE_PARAMETERS, goalRecovery: true, goalRecoveryMin: 2 },
+      pressureThree: { ...REFERENCE_PARAMETERS, goalRecovery: true, goalRecoveryMin: 3 } }
+    : { baseline: { ...REFERENCE_PARAMETERS, continuationPruning: false, safeInformationEscape: false },
+      informationRevision: { ...REFERENCE_PARAMETERS, replanOnInformation: true },
+      goalRecovery: { ...REFERENCE_PARAMETERS, goalRecovery: true },
+      revisedGoals: { ...REFERENCE_PARAMETERS, goalRecovery: true, replanOnInformation: true } };
   const made = new Date().toISOString(), folder = path.join(root, 'analysis/archive/personal-bots/reference-exact-check-' + made.replace(/[:.]/g, '-'));
   fs.mkdirSync(folder); const sourceHashes = {};
   for (const source of Object.keys(require.cache).filter(source => source.startsWith(root + path.sep))) {
@@ -43,4 +52,4 @@ function main(directory) {
   fs.writeFileSync(path.join(folder, 'report.json'), JSON.stringify({ ...input, rows }), { flag: 'wx' }); console.log(JSON.stringify({ folder, evaluations: rows.length }));
 }
 
-if (require.main === module) main(process.argv[2]);
+if (require.main === module) main(process.argv[2], process.argv[3]);

@@ -7,6 +7,461 @@ const game = () => ({ tiles: [{ x: 0, y: 0, z: 0 }, { x: 2, y: 0, z: 0 }], faces
 
 module.exports = [
   {
+    name: 'personal bots: constructive information escapes reopen known routes without an unsafe tray endpoint',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_public_information_escape.js'); },
+  },
+  {
+    name: 'personal bots: reference failure forensics preserves public boundaries and distinguishes risks from proofs',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_reference_failure_trace.js'); },
+  },
+  {
+    name: 'personal bots: known continuation proofs retain safe removals and restore roots after inspection cycles',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_public_known_continuation.js'); },
+  },
+  {
+    name: 'personal bots: continuation pruning rejects publicly proven losing commitments without hidden-face optimism',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_public_continuation_pruning.js'); },
+  },
+  {
+    name: 'personal bots: source-pinned production batches preserve complete physics and explicit integrity validation',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_production_session_factory.js'); },
+  },
+  {
+    name: 'personal bots: exact public-belief policies preserve production actions and independently certify uncertain decisions',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_public_belief_exact.js'); },
+  },
+  {
+    name: 'personal bots: physical pixel controls distinguish production parity from changed planner reports',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_pixel_session_compare.js'); },
+  },
+  {
+    name: 'personal bots: independent screenshot replay preserves the production prior contract',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_pixel_reference_verify.js'); },
+  },
+  {
+    name: 'personal bots: incomplete pixel prefixes bind all completed artifacts without inventing a full rollout',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_pixel_opaque_inset_audit.js'); },
+  },
+  {
+    name: 'personal bots: observed retry memory preserves provenance and actual attempt boundaries',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_observed_memory.js'); },
+  },
+  {
+    name: 'personal bots: strengthened reference preserves physical witnesses and newly informed routes',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_public_witness_integration.js'); },
+  },
+  {
+    name: 'personal bots: productive reopen witnesses share budgets and repair false root-death certificates',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_public_witness_reopen_guard.js'); },
+  },
+  {
+    name: 'personal bots: screenshot singleton memory survives closed peeks without hidden rereads',
+    cpu: true,
+    async run() { await require('../tools/sim/refit/test_public_pixel_memory.js')(); },
+  },
+  {
+    name: 'personal bots: production scene tracks physical ice, key, lock and clock transitions',
+    cpu: true,
+    async run() { await require('../tools/sim/refit/test_production_scene_renderer.js').test(); },
+  },
+  {
+    name: 'personal bots: parallel public templates preserve alphabet, context and failure cleanup',
+    cpu: true,
+    async run() { await require('../tools/sim/refit/test_public_pixel_parallel.js')(); },
+  },
+  {
+    name: 'personal bots: resumable production physical environment preserves taps and hides private decisions',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_production_physical_session.js'); },
+  },
+  {
+    name: 'personal bots: independent screenshot replay verifies candidate support and earlier public context',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_pixel_capture_verify.js'); },
+  },
+  {
+    name: 'personal bots: public screenshot templates exclude hidden markup and retain rounded corner clues',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_public_pixel_scene.js'); },
+  },
+  {
+    name: 'personal bots: learned known-inspection sequence preferences remain optional and preserve exact disabled behavior',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_public_witness_streak_choice.js'); },
+  },
+  {
+    name: 'personal bots: known-inspection choice streaks distinguish repeated checks from new-information actions',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_known_inspection_streak.js'); },
+  },
+  {
+    name: 'personal bots: public witness loop diagnostics distinguish repeated observations from physical progress',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_public_witness_loop_probe.js'); },
+  },
+  {
+    name: 'personal bots: observed opening identities never fall back to actual hidden tile faces',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_public_observed_opening.js'); },
+  },
+  {
+    name: 'personal bots: bounded pixel matching retains all candidates under declared raster rounding noise',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_public_pixel_match.js'); },
+  },
+  {
+    name: 'personal bots: screenshot observations derive opening knowledge without private picture metadata',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_public_pixel_capture.js'); },
+  },
+  {
+    name: 'personal bots: pixel visibility retains exposed rounded tile edges without private picture metadata',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_public_tile_pixels.js'); },
+  },
+  {
+    name: 'personal bots: partial-pixel beliefs retain ambiguity and never substitute actual hidden inventory',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_public_pixel_belief.js'); },
+  },
+  {
+    name: 'personal bots: trusted pixel-opening masks remove covered identity leakage without root runtime edits',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_pixel_opening_prototype.js'); },
+  },
+  {
+    name: 'personal bots: pixel partitions preserve ambiguous observations without discarding all partial symbols',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_public_pixel_partition.js'); },
+  },
+  {
+    name: 'personal bots: bounded witness cache preserves complete public-state search semantics',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_public_witness_cache.js'); },
+  },
+  {
+    name: 'personal bots: public witness count grid retains all declared own confidence and recall interactions',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_public_witness_count.js'); },
+  },
+  {
+    name: 'personal bots: learned public witness choices stay optional and delegate exact disabled behavior',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_public_witness_choice.js'); },
+  },
+  {
+    name: 'personal bots: public witness signals extend own continuous preferences without changing prior observations',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_public_witness_features.js'); },
+  },
+  {
+    name: 'personal bots: public dead ends require proofs rather than inspection timeouts',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_public_dead_end.js'); },
+  },
+  {
+    name: 'personal bots: dead-end acknowledgement preserves personal policies outside proved losses',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_public_dead_end_choice.js'); },
+  },
+  {
+    name: 'personal bots: witness runtime plans through real taps and resets at actual attempt boundaries',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_public_witness_reference.js'); },
+  },
+  {
+    name: 'personal bots: stronger witness search stays public and returns physical routes rather than hidden winning branches',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_public_witness_search.js'); },
+  },
+  {
+    name: 'personal bots: public count screen binds all learning, recall and confidence settings',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_public_retention_count.js'); },
+  },
+  {
+    name: 'personal bots: public preference models refuse private or mismatched-prior observations',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_public_retention_choice.js'); },
+  },
+  {
+    name: 'personal bots: public replay controls compare knowledge within the same retention mode',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_public_retention_data.js'); },
+  },
+  {
+    name: 'personal bots: information-limited engine prototype keeps legacy controls and public prior invariance',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_public_engine_prototype.js'); },
+  },
+  {
+    name: 'personal bots: unknown-match expectations use an explicit public alphabet prior',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_public_picture_prior.js'); },
+  },
+  {
+    name: 'personal bots: hidden-inventory contract spans physical tray, geometry and clock states',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_observation_contract.js'); },
+  },
+  {
+    name: 'personal bots: observation audits compare hidden inventories, not just permutations',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_hidden_inventory_audit.js'); },
+  },
+  {
+    name: 'personal bots: joint preference count grid preserves declared confidence interactions',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_retention_attention_count.js'); },
+  },
+  {
+    name: 'personal bots: joint retention attention distinguishes useful reopens from repeated inspections',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_retention_attention.js'); },
+  },
+  {
+    name: 'personal bots: inspection loop probes count actual removals without replacing outcomes',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_retention_loop_probe.js'); },
+  },
+  {
+    name: 'personal bots: own move preferences adapt through a retention-matched public residual',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_retention_residual.js'); },
+  },
+  {
+    name: 'personal bots: matched retry annotations cannot use later or other-campaign pictures',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_retention_residual_data.js'); },
+  },
+  {
+    name: 'personal bots: sparse adaptive choice references preserve public-feature coordinates',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_retention_residual_audit.js'); },
+  },
+  {
+    name: 'personal bots: carried retry knowledge changes knowledge stamps, not observed physical outcomes',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_online_recall_audit.js'); },
+  },
+  {
+    name: 'personal bots: person-local policies can switch repeatedly without future-outcome learning',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_online_strategy.js'); },
+  },
+  {
+    name: 'personal bots: chronological replay evidence preserves resumed attempts and own retry knowledge',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_online_strategy_data.js'); },
+  },
+  {
+    name: 'personal bots: chronological action scores use immutable opening weights',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_online_strategy_measure.js'); },
+  },
+  {
+    name: 'personal bots: retry-route diagnostics separate exposed pictures from actual human recall',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_retry_route_audit.js'); },
+  },
+  {
+    name: 'personal bots: live replay fidelity never promotes partial auto prefixes to complete-game proof',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_live_replay_audit.js'); },
+  },
+  {
+    name: 'personal bots: current later checks refresh outcomes without replacing reused controller simulations',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_clock_preparation_later.js'); },
+  },
+  {
+    name: 'personal bots: fine clock-preparation count grid retains every own strength and retry setting',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_clock_preparation_count.js'); },
+  },
+  {
+    name: 'personal bots: fitted clock preparation has causal own intents and exact disabled controls',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_clock_preparation_choice.js'); },
+  },
+  {
+    name: 'personal bots: route retry experiments preserve fresh seeds and pending/overlap cases',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_route_blend_data.js'); },
+  },
+  {
+    name: 'personal bots: phase diagnostics distinguish nonclock from before-clock failures',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_clock_phase_audit.js'); },
+  },
+  {
+    name: 'personal bots: route interactions preserve exact endpoints and actual latent observations',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_route_blend_choice.js'); },
+  },
+  {
+    name: 'personal bots: passive clock telemetry preserves exact choices and state',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_clock_failure_probe.js'); },
+  },
+  {
+    name: 'personal bots: clock preparation respects known exit support and preserves existing dig behavior',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_clock_preparation.js'); },
+  },
+  {
+    name: 'personal bots: later capacity checks retain pending and fit-overlap campaigns without prospective credit',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_pair_capacity_later.js'); },
+  },
+  {
+    name: 'personal bots: capacity-preserving pair preparation is an optional recovery intent',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_pair_capacity_intents.js'); },
+  },
+  {
+    name: 'personal bots: pair capacity distinguishes temporary third spots from unmatched commitments',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_pair_capacity.js'); },
+  },
+  {
+    name: 'personal bots: full kind-within interaction grid preserves exact reuse and own settings',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_factorized_joint_data.js'); },
+  },
+  {
+    name: 'personal bots: factorized diagnostics distinguish action-kind and tile likelihood',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_factorized_action_audit.js'); },
+  },
+  {
+    name: 'personal bots: factorized count calibration binds the complete own confidence grid',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_factorized_count_data.js'); },
+  },
+  {
+    name: 'personal bots: factorized confidence separates action type from tile option count',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_factorized_choice.js'); },
+  },
+  {
+    name: 'personal bots: planning-risk diagnostics distinguish uncertainty from proven traps',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_planning_risk_audit.js'); },
+  },
+  {
+    name: 'personal bots: conditional sequencing is fitted on the exact own attention baseline',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_attention_handoff_choice.js'); },
+  },
+  {
+    name: 'personal bots: new handoff count proposals bind the entire own retry policy',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_attention_handoff_counts.js'); },
+  },
+  {
+    name: 'personal bots: passive tray-failure telemetry cannot change selector choices or public features',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_tray_failure_probe.js'); },
+  },
+  {
+    name: 'personal bots: source-bound future inputs retain whole exact unopened cohorts',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_source_bound_causal_data.js'); },
+  },
+  {
+    name: 'personal bots: fresh follow-through rates preserve own versions and optional sequencing',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_fresh_follow.js'); },
+  },
+  {
+    name: 'personal bots: count inputs bind new first-attempt signals to unchanged actor bodies',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_first_count_data.js'); },
+  },
+  {
+    name: 'personal bots: first-try signals preserve exact seeded per-attempt policy lifecycle',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_first_signals.js'); },
+  },
+  {
+    name: 'personal bots: distinct route features retain remaining aliases and refuse censored paths',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_distinct_route_count_data.js'); },
+  },
+  {
+    name: 'personal bots: reference difficulty covariates do not replace personalized behavioral policies',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_reference_count_data.js'); },
+  },
+  {
+    name: 'personal bots: fresh known-route policies replace aliases without changing own retry membership',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_fresh_known_counts.js'); },
+  },
+  {
+    name: 'personal bots: expanded count inputs bind reproduced variants and retain policy-source shifts',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_variant_count_data.js'); },
+  },
+  {
+    name: 'personal bots: full26 summaries preserve original failures and separate corrected public pairs',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_causal_full26_summary.js'); },
+  },
+  {
+    name: 'personal bots: full26 reproduction checks omitted metadata without injecting expected features',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_causal_full26_audit.js'); },
+  },
+  {
+    name: 'personal bots: whole capacity proposals preserve own retry memory and failure learning',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_clock_capacity_count_data.js'); },
+  },
+  {
+    name: 'personal bots: changed clock first-attempt probes cannot masquerade as complete count calibration',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_clock_capacity_first_data.js'); },
+  },
+  {
+    name: 'personal bots: uncertain clock routes retain optional own pair preparation without forced matches',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_clock_capacity_choice.js'); },
+  },
+  {
+    name: 'personal bots: count training uses only reproduced own factors and exact board bindings',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_verified_count_data.js'); },
+  },
+  {
+    name: 'personal bots: verified physical factors preserve retry lifecycle and reject computation failures',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_verified_factor_features.js'); },
+  },
+  {
+    name: 'personal bots: independent generator audit distinguishes exact cached and own recent-model provenance',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_causal_generator_audit.js'); },
+  },
+  {
+    name: 'personal bots: recall count policies retain mistake avoidance and bind their own confidence and picture memory',
+    cpu: true,
+    async run() { require('../tools/sim/refit/test_personal_attention_memory_data.js'); },
+  },
+  {
     name: 'personal bots: selected own future policies exclude real openings and replay counters',
     cpu: true,
     async run() { require('../tools/sim/refit/test_personal_attention_future_data.js'); },

@@ -1,6 +1,7 @@
 'use strict';
 const assert = require('assert/strict'), Layouts = require('../../../www/layouts.js');
-const { publicForensics } = require('./personal_reference_failure_trace.js');
+const { publicForensics, traceCase } = require('./personal_reference_failure_trace.js');
+assert.equal(typeof traceCase, 'function', 'Candidate witness harness needs the existing production trace helper');
 const tiles = Array.from({ length: 4 }, (unused, index) => ({ x: index * 8, y: 0, z: 0 }));
 const geometry = { tiles, nb: Layouts.neighbors(tiles), rules: null, clock: null };
 Object.defineProperty(geometry, 'faces', { get() { throw Error('Concealed picture read'); } });

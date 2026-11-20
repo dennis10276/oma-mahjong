@@ -9,6 +9,7 @@ const { designed } = require('./boards.js');
 const { encodeGame, decodeGame } = require('./personal_game_io.js');
 const { controllerIdentity, chain } = require('./personal_attention_count_data.js');
 const { chain: baselineChain } = require('./personal_policy_temperature_data.js');
+const { chain: memoryChain, policyIdentity, profiles: memoryProfiles } = require('./personal_attention_memory_data.js');
 const root = path.resolve(__dirname, '../../..'), archive = path.join(root, 'analysis/archive/personal-bots');
 const hash = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
 const inputName = 'analysis/archive/personal-bots/personal-attention-future-input.json';
@@ -18,14 +19,32 @@ function unopenedLevels(target, events) {
   return target.levels.filter(level => level >= target.first && !opened.has(level));
 }
 
-function prepare(argument) {
-  assert(argument, 'Supply a new read-only opening snapshot after the actual own confidence fit');
+function selectedPolicySettings(input, entry) {
+  const kind = input.policyKind || 'configured-confidence';
+  assert(['configured-confidence', 'memory-grid'].includes(kind));
+  if (kind === 'configured-confidence') {
+    assert(entry.policyId === undefined && entry.memory === undefined && entry.recall === undefined);
+    return null;
+  }
+  const selected = input.selected[entry.name], settings = memoryProfiles[selected.selectedProfile];
+  assert(settings && selected.controllerId === input.controllers[entry.name].id);
+  assert.equal(entry.temperature, settings.temperature); assert.equal(entry.selectedProfile, selected.selectedProfile);
+  assert.equal(selected.temperature, settings.temperature); assert.equal(selected.recall, settings.recall);
+  assert.deepEqual(selected.memory, settings.memory); assert.deepEqual(entry.memory, settings.memory);
+  assert.equal(entry.recall, settings.recall);
+  assert.deepEqual(selected.policy, policyIdentity(input.controllers[entry.name], settings));
+  assert.equal(entry.policyId, selected.policy.id);
+  return settings;
+}
+
+function prepare(argument, isMemory = false) {
+  assert(argument, 'Supply a new read-only opening snapshot after the actual own count-policy fit');
   const sources = {}, read = filename => {
     const resolved = path.resolve(filename); assert(resolved.startsWith(root + path.sep));
     const bytes = fs.readFileSync(resolved); sources[path.relative(root, resolved).replace(/\\/g, '/')] = hash(bytes); return JSON.parse(bytes);
   };
-  const confidenceFile = path.join(archive, 'personal-attention-log-temperature-models.json'), confidence = read(confidenceFile);
-  assert.equal(confidence.evidence, 'own-future-attention-confidence-fit-to-prior-counts-training-only');
+  const confidenceFile = path.join(archive, isMemory ? 'personal-attention-memory-models.json' : 'personal-attention-log-temperature-models.json'), confidence = read(confidenceFile);
+  assert.equal(confidence.evidence, isMemory ? 'own-attention-memory-confidence-fit-to-prior-counts-training-only' : 'own-future-attention-confidence-fit-to-prior-counts-training-only');
   for (const [name, expected] of Object.entries(confidence.sourceHashes)) assert.equal(hash(fs.readFileSync(path.join(__dirname, name))), expected);
   const calibration = read(confidence.dataFile); assert.equal(hash(fs.readFileSync(confidence.dataFile)), confidence.dataSha256);
   const calibrationRoot = path.resolve(confidence.dataSourceRoot);
@@ -34,13 +53,14 @@ function prepare(argument) {
     const filename = path.resolve(calibrationRoot, relative); assert(filename.startsWith(calibrationRoot + path.sep));
     assert.equal(hash(fs.readFileSync(filename)), expected);
   }
-  assert.equal(calibration.evidence, 'own-future-attention-policy-count-calibration-training-only');
+  assert.equal(calibration.evidence, isMemory ? 'own-attention-memory-count-calibration-training-only' : 'own-future-attention-policy-count-calibration-training-only');
   assert.equal(calibration.runs, 8); assert.equal(calibration.attempts, 8); assert.equal(calibration.rows.length, 80);
   assert.deepEqual(calibration.actors, confidence.controllers);
-  const calibratedInputName = 'analysis/archive/personal-bots/personal-attention-count-input.json';
+  const calibratedInputName = 'analysis/archive/personal-bots/' + (isMemory ? 'personal-attention-memory-input.json' : 'personal-attention-count-input.json');
   const calibratedInput = read(path.join(calibrationRoot, calibratedInputName));
   assert.equal(hash(fs.readFileSync(path.join(calibrationRoot, calibratedInputName))), calibration.inputSha256);
-  assert.equal(calibration.attentionModelSha256, confidence.attentionModelSha256);
+  if (isMemory) assert.equal(calibration.referenceSha256, confidence.referenceSha256);
+  else assert.equal(calibration.attentionModelSha256, confidence.attentionModelSha256);
   const live = path.resolve(argument); assert(live.startsWith(path.join(archive, 'live-openings-')));
   const liveManifest = read(path.join(live, 'manifest.json')), preparedAt = Date.now();
   assert.equal(liveManifest.evidence, 'read-only-live-opening-check');
@@ -57,28 +77,34 @@ function prepare(argument) {
     const actor = calibratedInput.actors.find(value => value.name === name && value.id === binding.staticActorId);
     const base = calibratedInput.models.find(value => value.id === actor?.id), model = calibratedInput.attentionModels.find(value => value.id === actor?.id);
     assert(actor && base && model); assert.deepEqual(controllerIdentity(actor, base, model), binding);
-    assert.equal(selected.actorId, binding.id);
+    assert.equal(isMemory ? selected.controllerId : selected.actorId, binding.id);
     assert.equal(calibration.profiles[selected.selectedProfile].temperature, selected.temperature);
     assert(!selected.computationCensoredCandidates.includes(selected.selectedProfile));
     const own = calibration.rows.filter(row => row.name === name);
     assert.equal(own.length, 20);
     assert(own.every(row => row.modelId === binding.id && row.end < confidence.actualFitRequest
       && !row.computationCaps[selected.selectedProfile] && !row.chains[selected.selectedProfile].computationCensored));
+    if (isMemory) assert(own.every(row => row.policyIds[selected.selectedProfile] === selected.policy.id));
     const target = progressionTargets(plays[PIDS[name]], scores[PIDS[name]], 24), levels = unopenedLevels(target, plays[PIDS[name]]);
     assert(levels.length >= 20, 'At least20 unopened future levels are required for each own candidate');
     targets[name] = { ...target, unopened: levels };
     for (const lv of levels) {
       const game = designed(target.version, lv); assert(game);
-      entries.push({ name, lv, version: target.version, board: boardId(game), modelId: binding.id,
+      const entry = { name, lv, version: target.version, board: boardId(game), modelId: binding.id,
         staticActorId: actor.id, selectedProfile: selected.selectedProfile, temperature: selected.temperature,
-        firstAttempt: 1, firstClear: true, game: encodeGame(game) });
+        firstAttempt: 1, firstClear: true, game: encodeGame(game),
+        ...(isMemory ? { policyId: selected.policy.id, recall: selected.recall, memory: selected.memory } : {}) };
+      selectedPolicySettings({ policyKind: isMemory ? 'memory-grid' : 'configured-confidence', selected: confidence.selected, controllers: confidence.controllers }, entry);
+      entries.push(entry);
     }
   }
   for (const filename of Object.keys(require.cache).filter(filename => filename.startsWith(root + path.sep))) {
-    sources[path.relative(root, filename).replace(/\\/g, '/')] = hash(fs.readFileSync(filename));
+    const relative = path.relative(root, filename).replace(/\\/g, '/'), actual = hash(fs.readFileSync(filename));
+    if (calibration.sourceHashes[relative]) assert.equal(actual, calibration.sourceHashes[relative], 'Future runtime changed the calibrated policy: ' + relative);
+    sources[relative] = actual;
   }
   for (const filename of ['personal_attention_future.py', 'personal_attention_future_head.py', 'personal_attention_count_fit.py',
-    'personal_policy_temperature_fit.py', 'attempt_count_fit.py', 'personal_value_fit.py', 'prospective.py', 'progression_score.py']) {
+    'personal_policy_temperature_fit.py', 'personal_attention_memory_fit.py', 'attempt_count_fit.py', 'personal_value_fit.py', 'prospective.py', 'progression_score.py']) {
     const relative = 'tools/sim/refit/' + filename; sources[relative] = hash(fs.readFileSync(path.join(root, relative)));
   }
   for (const filename of fs.readdirSync(path.join(__dirname, 'tables')).filter(name => /^(levels|hard|early)-.*\.js$/.test(name))) {
@@ -87,6 +113,7 @@ function prepare(argument) {
   const made = new Date().toISOString(), runRoot = path.join(archive, 'runs/personal-attention-future-' + made.replace(/[:.]/g, '-'));
   const input = { made, preparedAt, evidence: 'own-log-attention-unopened-future-input-not-numeric-forecasts', targetMet: false,
     entries, targets, actors: calibratedInput.actors, models: calibratedInput.models, attentionModels: calibratedInput.attentionModels,
+    policyKind: isMemory ? 'memory-grid' : 'configured-confidence',
     controllers: confidence.controllers, selected: confidence.selected, confidenceReadyAt: confidence.made,
     confidenceSha256: hash(fs.readFileSync(confidenceFile)), calibrationSha256: confidence.dataSha256,
     liveSnapshot: path.relative(root, live).replace(/\\/g, '/'), liveManifestSha256: hash(fs.readFileSync(path.join(live, 'manifest.json'))),
@@ -117,15 +144,18 @@ function measure(entries, input, isPilot, priorPilot) {
     assert.deepEqual(controllerIdentity(actor, base, model), input.controllers[entry.name]);
     assert.equal(input.controllers[entry.name].id, entry.modelId);
     const game = decodeGame(entry.game); assert.equal(boardId(game), entry.board);
+    const settings = selectedPolicySettings(input, entry);
+    const selectedChain = (runs, attempts) => settings
+      ? memoryChain(game, actor, base, model, settings, runs, attempts) : chain(game, actor, base, model, entry.temperature, runs, attempts);
     const zero = { ...model, attention: { ...model.attention, weights: [0, 0] } };
     const control = baselineChain(game, actor, base, 1, 2, 3, true);
     assert.deepEqual(chain(game, actor, base, zero, 1, 2, 3), control, 'Fresh future zero-attention lifecycle changed');
     if (priorPilot) {
       const prior = priorPilot.rows.find(row => row.name === entry.name && row.lv === entry.lv && row.board === entry.board);
       assert(prior && prior.modelId === entry.modelId);
-      assert.deepEqual(chain(game, actor, base, model, entry.temperature, 2, 3), prior.chain);
+      assert.deepEqual(selectedChain(2, 3), prior.chain);
     }
-    const measured = chain(game, actor, base, model, entry.temperature, runs, attempts);
+    const measured = selectedChain(runs, attempts);
     parentPort?.postMessage({ progress: { name: entry.name, lv: entry.lv, caps: measured.computationCensored || 0 } });
     const { game: encoded, ...metadata } = entry;
     return { ...metadata, chain: measured, computationCaps: measured.computationCensored || 0, exactZeroPilotControl: control };
@@ -133,7 +163,7 @@ function measure(entries, input, isPilot, priorPilot) {
 }
 
 async function main(mode, argument) {
-  if (mode === 'prepare') return prepare(argument);
+  if (mode === 'prepare' || mode === 'prepare-memory') return prepare(argument, mode === 'prepare-memory');
   assert(['pilot', 'full'].includes(mode));
   const manifestFile = path.join(root, 'attention-future-run-manifest.json'), manifest = JSON.parse(fs.readFileSync(manifestFile));
   assert.equal(manifest.evidence, 'immutable-own-log-attention-future-measurement-run');
@@ -169,6 +199,7 @@ async function main(mode, argument) {
     calibrationSha256: input.calibrationSha256, runs: isPilot ? 2 : 32, attempts: isPilot ? 3 : 9,
     computationCaps, validUncensoredSimulation: computationCaps === 0, pairedPilotControls: isPilot ? 0 : rows.length,
     exactZeroPilotControls: rows.length, controllers: input.controllers, selected: input.selected, targets: input.targets,
+    policyKind: input.policyKind,
     sourceHashes: { ...manifest.sourceHashes, [inputName]: manifest.inputSha256, 'attention-future-run-manifest.json': hash(fs.readFileSync(manifestFile)),
       ...(priorPilotSha ? { 'analysis/archive/personal-bots/personal-attention-future-pilot.json': priorPilotSha } : {}) }, rows,
     note: 'New32x9 selected own-controller simulation, not reused calibration/pilot chains or a numeric pre-opening freeze. '
@@ -181,4 +212,4 @@ async function main(mode, argument) {
 if (!isMainThread && workerData?.attentionFuture) parentPort.postMessage({ rows: measure(workerData.entries, workerData.input,
   workerData.isPilot, workerData.priorPilot) });
 else if (require.main === module) main(process.argv[2], process.argv[3]).catch(error => { console.error(error); process.exitCode = 1; });
-module.exports = { unopenedLevels };
+module.exports = { unopenedLevels, selectedPolicySettings };

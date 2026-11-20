@@ -113,4 +113,4 @@ function main(baselineFilename) {
 }
 
 if (require.main === module) main(process.argv[2]);
-module.exports = { publicForensics, decodeGeometry };
+module.exports = { publicForensics, decodeGeometry, traceCase };

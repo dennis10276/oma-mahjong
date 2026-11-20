@@ -89,6 +89,20 @@ class HandoffTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'membership'):
             fit_handoff([{**game, 'availableAt': 10}], self.actor, self.base)
 
+    def test_cached_attention_offsets_are_fitted_without_win_labels(self):
+        game = {'aid': 'own', 'availableAt': 9, 'initialNewLevel': True, 'decisions': [self.before, self.after] * 40}
+        key = ('actor', 'own', 9)
+        references = {key: {index: {'probabilities': [.2, .3, .5]} for index in range(80)}}
+        other_offsets = {key: {index: {'probabilities': [.8, .1, .1]} for index in range(80)}}
+        fitted = fit_handoff([game], self.actor, {}, references=references)
+        changed = fit_handoff([game], self.actor, {}, references=other_offsets)
+        self.assertEqual(fitted['trainingSamples'], 40)
+        self.assertFalse(np.allclose(fitted['weights'], changed['weights']))
+        self.assertEqual(fitted, fit_handoff([{**game, 'wonOn': 999, 'end': 999}], self.actor, {}, references=references))
+        invalid = {key: {index: {'probabilities': [.2, .3, .6]} for index in range(80)}}
+        with self.assertRaisesRegex(ValueError, 'baseline reference'):
+            fit_handoff([game], self.actor, {}, references=invalid)
+
     def test_native_runtime_state_and_zero_control(self):
         weights = [0.] * len(CONTEXT)
         weights[0], weights[1] = -.2, 2

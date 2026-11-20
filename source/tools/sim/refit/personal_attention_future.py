@@ -1,4 +1,5 @@
 import argparse
+import hashlib
 import json
 import os
 import time
@@ -25,6 +26,32 @@ def millis(value):
     return datetime.fromisoformat(value.replace('Z', '+00:00')).timestamp() * 1000
 
 
+def selected_policy_metadata(data, row):
+    kind = data.get('policyKind', 'configured-confidence')
+    if kind == 'configured-confidence':
+        if any(key in row for key in ('policyId', 'memory', 'recall')):
+            raise ValueError('A changed recall policy cannot masquerade as the old configured controller')
+        return {}
+    if kind != 'memory-grid':
+        raise ValueError('Unknown own count policy family')
+    controller, selected = data['controllers'][row['name']], data['selected'][row['name']]
+    memories = {'none': [0, 0, 0], 'configured': [.75, .5, .75], 'full': [1, 1, 1]}
+    memory = memories.get(selected.get('recall'))
+    temperature = selected['temperature']
+    if memory is None or temperature not in (.25, .5, 1, 1.5):
+        raise ValueError('Undeclared own retry-recall policy')
+    policy = selected['policy']
+    expected = {'controllerId': controller['id'], 'temperature': temperature, 'memory': memory,
+                'learnFromLoss': True, 'seed': 20261028}
+    if (selected.get('controllerId') != controller['id'] or json.loads(policy['definition']) != expected
+            or hashlib.sha256(policy['definition'].encode()).hexdigest() != policy['id']
+            or selected['selectedProfile'] != selected['recall'] + '_confidence' + str(round(temperature * 100)).zfill(3)
+            or selected['memory'] != memory or row.get('memory') != memory
+            or row.get('recall') != selected['recall'] or row.get('policyId') != policy['id']):
+        raise ValueError('Numeric point lost its complete own recall/confidence/failure-learning policy identity')
+    return {key: row[key] for key in ('policyId', 'memory', 'recall')}
+
+
 def predict_data(data):
     rows = data['rows']
     if (data.get('evidence') != 'own-log-attention-future-counts-not-frozen'
@@ -43,15 +70,16 @@ def predict_data(data):
             raise ValueError('Duplicate or unknown future target')
         identities.add(key)
         controller, selected = data['controllers'][row['name']], data['selected'][row['name']]
+        metadata = selected_policy_metadata(data, row)
         if (row['modelId'] != controller['id'] or row['staticActorId'] != controller['staticActorId']
-                or row['modelId'] != selected['actorId'] or row['temperature'] != selected['temperature']
+                or row['modelId'] != selected.get('controllerId' if metadata else 'actorId') or row['temperature'] != selected['temperature']
                 or row['selectedProfile'] != selected['selectedProfile'] or row['computationCaps']
                 or row.get('firstAttempt') != 1 or row.get('firstClear') is not True):
             raise ValueError('Future point is not from its exact selected own controller on a fresh target')
         point = forecast(row['chain'], data['runs'])
         predictions.append({key: row[key] for key in (
             'name', 'lv', 'version', 'board', 'modelId', 'staticActorId', 'temperature', 'selectedProfile')}
-            | {'predictedAttempt': point['predictedAttempt'],
+            | metadata | {'predictedAttempt': point['predictedAttempt'],
                'distribution1to9And10plus': point['distribution1to9And10plus'],
                'rawFirstWinProbability': row['chain']['first']})
     return predictions
@@ -78,6 +106,7 @@ def load_run(argument):
         raise ValueError('Future measurement no longer matches its prepared own input')
     inputs = json.loads((folder / INPUT).read_bytes())
     if (inputs.get('evidence') != 'own-log-attention-unopened-future-input-not-numeric-forecasts'
+            or inputs.get('policyKind', 'configured-confidence') != data.get('policyKind', 'configured-confidence')
             or any(inputs[key] != data[key] for key in ('controllers', 'selected', 'confidenceReadyAt', 'confidenceSha256', 'calibrationSha256'))):
         raise ValueError('Future measurement changed its source-bound own model selection')
     fields = ('name', 'lv', 'version', 'board', 'modelId', 'staticActorId', 'temperature', 'selectedProfile')
@@ -85,6 +114,11 @@ def load_run(argument):
     measured = sorted(tuple(row[key] for key in fields) for row in data['rows'])
     if prepared != measured:
         raise ValueError('Every prepared future target must retain its exact board/controller measurement')
+    metadata_fields = ('name', 'lv', 'policyId', 'memory', 'recall')
+    prepared_policies = sorted(json.dumps({key: row.get(key) for key in metadata_fields}, sort_keys=True) for row in inputs['entries'])
+    measured_policies = sorted(json.dumps({key: row.get(key) for key in metadata_fields}, sort_keys=True) for row in data['rows'])
+    if prepared_policies != measured_policies:
+        raise ValueError('Future measurement changed its exact prepared recall/confidence policy')
     for filename in QUANTITATIVE_SOURCES:
         relative = 'tools/sim/refit/' + filename
         if digest(Path(__file__).with_name(filename)) != data['sourceHashes'][relative]:
@@ -105,6 +139,7 @@ def predict(argument):
               'calibrationSha256': data['calibrationSha256'], 'dataSha256': digest(folder / DATA),
               'runManifestSha256': digest(folder / 'attention-future-run-manifest.json'), 'inputSha256': data['inputSha256'],
               'controllers': data['controllers'], 'targetsAtPreparation': inputs['targets'], 'forecasts': points,
+              'policyKind': data.get('policyKind', 'configured-confidence'), 'selected': data['selected'],
               'quantitativeSourceHashes': {name: digest(Path(__file__).with_name(name)) for name in QUANTITATIVE_SOURCES},
               'pointGeneratorSourceSha256': digest(Path(__file__)),
               'note': 'Uncensored new32x9 trajectories under each person’s own count-selected controller. '
@@ -256,6 +291,7 @@ def freeze(argument, live_argument):
                 'forecasts': points, 'predictionFile': str(prediction_file), 'predictionSha256': digest(prediction_file),
                 'dataSha256': digest(folder / DATA), 'run': str(folder), 'confidenceReadyAt': data['confidenceReadyAt'],
                 'controllers': data['controllers'], 'sourceHashes': data['sourceHashes'],
+                'policyKind': data.get('policyKind', 'configured-confidence'), 'selected': data['selected'],
                 'quantitativeSourceHashes': draft['quantitativeSourceHashes'], 'freezeSourceSha256': digest(Path(__file__)),
                 'liveSnapshot': str(live), 'liveManifestSha256': digest(manifest_file),
                 'note': 'New own log-attention/count-selected policy family, not a rewrite or promotion of older failed forecasts. '

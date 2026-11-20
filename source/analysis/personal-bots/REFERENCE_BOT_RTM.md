@@ -1,5 +1,22 @@
 # Human-information reference bot: evidence RTM
 
+The newer uncommitted perception checkpoint is in
+`REFERENCE_PERCEPTION_PROGRESS.md`:46/46 scoped tests, independently checked
+65-frame role evidence and all29 role openings, a complete171-case joint
+picture/role comparison with retained failures, and production-checked public
+obstacle frontiers. A failed partial-edge real-opening audit is retained;
+the repaired public dictionary is under complete repeated validation. A tiny
+observed-only controller now replans after visible unlocking. These are
+component advances, not a new autonomous
+human-information strength certificate. The full goal remains open.
+
+Later campaign research is recorded in `REFERENCE_CAMPAIGN_PROGRESS.md`.
+It adds genuine observed-only retry memory and source-bound29/80-case
+comparisons, but remains uncommitted and does not close the visual-information
+or universal-strength gates. The historical checkpoint table below continues
+to identify its exact committed implementation rather than attributing later
+work to an earlier commit.
+
 ## Contract and checkpoint
 
 Implementation: `7cd692041473f5a8ea1f93ac6dd4270218abd3c8`, branch `wip/personal-bots`,

@@ -1,4 +1,5 @@
 import copy
+import hashlib
 import io
 import json
 import shutil
@@ -38,11 +39,59 @@ def snapshot(points, timestamp=100):
 
 
 class AttentionFuturePipelineTests(unittest.TestCase):
-    def disk_fixture(self, directory):
+    def memory_fixture(self):
+        data, unused_plays, unused_scores = fixture()
+        data['policyKind'] = 'memory-grid'
+        for name, selected in data['selected'].items():
+            controller = data['controllers'][name]
+            definition = json.dumps({'controllerId': controller['id'], 'temperature': .25,
+                                     'memory': [0, 0, 0], 'learnFromLoss': True, 'seed': 20261028})
+            selected.clear()
+            selected.update(controllerId=controller['id'], temperature=.25, memory=[0, 0, 0], recall='none',
+                            selectedProfile='none_confidence025',
+                            policy={'id': hashlib.sha256(definition.encode()).hexdigest(), 'definition': definition})
+        for row in data['rows']:
+            selected = data['selected'][row['name']]
+            row.update(temperature=.25, memory=[0, 0, 0], recall='none', selectedProfile=selected['selectedProfile'],
+                       policyId=selected['policy']['id'])
+        return data
+
+    def test_memory_future_points_retain_complete_selected_policy_not_just_old_actor(self):
+        data = self.memory_fixture()
+        points = predict_data(data)
+        self.assertEqual(len(points), 96)
+        self.assertTrue(all(point['memory'] == [0, 0, 0] and point['recall'] == 'none' for point in points))
+        self.assertEqual(points[0]['policyId'], data['selected'][NAMES[0]]['policy']['id'])
+        for change in ({'memory': [1, 1, 1]}, {'policyId': 'old-actor'}, {'recall': 'configured'}, {'temperature': .5}):
+            changed = copy.deepcopy(data)
+            changed['rows'][0].update(change)
+            with self.assertRaises(ValueError):
+                predict_data(changed)
+
+    def test_changed_recall_cannot_hide_in_configured_family_or_disable_failure_learning(self):
+        data = self.memory_fixture()
+        with self.assertRaises(ValueError):
+            predict_data({**data, 'policyKind': 'configured-confidence'})
+        with self.assertRaises(ValueError):
+            predict_data({**data, 'policyKind': 'unknown'})
+        policy = data['selected'][NAMES[0]]['policy']
+        definition = json.loads(policy['definition'])
+        definition['learnFromLoss'] = False
+        policy['definition'] = json.dumps(definition)
+        policy['id'] = hashlib.sha256(policy['definition'].encode()).hexdigest()
+        for row in data['rows']:
+            if row['name'] == NAMES[0]:
+                row['policyId'] = policy['id']
+        with self.assertRaises(ValueError):
+            predict_data(data)
+
+    def disk_fixture(self, directory, use_memory=False):
         archive = directory / 'archive'
         folder = archive / 'runs' / 'future-fixture'
         folder.mkdir(parents=True)
         data, plays, scores = fixture()
+        if use_memory:
+            data = self.memory_fixture()
         sources = {}
         for filename in future.QUANTITATIVE_SOURCES:
             original = Path(future.__file__).with_name(filename)
@@ -54,6 +103,7 @@ class AttentionFuturePipelineTests(unittest.TestCase):
                   'entries': data['rows'], 'controllers': data['controllers'], 'selected': data['selected'],
                   'confidenceReadyAt': '2026-10-18T00:00:00Z', 'confidenceSha256': 'a' * 64,
                   'calibrationSha256': 'b' * 64, 'targets': {name: {'first': 101} for name in NAMES}}
+        inputs['policyKind'] = data.get('policyKind', 'configured-confidence')
         input_file = folder / future.INPUT
         input_file.parent.mkdir(parents=True, exist_ok=True)
         input_file.write_text(json.dumps(inputs), encoding='utf-8')
@@ -66,6 +116,20 @@ class AttentionFuturePipelineTests(unittest.TestCase):
                     started='2026-10-18T00:00:01Z', made='2026-10-18T00:00:02Z')
         (folder / future.DATA).write_text(json.dumps(data), encoding='utf-8')
         return archive, folder, plays, scores
+
+    def test_disk_memory_prediction_preserves_policy_and_refuses_measurement_rebinding(self):
+        with tempfile.TemporaryDirectory() as directory:
+            archive, folder, unused_plays, unused_scores = self.disk_fixture(Path(directory), use_memory=True)
+            with patch.object(future, 'ARCHIVE', archive), redirect_stdout(io.StringIO()):
+                future.predict(folder)
+                draft = json.loads((folder / future.PREDICTIONS).read_bytes())
+                self.assertEqual(draft['policyKind'], 'memory-grid')
+                self.assertTrue(all(point['memory'] == [0, 0, 0] for point in draft['forecasts']))
+                data = json.loads((folder / future.DATA).read_bytes())
+                data['rows'][0]['memory'] = [1, 1, 1]
+                (folder / future.DATA).write_text(json.dumps(data), encoding='utf-8')
+                with self.assertRaisesRegex(ValueError, 'prepared recall/confidence policy'):
+                    future.load_run(folder)
 
     def test_disk_pipeline_freezes_original_draft_and_excludes_a_start_during_computation(self):
         with tempfile.TemporaryDirectory() as directory:

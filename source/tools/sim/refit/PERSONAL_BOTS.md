@@ -1,5 +1,105 @@
 # Personal bots: chronological review
 
+### Honest Reporting And Observed Retry Memory, Oct21
+
+`personal_forecast_diagnostics.py LEDGER_JSONL OUTCOMES_JSON --output NEW_FILE`
+reports existing frozen numbers using the authoritative fixed progression cohort.
+It never calls a head or writes a ledger. Counts/coverage/exclusion reasons are
+dynamic; a stale snapshot cannot prove that a newer forecast was sealed before
+opening. Numerical80%/95% gates and source authentication are explicitly separate.
+The current v1 snapshot reproduces11/24 overall, not95%; the original misses stay.
+
+`createObservedMemory` in `personal_observed_memory.js` exposes `beginAttempt`,
+`observe` and `endAttempt` around actual production sessions. Supply current
+public pictures (null for unknown/dead), current-observation evidence and advancing
+physical tap counts. It never reads a deck. `retryRetention` and per-observation
+`decay` are explicit experimental assumptions, not fitted human probabilities.
+Retained removed pictures can survive a genuine exact-board retry; current
+recognition refreshes memory. A terminal production loss is required for another
+attempt. Partial prefixes, caps, wins, contradictory pictures, board swaps and
+same-attempt resurrection do not create free retries or fabricated memory.
+The caller must bind the actual environment/board and separately validate its
+observer; a provenance string is not self-authenticating screenshot evidence.
+
+Gemini3393854 restores identical canonical reference sources and fixes the old
+CUDA mask/clock smoke failures, but its manual personal simulator still differs
+from production, its behavioral aliases are disconnected and v2 merely copies
+old numbers with a manual Mrs adjustment. These are not adopted as predictions.
+See `source/analysis/personal-bots/GEMINI_3393854_REVIEW.md` for full retained
+counterexamples and source-bound audit paths. Own suites:196 JS groups/403 Python.
+
+### Strengthened Reference Integration, Oct21
+
+`public_witness_reference.reference()` now defaults to `REFERENCE_PARAMETERS`:
+20 taps,4096 nodes,beam32, known-board completion, paired progress and tray
+recovery from2. Call `physicalTrayPlanning(publicGeometry, publicState, actions)`
+and then acknowledge the actually selected physical tile with `acknowledgeTile`.
+`pictures` contains only legitimate observations/memory, null for unknown; no
+real concealed faces are needed. Intended inspection actions are derived from
+that public state even when callers omit inspection hints.
+
+The integrated clock-cone/safe-information/route-commitment mechanisms preserve
+20/25 research clears and3/4 controls, all29 cases retained. Eager board-twin
+reopening regresses Dennis153; constructive-witness gating fixes the small
+reopening cases without that regression and shares the original node budget.
+Unexamined heuristic exclusions cannot prove death. New information may preserve
+a route; forgotten/contradicted earlier pictures or changed live down status do not.
+
+Reproduce using `personal_reference_integration_screen.js PARENT BASELINE_DATA`,
+then `personal_reference_integration_verify.js RUN_DIRECTORY`. The final archive
+is integrated-witness-2026-10-21T06-26-39-284Z. All1740 known physical transitions
+are checked against actual production actions; no caps/unsupported/unmatched
+frames occur. This still uses the unchanged symbolic observer, not a validated
+full screenshot benchmark or prospective personal forecast. Do not reuse old
+personal fits as though their source/observation contract had not changed.
+
+Gemini72b8c19 itself reproduces19/25, not the reported20/25. Its95% retrospective
+head evaluation does not establish later frozen personal accuracy. CUDA rollout
+physics has source-bound down-mask and inspection-clock counterexamples on the
+RTX3070, so it is not used for production solvability. See
+`source/analysis/personal-bots/GEMINI_72B8C19_REVIEW.md` for accepted mechanisms,
+all failed variants, evidence paths and remaining limits. Own validation passes
+195 JS groups and397 Python tests.
+
+The production scene/memory bridge now also passes6 tiny physical fixtures,
+29 frames/68 banks/23 taps, including ice/key/lock/clock transitions. The first
+real screenshot attempt remains an explicitly stopped public-policy cycle, not
+a completed human loss; current frozen-state replanning escapes that known
+cycle, but a complete real-level replay is still required.
+
+### Pixel Template Performance Controls
+
+`observe(page, callback, { templateMode: 'parallel' })` uses four separate public
+template pages, never the original hidden markup/game state. Default remains
+`serial`. `personal_pixel_atlas_audit.js full parallel` compares complete candidate
+bytes, context, masks and final observations against serial rendering. Final18:19
+run passes48 banks/1776 candidates across8 declared fixtures; measured audit time
+falls112.216s ->75.751s (1.481x). This is not a CUDA or general speed guarantee.
+Both atlas variants failed and remain archived; atlas dispatch is explicitly refused.
+
+`production_pixel_session_audit.js parallel` exercises actual persistent taps.
+Use `personal_pixel_session_compare.js CONTROL CANDIDATE` to verify archived
+hashes, independently replay support/context/memory and require exact complete
+case parity. Final18:23 parallel run matches the18:01 serial control across all
+5 tiny fixtures/22 frames/47 banks per run, including raw production traces.
+Finite renderer equivalence does not validate all obstacle visibility, full human
+perception, the25-case reference milestone or80% new-game count accuracy.
+
+### Persistent Physical And Pixel Sessions
+
+`production_physical_session.js` exposes resumable production physical choices
+without private pictures/decks or free restarts. Its audit matches1067 physical
+choices across16 eligible retained paths of20 attempts (14 complete,0 caps).
+`production_pixel_session_audit.js` exercises screenshot singleton memory, public
+witness search and actual taps in one persistent loop: final18:01:57 audit passes
+5 tiny fixtures/22 frames/17 taps/47 banks, with source/artifact hashes verified.
+Offline reference pages use settled-static animation-free sampling; production
+action timing and clock costs remain unchanged. Public clock badge projection
+preserves icon/count/urgent styling without original HTML. This is not the25-case
+strength benchmark or80% evidence. Full structural visibility, keys/ice/flight
+rendering, robust perception and larger real-level performance remain unvalidated.
+CUDA is available on the user's RTX3070; Node branching search has no GPU backend.
+
 ### Fresh Own Models And Versioned Prefixes
 
 `personal_app_reference.js` verifies immutable upstream app sources and all218 fixed1.58 boards
@@ -1425,3 +1525,1056 @@ forgetful or imposing one shared greed/recall rule. Existing zero-recall results
 from a different earlier controller cannot validate the current policy.
 `personal_attention_count_snapshot.py` preserves the complete calibration and
 failed correction while verifying all five original ledger hashes unchanged.
+
+### Own retry-picture recall count experiment
+
+`personal_attention_memory_data.js prepare <completed-attention-count-run>` pins
+a new immutable measurement closure. The fixed grid crosses incoming picture
+recall `none=[0,0,0]`, `configured=[.75,.5,.75]`, `full=[1,1,1]` with temperatures
+`.25,.5,1,1.5`. Every profile retains simulated-loss avoidance. These are effective
+simulator parameters, not a diagnosis of how well a person remembers pictures.
+The current own static/joint/log-attention models and the exact20 prior boards
+per person remain fixed. Every complete policy identity includes its controller,
+temperature, memory, seed and enabled failure learning.
+
+Run `pilot` and then `full` from the newly printed frozen run's own helper.
+Pilots are2x3 lifecycle checks only; full measurements are8x8. Configured full
+chains are reused from the completed actual run only after checking all prior
+source hashes, identical loaded runtime dependencies, exact boards, own actor
+bindings and actual count metadata. Configured pilots still delegate directly
+to the unchanged prior helper. New recall profiles are genuinely simulated;
+all first-attempt rates must match the configured profile at the same temperature.
+Full measurement reruns every pilot and does not reinterpret computational caps
+as human failures or remove difficult levels.
+
+`personal_attention_memory_fit.py <full-data-file>` selects each person's own
+complete policy by recency-weighted proper1..7/8+ count likelihood over all20
+prior clean calibration boards. Computational censoring rejects the entire own
+profile, not merely its troublesome boards. The existing future pipeline is
+defaults to the older fixed-memory confidence model. Its explicit `prepare-memory`
+mode instead requires an actual completed own memory/confidence fit, verifies the
+unchanged calibrated runtime and carries the complete selected policy ID, recall
+and memory through simulation, numeric prediction and freezing. It never silently
+substitutes a changed policy. Same-family frozen numbers/frontiers remain fixed
+across updates. No real new-memory forecast is created by temporary unit fixtures,
+and training selection cannot establish80% on new levels.
+
+### Independently verified physical-factor measurements
+
+The new Gemini generator was verified independently against its full400-record
+archive, not just four Mrs benchmarks. Five simulation fields reproduce exactly
+on all400 after retaining a separate documented recent-model supplement; the
+literal cache-priority audit's29 missing models remain recorded. Two historical
+meanMateDepth sentinel discrepancies remain explicit (archive10/generator6).
+The other eleven simulation fields and generic reference rates are not certified.
+
+`personal_verified_factor_features.js` implements only the five reproduced
+measurements. Callers supply explicit source-bound own profiles; this does not
+replace an individual bot with a universal greedy controller. The first-trial
+statistics use fresh memory/avoidance state and original seeds. Retry rates keep
+the exact32-attempt horizon, canonical attempt factory and memory lifecycle.
+Computational caps throw instead of becoming human failures. Four-person actual
+parity with pinned originals and focused lifecycle/censoring tests pass. This
+extractor is not yet a count prediction head or a numeric pre-opening freeze.
+
+### Verified-factor count head and clock-capacity experiment
+
+`personal_verified_count_data.js` binds all305 earlier historical/recent boards
+to the independently reproduced five simulation signals and six public geometry
+fields, plus public clock presence/budget. This restores85 boards unavailable
+to the older geometry-only experiment. Raw generic reference rates, unverified
+variant fields, other-person outputs and target labels cannot enter the feature
+vector. Actor identities/availability and historical-exploratory caveats remain
+explicit. Two old no-mate depth sentinel inconsistencies use regenerated6.
+
+`personal_verified_count_fit.py` fits the same declared forest settings as the
+earlier geometry-only control, independently per person. Raw and own clock-regime
+variants compete only on strictly earlier own count likelihood. All80 reused
+comparison targets remain. The selected diagnostic is34/80, not80%; Dennis's
+newer reused clock cohort is16/23. These are retrospective development results,
+not validated future predictions, and the head is not promoted as reliable.
+
+`personal_clock_capacity.py` and `personal_clock_capacity_choice.js` test a
+different controller representation: optional known-pair preparation can belong
+to the clock pair mode before a fully known safe exit exists. Proven traps remain
+outside that mode; ordinary choices still have support. An internal eligibility
+adapter changes only the pair emission mask, not physical exit flags, transition
+contexts, search results or engine rules. Priors/transitions are independently
+refitted from each person's exact445-prefix membership. Tray behavior is retained.
+The changed base gets a fresh own log-attention fit rather than old offsets.
+Both compound runtimes match all39268 native decisions/posteriors;21707 PUK/Gerda
+decisions retain the exact earlier attention probabilities.
+
+The immutable paired first-attempt experiment is8x1 on all80 prior boards, not
+winning-count calibration. It has80 exact earlier first controls,40 unchanged
+no-clock controls andzero caps; only five board-level first rates change.
+`personal_clock_capacity_count_data.js` prepares a separate full8x8 old/new
+comparison of one declared own proposal per person. Earlier own memory and
+temperature settings are fixed on both sides, not relabelled as a new confidence
+fit. Every fresh baseline must reproduce the old whole chain; new first rates
+must match the completed8x1 probe and no-clock whole chains must remain equal.
+No computational boundary is a human failure, and none of these stages creates
+an actual future numeric forecast or establishes80% accuracy.
+
+### Full16 factor reproduction and expanded own count experiment
+
+The new Gemini generator commits2d1e579/7caabcb reproduce all16 simulation
+fields across400 exact task records in an immutable independent full26 audit.
+Historical276 secondary variants are cached lookups; the124 recent/future
+records alias six missing variants to one Plan8 chain. Reproduction is not an
+independent regeneration of those cached policies or proof of future accuracy.
+The actual full26 assembler matches236/400. Its openPairs fallback differs on162
+boards; openingPairCount in personal_public_opening.js implements the correct
+archived disjoint geometrically-free face-up picture-pair count, distinct from
+takeable pair-equivalent support. It matches400/400. The remaining two complete
+dictionary differences are old no-mate sentinel inconsistencies (Dennis65/73).
+
+personal_variant_count_data.js binds the newly available11 simulation fields to
+the earlier305 exact own records, retaining actor availability and per-record
+cached-versus-aliased policy provenance. The24-dimensional vector excludes
+generic reference scores and openPairs; target labels never enter it.
+personal_variant_count_fit.py uses the same fixed forest settings and strictly
+earlier own count-likelihood selection through an explicit feature-schema
+parameter in the old fitter. The original five-signal contract remains default
+and still rejects extra variant/generic fields.
+
+The expanded head achieves40/80 on the fixed reused development comparison,
+versus34/80 for the five-signal head and38/80 for always-first. Dennis11/20,
+Mrs7/20, PUK13/20, Gerda9/20. Dennis's recent development cohort16/23 is unchanged.
+No new head, controller or future numeric forecast is promoted as80%-accurate.
+The earlier capacity whole-count experiment is terminal and REJECTED: Dennis
+and Mrs count likelihood worsen; PUK/Gerda controls are unchanged.
+
+### Restoring distinct known-route policies on recent/future actors
+
+personal_fresh_known_fit.py uses the unchanged445-prefix public tray annotations
+and exact own actor memberships to fit33 known-route residual models. Four
+actually fitted future actors remain distinct from29 exploratory historical
+actors. The route coefficients can favor or oppose a behavior; planner-boundary
+weight stays zero. personal_fresh_known_audit.js verifies44290 native/runtime
+probabilities across503 reference prefixes plus exact zero-residual controls.
+
+personal_fresh_known_counts.js measures two genuinely different policies rather
+than aliasing both to ownStylePlan8. The known-route and zero-residual controls
+retain plan8, full32-run/32-attempt memory RNG, configured recall and simulated
+failure avoidance. Exact actor/model bodies and full policy definitions are
+bound. The immutable experiment retains all29 recent boards and four explicitly
+archived planning probes; none is called a new unopened forecast.
+
+personal_distinct_route_count_data.js will replace only kp8_w8/kp8_j2/kz8_w5
+after uncensored full measurement. It preserves all276 historical rows and all
+29 recent rows, plus the remaining four explicitly aliased policies. The paired
+count results and any development score still cannot establish pre-opening80%.
+
+personal_reference_count_data.js/personal_reference_count_fit.py separately test
+strong/average generic simulation scores as public-board difficulty covariates,
+not personal behavioral policies. This is allowed information, but the declared
+27-feature experiment scores38/80 versus24-feature40/80, so it is not promoted.
+The default earlier feature-schema contracts remain strict.
+
+The distinct known-route count run is now complete:33 paired32x32 tasks, zero
+caps,31 distinct known/zero complete chains. The bridge updates all29 recent
+records (27 changed feature vectors), retains276 historical records exactly,
+and labels the remaining four aliased policies. The declared count head still
+scores40/80 reused targets and Dennis16/23 recent, so no accuracy improvement or
+head promotion is claimed. This excludes the missing-known-policy aliases as a
+sufficient explanation of the remaining winning-try error; further independent
+personal first-attempt/retry signals are needed.
+
+### Direct own first-attempt and follow-through diagnostics
+
+personal_first_signals.js supports exact per-attempt factory metadata and fresh
+seeded first trials. It emits12 success/failure-cause/remaining/decision/seen/blind
+signals, without truncating a retry chain or treating computation caps as losses.
+The source-bound309-task run passes309 old first-decision controls and four
+full32x32 first-rate controls. personal_first_count_data.js binds all305 exact
+own records to36 features. The fixed forest still scores40/80 reused targets;
+Dennis recent15/23 is worse than16/23, so no promotion. The separate calibrated
+first/retry hazard model scores30/80; its interpolated interval hazards are
+explicitly model assumptions, not newly simulated retry frequencies.
+
+Dennis's recent simulated failures are mostly tray failures: Plan8 succeeds on
+average.166 first tries versus observed human.696, while clock expiration is
+only.0014 of trials. This motivates investigating sequential option quality
+rather than adding more clock-budget thresholds or merely rescaling counts.
+
+personal_fresh_follow_data.js reconstructs445 exact versions and extracts6071
+natural match/2437 natural pair-follow opportunities. personal_fresh_follow_fit.py
+fits33 own version-bound per-tray next-action-rate models. Native/JS parity is
+exact on every weighted rate. personal_fresh_follow_first.js retains optional
+pair/match following and declined choices; it does not impose a universal greedy
+strategy. All33 first-only paired probes match66 old success-rate/33 decision
+controls. Directly grafting these unconditional gates worsens Dennis's raw first
+Brier despite a small Full14 AUC gain; this candidate is not promoted or claimed
+as full count calibration. Genuine pre-opening numerical forecasts and later
+real per-person winning attempts are still required for the80% goal.
+
+### Fixed-source prospective handoff-head trial
+
+personal_source_bound_causal_data.js pins exact own actors, the independently
+preserved head/generator/engine, explicit measured26-factor history and exact
+fixed boards. It retains all24 consecutive future levels/person, reuses86
+independently reproduced feature records and actually simulates ten missing
+boards. Public pair counts/sentinels use reproduced definitions; historical
+cached variants and six future policy aliases stay disclosed.
+
+personal_source_bound_causal.py creates numerical drafts, requires a fresh
+separate opening check AFTER numerical computation, and appends locked/fsynced
+same-family immutable points. Quantitative source/dependency, completion, draft,
+opening and input hashes are bound. No implicit feature fallback, late opening,
+unknown app version, source/cohort reset or earlier-number replacement is allowed.
+
+The original86 points cannot be retroactively source-bound, so they stay in
+their own unchanged ledger. The new source-bound-handoff-factor-future-v1 family
+is a declared experimental hypothesis, not accepted retrospective78/80 proof.
+At2026-10-19T14:58:46.082UTC it freezes96 points: D157..180,M107..130,
+P54..77,G69..92. Original frontiers/empty cohort anchor remain, with actual
+numeric eligibility using the new freeze. A race-opened, pending, missing,
+unknown-board or hard first20 campaign remains in the score; replays do not
+prove the primary target. Both old and new families receive separate scores.
+
+The first independent post-freeze observation has0 primary openings/completions
+for every person. Goal remains unproven until each first20 future cohort has
+20 eligible completed predictions and at least16 correct. Do not select the
+best family after outcomes or change any frozen point. See the actual research
+numbers in source/analysis/personal-bots/SOURCE_BOUND_FORECASTS.md; no dashboard
+or Firebase content is updated by this local experiment.
+
+### Tray-failure and attention-conditional sequencing diagnostics
+
+`personal_tray_failure_probe.js` passively reproduces all80 earlier first-try
+controls (640 actual trials). None of the265 tray-failure final decisions has an
+immediate matching alternative. Do not replace earlier planning with a universal
+last-move match/avoid-fatal rule; an inspection need not be a real escape.
+
+`personal_attention_handoff_fit.py` fits own contextual recipient odds on the
+actual fixed log-attention probabilities. It is distinct from the older handoff
+fit on pre-attention offsets. `personal_attention_handoff_audit.js` checks all445
+prefixes/39268 probabilities, latent posteriors and exact zero controls.
+`personal_attention_handoff_counts.js` measures all80 paired full8x8 retry chains
+with bound new-policy IDs and exact earlier whole-chain controls. Fixed old
+memory/temperature settings are diagnostic proposals, not automatically valid
+confidence calibration for the changed controller.
+
+The completed2026-10-19T15-13-32-679Z run has80 exact whole controls and zero caps.
+`personal_attention_handoff_summary.py` validates source/input closure, retained
+board membership, full-policy identity and empirical count distributions.
+Its proper recency-weighted count likelihood is WORSE for every person, despite
+better training action fit. Reject this candidate for every person; do not
+promote PUK based only on its one extra training point or globally apply a
+greedy finishing policy. These are training comparisons, not80% evidence.
+
+`personal_planning_risk_audit.js` separately compares public planning risks on
+all39268 recorded human decision states, using native attention probabilities.
+It distinguishes proven traps from unknown/bounded routes and does not simulate
+autonomous outcomes. Dennis's tempered bot already declines many risks more
+strongly than he does on those states. Further work must explain earlier
+trajectory/knowledge gaps, rather than assume insufficient matching is the cause.
+The96 actual primary future forecast numbers stay unchanged by these diagnostics.
+
+### Separate action-kind and tile-option confidence
+
+`personal_factorized_choice.js` tests separate temperatures for total action-kind
+mass and the conditional distribution over tiles within that kind. Ordinary
+flattened temperature can change kind mass according to how diffuse/numerous
+its tile options are. The factorized transform avoids that interaction without
+forcing matches or pooling individual preferences. Identity1/1 preserves exact
+delegation;600 independent NumPy/JS cases and native attempt-state reset pass.
+
+`personal_factorized_action_audit.js` decomposes native own action likelihood on
+all445 prefixes/39268 decisions into kind and within-kind terms. Recorded-state
+kind fit improves, but this teacher-forced diagnostic is not count evidence.
+
+`personal_factorized_count_data.js prepare` snapshots a fixed five-profile own
+experiment: the exact old flat control, plus kind temperatures0.25/0.5/1/1.5,
+holding each person's old within temperature and recall fixed. Run `full` from
+the returned immutable source snapshot, not the mutable checkout. Completion
+refuses overwrite/restart; monitor the actual owned process/session. Caps remain
+explicit computation censoring, not human failures. Every board's flat whole
+chain must reproduce the actual earlier count, not just its first-attempt rate.
+
+The completed2026-10-19T15-24-56-578Z run measures400 whole8x8 chains on all80
+boards,80 exact controls, zero caps. `personal_factorized_count_fit.py` validates
+source, policy, original board/outcome membership and every declared profile,
+then selects independently per person by proper recency-weighted count loss.
+Every person selects the unchanged flat control for probability calibration.
+That surrogate is NOT a veto under the actual user objective of tolerance-rule
+point accuracy. `personal_factorized_accuracy_audit.py` separately preserves PUK's
+kind0.25 accuracy lead:15/20 versus13/20 flat (3 gained,1 lost) and14/20 always-first.
+Kind0.5 reaches14/20 (3 gained,2 lost). These are reused-training research leads,
+not independent held success or automatic promotion; no other person gains net
+point correctness. Do not silently replace the actual goal with log likelihood.
+This is not an exhaustive kind/within interaction search, nor independent held
+accuracy or80% proof. Keep all96 primary frozen future numerical points unchanged.
+
+### Full confidence interaction grid, accuracy-first
+
+`personal_factorized_joint_data.js prepare` declares the complete4x4 kind/within
+temperature grid0.25/0.5/1/1.5 plus the exact old flat control,17 policies/person.
+It binds the actual controller/transform sources and preserves each own picture
+recall and simulated-loss learning. Only the five identical previously measured
+policies per board may be reused after source and exact policy-ID validation;
+one actual earlier whole factorized chain is rerun per board before12 new full
+profiles. The declaration retains all80 boards:400 exact reused chains,
+80 fresh controls and960 fresh new8x8 measurements. Monitor the actual session,
+not only the presence/absence of a result file; never restart a live run.
+
+`personal_factorized_joint_fit.py <complete-data>` validates the full declared
+grid and selects by the actual agreed point-accuracy objective. Flat retains
+accuracy ties; likelihood is only a secondary tie-break among new candidates.
+It additionally checks factorized1/1 against every actual earlier raw whole
+chain. Censored profiles remain explicit and cannot masquerade as human8+.
+The selector-only first10/latter10 diagnostic is NOT human-held evidence since
+the actors saw later actions. This is source-bound training research; independent
+future accuracy remains required and the original96 primary forecasts stay fixed.
+
+### Full-grid result and pair-capacity clarification
+
+The complete joint grid has finished:80 boards,17 profiles/person,400 exact
+reused chains,960 fresh new8x8 measurements,80 fresh old whole controls, zero
+caps. The accuracy-first fit additionally reproduces80 old raw1/1 whole controls.
+Training selection: Dennis flat10/20,Mrs flat5/20,PUK kind0.25/within1.5 at15/20,
+Gerda kind0.25/within0.5 at13/20. None establishes the required future80%.
+
+Dennis explains that his first/second unmatched tile need not immediately find
+its partner, but leaving three unmatched tiles removes room to start a separate
+face-up pair. `personal_pair_capacity.js` therefore distinguishes immediate
+occupancy from a temporary third tile with known clearance. Do not replace that
+with a blanket pickup penalty or universal greedy matching.
+
+`personal_pair_capacity_intents.js` identifies optional public nonjoker progress
+whose known follow-ups restore the previous occupancy. This can admit first
+tiles of known face-up pairs omitted by the older recovery mode. Fresh own
+latent fits in `personal_pair_capacity_intents.py` and a genuinely refitted
+attention layer in `personal_pair_capacity_fit.py` are required. Clock intent
+bodies remain fixed; refitted attention can change final clock probabilities.
+`personal_pair_capacity_runtime.js` reproduces445 prefixes/39268 probabilities
+and posteriors,1378 original raw clock controls and39268 zero-attention controls.
+That is implementation parity, not count-prediction success.
+
+`personal_pair_capacity_later.js` checks all later observed campaigns with a
+fixed paired proposal/person, fresh32x9 seed and four real old8x8 controls.
+Pending and fit-overlap campaigns remain explicit; an earlier partial recording
+in Gerda68 prevents calling it excluded-fit evidence. The completed18-case run
+has zero caps; later excluded-fit point results are Dennis2/5 old and new,
+Mrs3/10 old versus2/10 new. Do not promote this candidate on action fit. These
+outcomes were previously observed: this is NOT pre-opening prospective proof.
+
+### Actual prospective failure must remain visible
+
+At2026-10-19T18:45:31.647UTC, the original source-bound family scores Mrs107..113
+at0/7: predictions2,5,1,5,2,2,2; actual3,1,2,2,1,4,1. Her original first20 window
+can now reach at most13/20 (65%), so this candidate has FAILED its80% target.
+The old legacy family scores1/7 and must not be chosen instead after outcomes.
+Dennis/PUK have0 primary openings; Gerda69 is pending. All96 original numeric
+points remain unchanged. `personal_prospective_bounds.py` recomputes the fixed
+ledger score and reports conservative feasibility bounds without moving cohorts
+or converting unknown/pending games into losses. Any genuinely new model still
+needs its own declared pre-opening validation; do not erase this failed trial.
+
+### Do not confuse failed settings with an impossible strategy family
+
+See `source/analysis/personal-bots/RESEARCH_POLICY.md`. The frozen original trial
+failed, but research continues. Retain candidates and check implementation,
+partial strengths, own confidence/memory tuning and interactions before ruling
+out an approach. Native parity alone cannot establish predictive accuracy;
+small standalone count failures cannot establish that a mechanism is useless.
+
+`personal_route_blend_data.js prepare <immutable-capacity-later-run>` declares
+all80 original own calibration boards and a complete3x3 blend/confidence grid.
+Run its copied `full` worker in the returned snapshot. Eight-run nine-attempt
+chains use fresh seed20261030; all80 canonical old controls must reproduce.
+`personal_route_blend_fit.py <completed-data>` selects each person's settings
+by agreed point correctness, not action fit. This is reused training evidence.
+`personal_route_blend_later.js <model-file>` independently checks the prior-own-
+selected settings with fresh32x9 seed20261031 on all18 later observed campaigns;
+`personal_route_blend_later_summary.py` retains pending, caps and fit overlap.
+Already-observed later outcomes never count as prospective80% proof.
+
+`personal_clock_failure_probe.js` is passive and reproduces36 earlier first-rate
+and36 raw-path controls. `personal_clock_phase_audit.js` separates nonclock
+failures from before/after-clock losses and compares actual earlier human clock
+choices with teacher-forced own bot probabilities. Do not infer a universal
+safety rule from autonomous rollout failures without this state-distribution
+check. Optional clock preparation has measured human coverage but no fitted or
+validated improved controller yet.
+
+### Fitted optional clock preparation, fine strengths and current replay evidence
+
+The previous paragraph describes the earlier unfitted stage. Clock preparation
+is now fitted experimentally using `personal_clock_preparation_fit.py`, with
+separate original/capacity tray combinations and own refitted attention where
+clock evidence exists. `personal_clock_preparation_runtime.js` checks all890
+prefix/combinations,78536 actions, disabled clocks, unchanged raw nonclock
+policies and people without clock evidence. Fitting/runtime parity is not count
+accuracy or permission to import another person's behavior.
+
+`personal_clock_preparation_count.js prepare` pins a complete2x5 preparation/
+fine-blend grid on all40 prior own clock calibration boards. Run its copied
+`full` worker in the returned snapshot; then run
+`personal_clock_preparation_count_fit.py <completed-data>`. Actual point
+correctness is primary and the prior own selected controller wins accuracy ties.
+The experiment completed280 fresh8x9 chains plus120 exact reused controls and
+four real whole-chain controls, with zero caps. Confidence/recall stay fixed
+proposals during this stage, not inherited optimum calibration.
+
+`personal_clock_preparation_later.js <live-outcome-folder>` checks prior-selected
+settings against all later current campaigns, preserving unchanged people,
+pending outcomes and fit overlap. `personal_clock_preparation_later_summary.py`
+independently validates and scores the resulting25-case check. Its Dennis2/5,
+Mrs1/10 and Gerda2/7 scores are retrospective, not prospective80% proof.
+
+`personal_prediction_stability.py` separates exact finite-simulation point
+sensitivity from behavior accuracy. `personal_live_replay_audit.js <live-folder>
+<person> <level>` saves separate read-only per-attempt GETs and tests exact
+observed physical paths. `personal_retry_route_audit.js <replay-audit-folder>`
+measures opening overlap and strictly earlier exposed pictures. Auto-finish
+boundaries remain incomplete; exposed pictures do not imply human retention.
+No existing fitting archive or original numerical forecast is overwritten.
+
+### Repeated strategy changes inside evaluation data
+
+`personal_online_strategy_data.js <same-live-outcome-folder>` collects a separate
+read-only replay snapshot for every campaign in the completed 25-case later
+check. It reconstructs exact observed paths with combined public planning and
+each person's own none/full retry-knowledge setting. Constant three-part recall
+vectors are recognized as their scalar endpoints; genuinely stochastic recall
+is explicitly refused rather than silently annotated under another assumption.
+Repeated start events for one resumed AID remain one attempt. Missing natural
+prefixes remain explicit and cannot update the learner. All four own actors are
+retained, including PUK with no later campaigns.
+
+`personal_online_strategy.js` implements person-local cross-level strategy
+weights over that person's original/capacity policies and, where own clock
+evidence exists, both preparation variants. Each component observes only the
+same actual chosen action. Four declared procedures compare fixed, gradual,
+fast and winning-route-balanced learning. The latter reserves half a completed
+campaign's learning weight for the winning attempt, instead of allowing many
+failed retries to overwhelm it. Each campaign contributes one update; fixed
+share permits repeated switches instead of permanently eliminating a strategy.
+These are bounded own-policy mixtures, not a claim to learn every new strategy.
+
+`personal_online_strategy_measure.js <returned-run-folder>` freezes the strategy
+state at each historical opening using only earlier completed, available own
+campaigns. It runs all four procedures at 16 simulations, nine attempts and
+seed20261101, preserving pending and fit-overlap cases. Exact identical weights
+can reuse a chain on the same board; changed weights are actually simulated.
+This is an explicitly retrospective count pilot, not a prospective trial. The
+actors and newer strategy families were developed after some target openings.
+Reconstructed client availability does not prove historical server availability.
+
+`personal_online_strategy_summary.py <run-folder>` independently reconstructs
+the chronological updates in Python, verifies all natural-action losses and
+reports each person's full scores plus ordered five-game windows. It does not
+select a new setting using these target outcomes.
+`personal_online_strategy_endpoint_audit.js <run-folder>` checks 12 actual whole-chain one-hot controls
+against the existing controllers at two runs, nine attempts, seed20261102.
+
+`personal_online_recall_audit.js <run-folder>` separately compares identical
+observed physical paths under causal none/full retry knowledge and reproduces
+all current-setting probabilities. Knowledge stamps are expected to differ;
+physical choices/outcomes must not. The underlying own actors were trained
+without carried retry knowledge, so this fixed-actor likelihood check alone
+cannot identify human retention or validate a changed memory setting.
+
+### Retention-matched, changing move preferences
+
+**Information-boundary warning:** a newer hidden-inventory replacement audit
+finds that the legacy extractor's `reveal` and `flipHit` fields use the true
+unrevealed picture histogram. Earlier hidden-permutation tests did not catch
+this. Both76- and78-feature adaptive families consume these fields, so neither
+may be promoted as human-information-limited until extraction and dependent
+training data are repaired. Their existing count runs remain retained research
+diagnostics, not accepted future validation. The newer publicRetention-v3 family
+below uses the corrected explicit public mode; this does not repair old results.
+
+`personal_retention_residual_data.js <completed-online-strategy-run>` builds a
+new immutable paired dataset from all445 original own prefix versions and66
+available later natural prefixes. It retains two historical physics boundaries
+as retained-prefix evidence, not complete games, and keeps the missing pending
+prefix explicit. Old split12+5 planning fields are combined without rewriting
+their source. None/full retry variants preserve the observed physical paths;
+full retention uses only same-campaign earlier available recorded knowledge.
+Missing earlier recordings are not magically supplied as human memory.
+
+`personal_retention_fit.py` fits actual move-preference changes around the
+previous own selected controller, rather than only mixing fixed strategies.
+The76 public residual features exclude absolute tile coordinates and picture
+identity fields and include public planning plus action-kind/tray/clock/key
+interactions. Sparse conditional likelihood uses own-person data only,
+regularization10, coefficient bounds4, one campaign learning mass and a
+20-campaign recency half-life. Balanced and winning-route-weighted fits are
+separate proposals; a later clear cannot label an earlier prefix prematurely.
+
+`personal_retention_residual_fit.py <run-folder>` refits both recall endpoints
+and learning procedures at every historical opening, excluding every target
+AID and selecting only the latest earlier version per attempt. It also saves
+current fits to the supplied history, not a claim that this snapshot includes
+all subsequently played games. Historical logical cutoffs are explicitly not
+actual pre-opening readiness. `personal_retention_residual_audit.js` checks all
+28,092 next-campaign choices (364,064 alternative probabilities) against independent Python
+math and exact disabled emissions. `personal_retention_residual_control.js`
+checks four actual old selected8x9 retry chains including PUK's configured recall.
+
+`personal_retention_residual_count.js <run-folder>` runs all six none/full by
+disabled/balanced/winning arms on all25 pinned later campaigns,16 simulations,
+nine attempts, seed20261105. `personal_retention_residual_summary.py` independently
+checks chronological own rosters and reports primary correctness, ordinal score,
+bucket/raw representative MAE, recent distance and ordered windows. Closer misses
+stay visible even without an accuracy gain. The eight-plus bucket does not
+pretend to estimate the exact unresolved ten-plus tail. This remains retrospective
+research and cannot replace a genuine future frozen trial.
+
+`personal_gemini_coach_review.js <Gemini-checkout>` independently reproduces
+covered-picture and clock-macro counterexamples and checks the updated handoff
+against the actual unchanged ledger. It reads that checkout without editing it;
+see `analysis/personal-bots/GEMINI_COACH_REVIEW.md` before treating the coach's
+own-engine21/21 result or recalculated live scores as accepted validation.
+
+### Joint inspection history and confidence interactions
+
+The completed first residual pilot did not improve overall later-case count
+quality. All150 cells completed without numerical caps; primary eligible
+denominators remain Dennis5, Mrs10 and Gerda7, with no later PUK cases. Both
+accuracy and ordinal distance are reported in the immutable parent summary;
+individual closer misses are not discarded, but do not establish overall gain.
+
+`personal_retention_loop_probe.js <residual-run> <person> <level>` records a
+separate256-choice first-trial diagnostic. It is not a restart, a replacement
+count outcome or a human failure. On Gerda75 the old disabled bot also repeats
+inspections excessively. This is not a newly introduced-only regression.
+
+`personal_retention_attention_data.js <completed-residual-run>` appends two
+observed-history features to the exact76 sparse public features. It reconstructs
+all511 original prefix versions under both recall endpoints without rerunning
+planning, checks every non-planning column and alternative order, and preserves
+the original17 planning fields and base probabilities unchanged. Identity is
+used only to count previous inspections, not to learn a picture/location bias.
+Counts reset on removals; first required and productive reopens stay unpenalized.
+Full recall uses exactly the parent's causal recorded-prefix memory roster.
+
+`personal_retention_attention_study.py <attention-run>` jointly fits all78
+coefficients at the100 original logical cutoffs and saves16 current own fits.
+The repetition coefficients can learn either sign. This is not a hard repeat
+ban or an assumption that human rechecking is always a mistake. All prior
+target exclusions, own-person constraints, campaign recency and winning-route
+availability gates remain in force.
+
+`personal_retention_attention_audit.js <attention-run>` verifies independent
+Python/JS emission parity, exact embedding of the old76-feature fitted models,
+and four actual disabled8x9 whole-chain controls. It also reports action entropy
+and NLL: fitting observed choices can soften the already sharpened old policy,
+so better action NLL alone cannot establish better autonomous play.
+
+`personal_retention_attention_count.js <attention-run>` tests the full declared
+none/full by balanced/winning by confidence0.25/0.5/1 grid on all25 pinned cases.
+It simulates300 actual16-run, nine-attempt chains and reuses50 exactly unchanged
+parent disabled controls at the same seed20261105. All14 arms stay visible;
+there is no per-target oracle or outcome-based profile selection. Do not
+restart a live run or edit its hash-bound sources.
+
+After terminal completion, `personal_retention_attention_summary.py
+<attention-run>` validates all100 own earlier version rosters and300 model-policy
+applications, preserves pending/fit-overlap cases and reports accuracy, recent
+and ordinal distance, moving windows and closer misses against both disabled
+and old learned residuals. This remains retrospective research, not evidence
+that later frozen predictions meet80%.
+
+### Hidden inventory observation audit
+
+`personal_hidden_inventory_audit.js <attention-run>` captures the production
+pre-action observation on three six-tile deals. All have even picture counts
+and the same visible opening. Permuting unseen pictures preserves all features,
+but replacing their unrevealed inventory changes `reveal` and `flipHit`, despite
+zero moves/reveals and identical public planning. No public deck multiset is
+supplied. The original own selected policies happen to be invariant on this
+fixture; all32 current76/78-feature fitted variants change probabilities.
+
+This is a failing observation-boundary audit, not a claim it explains all count
+errors or that its unit tests prove information safety. Repair the underlying
+unknown-picture expectation using genuinely public information, audit all other
+raw features for the same problem, and regenerate dependent annotations/fits
+before any new frozen evaluation. Preserve the old sources/results; do not edit
+the hash-bound engine while an owned count experiment is still running.
+
+### Corrected public-observation personal policies
+
+The old attention/confidence run was explicitly administratively stopped after
+the confirmed observer defect, not after an observation timeout or an accuracy
+miss. Its333 completion-progress messages, frozen sources and stop rationale
+remain in its directory. No final numeric count file exists; do not run its
+summary, invent accuracy or restart it in place. The strategy/confidence family
+continues with corrected observations, rather than being discarded.
+
+`Hard.play` now supports an explicit256-entry normalized `publicPicturePrior`
+for physical observers. Unknown-match expectations use this declared prior,
+never the actual concealed histogram. Tray safety counts only known matching
+down tiles. Old unflagged mode is retained for historical level-generator and
+forecast reproducibility, not accepted as an information-limited reference.
+New public personal selectors require the engine-emitted `observationVersion1`
+marker, person identity and bound prior; they refuse unmarked/private features.
+
+`personal_public_picture_prior.js` supplies a declared uniform prior over the36
+ordinary pictures plus wildcard. This is non-oracle but not posterior-optimal.
+`personal_observation_contract.js --public` compares308 captures/264 same-public-
+state hidden-inventory pairs spanning clock, tray0..3, side blocking, covered
+face-up/down tiles and keys. All264 pass in the integrated public mode. Legacy
+has136 failing pairs; replacing the histogram alone still leaves four failures
+in `stuckSoft`, which the additional known-only tray-safety correction fixes.
+This finite sweep does not prove universal noninterference or perfect play.
+
+`personal_public_engine_prototype.js` is a source-anchored research/ablation
+tool, not the production runtime. The integrated engine's normalized source
+exactly matches the prototype used for the new data. Frozen source copies stay
+available for independent historical replay after deliberate integration.
+
+`personal_public_retention_data.js <old-attention-run>` regenerates all511 own
+prefix versions in both retention modes. It checks1022 physical and public
+planning paths, recomputes all78 sparse features and base emissions, and retains
+only the unchanged17 purely public planning columns from the old cache. Two
+historical physics boundaries remain retained prefixes, not full games. Full
+memory is compared with matched full-memory controls, not no-memory stamps.
+
+`personal_public_retention_study.py <public-run>` fits100 own chronological
+models plus16 current models with strict earlier availability and target-AID
+exclusion. Actual source/design readiness is later than historical openings.
+It verifies immutable archived annotation sources rather than pretending those
+historical files must match an intentionally updated working-tree engine.
+The original personal controller is a fixed learned center now evaluated only
+on corrected observations; the78 preference coefficients are freshly refitted.
+
+`personal_public_retention_audit.js <public-run>` checks independent Python/JS
+math,16 actual current own public selectors against hidden-inventory replacement
+and four exact old8x9 whole-chain controls. `personal_public_observation_integration.js`
+also verifies exact normalized engine source identity and eight actually run
+public2x9 retry-chain controls across both recall modes and all four people.
+The production-integration certificate is separate; historical prototype
+readiness metadata and old forecasts are not rewritten.
+
+`personal_public_retention_count.js <public-run>` is the new all25-case,
+all14-policy eight-run/nine-attempt screen at seed20261109. Every public baseline
+is actually simulated; private-observer controls cannot be reused. Full numeric
+chain vectors are journaled per cell, not just completion messages. Do not edit
+its bound runtime sources or restart a live owned job. After terminal success,
+`personal_public_retention_summary.py <public-run>` checks all350 journaled cells
+and100 own earlier rosters, then reports correctness, ordinal/recent distance,
+closer misses and moving windows. Numerical caps keep their full denominator
+and unresolved bounds; they are never called human failures. Eight-run points
+are screening precision, not final forecast stability or later frozen80% proof.
+
+### Public dead-end acknowledgement and stronger witness reference
+
+`public_dead_end.js` exhausts a bounded known inspection graph. It certifies
+death only when no safe known removal, reachable new information, unsupported
+transition or unexplored boundary remains. `public_dead_end_choice.js` is an
+optional personal-policy wrapper: outside a proof it delegates unchanged;
+inside a proof it executes real production taps to acknowledge the doomed
+attempt. It does not add free retries or force greedy choices in live states.
+
+`personal_public_terminal_study.js <public-run>` measures all25 pinned cases,
+six matched own-policy/recall endpoints, eight runs and nine attempts. After
+successful completion, `personal_public_terminal_summary.py <terminal-run>`
+verifies150 journaled numeric vectors,100 earlier-own model rosters and all150
+exact first-attempt win invariants against the parent count study. Later retry
+outcomes may change when actual terminal acknowledgement replaces endless
+inspection; unchanged first-win events are mandatory. Caps remain unresolved,
+not human losses. The completed01:08 run has zero caps; the parent14-policy
+screen is also complete and retains its301 caps as numerical censoring.
+
+`public_witness_search.js` is a separate neutral reference planner. It searches
+publicly known pictures using production-compatible physical transitions;
+unknown reveals end hypothetical routes. It reports constructive win/clock
+exit paths, information frontiers, explicit budget boundaries and independently
+proved-dead successors. Complete known-graph exhaustion can certify a loss;
+a truncated beam cannot. `public_witness_reference.js` retains a route only
+when the actual selected tap and subsequent public state match it. Its
+canonical per-attempt factory dispatches planning to the active selector.
+Probability queries alone never commit hypothetical route history.
+
+`public_witness_screen.js <public-run>` declares its complete profile grid
+before playing all25 pinned later research cases plus four separate earlier
+controls, including PUK. Some board inputs repeat across cohorts; these are
+not29 independent later games. It verifies every deterministic known
+transition against actual `Hard.play` telemetry and explicitly counts unknown
+and unsupported transitions. The512-choice cap is numerical censoring.
+Profiles compare search budgets, successor-death pruning, pair-completion
+versus unmatched-tile progress, continued all-known endgame search and optional
+public tray-recovery ordering. Recovery means an immediately free **known**
+mate; absence is only a heuristic risk signal, not proof of inaccessibility.
+
+The04:36 reference screen improves pinned first-trial wins from10/25 to13/25
+with recovery ordering, with zero caps and no unsupported transitions. It
+also regresses Mrs111 and includes a gain on still-pending Dennis156. These
+are retained, not cherry-picked away. Deeper known-board search alone stays
+10/25. Reference wins are NOT human attempt-count accuracy, perfect play,
+personal handicap estimates or evidence that the requested80% goal is met.
+No reference policy is imposed on all four personal bots. Its optional
+planning features still require earlier-own continuous preference fitting
+and new later frozen forecasts before promotion.
+
+Follow-up04:38 and04:40 all-case ablations are complete. Starting recovery
+ordering only at two occupied slots reaches15/25; the always-on smaller
+budget reaches14/25 and threshold3 reaches11/25. A clock/nonclock hybrid
+(threshold0 with an active clock, threshold2 otherwise) scores14/25 at both
+budgets, with weaker prior controls. All377 final-grid cells are durable and
+matched to the final data; all archived source hashes verify. No caps or
+unsupported transitions occur. Keep the failed interaction and per-case
+regressions; neither choose case-specific policies nor call this prospective
+personal accuracy. The neutral reference remains research-only.
+
+### Joint own-person witness preferences (90 fields)
+
+The next experimental family learns all90 action coefficients jointly rather
+than forcing the reference bot's decisions. `personal_public_witness_features.js`
+appends12 fields to the unchanged public78: eight optional witness/continuation
+signals, unknown successor, lack of an immediately free known tray mate,
+immediate known tray mates, and independently proved-dead successors. The
+reference configuration is source-bound to the threshold2 recovery proposal.
+Unknown/unsupported transitions never use their actual concealed outcomes.
+
+`personal_public_witness_data.js <public78-run>` reconstructs the original
+natural prefixes under both causal recall endpoints. Every retained physical
+path, original78 feature value and frozen base probability must match the
+parent. Only12 columns are appended. The reference's continuation is updated
+with the actual human action, not its own hypothetical recommendation. All
+original partial versions and known physics boundaries remain explicit.
+
+`personal_public_witness_study.py <witness-run>` fits90 bounded continuous
+preferences per person and original logical opening, excluding every target
+campaign AID. It retains the two prior campaign-balanced/winning-route
+objectives and20-campaign recency half-life. Observers, prior, planner options,
+feature names and annotation rosters bind model identity. Current fits are
+only as current as the supplied history; this old pinned cohort is not a
+refresh of all later live play. Tests exercise repeated preference reversals
+within one dataset, not merely a single old/new strategy split.
+
+`personal_public_witness_choice.js` supplies the matching actual runtime.
+Recommendations are soft features, not hard route switches. Every coefficient
+is learned from that person's earlier actions. Probability queries do not
+advance attention or hypothetical routes; only actual choices do. Zero new
+weights bypass witness computation, and padding old78 coefficients with12
+zeros preserves the prior runtime. `personal_public_witness_controls.js`
+actually runs eight public2x9 padded controls, four people and both recall
+endpoints, rather than inferring parity from algebra alone.
+
+After data and fitting complete, run `personal_public_witness_audit.js` for
+independent Python/JS emission math,16 real public hidden-inventory opening
+controls and eight actual padded retry controls. Then run
+`personal_public_witness_count.js <witness-run> <public-terminal-run>` and
+`personal_public_witness_summary.py <witness-run>`. The declared grid retains
+all25 cases and14 own recall/learning/confidence arms at the earlier8x9 seed.
+Every zero-preference chain must match the original terminal-acknowledgement
+study exactly. The same proof-only acknowledgement wrapper applies to all
+arms; nonterminal choices remain personal. Censored counts stay unresolved.
+
+Comparisons isolating the90-versus78 preference family are matched only at
+confidence1, where both studies share acknowledgement and seeds. Lower
+confidence arms are standalone screens, not a claimed isolated feature gain.
+Summaries retain agreed-rule accuracy, distance, ordinal/recent error, closer
+misses and human-action NLL denominators. This entire newly designed family
+is retrospective until separate numerical forecasts are frozen before later
+real openings. No80% or perfect-play claim follows from implementation tests.
+
+### Renderer observation audit
+
+`personal_render_visibility_audit.js` renders valid paired fixtures through
+actual production CSS, tile faces and renderBoard/layoutBoard in offline
+headless Chromium. All36 uncovered pictures distinguish themselves, but
+some pictures covered by unions of offset tiles have identical whole-board
+pixels. Actual `Hard.play` public planning snapshots nevertheless reveal
+different full identities there. Inventory safety alone is not universal
+human-information parity. The report archives sources and PNG evidence.
+
+`personal_render_case_audit.js <public78-run> --all` checks the entire declared
+25-case cohort with recorded first-attempt theme, boardWrap size, highlight,
+contrast and decorations. It swaps each supposedly known overlapped face
+with up to8 distinct actual down-tile pictures, retaining the exact deck.
+Equal board pixels additionally require differing isolated glyph controls.
+The completed05:06 screen tested24 cases/4728 swaps with no counterexample;
+Dennis156's missing archived opening view/source is explicit. This finite
+negative result is not proof of human recognition, and does not erase the
+synthetic counterexample. Host font/browser limitations remain recorded.
+The observation abstraction must not be promoted as universally renderer-
+validated. Do not silently replace it with a reduced-information observer
+and call that perfect human-information play; see RESEARCH_POLICY.md.
+
+The independent `public_witness_cache.js` is a bounded, tested pure-search
+memoizer, enabled only in the new90 runtime after source-bound annotation
+completed. It excludes private metadata, binds complete public states/rules/
+budgets and clones cached reports. The default reference/extraction search
+remains uncached. The06:30 trajectory control verifies all29 actual cases and
+2317 physical frames, complete results and planner counters against the prior
+threshold2 study. Its1041 cold queries had zero hits; whole-game acceleration
+is not established by that control. Repeated-query component timing is separate.
+
+### Pixel-based ambiguity prototype
+
+`public_pixel_partition.js` classifies only an observed RGBA buffer against a
+declared public glyph dictionary on a public pixel mask. It returns the full
+indistinguishable symbol class; only singleton classes become known. No safe
+visible pixels or an out-of-dictionary rendering stays unresolved. Neither
+dictionary identity nor output signatures hash unobserved pixels. This can
+retain useful partially exposed symbols instead of hiding every covered tile.
+
+`personal_pixel_partition_audit.js` exercises actual production-rendered
+sunflower/animals/classic templates under uncovered, jointly occluded and
+partly exposed fixtures. It checks glyph footprint bounds, static-frame
+sampling and a one-pixel antialiasing margin shared with occluder masks.
+The completed05:44 run distinguishes all37 legal templates on3304 safe
+partial pixels, but correctly returns one37-symbol unknown class with zero
+safe pixels under two upper tiles. Distinct valid paired worlds then produce
+identical actual engine opening features in an isolated, capture-only
+`personal_pixel_opening_prototype.js`. Earlier actual memory remains separate.
+The production root engine and active annotation sources are not edited.
+
+This prototype is not a general dynamic game integration, full perception
+model, human-recognition guarantee, or80% result. Public foreground independence
+and glyph footprint assumptions still need broader scene validation. Animated
+Jokers are sampled with animation disabled for the public template reference;
+live phase recognition is not established. Source-bound reports explicitly
+record those restrictions. The static-mask consumer refuses autonomous use.
+
+`public_pixel_belief.js` conditions a declared non-oracle prior on informative
+symbol classes, retaining ambiguity rather than reading an actual hidden face
+or concealed deck histogram. No-pixel/out-of-dictionary cases preserve a
+normalized prior exactly. Zero prior mass is explicit; symbol compatibility
+is an independent-marginal estimate, not a joint-deck posterior or physically
+guaranteed pair. These helpers are not silently enabled in the ongoing90-field
+study, which remains under its earlier observer abstraction.
+
+The player's exposed-edge clarification is modeled as recognition from visible
+picture fragments, not a requirement to uncover the whole tile. The06:05
+renderer audit (`pixel-partition-2026-10-20T06-05-23-231Z`) expands the target
+mask from its central rectangle to its safe rounded interior, retaining8881
+partial pixels and all37 singleton classes in each theme. Under two upper
+tiles,2073 exposed pixels distinguish12 classic singleton symbols, but only
+one sunflower/animals singleton; the paired2/4 counterexample remains unknown
+and actual opening captures remain equal. A visible blank edge is not magical
+identity information. This is still an isolated prototype, not the live bot.
+
+The rejected rounded-occluder variant remains archived: changing the other
+lower tile caused a one-channel antialiasing difference at a foreground corner,
+falsely identifying symbol0. Conservative rectangular upper-tile bounds avoid
+that failure while retaining target-edge pixels elsewhere. Some recognizable
+corner fragments are consequently excluded; complete human perception is not
+established. No80% attempt-prediction claim follows from these renderer tests.
+
+### Screenshot-derived opening observations
+
+`public_pixel_capture.js` now derives all live tiles' glyph-support classes,
+conditional public beliefs and opening knowledge masks from actual rendered
+screenshots. Templates render in a separate cloned page; the observed scene
+is never mutated. Unlike the earlier conservative rectangular upper masks,
+matching includes all observed pixels in the rounded target footprint. This
+retains distinguishing corner/edge clues, including pixels affected by public
+foreground layers. All candidates within one channel unit of every selected
+pixel remain possible; the first nearest label is not substituted for a class.
+The tolerance follows a measured one-unit raster-rounding artifact, not game
+outcomes. Exact template groups remain separate diagnostic fingerprints, not
+equivalence classes under this tolerance.
+
+`personal_pixel_capture_audit.js` completed18 offset scenes across three
+themes (`pixel-capture-2026-10-20T06-48-54-343Z`):72 tile observations,
+six actual opening captures using derived rather than hand-labelled masks.
+All72 observations were independently reconstructed from archived templates
+and observed PNGs. All15 archived source hashes verify. Sunflower2/4 whole
+images, observation classes and actual raw opening features remain identical.
+Animals2/4 differ at12 small exposed-edge pixels; those lower pictures are
+now identified rather than hidden by a conservative upper bounding box.
+Classic2 stays ambiguous while4 is identified. Do not assume equal glyph
+occlusion across themes or demand identical decisions for differing pictures.
+
+These are finite static fixtures at device scale1, with host fonts and disabled
+animation explicit. Candidate renderers clone current scene DOM, including
+unobserved markup: nuisance-context independence outside these verified pairs
+is not established. The classifier does not receive true picture labels, but
+this rendering boundary still needs broader validation before general human-
+information claims. The capture-only engine currently consumes singleton
+knowledge masks, not the richer ambiguous per-tile beliefs. No dynamic play,
+deployed prediction, universal perception equivalence or80% result is claimed.
+
+The aligned three-layer variant also completes18 scenes and72 classifications
+(`pixel-capture-2026-10-20T06-54-59-521Z`), with six derived engine opening
+captures and separately replayed template artifacts. In classic picture2,
+both exposed lower pictures are recognized although the original exact-cover
+observer masks them. Picture4 remains ambiguous. Sunflower/animals same-image
+pairs remain indistinguishable. Thus the observer needs to correct both
+unsupported knowledge and missing visible-edge knowledge, not just hide more.
+
+### Continuous Recency Adaptation
+
+`personal_public_witness_recency.py` retains jointly fitted own90 preference
+vectors at5/20/60 campaign half-lives, using the same strict earlier own
+observations and target exclusions. Penalty scales with total learning mass
+relative to20. Previously fitted20-window controls are reused unchanged.
+`personal_recency_blend.py` averages coefficient vectors using only available
+earlier completed eligible campaigns' mean-attempt action losses. Fixed share
+preserves every route through multiple reversals. It does not impose a fixed
+strategy, borrow another person's behavior, or choose weights using the target
+clear count. Empty calibration history stays explicitly uniform.
+
+The07:10 recency run has348 components,100 historical blends and16 matched-
+current blends. `personal_public_witness_recency_verify.py` separately verifies
+all component rosters, prior-history availability, mean-attempt scores, full
+model identities and independent NumPy/SciPy weight/coefficient math. Existing
+native/runtime audit then checks the actual90-feature engine integration.
+Both audits complete; full attempt-count comparison is still running.
+Action likelihood gains alone do not establish better first-clear forecasts.
+
+The dataset, cutoffs and symbolic observer remain those of the parent run;
+new fit timestamps do not mean current live play or pixel perception has been
+incorporated. These are retrospective candidates, not future80% evidence.
+Do not rewrite old forecasts or promote a partial count screen as success.
+
+### Observed-Value Opening Boundary
+
+`public_observed_opening.js` replaces the audit-only true-face Boolean gate
+with explicit recognized picture values. Actual deck/tile-face getters are
+never read; unknowns use fixed internal fillers and remain null in public
+snapshots. Intentional wrong recognition is not secretly oracle-corrected.
+Support classes retain conditional public beliefs. Observer version2 marks
+the semantic change instead of silently reusing version1 personal fits.
+
+The12 saved offset/aligned opening controls reproduce exact states/features
+under correct recognition, and12 deliberately wrong-recognition controls
+retain the wrong observed value. A37-symbol unknown-filler sweep also matches.
+The raw engine still uses its global public prior for uncertain chance terms;
+per-tile beliefs are sidecars, not yet integrated into rollout decisions.
+This is initial/all-alive capture only, with explicit public-metadata inputs,
+not dynamic physical play, memory reconstruction or a perfect observer claim.
+
+### Count Comparison And Loop Diagnosis
+
+After both fixed90/adaptive90 count runs complete, use
+`personal_public_witness_recency_summary.py FIXED_RUN ADAPTIVE_RUN`. It requires
+identical full case inputs, budgets, runtime/physics, policies and all50 actual
+disabled retry controls. It retains unresolved denominators and separately
+reports closer misses; a smaller miss is not silently counted as rule-correct.
+Partial count journals cannot produce this comparison.
+
+`personal_public_witness_loop_probe.js RUN NAME START PROFILE [VARIANT]`
+replays a recorded censored cell with unchanged8x9 settings and the engine's
+actual default4096-choice budget. The original variant must reproduce the
+entire chain and telemetry. It records public-state revisits without assuming
+identical controller histories. The explicit `withoutAttention` variant is
+a diagnostic intervention only, not a newly trained or frozen personal model.
+Gerda70's inspected-known cycles shrink markedly in that ablation, but remain
+substantial. Do not globally erase a learned personal preference or promote
+this selected case as an80% accuracy improvement.
+
+### Learned Known-Inspection Sequences
+
+`personal_known_inspection_streak.js/.py` derives six causal, bounded action
+features from consecutive earlier selected known-inspection labels. Log and
+squared strengths interact with unknown-inspection availability and active
+clock. Other action labels reset the history. This is not a physical no-progress
+counter: some inspection-labelled taps can remove tiles. There is no hard cap,
+forced failure/reset or ban on legitimate reinspection.
+
+`personal_public_witness_streak_fit.py` jointly fits all96 preference coefficients
+on the same strictly earlier own roster; `personal_public_witness_streak_choice.js`
+adds the optional history terms. Disabled terms delegate to the old90 selector
+exactly. Pure probability queries never update history. Observer2 is refused
+instead of silently treating new recognized-value observations as old training.
+
+The10:10 pilot fits one selected historical Gerda70 model and16 matched-current
+models. Its runtime audit checks17 rosters and50288 probabilities (6.66e-16
+maximum difference), plus eight synthetic2x9 exact disabled production controls.
+Current math fixtures come from training histories, not unseen validation.
+The historical301-choice action NLL worsens2.435132->2.448278; actual count
+behavior must still be tested before judging this optional route. No80% claim.
+
+For the matched selected-case physical diagnostic, append `streak CANDIDATE_FILE`
+to the loop-probe invocation. Candidate parent identity, earlier roster, cutoff,
+observer/planner and fit settings must match; its bytes are bound and archived.
+Keep the unchanged8x9 physics/budget and numerical-censor handling. This diagnostic
+does not replace the complete fixed/adaptive count comparison or prospective
+new-level scoring. The exposed-edge recognition prototypes remain separate
+from these observer1 fits and must not be claimed as deployed behavior.
+
+The initial selected Gerda70 full/balanced confidence0.25 sequence rollout
+worsens numerical censoring2->5 and completes only3/8 chains by try9 versus
+the parent's7/8; unresolved capped chains remain unresolved, not human failures.
+The full trace/candidate and43 source hashes verify. This candidate is not
+promoted, but its other two already-declared confidence settings are tested
+before discarding the sequence route. Explicit `streak` controls may replay
+noncensored parent cells for that purpose, with every other match guard intact.
+
+Both additional controls complete: at confidence0.5 first wins1/8->2/8,
+within9 stays7/8 but caps0->2. At confidence1 first wins1/8->3/8, within2
+4/8->5/8, within9 stays8/8 and caps remain0. Even this last11669-choice chain
+has10378 known inspections and9727 public-state revisits. The interaction
+therefore deserves refinement, not promotion or immediate blanket rejection.
+All three candidate traces/source archives verify; every result is retained.
+
+### Reference-First Public Template Boundary
+
+The replacement goal prioritizes a strong human-information reference before
+further personal fitting. Gemini's existing skills_coach/optimal_bot.js at
+526e084 is the pinned planner starting point; its old claimed wins are not
+accepted until hidden-picture, physical-clock and free-restart defects are
+repaired and independently tested. The final80% frozen own-person forecast
+target remains separate and unmet.
+
+`public_pixel_scene.js` replaces original-page HTML cloning with an explicit
+public DOM projection: geometry/paint order, supported visible classes, public
+obstacle kinds and clock badge text. Only position/size/z-index inline styles
+are projected for tiles. Template pages contain fixed public glyph0 fillers,
+not actual tile pictures. Matching excludes rounded foreground bodies and
+their two opaque production depth layers, while retaining unoccluded corner
+pixels. Templates preserve relative positioning to avoid changing classic
+corner-text rasterization. Device scale1 is enforced rather than silently
+using a mismatched renderer.
+
+The corrected offset audit completes18 scenes/72 classifications, with all
+private game-state getters and original page HTML access forbidden during
+observation. Archived sources and all72 candidate-support calculations replay
+independently. Earlier failed versions are retained, including a false0
+identification before opaque-depth masking, and classic outside-dictionary
+failures caused by fixed positioning. The safe model loses some tiny occluded
+edge distinctions from the old scene-dependent renderer; do not call it full
+human perception, dynamic integration, deployed behavior or improved strength.
+It still recognizes tested partial exposed pictures without concealed markup.
+
+The full fixed90 count screen is terminal and independently verified:350 cells,
+100 own rosters,50 actual disabled controls;212 computation caps remain censored.
+It does not meet80%. Finish/account for the adaptive screen and use its prepared
+full matched comparison rather than selecting favorable partial results.
+
+### Completed Matched Recency Results
+
+Both fixed90/adaptive90 count jobs finish normally. Each independently verified
+summary contains all350 durable cells,100 own rosters,300 learned applications
+and50 actual disabled controls. The full matched comparison is archived in the
+adaptive run's `recency-count-comparison.json`, including its scoring-source
+closure. Identical data, settings, physical/runtime graph and disabled chains
+are required. Fixed212/adaptive269 numerical caps remain censored.
+
+At confidence1 full/balanced, correct counts remain Dennis3/5, Mrs1/10 and
+Gerda2/7. Bucket errors remain1.6 for Dennis and improve4.3->4.1 for Mrs,
+3.285714->3.0 for Gerda. No-memory/balanced Gerda loses a rule hit despite
+improving distance; no-memory/winning Gerda gains a hit and improves distance.
+All arms, including regressions, closer misses and unresolved bounds, are
+retained. No PUK primary cases exist in this pinned screen. These later-designed
+chronological studies do not establish prospective80% or justify replacing the
+reference-first priority with more personal tuning.
+
+### Public Recognized Foreground Context
+
+The screenshot observer classifies top-down. Only earlier screenshot singleton
+recognitions can replace fixed0 foreground fillers in the separate public
+template renderer. Each target archives that exact earlier context, and the
+constructed foreground DOM is checked against it. Unknown foreground uses
+expanded opaque-body/depth masks; recognized foreground retains antialiased
+edges around an inset opaque core. Original page HTML and private game state
+remain forbidden. Candidate rendering rebuilds the constructed public board,
+not the original board: incremental glyph replacement failed the retained
+17:10/17:16 controls and is not used.
+
+Final offset/aligned audits17:25:06/17:29:11 complete36 scenes/144 classifications
+and12 opening controls. Use `personal_pixel_capture_verify.js RUN` to replay
+direct pixel arithmetic, earlier singleton-context provenance, fixture truth
+membership and source/bank/image hashes without importing the recognizer or
+matcher. Both runs have independent verifier reports/source copies. These are
+finite static device-scale1 fixtures, not full perception, dynamic autonomous
+play, strength gains or80% evidence. Full189 named JS tests pass.

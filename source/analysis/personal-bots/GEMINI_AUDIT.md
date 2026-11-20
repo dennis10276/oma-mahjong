@@ -1,3 +1,5 @@
+> **Gemini's assignment changed on 22 Oct 2026 (Dennis).** Gemini now works only from agy-personal-bots/GEMINI.md: predictions locked in Firebase forecasts/ and scored by the dashboard's Voorspeltest card, which is the referee. Codex: do not write new tasks, contracts, gates or protected verifiers for Gemini, and do not hand it TELEMETRY_DISCOVERY_TASK.md or GEMINI_NEXT_WORK.md again. The audits below are history.
+
 # Independent Gemini handoff audit
 
 Audited checkout: `C:/Users/den_k/Idea/OmasMahjong/agy-personal-bots`,
@@ -112,3 +114,117 @@ locks, fractional support units, input immutability and malformed transport.
 This adopts a verified useful component, not the unverified simulation table
 producer or the hand-tuned prediction head. Depth/slack remain heuristics, and
 the no-visible-mate depth sentinel is explicitly diagnosed.
+# Generator follow-up: commits05e48e0/c9d8be0
+
+The user supplied the generator/profile/seed follow-up. Inspected actual HEAD
+`c9d8be07466ad73864673268d3334bb7ee7ce846`; source changes are committed, while
+the unrelated evaluation JSON is dirty and remains untouched. The generator SHA
+is `a919cfdd1732fd4491141614f543b13fde39852e1412ed0c6142a09da53cccc3`.
+The feature archive is unchanged at
+`f203ef1a2a1a884bcdea4b4af605459ee596f023f6338eafdb7547649f6e7f2e`.
+
+Direct benchmark execution independently reproduces Mrs34,84,102,107 exactly.
+This supersedes the earlier statement that no generator exists for the five
+implemented simulation fields: `sf14_w3/w5/w8`, `s14_t1Left`, `p8_t1Dec`.
+However, the other eleven simulation fields are only described in the handoff;
+`simulateTaskFeatures` does not generate them. Nor does this CLI verify generic
+reference rates or solve the earlier frozen-ledger/retrospective tuning issues.
+
+Independent audit snapshots pin32 actual runtime/input dependencies, use exact
+person/start/board tasks, retain all400 archive records and count computational
+caps explicitly. The literal cache-first resolver cannot supply all29 recent
+Dennis/Gerda models because matching cache tasks lack fresh model IDs. A distinct
+29-record documented-recent-model supplement reproduces every one of those
+records' eleven checked fields exactly withzero caps. The full literal audit
+is still running at this note's observation; neither benchmark nor supplement
+is claimed as complete26-field or80% pre-opening evidence.
+
+The full literal audit is now terminal (nonzero because discrepancies remain):
+369/400 match all eleven checked fields,29 lack a literal recent model and2
+historical Dennis records differ only in meanMateDepth (65/73:archive10 versus
+generator6, the no-visible-mates sentinel). All five simulation fields match in
+those two records as well. Together with the separately retained documented
+29/29 recent-model supplement, the FIVE implemented simulation fields reproduce
+exactly on ALL400 records, withzero caps. Geometry matches398/400. The combined
+summary records original failures and source hashes; it does not rewrite either
+audit. No remaining eleven simulation fields or retrospective accuracy claim is
+certified by this result.
+
+Ported only these verified five calculations as personal_verified_factor_features.js.
+First-trial left/decision statistics require only independently seeded first
+attempts, but full retry rates retain the original32-attempt horizon because the
+memory RNG stream affects later runs. All computation boundaries are refused.
+Actual four-person parity against pinned originals matches all five fields
+exactly, including the per-attempt style factory. These measurements are not a
+new count head, frozen forecasts or an assertion of generic greedy human play.
+
+# Full16 generator follow-up: commits2d1e579/7caabcb
+
+The clean external HEAD7caabcb3d9b1d01c068df62814ee14459f1e22d7 passes its five
+benchmark examples independently. This supersedes the earlier missing-eleven
+generator statement, but not the earlier frozen-ledger/retrospective-tuning audit.
+
+The immutable independent full26 audit is terminal:
+gemini-generator-full26-audit-2026-10-19T13-36-26-045Z, made13:45:07.654UTC.
+It pins34 runtime/input dependencies, retains400 exact person/start/board tasks
+and uses the actual assembleTaskRecord interface without supplying expected
+reference or physical metadata. All16 simulation fields reproduce400/400;
+str/avg/hasClock/n also reproduce400/400. No current simulation computation caps.
+
+However, only236/400 complete dictionaries match literally. The openPairs fallback
+uses half the count of supported takeable tiles, but the archived field counts
+disjoint identical-picture pairs among geometrically free face-up tiles. Those
+are different quantities, especially with ice/locks or three copies of a picture.
+The fallback differs on162 boards, including12 recent and46 future-planning
+boards. The independently implemented openingPairCount reproduces archived
+openPairs on400/400. Applying only that public correction gives398/400 complete
+matches. The remaining two discrepancies are the earlier Dennis65/73 no-mate
+sentinel10 versus generated6; the old archive and raw audit are not rewritten.
+
+Historical276 secondary chain variants are pinned cached lookups, not fresh
+independent resimulations by the new generator. Recent29/future95 all substitute
+the SAME Plan8 chain for six missing variant policies. This reproduces the table,
+but cannot be presented as six independently fitted future behaviors. No effective
+latest-bank follow-through override is used by these inputs. The independent
+summary rereads actor bodies and preserves29 historicalExploratoryOnly flags;
+the initial driver used the wrong flag spelling in provenance, explicitly
+corrected by that summary without modifying its immutable inputs.
+
+The newly available11 fields are added to a separate24-feature own count
+development experiment, excluding generic reference scores and the inconsistent
+openPairs fallback. All305 exact own boards and80 fixed reused targets remain.
+The same forest settings and strictly earlier own likelihood selection give
+40/80 versus34/80 with only five simulation signals (always-first38/80).
+Per-person selected scores: Dennis11/20, Mrs7/20, PUK13/20, Gerda9/20.
+Dennis's later reused cohort remains16/23; Gerda's is1/5. These are development
+scores with cached/aliased source-shift and exploratory actor caveats, NOT a
+validated80% result or new frozen numerical predictions. No head is promoted.
+
+# Genuine source-bound future hypothesis
+
+The original86-point ledger remains unchanged at SHA
+`1a644b70df74eaa2847cdbdafcc513caaa5e22dd829a4d38fbf256308b6758d5`.
+Its missing model-source binding cannot be retrospectively repaired by attaching
+the later01:18 head snapshot. The three original/current numerical drifts remain
+visible and the original family is independently scored.
+
+The unchanged pinned head is now tested as a DISTINCT fixed-source hypothesis:
+`source-bound-handoff-factor-future-v1`. The new ledger freezes96 actual points
+at2026-10-19T14:58:46.082UTC, after actual computation and a separate fresh
+opening check. All24 consecutive levels/person are covered, not just Dennis's
+original18. Original frontiers and an empty original cohort anchor are retained;
+actual numeric eligibility uses the real NEW freeze time. An eventual late
+arrival describing a race-opened campaign therefore remains a missing forecast,
+not a disappeared case. Every old numeric point remains in its own original family.
+
+Sources, own actor bodies,313 earlier history records, all26 factors and fixed
+boards are bound.86 feature records were independently reproduced; ten new
+boards receive full simulation. Cached historical variants and six aliased
+future variants remain disclosed. The frozen head cannot silently access a
+synthetic feature fallback. The new hypothesis is declared before observing
+validation outcomes, not selected after seeing which forecast family won.
+
+Independent post-freeze scoring at14:58:46.660UTC still gives0 opened/0 completed
+primary validation games for EACH person, for both families. No80% result or
+promotion is asserted. The old97.5%/8-of-8 claims remain retrospective/unsupported
+as described earlier; they do not become valid merely because this trial exists.

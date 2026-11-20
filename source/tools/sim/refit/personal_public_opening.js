@@ -62,4 +62,14 @@ function openingFeatures(encodedGame) {
       + 'Depth/slack are public geometry heuristics, not guaranteed route costs. meanMateDepth6 means no samples when visibleMateSamples0.' } };
 }
 
-module.exports = { SCHEMA, openingFeatures };
+function openingPairCount(encodedGame) {
+  const game = decodeGame(encodedGame), alive = new Uint8Array(game.tiles.length).fill(1), counts = new Map();
+  for (let index = 0; index < game.tiles.length; index++) {
+    if (game.down[index] || !Layouts.isFree(index, alive, game.nb)) continue;
+    const picture = game.faces[index];
+    counts.set(picture, (counts.get(picture) || 0) + 1);
+  }
+  return [...counts.values()].reduce((sum, count) => sum + Math.floor(count / 2), 0);
+}
+
+module.exports = { SCHEMA, openingFeatures, openingPairCount };

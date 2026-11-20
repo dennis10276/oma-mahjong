@@ -1,5 +1,895 @@
 # Personal-bot research checkpoint
 
+## Exact public-belief evidence and profiled CPU batching, 2026-10-21
+
+Previous goal turn was progress: real screenshot clear, independent production
+replay and199 passing tests. Before new work, confirmed all10 baseline reference
+source hashes still match integrated-witness-2026-10-21T15-38-30-165Z. Gemini HEAD
+still eec825d, but its new v3/calibration work is now dirty/uncommitted; observed
+without editing/adopting it. No background process was restarted from a stale
+state file.
+
+New exact finite public-belief oracle reuses production sessions and existing
+reference, rather than replacing them with an omniscient bot. Full declared
+synthetic inventory support, public opening constraints, posterior observation
+groups, integer success masses and inspection SCCs. Separate rational Bellman
+upper-bound/attaining decreasing-rank policy verifier; independent observer and
+all-branch production grounding; independent multinomial prior-support and
+public-history noninterference checks. Unsupported mechanics are rejected,
+calculation caps unresolved, ordinary arrival flags retained. No real hidden
+inventory is used. Details/commands in REFERENCE_EXACT_BELIEF.md.
+
+Original six-case archive public-belief-exact-2026-10-21T16-13-47-149Z TERMINAL0
+also passes separate full production replay. Expanded eight-case archive
+public-belief-exact-2026-10-21T16-16-59-640Z TERMINAL0:56,371 belief states,
+1,783 synthetic deals, current reference exactly matches each initial optimum,
+no suboptimal visited decisions and no exclusions/caps. Producer-side independent
+grounding checks297,221 branches and2,102,778 prefix taps; graph-only independent
+archive/support/value/history verification explicitly is not a second physics
+run. Eight-case exact data are not a personal prediction metric.
+
+Tight-clock control:234/360 optimal and reference wins, all126 other deals
+physically impossible under that synthetic setup, even with hidden identities.
+Two-new-kind route control:936/1260 exact public optimum, reference936, versus
+998 physically solvable with omniscience;62 is genuine information cost and262
+are physical impossibilities. These synthetic priors need not match production
+deal generation and do not excuse real personal accuracy targets.
+
+Profile actual replay before GPU work: physical-profile-2026-10-21T16-26-48-936Z
+has458/1110 samples under source compilation/checking. Opt-in production session
+factory now pins verified source for a batch and validates explicitly at end;
+standard constructor's per-session guard remains. Tests preserve complete
+results/logs/traces across flips, clocks, Jokers, arrivals, relief and caps, and
+simulate changed-source reads without editing Hard to check integrity failure.
+Warm A/B physical-batch-ab-2026-10-21T16-31-01-644Z:1700 sessions/9965 taps each,
+1492/770ms and1484/772ms standard/bound. About1.93x replay-kernel throughput,
+not a GPU or whole-catalog claim.
+
+Complete cached eight-case repeat public-belief-exact-2026-10-21T16-31-38-141Z
+TERMINAL0. All eight complete graph/certificate/grounding/reference gzip
+artifacts are byte-identical to the uncached run. Independent comparison checks
+whole-catalog identity and raw bytes, both complete source archives and inputs.
+Complete elapsed case durations614,888ms to265,508ms, measured2.316x on this
+workload. Separate cached-run support/certificate/history/archive verification
+also passes. No production Hard code or reference decisions changed, no personal
+ledger rewritten, all new implementation uncommitted. All10 original reference
+baseline source hashes still match. Full offline suite201/201 in9 seconds,
+output reference-exact-js-tests-2026-10-21.txt; diff check has only existing
+line-ending notices. All jobs launched in this checkpoint are terminal; latest
+process inventory finds no simulation/test Node process. Goal remains active;
+exact/screenshot/large-level gaps remain explicit in RTM.
+
+## Reference baseline reproduced; opacity candidate under validation, 2026-10-21
+
+Before changing perception, reran all29 reference cases at unchanged conditions:
+integrated-witness-2026-10-21T15-38-30-165Z TERMINAL0. Research20/25,
+controls3/4, no changed outcomes, no computation caps, unsupported choices or
+unmatched frames. Independent verifier checks10 archived sources and29 cases;
+runner checks1,740 known physical transitions against production. This remains
+symbolic-observer evidence, not general human-information strength or accuracy.
+
+Made the opaque-inset audit explicitly support an incomplete, cycle-stopped
+prefix without inventing a completed rollout. It validates original input and
+all150 frame hashes, then binds all840 completed-frame/evidence/PNG/bank artifacts
+and its loaded source dependencies before measurement. In-flight artifacts are
+not counted. Focused tests reject changed input/frame hashes and missing frames.
+
+pixel-opaque-inset-2026-10-21T15-43-14-295Z TERMINAL0:388 banks, original inset1
+has300 outside-dictionary cases. Each predeclared stricter inset1.5/2/3 has zero
+outside-dictionary cases,377 correct singletons, zero wrong singletons, and11
+remaining ambiguous cases. These are repeated observations in one old prefix,
+not388 independent levels or a new win count. Contexts are frozen; truth is only
+an audit check. Tolerance remains1, the full37-picture alphabet is preserved.
+
+Candidate globally erodes only the target-body mask to1.5 pixels; no per-tile
+truth-driven choice or hidden-face fallback. The narrower certified area can
+leave a very thin exposed sliver unknown; the geometry regression records that
+tradeoff instead of pretending every visible edge is recognizable. Existing
+foreground/opaque-depth rules remain unchanged.
+
+Fresh static audit pixel-capture-2026-10-21T15-44-41-367Z TERMINAL0:18 scenes,
+72 banks across3 themes/3 phases/2 worlds; independent direct-pixel verifier
+passes, including126 earlier public-context identities and17 archived sources.
+Four focused unit checks pass, output in reference-opacity-unit-tests-2026-10-21.txt.
+Broader offline JavaScript suite initially passes197/197 in15 seconds; with the
+prior regression it passes198/198 in16 seconds. Full output retained in
+reference-opacity-js-tests-2026-10-21.txt and reference-opacity-final-js-tests-2026-10-21.txt.
+No Python implementation changed.
+New screenshot-driven production Gerda70 development run
+pixel-reference-2026-10-21T15-48-00-444Z TERMINAL0 clears in109 actual taps,
+110 observed frames,116 banks,3,204 legitimate earlier-only recalls,2,239
+uninformative observations and71 known physical controls; no cap or unsupported
+transition. Independent direct-pixel/memory/hash verification and unmodified
+production Hard follow replay confirm all109 physical taps and terminal win.
+This is the same development board used for the old-prefix diagnosis, not
+untouched validation, a full screenshot benchmark or a human winning-try claim.
+
+The first independent verifier failed because its prior had102 rather than256
+entries; its source/output are retained in the run. Also initialized its
+required production follow-log buffer. New regression checks the256-entry,
+37-symbol prior against real Hard.play and rejects the old truncated prior.
+The successful verifier source/hash/result are archived separately; no rollout
+artifact or production rule was changed to pass.
+
+Six physical screenshot control fixtures also pass in
+pixel-session-2026-10-21T15-57-22-722Z TERMINAL0:29 frames,68 banks,23 taps.
+Independent arithmetic/context/source verification checks both new and old
+complete controls. Memories, chosen taps/witness paths, physical states, raw
+production audits and outcomes match all six previous controls exactly. Full
+plan reports do NOT match because the strengthened guard adds diagnostics;
+publicPlanReportsIdentical:false records this explicitly. Initial stricter
+comparison/source/output retained; final physicalControls scope does not
+pretend planner-report or pixel equality, isolate the cause of the separate
+Gerda70 clear, or exclude any failing control. New unit test preserves every
+meaningful physical field and distinguishes metadata-only plan changes.
+Final broader suite passes199/199 in13 seconds; output in
+reference-opacity-complete-js-tests-2026-10-21.txt. All jobs launched for this
+checkpoint are terminal. A separately owned generate_personal_witness_v3.js
+Node process was observed and left untouched. Changes remain uncommitted;
+reference optimality and prospective personal prediction gates remain unmet.
+
+REFERENCE_BOT_RTM.md records the goal, incomplete requirements and uncommitted
+status. The later human-possibility role distinguishes a witnessed human-legal
+route, an unresolved calculation, a rigorously proven impossibility and practical
+human difficulty. Bot failure alone never proves a level impossible. Goal active.
+
+## Finalized Gemini handoffs inspected, eec825d, 2026-10-21
+
+Located and read root CODEX_HANDOFF.md and the requested brain artifact
+.gemini/antigravity/brain/170f0ceb-dc89-4077-8821-610221319e5d/CODEX_COMPLETE_HANDOFF.md.
+Working copies have identical bytes; archived Git text differs only in LF/CRLF.
+Gemini remains clean at eec825d. Committed-source snapshot SHA
+8c18311c7a45fce1bf9ac600564bc41a6980038cbd51c013dafc149b03383b48.
+Full findings: GEMINI_EEC825D_REVIEW.md.
+
+Real progress: campaign transitions now use production createSession, the two
+supplied new campaign/search test files pass, null-on-uncleared and old clock/
+tray fixtures are fixed, and forecast generation actually executes simulations.
+Do not erase those improvements. However, handoff completion is not established:
+RTM has27 rows,26 completed and95% row6 pending, not all24 completed as claimed.
+The supplied older outcome snapshot has no qualifying completed v2 forecasts.
+
+Independent bound audit gemini-eec825d-audit-2026-10-21T15-04-03-321Z TERMINAL0:
+concealed partner permutation changes default remembered pictures under identical
+public inspections because the memory seed hashes private board faces; fixed
+explicit seed restores equality. A direct search call draws twice for one tile's
+forgetting. Actual recordings contain884 removals newly observed in the current
+retry but classified as prior-attempt recall (Dennis461,Mrs161,PUK78,Gerda184).
+Nine-source v2 closure still omits the actual generator and raw training inputs.
+Earlier15:03:05 run retained its raw-byte-only document equality diagnostic;
+final run explicitly checks normalized text and raw bytes separately.
+
+These are fixable code/measurement issues, not an external-gameplay-only wait.
+New diagnostic gemini-eec825d-v2-diagnostics.json preserves the old snapshot
+warning and reports no available v2 accuracy. No unsafe candidate is promoted,
+no ledger/production/live data are rewritten, no background simulation remains.
+Overall reference-first/later genuine per-person80% objective remains active;
+Gemini's95% stretch gate is likewise unmet.
+
+## Gemini3393854 reviewed; safe foundations adapted, 2026-10-21
+
+Reviewed99713e0 through3393854. Gemini tree remains clean and untouched. Source
+snapshot gemini-review-3393854/committed-source.zip SHA645ae6f83ac6625840bb01b48d626b6cdf084defed030291503605a4c4507a46;
+four separately copied replay inputs are bound by the independent audit. The
+live-opening directory is not tracked in Gemini Git, so source alone does not
+supply all claimed clean-checkout reproduction inputs. Full review is
+GEMINI_3393854_REVIEW.md. No commit, deploy, live write or numeric ledger rewrite.
+
+All8 canonical reference/physics files match our verified active integration
+after LF normalization, so no redundant377-play reference run was launched.
+Prior20/25 +3/4 symbolic-observer result remains unchanged, not screenshot proof.
+Corrected frozen-number diagnostics independently reproduce11/24 (Mrs0/7,
+PUK3/4,Gerda8/13,Dennis no eligible completion). Both pending games stay explicit.
+V2 has no qualifying post-freeze outcomes in the provided older snapshot, not a
+measurable0%/95% success; old observations cannot authenticate its unopened state.
+
+Added read-only personal_forecast_diagnostics.py using the authoritative fixed
+progression scorer. Per-person scores, intervals, errors, pending/missing cases,
+actual exclusion reasons and dynamically classified forecast coverage are
+reported without head recomputation, hard-coded future count or ledger writes.
+Source authentication remains a separate required gate. New6 Python tests cover
+input immutability, pending/race/missing cases, stale snapshots and full first20
+thresholds; these are numerical diagnostics, not a new registered model.
+
+Gemini's new manual campaign simulator is still invalid: legitimate two-tile
+clock deal loses on inspection while actual production wins on tap2; it can also
+claim an unmatched-tray4 win on an explicit engine-transition fixture. Canonical
+search ignores its depth/trayBuffer/memoryDecay/etc aliases. Calibration indexes
+neighborhoods with the wrong schema, counts repeated peek-state records as new
+inspections and does not identify memory retention from retry index overlap.
+V2 does not call that simulator:96 old forecasts are copied, only16 Mrs points
+are manually adjusted, and the registration generator is not source-bound.
+Do not promote either the parameters, simulator or v2 ledger as a personal bot.
+
+Adapted the useful carry-forward idea into personal_observed_memory.js instead:
+only supplied current public observations, minimal provenance, seeded persistence/
+forgetting, exact board/campaign identity, advancing observations and no same-
+attempt resurrection. Real production terminal losses delimit retries; wins,
+partial prefixes and caps cannot become free losses. Synthetic visible-fixture
+tests use actual production actions; no new screenshot validation or prediction
+accuracy is claimed. It remains a reusable foundation, not a calibrated predictor.
+
+Source-bound counterexample/lineage audit:
+gemini-3393854-audit-2026-10-21T13-39-42-023Z (terminal0; earlier13:39:11 retained).
+The RTX3070 actually passes the old down-mask/two-tile-clock failures now, and
+rejects unsupported keys: gemini-gpu-smoke-2026-10-21T13-42-06.329690+00-00,
+terminal0. This useful finite repair is not full per-tap/observation parity or
+end-to-end acceleration of our reference; no GPU rollout backend is adopted.
+
+Own suites196 JS groups/403 Python tests pass. No owned witness/reference/CUDA
+job remains. Engine79d244ab7060d776e854f217ff1714724ce130b61946e9d06ef9f27f517f615f
+and source-bound ledger66fad209cefcedb09d56fe9cf2ce001e3912a49925f135dda7d22b9d4a3cbf20
+remain unchanged. The reference-first/later genuine per-person80% goal is active
+and unmet; no95% result has been established.
+
+## Gemini72b8c19 selectively integrated, 2026-10-21
+
+User requested review and implementation of useful Gemini work. Reread the full
+active reference-first objective. Working checkout remains personal-bot-review,
+branch wip/personal-bots. Gemini checkout stays clean at72b8c19; no commits,
+deployments, live-data writes or numeric forecast rewrites were performed.
+Detailed review: GEMINI_72B8C19_REVIEW.md.
+
+Archived committed latest sources as gemini-witness-review-72b8c19, zipSHA
+531c62f67e10dfacbde6e2248fe1ef55f1a6f1aa3eb213809073de56c98d3e6a.
+Unmodified latest13-profile/all29-case reproduction session55773 TERMINAL0,
+run witness-reference-2026-10-21T06-16-33-552Z inside that snapshot:
+recoveryFromTwo19/25 +3/4, not the handoff's20/25. Dennis153 regresses to a
+50-move tray loss. All supplied standalone search/reference tests still pass.
+
+Integrated strengthened clock geometry, safe-information ranking, no-progress
+peek suppression and physical route commitment into active search/reference.
+reference() defaults to the strong4096-node/beam32/trayRecoveryMin2 profile.
+New public pictures no longer discard a valid physical continuation; losing or
+contradicting earlier knowledge or changing live down status does invalidate it.
+Action inspection kinds are derived from public state, not caller/oracle hints.
+Heuristic root exclusions cannot certify death without shared-budget completion.
+
+Did not discard the board-twin improvement after its first regression. The eager
+variant independently reproduced19/25 +3/4 (integrated-witness-06:20:56,
+session30438 TERMINAL0). Constructive win/clock-exit gating instead preserves
+all20/25 +3/4 outcomes and fixes clock reopening/board-twin counterexamples.
+Intermediate gated run06:23:19, session41257 TERMINAL0. Final source-bound run
+integrated-witness-2026-10-21T06-26-39-284Z, session19413 TERMINAL0:
+all29 cases,20/25 +3/4, zero caps/unsupported/unmatched frames,1740 known
+physical checks, no changed case outcomes against f184eac. Separate verifier
+checks all10 archived sources, normalized engine, complete journal/case identities,
+baseline binding/frame accounting/scores; this is not a second autonomous replay.
+
+CUDA audit on the RTX3070 proves two simulator problems: down-mask[1,1] becomes
+[false,true]; correcting encoding still makes an inspection cost a clock move
+and loses a real production-winning two-tile deal in8/8 GPU replicas. Completed
+source-bound audit gemini-cuda-review-2026-10-21T06-24-40.923072+00-00. Two earlier
+harness failures retain input bindings, not completed reports. No GPU rollout
+or new person threshold head is promoted. The claimed95% live score recomputes
+old forecasts using edited thresholds and infinity timestamps; it does not score
+the immutable before-opening forecasts. retryLearning is only reported by search,
+not implemented as reference carry-forward. Failure traces are useful hypotheses,
+not proofs of unavoidable losses or a20/25 Pareto bound.
+
+Previous turn accounting: progressEscape study session95052 TERMINAL0,
+20/25 +3/4 just like witnessReopen; whole-filter-removal19/25 +2/4 retained.
+Production obstacle renderer sixth fixture passed:6 fixtures/29 frames/68 banks/
+23 taps, original5 cases unchanged. Persistent screenshot singleton memory with
+image/dictionary provenance passes. Real screenshot-driven Gerda70 run90021 was
+stopped only after a source-bound exact three-cycle public-state proof;150 full
+frames retained, unresolved not a loss/cap. Current planner on its frozen frame56
+chooses71 then0 for2 known removals instead of the old repeated known peek9;
+this is a diagnostic, not a completed new clear.
+
+Final own suites:195 JS groups and397 Python tests pass. git diff --check passes
+with CRLF notices only. No owned witness/reference/CUDA jobs remain. hard.jsSHA
+79d244ab7060d776e854f217ff1714724ce130b61946e9d06ef9f27f517f615f and primary
+forecast ledgerSHA66fad209cefcedb09d56fe9cf2ce001e3912a49925f135dda7d22b9d4a3cbf20
+are unchanged. Screenshot-complete reference validation and genuinely later
+frozen per-person80% prediction accuracy remain unmet; goal stays active.
+
+## Faster public observation without changing decisions, 2026-10-20
+
+Previous goal turn is progress: persistent physical/pixel audits were verified,
+validation recovered and their limits documented. This continuation reread the
+full objective and addressed a real obstacle to larger screenshot-driven runs:
+37 sequential renders per tile, repeated throughout each physical attempt.
+
+Retained two atlas failures rather than silently relaxing equivalence. Clipping
+and translating candidate boards changed raster pixels (first session60172,
+terminal1; source copies in pixel-atlas-clipped-failure-2026-10-20). Preserving
+whole boards on256-aligned atlas cells improved the first comparison but still
+failed tile5/picture1. That second failure is fully source/artifact bound in
+pixel-atlas-2026-10-20T18-17-17-787Z, session44739 terminal1. No recognition
+tolerance changed. Atlas is refused by the accepted observe API; experimental
+source remains available for investigation, not selected by the play loop.
+
+public_pixel_parallel.js instead uses four separately constructed public-template
+pages with the original coordinates and the same earlier singleton context.
+Candidate work is disjoint, ordered back into the full alphabet, and all workers
+restore their glyph even on failure. The serial backend remains the default.
+Full comparison pixel-atlas-2026-10-20T18-19-59-679Z, session25784 TERMINAL0,
+matches all48 banks/1776 complete candidate crops byte-for-byte across8 declared
+theme/geometry/urgent-clock/back/role-render fixtures. Independent reread verifies
+all17 archived sources,129 artifacts and every complete bank. Serial112.216s vs
+parallel75.751s including audit overhead:1.481x on this workload, not a general
+speed guarantee or CUDA result. Smoke session60980 also TERMINAL0.
+
+Actual screenshot-driven production session64524 is TERMINAL0:
+pixel-session-2026-10-20T18-23-33-530Z. All5 declared tiny fixtures complete.
+personal_pixel_session_compare.js independently checks both runs' archived
+source/artifact hashes, pixel support arithmetic, earlier screenshot-context
+provenance, truth membership and memory accumulation. It then requires exact
+complete case JSON parity against the18:01 serial control:22 frames/47 banks
+per run, every observation/memory/public plan/physical frame/raw result/log/trace
+and terminal outcome identical. Its source/report are archived with the candidate.
+This is finite settled-static equivalence, not the25-case milestone, general
+human-information proof or80% forecasts. Removing the rejected atlas dispatch
+after that run leaves the accepted serial/parallel implementations unchanged.
+
+All191 named JS tests pass, including alphabet partition, context, input rejection,
+worker failure cleanup and refusal of atlas/oracle modes. All397 Python tests also
+pass; git diff--check passes with existing line-ending warnings. Root hard.js
+hash remains unchanged at79d244ab7060d776e854f217ff1714724ce130b61946e9d06ef9f27f517f615f.
+No owned expensive study remains running; no commits, deployment or live data
+writes. Goal stays ACTIVE/UNMET. Next substantive integration still needs legitimate
+incremental memory to avoid reclassifying already known tiles, production obstacle
+rendering/visibility validation and real all-case reference measurement; the old
+15/25 result has not become20/25 from this performance work.
+
+## Persistent production and screenshot sessions, 2026-10-20
+
+Added production_physical_session.js, a source-anchored resumable generator
+around the production transition closure. Each physical tap resumes the same
+attempt; structural views omit pictures, decks, scores and inspect/take hints.
+Separate trusted audit access is not a policy input. Legal taps are independently
+geometry-checked; invalid taps cannot restart or mutate an attempt. Structural
+views are not yet a completely validated human-visible observation contract.
+
+Physical audit physical-session-2026-10-20T17-55-48-889Z retains all20 attempts:
+4 have no eligible prefix,16 paths match original production reconstruction,
+14 recordings are complete,1067 physical choices match, and0 are computation
+censored. All15 archived/current source hashes, inputs and16 artifacts verify.
+Regression tests compare complete raw results/logs/traces for pairs, inspections,
+clocks, Joker/arrival/locks, caps and hidden-picture variants.
+
+production_pixel_session_audit.js closes the screenshot -> singleton memory ->
+public witness search -> production tap loop. Original HTML/private G access
+throws during recognition; public search geometry face getters also throw.
+Independent pixel arithmetic rechecks every archived template bank. Final
+pixel-session-2026-10-20T18-01-57-606Z passes5 tiny declared fixtures:22 frames,
+17 taps,47 banks. All49 source hashes and96 artifacts verify. Offset opening
+memory is [null,null,3,3,4,4], not concealed truth; clock exit chooses tile1
+first; Joker finale consumes0 clock moves, matching production.
+
+Retained the first17:59 failure at an animated urgent clock badge. Fixed public
+clock icon/count/urgent reconstruction and disabled animation/transition sampling
+in offline reference pages only. No live renderer or physical action cost/timing
+changed. This is settled-static smoke evidence, not the25-case strength benchmark,
+general perception proof or80% forecasts. Keys/ice overlays, broader structural
+visibility, animated/flight recognition and real-level performance remain open.
+
+Validation:190 named JS tests and397 Python tests pass; git diff--check passes
+with existing line-ending warnings. Root hard.js remains unchanged at
+79d244ab7060d776e854f217ff1714724ce130b61946e9d06ef9f27f517f615f.
+No commits, deployments or live data writes. Goal remains ACTIVE/UNMET.
+
+User authorized RTX3070 use. CUDA verified with PyTorch2.5.1+cu121, RTX3070/8GB.
+Existing Node branching search is CPU-only: no automatic GPU switch or speedup
+claimed. Use GPU for suitable batched work only after correctness/end-to-end
+timing comparison. No owned Node research/Python job remains running at this
+checkpoint; app and Gemini helpers remain untouched.
+
+## Both full count screens complete; public-context recognition verified, 2026-10-20
+
+Previous goal turn made concrete public renderer/source-bound full fixed90
+progress; this turn reread the reference-first objective and completed the
+remaining actual adaptive measurement and matched comparison. No restarted
+count job and no new personal-fit grid. Both original handles are TERMINAL0:
+23187/PID35612 fixed90;62136/PID34588 adaptive90 (last cell17:36:57.523UTC).
+No owned count/loop process remains live. Each summary verifies350 cells,
+100 strictly earlier own rosters,300 learned-policy applications and50 actual
+disabled controls. The complete matched comparison archives its scoring-source
+closure and requires identical25 cases, policies, seeds, physics/runtime graph
+and all50 disabled chains. Fixed212/adaptive269 numerical caps remain censored.
+
+Confidence1 full/balanced fixed->adaptive: Dennis3/5->3/5, bucketMAE1.6->1.6;
+Mrs1/10->1/10,4.3->4.1; Gerda2/7->2/7,3.285714->3.0. No-memory/balanced Gerda
+loses3/7->2/7 while distance improves3.571429->3.0. No-memory/winning Gerda
+improves2/7->3/7 and3.0->2.714286, while other arms regress or have unresolved
+caps. Dennis no-memory/balanced stays1/5 but distance1.4->1.2 and154 is a
+closer miss. Full/balanced Mrs104/106 are closer misses despite flat accuracy.
+All gains/losses, closer/further misses, ordinal/recent-level diagnostics and
+all14 arms remain in recency-count-comparison.json; no cherry-picked arm is
+promoted as success. Dennis has1 pending, Gerda1 pending plus1 fit-overlap
+diagnostic, PUK no primary cases. The old pending labels are not refreshed
+inside these pinned studies. This is retrospective development, not frozen
+future80% evidence. Keep adaptation as a possible component for a stronger
+reference, but it is not the main missing capability demonstrated here.
+
+Public screenshot classification now processes tiles top-down in paint order.
+Only earlier singleton screenshot recognitions populate the constructed
+template's foreground context; no true picture/G state/original HTML is read.
+Unknown foreground retains expanded rounded-body/opaque-depth masks; recognized
+foreground uses an inset opaque core, admitting conditional antialiased edge
+pixels. Noninformative opaque interiors stay excluded. Every context identity
+is archived per target and its constructed DOM content is checked explicitly.
+
+Incremental hypothesis replacement initially produced false lower-picture
+support: retained17:10:18 and17:16:05 artifacts reject it. Rebuilding the already
+public, constructed board DOM for each glyph hypothesis fixes those fixtures;
+this is NOT cloning original page markup. Old global restore closures were
+changed to find the current target after that rebuild. No noise threshold was
+increased or private nuisance glyph supplied to make the tests pass.
+
+Final two actual renderer audits are TERMINAL0: pixel-capture-
+2026-10-20T17-25-06-936Z (offset) and17-29-11-834Z (aligned).36 scenes,144 tile
+classifications,12 derived opening controls; all actual source/bank/PNG hashes
+verify. New independent personal_pixel_capture_verify.js imports neither matcher
+nor recognizer: direct RGBA replay checks every support/known/reason value,
+all18 cases per run, fixture truth membership, unchanged observed images and
+exact chronological public-context rosters. It verifies126+78 prior singleton
+context identities and both16-source archives. Reports bind/copy the verifier
+itself. No same-pixel world gets different observations/opening features.
+
+Remaining limits stay explicit: tiny differing occluded images may still share
+classes; this is not full human recognition, all overlay/font/device contexts,
+dynamic play, a production observed-value controller or reference optimality.
+Tested partial exposed pictures remain recognizable without hidden markup.
+Do not reuse symbolic observer1 personal fits as verified new-perception fits.
+
+Full189 named JS tests pass after the final changes; Python397 last full pass,
+no Python source changed. RTX3070/8GB, driver610.88, PyTorch2.5.1+cu121 and real
+CUDA availability/device name verified locally. No installation or arbitrary
+GPU rewrite; branching Node search was CPU-bound and both jobs are now done.
+Primary frozen ledger hash remains66fad209cefcedb09d56fe9cf2ce001e3912a49925f135dda7d22b9d4a3cbf20.
+No commit/push/deployment/live-data write/new numeric freeze. Reference-first
+work and independent Gemini integration remain the priority. Goal ACTIVE/UNMET.
+
+## Reference-first goal and public renderer boundary, 2026-10-20
+
+Read the replacement objective at the user's goal-objective.md attachment
+711042e1-6e62-40b4-8ddb-8c2749c77544. Reference strength/information fidelity now
+take priority over additional personal-feature fitting. The final own-person
+80% frozen new-level objective remains unchanged and unmet. Gemini is separately
+hardening its existing skills_coach/optimal_bot.js from pinned526e084; do not
+edit its active checkout or substitute another private-information engine.
+
+Existing fixed90 count session23187/PID35612 is TERMINAL0. Its independent
+summary verifies all350 durable cells,100 earlier own rosters,300 applications
+and50 actual disabled retry controls. All212 numerical caps stay censored.
+At confidence1, full/balanced Dennis3/5 versus disabled2/5, Mrs1/10 versus0/10,
+Gerda2/7 versus2/7. Other recall/objective arms remain in the full report;
+there is no overall80% result and some distance metrics worsen. PUK has no
+eligible cases in this pinned screen. Adaptive90 session62136/PID34588 remains
+LIVE at348/350 around17:05UTC; do not edit its40 bound source files. Run the
+prepared matched comparison only after that same job completes normally.
+
+The prior screenshot classifier cloned the original page HTML, potentially
+including concealed glyph markup. public_pixel_scene.js now projects only
+explicit public DOM tile geometry/paint order, supported public classes,
+obstacle kinds and clock badge text; it does not export face markup or private
+game state. A separate renderer uses public assets and fixed glyph0 fillers.
+Candidate target glyphs replace that filler only. Original page.content is
+forbidden and every private G getter throws during the actual screenshot audit.
+Relative positioning preserves production text rasterization; arbitrary
+original HTML and private face/deck data never enter template construction.
+
+Failed artifacts are retained:16:48:55 empty-glyph and16:51-era fixed-filler
+versions falsely excluded the true lower picture near opaque tile-depth edges;
+the latter even falsely identified0.16:53:41 excludes opaque depth correctly,
+but fixed-position template wrapping changes classic corner-text rasterization,
+leaving classic tiles outside the dictionary. Corrected relative-position
+templates at pixel-capture-2026-10-20T16-59-49-578Z complete all18 offset scenes,
+72 classifications and6 derived opening controls. All16 archived source hashes,
+PNG/bank hashes and72 support calculations were independently replayed. Same-
+image sunflower2/4 controls have identical classes/openings. No true pictures
+are supplied to recognition; audit-only truth checks reject false support.
+
+Masks retain exposed rounded corners but exclude the two actual opaque CSS
+depth layers. Relaxing only that exclusion on the archived72 banks yields
+false support in all six occluded theme/world pairs, so it is not promoted.
+The safe projection currently loses some tiny edge distinctions retained by
+the old scene-dependent templates (animals/classic occluded2/4 now share
+classes despite different observed pixels). This is a stated remaining
+perception limitation, not a claim of perfect human recognition or stronger
+play. Partial exposed pictures are still recognized. Static device-scale1
+fixtures do not prove all dynamic overlays/themes/recognition contexts.
+The aligned18-scene companion is running under session60906; inspect its
+actual terminal state before changing the new renderer's bound sources.
+
+Read-only live refresh15:29:12.622UTC exports349 campaigns: Gerda80 first-clear16,
+81 first-clear1,82 pending after66 observed attempts; PUK55/56 first-clear1,
+57 first-clear4,58 pending after3. Preserve old forecasts and pending cases.
+Original source-bound cohorts: Gerda8/13 completed with1 pending, PUK3/4 with
+1 pending, Mrs0/7. No new candidate gets prospective credit. Separate replay
+GET audits: Gerda80 all16 recordings retained,4 without eligible prefixes,
+11 exact complete failure paths and one exact partial winning prefix;691
+retained physical choices, no initial/end/physics mismatches. PUK57 all4
+recordings,3 complete and one partial exact path,376 choices, no mismatches.
+Do not describe Gerda's winning recording as complete or insert new outcomes
+into the old pinned count inputs. Future fits need these new own strategies.
+
+New public-scene geometry tests pass; full188 named JS passes before final
+relative-position/projection refinement. Re-run after all renderer audits.
+No new personal model grid, freeze, commit, deployment or live data write.
+Goal ACTIVE/UNMET; working in personal-bot-review on wip/personal-bots.
+
+## Learned inspection-sequence pilot, 2026-10-20
+
+The human observation constraint remains: identifiable exposed edges count as
+known pictures. The screenshot/recognized-value prototypes test this separately;
+the two already-running count studies still use symbolic observer1. Do not
+retroactively describe those studies as using the corrected perception model.
+
+New personal_known_inspection_streak.js/.py derives six bounded features from
+only earlier actual selected actions: consecutive known-inspection log/squared
+strength, interactions with no unknown inspection available, and active clock.
+Other action labels reset the run. Raw inspection labels can accompany physical
+removal; these features do NOT assert zero progress or impose a human tap limit.
+Before the selected Gerda70 target, her own roster contains3140 completed
+inspection-labelled bursts, maximum34/p95=9, plus19 right-censored prefix tails.
+That observed maximum is not used as a hard limit or universal human constraint.
+
+personal_public_witness_streak_fit.py jointly learns all96 coefficients, not a
+hand-set negative penalty. Pilot94789 is TERMINAL0 in runs/
+public-witness-streak-pilot-2026-10-20T10-10-56-609900_00-00: one selected historical
+Gerda70 model and16 matched-current fits. Exact own rosters, target exclusions,
+regularization/half-life/objectives match the parent90. Historical action NLL
+is worse2.435132->2.448278 on301 choices; retain this evidence and test physical
+rollouts rather than discard the route on that one metric. Current fixtures
+are training-history math checks, not unseen validation or fresh-live fits.
+
+Runtime audit independently verifies17 rosters,3857 decisions/50288 probabilities
+against Python96 math, max difference6.66e-16. Eight actual synthetic2x9 production
+controls with the six coefficients disabled exactly reproduce old90. The
+selector updates history once per selected action, never on probability queries,
+and never bans an inspection. Full397 Python tests and187 named JS tests pass.
+The first broad JS invocation lacked NODE_PATH and failed to load Playwright;
+the complete rerun using the bundled dependency path passes, without code changes.
+
+Loop probe accepts an explicit streak candidate file, binds/archives its bytes
+and validates parent identity/own roster/cutoff/configuration. Session54895 is
+TERMINAL0 in witness-loop-2026-10-20T10-20-58-659Z: same Gerda70 full_balancedT0.25,
+eight runs/nine tries/default budget. Sequence candidate caps worsen2->5, total
+choices34898->46487, within9 sampled successes7/8->3/8; capped chains remain
+censored. This first physical test does NOT support promoting the candidate.
+
+Rather than discard it after that first test, measured both other confidence
+settings with the identical model/roster/seed/physics/budget. Session17907 is
+TERMINAL0 for both: witness-loop-2026-10-20T10-39-39-425Z (T0.5) and10-45-21-318Z
+(T1). AtT0.5, first wins1/8->2/8 and within9 remains7/8, but new caps0->2 and
+29327 choices. AtT1, first wins1/8->3/8, within2 4/8->5/8, within9 remains8/8,
+zero caps and11669 choices/10378 known inspections/9727 state revisits.
+All three43-source archives, candidate byte hashes and gzip traces verify.
+The route has context-dependent tradeoffs; evenT1 still cycles far beyond
+natural human bursts. No selected-case tuning result is an independent frozen
+forecast, broad count improvement or80% evidence. Retain every failed variant.
+
+Both original full count jobs remain LIVE and all40 bound source hashes match:
+fixed90 session23187/PID35612,304/350 cells; adaptive90 session62136/PID34588,
+279/350 at~10:23UTC. Shared sources/inputs/ledgers unchanged. No partial accuracy
+comparison, new numerical freeze, commit, deployment or database write.
+Working in personal-bot-review on wip/personal-bots. Goal ACTIVE/UNMET.
+
+## Full comparisons prepared; actual inspection-cycle diagnosis, 2026-10-20
+
+Previous goal turn made concrete observed-value boundary progress. This turn
+also performed verified waits on the SAME two live count handles, checking
+process CPU growth and new durable cells, never restarting on silence. Shared
+runtime sources remain frozen. Some Gerda70 low-temperature cells now have
+numerical caps; they remain censored, never converted to human failures.
+
+Prepared personal_public_witness_recency_summary.py for AFTER both complete:
+exact fixed90 parent/model hashes, identical inputs/runtime/physics/settings/
+seed/policies, all25 cases and50 actual disabled chains must match. Existing
+full summaries must verify350 journal cells each. Re-check agreed-rule point
+scores, keep pending/fit-overlap/censoring denominators, and report distance,
+ordinal/recent-level scores and closer misses separately. Tests explicitly
+cover8→2 with actual3: both rule misses, but distance5→1 is improvement. All
+comparison/metric Python sources archive with the eventual comparison.
+The comparison has NOT run against incomplete studies. Full Python388 passes.
+
+Independent exact-chain loop probe84526/PID36840 is TERMINAL0:
+witness-loop-2026-10-20T09-23-37-245Z, Gerda70 full_balancedT0.25. Its entire
+8x9 vector and every planner/dead-acknowledgement counter reproduce the actual
+durable original cell. No extra probability query, observe, draw or changed
+limit. Engine's unchanged default limit is4096, not the reference screen's512.
+Two capped episodes have4096 choices each, with3958/3969 public-state revisits
+and3994/4033 already-known inspection choices. The largest same-public-state/
+same-action groups repeat946/830 times; every selected raw feature and kind
+context in each group is byte-identical. Thus unbounded selected raw-feature
+growth is NOT supported here. The fitted attention weight76 is+.42012359.
+
+Explicit withoutAttention ablation77318 is TERMINAL0:
+witness-loop-2026-10-20T09-37-56-775Z. Only weights76/77 change; original model
+files stay untouched. Same seed/budget/physics: caps2→0, total choices34898→8213,
+known inspections33144→6798, public-state revisits32209→6300, longest no-removal
+stretch1918→575. First-trial sampled wins1/8→3/8, while within9 remains7/8.
+This selected-cell intervention implicates attention amplification but does
+NOT establish that zeroing it is a validated personal fix: substantial cycling
+remains and there is no new frozen forecast. Legitimate human reinspection,
+memory assumptions and absent state/action commitment still need distinction.
+Both41-source archives and gzip trace hashes independently verify. Named JS185
+passes after the explicit original/ablation controls. No active study changed.
+
+Read-only live snapshot09:26:51.791UTC: Gerda79 cleared local try2 at06:32:41.183,
+then opened80 at06:33:16.255. Latest recorded80 is pending after13 attempts.
+Original immutable source-bound forecasts were79→1 and80→8; re-scoring retains
+the79 miss. Gerda has11 completed/6 correct plus one pending, not80% evidence.
+Do NOT credit80 before an actual clear. No new family receives prospective
+credit: the recency design followed this opening and neither new count family
+froze numeric80 forecasts before it. All343 own campaign exports stay separate
+from pinned study data; do not insert79's newly known result into old inputs.
+Future fresh fits must incorporate the actual new own play before a new freeze.
+Live plays SHA6bf30fc6266db02460520bf7796d2d34a429c24078f78f8da7ff98695a7635f1;
+scores SHA2668eb7407513ad0700db8463fd6aae72fdeea382ecf7dcc8b0dad926b2592a5.
+Goal ACTIVE/UNMET. No commit, push, deployment, DB write or ledger rewrite.
+
+## Observed values, not a true-face knowledge gate, 2026-10-20
+
+Previous goal turn made concrete progress on348 recency components,116
+continuous blends and chronological/runtime audits. Both same count jobs
+23187/35612 and62136/34588 were independently verified LIVE again here.
+No shared runtime source was changed or measurement restarted.
+
+New public_observed_opening.js consumes recognized identities/support classes
+and explicitly projected public geometry/down/rule metadata. It never reads
+the actual environment deck, tile faces, neighbor metadata or retry-memory
+flags. Canonical filler0 stands for unknowns only inside capture; a37-symbol
+filler sweep leaves public snapshots and raw numeric features exactly equal.
+Wrong recognized values remain wrong in the policy view, rather than being
+silently corrected through actual game.faces. Conditional per-tile beliefs
+are retained. Observer version2 prevents silently presenting changed semantics
+as the existing version1 personal model; no root Hard edit was made.
+
+First exact fixture replay exposed redundant normalization of an already
+normalized prior: immediate13 drifted0.05405405405405406→0.054054054054054106.
+The failed source variant was retained in observed-opening-failed-prior-
+2026-10-20T07-38-29-955Z as an explicit post-failure capture. Fixed the cause
+by preserving an already normalized validated prior byte-for-byte, not by
+relaxing the comparison. Future audit attempts archive their configuration
+before evaluating controls. No count-model source or frozen forecast changed.
+
+observed-opening-2026-10-20T07-38-30-560Z completes12 actual screenshot-derived
+opening controls across offset/aligned scenes, all exact numeric feature/state
+matches to the saved correct-recognition controls apart from version2. All12
+intentional misrecognitions preserve the observed wrong identity and belief,
+with throwing actual-deck/tile getters guarding the interface. Named JS184
+passes after repair; last full Python383 remains passing.
+
+This is first-opening/all-alive capture, not autonomous physical play or retry
+memory integration. Rich ambiguous beliefs are sidecars; raw unknown chance
+features still use the legacy global non-oracle prior. Public status/rule
+metadata and renderer nuisance independence still need broader validation;
+the cloned template DOM issue is not magically solved by this consumer.
+No new person fits, rollout strength,80% evidence or production readiness is
+claimed from these controls. Both existing count studies remain pinned to
+their earlier symbolic observer, with immutable forecasts preserved.
+
+## Continuous personal recency adaptation, 2026-10-20
+
+Previous goal turn made concrete progress on screenshot-derived observation.
+This turn revalidated the SAME original count23187/PID35612 live; no restart
+or changes to its40 bound runtime sources. Partial cells are not final scores.
+
+New personal_recency_blend.py / personal_public_witness_recency.py fit joint
+own90 preferences at5/20/60 campaign half-lives. Ridge penalty scales by the
+total campaign learning-mass ratio against20, avoiding accidental changes in
+regularization per unit mass. All348 components remain archived:116 reused
+fixed20 models and232 new fits. Forecasts average continuous learned vectors,
+not fixed global strategies or forced reference actions. Only that person's
+strictly earlier completed eligible campaign action losses update weights.
+One mean-attempt NLL per campaign prevents19 retries from getting19 votes.
+Availability includes actual completion AND all selected source versions.
+Target/future/foreign/duplicate/base-fit-overlap calibration is excluded.
+Declared rate8/share.1 retains every route and permits repeated reversals.
+
+Recency fit64909/Python23700 is TERMINAL0. New immutable run:
+public-witness-recency-2026-10-20T07-10-12-020796_00-00.
+It contains100 historical and16 matched-current blends, all348 components.
+Models SHA afec426bb63d9ea408aac4c8e457d09d2784bb8477acdd82c7d8d24b1161c8f9;
+native SHA1f0bd68881a96747b2b192b76e64a165b3685737ab85c1432d61aaf6bf439431.
+Input/targets/cutoffs match fixed90; fitting later does NOT refresh its data.
+PUK54 remains absent. These are retrospective source/design-readiness fits,
+not newly frozen predictions or fully current own-player training.
+
+Separate verifier92492/Python30764 is TERMINAL0:348 component rosters,
+116 blends and440 repeated prior-history update APPLICATIONS verify against
+raw own observations. They are NOT440 independent human campaigns. Independent
+NumPy/SciPy weight math differs by max1.3322676295501878e-15; all campaign
+losses reproduce exactly. Component file hashes are explicit POST-FIT bindings.
+Runtime audit35082 is TERMINAL0:28092 choices/364064 probabilities, max JS/Python
+difference8.881784197001252e-16,16 actual public opening controls and eight
+actual padded2x9 retry controls pass. Eight new focused tests cover reversals,
+chronology, person isolation, rosters, coefficient bounds, mass scaling and
+campaign-vs-action weighting. Full Python383 and named JS183 pass.
+
+Matched action NLL gains remain small/mixed, not count accuracy: Dennis none
+balanced1.969386→1.967658, none winning1.964069→1.961733; full balanced flat,
+full winning2.081474→2.080747. Gerda full balanced2.894803→2.884420 and full
+winning2.885646→2.876045; none improves about.003. Mrs none improves about.0008;
+full worsens up to.00045. Dennis currently favors60-window mass (.52–.56),
+Gerda full favors5 (.49–.53), Mrs none mildly favors5 (.39–.41), PUK stays
+uniform with zero eligible calibration updates. This is NOT causal proof of
+skill changes or evidence that every person should adapt faster.
+
+After actual chronology/runtime gates, launched a separate full350-cell recency
+count screen62136/PID34588: same25 cases/14 policies/8runs9attempts/seed20261109,
+actual terminal controls. Original35612 continues unchanged. Six numerical
+workers fit within12 physical cores. No active job was cancelled for speed.
+Keep shared runtime sources frozen until BOTH are terminal0; then run the
+existing summary in each exact directory and compare fixed90/adaptive90
+without choosing a favorable partial subset. Goal ACTIVE/UNMET. No new frozen
+numeric forecasts,80% claim, commit, push, deployment or database write.
+
+## Screenshot-derived knowledge instead of hand masks, 2026-10-20
+
+Previous goal turn was concrete progress: own90 extraction/fitting/runtime
+audits completed and actual count measurement launched. Same count23187/
+PID35612 remains LIVE with durable numeric cells; no restart. Its complete
+bound source graph is untouched by the independent renderer work here.
+
+New public_pixel_capture.js creates complete public glyph-support rows,
+conditional beliefs and singleton knowledge masks from the observed scene,
+not manual visibility flags. Pure bridge tests reject malformed classes and
+never read private picture metadata. Rendering templates in the actual page
+was rejected: pixel-capture-2026-10-20T06-40-54-611Z changed136 pixels by at
+most one channel unit after restoring the scene. Failed sources/PNGs retained.
+An initial separate-page creation attempt also failed explicitly under
+Playwright's owned-context restriction; it was corrected with a separate
+browser page. The actual observed scene now remains pixel-exact unchanged.
+
+The conservative upper bounding boxes hid useful edge pixels. In the next
+retained run06:44:18.836Z, sunflower2/4 whole frames were equal, but animals
+were not:12 exposed pixels differed by up to11 channel units. An assertion
+that every theme must hide2/4 was a wrong fixture assumption, not proof of
+hidden-picture leakage. Do not erase this failure or call those images equal.
+
+The new matcher uses the entire observed rounded target footprint, including
+unchanged foreground pixels. One channel unit of bounded raster tolerance
+retains every consistent glyph, not a nearest label; larger unsupported
+differences stay unresolved. Tests cover ambiguous neighborhoods, zero mask,
+invalid tolerance, and throwing unobserved-pixel getters. No game outcome
+was used to choose this tolerance. Old exact dictionary compilation remains
+unchanged. Approximate support sets are not advertised as equivalence classes.
+
+pixel-capture-2026-10-20T06-48-54-343Z, session29286, is TERMINAL0:18 scenes,
+72 tile observations, six actual opening controls with screenshot-derived
+masks. All15 archived sources independently verified and all72 observations
+reconstructed independently from saved PNGs/templates (session14318 exit0).
+The sunflower same-image worlds yield identical classes and actual raw engine
+features. Animals lower2/4 are now both identified; classic lower2 remains
+ambiguous while4 is identified. All partial scenes retain identifiable lower
+symbols.183/183 named JS tests pass. This is stronger fidelity than dropping
+all partially covered tiles, not a claim of full human perception or80%.
+
+Scope remains explicit: static six-tile fixtures, device scale1, host fonts,
+animation disabled. The cloned template DOM contains unobserved markup;
+general nuisance independence is not proved by these finite controls. The
+capture-only engine consumes singleton masks, not ambiguous per-tile beliefs.
+No root engine edit, dynamic game integration or current-count source change.
+
+Started the predeclared aligned three-layer variant (36972), independently
+of the active count job. This checks whether exact-coordinate covers also
+hide useful exposed edges from the old symbolic observer. Different-image
+aligned pairs are not forced to have identical features. Equal-image pairs,
+if present, still must have equal classes and actual captures. All candidate
+glyphs and failed variants remain archived; no80% or perfect-play claim yet.
+
+Aligned run pixel-capture-2026-10-20T06-54-59-521Z is now TERMINAL0
+(36972):18 more scenes,72 tile classifications, six screenshot-derived actual
+opening captures. All15 source hashes and72 bank/image classifications were
+separately replayed from archived artifacts (72568 exit0). Sunflower and
+animals equal-image pairs retain equal classes and actual features. Classic
+picture2's exposed lower edges identify both lower tiles that original
+Hard.coverOf calls unknown; picture4 remains ambiguous. This demonstrates
+the opposite error too: the old abstraction can omit visible information,
+not merely expose invisible information. It does not establish prevalence
+or the performance effect in actual player campaigns.
+
+Latest full183-test JS regression passes. Same count35612 verified live at
+114/350 durable cells, zero caps so far, final file absent. All40 count-bound
+source hashes remain exact. Original root Hard and primary frozen ledger
+hashes unchanged. No source repair to an active measurement, commit, push,
+deployment or database write. Goal ACTIVE/UNMET. After that same count job
+is terminal0, run its existing summary before changing shared runtime sources.
+
+## Own90 fits and runtime audit complete, count screen live, 2026-10-20 06:36 UTC
+
+Fitting49772 is TERMINAL0:100 strict own historical fits plus16 current fits.
+Models SHA d3303fb497ce5ef156a15cac4eef8cb8a381dbb05f3ada226b3a3c5e1e49dc04;
+native SHA2db2f42f904f7d4dc8f836ce48b610cd3eb98e7387ae4064f0d5bc3d3b074043.
+Runtime audit63408 is TERMINAL0:28092 actual choices,364064 probabilities,
+independent JS/Python max difference8.881784197001252e-16,16 actual public
+opening controls and eight actual padded2x9 retry controls all pass.
+
+Matched earlier-human action likelihood is mixed, not a reason to claim80%
+or discard the route before its count screen. For4062 Gerda choices per arm,
+NLL improves2.7720→2.7271 (none balanced),2.7672→2.7187 (none winning),
+2.9492→2.8948 (full balanced),2.9450→2.8856 (full winning). Dennis966-choice
+full-recall NLL improves about.008; none-recall worsens about.006. Mrs1995-
+choice arms are essentially flat/slightly worse except a tiny none-winning
+improvement. These matched action-choice denominators are not independent
+level counts, future scoring, or overall perfect-reference strength.
+
+Actual own preferences differ, rather than forcing a common greedy solver.
+For example balanced current full-recall immediateKnownTrayMate weights are
+Dennis1.4328, Mrs.2604, PUK1.1157, Gerda2.2261; clock coefficients are exactly
+zero for PUK/Gerda where their data provide no clock support. Individual
+coefficients are conditional on all other fitted covariates, not standalone
+causal explanations of human intentions. These current fits still use the
+pinned old input and must be refreshed before any new prospective freeze.
+
+Started the actual350-cell25x14 count screen,8runs9attempts,seed20261109,
+same terminal controls. Session23187/PID35612 verified LIVE with durable
+numeric cells; no caps visible in the first six cells. All shared runtime,
+physics, planner, fitting/data sources now remain frozen until it is terminal.
+Do not restart on slow output or treat early cells as final performance.
+Then run personal_public_witness_summary.py on the same run directory.
+Goal ACTIVE/UNMET; no new frozen numeric forecast or80% evidence yet.
+
+## Own90 annotation complete and cache integration, 2026-10-20 06:31 UTC
+
+Previous goal turn made concrete progress on exposed-edge recognition and
+verified the same live annotation. Session71394/PID35684 is now TERMINAL0.
+public-witness-2026-10-20T04-46-25-871Z/input.json exists after all source
+assertions passed:1022 own prefix/recall records,92582 human choices, all1022
+original physical paths identical. Earlier carry replays311; four retained
+boundary records across both recall modes remain explicit, not repaired wins.
+The old waiting pipeline31443 remains terminal; it was not resurrected.
+
+At that safe boundary, enabled injected pure search in reference/features,
+with the old uncached default unchanged, and a bounded4096-entry cache ONLY
+in the new90 runtime. No global monkeypatch or shared physics edit.
+witness-cache-trajectories-2026-10-20T06-30-44-858Z is TERMINAL0 (73476):
+all29 actual cases/controls,2317 physical frames, complete engine results and
+planner counters identical, including exact original threshold2 results.
+All36 archived source bodies independently verify.1041 cold queries had zero
+hits, so this control does NOT demonstrate whole-game acceleration; uncached
+50.345sec vs cached50.318sec is effectively equal. Earlier repeated-query
+component timing remains separate.181 named JS tests pass after injection,
+including new factory/features forwarding tests.
+
+Own chronological90 fitting actually started, session49772, Python34200 via
+launcher21000. It is live with durable per-model fit progress, not yet a count
+accuracy result. Its Python source graph and extracted data remain frozen.
+After terminal success: native/runtime audit, count measurement, then summary.
+Preserve the original fixed25-case input; no new outcomes inserted into it.
+
+Read-only live snapshot06:30:39.922UTC has plays SHA
+f6777dad2841d917a6b81ea8cdd9dfb8abe13f1e41652c38c2557a5f6b9b1bf6
+and scores SHA f3a55536bf07358af75efdb32405ba2e4f0275b2f3b4abe449cb500084c11ff3.
+All342 own campaign episodes equal the05:14 snapshot exactly: no new own
+clear or progression opening. Re-scored the original immutable ledgers;
+targetMet remains false. No new90 prospective credit. Working checkout and
+branch unchanged; no commit, branch creation, push, deployment or DB write.
+
+## Exposed picture edges, 2026-10-20 06:05 UTC
+
+Dennis confirms that visible picture edges identify the lower tile for him.
+Recognition must not require full uncovering. Expanded the separate pixel
+prototype's target mask to its rounded opaque interior, including safe edge
+fragments. No active annotation source or root Hard engine was edited.
+The completed renderer control pixel-partition-2026-10-20T06-05-23-231Z has
+8881 partial pixels and37 singleton symbols in each of three themes. Two-upper
+occlusion retains2073 pixels:12 classic singletons, one sunflower/animals
+singleton. Pictures2/4 remain ambiguous, with equal actual opening captures.
+These are static machine distinctions, not a universal recognition guarantee.
+
+Validation after this change:181/181 named personal-bot JavaScript tests and
+375 Python tests pass. git diff--check passes apart from existing CRLF notices.
+Root Hard SHA79d244ab7060d776e854f217ff1714724ce130b61946e9d06ef9f27f517f615f
+and primary ledger SHA66fad209cefcedb09d56fe9cf2ce001e3912a49925f135dda7d22b9d4a3cbf20
+remain unchanged. At this check963/1022 annotations were durable; input.json
+does not yet exist, so the held fitting pipeline has not started.
+
+Retained the failed rounded-upper-mask variants and diagnostics. A one-pixel,
+one-channel foreground-corner antialiasing change incorrectly selected symbol0
+after the other lower tile changed. Conservative expanded rectangular upper
+bounds remove that artifact without reverting to a central-only target mask.
+Some human-recognizable corner fragments may still be excluded. This remains
+an isolated research prototype, not dynamic production integration or80% proof.
+The prior own90-feature annotation remains live, unchanged, with Gerda full
+carry the remaining endpoint. Its symbolic observer is not claimed equivalent
+to all human-visible pixels. Primary frozen forecasts remain immutable.
+
 ## Fresh personal fits, verified1.58 and predictive-tail correction, 2026-10-18
 
 Previous goal turn was concrete progress (exact209-tap bee deferral, snapshots and tests). This
@@ -3440,3 +4330,1916 @@ the parent OmasMahjong directory is not itself a Git checkout. Re-ran all253
 Python tests, the personal JavaScript suite and git diff--check successfully
 before this commit. This checkpoint preserves the research and tests without
 claiming80% accuracy or changing the older forecast ledgers. Nothing is pushed.
+
+## Own picture-recall count experiment
+
+The preceding goal turn made progress: the user-requested branch checkpoint is
+committed as b7fdf0a, with a clean tree and successful253 Python/personal JS tests.
+No count simulation was live when this new experiment began (CIM inspection).
+The Gemini checkout is still clean at6628eab; the handoff's retrospective claims
+remain invalid as genuinely pre-opening evidence, as documented in GEMINI_AUDIT.
+
+Implemented a predeclared3x4 picture-recall/confidence grid for the CURRENT own
+static/joint/log-attention controllers, not the rejected older controller. Recall
+none/configured/full each retain learnFromLoss:true. The experiment does not
+claim Dennis repeats mistakes or literally has no picture memory. Full policy
+IDs bind own controller, temperature, memory, seed and retained failure learning.
+Own per-person proper count fitting retains the same20 exact prior clean boards;
+caps disqualify a whole profile and never become simulated human8+ failures.
+
+Prepared immutable run personal-attention-memory-2026-10-19T02-59-32-247Z after
+checking the actual completed prior80-board/four-temperature8x8 source closure.
+Reference data SHA cd5d4f4f9179fc9f79f662174a9042e9ac0b5a0446a74291343f7633a607e5cc.
+The unchanged configured chains can be exactly reused; every new memory chain
+is freshly simulated and must preserve its matched first-attempt rate. Pilots
+remain2x3 only, with full8x8 reruns of every pilot required. The source and new
+input are frozen separately; the original completed run is never edited.
+Five new Python tests and the new JS policy/lifecycle and worker-import controls
+pass. Actual full calibration and future80% evidence are still pending.
+
+The first pilot45056/PID2972 is terminal1, not live: all four workers finished
+without caps, but report assembly referenced undefined runs/attempts. Its frozen
+source/progress remain untouched and its missing report is NOT measurement proof.
+Fixed the workspace helper with shared, tested measurementSettings; prepared NEW
+run personal-attention-memory-2026-10-19T03-01-10-950Z rather than editing/restarting
+the frozen failed run. Pilot24379/PID31960 is actually terminal0: all4 boards,
+12 profiles,48 first-try controls,2x3,zero caps. Full20204/PID28348 was then launched
+at2026-10-19T03:01:50.767Z, same frozen corrected runtime; it is live, not complete.
+Its actual progress already includes10 complete Dennis boards withzero caps.
+Do not restart it based on polling timeout or substitute pilot results for8x8.
+
+Adapted the separate future pipeline with explicit prepare-memory, without
+silently replacing the default fixed-memory head. A completed actual own fit and
+identical calibrated runtime are required; full policy IDs/memory/recall remain
+bound through simulation, predictions and frozen points, with failure learning
+mandatory. Old configured-family rows cannot smuggle in changed memory metadata.
+Two new Python future-binding tests and JS selected-policy controls pass; no
+real numeric prediction has been made or frozen. Full fitting and80% on genuinely
+later pre-opening-frozen outcomes remain unmet.
+
+Full20204/PID28348 is now authoritatively terminal0, not live. Actual data finished
+2026-10-19T03:26:00.729Z: all80 boards,12 profiles,8x8,zero computational caps,
+48 paired pilots,320 exact configured-chain reuses and960 first-try controls.
+The old03:06 run-state JSON remains a timestamped partial observation only.
+Actual fit27841 is terminal0, made2026-10-19T06:07:38.064946Z. Own selections:
+Dennis none/.25; Mrs none/.5; PUK configured/.5; Gerda full/.25. These are effective
+simulator recall settings with failure learning retained, not claims of human
+amnesia. Weighted own count loss improves D1.9411->1.6524,M2.7999->2.4211,
+PUK unchanged.8738,G1.5309->1.3864. Independently verified all320 reused chains
+and960 matched first-try rates. Conservative8-try TRAINING point diagnostics are
+only10/20,5/20,13/20,11/20, vs previous9/20,5/20,13/20,10/20. Still NOT80%.
+
+First-try training signals explain why retry recall cannot solve the main gap:
+own raw first-clear AUC is Dennis.4048,Mrs.4505,PUK.6190,Gerda.5657 (small reused
+training samples, not held evidence). All20 D/M boards are clock boards. A separate
+exact own-prefix action coverage audit finds121/230 Dennis and103/168 Mrs chosen
+pair-like clock actions outside the current pairFirst mask. That mask generally
+requires a fully known successful exit; before the route is established, pair
+actions fall back to ordinary behavior. This is representation evidence, NOT a
+proven new policy. Next plausible bot change is a separately learned uncertain-
+route pair-preparation mode, not universally forcing greedy matching. The current
+source/measurements remain unchanged while this hypothesis is investigated.
+
+User supplied new Gemini commits05e48e0/c9d8be0 and updated handoff Section5.
+Read the actual new source at c9d8be07466ad73864673268d3334bb7ee7ce846; its dirty
+evaluation JSON is unrelated and left untouched. Direct read-only benchmark
+execution reproduces all4 Mrs34/84/102/107 cases exactly for the implemented
+five simulation fields and public geometry. New generator SHA
+a919cfdd1732fd4491141614f543b13fde39852e1412ed0c6142a09da53cccc3.
+Feature archive remains f203ef1a2a1a884bcdea4b4af605459ee596f023f6338eafdb7547649f6e7f2e.
+
+Prepared an independent self-contained400-record audit with32 exact copied
+dependencies, preserving literal cache-first behavior, all failures and explicit
+caps: gemini-generator-audit-2026-10-19T06-18-18-713Z. Full91767/PID30228 is live
+at the last confirmed observation, not complete. Exact cache tasks lack modelId
+for all29 recent D/G records, so the literal selector cannot resolve those own
+models. A distinct documented recent-model supplement, not a silent overwrite,
+uses the exact fresh recent actor IDs: audit06-19-36-914Z, session10410 terminal0,
+29/29 exact matches,zero caps. It does not erase the literal29 unavailable cases.
+This generator implements only5 of16 simulation fields; eleven variant-chain
+features are described but not actually generated by simulateTaskFeatures.
+Full source reproduction does not retroactively turn old recomputed scores into
+pre-opening forecasts or undo the already documented target-tuned thresholds.
+
+The full literal generator audit91767/PID30228 is now terminal, not live (tool
+exit1; report finished06:21:17.438Z). Report SHA
+1d4ffa2764bed0b4367f9e2c6760150b162475d65d13c6121c13872e7ef6ec51.
+All371 resolvable literal tasks were simulated:369 exact eleven-field matches,
+2 historical Dennis geometry-only differences (65/73 no-mate depth archive10
+versus generator6),29 recent models unavailable under literal cache priority,
+zero computation caps. The separately preserved documented-recent supplement
+is29/29 exact (report SHA53cbf4f4395fa849e1804fd088838f645997fb656914520042b6f679e6e35027).
+Combined independent summary proves all FIVE implemented simulation fields
+reproduce on400/400 records; geometry398/400. It does not erase literal misses,
+certify the eleven remaining simulation fields or validate retrospective80%.
+
+Implemented only those verified calculations in personal_verified_factor_features.js.
+First-trial statistics use fresh memory/avoidance state and original seeds; full
+retry rates retain the exact32-attempt memory RNG horizon and canonical attempt
+factory. Explicit computational caps are refused. Actual four-person parity on
+pinned originally-future planning boards (D152,M105,P55,G70,not newly unopened
+forecasts) reproduces allfive values exactly. Those profile diagnostics are NOT
+a generic greedy replacement for each personal bot, a new count head, or80%.
+
+Memory calibration is preserved independently at
+experiments/personal-attention-memory-complete-2026-10-19T06-22-08-679Z:
+463 copied files,39 measured-run dependencies,manifest SHA
+310eac22e7b526572cadaf1056fcd689a382b9fade1714357f886e4cb3ce74f2.
+All original forecast ledgers remain unchanged; new-family numeric ledger is
+still absent. All owned measurements/audits are terminal. Next useful direction
+is fitting an own count head from the independently reproduced five simulation
+signals and public geometry, while keeping unverified factors out and later
+freezes genuine. The partial-clock pair-mode coverage finding also remains a
+separate actionable bot hypothesis, not an already validated controller change.
+
+## Verified-factor head and personal clock-capacity controller
+
+The previous goal turn made concrete progress: independently reproduced/ported
+five Gemini simulation features on400 records, completed the memory experiment,
+and retained its negative count-prediction evidence. No old owned job remained
+live at the start of this turn. Goal remains active and unmet, not blocked.
+
+Materialized all305 exact historical/recent boards using pinned generator audit
+data, restoring85 missing from the earlier220-board geometry-only experiment.
+Only the five independently reproduced own simulation features, six regenerated
+public geometry values and public clock presence/budget enter the13-feature
+vector. Labels, generic references and eleven unverified simulation fields cannot
+enter. Own model bodies/availability/exploratory flags remain bound per record.
+The80 fixed reused comparison targets, assisted/hard/cold-start cases included,
+remain scored; only clean strict earlier own history trains normal habits.
+
+Actual verified-count development89834 is terminal0, made06:31:39.869924Z.
+Same declared forest settings as the prior geometry-only head, with no hand-coded
+level thresholds. Selected own prequential development is D6/20,M7/20,P12/20,G9/20
+(34/80), versus always-first38/80. Newer D clock development16/23,G3/5.
+This head is NOT promoted. Reused historical diagnostics cannot establish the
+requested pre-opening80%. Asked the user for Gemini's remaining eleven-field
+generator: the new simulateTaskFeatures currently only generates five fields.
+That clarification is useful, but meaningful own bot work continues meanwhile.
+
+Implemented separately versioned optional public-pair capacity eligibility for
+active-clock intent emissions. It does not require a fully known exit before
+representing a pair preparation; proven traps still do not enter the pair mode,
+ordinary options retain support and no generic greedy matching is forced.
+Physical route flags, engine rules, search and transition contexts are unchanged.
+Original frozen models/source remain untouched. Refitted all4 own clock models
+on exact445-prefix/39268-action membership with earlier static weights retained.
+Own training joint loss D1.645043->1.644465,M1.773346->1.771434,PUK/G unchanged.
+Previously unrepresented chosen pair-like clock actions reduce D121->7,M103->1.
+These are action-training gains, not winning-count evidence.
+
+Clock-capacity fit20186 is terminal0. New base SHA
+596afb1c84af86731e52f78c1f588d0f203f1842e5be2ca1b25bb59ac7dd434f.
+Native/runtime audit passes all39268 probability and both posterior comparisons,
+39268 disabled controls,zero non-clock changes,maxdifference9.992e-16.
+New base receives an actual new log-attention fit35243, terminal0, rather than
+borrowing old offsets. New attention SHA
+a517998f5a4466dc76dc48ea646ffb3155eaaa867af2b715725f80b3d45ea7b0.
+All39268 new attention probabilities/posteriors and zero controls match native;
+all21707 PUK/Gerda action probabilities remain equal to the previous policy.
+
+Paired first-rate probe21317/PID25036 is actually terminal0, completed
+06:45:15.252Z, run personal-clock-capacity-first-2026-10-19T06-43-26-341Z:
+80 boards8x1,zero caps,80 exact earlier first controls and40 no-clock controls.
+Only D146/150,M86/87/94 first rates change. First Brier D.411719->.413281 (worse),
+Mrs.321094->.301563 (better); PUK/Gerda unchanged. AUC D.404762->.416667,
+Mrs.450549->.483516,still weak. This is NOT full winning-count calibration.
+
+Prepared and launched NEW whole8x8 paired count run
+personal-clock-capacity-count-2026-10-19T06-47-31-794Z,session51479/PID13908.
+It is live at last CIM observation,41/80 boards completed withzero caps so far.
+Every fresh old whole chain must reproduce the previous actual8x8 chain, new
+first rates must match the completed first probe and all40 no-clock full chains
+must remain equal. Old own diagnostic settings are fixed on both sides:
+Dnone/.25,Mnone/.5,Pconfigured/.5,Gfull/.25,all retain failure avoidance.
+Those settings are a declared new-policy proposal, NOT inherited count-confidence
+calibration. Do not restart the live job or infer whole results from first probes.
+All original numeric ledgers remain untouched; no new-family real numeric freeze
+is created by these models, diagnostics or temporary test fixtures.
+
+## Terminal clock-capacity result and new full26 handoff audit
+
+The previously live whole-count job51479 completed successfully. All80 fresh
+old chains,80 paired first controls and40 no-clock whole controls match; zero
+computation caps. Count loss worsens for Dennis1.652423->1.665296 and
+Mrs2.421110->2.601250; PUK/Gerda are unchanged. Conservative training correctness
+is Dennis10/20 unchanged, Mrs5/20->4/20, PUK13/20 and Gerda11/20 unchanged.
+The capacity proposal is REJECTED, not promoted. The terminal summary is
+clock-capacity-count-training-summary.json, made2026-10-19T06:52:53.709044UTC.
+
+User supplied committed Gemini generator updates2d1e579/7caabcb. The clean
+7caabcb checkout passes its literal five-example benchmark independently.
+New personal_causal_full26_audit.js pins34 source/input dependencies and all400
+exact person/start/board records in gemini-generator-full26-audit-2026-10-19T13-36-26-045Z.
+It calls the actual full26 assembler without injecting expected reference or
+physical features. All records resolve under documented-kind selection.
+Historical276 secondary variants are cached lookups; recent/future124 missing
+variants alias the same Plan8 chain. The new audit explicitly distinguishes
+these from independently resimulated policy variants and makes no accuracy claim.
+No effective latest-bank follow-through override is used in these400 inputs.
+The old five-field audits and original numeric forecasts remain unchanged.
+
+Full26 audit8676 is now terminal at2026-10-19T13:45:07.654UTC. All16 simulation
+fields match400/400; zero computation caps, no missing/failed tasks. The literal
+assembler matches236/400 full dictionaries:162 openPairs fallback mismatches
+and the two earlier Dennis65/73 depth-sentinel discrepancies. Independently
+correct openingPairCount matches archived openPairs400/400; substituting only
+that field yields398/400 full dictionaries. Independent summary pins all inputs
+and reports the original failures. Its actor-body reread corrects a provenance
+flag-name typo in the initial driver and retains all29 exploratory recent actors.
+No original snapshots or feature/forecast ledgers were rewritten.
+
+Adopted the useful11 reproduced variant signals in a distinct24-feature own
+count development dataset, all305 exact own boards retained. Historical276
+variants are cached; the29 recent rows alias the same Plan8 chain, explicitly
+flagged. Generic reference scores/openPairs/target labels are not head inputs.
+The fixed forest/strictly-earlier own likelihood selector gives40/80 reused
+targets, compared with34/80 for five signals and38/80 always-first. Per-person
+11/20,7/20,13/20,9/20. Dennis recent16/23 unchanged; Gerda1/5. This is insufficient
+and retrospective, not untouched held-out80% evidence or an active head promotion.
+Fit25362 is terminal0; no owned jobs remain live. New numeric freezes are absent.
+
+Final validation:274 Python tests and124 named personal JavaScript tests pass;
+git diff--check passes (only existing CRLF-conversion warnings). External Gemini
+checkout remains clean at7caabcb. Work stays uncommitted in personal-bot-review
+on wip/personal-bots; no new commit, push, deployment or Firebase write.
+
+## Distinct fresh known-route policy follow-up
+
+Previous goal turn classification: PROGRESS (full16 reproduction, public-pair
+correction and actual24-factor count fit). The80% goal remains active/unmet.
+
+New personal_fresh_known_fit.py fits33 own known-route models against exact
+version-bound memberships: four actual future actors and29 historical actors.
+Existing445-prefix trayPlan annotations provide the five public known-route
+fields; no original clock annotation or semantic prefix is changed. Preferences
+can favor or oppose progress/clear/traps/information; no universal greedy finish.
+Planning-boundary coefficient remains zero. The models/native outputs are
+exclusive new artifacts, not overwrites of earlier fits.
+
+Fit/audit93003 is terminal0: all33 models covered,503 reference prefixes and
+44290 probabilities (all445 future training prefixes plus first/last references
+for each historical actor). Native/JS maximum error1.4432899320127035e-15 and
+44290 exact zero-residual controls. Models SHA
+1e65d9e2dcb7521846c8a44a498dbfe6405bc0e90052e662451c1e5a93450154.
+
+New full32x32 paired count job76317/PID23420, immutable run
+fresh-known-route-2026-10-19T14-04-46-215Z, measures every29 recent task plus
+four ARCHIVED planning probes. Probes are NOT claimed unopened or forecasts.
+At16:12Amsterdam, PID23420 is live with increasing CPU and board progress;
+all completed rows have zero computation caps. Do not restart/overwrite it.
+Actual kp8/kz8 policies are distinct; four remaining variants still alias Plan8.
+personal_distinct_route_count_data.js prepares a strict post-run bridge that
+will refuse any censored measurement and retain all305 own records.
+
+Also tested whether excluding generic references had needlessly removed useful
+board information. Strong/average rates and corrected opening pairs are legal
+pre-opening difficulty covariates, NOT substitutes for personalized behavior.
+The distinct27-feature experiment keeps the same fixed forest settings and own
+strictly-earlier likelihood selection. Actual80524 terminal0: selected38/80,
+versus24-feature40/80; Dennis recent16/23 unchanged. This candidate is not
+promoted. Original five/24-feature contracts and numerical forecasts remain.
+
+Fresh read-only live check14:08:26.631UTC still yields323 campaigns/four unresolved
+boards. Actual app versions remain1.58 (PUK1.55); no unsupported-version inference.
+Independent original-causal-ledger scoring still finds0 genuinely post-freeze
+openings/completions for each person, not8/8 or80% evidence. The new score is
+saved separately as gemini-frozen-results-2026-10-19T14-08-26-631Z.json; old
+forecasts/results remain unchanged. No Firebase write or deployment.
+
+### Terminal distinct-route results
+
+Actual76317/PID23420 is terminal0 at14:21:42.567UTC. All33 full32x32 paired
+measurements finish with ZERO computation caps:29 recent boards and four
+archived planning probes. Known/zero complete chains differ on31/33 boards;
+this is real policy differentiation, not renaming aliases. A separate Gerda64
+first-path probe is preserved as a probe only, not a substitute for these counts.
+
+The strict bridge updates kp8_w8/kp8_j2/kz8_w5 for every29 recent record,
+changing27 feature vectors while retaining all276 historical vectors unchanged.
+Four other recent variant policies remain explicitly aliased. Input identities,
+full seed/memory/attempt settings and exact source/model hashes are retained.
+
+Actual head96496 is terminal0. The selected count head remains40/80 reused
+targets; Dennis recent16/23 and Gerda1/5 are unchanged. Raw forest Dennis recent
+13/23 versus old14/23, regime forest14/23 versus old14/23. Restoring these two
+policies does NOT establish an accuracy improvement and is not promoted as a
+new reliable head. Keep the measured policies/data as independent diagnostic
+features, rather than returning to falsely named aliases or replacing old points.
+
+Final validation:278 Python tests,127 named personal JS tests, and diff--check
+pass. All owned fit/audit/count/test jobs are terminal. No new numeric future
+forecast, commit, push, deployment or database write is made. Goal remains UNMET.
+
+Evidence-guided next action: the current personal Full14 feature set contains
+within3/5/8 but no direct first-attempt success probability or clock-versus-tray
+failure decomposition. Those are potentially useful independent own simulation
+signals for the difficult exact1/2/3 distinction. Extract first trials with exact
+canonical per-attempt factory metadata/seeds and fresh memory, verify against
+existing p8 first-decision controls and selected full-chain first controls, then
+evaluate a declared own count head. Do not infer a new accuracy score before
+actually measuring/fitting it, or relabel retrospective diagnostics as forecasts.
+
+## Own first-attempt signals and fresh follow-through investigation
+
+Previous goal turn: PROGRESS. It measured genuinely distinct known-route policies
+and rejected their count-accuracy improvement hypothesis; no80% claim or goal
+completion. Current work remains in personal-bot-review/wip/personal-bots.
+
+personal_first_signals.js now extracts12 own first-attempt signals, resolving
+attempt factories with the exact frozen {run,attempt:1,seed,previousFailure:null}
+metadata and fresh per-run memory/avoidance. No retry horizon is shortened or
+misrepresented. Computation boundaries refuse measurement. The immutable run
+personal-first-signals-2026-10-19T14-27-05-231Z measures305 own historical/recent
+records plus four ARCHIVED planning probes. Actual80157 terminal0:309 records,
+zero failures,309 exact previous p8 first-decision controls and four actual
+full32x32 first-rate controls. No human target outcomes enter simulation.
+
+The strict36-feature bridge preserves all305 exact actor bodies/boards and
+remaining variant-alias/exploratory flags. Actual forest93398 terminal0 gives
+40/80 reused targets, but Dennis recent15/23 versus prior16/23, Gerda2/5 versus
+prior1/5. It is not promoted. A distinct simple first/retry hazard calibration
+uses own earlier counts only, penalty5/bounds4, proper1..9/10+ mass, declared
+interval-hazard interpolation from first/3/5/8 and final-hazard extrapolation to9.
+Actual calibration is terminal0: selected30/80, Dennis recent14/23. REJECTED as
+an improvement; its interpolated hazards are not claimed exact simulated counts.
+
+The new measurements locate a behavioral gap, not just a head-calibration gap.
+On Dennis's23 completed recent clock levels, human first clears16/23=.695652;
+Plan8 first success averages.165761, clock loss.001359, tray loss.832880.
+Full14 first success.225543, clock loss.039402, tray loss.735054. His first-signal
+Full14 AUC.629464 is better than chance but does not explain exact winning tries.
+Most simulated failures are tray failures, not simply clock expiration.
+
+Investigated missing natural pair/match follow-through rates, rather than
+forcing a generic greedy finish. personal_fresh_follow_data.js reconstructs all
+445 exact natural prefix versions (zero cached versions reused), preserving
+every semantic/physical control. It extracts6071 match and2437 pair opportunities;
+censored final opportunities and Joker boards retain old validated exclusions.
+personal_fresh_follow_fit.py independently fits33 exact own memberships, four
+actual future actors and29 exploratory historical actors. No winning labels,
+family pooling or static-actor replacement. Existing Beta(1,1),20-prefix decay
+and per-tray rates remain optional, including the probability to decline.
+Native/JS rate audit matches all75788 across-model opportunity memberships with
+zero error (not75788 unique human observations). Models SHA
+d30b4dbe94dbcf024f3956d58a8c5f4ecb44f73ac08a287cce94f74860f882c9.
+
+Actual33367 paired first probe terminal0: all33 records,66 exact prior first
+controls and33 exact prior decision controls. It is first-only, NOT full winning
+count calibration. Dennis p8Both first mean.139946 and Brier.530358 versus
+base.165761/.512568; FullBoth.199728/.452913 versus base.225543/.432235.
+FullBoth AUC.651786 versus base.629464 is a small diagnostic ranking gain, not
+an accuracy improvement. Gerda results also remain mixed; no policy is promoted.
+This rules out simply grafting unconditional follow-through gates as a sufficient
+fix. Conditional sequencing/option quality still needs work.
+
+Final validation84683 terminal0:286 Python tests,130 named personal JS tests and
+diff--check pass. All owned measurements/fits/probes/tests are terminal. Old
+numeric forecast ledgers, frozen snapshots and external Gemini checkout remain
+untouched. No new numerical future freeze, commit, push, deploy or database write.
+
+Next priority: audit/complete genuine future-cohort forecast coverage rather
+than continuing retrospective forest searches alone. The preserved original
+causal family has only18 Dennis future points but needs20. Inspect its pinned
+head/data/ledger format and fresh real openings before adding eligible points;
+retain every original numeric point/timestamp (including three documented drift
+cases), all missed/pending/hard targets and all per-person frontiers. Never reset
+the cohort or select a winning family after outcomes. The handoff head can be a
+frozen future hypothesis without treating its retrospectively tuned78/80 claim
+as validated. Independently test later real outcomes before claiming80%.
+
+## Source-bound future trial:96 actual numeric forecasts frozen
+
+Previous goal turn: PROGRESS. It completed first-signal and follow-through
+experiments, rejected unsupported accuracy gains and identified the missing
+genuine future trial as the next priority. The full80% goal remains intact.
+
+Inspected the authoritative original ledger/head/audit again. The original86
+points have NO model-source binding. The01:18 preserved head cannot be backdated
+to their23:44 freeze, and three numeric drifts already demonstrate why simply
+extending it as an unchanged source-bound model would be misleading. All86
+original points/timestamps remain byte-for-byte unchanged; their original family
+still receives separate scores. The original ledger SHA remains
+1a644b70df74eaa2847cdbdafcc513caaa5e22dd829a4d38fbf256308b6758d5,
+both in the independent audit and clean external Gemini checkout.
+
+Created a DISTINCT declared experimental family, source-bound-handoff-factor-future-v1.
+The pinned f462c35d... head is an unchanged quantitative hypothesis, not accepted
+78/80 retrospective proof or a replacement of the old family. Its exact sources,
+all actual imported quantitative Python dependencies, static actor bodies,
+feature generator/engine,313 earlier own-history records and board tables are
+pinned in immutable run source-bound-causal-2026-10-19T14-55-29-318Z.
+All305 old own records remain; eight independently matched completed earlier
+campaigns add legitimate history before prediction. Original pending/replay
+records are not mislabeled as human failures. Complete explicit26-feature
+dictionaries prevent the pinned head’s synthetic/implicit fallback paths.
+
+The new cohort retains the ORIGINAL frontiers D157/M107/P54/G69 and original
+empty cohort time anchor. An empty anchor carries NO fabricated prediction;
+eligibility always uses the actual later numeric frozenAt. Preparation/freeze
+refuses already-opened legacy-cohort levels, advanced saved progress and unknown
+versions. A race-opened campaign that arrives later still counts as missing in
+the first20, instead of silently disappearing before the new numeric freeze.
+No replay, pending, missing, unknown-board or hard case can be filtered away.
+
+Actual34135 terminal0: all96 consecutive future boards measured, zero failed/capped
+records.86 use independently reproduced archived future factors, ten new boards
+(D175..180,M128..130,G92) receive actual full26 simulation. Public disjoint opening
+pairs are corrected and the two old no-mate sentinel inconsistencies use their
+reproduced values in this NEW family. Historical cached variants/six future
+Plan8 aliases remain explicitly disclosed. A pre-copy VM-realm comparison error
+was fixed through exact canonical transport comparison, not board substitution;
+no failed preparation created a run or numeric freeze.
+
+The actual96-number draft is made BEFORE a fresh read-only opening check.
+Freeze completed2026-10-19T14:58:46.082UTC (16:58:46Amsterdam), frozenAt1792421926082.
+Ledger personal-source-bound-causal-forecasts.jsonl SHA
+66fad209cefcedb09d56fe9cf2ce001e3912a49925f135dda7d22b9d4a3cbf20.
+It contains24 consecutive exact-board points each: D157..180,M107..130,
+P54..77,G69..92. Actual next unopened predictions: D157=1,M107=2,P54=1,G69=1.
+The new family differs from three old numeric points (M107:8->2,M109:2->1,
+G84:8->1); the old values are retained in their OWN family, not rewritten.
+
+The new source-bound family is declared as this prospective test candidate NOW,
+before validation outcomes. Do not choose whichever family later scores best.
+All same-family appends retain earliest points, policy source/frontiers/cohort
+and legacy evidence; append locking/exclusive/fsync guards prevent replacements.
+Source/draft/completion/live-snapshot hashes are revalidated when freezing/scoring.
+
+Separate actual observation14:58:46.660UTC scores BOTH families:0 primary opened,
+0 completed,0/0 for every person; targetMet=false. This is NOT80% evidence yet.
+The first20 per person must all complete with valid pre-opening predictions,
+and each person must score at least16/20 under the original agreed tolerance rule.
+SOURCE_BOUND_FORECASTS.md displays all96 actual frozen numbers without claiming
+any future success. Dashboard/Firebase/deployments are not changed.
+
+Final validation:291 Python tests,131 named personal JS tests and diff--check
+pass. Tests explicitly retain race-opened/pending/unknown/replayed cases and
+refuse success with missing or late forecasts, source/cohort resets or overwritten
+numbers. All owned jobs are terminal. Work remains uncommitted on wip/personal-bots;
+no push/deployment/database write. Goal remains ACTIVE and UNMET.
+
+## 2026-10-19: diagnose tray failures; reject conditional handoff on full retry evidence
+
+Passive personal_tray_failure_probe.js reproduced all80 actual earlier first-try
+rates (8 seeds per board,640 trials). None of the265 tray-loss final decisions
+had an available immediate matching alternative. Dennis:81 wins,49 tray losses,
+30 clock losses; Mrs:41/86/33; PUK:99/61/0; Gerda:91/69/0. A nonfatal inspection
+is not necessarily a real escape. This points to earlier choices, not a blanket
+last-move/always-match patch. The probe delegates the original draw exactly once.
+
+Fit personalAttentionConditionalHandoff-v2 separately to each person's actual
+log-attention probability offsets, not the obsolete pre-attention joint baseline.
+Context includes tray occupancy, clock urgency and fresh-tray versus peek-pair
+identity. Recipient-group odds may increase OR decrease; no forced matches or
+pooled player fit. Actual attention/latent state remains fixed and observes the
+final natural choice.445 prefixes/39268 decisions reproduce native Python/JS
+probabilities, zero controls and latent posteriors within8.881784197001252e-16.
+Training action log loss improves for all four people, which is NOT count proof.
+
+The actual paired full8x8 retry test is TERMINAL and complete, not a first-try
+approximation: runs/attention-handoff-count-2026-10-19T15-13-32-679Z, started
+15:13:33.848UTC, finished15:18:00.554UTC. All80 exact earlier disabled whole-chain
+controls reproduce; zero computation caps. New whole-policy IDs bind static,
+joint, attention, residual body, temperature, memory, failure avoidance and seed.
+Existing memory/temperature settings are fixed paired proposals on both sides,
+NOT inherited confidence calibration for the changed controller.
+
+Proper recency-weighted count log loss (lower is better), old -> conditional:
+- Dennis1.6524226828003177 ->1.6811836060265128; training points10/20 ->10/20.
+- Mrs2.4211102677409024 ->2.610482922703679; points5/20 ->4/20.
+- PUK0.8737704568130801 ->0.8813265683969395; points13/20 ->14/20.
+- Gerda1.386370260114513 ->1.456631649329003; points11/20 ->10/20.
+
+REJECTED for every person under the predeclared proper-likelihood objective.
+PUK's extra training point does not override its worse distributional loss.
+No controller is promoted, and action-fit/parity gains cannot substitute for
+count prediction. Exact data, input/source closure and comparison checks are
+in personal_attention_handoff_summary.py and attention-handoff-count-training-summary.json.
+
+Follow-up personal_planning_risk_audit.js covers the same445 recorded human
+prefixes/39268 decisions, with actual native attention probabilities. It is
+teacher-forced diagnostics, NOT autonomous rollout evidence. In Dennis's25
+public proven-trap/known-clear opportunities, actual traps selected=0 and
+expected tempered trap selections=0.000001226705673. On236 crowded unmatched
+opportunities with a known-clear alternative, actual choices=21 versus expected
+tempered10.850518198553393. Thus the bot already avoids these risks more strongly
+than Dennis on observed human states; do not assume more greedy matching or a
+universal trap penalty fixes the earlier trajectory/knowledge gap. Planning
+boundaries/unknown pictures never count as proven traps.
+
+Regression checks now pass295 Python tests and135 named personal JS tests,
+including exact disabled delegation/state observation, positive/negative odds,
+baseline identity rejection, clock-zero-sample controls, cached attention-offset
+fitting without win labels, source-bound count comparison and worker import guards.
+diff--check passes. No active owned simulation remains from this experiment.
+The96 actual primary future numerical forecasts remain byte-identical, ledger
+SHA66fad209cefcedb09d56fe9cf2ce001e3912a49925f135dda7d22b9d4a3cbf20.
+No later future-outcome observation is claimed by this diagnostic.80% remains
+UNPROVEN. Work stays local/uncommitted on wip/personal-bots at b7fdf0a;
+no new commit, push, deployment or Firebase write. Goal remains ACTIVE and UNMET.
+
+## 2026-10-19: factor action-kind confidence from tile-option confidence
+
+Previous goal turn is PROGRESS: actual full conditional-handoff counts rejected
+that policy and the public-risk audit ruled out a naive universal greedy fix.
+Re-read Gemini's authoritative CODEX_HANDOFF.md; no new handoff change was found.
+
+Actual independent read-only observation15:22:22.441UTC still has0 new primary
+openings/completions for every person. Plays SHA653526300788773a1fb6a9b1ad4d7f2836c56ec7608941e45903d6991426fb7a
+and scores SHA f6e6dfa786097a9b160ba174d7a47e7407ac4ace8637e3b204aa6cd668848cbe
+are unchanged. source-bound-causal-results-2026-10-19T15-22-22-441Z.json validates
+both unchanged forecast families separately. No new80% evidence exists.
+
+Identified a real mathematical distinction in confidence calibration: flattening
+the entire action distribution before sharpening also changes action-kind mass
+according to the number/concentration of options in that kind. For example,
+ten equal inspection options sharing0.5 probability versus one take at0.5:
+temperature0.25 almost eliminates the inspection kind, despite equal initial
+kind mass. This is not an implementation error in ordinary joint temperature;
+it is a testable alternative to the existing intended calibration.
+
+personal_factorized_choice.js separately tempers kind mass and conditional
+within-kind probabilities. No mandatory matching, type masks, hidden pictures,
+pooled weights or action ranking changes WITHIN each kind. Native identity1/1
+delegates the original selector exactly; final choices update latent/attention
+state once; separate attempt factories reset attention and retain fresh versus
+retry priors.600 independent NumPy/JS random-vector cases agree within1e-12.
+
+The recorded-state action audit covers all445 own prefixes/39268 decisions.
+Dennis flat kind log loss1.291286457130343 -> factorized kind-temperature0.25
+1.0009099901209841; kind-temperature1 restores0.47419532609337317. Gerda flat
+1.710233779273215 ->1.0552714883812617 /0.6004681628697977, respectively.
+Within-kind log loss is unchanged at the same within temperature. Better
+teacher-forced action fit is not an autonomous count gain or a future score.
+
+Predeclared actual retry experiment: all80 boards,8 runs x8 attempts, the exact
+old own flat control plus kind temperatures0.25/0.5/1/1.5. Within-kind temperature
+and picture recall stay at each person's old selected settings on BOTH sides;
+this is a four-proposal diagnostic at those fixed within settings, NOT an
+exhaustive two-dimensional kind/within grid or inherited new-controller fit.
+Source-bound run: runs/personal-factorized-count-2026-10-19T15-24-56-578Z.
+Exec75335 is TERMINAL0, complete15:37:49.472UTC.80 exact actual earlier whole
+controls reproduce,400 complete measured chains, zero caps. Dataset SHA
+2103044ce5f6412c3287fb581a2e51cb6b0272c1d27d32306cf0392aaea8aa93.
+
+personal_factorized_count_fit.py verifies exact board membership, source/runtime
+closure, full-policy identity, all five profiles and proper own20-board count
+likelihood. Actual fit request1792424277417, completion15:37:57.424777UTC.
+All four people select the unchanged flat control, not a factorized proposal.
+Weighted count log losses, flat / kind0.25 / kind0.5 / kind1 / kind1.5:
+- Dennis1.652423 /2.467203 /2.143265 /2.907299 /2.903532.
+- Mrs2.421110 /2.942307 /2.965773 /2.807899 /3.466711.
+- PUK0.873770 /0.964771 /0.897779 /1.093275 /1.460633.
+- Gerda1.386370 /1.835211 /1.824191 /1.678936 /2.120515.
+
+The probability-calibration objective rejects these four fixed-within proposals
+for every person. This is NOT a veto under the user's actual accuracy objective:
+PUK's15/20 training points for kind0.25 versus13/20 flat remain a research lead.
+This does not establish that every possible factorized confidence setting fails;
+within-temperature interaction remains unmeasured. Do not substitute recorded
+action agreement, training point gains or increased simulation wins for actual
+pre-opening attempt-count accuracy. The earlier trajectory/strategic commitment
+gap is still unresolved. Asked Dennis one optional non-clock unmatched-tile
+planning question; no new answer is assumed or required to continue research.
+
+Validation:301 Python tests,138 named personal JS tests and diff--check pass.
+These include exact zero controls, count-option invariance of kind confidence,
+independent NumPy parity, native attempt-state reset, complete own grid binding,
+proper-loss selection/tie-to-existing policy, cap rejection and worker imports.
+No owned factorized simulation remains live. Actual primary96 forecast ledger
+SHA remains66fad209cefcedb09d56fe9cf2ce001e3912a49925f135dda7d22b9d4a3cbf20.
+Working in personal-bot-review on wip/personal-bots at b7fdf0a, uncommitted;
+no push/deployment/Firebase writes. Goal remains ACTIVE and UNMET.
+
+Metric-alignment correction: a proper-likelihood surrogate must not replace the
+actual requested tolerance-rule point accuracy. personal_factorized_accuracy_audit.py
+independently verifies the completed source-bound dataset and actual earlier
+proper fit, then evaluates paired target-metric gains without silently promoting
+a policy. PUK kind0.25 has3 newly correct and1 newly wrong board (net+2;15/20),
+kind0.5 has3 newly correct/2 newly wrong (net+1;14/20), versus flat13/20 and
+always-first14/20. These remain accuracy-focused research leads despite worse
+probability calibration. No other person gains net target-metric correctness.
+The previous conditional-handoff PUK+1 training point is likewise not disproven
+solely by a worse likelihood surrogate. None is independent held evidence or
+80% prospective success; no automatic promotion or primary forecast change.
+
+Target accuracy audit output: factorized-target-accuracy-audit.json. This retains
+the actual primary objective alongside, rather than underneath, count likelihood.
+Additional tests explicitly prevent a probability-calibration selection from
+silently discarding a point-accuracy gain or turning a cap into a human8+ result.
+
+Final metric-aligned validation:303 Python tests and138 named personal JS tests
+pass; diff--check passes and the primary96-point ledger hash is unchanged.
+
+## 2026-10-19: complete kind/within interaction measurement, accuracy-first selection
+
+Previous goal turn is PROGRESS:400 actual completed count measurements and a
+separate target-metric audit preserve PUK's accuracy lead instead of discarding
+it solely for a worse likelihood surrogate. The fixed-within experiment does
+not answer whether kind and within confidence jointly improve each own bot.
+
+Started a full predeclared4x4 grid: kind and within temperatures each
+0.25/0.5/1/1.5, plus the exact earlier flat control,17 policies per person.
+Own controller bodies, memory, learned-loss avoidance and canonical seed stay
+bound; no pooled person, mandatory matching or changed primary forecast.
+personal_factorized_joint_data.js only reuses the five exact earlier settings
+per board when serialized policy IDs, actual chains and source closure agree.
+One earlier factorized full8x8 chain is freshly rerun per board and must exactly
+match before the other12 new profiles are measured. All80 boards remain.
+Declared measurement:400 exact reused chains,80 fresh whole-chain controls,
+960 genuinely new whole8x8 chains, not1360 claimed completed observations yet.
+
+Immutable run:
+analysis/archive/personal-bots/runs/personal-factorized-joint-2026-10-19T15-43-43-473Z
+Started15:43:44.351UTC. Owned exec session62592, node PID31388, verified LIVE
+again by actual session polling after120 seconds. Do NOT restart the job on
+an observation timeout or merely because its output file is not ready. Progress
+is appended per actual profile and board. No completed full-grid fit exists yet.
+
+personal_factorized_joint_fit.py is ready for the actual completed data only:
+- Primary selector maximizes the agreed tolerance-rule point correctness.
+- An accuracy tie keeps the existing flat policy; proper count likelihood is
+  secondary among tied factorized candidates, not a veto on accuracy gains.
+- All17 profiles/80 exact clean earlier boards, individual source/policy IDs,
+  all400 reused chains and all80 actual earlier control assertions are checked.
+- Any profile with a cap remains explicit and cannot become a human8+ result.
+- Factorized1/1 must additionally reproduce all80 actual earlier raw-temperature1
+  whole chains from the immutable memory-grid reference (pending real data).
+- A first10-outcome selector/latter10 diagnostic is explicitly NOT independent
+  held evidence: these current actors saw actions from the latter training block.
+  Later caps make that diagnostic unmeasurable, not silently counted as losses
+  or used to switch the first10-selected policy after the fact.
+
+Run after actual terminal completion:
+python source/tools/sim/refit/personal_factorized_joint_fit.py <run>/analysis/archive/personal-bots/personal-factorized-joint-data.json
+The fitter refuses incomplete, missing, foreign, replayed, late, altered-reuse,
+changed-policy, hidden-cap or uncontrolled measurements. It writes a new exclusive
+personal-factorized-joint-models.json; this is training research calibration,
+NOT a new primary prospective family or permission to replace frozen numbers.
+
+Current validation passes309 Python tests and139 named personal JS tests,
+including a true target-accuracy-vs-likelihood conflict and all17-policy reuse
+and board-binding guards. diff--check passes. Only test fixture property order
+was corrected after a failing assertion; the running measurement source was
+unchanged and was never restarted. Primary96 forecasts remain untouched.
+Work remains uncommitted on wip/personal-bots in personal-bot-review;
+no push, deployment, Firebase write or new claim of80%. Goal ACTIVE and UNMET.
+
+## 2026-10-19: full grid terminal; user pair-space clarification; real prospective failure
+
+The full factorized joint grid is TERMINAL0 (exec62592). Actual complete data
+finished16:25:23UTC:80 boards,17 profiles/person,400 exact reused chains,
+960 genuinely new8x8 chains,80 fresh earlier whole controls, zero caps.
+The accuracy-first fit completed18:39:39.778UTC with80 additional raw1/1 whole
+identity controls. Dennis remains flat10/20 (always-first14); Mrs flat5/20
+(always-first7); PUK selects kind0.25/within1.5 at15/20 versus flat13 and baseline14;
+Gerda kind0.25/within0.5 at13/20 versus flat/baseline11. All are reused training,
+NOT held/prospective80%. The selector-only latter10 diagnostics are explicitly
+actor-contaminated, not clean held evidence. No future number is replaced.
+
+Human clarification now received: on a non-clock level, Dennis need not search
+for the partner immediately for his first/second unmatched tile; he avoids
+leaving three unmatched tiles because there is no room to start another pair
+when a member is face-up. This is NOT universal greedy matching or a hard ban
+on temporarily using a third spot while clearing a known pair.
+
+personal_pair_capacity.js separates true immediate post-tap occupancy from
+known follow-ups and bounded public recovery. All445 prefixes/39268 decisions
+are audited separately per person. Dennis's temporary known-followup third
+starts:236 actual choices/2005 optional opportunities versus78.6779 expected
+under old count-tempered probabilities. Thirds without known recovery:62 actual
+on1721 opportunities versus25.9687 expected. Thus lowering ALL pickups would
+suppress productive pair starts as well as genuine capacity risks; lack of a
+known recovery is not proof of a trap. The original broader crowded-pickup
+diagnostic did not distinguish this mechanism.
+
+Concrete mode-coverage gap: old recovery masks require emptying the whole tray,
+or mark preparation only on inspections; starting a separate face-up known pair
+can therefore be excluded even when immediate known follow-ups restore tray
+occupancy. personal_pair_capacity_intents.js admits this optional public,
+nonjoker, nontrapped, capacity-preserving progress without changing ordinary or
+matching masks or imposing Dennis's preference on other people. Newly covered
+actual own choices: Dennis531 (313 at tray1,218 at tray2); Mrs239; PUK409;
+Gerda1543. Every39268 disabled mask and1378 clock mask is unchanged.
+
+Fresh own latent tray fits and genuinely refitted log-attention are implemented
+in personal_pair_capacity_intents.py / personal_pair_capacity_fit.py, with native
+runtime in personal_pair_capacity_choice.js. Static actors and clock intent
+bodies remain fixed. Attention is refitted on NEW joint offsets, so final clock
+probabilities may change even though raw clock controls remain exact. No human
+winning labels or pooled preferences enter the fit; occasional unmatched thirds
+remain supported by ordinary intent. Native audit passes all445 prefixes and
+39268 probabilities/causal posteriors,1378 old raw clock controls and39268 zero-
+attention controls, maximum error8.881784197001252e-16.
+
+The first owned fit (session36227) was explicitly stopped before producing any
+artifact after identifying an API misuse: attention.adjusted needs the fitted
+weight vector, not the entire model dictionary. It was not called completed or
+reused. The corrected fresh fit (session82424) is TERMINAL0, complete
+18:45:56.330UTC. Model SHA8dc239eec8dc3f95168d2d55ba96c1a27d259c3a9729799cb15af98b7f27890c;
+runtime audit SHA f6f1e3a8badbd0fd9334a9583ff792b409be51080fdccd0801e70b90972729ca.
+Training action loss alone remains insufficient: D1.635712,M1.755131,P1.538640,G1.930041.
+
+CRITICAL genuine prospective observation18:45:31.647UTC:
+plays SHA7c31c8f503c5779875df9d02faea7713c01f3acacc7a536a13e6b6c52f73747a,
+scores SHA045888229dd43d565981e552d2454342dbd568ac839d96d5b93e02bb37286515.
+Mrs107..113 have all completed. Fixed predictions [2,5,1,5,2,2,2], actual local
+tries [3,1,2,2,1,4,1]:0/7 under the original exact1..3/±1/±2/8+ rule.
+Old legacy family is1/7; it is NOT chosen instead after these outcomes. Gerda69
+opened and remains pending; Dennis/PUK have0 primary openings. New original-family
+score is source-bound-causal-results-2026-10-19T18-45-31-647Z.json.
+
+personal_prospective_bounds.py independently recomputes the original ledger
+score and makes early failure explicit. Seven scored misses mean maximum13/20
+(65%), so the fixed source-bound-handoff-factor-future-v1 family is already
+MATHEMATICALLY UNABLE to meet Mrs's80% gate. Unknown/pending cases are treated
+conservatively as possible future successes, never fabricated losses. Tests cover
+late or rewritten numbers, four versus seven misses and pending cases. This is
+not merely "still awaiting proof": the original candidate is falsified. Its96
+numeric points and original cohort remain immutable. Any genuinely improved
+model needs its own declared pre-opening test; no reset can erase this failure.
+SOURCE_BOUND_FORECASTS.md now displays that observed failure without altering
+the original prediction table or ledger.
+
+New capacity controller later-game check is also TERMINAL0 (session42376), not
+promoted on action fit. Immutable run pair-capacity-later-2026-10-19T18-51-30-742Z
+measures18 later observed campaigns with fresh32x9 seed20261029, paired old/new
+fixed own diagnostic settings and four exact old canonical8x8 controls; zero caps.
+Data finished18:55:39.909UTC, SHA dc85bc0f7eb0aaa29728b5cdbf2caf86606bf0c945fdb5e3e0e1f9ffc0d5c96d.
+Settings are proposals for the changed controller, NOT inherited calibration.
+All16 known outcomes and2 pending campaigns are retained. Gerda68 is explicitly
+fit-overlap diagnostic-only: its earlier partial recording was inside her actor;
+the preparation guard discovered this and the campaign is retained, not silently
+dropped or called held.15 completed cases are genuinely excluded from own actor
+and count fitting, but their outcomes were already observed before this check:
+the check is retrospective and can NEVER prove pre-opening80%.
+
+Results using the actual point metric: Dennis151..155 old2/5,new2/5; Mrs104..113
+old3/10,new2/10. PUK has0 later cases; Gerda has0 eligible completed later cases,
+one pending69 and one fit-overlap68 (actual8). Dennis156 remains pending. No
+overall count improvement is established, so do not promote this candidate or
+replace any primary point. Summary: pair-capacity-later-summary.json. Ninth wins
+and unresolved10+ are represented separately; the user rule can legitimately
+credit prediction7 for actual9 via±2, rather than requiring every ninth win's
+point to be8+. A mistaken test assumption about that tie was corrected without
+changing the scoring rule or measurement.
+
+Final validation:317 Python tests and142 named personal JS tests pass;
+diff--check passes. Both owned measurements and the fresh fit are terminal;
+no live job remains from this turn. All original primary96 points still hash
+66fad209cefcedb09d56fe9cf2ce001e3912a49925f135dda7d22b9d4a3cbf20.
+No commit, push, dashboard/deployment/Firebase write. Goal remains ACTIVE and
+UNMET; the fixed first candidate FAILED, not repaired by research or renamed data.
+Next investigate clock pair-before-clock preparation coverage and the observed
+first-clear failures; that hypothesis has NOT yet been measured or accepted.
+
+## 2026-10-19: retain approaches, tune interactions before rejecting families
+
+User explicitly challenges early rejection: a failed frozen configuration may
+contain a bug, need more tuning, or work well combined with another approach.
+Agreed. RESEARCH_POLICY.md now distinguishes a falsified numerical forecast
+trial from an abandoned strategy family. Frozen accounting does not freeze
+model improvement. Preserve full-strength failures and revisit partial strengths,
+own confidence/recall and interactions; do not veto a count-accuracy lead solely
+because action likelihood or one standalone result worsened.
+
+Passive clock probe is TERMINAL0, session66354; result made19:07:55.363UTC.
+All36 earlier first-rate and36 full raw-path observer controls reproduce exactly.
+Dennis six later boards: old187/192 clock saves,84 post-clock tray losses;
+capacity187/192 saves,53 post-clock tray losses. Mrs ten later clock boards:
+old83 clock losses and156 post-clock tray losses/320 starts; capacity82 and145.
+Optional supported pair-first preparation covers127 actual Dennis and56 Mrs
+choices beyond old pair-first eligibility, with ordinary/dig masks unchanged.
+This is a legitimate untested fitting lead, not an accepted prediction model.
+
+Clock phase audit corrects a diagnostic ambiguity: the original aggregate named
+trayFailuresBeforeClock also counted nonclock boards. The follow-up explicitly
+separates nonClock/beforeClock/afterClock and preserves the old artifact. At
+actual human clock states, Dennis selects18 known-only certified traps versus
+9.5926 tempered-bot expected; Mrs13 versus3.3847. Therefore autonomous trap
+choices do not justify blindly increasing a universal safety penalty. Earlier
+state-distribution/planning failures remain a candidate mechanism. Clock and
+tray telemetry is not actual attempt-prediction accuracy.
+
+New complete own route-blend/confidence interaction search is LIVE:
+session8930, node PID23508, immutable run
+analysis/archive/personal-bots/runs/route-blend-2026-10-19T19-08-29-939Z.
+Runner personal_route_blend_data.js full, stdout route-blend-output.txt.
+Read its progress/process before restarting; a timeout is not terminal.
+All80 original own calibration boards x9 settings x8 retry chains x9 attempts,
+fresh seed20261030. Three blend weights0/.5/1 crossed with own-flat versus
+kind.25/within.5 versus kind.25/within1.5. Both causal component states observe
+the same actual sampled action. No hypothetical-action latent updates. Exact
+old/new endpoint2x9 controls on Dennis passed before launch; all80 real old
+canonical8x8 controls must reproduce during the full run. Zero/one blend returns
+the exact original selector. This tests a partial-strength component and its
+interaction with separately tuned confidence, not just another full-strength
+standalone check. Own memory remains fixed for this declared stage, not assumed
+optimal or interpreted as human memory ability.
+
+personal_route_blend_fit.py selects own settings by actual point correctness
+on all20 own calibration boards, unchanged control wins accuracy ties, then
+count likelihood is secondary. These are reused actor-training boards, NOTheld
+or prospective proof. Five new Python tests cover complete-grid retention,
+standalone-failure/combination-success, cap handling, original ties and explicit
+ninth-win/tail separation. personal_route_blend_later.js then tests exactly the
+training-selected own setting vs unchanged control on all18 pinned later cases,
+fresh32x9 seed20261031; pending and fit-overlap campaigns remain explicit. Later
+outcomes cannot choose a profile. Three summary tests cover pending/overlap/caps.
+This later checker has NOTyet run; wait for the full80-board artifact, fit, then
+launch it. Eight-run search alone cannot reject the entire strategy family.
+
+No original96 point changes, new prospective trial, commit/push/deployment or
+Firebase write. Goal ACTIVE/UNMET. Initial validation322 Python/145 named JS
+passed before the subsequent phase/later-summary additions; rerun full suites
+at completion. New helper tests also pass individually.
+
+Full route search is now TERMINAL0, session8930, finished19:37:36.623UTC:
+all720 actual8x9 chains, all80 old canonical controls, ZERO caps.
+Data SHA2a7bc296fbc465d281aab54880ec4607d69aa28120ccbd956d9afcf2c29e466b.
+Own fit completed19:37:44.400564UTC, request1792438664380;
+personal-route-blend-models.json SHA
+c6da4c960216048ba511af90d7a52016e62ba5b8a83fd3c0d45bf3c626f827d7.
+Fresh-seed training correctness: Dennis old7/20, full-capacity7/20, half-blend
+9/20 (selected ownflat); Mrs old3/full5 (selected fullflat); PUK old15/selected16
+(original actor, kind.25/within.5); Gerda old12/selected12 (old wins accuracy tie).
+This directly supports retaining a component despite standalone failure, but is
+NOT independent held evidence. Dennis/Mrs still trail always-first14/20,7/20;
+PUK16/20 is training only, never the future80% claim. Do not hide poor absolute
+accuracy behind the relative improvement. Eight-run seed variation remains.
+
+Independent endpoint audit TERMINAL0, session56946: both original wrappers
+reproduce entire actual8x9 retry chains for all four people, EIGHT controls.
+This validates routing/own identity/confidence/retry wiring, not all game physics
+or human prediction. Output route-blend-endpoint-audit.json.
+
+Later paired validation is LIVE, session37617, node PID24708:
+personal_route_blend_later.js personal-route-blend-models.json,
+output analysis/personal-bots/route-blend-later-output.txt;
+progress analysis/archive/personal-bots/route-blend-later-progress.jsonl.
+Uses own-training-selected settings only; all18 pinned later cases, fresh32x9
+seed20261031. Wait for actual terminal/output; do not restart. Then run
+personal_route_blend_later_summary.py. No later outcome-selected profile.
+
+Full current suites pass325 Python and147 named JS tests; diff--check passes.
+All96 original forecast numbers retain
+66fad209cefcedb09d56fe9cf2ce001e3912a49925f135dda7d22b9d4a3cbf20.
+
+Later interaction validation is now TERMINAL0, session37617/PID24708 gone.
+Finished19:40:55.553UTC; personal-route-blend-later-data.json SHA
+2d9d92d563a6b525cee0bb17dd8b5e943203f7bc8d20189da689451e51d41f34.
+All18 cases, fresh32x9, zero caps. Summary successfully source-validated and
+written as route-blend-later-summary.json. Dennis eligible5: old2/5, half2/5;
+Mrs eligible10: old1/10, full1/10. PUK0 later; Gerda1pending+1fit-overlap,
+0eligiblecomplete. Pending Dennis156 stays visible, not a new frozen forecast.
+No improvement in later point accuracy is confirmed and no model is promoted.
+Crucially DO NOT discard the family: Dennis's half blend beat both full-strength
+endpoints on prior calibration, and the unchanged Mrs baseline alone varies
+from3/10 to1/10 between two32-run seeds. Point-selection/MonteCarlo stability,
+finer strengths and interactions need more investigation. New seeds are not new
+human evidence; no future80% claim follows from either result.
+
+All jobs from this turn are terminal. Current suites325Python/147namedJS pass,
+and diff--check passes. No commit, push, deployment or Firebase write. Goal stays
+ACTIVE/UNMET. Preserve all candidates/source/results; next prioritize point/seed
+stability, finer own blend strengths, the supported clock-preparation fit and
+retry/context interactions. Failed frozen settings are not an impossible model
+family. Any genuinely improved model still needs its own pre-opening trial;
+all96 original failed-trial numerical points remain unchanged.
+
+## 2026-10-19 continuation: clock preparation, precision and actual retry fidelity
+
+Previous goal turn classified PROGRESS: complete9-profile per-person grid,
+independent endpoints and later checks produced real evidence, not just plans.
+All prior jobs rechecked terminal; current branch stillwip/personal-bots.
+Re-read Gemini CODEX_HANDOFF.md section5 implementation. Its reproduced
+simulation features remain valid research ingredients, not proof of original
+claimed97.5% future prediction. Goal stays ACTIVE/UNMET.
+
+New exact point-stability audit revalidates both real32x9 seed datasets and
+identical original controllers/settings. One actual point changes across seeds
+for Dennis/6 cases and3 for Mrs/10; old Mrs scores3/10 vs1/10. Combined real64
+trials reduce fragility but still score Dennis2/5,Mrs2/10. One-outcome-change
+sensitivity preserves known ninth wins separately from unresolved10+; this is
+NOT a confidence interval or new human evidence. Four tests pass. Report
+prediction-stability-audit.json. More samples alone are not the behavior fix.
+
+Fresh optional clock-preparation latent fits now implemented in Python/JS,
+without modifying any prior controller source. New pair-first emissions admit
+known first pair tiles and inspections only with a supported public in-budget
+safe clock exit. Ordinary and digging emissions stay optional, not forced greed.
+Same original observation/context meaning is retained for isolation. Four own
+clock fits, two original/capacity tray combinations each; attention genuinely
+refitted independently for the two people with clock data. PUK/Gerda have no
+clock evidence and preserve original final probabilities, not Dennis's rule.
+
+Fit TERMINAL0 session17690, actual request1792439233312, finished
+19:47:41.456305UTC. personal-clock-preparation-models.json SHA
+52c12518ee75f30bc1ccb3cf68e24333128b578bd84acae5ba38eed5c2894cc8.
+Native runtime audit TERMINAL0 session98528:890 own prefix/combinations,
+78536 choices,75780 exact raw nonclock controls,2756 exact disabled clock
+controls,43414 no-evidence final controls,78536 zero-attention controls.
+Max Python/JS discrepancy9.992007221626409e-16. All causal posteriors checked.
+This does not prove behavioral or count correctness. New model fits ignore
+winning labels; tests scramble outcomes, enforce own membership and show
+cross-language causal probabilities/masks/disabled controls.
+
+Full fine-strength count study TERMINAL0 session74032/PID16452 gone.
+Immutable runclock-preparation-count-2026-10-19T19-50-50-419Z contains all20
+earlier clock boards for each person WITH own clock training (Dennis/Mrs),
+not performance-selected cases. PUK/Gerda retained unchanged due zero own clock
+evidence. Complete2 clock modes x5 weights0/.25/.5/.75/1:120 exact original
+chains reused,280 fresh8x9, four actual old whole-chain9-attempt controls,
+zero caps. Per-person confidence/recall fixed as proposals, not declared optimal.
+Source/input checks bind every reused actual chain and all400 measurements.
+
+Own selection finished19:57:06.638250UTC, request1792439826626;
+personal-clock-preparation-count-models.json SHA
+b0244f9fa567da052db64cfa1fb1e6485f29fe93f92be5eb5541a66fb233e41f.
+Dennis prep_w0.5/prep_w0.75 both10/20 vs prior half9/20; selectedprep_w0.75
+by secondary count likelihood. Mrs staysold_w1,5/20. All10 settings retained;
+small action-loss deterioration does NOT veto the count lead. Dennis remains
+below always-first14/20; neither calibration result is target attainment.
+
+Read-only live GET at19:53:33.775UTC has338 campaigns,4 unresolved boards.
+plays SHAe8a0c172459bd71ed51f8b75670e53b01bf67dc7f94f4450aa2435323cdc510b;
+scores SHA0a2721235ea63468c0ea1c358586df4f2d12fe8e72b8a4d6cdeaa97bc29d3a53.
+Original frozen source-bound trial re-scored from actual immutable96 points:
+Mrs107..113 still0/7 and already failed; Gerda69..75 now3/7,76pending,
+4misses=>maximum16/20=80% (not proven); Dennis/PUK0 primary openings.
+SOURCE_BOUND_FORECASTS.md status updated, original table/ledger unchanged.
+Bounds audit recomputes every original point and feasibility; no family swap.
+
+Current later-clock check TERMINAL0 session25932/PID25684 gone, finished
+19:59:49.120UTC. Data SHA
+b7a6f22133f2d259c10d33b0b204aa1187ede26e529094f705cc7f8fbd0d1f9a.
+All25 current later campaigns included (not obsolete18-case pending labels),
+including Gerda69actual19 and new70..76. Exact18 prior-selected32x9 controls
+reused independent of refreshed outcomes; new settings/cases actually simulated
+at the same comparison seed20261031, distinct from calibration30. Zero caps.
+Summary source-validates all25 cases, all reuse/own selected-policy identities,
+pending and fit overlap. Eligible completed Dennis2/5 old+new, Mrs1/10 old+new,
+Gerda2/7 unchanged; PUK0. No accuracy gain confirmed, no model promoted and
+no research family rejected. These later outcomes were already observed:
+NEVER call this a new pre-opening trial or erase the failed original trial.
+
+New separate read-only per-attempt replay audit for Gerda69: all19 requested
+recordings found, no initial physical mismatch, no historicalPhysicsBoundary,
+no board mismatches. 1762 observed physical choices reproduce. All18 losses
+are complete tray losses. Winning try19's NATURAL prefix stops at standard
+auto-finish with6 tiles; not passed off as a complete manually replayed win.
+App autoFinishOK requires every remaining order safe (board.js finishSafe),
+so this is not evidence that turning on a stronger bot solver fixes counts.
+Canonical current replay folder:
+live-openings-2026-10-19T19-53-33-775Z/replay-audit-Gerda-L69-2026-10-19T20-05-58-847Z.
+Earlier20:00 snapshot is preserved, including the actually executed source
+under source-versions before a local timestamp-variable naming cleanup. All19
+raw replay files are byte-identical across the refreshed source-version audit.
+
+Retry-route diagnostic restores JSON-serialized numeric-index typed seen-vectors
+with strict contiguous index/integer checks (new-reader serialization issue,
+NOT a claimed old bot fix). All19 attempts retained, exact-board/path required.
+80 of86 pictures had previously been exposed by try6, yet actual losses continue
+through18; most retry openings change immediately (first-action overlap0).
+Winning19 shares7 opening actions with some earlier attempt. This does NOT prove
+she remembered exposed pictures or had no learning; it motivates fitting own
+retention, route changes and retry adaptation instead of assuming perfect recall.
+No forced Dennis tray rule is applied to Gerda. Current artifact
+retry-route-audit.json inside the canonical replay folder. Native output is
+diagnostic only, no winning-label fit or future80% assertion.
+
+All current jobs TERMINAL. Full Python335 tests pass; current named JS152 pass;
+diff--check passes. No commit/push/deployment/Firebase write (GETs only).
+All96 original numeric forecasts retain
+66fad209cefcedb09d56fe9cf2ce001e3912a49925f135dda7d22b9d4a3cbf20.
+Goal ACTIVE/UNMET. Next real lead: annotate actual new retry prefixes under
+causal none/configured/full retention assumptions with identical physical paths,
+compare own action evidence (not only win counts), and fit person-specific
+retry/route/recall adaptation. Keep observedAt/readiness genuinely current; do
+not backdate the newly downloaded observations into older held-out actor fits.
+Also retain fine-strength/preparation leads for further confidence/recall tuning,
+not rejection after this limited later check. Any improved model needs a fresh
+declared pre-opening future trial before claiming the80% target.
+
+## 2026-10-19 clarification: repeated learning inside evaluation data
+
+The user clarified that strategy changes can occur several times inside the
+dataset itself, not just between offline fitting and future live games. Added
+an explicit chronological person-local evaluation requirement to RESEARCH_POLICY:
+predict and save the opening count, observe only then-available actions/results,
+update the own-person strategy state, and repeat for every later campaign.
+The update algorithm may be fixed while the policy state evolves repeatedly.
+Hard clears are evidence to investigate, not oracle change-point labels; do not
+backdate successful strategies, exclude transition misses, or let long retry
+campaigns masquerade as many independent cross-level learning episodes.
+
+Explicitly classified existing fixed-setting route/preparation count studies as
+fixed-policy controls, not evidence that they handle cross-level human learning.
+Recency-weighted initial fitting or within-attempt latent filtering does not
+implement this evaluation. Historical chronological replay remains retrospective
+without actual pre-opening availability and a genuinely prior experiment design.
+No adaptive evaluator/model is implemented in this documentation-only change.
+No forecasts, fitted models, outcome artifacts or prior scores changed; 80% is
+still unmet. Validation: git diff --check; no code tests needed for prose only.
+
+## 2026-10-19 continuation: implemented repeated cross-level adaptation
+
+Previous policy-only clarification turn is classified NO PROGRESS toward actual
+adaptive behavior: it recorded an unexecuted requirement. This turn is PROGRESS:
+new own-person adaptive runtime, actual replay collection, completed autonomous
+count study, independent chronological verification and paired knowledge audit.
+No required outcome or scope is redefined; the future per-person80% goal stays
+ACTIVE/UNMET. Read Gemini's current handoff again; its hindsight-tuned claims
+still do not establish independently verified future accuracy.
+
+Workspace C:/Users/den_k/Idea/OmasMahjong/personal-bot-review, branch
+wip/personal-bots, HEAD b7fdf0a1f26f82bb913e7e1497c752a24608b873 unchanged.
+No delegation, commit, push, deployment or Firebase writes. Replay access uses
+explicit read-only GETs. Own trained actors, old forecasts and fitting archives
+remain unchanged.
+
+## October20: personal continuous witness/recovery preference family
+
+Previous turn PROGRESS: the reference improved10/25→15/25, all count/terminal
+studies completed and all results/failed interactions were retained. This
+turn PROGRESS: implemented the actual own-person learning route from those
+planning concepts rather than imposing a generic finishing policy.
+
+New personal_public_witness_features.js appends12 optional public planning
+and recovery columns to the original78. They are eight witness/history
+signals plus uncertain successor, no immediate known tray mate, ready known
+tray mate, and independently proved-dead root. The neutral planner uses the
+declared4096-node/32-beam threshold2 proposal. No actual hidden branch faces
+enter a feature. Reference history is filtered on the real human action.
+Original78 features, base emissions and actual physics must remain unchanged.
+
+personal_public_witness_data.js is actually annotating all original511 own
+prefix versions at both recall endpoints, in
+public-witness-2026-10-20T04-46-25-871Z. Session71394/PID35684 is LIVE;
+276/1022 prefixes were durably journaled at the latest check, with no failed
+feature, probability or physical-path assertion. Do not restart it or edit
+its bound data/features/witness/Hard/shared planner graph while live. Eight
+final gzip files and input.json are written only when their stages complete;
+partial files are not a completed dataset or a failed run.
+
+personal_public_witness_fit.py/study.py jointly fit all90 coefficients per
+person and logical opening, not a switch between fixed reference policies.
+Existing strict earlier-own selection, full target-AID exclusion, campaign
+mass balance, optional winning-route emphasis and20-campaign recency remain.
+Model identity includes prior, engine, reference options and feature names.
+Tests demonstrate repeated positive→negative→positive preference changes
+within one chronologically evaluated dataset, plus exact padded78 emission
+controls and refusal of future/foreign/target evidence. No fitted90 result
+has been produced yet; do not call this a measured improvement in predictions.
+
+personal_public_witness_choice.js is the actual matching runtime. Public tags,
+person/recall/prior/feature/planner contracts are required. Witness suggestions
+are soft covariates; probabilities do not commit route or attention history.
+Actual choices commit each latent controller once. An all-zero model delegates
+the exact old draw; zero extra coefficients bypass witness search. The legacy
+78 coefficients padded with12 zeros retain exact old behavior.
+
+Actually ran personal_public_witness_controls.js rather than assuming this
+from sparse math: session8154 is TERMINAL0. All eight real2x9 controls, four
+people×two recall modes at seed20261115, match the old public78 runtime
+exactly. Artifact public-witness-controls-2026-10-20T04-53-36-951Z.json binds
+both parent hashes and runtime sources. This is implementation parity, not
+a new fit or an accuracy result.
+
+New audit checks independent Python/JS sparse math,16 actual own hidden-
+inventory public opening controls and eight actual padded retry controls.
+New count study declares all25 pinned cases×14 confidence/recall/own-fit
+policies,8runs×9attempts at seed20261109, all with the same optional proof-only
+terminal acknowledgement as the prior study. Every actual disabled chain
+must exactly reproduce the prior terminal study. Keep caps unresolved.
+New summary verifies350 journal cells,100 own earlier rosters,300 policy
+applications,50 actual disabled controls and unchanged numeric ledgers, with
+distance/ordinal/recency and closer-miss metrics. Comparisons isolating the
+90-vs78 family are matched only at confidence1, since prior lower-confidence
+arms did not have the same acknowledgement wrapper. Do not silently label
+that confounded comparison a feature improvement.
+
+Session31443 is LIVE as a one-shot sequential pipeline. It explicitly waits
+for existing annotation PID35684 (after command verification; no restart),
+then requires the completed input artifact before running study→audit→count
+→summary. Every nonzero stage exits the pipeline. It is not an automation or
+new annotation job. Poll this same handle, plus71394 when needed. No source
+editing to those bound stages once they start; no duplicate launch on timeout.
+The count input remains the old pinned cohort, not later live outcomes.
+All forecasts and primary failed-trial status are unchanged.
+
+Validation: full Python375 pass, all176 named personal-bot JavaScript tests
+pass, actual eight padded public retry controls pass, diff--check passes.
+An accidental Node require of the Python study reported a syntax error;
+correct Python py_compile succeeded immediately, no source repair was needed.
+No new commits/branches/pushes/deployments/database writes. Working in
+personal-bot-review, branchwip/personal-bots, HEADb7fdf0a. Goal ACTIVE/UNMET.
+
+## October20: renderer information audit while the own-witness job runs
+
+Previous goal turn PROGRESS: new joint90 own-person learning/runtime/studies
+and actual padded retry controls. Current initial revalidation was a verified
+wait on live sessions71394 and31443, not a restart. Annotation remains LIVE
+PID35684; latest observed563/1022 prefixes, no data/fitting failure. Pipeline
+PID28236 is independently verified to be waiting on that original exact
+annotation PID, with later fit/audit/count stages not yet started. Do not edit
+the bound observation/feature/runtime graph or duplicate either job.
+
+Used the waiting interval to check a distinct information assumption against
+the ACTUAL production renderer, not just the symbolic planner. New
+personal_render_page.js builds an offline headless board with source CSS,
+Tiles.faceHTML and actual renderBoard/layoutBoard; all network is blocked.
+personal_render_visibility_audit.js draws valid even-pair deals where two
+offset upper tiles jointly cover a lower picture, although Hard.coverOf
+returns no exact-alignment cover. It changes both lower paired pictures, so
+pair multiplicity remains valid. Pixel-identical whole-board images are
+checked against distinct uncovered-symbol controls, not assumed from geometry.
+
+Confirmed artifact render-visibility-2026-10-20T05-06-03-900Z, TERMINAL0
+session89370, archives the actual generator/render sources and216 PNGs.
+Uncovered controls distinguish ALL36 pictures in each of sunflower, animals
+and classic. Covered sunflower pictures[2,4,6,7,9,12,17,22,24,29] nevertheless
+have identical whole-board pixels; animals has an11-picture ambiguous group;
+classic22/24 are ambiguous. Actual Hard.play public-mode opening captures
+report different lower picture identities for the same screenshot. Thus the
+current inventory-safe public observer is NOT a universally correct
+pixel/human-information observer. No root source was changed while bound jobs
+run. The conservative option of hiding all partly covered symbols is NOT
+claimed as perfect human-information play; partial perception needs modelling.
+
+This does not automatically establish prevalence/performance effects on the
+real cohort. personal_render_case_audit.js uses archived first-attempt geometry,
+recorded theme/boardWrap size/highlight/contrast, gold and obstacle decorations.
+It swaps a supposedly known blocked face with an actual face-down tile,
+preserving the entire deck, and requires identical rendered board images plus
+distinct isolated target glyphs. Finite first-per-person screen
+render-cases-2026-10-20T05-02-48-590Z tested176 Dennis151,216 Mrs104 and176
+Gerda68 swaps with NO equal-image counterexample. This finite negative result
+is not universal proof or human recognition evidence. Earlier12-swap pilot
+and initial synthetic outputs remain archived unchanged.
+
+An explicitly broader all25-case renderer screen is now LIVE session15072;
+it records unavailable raw/view cases explicitly and tests up to8 distinct
+down-tile buddy pictures for every opening known-but-overlapped target.
+Check this same handle; do not restart on polling timeout. The current
+retrospective90-feature experiment stays intact under its stated symbolic
+observer abstraction, but neither old finite hidden-inventory tests nor new
+joint preference fitting can certify full renderer parity. Added that
+promotion restriction to RESEARCH_POLICY.md. The80% goal remains ACTIVE/UNMET.
+
+All-case renderer screen is now TERMINAL0/session15072/PID37812:
+render-cases-2026-10-20T05-06-59-013Z. It retains all25 declared cases:
+24 tested,4728 actual rendered paired swaps, ZERO equal-pixel counterexamples
+within that finite sample. Dennis156 is explicitly untested because the
+pinned parent lacks an archived first-attempt replay source. This does not
+erase the confirmed synthetic actual-engine counterexample or prove human
+recognition. It limits the currently established scope: do not claim a broad
+real-cohort leakage rate, a clean universal observer, or a causal performance
+effect from the synthetic fixture alone. No current study was killed or
+restarted because of slowness, an observation timeout, or its first score.
+
+Read-only fresh snapshot live-openings-2026-10-20T05-14-55-872Z completed and
+was scored against BOTH ORIGINAL frozen families, without changing any point.
+342 campaigns,4 unresolved boards. PlaysSHA
+a04ba29baf793013b045265bde13e00d9ba03e1b78e7683c0d70f73411388628;
+scoresSHA2c2decaef4f356ac62621f2d69b3fa27f16e0940d9294bb71338168896b6f2b2.
+PUK54 is now a genuine first-clear on local try1, opened00:12:27.088UTC and
+finished00:18:54.603UTC October20. Both old frozen ledgers predicted1, so
+each gets that one real future point. It preceded the new90-feature design;
+the new family gets NO prospective credit. Source-bound trial remains failed:
+Mrs0/7,Gerda6/10 plus79 pending; Dennis no eligible new opening; PUK1/1 is
+not20-game or80% proof. Dennis156 remains pending, Mrs113 last win, Gerda79
+pending. Do not retrofit PUK54 or newer outcomes into the pinned25-case job.
+
+Added and tested a bounded public_witness_cache.js for later speed work.
+It keys geometry, obstacle sets, clock, complete public state, actual root
+restrictions and all search settings; never serializes raw/private game or
+tile metadata. Cached reports are defensively cloned and invalid/nonfinite
+states cannot collide with valid inputs. Tests cover changed memory/down,
+tray/peek/arrival/moves, mutable lock sets, budgets, eviction and throwing
+private getters. A fixture initially spread its deliberately throwing private
+getter; fixed that test and explicitly whitelisted nested geometry/neighbor
+fields too. All177 named JS tests now pass. This cache is NOT wired into
+the active source-bound annotation or queued counts; source integrity stays
+intact. After those stages safely finish, benchmark exact actual trajectory/
+feature parity before enabling it, rather than quietly changing a live job.
+
+At05:30UTC annotation session71394/PID35684 is independently LIVE,
+773/1022 durable prefixes. All Dennis, Mrs and PUK endpoint files are complete;
+Gerda's no-carry endpoint is near completion and full carry is still pending.
+This is expensive known-state planning, not a failed/abandoned job. Pipeline
+session31443/PID28236 remains LIVE waiting on that original annotation PID;
+input/models/runtime-audit/count-progress are not yet present. Reuse these
+same handles and inspect actual stage artifacts; do not duplicate the run.
+Long polls of these verified live handles and the renderer yielded no false
+terminal interpretation. Existing root Hard/observer/witness/features graph
+was not edited. New render/cache helpers are independent of the bound graph.
+
+Current turn classification PROGRESS plus verified waits: actual-render
+counterexample and full declared-cohort scope audit, real new frozen PUK54
+score, and tested optional memoization yield new authoritative evidence.
+Full Python375 remains passing; all177 named JS pass; diff--check passes.
+Primary numeric ledger freshly retains
+66fad209cefcedb09d56fe9cf2ce001e3912a49925f135dda7d22b9d4a3cbf20.
+No commits, branches, pushes, deployments or database writes. Same checkout,
+wip/personal-bots, HEADb7fdf0a. Goal ACTIVE/UNMET; no numerical90-feature
+prediction result has been measured yet and no80% claim is made.
+
+## October20: actual pixel-ambiguity repair prototype and cache controls
+
+Previous turn PROGRESS (renderer boundary evidence, complete finite cohort
+screen, new real PUK54 score, bounded cache tests), not no-progress. Revalidated
+the same annotation/pipeline handles before acting. Original annotation remains
+LIVE and untouched; stage changes below concern only the waiting wrapper.
+
+New public_pixel_partition.js recognizes an observed image against public
+glyph templates on an identity-independent pixel mask. It never receives the
+true target face. Equal observed pixels give equal symbol classes; only a
+singleton becomes known. Dictionary IDs exclude unobserved pixels as well.
+No visible support/out-of-dictionary glyphs stay unresolved. This retains
+partial-symbol information, not a blanket hide-all-overlaps substitute for
+the real goal. Pure tests exercise ambiguity/refinement, unknown pixel changes,
+output mutation, malformed dictionaries and explicit mismatch fallbacks.
+
+personal_pixel_partition_audit.js renders all37 legal symbols for each of
+sunflower/animals/classic under three declared fixture phases: uncovered,
+two-upper-tile occlusion and partly exposed. The conservative public mask
+uses an opaque target interior and higher-tile bounding boxes with a shared
+one-pixel antialiasing margin. Source/glyph footprint bounds are checked.
+Completed source-archived artifact pixel-partition-2026-10-20T05-44-11-171Z,
+session75718 TERMINAL0 (earlier05:42 control also terminal):
+- uncovered11210 safe pixels,37 singleton symbols in each theme;
+- jointly occluded0 safe pixels, one37-symbol ambiguous class in each theme;
+- partial3304 safe pixels,37 singleton symbols in each theme.
+These are machine pixel distinctions, NOT proof a person recognizes every
+symbol equally well. Source, template bank and18 actual observation PNGs
+are archived. Templates are static glyph hypotheses, not future reveal paths.
+
+The initial footprint check correctly FAILED for animated Joker101: layer/
+raster changes outside the target invalidate a static footprint assumption.
+Those failed outputs/diagnostics stay retained. The explicitly new static
+reference experiment disables animation and records that restriction. A
+remaining one-pixel fractional-boundary antialiasing effect is handled by the
+same1px expansion used in occluder masking, not silently waived. Live animated
+Joker phase recognition and general foreground independence remain unproved.
+
+personal_pixel_opening_prototype.js compiles a separately source-pinned,
+capture-only Hard instance. It accepts a trusted externally rendered opening
+recognition mask, preserves earlier actual memory and refuses static-mask
+autonomous use. Actual captures of the two equal-pixel paired worlds now
+have EXACTLY IDENTICAL planning state AND raw decision features, fixing the
+confirmed fixture leak without editing root Hard.js or the live dataset graph.
+No-mask controls match the original engine. Broader dynamic scene integration
+is still required; do not advertise this as a fully fixed production observer.
+
+New public_pixel_belief.js turns informative observed classes into conditional
+public-prior marginals, with explicit zero-mass fallback. Uninformative or
+dictionary-mismatch observations preserve the prior exactly. A first exact
+control exposed normalization-only floating drift; preserved already-normalized
+prior bytes when no new information exists instead of weakening the test.
+Compatibility estimates include wildcard symbols but are NOT legal-move,
+clock, joint-deck or solvability guarantees. No hidden inventory is consumed.
+All375 Python and all180 named JavaScript tests now PASS.
+
+Actually ran cache benchmark session6326 TERMINAL0 on384 declared first/last24
+public decisions from the latest recorded own prefix of each person, both
+recall endpoints. witness-cache-benchmark-2026-10-20T05-49-19-814Z.json:
+1152 full-report comparisons all exact. Uncached18.708sec; cold memoized
+13.573sec; TWO warm passes0.093sec;919 hits/233 misses, no evictions.
+This is component parity/timing, not expected whole-pipeline speed or improved
+prediction accuracy. Verified and archived50 exact source bodies beside the
+report with runtime metadata. No active annotation source was changed.
+
+IMPORTANT pipeline status supersedes the earlier LIVE-waiting instructions:
+At05:47UTC, after verifying no completed input or fit/audit/count child existed,
+administratively stopped ONLY waiting pwsh PID28236. Session31443 is now
+TERMINAL(-1). Original annotation PID35684/session71394 remains LIVE. Recorded
+pipeline-administrative-hold.json in the run. This is a deliberate safe hold
+before later stages to validate behavior-identical planner caching, NOT an
+observation timeout, failed data run, rejected strategy or pause of the goal.
+No measurement has been restarted or cancelled. Do not resurrect that wrapper
+or assume later stages started automatically.
+
+Prepared public_witness_cache_trajectory.js for all25 pinned reference cases
+plus four prior controls, cached vs uncached actual Hard physical trajectories
+and exact original threshold2 results. It has NOT run yet: reference does not
+accept injected search until the bound annotation is terminal. After successful
+annotation completion, add an optional search function to reference/features,
+enable memoization ONLY in the new personal runtime, verify all29 trajectories
+and full regression suite, then manually study→audit→count→summary. Defaults
+must preserve old extraction semantics; archive old files, do not edit old
+models/ledgers. This safe sequencing avoids either corrupting the active
+annotation or launching hours of expensive repeated planning before parity.
+
+At05:50UTC annotation was908/1022 durable prefixes and independently LIVE,
+Gerda full carry the remaining endpoint. Cases/outcomes remain pinned to the
+old input; no PUK54 outcome was inserted into it. Goal ACTIVE/UNMET. Same
+personal-bot-review/wip/personal-bots checkout, no commits/branches/pushes,
+deployments or database writes. Partial-pixel helpers remain separate research
+controls; no new90-feature forecast accuracy result or80% claim yet.
+
+New personal_online_strategy.js retains each person's own original/capacity
+policies plus both own preparation variants where clock evidence exists. All
+components filter on the same actual selected action. Cross-level mixture
+weights update only after earlier completed, available own campaigns. Fixed
+share permits several reversals instead of permanently eliminating a route.
+Four predeclared procedures: fixed uniform, gradual rate1/share.1, fast
+rate4/share.1, and fast with half the learning weight reserved for the prior
+winning attempt. All other updates use mean attempt NLL within each campaign;
+one19-try level still contributes one update, not19 independent levels. This is
+a bounded strategy-mixture prototype, not arbitrary new-strategy learning.
+
+Canonical immutable study:
+source/analysis/archive/personal-bots/runs/online-strategy-2026-10-19T20-19-36-590Z
+- input.json SHA f3b5adce68508e99103fdb78eaf3f2115a53e16e21a07cb2042bc6c23f471d67
+- measurements.json SHA e311db4e347dee118791834450b3c75768867c8de0a6c1b89c29d14fa4b4152b
+- summary.json SHA 5c657d7e1e611e002f9de27aac94bf7c99938dfb05a47e924fb9b3c76ce1c983
+- endpoint-audit.json SHA a40bb48bc5ba9580e75964b0c10002b7d71e90861c0004f2907852dc7e37c098
+- recall-audit.json SHA 72edfcf7c19457d602a4ff3e278e21cbb62f906ba73332ba88bd9a5289909d42
+
+Collection session53038 TERMINAL0: all25 earlier later-check campaigns,67
+requested attempts,66 exact natural paths,7023 choices. Dennis156 has no eligible
+natural prefix and remains explicit/unlearnable, not removed from prediction.
+Gerda69 reuses the hash-verified canonical20:05 raw snapshot; remaining paths
+use separately captured GETs. None/full carry follows own scalar endpoints,
+recognizing [0,0,0]/[1,1,1] arrays. Stochastic retention is explicitly refused
+pending a declared matching annotation draw; PUK has no cases to annotate.
+One resumed AID can have several start events: earliest start is retained once.
+Auto-finish natural boundaries are not promoted to complete manual game proof.
+Three earlier collection runs (20:18:22,20:18:36,20:19:13) are TERMINAL failures,
+not live jobs or completed experiment evidence. They respectively exposed the
+vector endpoint assumption, missing pending natural prefix, and resumed-start
+assumption. Partial folders remain; no completed input/result was overwritten.
+
+Measurement session58432/PID19808 TERMINAL0: all100 profile/campaign cells,
+85 fresh16-run nine-attempt chains,15 exact same-weight reuses,seed20261101,
+zero caps. State and state hash recorded at each reconstructed opening. No
+future/foreign/current campaign can enter that opening's update history.
+Python independently rebuilt384 per-forecast earlier-campaign updates and every
+frozen-mixture held-next-campaign action NLL. These are not384 unique campaigns.
+Results fixed/gradual/fast/winningFast:
+- Dennis2/5,2/5,2/5,2/5.
+- Mrs3/10,2/10,3/10,4/10.
+- Gerda2/7 in every arm.
+- PUK0cases, not a zero-accuracy or inherited-other-person result.
+Full ordered five-case windows, hard cases, pending and fit-overlap diagnostics
+remain. Six of Mrs's ten winningFast points are one-simulated-outcome fragile;
+the +1 versus fixed is a weak lead, not confirmed improvement. Earlier selected
+32-run seed31 controls are shown separately as contextual2/5,1/10,2/7, not a
+same-seed paired comparison with the new16-run mixture. No family is rejected,
+no model promoted, and no hyperparameter selected using these target outcomes.
+
+Endpoint audit session80048 TERMINAL0:12 actual one-hot whole-chain controls
+across all four people and all own expert types,2runs x9attempts,seed20261102.
+Each reproduces its previous controller exactly. This checks integration, not
+future accuracy. Main study is explicitly retrospective: newer expert families
+and experiment design occurred after some openings; client queue availability
+is not historical server/readiness proof. None of these values replaces an
+original numeric forecast or supplies valid future80% evidence.
+
+Recall audit session96837 TERMINAL0: identical physical paths under causal
+none/full carried knowledge;19968 selected-setting probabilities reproduce with
+maximum error0,7450 first-attempt endpoint probabilities exactly identical.
+Own actors all explicitly trained with retryMemoryMode=none. Expert mean attempt
+NLL for original/capacity:
+- Dennis none2.7541/2.7387 versus full2.9572/2.9281.
+- Mrs none2.0323/2.0158 versus full2.0634/2.0479.
+- Gerda none3.6129/3.6056 versus full3.9480/3.9336.
+This diagnoses a training/runtime knowledge-distribution mismatch, NOT actual
+human forgetting. Earlier Gerda count calibration selected full retention, so
+refit paired own actors on matching retention annotations before interpreting
+these likelihood differences or changing memory. The first audit execution
+correctly failed an invalid diagnostic expectation that seen stamps must match:
+carried knowledge can change first-known stamps while physical paths agree.
+The repaired audit compares actual physical result fields and independently
+reconstructs both paths; a regression test preserves this distinction.
+
+Read-only live refresh20:29:04.793UTC has341campaigns and4unresolved boards:
+source/analysis/archive/personal-bots/live-openings-2026-10-19T20-29-04-793Z
+plays SHA89f1bbf1da4b9f6f45cefd89f673e29a305074845ff92e99e077df7ce17b13f9
+scores SHAbbc77bfcae5d02d66ab0681045828084ab52cfc93538781b27d2c67e24164b20
+Original source-bound family remains Mrs0/7; Gerda now6/10 on69..78,79pending.
+Actual Gerda79 first attempt ended stuck and second started. Frozen pred1 can
+never become correct on any later first-clear try. New personal_pending_bounds
+keeps completed scores unchanged but proves original Gerda first20 upper bound
+15/20=75%, hence FAILED too. The older conservative bound16/20 remains untouched
+as a valid but looser upper bound. New pending-window-bounds-20:29 report uses
+the original ledger and actual loss event, not a guessed winning label. Missing
+endings remain possible successes. Tolerance and8plus behavior have regressions.
+SOURCE_BOUND_FORECASTS status updated; all96 original numbers and ledger SHA
+66fad209cefcedb09d56fe9cf2ce001e3912a49925f135dda7d22b9d4a3cbf20 unchanged.
+The earlier25-case adaptive pilot's labels stay pinned to19:53, not retroactively
+rescored as a pre-opening trial with these newly observed completions.
+
+Final full Python343 pass, named JS156 pass, git diff--check passes. All owned
+jobs TERMINAL and authoritative process inventory empty for these commands.
+Next: paired own retention-feature annotations/refits and more expressive
+cross-level policy updates, retaining count correctness as the primary metric.
+Follow the winning-route lead with independent seeds before any promotion;
+do not mistake small action-NLL changes for solved count prediction. A genuinely
+new adaptive trial must freeze its update rule and every numeric opening point
+with real observation readiness, while allowing the own policy state to evolve.
+
+## 2026-10-20 continuation: changing move preferences and updated Gemini review
+
+Previous completed goal turn classified PROGRESS: implemented and actually
+tested repeated cross-level own strategy mixing. New scope clarifications are
+preserved: learn changing preferences, retain closer-count progress even on
+unchanged binary accuracy, emphasize recent own levels, and keep a stronger
+human-information reference planner as a contingency. No80% success is inferred.
+
+Implemented personal_retention_residual.js and sparse Python conditional fitting
+in personal_retention_fit.py. This learns76 own move-preference corrections,
+not merely a switch among existing routes. Absolute coordinate/picture identity
+fields are excluded. Public action/planning and action-kind x tray/clock/key
+features are clipped4; coefficient bounds4, penalty10. Campaign-normalized
+importance and20-campaign half-life avoid treating19 retries as19 new levels.
+Separate balanced and winning-route=.5 procedures. A winning label can affect
+an update only after its actual end timestamp, never an earlier prefix. Each
+logical target opening selects latest earlier own versions and excludes all
+target campaign AIDs. Original own selected policies are the residual baselines.
+
+Canonical paired data run:
+source/analysis/archive/personal-bots/runs/retention-residual-2026-10-19T23-34-52-277Z
+Collection session90696 TERMINAL0:445 exact old source versions plus66 current
+prefixes,511 total,46291 choices in each recall endpoint. One missing Dennis156
+prefix stays explicit. Two historical physics boundaries remain retained-prefix
+evidence, not whole-game proof. Full carried knowledge is replayed on311 paths;
+200 zero-carry none/full controls reproduce exactly. Knowledge only unions same-
+campaign earlier available observed prefixes, never hidden future pictures.
+Two earlier collection runs20:38:27 and20:38:46 TERMINAL failures remain partial:
+first exposed the old split12-clock +5-tray annotation schema, second the old
+campaign helper's exclusion of Gerda's levels below10. Repaired combination and
+an earlier-clear-bounded early-level grouping retain all445, not a trimmed cohort.
+Early-level grouping has a regression preventing old completed replay carry.
+
+Fit session19032 TERMINAL0:100 chronological held-next-campaign model fits,
+plus16 current own fits to the supplied source history (including PUK's own fits
+but no later PUK accuracy claim). Each retention mode has matching natural input
+features; none/full models do not borrow or mix each other's knowledge states.
+Models SHA856fe5b132fc60e85c6cca7f53a4c757559670da3aa5dc3ff60ccfe54c6edf95
+Native SHAa12968e8a75a298761968622930b1a7ff88cde0d97845be320c54e1e6efa01a0
+Actual model readiness is the current fit time; historical logicalCutoff is
+never called a genuinely pre-opening freeze. Current source snapshot is limited
+to the earlier25-case study; it does not include all subsequently observed live
+games. No old actor, forecast, source dataset or dashboard is overwritten.
+
+Runtime audit TERMINAL0:28092 choices,364064 alternative probabilities agree
+Python/JS within8.881784197001252e-16;28092 exact disabled-emission controls.
+This is sparse choice-math parity, not independently replaying all raw paths at
+runtime; physical feature extraction was separately checked by the data builder.
+Whole-chain audit session63646 TERMINAL0: all4 actual old own selected controllers
+reproduce at8runs x9attempts seed20261030, including configured PUK recall for
+the disabled control. Sixteen-run six-arm count measurement launched separately
+as session55379/PID32876; do not restart it based on an observation timeout.
+Its completion and final count/closeness results must be checked separately.
+
+New personal_count_quality.py keeps primary scoring intact but reports bucket
+absolute error, raw representative error, ordinal CDF score, and recency-weighted
+distance. Example8->2 for actual3 is recorded as a closer miss, not relabeled
+correct. Eight-plus distance is bucketed appropriately; raw representative MAE
+does not imply exact tail estimation. The new point decoder uses expected bucket
+distance only among maximal expected rule-reward ties. All six arms use the
+same decoder; no original frozen point is changed. New summary preserves
+transition losses and closer/further misses, with all-case denominators/windows.
+
+User requested reading the UPDATED Gemini handoff. Read the entire current file
+and reviewed new commits3382e29,7dcbdcb,526e084 in the clean READ-ONLY external
+checkout. Actual HEAD526e084d5eff0f559e522bcb47845ef80505a369; handoff header
+still names0d2ecbb. Independently ran replication CLI, coach tests,135..155 test:
+their own outputs reproduce73/80 historical,24/28 recent,14/17 recalculated live,
+68 filtered ledger entries, five coach checks and21/21 own-engine wins.
+
+These are NOT accepted as goal proof. Concrete new reviewer and artifact:
+personal_gemini_coach_review.js; GEMINI_COACH_REVIEW.md;
+gemini-coach-review-2026-10-19T23-46-30-669Z.json records source hashes/HEAD.
+- Original unchanged legacy ledger still says Mrs107=8,Gerda69=1, not newly
+  reported3/8. Future table also differs:Mrs115 ledger2/table1,Gerda82 ledger1/
+  table8. Live CLI recomputes current head with target.start=infinity, hardcoded
+  outcomes and invented timestamps; it does not score sealed numeric forecasts.
+- Coach init knows a fully covered face-up picture (fixture known2, not free)
+  and reads a concealed face to infer an exact undeclared total deck multiset.
+- Its generated two-tile pair action wins in one clock move in the coach, but
+  identical physical order in production Hard.play loses to clock after first
+  removal. Actual replay verifiedwinfalse/whyclock/moves1/left1.
+- Beam branches use actual concealed faces to choose a winning hypothetical
+  route; greedy failure then beam restart is returned as one attempt. Not a
+  non-anticipating human-information policy. The hand-written H.P personas in
+  the skills experiment are not recorded own-human skill-gap measurements.
+- Imported factor head actually lists26 raw fields and still uses variants,
+  contrary to the described17-field unaliased pipeline.
+Keep the useful visible-state lookahead/dynamic depth/clock-delay direction;
+repair observation and physical transition boundaries, then re-test. Do not
+discard the planning family or import invalid100% claims. No external files,
+Git state, database, deployments or original ledgers were changed by this review.
+
+Current validation: full Python357 pass, named JS159 pass, git diff--check passes.
+The adaptive count job is still LIVE, independently confirmed as PID32876 at
+23:48UTC with126/150 profile/campaign cells recorded. Resume owned session55379;
+do not restart it or run its summary before count-data.json is actually complete.
+All other owned annotation/fitting/audit/test jobs above are TERMINAL. The latest
+user request to read the updated handoff is fulfilled by the full read,
+reproduction and independent documented counterexamples. The broader bot goal
+remains ACTIVE/UNMET; no new future80% evidence or perfect-play claim is made.
+
+## 2026-10-20: residual count results and joint attention/confidence follow-up
+
+The immediately preceding short handoff-only reply added no new model evidence.
+This continuation revalidated the owned PID32876/session55379 as live, without
+restarting it, then observed terminal0 and the actual immutable count-data.json.
+The canonical residual run remains retention-residual-2026-10-19T23-34-52-277Z.
+All25 cases x6 arms x16 simulations x9 attempts seed20261105 completed, with
+zero numerical caps. The independent summary validates100 exact earlier-own
+version rosters and leaves the original frozen ledger untouched.
+
+Completed eligible accuracy and bucket MAE (accuracy / MAE):
+
+| Person/recall | Disabled | Balanced residual | Winning residual |
+| --- | --- | --- | --- |
+| Dennis none |3/5 /0.6 |1/5 /2.2 |1/5 /1.8 |
+| Dennis full |3/5 /0.6 |1/5 /2.2 |1/5 /2.2 |
+| Mrs none |1/10 /3.6 |1/10 /4.1 |2/10 /3.8 |
+| Mrs full |2/10 /2.1 |1/10 /2.5 |2/10 /2.4 |
+| Gerda none |3/7 /1.5714 |3/7 /2.8571 |3/7 /2.7143 |
+| Gerda full |2/7 /2.0 |2/7 /3.5714 |1/7 /3.4286 |
+
+No later PUK case exists. Two pending cases and Gerda68 fit-overlap diagnostic
+remain in the25-case artifact, not silently removed or relabelled as misses.
+The learning family is not promoted: aggregate ordinal/recent distance also
+worsens. Individual closer misses remain visible (Mrs106/113 full balanced;
+Gerda69 full), rather than being erased by the binary score. These are already
+observed later outcomes and later-designed fits, NOT frozen future80% evidence.
+
+Read-only fresh snapshot live-openings-2026-10-19T23-51-12-438Z found no new
+progression compared with20:29. Plays SHA190ce81225a636d6d55be07e5d3057d4fa8b944cdc7a499d7c6b7d2992e6e8ab;
+scores SHA bbc77bfcae5d02d66ab0681045828084ab52cfc93538781b27d2c67e24164b20.
+The old pilot cohort is not retrofitted to this snapshot. Original future trial
+failure and all frozen numeric points remain unchanged.
+
+New loop-probe-75-2026-10-19T23-53-27-511Z.json is an explicitly256-choice
+censored first-trial diagnostic at the main run's identical first seed. It is
+not a restart or substitute count. Disabled none/full both hit that diagnostic
+cap with170 repeated tile choices without removal and86 choices at the same
+remaining count; learned variants still repeat112..132 times. The old controller
+also loops; do not blame a new-only regression or count a diagnostic cap as a
+human failure. test_personal_retention_loop_probe.js is now in the named suite.
+
+Version2 canonical data: retention-attention-2026-10-19T23-59-40-986Z.
+New personal_retention_attention.js appends two soft inspection-history fields
+to the76 public residual fields, retaining necessary first reopens and productive
+matches and resetting counts on removals. No coordinates/picture coefficients
+or hidden state are added. It learns either sign; it does NOT force negative
+coefficients because we guessed all rechecking was bad.
+
+Data builder terminal0/session59271: all511 own original prefix versions under
+both recall endpoints (1022 annotations,92582 choices counting both variants,
+NOT92582 independent human actions),311 actual carried-memory replays and200
+zero-carry paths. Every non-planning sparse column, alternative count and actual
+choice agrees with a fresh production-physics reconstruction. Original17 public
+planning columns and base probabilities are retained unchanged. Maximum natural
+log repetition feature2.1972; extrapolation to longer autonomous loops remains
+a risk, not a claim this fixes them.
+
+Joint fitting terminal0/session18030:100 chronological own fits and16 current
+fits, penalty10, campaign half-life20, bounds4, balanced/winning proposals. Every
+target AID is excluded. Actual fit readiness is later than historical openings.
+Models SHA3e28c758c95b91ab937c7c6329190e7f196a104577325c0224c645d836947955;
+native SHA74e777d34f55f317564842a4bc34e218066c0ecbc8afafca3415d25aff4618cb.
+Runtime audit terminal0/session84487:28092 choices/364064 probabilities agree
+with independent Python math within1.1102230246251565e-15,28092 exact old-model
+embeddings, four actual old own8x9 disabled control chains exactly reproduced.
+The builder verifies physical extraction; sparse math parity alone does not.
+
+Teacher-forced entropy rises after fitting both76 and78 weights (e.g. Dennis
+none balanced base0.5769 -> old residual0.8830 -> joint0.8879). Actual-action NLL
+improves slightly, but this can weaken previously sharpened autonomous choices.
+This motivates testing the interaction with confidence, not discarding the
+family or assuming better action imitation implies better attempt prediction.
+
+Declared count grid BEFORE measurement: both recall endpoints x both learning
+profiles x confidence0.25/0.5/1, plus two old disabled controls =14 arms. All25
+pinned cases retained,16 simulations,9 attempts, seed20261105.300 fresh chains
+are simulated and50 exact unchanged parent baseline chains reused. New count
+job session93721/PID19184 is LIVE, confirmed at00:05UTC. Do not restart or edit
+its bound runtime/builder/source modules. No final count result exists yet.
+After terminal completion run personal_retention_attention_summary.py on that
+folder. It reports all arms and closer/ordinal/recent progress; no per-target
+oracle selection is permitted. Goal remains ACTIVE/UNMET.
+
+Validation after the new preference/confidence modules: Python363 pass, named
+JS162 pass, diff--check passes. The subsequent inventory-audit helper adds one
+named JS test; rerun the full named suite before citing the updated total.
+
+### New blocking promotion finding: unknown inventory leaks into raw features
+
+Independent source inspection found another observation boundary beyond the
+Gemini coach. Production Hard.play counts the true unknown picture histogram
+at hard.js829, then uses it for `reveal` and `flipHit`. The previous permutation
+tests preserve that histogram and therefore cannot establish information safety.
+
+New personal_hidden_inventory_audit.js and two immutable reports:
+hidden-inventory-audit-2026-10-20T00-10-32-202Z.json (base-only) and
+hidden-inventory-audit-2026-10-20T00-10-50-828Z.json (all32 current fitted models).
+Three six-tile deals have the identical visible opening, public rules, geometry,
+and no supplied exact deck specification. All have even picture multiplicities,
+at most four copies per picture. No move or reveal occurs before capture:
+visible[1,2], concealed[1,2,3,3] versus concealed[1,2,1,1]. Hidden permutation
+control passes exactly and public planning/context stay identical. Nevertheless
+two take options' reveal changes2->4 and four flips' flipHit changes0.5->1.
+
+All four original own selected controllers happen to be invariant here within
+1.96e-18; do not falsely claim this fixture proves their probabilities change.
+But all32 current fitted76/78-feature variants DO change, maximum absolute
+probability difference0.0226328 (Mrs none winning joint model). The residual's
+cross-kind adjustment makes the raw aggregate oracle consequential. This does
+NOT prove it caused the poor count accuracy. It DOES refute the stronger claim
+that these raw features/fitted candidates are fully human-information-limited.
+
+Correction to earlier public-feature terminology: coordinates/picture-ID
+coefficients were excluded and known-only planning is public, but raw13/20 were
+not inventory-safe. Neither adaptive family may be promoted/frozen as an
+information-limited personal policy yet, whatever the current confidence grid
+scores. Preserve that running experiment as a diagnostic, not accepted future
+validation. Next priority: repair unknown-picture expectation at the observation
+boundary, audit remaining raw fields under hidden-inventory replacement, and
+regenerate/refit dependent data. Do not edit source-bound Hard/runtime files
+while the currently live owned experiment is using them. No old result/forecast
+was rewritten, no source in Gemini's checkout changed, and the full goal remains
+ACTIVE/UNMET. This is a model promotion gate, not an external impasse or a reason
+to mark the goal blocked.
+
+Final check this turn: full named JS suite163 pass (including the new audit
+helper), full Python363 pass, diff--check passes. These green helper tests do
+not reverse the explicitly failing actual observation-boundary audit. PID19184
+was independently live with CPU1352.44sec and201/350 count cells at00:12UTC;
+session93721 remains the sole owned live measurement. All data generation,
+fitting, old count, new parity/control audit and validation sessions above are
+TERMINAL0. Work stays in personal-bot-review on wip/personal-bots at b7fdf0a;
+no new commit, reset, branch, deployment or DB write was made.
+
+## 2026-10-20 continuation: root observer repair and freshly fitted public bots
+
+Previous goal turn was PROGRESS: it completed the original residual count
+experiment, tested preference/confidence interactions and independently found
+the unknown-inventory leak. This turn revalidated owned PID19184/session93721
+as live, without restarting it, then expanded the observation audit before
+choosing the root fix.
+
+New personal_observation_contract.js covers308 captures/264 same-public-state
+pairs across tray0..3, clocks, keys, side blocking and fully covered face-up/down
+tiles. Every compared deal has even picture multiplicities <=4, and actual
+public planning snapshots/actions plus preceding physical choices agree.
+observation-contract-2026-10-20T00-15-49-729Z.json finds136 failing pairs. Besides
+raw13 reveal and20 flipHit (also immediate features), raw9 stuckSoft leaks:
+the safe-pair loop counted a down tile by its unknown true face. This is why
+zeroing/replacing only the histogram is an insufficient surface patch.
+
+Source-anchored in-memory prototype first tests the fix without editing the
+live experiment's engine. Public alphabet prior alone leaves four failed
+comparisons; adding known-only tray safety leaves zero. Exact308 legacy opening
+controls and1246 independent public-prior flip expectations pass. The prior is
+uniform over36 ordinary pictures plus wildcard, not claimed posterior-optimal.
+Updated report public-engine-prototype-2026-10-20T00-26-53-952Z.json. The frozen
+prototype also tags real public selector observations with version1.
+
+Public data run public-retention-2026-10-20T00-22-52-038Z completed TERMINAL0,
+session61149. All511 original versions x2 recall endpoints remain:1022 paths,
+92582 choices counting both variants (not independent human actions),311
+carried-memory replays and two retained historical physics boundaries. All1022
+physical outcomes and public planning snapshot paths agree between legacy and
+corrected observers. Cached17 pure-public planning fields remain identical;
+only stuckSoft/reveal/flipHit raw columns change. Base emissions are recomputed,
+not reused:945253 alternative probabilities differ, maximum absolute change
+0.9102959. The old selected personal actors remain fixed learned centers, now
+evaluated on safe observations; new78 preference coefficients are refitted.
+
+The earlier public-retention-2026-10-20T00-22-03-100Z partial directory is a
+TERMINAL1 failed data build, not a count result. A too-strong assertion equated
+full-memory seen stamps with no-memory stamps. Corrected replay compares
+knowledge within the same retention mode; a dedicated regression demonstrates
+that legitimate remembered pictures must change those stamps. No prefix was
+dropped to fix this, and the successful run uses a fresh immutable directory.
+
+New own public fit terminal0/session45143:100 chronological models and16 current
+fits, type personalPublicRetention-v3. Original target campaign exclusions,
+latest-earlier version gates, one campaign mass, half-life20, regularization10,
+bounded weights and balanced/winning learning proposals remain. Observation
+prior identity and engine identity are bound into model IDs. Models SHA
+bcfe05506a8dae29e5e0c2452d49adfdea149e2f2ea70ae6930938ebc50705b8;
+native SHA0ac588eeb88c47595f15802050170f71baf1578e90c86be2ae2021f473f92bf5.
+Actual readiness is later than historical openings: still retrospective.
+
+Public runtime audit terminal0/session54057:28092 choices/364064 probabilities
+match independent Python within6.661338147750939e-16. All16 actual current own
+selectors are invariant on the same-visible-opening hidden-inventory fixture
+and reject private/unmarked observations. Four actual old8x9 selected chains
+are exactly reproduced by the frozen engine with public mode disabled. Cached
+math parity is not falsely called a complete feature replay: that is separately
+established by the builder's1022 observed paths.
+
+At00:31:01UTC, deliberately stopped the old INVALID-OBSERVER confidence run,
+after verifying its exact owned command/PID and archiving count-administrative-
+stop.json in retention-attention-2026-10-19T23-59-40-986Z.333/350 completion
+metadata messages exist, but no final numeric count-data.json. Session93721
+is authoritatively TERMINAL1 and PID19184 is absent. This was not a timeout
+restart, a slowness kill, or dropping a strategy because of its first score.
+The confirmed information-boundary defect prevented promotion; preserving its
+sources/partial record and proceeding with the SAME learning/confidence family
+under repaired observations is the aligned next action. Do not invent its
+accuracy, run its final summary or restart that directory. Several numerical
+caps were already explicit (including24 in one chain); none is a human failure.
+
+Only after owned-job termination integrated the tested root patch in www/hard.js:
+optional normalized256-entry publicPicturePrior, no concealed histogram reads
+for that mode, known-only down-tile tray safety, engine observationVersion1 and
+PUBLIC_OBSERVATION_VERSION1 capability. New public personal selectors bind
+their person/prior and refuse private observations. Old unflagged mode remains
+for historical generator/forecast reproduction, not a valid human-info reference.
+No live deployment, DB write or level-generation defaults were changed.
+
+Integrated normalized engine SHA EXACTLY equals the data-generating prototype:
+648718b0d0da87d2ef501f47bd860bc200c51ae9061d15f30e8b8a3224656c95.
+Production integration terminal0/session24054: all264 inventory comparisons
+pass on the actual module, and eight actual2-run x9-attempt public retry controls
+(four people x both recall modes, seed20261108) match the frozen engine exactly,
+zero caps. Separate production-integration.json records this later readiness;
+old prototype metadata/fits/forecasts are NOT rewritten. Actual public contract
+report observation-contract-2026-10-20T00-33-13-819Z.json records308 captures,
+264 pairs, zero failures. Finite checks do not establish universal noninterference,
+posterior-optimal play, perfect play or human count accuracy.
+
+New public count screen session31299/PID13540 is LIVE, confirmed at00:36UTC.
+Canonical directory remains public-retention-2026-10-20T00-22-52-038Z. All25
+original pinned cases and all14 recall/learning/confidence arms stay,8 actual
+simulations x9 attempts seed20261109. Every public baseline is simulated freshly;
+old private-observer controls cannot be reused. Full numerical chain vectors
+are durably journaled per cell now, not only completion notices. Eight-run
+precision is explicitly a screen, not final forecast stability. Do not restart
+this owned process or change its bound runtime sources. After TERMINAL0 and
+count-data.json, run personal_public_retention_summary.py on that directory.
+It validates350 journaled cells,100 own earlier rosters/300 model applications,
+keeps all cases and numerical uncertainty, and reports agreed-rule accuracy plus
+ordinal/recent/closer-miss progress. No per-target oracle selection.
+
+Current validation after actual integration: Python367 pass, named JS169 pass,
+diff--check passes. No new commit/branch/reset/deployment or DB write. Worktree
+personal-bot-review, branch wip/personal-bots, HEAD b7fdf0a. Original frozen
+ledgers and primary failed-trial status unchanged. Full goal ACTIVE/UNMET; no
+valid later frozen80% result yet. The sole owned live measurement is the new
+public count screen; data/fitting/parity/integration/test sessions are TERMINAL.
+
+Post-integration regeneration control also completed TERMINAL0/session42098:
+public-retention-2026-10-20T00-39-56-736Z. The builder now validates archived
+parent generator sources separately from the current generator graph, so an
+intentional root integration does not make historical source provenance appear
+to be corruption. All1022 actual/public planning paths reproduce again and all
+EIGHT gzip feature files are BYTE-IDENTICAL to the canonical00:22 dataset.
+regeneration-parity.json binds both input hashes and every actual file hash.
+This is a production-source regeneration control, NOT a new canonical model,
+new accuracy result or reason to rerun the live count job. Canonical models and
+session31299 remain untouched.
+
+Final validation after this last builder change: full Python367 pass, full named
+JS169 pass, diff--check passes. Original own primary ledger freshly verified
+SHA66fad209cefcedb09d56fe9cf2ce001e3912a49925f135dda7d22b9d4a3cbf20;
+Gemini's READ-ONLY legacy ledger SHA1a644b70df74eaa2847cdbdafcc513caaa5e22dd829a4d38fbf256308b6758d5.
+No old forecast points changed. PID13540 is independently LIVE with CPU1717.83sec
+and271/350 durably numeric journal cells at00:44UTC. Session31299 is the only
+owned live job; tests/regeneration are TERMINAL0. Resume this same handle and
+run the public summary only after actual successful completion. The objective
+is still ACTIVE/UNMET; repaired information flow is not claimed as80% accuracy.
+
+## October20: public count completion, terminal lifecycle and witness reference
+
+Previous goal turn classified PROGRESS: the observation repair, regenerated
+own-person data, fitted models and actual parity/integration controls changed
+authoritative state. Current turn also PROGRESS, not an unchanged waiting
+turn: completed and scored the count study, measured terminal acknowledgement,
+built and tested the public witness reference, and measured its refinements.
+
+Canonical public-retention-2026-10-20T00-22-52-038Z count session31299 is
+TERMINAL0. All350 numeric cells exist; count-summary.json checks100 strict
+earlier-own rosters and the immutable primary ledger.301 computation caps
+remain explicitly censored. Eligible completed cases are Dennis5, Mrs10,
+Gerda7, PUK0; pending and fit-overlap cases stay in the declared25-case set.
+Corrected preferences still predict human counts poorly. For example,
+full/winningT.25 Mrs is2/10 with bucketMAE1.7; Dennis disabled is2/5,
+MAE.8; full/winningT1 Gerda is3/7,MAE1.8571. No promotion or80% claim.
+
+New public_dead_end.js proves exhaustion of the reachable known-inspection
+graph, requiring no safe removal, unknown frontier, unsupported Joker case or
+budget boundary.36 label-permuted trapped fixtures agree with an independent
+complete full-information recovery graph. A valid even-pair physical fixture
+actually ends by taking a fatal fourth tile; inspection caps are never
+relabelled as human failures or allowed to reset an attempt for free.
+
+public_dead_end_choice.js preserves exact disabled delegation and original
+personal choices outside certified loss. It commits the actual forced action
+once. The six-profile personal_public_terminal_study at
+public-terminal-2026-10-20T01-08-05-499Z, session46672/PID25724, is now
+TERMINAL0 with all150 cells and ZERO caps. Summary verifies100 strict own
+rosters and150 matched first-win invariants. No first-trial outcome changed.
+Dennis scores unchanged; Mrs full_balanced gains113,1/10→2/10,MAE3.5→3.0;
+Gerda full_winning gains69,3/7→4/7,MAE1.8571→1.4286. Other eligible points
+unchanged. This is a retry-lifecycle improvement, not stronger opening play
+or new prospective accuracy. Parent outcomes, fits, seeds and old forecasts
+were not rewritten.
+
+public_witness_search.js and public_witness_reference.js implement a separate
+stronger neutral public-only reference using known_tray_plan.advance. The
+search cannot read actual game.faces (throwing-getter test), stops before
+unknown hypothetical reveals, respects actual clock costs and maintains real
+physical pair taps. Returned win/clock exits have constructive witnesses.
+Clock distance is only an ordering heuristic. A negative bounded beam is not
+a proof. Optional successor pruning uses independent known-death proofs;
+full graph exhaustion can compose them into a certificate but must choose
+real progress/loss rather than reopen forever. The controller stages history
+until its actual selection is observed, invalidates on new public knowledge,
+and uses the current canonical per-attempt selector for planning dispatch.
+Eight optional reference features are not yet imposed on own personal fits.
+
+All screens retain25 pinned later cases plus four separate prior controls
+including PUK; repeated boards are explicit, not29 independent fresh games.
+Earlier screens archived intact:
+- witness-reference-2026-10-20T00-55-24-810Z: compact9/25,deep10/25;
+  inspection loops cause13/12 computation caps.
+- 00-58-07-130Z: same9/10 wins; known-dead acknowledgement removes all caps.
+- 01-11-00-292Z: compact successor pruning gains one win but introduced3/2
+  prior-control caps. This was a real terminal-selection bug, not evidence
+  to abandon the planning family; fix composes exhausted known graphs and
+  chooses an actual progressing tap when all removals are certified losing.
+- 01-13-00-640Z: four compact/deep/pruned controls9/10/10/10 wins, zero caps.
+- 01-23-56-175Z: paired-progress ranking added, six controls9/10/10/10/10/10
+  wins, all zero caps; deep selective prior controls rise2/4→3/4.
+
+New known-endgame refinement continues search when all remaining pictures
+are public, instead of stopping after the first short progress segment. The
+tap bound can cover each remaining removal/known-down inspection, with beam
+and node boundaries still explicit. New recovery ordering counts occupied
+tray pictures lacking an immediately free known mate; this is a public risk
+heuristic, NOT proof that no hidden/inaccessible mate can be reached.
+
+witness-reference-2026-10-20T04-36-34-833Z is TERMINAL0/session81801:
+all29×8 profile cells, known transitions physically replayed, zero caps and
+zero unsupported transitions. Old deep selective10/25; continued known
+finishing10/25; recovery13/25. Paired recovery gains Dennis155,156(pending),
+Mrs109,Gerda72 and loses Mrs111. Prior controls3/4 for both newer policies.
+Eligible completed reference first wins: Dennis2/5 vs human2/5, Mrs2/10 vs
+human4/10, Gerda6/7 vs human3/7; PUK no later cases. A human eventually
+winning is not a first-trial reference target label, and none of these
+numbers is attempt-count accuracy. Stronger neutral search remains useful
+but is not perfect or an identified personal handicap model.
+
+Reread Gemini's requested updated CODEX_HANDOFF.md at clean HEAD526e084.
+The CLI again prints14/17 live correct, but re-scoring its actual single
+October18 frozen ledger gives Mrs1/7,Gerda6/10. The advertised6/7 and8/10
+come from the current recomputed head and synthetic timestamps. Counting68
+unopened forecasts is not accuracy evidence. Existing coach hidden-face,
+clock-cost and uncounted-reset counterexamples remain relevant; preserve
+the useful planning ideas without accepting false prospective/perfect claims.
+Gemini checkout remains read-only. See GEMINI_COACH_REVIEW.md.
+
+Validation so far: full Python369 pass and all173 named personal-bot JS
+tests pass, including new dead-end/witness tests. Source-bound immutable
+primary ledger remains unchanged. No commits, branches, pushes, deployments
+or database writes. Working in personal-bot-review, wip/personal-bots,
+HEADb7fdf0a. Goal ACTIVE/UNMET. A declared recovery threshold/budget ablation
+is now live under session86530; inspect its authoritative completion before
+editing its bound source graph or starting another run.
+
+Final continuation status at04:42UTC: session86530 is TERMINAL0,
+witness-reference-2026-10-20T04-38-16-803Z. All29×11 cells complete with
+zero caps/unsupported transitions. Recovery from two occupied slots reaches
+15/25, smaller-budget always-on recovery14/25, recovery only from three11/25.
+These are declared public-state mechanisms, not level/person-specific rules.
+
+Tested the proposed clock/nonclock interaction rather than assuming it would
+combine gains: recoveryClockHybrid uses threshold0 while the clock remains
+active and threshold2 afterward. Both4096/32 and1024/24 node/beam budgets
+were declared before the next all-case measurement. That run,
+witness-reference-2026-10-20T04-40-21-736Z, session1260/PID36260, is
+TERMINAL0. All377 numeric cells and their durable journal values were
+independently matched field-for-field; all eight archived source hashes
+verified. All13 profiles have zero caps and zero unsupported transitions.
+The old controls reproduce exactly. Hybrid is14/25 at both budgets, not
+better than threshold2's15/25; it loses Dennis152 and its prior controls
+drop3/4→2/4 or1/4. The interaction is retained as evidence, not promoted or
+erased after failure. Overall reference strength is still not perfect.
+
+Threshold2 eligible completed first-trial reference wins: Dennis2/5 vs
+human2/5, Mrs4/10 vs human4/10, Gerda7/7 vs human3/7. This is retrospective
+strength evidence, NOT an80% human count forecast, exact handicap estimate
+or prospective result. It motivates fitting optional witness/recovery action
+preferences from each person's own earlier trajectories, with chronological
+adaptation, rather than forcing the same successful reference policy on
+everyone. Unknown-picture probability and new-information route quality
+remain meaningful stronger-reference avenues; not all routes are exhausted.
+
+All173 named JS tests rerun successfully after threshold/hybrid changes;
+Python369 remains passing. git diff--check passes (existing CRLF conversion
+warnings only). Primary numeric ledger SHA freshly unchanged at
+66fad209cefcedb09d56fe9cf2ce001e3912a49925f135dda7d22b9d4a3cbf20.
+No owned study is live now; every handle mentioned in this entry is terminal.
+Goal ACTIVE/UNMET. Working checkout/branch and no-commit/deploy/write status
+remain unchanged.
