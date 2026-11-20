@@ -138,6 +138,6 @@ showed the trap's name and solution above the Play button. All 11 stored solutio
 Not done: b9 "The escape is too slow" (layout 3109 Shelf) - no picture set where the short way needs relief, one plain tile gives
 it and the face-down escape is too slow; three redesigns failed (the short way is only 9 moves, too few tiles to hold the pressure).
 
-**Warning (2026-11-20, MECHANICS.md):** the game shows ice 3+ as ❄️❄️ and tells the player "2". Boards b1, b2, b5, b12, f10, i10,
-i13, i23, i43, i47 use ice 3-5: they misinform until Dennis decides (show the real number, or redesign them with ice 1-2).
-idea_search.js and hand.js now refuse ice above 2 unless a spec sets `thickIce: true`.
+**Thick ice (2026-11-20, MECHANICS.md):** the game used to show ice 3+ as ❄️❄️ and say "2". Dennis: "Show the real number" -
+wip/second-key 6696c25c shows ❄️3 / ❄️4 and the count in the texts. Boards b1, b2, b5, b12, f10, i10, i13, i23, i43, i47 (ice 3-5)
+are fair only in a lab built from that commit.

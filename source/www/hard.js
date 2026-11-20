@@ -260,7 +260,9 @@ const Hard = (() => {
       if (q < 0 && tray.length >= SLOTS - 1) {
         const j = path[move + 1];
         if (!(g.down && j !== i && can(j) && g.faces[j] === g.faces[i] && (g.down[i] || g.down[j]))) return false;
-        if (!clockTaken && move + 1 >= g.clock.n) return false;
+        // the game checks the clock after the whole action: a pair that holds the clock may end one move past its number
+        // (board.js checkClock after both takeOff; Dennis 2026-11-20: "Allow it as a trick")
+        if (!clockTaken && move + 1 >= g.clock.n && i !== g.clock.i && j !== g.clock.i) return false;
         alive[i] = 0; alive[j] = 0;
         if (g.clock && (i === g.clock.i || j === g.clock.i)) clockTaken = true;
         move++; continue;

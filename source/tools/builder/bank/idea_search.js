@@ -21,9 +21,7 @@
 const fs = require('fs'), path = require('path'), E = require('../engine.js'), H = require('./hand.js'), O = require('./orders.js');
 const DIR = path.resolve(__dirname, '../../../analysis/builder/hand');
 function search(idea, o = {}) {
-  // the game shows ice 3+ as ❄️❄️ and tells the player 2 (MECHANICS.md): only with thickIce: true
-  const thick = Object.values(idea.ice || {}).filter(h => h > 2);
-  if (thick.length && !idea.thickIce) throw Error('ice above 2 shows as 2 in the game - use 1 or 2, or set thickIce: true (MECHANICS.md)');
+  // ice 3+ needs the game of wip/second-key 6696c25c (shows the number; Dennis 2026-11-20 "Show the real number")
   const tiles = H.layouts()[idea.layout].tiles.map(t => t.slice(0, 3)), n = tiles.length;
   const g = E.game({ tiles, faces: tiles.map(() => 0), down: [], obst: {}, clock: null, solution: [] }, { strict: true });
   const depth = i => { const s = new Set(), st = [i]; while (st.length) for (const j of g.nb.above[st.pop()]) if (!s.has(j)) { s.add(j); st.push(j); } return s.size; };
@@ -74,6 +72,8 @@ function search(idea, o = {}) {
       ice: idea.ice, locks: idea.locks, keys: idea.keys, locks2: idea.locks2, keys2: idea.keys2, digPairs: .3, pressure: idea.hand.pressure ?? 1.6 };
     const p = H.prove(spec, { seed: o.seed, offersMs: 20000 });
     W(p.ok ? 'proved' : 'proveFail:' + (p.fail || p.errors[0]).replace(/\d+/g, '#').slice(0, 50));
+    // the sun stays a safety net (Dennis 2026-11-20): a board where it can happen is not used
+    if (p.ok && require('./relief_scan.js').scan({ design: p.design }, 300, (o.seed ?? 1) + t).sun) { W('sun'); continue; }
     if (p.ok && idea.tailLose) {   // tailLose: { tiles, limit } - every order over these tiles that takes the clock must be lost after it
       const tc = require('./tail_check.js').check({ spec, design: p.design }, idea.tailLose.tiles, idea.tailLose.limit, { stopAtWinnable: true, budget: 5e5 });
       if (!(tc.lost > 0 && !tc.won && !tc.unk)) { W('tailWinnable'); continue; }

@@ -38,9 +38,9 @@ state (`tools/builder/bank/mech/`: `make_mech.js` writes the boards, `run_mech.j
   in the next rows (dx 0, dy 2), half a tile over in the next row (dx 1, dy 2, verified: melts without blocking), and the tiles
   half a row up/down beside it (dx 2, dy 1: these also block a side); plus **one layer** up or down overlapping it. A tile two
   layers up covers it but does **not** melt it (verified). Tiles under it count but can never go first.
-- **Display: ❄️ = 1 melt left, ❄️❄️ = 2 or more.** The game says "Thick ice: remove 2 touching tiles" on a tap, "Crack! One more
-  time" on every crack, and its lesson says "❄️❄️ needs 2". So ice 3+ looks like 2 and the texts say 2. Live levels use only 1
-  and 2. **Ten hand boards use 3-5 (b1, b2, b5, b12, f10, i10, i13, i23, i43, i47): the game misinforms there** - see questions.
+- **Display: ❄️ = 1 melt left, ❄️❄️ = 2, ❄️3 / ❄️4 ... = that many** (wip/second-key 6696c25c; Dennis 2026-11-20 "Show the real
+  number"). Before that, ice 3+ looked like ❄️❄️ and every text said 2. Live levels use only 1 and 2; hand boards with 3-5 (b1,
+  b2, b5, b12, f10, i10, i13, i23, i43, i47) need a lab built from that branch.
 - A tap on a frozen tile (even a covered one) lights up every tile that still melts it: the neighbourhood is discoverable.
 - A face-down tile under ice cannot be turned over.
 
@@ -57,7 +57,8 @@ state (`tools/builder/bank/mech/`: `make_mech.js` writes the boards, `run_mech.j
   tiles cost nothing.
 - Checked after each **action**: the clock as the n-th single tile is in time; the n-th tile not being the clock loses at once.
 - **A face-down pair counts as one action**: started with one move left, the clock as one of its two tiles is still in time - one
-  move past the number (verified: number 2, taken as the 3rd tile). `Hard.validSolution` is stricter (the pair must end by n).
+  move past the number (verified: number 2, taken as the 3rd tile). Allowed as a design trick (Dennis 2026-11-20);
+  `Hard.validSolution` agrees since 6696c25c (only a pair that holds the clock gets the extra move).
 - The clock's own picture matches like any tile (it can close a waiting pair, or be half of a face-down pair). The clock button
   makes the clock flash red through the pile.
 
@@ -66,7 +67,8 @@ state (`tools/builder/bank/mech/`: `make_mech.js` writes the boards, `run_mech.j
   board melts** at once - or, with no ice left, the gold locks open, then the silver ones - **without a move** (verified, both).
 - A full tray never gets it: the free tiles are takeable (as a fatal 4th), so it is not "nothing takeable".
 - The builder's engine and the game's validator do not know it. `relief_scan.js`: on all 71 hand boards, 2000 sensible random
-  games each, it never happens (some tile is always takeable) - every proof so far stands. It only happens on a board built for it.
+  games each, it never happens (some tile is always takeable) - every proof so far stands. **Safety net only** (Dennis
+  2026-11-20): no trap may need it; idea_search rejects a board where it can happen.
 
 ## 8. What a player can see without a move
 - **See-through tap**: a tap on a covered tile makes the tiles on it 78% see-through for 1.8 s - its picture can be read (verified).
@@ -93,11 +95,11 @@ state (`tools/builder/bank/mech/`: `make_mech.js` writes the boards, `run_mech.j
 | a face-down twin of a waiting tile goes on the first tap | "the first tap only looks" | an extra move spent on a look |
 | two face-down twins pair blind | you think you must see both | the escape at the full tray is two face-down tiles - open one, tap the other |
 | face-down under ice or a lock cannot be opened | you plan to peek it | its picture (the escape?) only shows after the melt / the keys |
-| the clock in a pair may be one move late | the number says you are a move short | **ask Dennis** |
-| the sun | nobody ever sees it | **ask Dennis** |
+| the clock in a pair may be one move late | the number says you are a move short | allowed (Dennis 2026-11-20): the only way in time is the clock as half of a face-down pair started with one move left |
+| only the tile right on top melts (now that the number shows) | a stack of three on ❄️3 looks like three melts | the top tile, two layers up, does not count: the third melt has to come from the side or the next row |
+| the sun | nobody ever sees it | not used: safety net only (Dennis 2026-11-20) |
 
-## Questions for Dennis
-1. Ice above 2 shows as ❄️❄️ and the texts say "2". Show the real number (❄️×3, or a digit), or keep designs to 1 and 2? Ten hand
-   boards use 3-5 today.
-2. The clock as half of a face-down pair may be one move past its number. A fair trick to design for, or a gap to close?
-3. The sun: may a trap ever need it ("take everything else and the ice gives way"), or is it only a safety net?
+## Decisions (Dennis 2026-11-20)
+1. Thick ice: **show the real number** - done on wip/second-key 6696c25c (❄️3, texts with the count, a line in the lesson).
+2. The clock in a face-down pair one move late: **allowed as a trick** - Hard.validSolution aligned (same commit).
+3. The sun: **safety net only** - idea_search rejects boards where it can happen.

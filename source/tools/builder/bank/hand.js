@@ -144,7 +144,6 @@ function prove(spec, o = {}) {
     spec = { ...spec, route: E.flatten(cs.path).slice(0, k), goalAt: spec.goalAt.map(() => 0), refilled: (spec.refilled || 0) + 1 };
   }
   let d = f.design; const out = [], errors = [];
-  if (!spec.thickIce && Object.values(spec.ice || {}).some(v => v > 2)) errors.push('ice above 2 shows as 2 in the game (MECHANICS.md)');
   if (spec.refilled) out.push('refilled ' + spec.refilled + 'x along a shorter way');
   if (k == null && !spec.clockN) errors.push('clock minimum unproven');
   // the clock inside the last face-down pair: the solver counts the clock's move, the game's validator both tiles (validSolution:
