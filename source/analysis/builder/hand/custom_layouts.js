@@ -124,6 +124,30 @@ Object.assign(defs, {
 const mirror = t => [10 - t[0], t[1], t[2]];
 defs[3113] = { name: 'Dale', named: { C: [6, 6, 0], R: [4, 6, 0], T: [0, 0, 0], LK: [5, 5, 1], K1: [9, 3, 1], K2: [1, 9, 1] },
   rest: defs[3106].rest.map(mirror).filter(t => !['6,6,0', '4,6,0', '0,0,0', '5,5,1', '9,3,1', '1,9,1'].includes(t.join(','))) };
+// ---- round 5 (Dennis 2026-11-20 after lab-buried "start over for most": keys you must think about, several traps on the one
+// forced path, the clock with no spare move, every board its own kind of chain) ----
+// 3201 "Vault" - Silver opens the gold. The clock C deep in a centre pyramid (four tops, four covers); one cover, GL, is gold-locked.
+// Gold key G1 lies on the top row under (7,1,1); gold key G2 sits in the bottom
+// roof row boxed in by SL1 and SL2, both silver-locked. The silver keys S1, S2 lie at the board's edges under one cover each.
+const N3201 = { C: [4, 4, 0], GL: [3, 5, 1], G1: [8, 0, 0], G2: [5, 11, 1], SL1: [3, 11, 1], SL2: [7, 11, 1], S1: [0, 6, 0], S2: [10, 2, 0] };
+defs[3201] = { name: 'Vault', named: N3201, rest: minus([...pyr(2, 8, 2, 8), [2, 0, 0], [4, 0, 0], [6, 0, 0], [3, 1, 1], [7, 1, 1],
+  [0, 2, 0], [0, 6, 0], [0, 8, 0], [10, 2, 0], [10, 4, 0], [10, 6, 0], [10, 8, 0], [1, 7, 1], [9, 3, 1], [9, 7, 1],
+  ...X6.map(x => [x, 10, 0]), ...X6.map(x => [x, 12, 0]), ...[1, 3, 5, 7, 9].map(x => [x, 11, 1]), [2, 11, 2], [8, 11, 2]], N3201) };
+// 3202 "Frost" - Which neighbour to leave. A roof band (rows y3-y9) over a floor band; the clock C in the roof's middle row, frozen 4.
+// Its melters: the top T lying on it and its four roof neighbours W, E, N, S - T plus three of the four. Each neighbour sits inside a
+// five-tile row (free only from an end) and under its own top; the digs differ in cost and in what they leave in the tray.
+const N3202 = { C: [5, 5, 1], T: [6, 6, 2], W: [3, 5, 1], E: [7, 5, 1], N: [5, 3, 1], S: [5, 7, 1] };
+defs[3202] = { name: 'Frost', named: N3202, rest: minus([...X6.map(x => [x, 0, 0]), ...[2, 4, 6, 8, 10].flatMap(y => X6.map(x => [x, y, 0])),
+  ...[3, 5, 7, 9].flatMap(y => [1, 3, 5, 7, 9].map(x => [x, y, 1])), [2, 4, 2], [8, 4, 2], [2, 8, 2], [8, 8, 2],
+  ...X6.map(x => [x, 12, 0]), [5, 11, 1]], N3202) };
+// 3203 "Thaw" - The tile on it melts it. A three-layer pyramid at the bottom with the clock C deep on its floor; C's cover LK (under
+// all four tops) is gold-locked. Gold key K1 lies on the pyramid's floor edge under three covers, one of them (3,9,1) also a cover of
+// the clock. Gold key K2 lies in the top band's roof row, frozen 2 and boxed in its row, with a top KT on it: KT plus one side
+// neighbour melt and free it - a player who counts only side tiles takes one too many.
+const N3203 = { C: [4, 8, 0], LK: [5, 9, 1], K1: [2, 10, 0], K2: [5, 3, 1], KT: [4, 2, 2] };
+defs[3203] = { name: 'Thaw', named: N3203, rest: minus([...pyr(2, 8, 6, 12), ...[0, 2, 4].flatMap(y => X6.map(x => [x, y, 0])),
+  ...[1, 3].flatMap(y => [1, 3, 5, 7, 9].map(x => [x, y, 1])), [0, 6, 0], [10, 6, 0], [10, 8, 0], [0, 10, 0], [10, 10, 0], [0, 12, 0],
+  [9, 7, 1], [1, 11, 1]], N3203) };
 const out = {}, report = [];
 for (const [id, d] of Object.entries(defs)) {
   const tiles = [...d.rest], idx = {};

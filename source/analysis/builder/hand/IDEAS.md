@@ -144,3 +144,21 @@ are fair only in a lab built from that commit.
 
 ## One move late, in a pair (Dennis 2026-11-20: the clock in a face-down pair may end one move past its number, "Allow it as a trick")
 | 481 (chain 12 of lab-buried) | b13 | layout 3113 "Dale" (Hill mirrored) | clock 18, gold lock+keys, face-down twin in the far corner | at the pair 17 moves made, the badge says 1 left, the tray is full: the clock alone is a 4th tile, clock + face-down twin look like 2 moves for 1 - but they are one action. Without face-down pairs 24; the old validator rule calls the stored solution too late, the new one in time (late_clock.js). Wins in the real game. |
+
+## Round 5 (Dennis 2026-11-20 after lab-buried, all "easy": "start over for most", "Can it go tighter?", "The keys should be thought
+## about how to get them not auto easy take always", "You need to make multiple traps within a have to take path", "levels feel similar")
+Cause of "2-3 moves early": the clock badge counts down before the move, so with spare 1 it shows 2 at the clock tap (checked in
+the real game). Every round-5 board has spare 0 (badge 1 at the clock). Pictures are laid along a planned route (idea_search
+`route`, `pressure`, `closeOk`: the tray at 2-3 most of the way; buried close twins allowed, never two visible ones side by side).
+Each board is its own kind of chain (no more "pyramid + one lock + keys on piles" every time). Lab port 8296 (scratchpad lab-r5,
+levels 490-494, no hints).
+| lv | board | idea | layout | clock | specials | long wrong paths |
+|---|---|---|---|---|---|---|
+| 490 | r1 | Silver opens the gold: G2 between two silver locks, both doors look alike, every key under a tile | 3201 Vault | 20 | gold+silver | 4 (right door: 19 moves of false hope) |
+| 491 | b4t | Keys before the lid, clock tightened 19 -> 18 (Dennis's AHA board) | 3104 Well | 18 | gold | - |
+| 492 | r2 | Which neighbour to leave: frozen-4 clock, the top plus 3 of 4 neighbours; the open-looking one is boxed | 3202 Frost | 11 | ice 4, no locks | 4 |
+| 493 | b13 | One move late, in a pair (kept: the trick is required, 24 moves without it) | 3113 Dale | 18 | gold, face-down twin | - |
+| 494 | r3 | The tile on it melts it: frozen key freed by its top + one side; its partner key shares a cover with the clock | 3203 Thaw | 18 | gold, ice 2 on a key | 8 |
+Tried and dropped: a simulated learning player (goal-directed, look-ahead 1-7) to count tries - it rated chain 1 and chain 10 as
+12-try boards that Dennis solved at once; a planner that knows all visible pictures gave up on every board (a hidden picture
+counted as twinless makes no level winnable). Dennis reads visible logic; only the lab measures him.

@@ -31,10 +31,39 @@ function search(idea, o = {}) {
   const why = {}, W = k => why[k] = (why[k] || 0) + 1;
   for (let t = 0; t < (o.tries ?? 20000); t++) {
     const faces = {}; for (const [i, l] of Object.entries(fixed)) faces[i] = code[l];
-    const ids = free.slice().sort(() => rnd() - .5), [lo, hi] = idea.inside || [1, Math.floor(free.length / 2)];
+    // route mode (round 5): pictures laid along a planned route so the tray stays at 2-3 most of the way and never overflows;
+    // a route tile still waiting at the end gets its twin outside the block (deep twin). The other free tiles as below.
+    let routeIds = new Set();
+    if (idea.route) {
+      const open = []; let c = 300;
+      for (const t of idea.route) {
+        if (faces[t] != null) { const q = open.findIndex(x => faces[x] === faces[t]); if (q >= 0) open.splice(q, 1); else open.push(t); continue; }
+        routeIds.add(t);
+        const wantOpen = open.length < 2 ? rnd() < .85 : open.length === 2 ? rnd() < (idea.pressure ?? .5) : false;
+        // never a twin next to its twin (Dennis 2026-11-13 "Pairs are too much together"): |dx|, |dy| <= 2 in any layer
+        const far = open.filter(x => faces[x] < 500 && !(Math.abs(tiles[x][0] - tiles[t][0]) <= 2 && Math.abs(tiles[x][1] - tiles[t][1]) <= 2));
+        const anyOpen = open.filter(x => faces[x] < 500), pool = idea.closeOk ? anyOpen : far;
+        if (!wantOpen && pool.length) { const x = pool[Math.floor(rnd() * pool.length)]; faces[t] = faces[x]; open.splice(open.indexOf(x), 1); }
+        else if (open.length >= 3) {   // the tray is full and only a close twin fits: allowed (hand.js moves twins apart afterwards)
+          const ok = open.filter(x => faces[x] < 500); if (!ok.length) { faces[t] = -1; break; }
+          const x = ok[Math.floor(rnd() * ok.length)]; faces[t] = faces[x]; open.splice(open.indexOf(x), 1); }
+        else { faces[t] = c++; open.push(t); }
+      }
+      if (Object.values(faces).includes(-1)) { W('closeTwin'); continue; }
+      // closeOk: buried close twins are allowed, but never two twins side by side that are both uncovered at the start
+      if (idea.closeOk) { const vis = [...routeIds].filter(i => !g.nb.above[i].length);
+        if (vis.some(a => vis.some(b => a < b && faces[a] === faces[b] && Math.abs(tiles[a][0] - tiles[b][0]) <= 2 && Math.abs(tiles[a][1] - tiles[b][1]) <= 2))) { W('closeVisible'); continue; } }
+    }
+    const ids = free.filter(i => !routeIds.has(i)).sort(() => rnd() - .5), [lo, hi] = idea.inside || [1, Math.floor(free.length / 2)];
     const inside = lo + Math.floor(rnd() * (hi - lo + 1));
-    for (let k = 0; k < inside && 2 * k + 1 < ids.length; k++) faces[ids[2 * k]] = faces[ids[2 * k + 1]] = k;
-    for (let k = 2 * inside; k < ids.length; k++) faces[ids[k]] = 100 + k;
+    if (idea.route) {   // round 5: pairs of the other tiles also never side by side
+      const pool = ids.slice(), near = (a, b) => !idea.closeOk && Math.abs(tiles[a][0] - tiles[b][0]) <= 2 && Math.abs(tiles[a][1] - tiles[b][1]) <= 2;
+      for (let k = 0; k < inside && pool.length > 1; k++) { const a = pool.shift(), q = pool.findIndex(b => !near(a, b)); if (q < 0) { pool.push(a); break; } faces[a] = faces[pool[q]] = k; pool.splice(q, 1); }
+      pool.forEach((i, k) => faces[i] = 100 + k);
+    } else {
+      for (let k = 0; k < inside && 2 * k + 1 < ids.length; k++) faces[ids[2 * k]] = faces[ids[2 * k + 1]] = k;
+      for (let k = 2 * inside; k < ids.length; k++) faces[ids[k]] = 100 + k;
+    }
     let ok = true, results = {};
     for (const ts of idea.tests) {
       const q = { layout: idea.layout, clock: ts.target ?? idea.target, limit: ts.limit ?? idea.limit, tiles: ts.tiles || idea.block, faces,
@@ -43,7 +72,7 @@ function search(idea, o = {}) {
         gone: ts.gone, max: 20, peek: ts.peek !== false, trayMax: ts.trayMax };
       const res = O.orders(q); results[ts.name] = res;
       const got = res.wins.length ? 'win' : 'none';
-      if (got !== ts.expect) { ok = false; W(ts.name + ':' + got); break; }
+      if (got !== ts.expect) { if (process.env.DEBUG && got === "win" && !globalThis.__dbg) { globalThis.__dbg = 1; console.log("DEBUG", ts.name, JSON.stringify(res.wins[0]), "route", JSON.stringify(idea.route)); } ok = false; W(ts.name + ':' + got); break; }
       if (ts.firsts != null && Object.keys(res.firstMoves).length > ts.firsts) { ok = false; W(ts.name + ':wide'); break; }
       if (ts.peekForced && res.strictWins) { ok = false; W(ts.name + ':notForced'); break; }
     }
