@@ -1,5 +1,5 @@
 'use strict';
-const fs = require('fs'), path = require('path'), M = require('../factory/meter.js'), P = require('./task11_plan.js'), S = require('./task10_study.js');
+const fs = require('fs'), path = require('path'), zlib = require('zlib'), M = require('../factory/meter.js'), P = require('./task11_plan.js'), S = require('./task10_study.js');
 function frozen(dir, name, value) {
   delete value.fingerprint; value.fingerprint = M.digest(value);
   const f = path.join(dir, name); if (fs.existsSync(f) && P.read(f).fingerprint !== value.fingerprint) throw Error('Changed derived plan: ' + name);
@@ -32,13 +32,19 @@ function prepare(baseline, primary, rerating, candidateLadder) {
 function compareMemory(baseline, candidate) {
   const old = P.read(path.join(baseline, 'key-memory.json')), next = P.read(path.join(candidate, 'key-memory.json'));
   const metrics = r => ({ opportunities: r.eligibleTransitions, firstTowardCover: r.firstCommitTowardCover, strictStraight: r.strictStraightCoverDig, reexposed: r.nextTryReexposed, hiddenPictureRecall: r.hiddenPictureRecallShare });
+  const raw = (root, id) => { const meta = P.read(path.join(root, 'key-trace-index', M.digest(['key-memory', id, 'family']) + '.json'));
+    const value = JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(root, meta.rawFile)))); if (M.digest(value) !== meta.rawHash) throw Error('Changed key-audit raw trace'); return value; };
   const rows = old.rows.map(a => { const b = next.rows.find(b => b.boardKey === a.boardKey); if (!b) throw Error('Unpaired key board');
+    const x = raw(baseline, a.id), y = raw(candidate, b.id); if (M.digest(x.options) !== M.digest(y.options)) throw Error('Key-audit streams/options differ');
+    const firstTryIdentical = x.result.results.map((c, k) => JSON.stringify(c.attempts[0].actions) === JSON.stringify(y.result.results[k].attempts[0].actions));
     return { id: a.id, boardKey: a.boardKey, reference: metrics(a), candidate: metrics(b), fullReferenceFamily: a.fullFamily, fullCandidateFamily: b.fullFamily,
-      referenceWonOn: a.sampleWonOn, candidateWonOn: b.sampleWonOn }; });
-  const out = { reference: metrics(old), candidate: metrics(next), rows,
+      referenceWonOn: a.sampleWonOn, candidateWonOn: b.sampleWonOn, firstTryIdentical }; });
+  const firstTries = rows.flatMap(r => r.firstTryIdentical);
+  const out = { reference: metrics(old), candidate: metrics(next), firstTryTapSequences: { paired: firstTries.length, identical: firstTries.filter(Boolean).length }, rows,
     note: 'Exact same boards and campaign seeds; policy changes can alter key sightings and which campaigns survive to another retry. Opportunity denominators therefore differ. Descriptive cover shares are not a causal effect conditioned on identical observations. Full ratings are separately paired with fixed seeds.' };
   P.save(candidate, 'memory-comparison.json', out);
   const lines = ['# Observed-key memory: reference and candidate', '', out.note, '',
+    `First-try physical tap sequences are identical in ${out.firstTryTapSequences.identical}/${out.firstTryTapSequences.paired} paired campaigns. This is a separate check of whether behavior changed before retry knowledge could help.`, '',
     '| Policy | opportunities | first commit toward cover | strict straight cover | later re-exposed | hidden-picture recall |', '|---|---:|---:|---:|---:|---:|'];
   for (const [name, r] of Object.entries({ reference: out.reference, candidate: out.candidate })) lines.push(`| ${name} | ${r.opportunities} | ${r.firstTowardCover} (${(100 * r.firstTowardCover / r.opportunities).toFixed(1)}%) | ${r.strictStraight} | ${r.reexposed} | ${r.hiddenPictureRecall} |`);
   lines.push('', '## Per-board full family rating', '', '| Board | reference | candidate | six reference wins | six candidate wins |', '|---|---:|---:|---|---|');

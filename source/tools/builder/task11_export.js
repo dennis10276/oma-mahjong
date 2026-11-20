@@ -40,7 +40,7 @@ function apiManifest(studies, fit) {
     const gzip = zlib.gzipSync(raw, { level: 6 }), dest = path.join(EXTERNAL, 'full-api', key + '.json.gz'); fs.mkdirSync(path.dirname(dest), { recursive: true }); fs.writeFileSync(dest, gzip);
     rows.push({ key, ...info, expectedTries: result.expectedTries, file: 'full-api/' + key + '.json.gz', contentSHA256: sha(raw), gzipSHA256: sha(gzip), bytes: raw.length });
   }
-  return { note: 'Exact meter API cache returns. Compact capture retains the API\'s sampled campaign details and last5 decisions per attempt; it is not a claim that all40 pooled campaigns or both planner-style traces are returned. Complete diagnostic tap traces are separately retained in reference/traces and candidate/traces. No new measurements or cache migration during export.', rows };
+  return { note: 'Exact meter API cache returns. Depending on capture mode, compact returns retain sampled campaign details and up to the last5 decisions per attempt; this is not a claim that all40 pooled campaigns or both planner-style traces are returned. Complete diagnostic tap traces are separately retained in reference/traces and candidate/traces. No new measurements or cache migration during export.', rows };
 }
 function run() {
   const fitSummary = P.read(path.join(BASE, 'fit/summary.json')); if (!fitSummary.complete) throw Error('Do not export a final handback while fit is incomplete');

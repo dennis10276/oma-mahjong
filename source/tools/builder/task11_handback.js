@@ -27,8 +27,8 @@ function run() {
   if (rr.kept.n !== 20 || rr.kept.rated !== 20 || rr.hidden.n !== 117 || rr.planner.maxAbsoluteDriftFromReferenceBot > 1e-9) throw Error('Investigate missing scope or planner drift before handback');
   const summary = ['# Task 11 done', '',
     'Branch: `wip/codex-why-hard`. Complete evidence is beside this summary and in `codex-tasks/results/why-hard-v1/`.', '',
-    `The family bot makes its first proved mistake earlier on brutal boards (typical removal move ${hard.medianErrorMove}, versus ${easy.medianErrorMove} on easy boards). The loss arrives later: another ${hard.medianDelayAfterError} tile removals versus ${easy.medianDelayAfterError}. Route length and fork counts barely separate the bands. Many mistakes take an attractive free pair too early. These are real traps, but a capped 20 is not a human forecast.`, '',
-    `The family bot also forgot that a previously seen tile was a key. The separate key-memory version fixes that decision knowledge and passes all inherited human-fit checks. Live family error changes only 2.081→2.079; planner live 1.009 and lab24 1.945 are unchanged. On the same 10 hidden-key boards, first commitments toward an observed key's cover are ${a.firstTowardCover}/${a.opportunities} (${pct(a.firstTowardCover, a.opportunities)}) before and ${b.firstTowardCover}/${b.opportunities} (${pct(b.firstTowardCover, b.opportunities)}) after. Changed policies have different retry opportunities, so these shares alone are not a causal comparison.`, '',
+    `In the reference study, the family bot makes its first proved mistake earlier on brutal boards (typical removal move ${hard.medianErrorMove}, versus ${easy.medianErrorMove} on easy boards). The loss arrives later: another ${hard.medianDelayAfterError} tile removals versus ${easy.medianDelayAfterError}. Route length and fork counts barely separate the bands. Many mistakes take an attractive free pair too early. These are real traps, but a capped 20 is not a human forecast.`, '',
+    `The family bot also forgot that a previously seen tile was a key. Fixing that knowledge lowers the rating by ${rounded(-rr.hidden.meanFamilyChange)} tries on average across the same 117 hidden-key boards: ${rr.hidden.improved} easier, ${rr.hidden.worsened} harder. It passes all inherited real-player fit checks; live family error barely moves (2.081→2.079), and the planner is unchanged. The detailed ten-board follow-up is in candidate/MEMORY-COMPARISON.md. A substantial part of the old hardness was a bot blind spot.`, '',
     `The kept batch has ${rr.kept.candidateWithinOne}/20 levels within ±1 of its frozen Task9/10 curve, versus ${rr.kept.referenceWithinOne}/20 before. Off-curve now: ${off.join(', ')}. Exact boards, gold pairs and Dennis's approved 5/4-try results are preserved. The new bot stays an explicit offline option for Claude's review.`, '',
     `Way length is an unreliable difficulty control: ${cliffs(oldL)}/6 reference pairs and ${cliffs(newL)}/6 new-bot pairs show jumps larger than 5 tries between neighboring actual lengths. Longer requests also move keys, clock and matching patterns. The builder should control:`, '',
     '1. **What the player can see and remember:** opening key visibility and when both keys become visible. Hidden-key uncertainty and memory failures dominate many brutal ratings.',
@@ -36,11 +36,19 @@ function run() {
     '3. **How a trap communicates its consequence:** deliberately place tempting pairs against a readable safe plan, and control the delay before a bad choice is punished. Counting traps or uniquely safe states alone does not separate easy and brutal boards.', '',
     `No missing slot is claimed. ${incidental.bothBands} new-bot ladder boards reach both broad bands; none passes originality. Three playable examples with exact move numbers are in reference/EXAMPLES.md. See BUILDER-CONTROLS.md, candidate/RERATING.md and candidate/MEMORY-COMPARISON.md for the supporting comparisons.`, ''];
   const spareOld = pairedSpare(oldL), spareNew = pairedSpare(newL);
+  const hiddenByVisibility = [0, 1].map(shown => {
+    const rs = rr.rows.filter(r => r.group === 'task10-hidden-keys' && r.shown === shown);
+    return { shown, n: rs.length, referenceMedian: A.median(rs.map(r => r.reference.family)), candidateMedian: A.median(rs.map(r => r.candidate.family)),
+      reference18plus: rs.filter(r => r.reference.family >= 18).length, candidate18plus: rs.filter(r => r.candidate.family >= 18).length };
+  });
   const controls = ['# Builder controls supported by Task11', '',
     'These are design recommendations for Claude, not newly calibrated promises of a particular human try count. Mandatory readability and keysShown are already Claude\'s builder v3 changes.', '',
     '## 1. Objective visibility and reveal timing', '',
     'Expose opening actual key glyph count together with route moves until both have appeared. The reference full Task10 medians are19.77/13.00/4.04 for0/1/2 opening key glyphs after excluding all actually frozen keys. This is association, not a one-variable causal effect. Claude\'s keysShown requests also rebuild placements. Use the new bot and paired re-rating before trusting an old20 as human difficulty.', '',
     `Across all117 non-frozen Task10 hidden/partly-hidden-key boards, mean new-minus-old family change is${rounded(rr.hidden.meanFamilyChange, 3)} tries (${rr.hidden.improved} improved,${rr.hidden.worsened} worsened). The exact rows and both family streams are in candidate/rerating-summary.json. The same10-board memory audit preserves observed-fact eligibility and separates key identity from picture retention.`, '',
+    ...hiddenByVisibility.map(r => `${r.shown} actual opening key glyphs (${r.n} boards): family median ${rounded(r.referenceMedian)}→${rounded(r.candidateMedian)}; boards at18+ ${r.reference18plus}→${r.candidate18plus}.`), '',
+    `First commitment toward a previously observed key's cover is ${a.firstTowardCover}/${a.opportunities} (${pct(a.firstTowardCover, a.opportunities)}) before and ${b.firstTowardCover}/${b.opportunities} (${pct(b.firstTowardCover, b.opportunities)}) after. Changed policies change retry/sighting opportunities; these conditional shares alone are not a causal effect. First-try tap equality is checked separately in the memory comparison.`, '',
+    'Keep visibility as an information/clarity control, but do not reuse the old visibility-to-tries mapping after repairing the yardstick.', '',
     '## 2. Actual spare, with verified pressure', '',
     'Keep the exact fewest legal clock moves and spare as authored controls. Spare1→2 changes only clock.n; recompute forced pressure instead of copying its old claim. It makes a smaller adjustment than rebuilding a longer way. These medians use all matched requested-way/seed cells, not only in-band boards.', '',
     '| Story | exact spare pairs | reference median family change | new-bot median family change |', '|---|---:|---:|---:|'];
@@ -59,7 +67,7 @@ function run() {
     '- Re-rating distinguishes approved human skilled wins from bot estimates. A regression test prevents comparing stored human5 with reference planner5.15 as if both were bot scores.', '',
     '- Delay after an error now excludes the erroneous action itself (one take or a two-tile automatic pair); synthetic physical traces cover immediate pair loss and a later clock loss. The original pre-error span, backups and correction hashes are retained.', '',
     'The complete builder/factory/candidate regression output is factory-tests.log. Three phone previews and all three actual-game stored solutions passed. No published game, level table, Firebase or release changed.', '');
-  const readme = ['# Task11 done', '', 'Branch: `wip/codex-why-hard`.', '',
+  const readme = ['# Task 11 done', '', 'Branch: `wip/codex-why-hard`.', '',
     'Start with summary-for-dennis.md and BUILDER-CONTROLS.md.', '',
     '- reference/:60-board error study, every brutal board\'s human/bot interpretation, MEMORY-ACROSS-TRIES.md, ten-board memory audit, refined visible-key openings,342 full fit measurements on171 exact benchmark cases, raw diagnostic traces, proof outcomes and numbered examples.',
     '- v3-reference/:primary six-pair readable builder v3 ladder, all252 requests/failures,210 readable outputs,148 physical boards and444 full current-fingerprint cache hits. Exact witnesses/structural inputs verified before proof reuse.',
@@ -74,9 +82,10 @@ function run() {
   for (const dir of [OUT, EXTERNAL]) {
     fs.mkdirSync(dir, { recursive: true }); fs.writeFileSync(path.join(dir, 'summary-for-dennis.md'), summary.join('\n'));
     fs.writeFileSync(path.join(dir, 'BUILDER-CONTROLS.md'), controls.join('\n')); fs.writeFileSync(path.join(dir, 'README.md'), readme.join('\n'));
+    fs.writeFileSync(path.join(dir, '.gitattributes'), '# Preserve exported evidence bytes for SHA256 verification, including on Windows.\n** -text\n');
     fs.copyFileSync(path.join(SOURCE, 'build/task11-tests.log'), path.join(dir, 'factory-tests.log'));
   }
-  P.save(BASE, 'handback-summary.json', { created: new Date().toISOString(), keptWithinOne: rr.kept, hidden: rr.hidden, memory, referenceCliffPairs: cliffs(oldL), candidateCliffPairs: cliffs(newL), spareOld, spareNew, incidentalOriginal: incidental.originalInBothBands });
+  P.save(BASE, 'handback-summary.json', { created: new Date().toISOString(), keptWithinOne: rr.kept, hidden: rr.hidden, hiddenByVisibility, memory, referenceCliffPairs: cliffs(oldL), candidateCliffPairs: cliffs(newL), spareOld, spareNew, incidentalOriginal: incidental.originalInBothBands });
   return { kept: rr.kept, hidden: rr.hidden, referenceCliffs: cliffs(oldL), newCliffs: cliffs(newL) };
 }
 if (require.main === module) console.log(run());
