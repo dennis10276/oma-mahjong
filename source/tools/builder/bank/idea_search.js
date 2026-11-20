@@ -21,6 +21,9 @@
 const fs = require('fs'), path = require('path'), E = require('../engine.js'), H = require('./hand.js'), O = require('./orders.js');
 const DIR = path.resolve(__dirname, '../../../analysis/builder/hand');
 function search(idea, o = {}) {
+  // the game shows ice 3+ as ❄️❄️ and tells the player 2 (MECHANICS.md): only with thickIce: true
+  const thick = Object.values(idea.ice || {}).filter(h => h > 2);
+  if (thick.length && !idea.thickIce) throw Error('ice above 2 shows as 2 in the game - use 1 or 2, or set thickIce: true (MECHANICS.md)');
   const tiles = H.layouts()[idea.layout].tiles.map(t => t.slice(0, 3)), n = tiles.length;
   const g = E.game({ tiles, faces: tiles.map(() => 0), down: [], obst: {}, clock: null, solution: [] }, { strict: true });
   const depth = i => { const s = new Set(), st = [i]; while (st.length) for (const j of g.nb.above[st.pop()]) if (!s.has(j)) { s.add(j); st.push(j); } return s.size; };
