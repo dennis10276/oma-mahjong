@@ -251,7 +251,8 @@ if (process.argv[2] === '--worker') {
     console.log(`Max board simulation time: ${maxElapsed.toFixed(2)}s (Gate: <= 60s, ${maxElapsed <= 60 ? 'PASS' : 'FAIL'})`);
 
     // Save full JSON output for inspection
-    const outJsonPath = path.join(repoRoot, 'source/analysis/factory/eval-output-current.json');
+    const outArgIdx = process.argv.indexOf('--out');
+    const outJsonPath = outArgIdx >= 0 ? path.resolve(process.argv[outArgIdx + 1]) : path.join(repoRoot, 'source/analysis/factory/eval-output-current.json');
     fs.writeFileSync(outJsonPath, JSON.stringify({
       metrics: {
         combined: mCombined,
