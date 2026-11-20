@@ -109,7 +109,9 @@ function simulatePersonalCampaign(game, playerName, options = {}) {
       const searchOptions = {
         depth: params.depth,
         trayBuffer: params.trayBuffer,
-        clockPatience: params.clockPatience
+        clockPatience: params.clockPatience,
+        pairProgress: true,
+        trayRecovery: true
       };
 
       const plan = search(publicGeometry, searchState, legalMoves, searchOptions);

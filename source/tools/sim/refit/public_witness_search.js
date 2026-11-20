@@ -61,9 +61,11 @@ const REFERENCE_PARAMETERS = Object.freeze({ ...PARAMETERS, nodes: 4096, beam: 3
 
 function unproductiveReopen(state, index) {
   const picture = state.pictures[index];
-  return !!state.down[index] && state.openPeek !== index && picture !== null
-    && !state.tray.includes(picture)
-    && !(state.openPeek >= 0 && state.pictures[state.openPeek] === picture);
+  if (!state.down[index] || state.openPeek === index || picture === null) return false;
+  if (state.tray.includes(picture)) return false;
+  if (state.openPeek >= 0 && state.pictures[state.openPeek] === picture) return false;
+  if (state.pictures.some((p, i) => i !== index && state.alive[i] && p === picture)) return false;
+  return true;
 }
 
 function keyOf(game, state, knowledge = false) {
@@ -175,15 +177,25 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
     const recovery = recoveryOf(game, position);
     const inCone = cone && targetIndex >= 0 ? cone.has(targetIndex) : false;
 
-    // Safety check: is this information path safe for the tray?
-    const safeInfo = information && (room.safe || position.tray.length <= 2);
+    // Safety check: information paths must not pollute tray on unclocked boards,
+    // and must not exceed 1 tray slot on clocked cones.
+    const isCleanInfo = information && (position.tray.length <= state.tray.length || (clocked && inCone && position.tray.length <= 1));
+    const bufferLimit = settings.trayBuffer !== null ? 4 - settings.trayBuffer : 2;
+    const safeInfo = isCleanInfo && (room.safe || position.tray.length <= bufferLimit);
 
     const goal = won ? 'win' : exit && room.safe ? 'safeClockExit'
       : (!clocked && progress >= settings.progress && !position.tray.length) ? 'knownProgress'
       : safeInfo ? 'information' : 'boundedProgress';
 
+    // Clock-slack gated clean pair clear: outside pairs cannot claim Tier 4 if remaining slack is negative
+    const cleanPairClear = matchedTiles > 0 && position.tray.length <= state.tray.length;
+    const dist = clocked ? clockDistance(game, position) : 0;
+    const slack = clocked ? game.clock.n - position.moves - dist - 1 : Infinity;
+    const safeCleanPair = cleanPairClear && (!clocked || (slack >= 0 && (inCone || slack > 0)));
+
     const tier = won ? 6
       : exit && room.safe ? 5
+      : safeCleanPair ? 4
       : exit ? 3
       : safeInfo ? 2
       : 1;
@@ -198,12 +210,14 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       const distWeight = (settings.clockPatience !== null && settings.clockPatience < 0.4) ? 0 : -clockDistance(game, position);
       rank = [tier, conePreference, -room.pressure, distWeight, safeInfo ? -path.length : progress, room.room, safeInfo ? progress : -path.length];
       const recoveryMin = settings.trayRecoveryClockMin !== null ? settings.trayRecoveryClockMin : settings.trayRecoveryMin;
-      if (settings.trayRecovery && (!clocked || !position.alive[game.clock.i])) rank.splice(2, 0, position.tray.length >= recoveryMin ? -recovery.stranded : 0,
+      if (settings.trayRecovery) rank.splice(2, 0, position.tray.length >= recoveryMin ? -recovery.stranded : 0,
         position.tray.length >= recoveryMin ? recovery.immediate : 0);
     } else {
+      const bufferPenalty = (settings.trayBuffer !== null && position.tray.length > (4 - settings.trayBuffer) && !room.safe) ? 2 : 0;
+      const effectivePressure = room.pressure + bufferPenalty;
       rank = settings.pairProgress
-        ? [tier, -room.pressure, matchedTiles, room.room, progress, -path.length]
-        : [tier, -room.pressure, progress, room.room, -path.length, 0];
+        ? [tier, -effectivePressure, matchedTiles, room.room, progress, -path.length]
+        : [tier, -effectivePressure, progress, room.room, -path.length, 0];
       if (settings.trayRecovery) rank.splice(2, 0, position.tray.length >= settings.trayRecoveryMin ? -recovery.stranded : 0,
         position.tray.length >= settings.trayRecoveryMin ? recovery.immediate : 0);
     }
@@ -224,16 +238,27 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       const allowed = physical.legal(game, node.state), settled = { ...node.state, relieved: allowed.relieved };
       const indices = allowed.free.filter(index => node.path.length || roots.has(index) && !excludedRoots.includes(index));
       const priority = index => {
-        if (settled.pictures[index] !== null && settled.tray.includes(settled.pictures[index])) return 0;
+        const pic = settled.pictures[index];
+        if (pic !== null && settled.tray.includes(pic)) return 0;
         if (game.clock?.i === index) return 1;
-        if (settled.openPeek >= 0 && index !== settled.openPeek && settled.pictures[index] === settled.pictures[settled.openPeek]) return 2;
+        if (settled.openPeek >= 0 && index !== settled.openPeek && pic === settled.pictures[settled.openPeek]) return 2;
+        if (settled.openPeek >= 0 && index === settled.openPeek) {
+          return (cone && cone.has(index)) ? 1.5 : 2.2;
+        }
+        const currDist = clocked ? clockDistance(game, settled) : 0;
+        const currSlack = clocked ? game.clock.n - settled.moves - currDist - 1 : Infinity;
+        if (pic !== null && allowed.free.some(other => other !== index && settled.pictures[other] === pic)) {
+          if (clocked && cone && !cone.has(index) && currSlack <= 1) return 5.5;
+          return 2.5;
+        }
         if (cone && cone.has(index)) {
           if (settings.clockPatience !== null && settings.clockPatience < 0.4) {
-            return settled.pictures[index] === null ? 5 : 6;
+            return pic === null ? 5 : 6;
           }
-          return settled.pictures[index] === null ? 3 : 4;
+          if (currSlack <= 1) return pic === null ? 1.8 : 2.0;
+          return pic === null ? 3 : 4;
         }
-        if (settled.pictures[index] === null) return 5;
+        if (pic === null) return 5;
         return 6;
       };
       indices.sort((left, right) => {
@@ -248,6 +273,13 @@ function searchKnown(game, state, actions, options = PARAMETERS) {
       });
 
       for (const index of indices) {
+        // Disallow toggling openPeek to an already known face-down tile without committing
+        if (settled.openPeek >= 0 && index !== settled.openPeek && settled.down[index] && settled.pictures[index] !== null) {
+          const pic = settled.pictures[index];
+          if (pic !== settled.pictures[settled.openPeek] && !settled.tray.includes(pic)) {
+            continue;
+          }
+        }
         const moved = physical.advance(game, settled, index), path = node.path.concat(index);
         if (moved.uncertain) {
           if (moved.reason !== 'unseenPicture') { unsupported++; continue; }
