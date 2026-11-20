@@ -124,7 +124,7 @@ function czSameStart(segA, better, faces, good, cut = null) {
    parts the little pile is set up again. Loops until the window closes. */
 function coachPlay(demo, clip) {
   stopCoach();
-  // clip.pace (js/pro.js): a whole recorded win once, at its own pace (speed ×, long pauses shortened),
+  // clip.pace: a whole recorded win once, at its own pace (speed ×, long pauses shortened),
   // with quicker animations, the whole pile in view; no captions, no loop
   const pace = clip.pace || null, A = pace ? 0.4 : 1;
   const run = coachRun = { dead: false, paused: !pace && matchMedia('(prefers-reduced-motion: reduce)').matches, timers: [], vt: 0 };

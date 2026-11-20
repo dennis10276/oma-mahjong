@@ -142,7 +142,6 @@ function begin(o, restart = false) {
     if (!S.seenDown && G.down.some(Boolean)) { showDownTip(introductions); return; }
     G.introducing = false; resumeClock();
     ready();
-    if (!resumed) proCheck();
   };
   G.introducing = true; syncClock(); G.tStart = 0;
   introductions();

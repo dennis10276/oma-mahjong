@@ -16,12 +16,6 @@ const RULES = {
   // Game tips are opened manually from the menu. Automatic tips between attempts were removed
   // (Dennis, 2026-11-12); new tile introductions must finish before play starts.
   coach: { fromLevel: 60 },
-  // replay of a win (js/pro.js, decisions Dennis 2026-11-06; on per player on the dashboard, part 'pro'): after
-  // `after` lost tries of a level not passed yet (restarts count), once per level a winning try of that exact
-  // board (Dennisisdebeste's, else the fewest tries), at `speed` × its pace
-  // (pauses longer than maxGapMs, after speeding up, are shortened); only a small × at the top, after closeAfterMs
-  pro: { after: 5, speed: 2, maxGapMs: 3000, closeAfterMs: 3000, waitMs: 5000,
-    url: 'https://dennis10276.github.io/oma-mahjong/play/pro/' },
   autoFinish: { fromLevel: 50, maxTiles: 24, budget: 200000, stepMs: 260 },
   // the harder levels (www/hard.js): from measureFrom the test player designs each level so a
   // sensible player wins about `sense` of first tries; from `from` the levels get harder (a tile on
@@ -98,7 +92,6 @@ const PARTS = [
   { id: 'shuffleLater', group: 'help', help: ['shuffleAfter'], label: 'Schudden niet meteen', note: 'pas na een paar zetten (bewaart de ster)' },
   { id: 'lucky', group: 'extra', help: ['lucky'], label: 'Meer geluksmomentjes', note: 'vanaf level 1, tot 2 per level' },
   { id: 'keepTools', group: 'extra', help: ['toolsGoneFrom', 'jokersGoneFrom'], label: 'Hint, Schudden en jokers na level 50', note: 'blijven, ook na level 50' },
-  { id: 'pro', group: 'help', label: 'Replay na 5 keer mis', note: 'hoe Dennisisdebeste (of wie het snelst won) het level haalde, 2× zo snel' },
   { id: 'news', group: 'news', label: 'Nieuws uit Apeldoorn', note: 'na een gewonnen level een nieuwtje of buurtverhaal' },
 ];
 const PART_GROUPS = { easy: 'Makkelijker spelen', help: 'Hulp', extra: "Extra's", news: 'Nieuws' };
