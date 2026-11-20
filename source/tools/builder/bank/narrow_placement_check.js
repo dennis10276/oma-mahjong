@@ -1,14 +1,14 @@
 'use strict';
 const fs=require('fs'),{Worker,isMainThread,parentPort,workerData}=require('worker_threads');
 const P=require('./narrow_proof'),E=require('../engine'),M=require('./narrow_placement_model');
-function check(row,snapshot){
+function check(row,snapshot,opts={}){
   const s=M.validate(row,snapshot),incomplete=M.incomplete(s.positions);if(incomplete)return incomplete;
   const design={...M.copy(M.designFor(row,s)),tiles:s.positions};
   if(!require('./narrow_methods').valid(design.tiles)){
     const bad=new Set();for(let i=0;i<design.tiles.length;i++){if(!M.supported(design.tiles.filter((_,j)=>j!==i),design.tiles[i]))bad.add(i);for(let j=0;j<i;j++)if(design.tiles[i][2]===design.tiles[j][2]&&M.overlap(design.tiles[i],design.tiles[j])){bad.add(i);bad.add(j);}}
     return {status:'failed',ok:false,message:'Some tiles overlap or lack support. Your arrangement is saved.',tiles:[...bad]};
   }
-  const before=P.original(row.level),base=P.prepare(before),g=E.game(design,{strict:true}),prefix=before.design.solution.slice(0,base.k);let state=E.start(g);
+  const before=opts.prepared?.before||P.original(row.level),base=opts.prepared?.base||P.prepare(before),g=E.game(design,{strict:true}),prefix=before.design.solution.slice(0,before.design.solution.indexOf(before.design.clock.i)+1);let state=E.start(g);
   const core=[...base.M].sort((a,b)=>a-b),oldLinks=P.relations(E.game(before.design),core),newLinks=P.relations(g,core),changed=new Set();
   for(let i=0;i<oldLinks.length;i++)if(JSON.stringify(oldLinks[i])!==JSON.stringify(newLinks[i])){changed.add(oldLinks[i][0]);changed.add(oldLinks[i][1]);}
   if(changed.size){const details=[];for(let i=0;i<oldLinks.length;i++){const a=oldLinks[i],b=newLinks[i];for(const [k,subject,other,verb]of[[2,a[1],a[0],'covers'],[3,a[0],a[1],'covers'],[4,a[1],a[0],'helps thaw'],[5,a[0],a[1],'helps thaw']])if(a[k]!==b[k])details.push(`Tile ${subject} ${b[k]?'now':'no longer'} ${verb} tile ${other}.`);}return {status:'failed',ok:false,message:'Connections used by the trap changed:\n'+details.slice(0,5).join('\n')+(details.length>5?`\nAnd ${details.length-5} more changes.`:''),tiles:[...changed],errors:['trapRelations'],details};}
@@ -22,7 +22,7 @@ function check(row,snapshot){
   for(const id of route){try{boundary=E.step(g,boundary,id)}catch{boundary=null;}if(!boundary)break;}
   if(!boundary)return {status:'unknown',ok:false,message:'The clock route could not be replayed. Your arrangement is saved.',errors:['clockRouteReplay']};
   if(!E.replay(design,design.solution,{strict:true}).ok||JSON.stringify(design.solution.slice(0,route.length))!==JSON.stringify(route)){
-    const ordered={...design,solution:route.concat(design.solution.filter(i=>!route.includes(i)))},tail=require('./tail').cappedTail(ordered,3,{peek:false,nodes:1000000,ms:12000});
+    const ordered={...design,solution:route.concat(design.solution.filter(i=>!route.includes(i)))},tail=require('./tail').cappedTail(ordered,3,{peek:false,nodes:1000000,ms:opts.tailMs??12000});
     if(tail.result!=='win')return {status:tail.result==='unknown'?'unknown':'failed',ok:false,message:tail.result==='unknown'?'The finish needs more checking; no win has been proved.':'No winning finish was found with these pictures and this clock.',detail:tail.result};
     design.solution=tail.solution;
   }
