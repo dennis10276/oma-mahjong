@@ -30,7 +30,9 @@ module.exports = [
       t.ok(!H.validSolution({ tiles, nb, faces, down, rules: null, clock: null }, [0, 1, 2, 3, 5, 4, 7, 6]), 'the twin must come right after');
       const clock = { i: 4, n: 5 };
       t.ok(H.validSolution({ tiles, nb, faces, down, rules: null, clock }, sol), 'the clock in the pair, in time (move index 4 < 5)');
-      t.ok(!H.validSolution({ tiles, nb, faces, down, rules: null, clock: { i: 4, n: 4 } }, sol), 'one move too late');
+      // the game checks the clock after the whole pair, so the pair may end one move past the number (Dennis 2026-11-20: allowed)
+      t.ok(H.validSolution({ tiles, nb, faces, down, rules: null, clock: { i: 4, n: 4 } }, sol), 'the pair ends one move past the number: in time');
+      t.ok(!H.validSolution({ tiles, nb, faces, down, rules: null, clock: { i: 4, n: 3 } }, sol), 'the pair would start after the number: too late');
     },
   },
 ];

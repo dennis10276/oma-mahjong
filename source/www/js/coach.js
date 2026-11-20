@@ -195,7 +195,7 @@ function coachPlay(demo, clip) {
     if (!el) return;
     el.classList.toggle('blocked', !!s.a[i] && !isFree(i));
     if (!ob) return;
-    paintOb(el, czObKind(s, ob, inb, i), czObMarker(s, ob, i));
+    paintOb(el, czObKind(s, ob, inb, i), czObMarker(s, ob, i), czIceLeft(s, ob, inb, i));
   });
   const paintTray = (bad = -1) => slots.forEach((sl, k) => { sl.innerHTML = k < s.tray.length ? `<div class="tmini${k === bad ? ' cz-bad' : ''}">${Tiles.boardFace(S.theme, s.tray[k])}</div>` : ''; });
   const placeMark = (i, cls) => {

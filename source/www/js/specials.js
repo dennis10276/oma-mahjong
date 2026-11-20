@@ -137,7 +137,9 @@ function obMarker(i) {
 }
 // a second sign on a special: what a frozen tile is underneath (key/lock), or that a locked tile is itself a key (silver/gold crossing)
 const markerOk = (kind, marker) => !!marker && (kind.startsWith('ice') || (kind.startsWith('lock') && marker.startsWith('key')));
-const obHTML = (kind, marker = '') => kind ? `<div class="ob" data-k="${kind}"${markerOk(kind, marker) ? ` data-marker="${marker}"` : ''}></div>` : '';
+// n: melts still needed; ice that needs 3 or more carries its number (data-n, drawn as ❄️3; Dennis 2026-11-20)
+const obHTML = (kind, marker = '', n = 0) => kind ? `<div class="ob" data-k="${kind}"${markerOk(kind, marker) ? ` data-marker="${marker}"` : ''}${n > 2 ? ` data-n="${n}"` : ''}></div>` : '';
+const iceLeft = i => G.ob && G.ob.left[i] > 0 ? G.ob.left[i] : 0;
 // the marker to paint: for a locked tile its key role (it is a key of the other set), else obMarker
 function obSign(i) {
   if (!G.ob || frozen(i) || !lockedT(i)) return obMarker(i);
@@ -145,14 +147,15 @@ function obSign(i) {
   if (!G.ob.unlocked2 && G.ob.keys2.includes(i)) return 'key2';
   return '';
 }
-function paintOb(el, kind, marker) {
+function paintOb(el, kind, marker, n = 0) {
   const ov = el.querySelector('.ob');
   if (!kind) { if (ov) ov.remove(); }
-  else if (!ov) el.insertAdjacentHTML('beforeend', obHTML(kind, marker));
+  else if (!ov) el.insertAdjacentHTML('beforeend', obHTML(kind, marker, n));
   else {
     ov.dataset.k = kind;
     if (markerOk(kind, marker)) ov.dataset.marker = marker;
     else delete ov.dataset.marker;
+    if (n > 2) ov.dataset.n = n; else delete ov.dataset.n;
   }
 }
 function crackFx(i) {
@@ -188,7 +191,7 @@ function updateObstacles() {
       const c = centerOf(G.tiles[i].el);
       FX.emoji(c.x, c.y, left ? ['❄️'] : ['❄️', '💧', '✨'], left ? 4 : 8); Sound.flip();
       crackFx(i);
-      if (!left) praise(tx('iceMelted')); else toast(tx('iceCrack'), 1600);
+      if (!left) praise(tx('iceMelted')); else toast(tx('iceCrack', left), 1600);
     }
   }
   if (!ob.unlocked && ob.keys.length && ob.keys.every(k => !G.alive[k])) unlockAll(1);
@@ -199,7 +202,7 @@ function obBlocked(i) {
   replay(G.tiles[i].el, 'shake');
   Sound.blocked(); buzz(30);
   const ice = frozen(i);
-  toast(ice ? tx(G.ob.left[i] > 1 ? 'iceThick' : 'iceThin') : tx(lockedBy(i) === 2 ? 'lockedTap2' : 'lockedTap'), 2600);
+  toast(ice ? tx(G.ob.left[i] > 1 ? 'iceThick' : 'iceThin', G.ob.left[i]) : tx(lockedBy(i) === 2 ? 'lockedTap2' : 'lockedTap'), 2600);
   if (ice) showThaw(i);
   else showKeys(lockedBy(i));
 }
