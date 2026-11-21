@@ -12,7 +12,7 @@
      line:  the text key of the line under the film (lang.js) */
 'use strict';
 
-const INTRO_FILM_MS = 5000;      // one play of a film (Dennis: quick, "it goes so slow")
+const INTRO_FILM_MS = 4000;      // one play of a film (Dennis: quick, "it goes so slow")
 const INTRO_REST_MS = 1500;      // the pause before it plays once more
 const INTRO_PLAYS = 2;           // then it rests on its last picture
 const INTRO_FILMS = {
@@ -28,19 +28,20 @@ const INTRO_FILMS = {
       ['top', 27, 1, 2, 1],             // lying on it (half over it, one layer up)
     ],
     steps: [
-      [100, F => F.point('ice')],
-      [400, F => F.tap('ice')],         // frozen (and covered): it shakes, all four touching tiles light up
-      [1000, F => F.point('up')],
-      [1300, F => F.tap('up')],         // the tile above it leaves: ❄️❄️ cracks to ❄️
-      [1650, F => F.point('down')],
-      [1950, F => F.tap('down')],       // the tile below it leaves: the ice melts (up + down are a pair)
-      [2550, F => F.point('ice')],
-      [2850, F => F.tap('ice')],        // thawed, but a tile still lies on it: it shakes, that tile lights up
-      [3350, F => F.point('top')],
-      [3650, F => F.tap('top')],        // the tile on top goes
-      [4050, F => F.point('ice')],
-      [4350, F => F.tap('ice')],        // now it is free: it can be taken
-      [4800, F => F.rest()],
+      // (a tap every 0.55 s, the hand arriving 0.25 s before it)
+      [50, F => F.point('ice')],
+      [300, F => F.tap('ice')],         // frozen (and covered): it shakes, all four touching tiles light up
+      [600, F => F.point('up')],
+      [850, F => F.tap('up')],          // the tile above it leaves: ❄️❄️ cracks to ❄️
+      [1150, F => F.point('down')],
+      [1400, F => F.tap('down')],       // the tile below it leaves: the ice melts (up + down are a pair)
+      [1700, F => F.point('ice')],
+      [1950, F => F.tap('ice')],        // thawed, but a tile still lies on it: it shakes, that tile lights up until taken
+      [2250, F => F.point('top')],
+      [2500, F => F.tap('top')],        // the tile on top goes
+      [2800, F => F.point('ice')],
+      [3050, F => F.tap('ice')],        // now it is free: it can be taken
+      [3500, F => F.rest()],
     ],
     line: 'intro_ice',
   },

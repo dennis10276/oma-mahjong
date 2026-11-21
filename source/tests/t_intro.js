@@ -26,7 +26,9 @@ module.exports = [
     t.eq(tiles.map(x => x.html), own, 'tiles in the player\'s own theme');
     t.ok(await p.evaluate(() => $('#modalBox .intro-film').style.background.length > 0), 'on the player\'s own background');
     t.ok(await p.evaluate(() => !!$('#modalBox p.intro-line') && $('#modalBox p.intro-line').innerHTML === tx('intro_ice')), 'one line under the film says what to do');
-    t.ok(await p.evaluate(() => INTRO_FILM_MS >= 4000 && INTRO_FILM_MS <= 5000), 'a quick film: 4 to 5 seconds');
+    t.ok(await p.evaluate(() => INTRO_FILM_MS >= 3500 && INTRO_FILM_MS <= 4500), 'a quick film: about 4 seconds');
+    const taps = await p.evaluate(() => INTRO_FILMS.ice.steps.filter(([, fn]) => { let tapped = false; fn({ point() { }, rest() { }, tap() { tapped = true; } }); return tapped; }).map(([ms]) => ms));
+    t.ok(taps.slice(1).every((ms, k) => ms - taps[k] >= 500 && ms - taps[k] <= 600), 'taps 0.5 to 0.6 s apart', taps);
     t.ok(await p.evaluate(() => $('#modalBox').scrollHeight <= $('#modalBox').clientHeight + 1), 'film, Dutch line and button fit the phone without scrolling');
     // back and taps on the board do not get around it
     await p.evaluate(() => { handleBack(); $('#modal').click(); });
