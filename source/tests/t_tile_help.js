@@ -6,12 +6,11 @@ module.exports = [
     for (const lang of ['nl', 'en']) {
       const p = await t.phone({ size: [360, 640], state: { name: 'Dennis', level: 80, sunSeen: true, lang, seenSp: seen } });
       await startLevel(p, 80);
-      for (const kind of ['ice', 'lock', 'trayPair', 'clock']) {
+      for (const kind of ['lock', 'trayPair', 'clock']) {        // (ice has the new intro film: t_intro.js)
         const before = await p.evaluate(() => JSON.stringify([G.mv, G.tray, [...G.alive], [...G.down], obState(), G.clock]));
         await p.evaluate(k => k === 'clock' ? showClockLesson() : showTileLesson(k), kind);
         t.eq(await p.locator('.lesson-demo').getAttribute('data-lesson'), kind, 'correct demonstration');
         // (from 1.60 a real game in the player's own tiles: the ice and the locks lie on the pile)
-        if (kind === 'ice') t.ok(await p.evaluate(() => !!$('.cz-board .tile .ob[data-k^="ice"]')), 'ice film shows frozen tiles on a real pile');
         if (kind === 'lock') t.ok(await p.evaluate(() => !!$('.cz-board .tile .ob[data-k="lock"]') && !!$('.cz-board .tile .ob[data-k="key"]')), 'lock film shows locks and keys on a real pile');
         if (kind === 'clock') t.ok(!/hint|schudden|shuffle/i.test(await p.locator('#modalBox').innerText), 'clock explanation does not mention tools');
         t.ok(await p.evaluate(() => $('#modalBox').scrollHeight <= $('#modalBox').clientHeight + 1), 'lesson and button fit: ' + lang + ' ' + kind);
@@ -32,8 +31,8 @@ module.exports = [
         await click(p, '#ntGo');
         t.eq(await p.evaluate(() => lessonTimer), null, 'closing cleans up timer');
       }
-      await p.evaluate(() => showTileLesson('ice', null, true));
-      t.ok(await p.evaluate(() => $('#modalBox').scrollHeight <= $('#modalBox').clientHeight + 1), 'ice reminder also fits: ' + lang);
+      await p.evaluate(() => showTileLesson('lock', null, true));
+      t.ok(await p.evaluate(() => $('#modalBox').scrollHeight <= $('#modalBox').clientHeight + 1), 'lock reminder also fits: ' + lang);
       await click(p, '#ntGo');
       await p.evaluate(() => showIntro()); await click(p, '#mTileHelp');
       t.eq([await p.locator('.cz-pick[data-kind]').count(), await p.locator('.cz-tilepick').count()], [8, 4], 'from level 60 How to play opens the game tips and the tile explanations (js/coach.js)');

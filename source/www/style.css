@@ -1055,3 +1055,33 @@ span.fx { font-size: inherit; }
   #ranking .rrow .rp { grid-column: 3; grid-row: 2; justify-content: flex-start; font-size: 15px; }
   #ranking .rrow .rp .heart-btn { position: absolute; right: 8px; top: calc(50% - 18px); }
 }
+
+/* intro film (js/intro.js): a few tiles of the real board, in the player's own theme and on their own background */
+.modal-box.intro-help { padding: 16px 14px 14px; }
+.intro-help h2 { font-size: 26px; line-height: 1.15; margin: 0 0 8px; }
+.intro-film { position: relative; height: 200px; margin: 0 0 8px; border-radius: 14px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(0,0,0,.12); }
+.intro-film.intro-end { cursor: pointer; }
+.intro-film.intro-end::after { content: '↺'; position: absolute; right: 8px; bottom: 6px; z-index: 80; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-size: 22px; line-height: 1; color: var(--ink); background: rgba(255,248,232,.92); box-shadow: 0 2px 5px rgba(0,0,0,.3); }
+.intro-tray { position: absolute; top: 10px; left: 0; z-index: 1; display: grid; grid-template-columns: repeat(4, var(--slotw)); gap: 5px; padding: 5px; border-radius: 12px;
+  background: linear-gradient(#8a5a33, #6b4224); box-shadow: inset 0 3px 6px rgba(0,0,0,.45), 0 3px 0 #4a2d17, 0 6px 10px rgba(0,0,0,.25); }
+.intro-slot { aspect-ratio: 1 / 1.24; border-radius: 8px; background: rgba(0,0,0,.28); box-shadow: inset 0 2px 4px rgba(0,0,0,.45); position: relative; }
+.intro-tray .tmini { border-radius: 8px; padding: 2px; }
+body.sunny .intro-tray { background: linear-gradient(#f3b73a, #c98317); box-shadow: inset 0 3px 6px rgba(80,40,0,.45), 0 3px 0 #8a5a10; }
+body.sunny .intro-slot { background: rgba(90,50,0,.28); }
+.intro-board { position: absolute; inset: 0; }
+.intro-board .tile { pointer-events: none; cursor: default; }
+.intro-board .tile.intro-moving { transition: transform .38s cubic-bezier(.35,.1,.25,1), opacity .25s; }
+.intro-board.hl .tile.blocked::after { opacity: 1; }
+.intro-board .tile.obhint { animation: nudgeShake 1.3s ease-in-out 1; box-shadow: 0 0 0 4px #7fd0ff, 0 0 16px 6px rgba(120,200,255,.85); }
+.intro-hand { position: absolute; left: 0; top: 0; z-index: 60; pointer-events: none; opacity: 0; transform: translate(200px, 260px); transition: transform .45s cubic-bezier(.4,0,.2,1), opacity .25s; }
+.intro-hand i { display: block; font-style: normal; font-size: 34px; line-height: 1; transform-origin: 40% 10%; transition: transform .12s; filter: drop-shadow(0 2px 2px rgba(0,0,0,.35)); }
+.intro-hand.intro-on { opacity: 1; }
+.intro-hand.intro-press i { transform: scale(.8) translateY(2px); }
+.intro-ripple { position: absolute; z-index: 55; width: 50px; height: 50px; margin: -25px 0 0 -25px; border-radius: 50%; border: 3px solid #ff9a3d; pointer-events: none; animation: introRipple .5s ease-out forwards; }
+@keyframes introRipple { from { transform: scale(.4); opacity: 1; } to { transform: scale(1.3); opacity: 0; } }
+.intro-spark { position: absolute; z-index: 70; font-size: 17px; line-height: 1; pointer-events: none; }
+.intro-help .intro-line { font-size: 18px; line-height: 1.3; margin: 0 0 4px; }
+.intro-help .big-btn { margin-top: 8px; }
+.intro-help .big-btn:disabled { opacity: .55; cursor: default; }
+.intro-help .big-btn:disabled b { font-size: 19px; }
+@media (prefers-reduced-motion: reduce) { .intro-film *, .intro-film *::before, .intro-film *::after { animation: none !important; transition: none !important; } }

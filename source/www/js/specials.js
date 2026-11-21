@@ -423,6 +423,7 @@ function startLessonDemo() {
   paint(); fresh(false); run();
 }
 function showTileLesson(kind, after = null, reminder = false, why = reminder ? 'retry' : 'intro', required = false) {
+  if (kind === 'ice') { playIntroFilm('ice', { required, after, why }); return; }      // the new intro film (js/intro.js)
   // (from 1.60: a film of a real game in the player's own tiles, background and tray, js/coach.js;
   // the explanation folds open under it)
   openModal(`${reminder ? `<p class="lesson-reminder">${tx('lessonReminder')}</p>` : ''}<h2>${required ? tx('newTile', tx('nt_' + kind)) : tx('nt_' + kind)}</h2>
@@ -475,6 +476,7 @@ function newTileIntro(after = null) {
   if (!G || G.done) return false;
   const k = Object.keys(NEW_TILES).find(k => !S.seenSp[k] && NEW_TILES[k].has() && (!NEW_TILES[k].first || NEW_TILES[k].first()));
   if (!k) return false;
+  if (k === 'ice') { playIntroFilm('ice', { required: true, after }); return true; }
   if (k !== 'joker2' && k !== 'gold') { showTileLesson(k, after, false, 'intro', true); return true; }
   const t = NEW_TILES[k];
   openModal(`<div class="nt-ico">${t.ico}</div><h2>${tx('newTile', tx('nt_' + k))}</h2><p>${tx('nt_' + k + '_text')}</p>
