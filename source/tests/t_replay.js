@@ -299,20 +299,20 @@ module.exports = [
     },
   },
   {
-    name: 'replay: helper reveals and rescue are recorded; older saves are explicitly partial',
+    name: 'replay: taps and the board are recorded and rebuilt; older saves are explicitly partial',
     async run(t, { startLevel, sleep }) {
       const pid = 'test-replay-help', p = await t.phone({ state: { level: 40, name: 'OmaHanny', pid } });
       await startLevel(p, 40);
       const aid = await p.evaluate(() => {
         const freeTiles = G.tiles.map((t, i) => i).filter(i => canTake(i));
-        G.down[freeTiles[0]] = 1; replayCapture(); startNudge(freeTiles.slice(0, 2), 5);
-        const i = freeTiles[0]; onTap(i); rescueTray();
+        replayCapture();
+        const i = freeTiles[0]; onTap(i); if (G.alive[i]) onTap(i);
         saveCur(); replayDrain(G); saveCur(); return G.rp.id;
       });
       await sleep(600);
       const r = readReplay(chunks(p, pid, aid));
-      t.ok(r.kinds.nudge === 1 && r.kinds.rescue === 1, 'helper and rescue actions recorded');
-      t.eq(r.state, await p.evaluate(() => replayState()), 'helper down flags and rescued tiles reconstructed');
+      t.ok(r.kinds.tap >= 1, 'tap actions recorded');
+      t.eq(r.state, await p.evaluate(() => replayState()), 'board reconstructed from the recording');
       await p.evaluate(() => { const c = loadCur(); delete c.rp; delete c.st; localStorage.setItem(CUR, JSON.stringify(c)); G = null; });
       await startLevel(p, 40, false); await p.evaluate(() => { replayDrain(G); }); await sleep(400);
       const partialAid = await p.evaluate(() => G.rp.id);

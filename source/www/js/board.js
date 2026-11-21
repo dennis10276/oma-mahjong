@@ -1,5 +1,5 @@
 /* Oma's Mahjong — one level: the pile, the 4 tray slots, tapping, matching, hint and shuffle.
-   Extra help (grandma) is in help.js, special tiles and ice/locks in specials.js. */
+   Special tiles and ice/locks in specials.js. */
 'use strict';
 
 const SLOTS = Layouts.SLOTS;
@@ -76,7 +76,7 @@ function begin(o, restart = false) {
     (o.mode !== 'level' || (Hard.applies(o.level, o.track) ? o.level < RULES.hard.rebuildFrom || cur.hv === Hard.designVersion(o.level) : !Hard.appliesEarly(o.level, o.track) || cur.hv == null || cur.hv === boardVer(o)));
   // (a save from before the table (no hv) resumes when its screen shape and tile count fit the level)
   // A new hard-level design starts fresh; earlier levels and grandma's saved boards still resume.
-  const ez = cur && cur.key === o.key && sameTrack ? (cur.ez || 0) : easeFor(o.key);
+  const ez = cur && cur.key === o.key && sameTrack ? (cur.ez || 0) : 0;      // (only a level saved with an easier deal resumes easier; a new deal is never eased)
   if (!o.spec || (o.ez || 0) !== ez) {
     if (!o.spec) o.aspect = o.fixedAspect || aspect;
     let sp = o.makeSpec(o.aspect);
@@ -115,13 +115,13 @@ function begin(o, restart = false) {
   }
   // the clock and the play log come first, so they are right even if drawing the board goes wrong
   // (in 1.10 a level could be played without them: logged as won in 0 seconds with 0 taps)
-  G.tStart = performance.now(); G.lastMove = performance.now(); G.nudge = null;
+  G.tStart = performance.now();
   G.st = { tp: 0, bt: 0, fl: 0, mc: 0, tm: 0, ...(resumed && cur.st || {}) };    // counters continue across closing/reopening
   if (!resumed || !S.att[o.key]) { S.att[o.key] = (S.att[o.key] || 0) + 1; save(); }
   G.attempt = S.att[o.key];
   replayBegin(cur, resumed);
   const focused = !!spec.made && o.mode === 'level' && o.level >= RULES.hard.rebuildFrom;
-  logEvt('start', { ...lvInfo(), aid: G.rp && G.rp.id, at: G.attempt, n, res: resumed || undefined, rs: restart || undefined, ez: ez || undefined, ad: adaptStepFor(o), tk: o.track || undefined, pr: spec.made && spec.made.info ? (focused ? spec.made.info.strong : spec.made.info.rate) : undefined, pm: focused ? Hard.ratingModel(o.level) : undefined, ck: G.clock ? G.clock.n : undefined, tl: toolsEarnLevel(toolLevel(o)) ? (toolsGoneFor(o) ? 0 : 1) : undefined });
+  logEvt('start', { ...lvInfo(), aid: G.rp && G.rp.id, at: G.attempt, n, res: resumed || undefined, rs: restart || undefined, ez: ez || undefined, tk: o.track || undefined, pr: spec.made && spec.made.info ? (focused ? spec.made.info.strong : spec.made.info.rate) : undefined, pm: focused ? Hard.ratingModel(o.level) : undefined, ck: G.clock ? G.clock.n : undefined, tl: toolsEarnLevel(toolLevel(o)) ? (toolsGoneFor(o) ? 0 : 1) : undefined });
   $('#gameTitle').textContent = o.title;
   try {
     show('game');
@@ -164,7 +164,7 @@ function takeOff(i) { G.alive[i] = 0; G.down[i] = 0; if (G.peek === i) G.peek = 
    Taps never wait for this: the game state has changed already, the animation just catches up. */
 function afterFlight(ms, fn) { G.flights++; afterLogic(); setTimeout(() => { G.flights--; fn(); afterLand(); }, ms); }
 function afterLogic() {
-  updateBlocked(); updateObstacles(); updateProgress(); updateNudge(); checkClock();
+  updateBlocked(); updateObstacles(); updateProgress(); checkClock();
   if (aliveCount() === 0 && G.tray.length === 0) { G.done = true; clearCur(); return; }
   saveCur();
 }
@@ -246,7 +246,7 @@ function glow(i, cls, on) {
   const el = G && G.tiles[i] && G.tiles[i].el; if (!el) return;
   el.classList.toggle(cls, on);
   const board = $('#board'), lifted = el.parentNode === board;
-  if (el.classList.contains('lucky') || el.classList.contains('nudge')) { if (!lifted) { el._lyr = el.parentNode; board.appendChild(el); } }
+  if (el.classList.contains('lucky')) { if (!lifted) { el._lyr = el.parentNode; board.appendChild(el); } }
   else if (lifted && el._lyr && el._lyr.isConnected) { el._lyr.appendChild(el); el._lyr = null; }
 }
 /* Where the tiles go for a board of W x H pixels (nothing is read from or written to the page). */
@@ -443,7 +443,6 @@ function tapTile(i) {
   if (frozen(i) || lockedT(i)) { G.st.bt++; obBlocked(i); return; }
   blockedTaps = 0;
   coachNote(i);                     // the game tips' own film of this try (coach.js)
-  G.lastMove = performance.now();   // the board moved: the helper waits again
   let reveal = false;
   if (G.down[i] && G.peek !== i) {
     const pk = G.peek;
@@ -630,7 +629,7 @@ function autoBanner(on) {
 }
 function maybeAutoFinish() {
   if (!autoFinishOK()) return;
-  G.autoFin = true; clearNudge(); clearHint();
+  G.autoFin = true; clearHint();
   replayMark('auto');
   autoBanner(true);      // big over the pile (nobody needs to see it any more); combo texts stay in the top bar
   logLvl('auto');
@@ -651,7 +650,6 @@ function checkStuck() {
   if (!G || G.done || G.overShown || G.tray.length < SLOTS) return;
   G.busy = true; G.overShown = true;
   syncClock();
-  if (help().rescue && !G.rescued) { setTimeout(offerRescue, 450); return; }
   gameOver();
 }
 function failTry() { bumpStat('losses'); noteFail(); endLevel('stuck'); }
@@ -676,8 +674,7 @@ let armedTool = null, armTimer = 0;
 function disarmTool() { clearTimeout(armTimer); if (armedTool) $(armedTool).classList.remove('armed'); armedTool = null; }
 function armTool(id, use, againKey) {
   const used = id === '#btnHint' ? G && G.usedHint : G && G.usedShuffle;
-  const w = help().shuffleAfter, early = id === '#btnShuffle' && G && w && G.tiles.length - aliveCount() < w.taken && G.tray.length < w.tray;
-  if (!G || G.done || G.busy || G.autoFin || !toolsOpen() || used || early) { disarmTool(); return use(); }
+  if (!G || G.done || G.busy || G.autoFin || !toolsOpen() || used) { disarmTool(); return use(); }
   if (armedTool === id) { disarmTool(); return use(); }
   disarmTool(); Sound.init();
   armedTool = id; $(id).classList.add('armed');
@@ -708,9 +705,8 @@ function hint() {
 }
 function shuffle() {
   if (!toolUsable(G && G.usedShuffle, tx('shuffleUsed'))) return;
-  if (shuffleTooEarly()) return;
   coachForget();
-  G.usedShuffle = true; updateTools(); clearNudge();
+  G.usedShuffle = true; updateTools();
   logLvl('shuf', { tray: G.tray.length });
   G.busy = true;
   if (G.peek >= 0) { if (G.alive[G.peek]) turn(G.peek, true); G.peek = -1; }

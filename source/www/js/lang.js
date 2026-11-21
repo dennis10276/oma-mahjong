@@ -138,12 +138,6 @@ const TEXT = {
   restartYes: ['↻ Ja, opnieuw', '↻ Yes, start again'],
   restartNo: ['Nee, verder spelen', 'No, keep playing'],
   // grandma's extra help
-  rescueText: ['Geen nood! Je mag de stenen <b>één keer</b> terugleggen en gewoon verder spelen.', 'No worries! You may put the tiles back <b>once</b> and simply play on.'],
-  rescueBack: ['↩ Stenen terugleggen', '↩ Put the tiles back'],
-  rescueCost: ['Dit kost één ⭐', 'This costs one ⭐'],
-  startAgain: ['Opnieuw beginnen', 'Start again'],
-  tilesBack: ['De stenen liggen weer op het bord 💪', 'The tiles are back on the board 💪'],
-  keepShuffle: ['Bewaar schudden voor als je vastzit 😉', 'Save the shuffle for when you are stuck 😉'],
   // special tiles
   goldPair: ['✨ Gouden paar! x2', '✨ Golden pair! x2'],
   twoJokers: ['🃏 Twee jokers!', '🃏 Two jokers!'],

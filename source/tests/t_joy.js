@@ -1,8 +1,6 @@
-/* 1.15: no messages over the pile, grandma's glowing-pair helper, and the little rewards. */
+/* 1.15: no messages over the pile, and the little rewards. */
 'use strict';
 const OMA = { name: 'OmaHanny', pid: 'test-oma', level: 12 };
-// the helper's timings, shortened (the real ones are in HELP.care.nudge): face-down after 2 s, visible after 5 s
-const QUICK = { HELP: { care: { nudge: { downS: 2, upS: 5 } } } };
 const DENNIS = { name: 'Dennis', pid: 'test-dennis', level: 12 };
 const overlaps = (a, b) => !(a.right <= b.left || b.right <= a.left || a.bottom <= b.top || b.bottom <= a.top);
 
@@ -43,45 +41,6 @@ module.exports = [
       // outside a level the normal toast is used
       await p.evaluate(() => __mj.show('home')); await p.evaluate(() => toast('hallo')); await sleep(100);
       t.ok(await p.evaluate(() => document.querySelector('#toast').classList.contains('on')), 'toast on the home screen');
-    },
-  },
-  {
-    name: 'helper (grandma): a pair with a face-down tile is turned over and glows until matched',
-    async run(t, { startLevel, sleep }) {
-      const p = await t.phone({ state: { ...OMA, level: 40 }, tune: QUICK });
-      let pair = null;
-      for (let L = 28; L <= 40 && !pair; L++) { await startLevel(p, L); await sleep(300); pair = await p.evaluate(makeHiddenPair); }
-      if (!t.ok(pair, 'set up a hidden pair')) return;
-      await p.evaluate(() => { __mj.G.lastMove = performance.now(); });
-      await sleep(1000);
-      t.eq(await p.evaluate(() => __mj.G.nudge), null, 'nothing yet after 1 second');
-      await sleep(2200);
-      const g = await p.evaluate(([d, u]) => { const G = __mj.G; return { nudge: (G.nudge || []).slice().sort(), down: G.down[d], glow: [d, u].map(i => G.tiles[i].el.classList.contains('nudge')), back: G.tiles[d].el.classList.contains('back') }; }, pair);
-      t.eq(g, { nudge: pair.slice().sort((a, b) => a - b), down: 0, glow: [true, true], back: false }, 'turned face up and glowing', g);
-      await sleep(3000);
-      t.ok(await p.evaluate(([d]) => __mj.G.tiles[d].el.classList.contains('nudge'), pair), 'keeps glowing');
-      await p.evaluate(([, u]) => __mj.onTap(u), pair); await sleep(500);
-      t.ok(await p.evaluate(([d]) => __mj.G.tiles[d].el.classList.contains('nudge') && document.querySelector('#tray .slot.nudge') !== null, pair), 'its twin in the tray glows too, the other tile still glows');
-      await p.evaluate(([d]) => __mj.onTap(d), pair); await sleep(600);
-      t.eq(await p.evaluate(([d, u]) => [__mj.G.alive[d], __mj.G.alive[u], __mj.G.tray.length, __mj.G.nudge, document.querySelectorAll('.nudge').length], pair), [0, 0, 0, null, 0], 'matched: glow gone');
-      t.ok(p.db.plays('test-oma').some(e => e.k === 'nudge' && e.down === 1), 'logged for the dashboard');
-    },
-  },
-  {
-    name: 'helper (grandma): a visible pair glows after a longer pause; not for others',
-    async run(t, { startLevel, sleep }) {
-      const p = await t.phone({ state: { ...OMA, level: 3 }, tune: QUICK });     // level 3: no face-down tiles
-      await startLevel(p, 3); await p.evaluate(() => { __mj.G.lastMove = performance.now(); });
-      await sleep(3500);
-      t.eq(await p.evaluate(() => __mj.G.nudge), null, 'not after the short wait');
-      await sleep(3000);
-      t.ok(await p.evaluate(() => (__mj.G.nudge || []).length >= 1 && document.querySelectorAll('#board .tile.nudge').length >= 1), 'glowing after the long wait');
-      const q = await t.phone({ state: { ...DENNIS, level: 40 }, tune: QUICK });
-      let qp = null;
-      for (let L = 28; L <= 40 && !qp; L++) { await startLevel(q, L); await sleep(300); qp = await q.evaluate(makeHiddenPair); }
-      await q.evaluate(() => { __mj.G.lastMove = performance.now(); });
-      await sleep(7000);
-      t.eq(await q.evaluate(() => [__mj.G.nudge, document.querySelectorAll('.nudge').length]), [null, 0], 'Dennis gets no helper');
     },
   },
   {
@@ -146,7 +105,7 @@ module.exports = [
     },
   },
   {
-    name: 'lucky moment and helper: the glowing tile stays visible on every layer (hidden under the pile before 1.23)',
+    name: 'lucky moment: the glowing tile stays visible on every layer (hidden under the pile before 1.23)',
     async run(t, { startLevel, sleep }) {
       const p = await t.phone({ state: { ...DENNIS, level: 25 } });
       await startLevel(p, 25); await sleep(1500);
@@ -158,7 +117,7 @@ module.exports = [
           const i = G.tiles.findIndex((t, i) => t.z === z && G.alive[i] && L.isFree(i, G.alive, G.nb));
           if (i < 0) continue;
           const el = G.tiles[i].el;
-          for (const cls of ['lucky', 'nudge']) { el.classList.add(cls); out.push({ z, cls, seen: seen(el) }); el.classList.remove(cls); }
+          for (const cls of ['lucky']) { el.classList.add(cls); out.push({ z, cls, seen: seen(el) }); el.classList.remove(cls); }
         }
         return out;
       });

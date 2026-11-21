@@ -24,9 +24,9 @@ module.exports = [
     async run(t) {
       for (const [st, on] of [[OMA, true], [DTEST, true], [DENNIS, false], [{ name: 'Mama', pid: 'pmv13884fc9vndv' }, false]]) {
         const p = await t.phone({ state: st, news: NEWS });
-        const r = await p.evaluate(() => ({ on: villageOn(), care: careMode(), help: help().rescue === true && help().gentle === 1 && !!help().nudge, chip: !document.querySelector('#btnPaper').classList.contains('hidden'), en: isEn() }));
+        const r = await p.evaluate(() => ({ on: villageOn(), care: careMode(), chip: !document.querySelector('#btnPaper').classList.contains('hidden'), en: isEn() }));
         t.eq([r.on, r.chip], [on, on], `${st.name}: news ${on ? 'on' : 'off'}`);
-        if (st === DTEST) t.eq(r, { on: true, care: true, help: true, chip: true, en: false }, 'DennisTEST: exactly like grandma');
+        if (st === DTEST) t.eq(r, { on: true, care: true, chip: true, en: false }, 'DennisTEST: exactly like grandma');
         await p.ctx.close();
       }
     },
@@ -162,22 +162,6 @@ module.exports = [
       t.eq(await state(x), { care: false, news: false, chip: false }, 'DennisTEST follows the real grandma\'s settings (Super-omamodus off: its parts too)');
       const g = await t.phone({ state: { name: 'OmaHanny', pid: 'test-oma2' }, tune: { VILLAGE: { enabled: false } } });
       t.eq(await g.evaluate(() => villageOn()), false, 'VILLAGE.enabled = false: no news for anyone');
-    },
-  },
-  {
-    name: 'helper: waits longer when she wins easily, sooner when she struggles',
-    async run(t, { startLevel }) {
-      const p = await t.phone({ state: OMA });
-      await startLevel(p, 12);
-      const w = hist => p.evaluate(h => { S.adapt = { step: 0, hist: h, since: 0, key: 'L12' }; return nudgeWaits(); }, hist);
-      t.eq(await w([]), { downS: 6, upS: 14 }, 'no results yet: the normal waits');
-      t.eq(await w([1, 1, 1, 1, 1, 1, 1, 1]), { downS: 17, upS: 39 }, 'winning easily: about 40 s');
-      t.eq(await w([0, 0, 1, 0, 0, 0.5, 0, 0]), { downS: 4, upS: 10 }, 'struggling: sooner');
-      const mid = await w([1, 0, 1, 1, 0, 1, 0, 1]);
-      t.ok(mid.upS >= 12 && mid.upS <= 18, 'in between: about normal', mid);
-      t.eq(await p.evaluate(() => { S.adapt.hist = [1, 1, 1, 1, 1, 1]; S.fails.L12 = 1; return nudgeWaits(); }), { downS: 4, upS: 10 }, 'this level already went wrong once: sooner');
-      const q = await t.phone({ state: DENNIS });
-      t.eq(await q.evaluate(() => help().nudge), null, 'others have no helper');
     },
   },
   {

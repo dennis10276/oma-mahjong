@@ -111,10 +111,18 @@ module.exports = [
       await startLevel(grandma,85);
       await grandma.evaluate(()=>{G.mv=2;saveCur();const c=JSON.parse(localStorage.getItem(CUR));delete c.hv;localStorage.setItem(CUR,JSON.stringify(c));__mj.startLevel(85);});
       t.eq(await grandma.evaluate(()=>[G.mv,G.o.track]),[2,'care'],'grandma saved boards are preserved');
-      await p.evaluate(()=>{HELP.normal.gentle=1;localStorage.removeItem(CUR);__mj.startLevel(83);});
-      t.eq(await p.evaluate(()=>[!!G.o.spec.made,G.ez]),[false,1],'separate optional help still supplies an easier board');
-      await p.evaluate(()=>{G.mv=2;saveCur();__mj.startLevel(83);});
-      t.eq(await p.evaluate(()=>G.mv),2,'current easier fallback boards also resume');
+      // a level saved with an easier deal (ez > 0, from an older version) still resumes as that same board; a new deal is never eased
+      await p.evaluate(()=>{localStorage.removeItem(CUR);__mj.startLevel(83);});
+      t.eq(await p.evaluate(()=>[!!G.o.spec.made,G.ez]),[true,0],'a new deal is never eased');
+      const easy=await p.evaluate(()=>{
+        const sp=Layouts.ease(Layouts.forLevel(83,G.o.aspect,1,''),1), d=Layouts.makeDeal(sp,24,true), n=sp.tiles.length;
+        const c=JSON.parse(localStorage.getItem(CUR))||{};
+        Object.assign(c,{v:CUR_V,key:'L83',tr:'',aspect:G.o.aspect,ez:1,n,faces:d.faces,alive:Array(n).fill(1),down:Array.from({length:n},(_,i)=>d.down.includes(i)?1:0),tray:[],peek:-1,gold:[],mv:2,ob:undefined,hv:Hard.designVersion(83)});
+        delete c.ck;
+        localStorage.setItem(CUR,JSON.stringify(c)); __mj.startLevel(83);
+        return {faces:d.faces.join()};
+      });
+      t.eq(await p.evaluate(()=>[!!G.o.spec.made,G.ez,G.mv,G.tiles.map(t=>t.face).join()]),[false,1,2,easy.faces],'a half-played easier level resumes as the same board');
     },
   },
 ];

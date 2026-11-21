@@ -18,7 +18,6 @@ Ad-free Mahjong solitaire for Android (and the web / iPhone), in Dutch or Englis
     | `update.js` | self-update from the website |
     | `screens.js` | menus, calendar, themes, prize cabinet, pop-ups, settings |
     | `board.js` | playing a level: the pile, the tray, tapping, matching, hint, shuffle |
-    | `help.js` | extra help (grandma): gentle/adaptive deals, tray rescue, the helper, no early shuffle |
     | `specials.js` | gold pair, joker, ice, lock & key |
     | `rewards.js` | statistics, daily tasks and chest, lucky moment, daily gift |
     | `telemetry.js` | play log for the dashboard |
@@ -59,12 +58,8 @@ On Windows, `python tools/build_apk.py` uses the verified archives listed in
 - `RULES.autoFinish`: from level 50, when no order of the remaining taps can fill the tray any more
   (checked exactly by `finishSafe` in `board.js`, trying every order; not while ice, locks or a joker
   are left), the last tiles play themselves. In practice that is the last 4-7 tiles.
-- `HELP`: the help per kind of player, `care` (grandma) and `normal` (everyone else): combo time,
-  lucky moments, a gentler deal, easier after N failed tries, putting the tray back, the helper and
-  its timings, no shuffle at the start, and the adaptive difficulty. To give someone else a kind of
-  help, change it under `normal` (e.g. `rescue: true`).
-  `toolsGoneFrom`: from that level on Hint/Schudden have to be earned (normal: 50; grandma mode: always
-  there). The levels go in blocks of `RULES.tools.earn.every` (5): 50-54, 55-59, ... In a block you have
+- `HELP.normal`: the help everyone gets: combo time, lucky moments, and the level from which Hint/Schudden have to be earned (`toolsGoneFrom`) and the jokers go (`jokersGoneFrom`).
+  `toolsGoneFrom`: from that level on Hint/Schudden have to be earned (50, for everyone). The levels go in blocks of `RULES.tools.earn.every` (5): 50-54, 55-59, ... In a block you have
   them when every level before the block has `earn.stars` (3) stars; playing a missing level again for 3
   stars brings them back right away. Without them the toolbar is hidden and the pile gets its space. A
   popup tells it at every new block and whenever it changes (`S.toolsSt` = what was told last).
@@ -80,7 +75,7 @@ On Windows, `python tools/build_apk.py` uses the verified archives listed in
 - `START_ENGLISH`: player ids that start in English (Mama). Anyone can switch in the settings
   (🌐 Language); that choice is saved in `S.lang` and always wins.
 - When ice and locks start is in `layouts.js` (`MECH`), the tray size there too (`SLOTS`).
-- The tests can change these per test: `t.phone({ tune: { HELP: { normal: { rescue: true } } } })`.
+- The tests can change these per test: `t.phone({ tune: { HELP: { normal: { comboMs: 5000 } } } })`.
 
 ## Updates (from version 1.5)
 
@@ -109,24 +104,8 @@ Everyone in grandma mode plays a separate, gentler set of levels (`forCare` in `
   with nothing on top and never both tiles of a picture (`careDownN`);
 - ice and locks at the same level numbers as everyone (35 and 45);
 - deals are picked so a sensible player clears ~90% first time (tested for every 3rd level up to 100);
-- on top of that her usual help below (one step gentler, adaptive, easier after 3 failed tries).
 A level saved from the other set of levels is not resumed (it starts fresh). The dashboard shows
-"Hulpje per poging" and "In één keer goed" for the last 7 days.
-
-## Extra help for grandma (`HELP.care`)
-
-- a full tray is not game over yet: once per level she can put the tiles back (costs one star)
-- every level is dealt a bit gentler (`Layouts.ease` 1); after failing the same level 3 times the
-  next try gets more matching pictures (one more step)
-- her difficulty follows her own results: her last 10 tries on levels are kept on the phone (win 1,
-  win after putting tiles back 0.5, stuck 0; starting over within 30 s does not count). When a new
-  level starts and 5+ tries were played since the last change: under 60% won -> half a step easier,
-  over 85% -> half a step back. Steps -2..+2 mean ease 0..2 (`Layouts.ease` takes half steps). Easier
-  steps also get less ice and fewer locks. The dashboard shows her step ("Moeilijkheid").
-- the helper: when nothing moved for 6 seconds and a free pair includes a face-down tile, that tile
-  is turned over and the pair glows until it is matched; a visible pair glows after 14 seconds
-- no shuffling until 8 tiles are gone or 2 wait in the tray (it would waste the good deal)
-- more lucky moments (from level 1, up to twice per level) and 10 seconds to keep a combo going
+"In één keer goed" for the last 7 days.
 
 ## Closing levels (`RULES.levels.blockedFrom`)
 - A level number closes that level and everything above it for everyone (also saved games; the
@@ -262,20 +241,13 @@ That needs `tools/news.yml` as `.github/workflows/news.yml` in the GitHub repo (
 
 ## Settings per player (family dashboard)
 
-Grandma mode is made of parts (`PARTS` in `rules.js`), each switchable per player on the dashboard's
-⚙️ card: own easier levels, one step gentler, follows the results (last 10 tries), easier after 3
-misses, putting tiles back, the helper, no shuffle at the start, more lucky moments, keeping Hint /
-Schudden / jokers after level 50, and the news. **👵 Super-omamodus** turns them all on (default: only
-grandma; DennisTEST follows her); a part can still be switched off for her, or on for someone else on
-its own (PUK: only "follows the results": easier when he loses a lot, never harder than normal).
+Grandma mode has one part left (`PARTS` in `rules.js`), switchable per player on the dashboard's
+⚙️ card: her own, easier levels (default: only grandma; DennisTEST follows her). The old parts (a gentler
+deal, adaptive difficulty, easier retries, putting tiles back, the helper, later shuffling, extra lucky
+moments, keeping Hint / Schudden / jokers after 50) are gone; old settings for them are ignored.
 Each switch is a small event in `plays/cfg-<pid>` (the newest counts; `playerCfg`, `partOn`,
 `helpFor` in `rules.js`); the app reads it at start, on return and every 30 s. Combos last 10 s for
 everyone.
-
-## The helper's pace (`HELP.care.nudge.pace`)
-
-The glowing pair waits longer when she wins easily (×2.8: about 40 s for a visible pair) and comes
-sooner when she struggles or the level already went wrong once (×0.7), based on her last 8 tries.
 
 ## Tests
 

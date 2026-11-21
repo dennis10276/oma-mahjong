@@ -838,11 +838,8 @@ body.sunny .cz-tray { background: linear-gradient(#f3b73a, #c98317); box-shadow:
 .gift-box { font-size: 86px; line-height: 1.1; cursor: pointer; display: inline-block; animation: giftWiggle 1.2s ease-in-out infinite; }
 .gift-box.open { animation: pop .5s cubic-bezier(.3,1.6,.5,1); font-size: 64px; text-shadow: 0 4px 0 var(--gold-d), 0 0 22px rgba(255,200,0,.8); }
 @keyframes giftWiggle { 0%, 60%, 100% { transform: rotate(0) scale(1); } 70% { transform: rotate(-10deg) scale(1.08); } 80% { transform: rotate(9deg) scale(1.08); } 90% { transform: rotate(-5deg); } }
-/* grandma's helper: a pair that glows until it is matched */
 /* a glowing tile is always free (nothing on top), so it is lifted above the whole pile (tiles use z-index layer*10000+...) */
-#board .tile.nudge { animation: nudgeShake 1.4s ease-in-out infinite; box-shadow: 0 0 0 4px #ffd23f, 0 0 18px 7px rgba(255,205,50,.85); z-index: 1000000 !important; }
 @keyframes nudgeShake { 0%, 45%, 100% { transform: translate(0) rotate(0); } 5% { transform: translateX(-4px) rotate(-5deg); } 12% { transform: translateX(4px) rotate(5deg); } 19% { transform: translateX(-4px) rotate(-4deg); } 26% { transform: translateX(3px) rotate(3deg); } 33% { transform: translateX(-2px) rotate(-2deg); } 40% { transform: translateX(1px) rotate(1deg); } }
-#tray .slot.nudge { animation: nudgeShake 1.4s ease-in-out infinite; box-shadow: 0 0 0 4px #ffd23f, 0 0 14px 5px rgba(255,205,50,.8); }
 /* see-through: the tiles on top of a stuck tile, briefly */
 #board .tile.xray { opacity: .22; }
 #board .tile.lucky { animation: luckyGlow .55s ease-in-out infinite alternate; z-index: 1000001 !important; }

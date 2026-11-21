@@ -138,7 +138,7 @@ module.exports = [
         const txt = s => p.evaluate(s => (document.querySelector(s) || {}).innerText || '', s);
         const alert = await txt('#alerts');
         t.ok(/OmaHanny/.test(alert) && /level 12/.test(alert) && /2× niet gelukt/.test(alert) && /6 stenen over/.test(alert), 'stuck alert', alert);
-        t.ok(/makkelijker/.test(alert), 'says her next try gets easier', alert);
+        t.ok(!/makkelijker/.test(alert), 'no promise of an easier next try any more', alert);
         t.ok(!/Dennis zit vast/.test(alert), 'no alert for Dennis');
         t.ok((await p.evaluate(() => document.title)).startsWith('😟'), 'tab title shows it');
         t.eq(await p.evaluate(() => window.__notes.length), 0, 'no notification for what was already there');
@@ -146,8 +146,7 @@ module.exports = [
         t.ok(/Vastgelopen\s*67%/.test(kpi), 'stuck rate KPI', kpi);
         t.ok(/Tijd per level\s*–/.test(kpi), 'the 0-second win does not count as a time', kpi);
         t.ok(/Totaal gespeeld\s*12:00/.test(kpi) && /per speeldag/.test(kpi), 'all-time play time (420 s + 300 s of tries)', kpi);
-        t.ok(/Moeilijkheid\s*iets makkelijker/.test(kpi) && /won 1 van de laatste 3 pogingen/.test(kpi), 'her difficulty step', kpi);
-        t.ok(/Moeilijkheid aangepast: iets makkelijker/.test(await txt('#feed')), 'the change is in the feed');
+        t.ok(!/Moeilijkheid/.test(kpi), 'no difficulty step tile any more', kpi);
         t.ok(await p.evaluate(() => document.querySelectorAll('#chClose .bar').length) === 2, 'closeness chart has both failed tries');
         const tbl = await txt('#tbl'), feed = await txt('#feed');
         const when = await p.evaluate(() => { const l = analyse(events('pDen')).levels; return { order: l.sort((a, b) => b.last - a.last).map(x => x.lv), ago: Math.round((Date.now() - l.find(x => x.lv === 27).last) / 60e3) }; });
@@ -212,11 +211,11 @@ module.exports = [
     },
   },
   {
-    name: 'dashboard: Super-omamodus and each part of it switched per player',
+    name: 'dashboard: her own levels are the one switch per player; old settings of deleted parts do not break it',
     async run(t, { serve, FakeDB, browser, sleep, WWW }) {
       const site = await serve(path.join(__dirname, '..', 'site'), { '/play/': WWW });
       const f = fixture();
-      f.plays['cfg-pDen'] = { a: { k: 'cfg', t: 1, adapt: true } };          // Dennis: only the part that follows his results
+      f.plays['cfg-pDen'] = { a: { k: 'cfg', t: 1, adapt: true, rescue: true, nudge: true, gentle: true, retry: true, super: false } };   // Dennis: old settings of deleted parts only
       f.scores.pRash = { name: 'Rashmi', avatar: '🌷', level: 5, points: 500, t: Date.now() };   // nothing switched on
       const db = new FakeDB(f);
       const ctx = await browser.newContext({ viewport: { width: 1200, height: 1100 } });
@@ -227,16 +226,14 @@ module.exports = [
         const sw = () => p.evaluate(() => Object.fromEntries([...document.querySelectorAll('#cfgBox .sw')].map(b => [b.dataset.k, b.textContent])));
         t.eq(await p.evaluate(() => document.querySelector('#cfgBox details').open), true, 'grandma: settings open');
         const oma = await sw();
-        t.eq(Object.values(oma).filter(v => v === 'Aan').length, Object.keys(oma).length, 'grandma: Super-omamodus and every part on');
-        t.ok('super' in oma && 'levels' in oma && 'adapt' in oma && 'news' in oma && !('combo' in oma), 'the switches', Object.keys(oma));
+        t.eq(oma, { levels: 'Aan' }, 'grandma: one switch, her own levels, on');
+        t.ok(await p.evaluate(() => document.querySelector('#cfgBox').innerText.includes('Eigen, makkelijkere levels')), 'with its label');
         t.ok(!(await p.evaluate(() => [...document.querySelectorAll('#who option')].some(o => o.value.startsWith('cfg-')))), 'settings are not a player in the list');
-        await p.evaluate(() => document.querySelector('#cfgBox .sw[data-k="news"]').click()); await sleep(400);
+        await p.evaluate(() => document.querySelector('#cfgBox .sw[data-k="levels"]').click()); await sleep(400);
         const post = db.log.find(l => l.m === 'POST' && /plays\/cfg-pOma/.test(l.p));
-        t.ok(post && post.body.k === 'cfg' && post.body.news === false && Object.keys(post.body).length === 3, 'one part off for her: only that is saved', post);
+        t.ok(post && post.body.k === 'cfg' && post.body.levels === false && Object.keys(post.body).length === 3, 'switched off for her: only that is saved', post);
         await p.evaluate(() => { document.querySelector('#who').value = 'pDen'; document.querySelector('#who').dispatchEvent(new Event('change')); }); await sleep(400);
-        t.eq(await p.evaluate(() => document.querySelector('#cfgBox details').open), true, 'Dennis has a part on: open');
-        const den = await sw();
-        t.eq([den.super, den.adapt, den.levels, den.rescue, den.news], ['Uit', 'Aan', 'Uit', 'Uit', 'Uit'], 'Dennis: only "follows the results"');
+        t.eq(await sw(), { levels: 'Uit' }, 'Dennis: old part settings are ignored, one switch, off');
         // someone with nothing switched on: collapsed, with a one-line summary; opening it is remembered
         await p.evaluate(() => { document.querySelector('#who').value = 'pRash'; document.querySelector('#who').dispatchEvent(new Event('change')); }); await sleep(400);
         t.eq(await p.evaluate(() => [document.querySelector('#cfgBox details').open, document.querySelector('#cfgBox summary').innerText.includes('alles uit')]), [false, true], 'nothing switched on: collapsed');

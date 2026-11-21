@@ -6,15 +6,15 @@ const freePair = () => { const G = __mj.G, L = __mj.Layouts; const fr = G.tiles.
 
 module.exports = [
   {
-    name: 'rules: the help table decides who gets which help (here: Dennis gets grandma\'s)',
-    async run(t, { startLevel, fillTray, modal, sleep }) {
-      const p = await t.phone({ state: DENNIS, tune: { HELP: { normal: { rescue: true, gentle: 1 } } } });
+    name: 'rules: grandma is known by her id or an "Oma" name; with no saved settings she gets her own levels and no gentler deal',
+    async run(t, { startLevel, fillTray, modal }) {
+      const p = await t.phone({ state: { name: 'OmaRiet', pid: 'test-oma-new', level: 12 } });
+      t.ok(await p.evaluate(() => isCarePlayer('pmuy4wmdp17hbws', 'x') && isCarePlayer('p1', 'Oma Riet') && !isCarePlayer('p1', 'Dennis')), 'grandma is known by her id or an "Oma" name');
       await startLevel(p, 12);
-      t.eq(await p.evaluate(() => __mj.G.ez), 1, 'the gentle deal');
+      t.eq(await p.evaluate(() => [__mj.G.o.track, __mj.G.ez]), ['care', 0], 'her own levels, no gentler deal on top');
       await fillTray(p);
       const m = await modal(p);
-      t.ok(m && m.buttons.includes('rsBack'), 'putting the tray back is offered', m);
-      t.ok(await p.evaluate(() => isCarePlayer('pmuy4wmdp17hbws', 'x') && isCarePlayer('p1', 'Oma Riet') && !isCarePlayer('p1', 'Dennis')), 'grandma is known by her id or an "Oma" name');
+      t.ok(m && m.buttons.includes('sRetry') && !m.buttons.includes('rsBack'), 'a full tray ends the level', m);
     },
   },
   {
@@ -32,7 +32,7 @@ module.exports = [
     },
   },
   {
-    name: 'rules: from level 50 Hint and Schudden only with 3 stars on every level so far, checked every 5 levels, with a popup (not in grandma mode)',
+    name: 'rules: from level 50 Hint and Schudden only with 3 stars on every level so far, checked every 5 levels, with a popup (the same for grandma)',
     async run(t, { startLevel, solve, click, modal, sleep }) {
       const bar = p => p.evaluate(() => ({ shown: getComputedStyle(document.querySelector('.toolbar')).display !== 'none', open: toolsOpen() }));
       const stars = (to, s = 3, extra = {}) => ({ ...Object.fromEntries(Array.from({ length: to }, (_, i) => [i + 1, s])), ...extra });
@@ -77,28 +77,31 @@ module.exports = [
 
       const g = await t.phone({ state: { name: 'OmaHanny', pid: 'test-oma', level: 60 } });
       await startLevel(g, 60);
-      t.eq(await bar(g), { shown: true, open: true }, 'grandma mode: still there at level 60, without any stars');
+      t.eq(await bar(g), { shown: false, open: false }, 'grandma: the same rule as everyone, gone at level 60 without the stars');
     },
   },
   {
-    name: 'parts: each part of grandma mode works on its own (PUK: only easier after losing); Super-omamodus = all; combos 10 s for everyone',
+    name: 'parts: her own levels are the one part left (switchable); old settings of deleted parts are ignored; combos 10 s for everyone',
     async run(t, { FakeDB, startLevel, sleep }) {
       const db = new FakeDB({ scores: {}, plays: {
-        'test-cfg-puk': { a: { k: 'cfg', t: 1, adapt: true } },
-        'test-cfg-oma': { a: { k: 'cfg', t: 1, news: false } },
+        'test-cfg-puk': { a: { k: 'cfg', t: 1, adapt: true, rescue: true, nudge: true } },
+        'test-cfg-oma': { a: { k: 'cfg', t: 1, news: false }, b: { k: 'cfg', t: 2, rescue: false, adapt: false } },
         'test-cfg-den': { a: { k: 'cfg', t: 1, super: true }, b: { k: 'cfg', t: 2, rescue: false } },
+        'test-cfg-lev': { a: { k: 'cfg', t: 1, levels: true } },
+        'test-cfg-off': { a: { k: 'cfg', t: 1, levels: false } },
       } });
-      const look = p => p.evaluate(async () => { await loadCfg(); const h = help(); return { sup: careMode(), track: levelTrack(), gentle: h.gentle, adapt: !!h.adapt, retry: h.easierAfterFails, rescue: h.rescue, nudge: !!h.nudge, shuffleLater: !!h.shuffleAfter, lucky: h.lucky.fromLevel, tools: h.toolsGoneFrom, news: villageOn(), combo: h.comboMs }; });
+      const look = p => p.evaluate(async () => { await loadCfg(); const h = help(); return { sup: careMode(), track: levelTrack(), keys: Object.keys(h).sort().join(), lucky: h.lucky.fromLevel, tools: h.toolsGoneFrom, combo: h.comboMs }; });
+      const normal = { keys: 'comboMs,jokersGoneFrom,lucky,toolsGoneFrom', lucky: 10, tools: 50, combo: 10000 };
       const puk = await t.phone({ state: { name: 'PUK', pid: 'test-puk', level: 13 }, db });
-      t.eq(await look(puk), { sup: false, track: '', gentle: 0, adapt: true, retry: 0, rescue: false, nudge: false, shuffleLater: false, lucky: 10, tools: 50, news: false, combo: 10000 }, 'PUK: only the adaptive part');
-      // losing a lot makes his next level easier, winning a lot never makes it harder than normal
-      t.eq(await puk.evaluate(() => { S.adapt = { step: 0, hist: [0, 0, 0, 0, 0, 0], since: 6, key: 'L12' }; return easeFor('L13'); }), 0.5, 'losing: half a step easier');
-      t.eq(await puk.evaluate(() => { S.adapt = { step: -2, hist: [1, 1, 1, 1, 1, 1], since: 6, key: 'L12' }; return easeFor('L14'); }), 0, 'winning: never harder than normal');
+      t.eq(await look(puk), { sup: false, track: '', ...normal }, 'PUK: old switches of deleted parts change nothing');
       const oma = await t.phone({ state: { name: 'OmaHanny', pid: 'test-oma', level: 13 }, db });
-      t.eq(await look(oma), { sup: true, track: 'care', gentle: 1, adapt: true, retry: 3, rescue: true, nudge: true, shuffleLater: true, lucky: 1, tools: null, news: false, combo: 10000 }, 'grandma: everything, except the news she had switched off');
+      t.eq(await look(oma), { sup: true, track: 'care', ...normal }, 'grandma: her own levels, the help everyone gets');
       const den = await t.phone({ state: { name: 'Dennis', pid: 'test-den', level: 13 }, db });
-      const d = await look(den);
-      t.ok(d.sup && d.track === 'care' && d.nudge && d.rescue === false, 'Super-omamodus switched on, one part off again', d);
+      t.eq(await look(den), { sup: true, track: 'care', ...normal }, 'Super-omamodus from an old setting: her own levels');
+      const lev = await t.phone({ state: { name: 'Lev', pid: 'test-lev', level: 13 }, db });
+      t.eq((await look(lev)).track, 'care', 'the levels part on its own');
+      const off = await t.phone({ state: { name: 'OmaOff', pid: 'test-off', level: 13 }, db });
+      t.eq((await look(off)).track, '', 'the levels part switched off for a grandma: the normal levels');
       const plain = await t.phone({ state: { name: 'Rashmi', pid: 'test-rash', level: 13 } });
       t.eq((await look(plain)).combo, 10000, 'everyone: 10 seconds for a combo');
     },

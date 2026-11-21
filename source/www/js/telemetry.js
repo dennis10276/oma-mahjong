@@ -71,7 +71,6 @@ function endLevel(r, extra = {}) {
   // Losses keep their board on screen for the retry/review dialog, but are no
   // longer resumable. In particular, hiding the app must not save them again.
   clearCur();
-  adaptNote(r);
   const st = G.st || {};
   logEvt('end', { ...lvInfo(), aid: G.rp && G.rp.id, r, at: G.attempt || 1, dur: Math.round(G.elapsed), sc: G.score, n: G.tiles.length, left: aliveCount(), h: !!G.usedHint, sh: !!G.usedShuffle, rb: G.rescued ? 1 : undefined, ez: G.ez || undefined, mc: st.mc || 0, tm: st.tm || 0, bt: st.bt || 0, fl: st.fl || 0, tp: st.tp || 0, ...extra });
 }
