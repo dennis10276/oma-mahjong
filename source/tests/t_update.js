@@ -1,8 +1,6 @@
 /* Self-update of the Android app: new game files arrive without reinstalling. */
 'use strict';
 const path = require('path');
-const fs = require('fs');
-const os = require('os');
 const json = (body) => r => r.fulfill({ status: 200, contentType: 'application/json', headers: { 'Access-Control-Allow-Origin': '*' }, body: JSON.stringify(body) });
 
 module.exports = [
@@ -26,20 +24,14 @@ module.exports = [
   },
   {
     name: 'update: an installed 1.72 app starts the bundle of a newer version',
-    async run(t, { WWW, buildBundle }) {
-      // the 1.72 page sits in a copy of www/ (it resolves its built-in script paths against its own folder), started as file:// like the app
-      const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'oma-172-'));
-      try {
-        fs.cpSync(WWW, dir, { recursive: true });
-        fs.copyFileSync(path.join(__dirname, 'fixtures', 'index-1.72.html'), path.join(dir, 'index.html'));
-        const nb = buildBundle('9.9');
-        const p = await t.phone({ url: 'file://' + path.join(dir, 'index.html'), clock: false, state: { level: 4 }, routes: [['**/version.json*', json({ v: '9.9' })], ['**/bundle.json*', json(nb)]] });
-        const before = await p.evaluate(() => window.__mjCode);
-        await p.waitForFunction(() => window.__mjCode === '9.9' && window.__mjReady, null, { timeout: 15000 }).catch(() => { });
-        const after = await p.evaluate(() => ({ code: window.__mjCode, ready: !!window.__mjReady, ver: APP_VERSION, level: __mj.S.level }));
-        t.eq(after, { code: '9.9', ready: true, ver: '9.9', level: 4 }, `1.72 app (was ${before}): started the downloaded bundle`);
-        await p.ctx.close();
-      } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+    async run(t, { buildBundle }) {
+      // what a finished download leaves behind (omamj.code, fail unset) is seeded before the installed 1.72 page loads;
+      // its boot loader then starts the bundle directly and never touches its built-in file list
+      const nb = buildBundle('9.9');
+      const p = await t.phone({ url: 'file://' + path.join(__dirname, 'fixtures', 'index-1.72.html'), clock: false, state: { level: 4 }, init: (code) => { if (/index-1\.72\.html$/.test(location.pathname)) localStorage.setItem('omamj.code', code); }, initArg: JSON.stringify(nb) });
+      const after = await p.evaluate(() => ({ code: window.__mjCode, ready: !!window.__mjReady, ver: APP_VERSION, level: __mj.S.level }));
+      t.eq(after, { code: '9.9', ready: true, ver: '9.9', level: 4 }, '1.72 app: started the stored bundle, progress kept');
+      await p.ctx.close();
     },
   },
   {

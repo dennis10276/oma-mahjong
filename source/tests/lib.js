@@ -98,6 +98,7 @@ async function phone(opts = {}) {
   const news = opts.news || { updated: 4102444800000, items: [] };
   await ctx.route('**/news.json*', r => r.fulfill({ status: 200, contentType: 'application/json', headers: { 'Access-Control-Allow-Origin': '*' }, body: JSON.stringify(news) }));
   if (opts.routes) for (const [pat, fn] of opts.routes) await ctx.route(pat, fn);
+  if (opts.init) await ctx.addInitScript(opts.init, opts.initArg);   // runs before every page script, on every page of the context
   const page = await ctx.newPage();
   page.errors = [];
   page.on('pageerror', e => page.errors.push(e.message));
