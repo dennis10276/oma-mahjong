@@ -1,7 +1,7 @@
 'use strict';
 process.env.MECH='1';process.env.NARROW_TRAP='core';
 const fs=require('fs'),path=require('path'),D=require('./detower'),P=require('./finish_all_sources'),Q=require('./towers_proof'),E=require(D.CF+'../engine'),H=require(D.CF+'finish_ten_human_pressure'),Feel=require(D.CF+'feel'),SEP=require(D.CF+'separate');
-const OUT=path.resolve(__dirname,'../../../analysis/builder/finish-all/gate1');
+const OUT=path.resolve(__dirname,'../../../analysis/builder/finish-all/'+(process.env.FINISH_GATE==='2'?'gate2':'gate1'));
 const clone=x=>structuredClone(x);
 function meter(input,playouts=4){const d=H.canonical(input),samples=[3,71,977].map(seed=>Feel.expert(d,{seed,playouts,nodes:150000,ms:250,wrong:process.argv.includes('--wrong'),requireProof:true})),avg=k=>samples.reduce((s,r)=>s+r[k],0)/samples.length;return{mean:avg('mean'),twoPlus:avg('twoPlus'),parks:avg('parks'),wrongPark:avg('wrongPark'),danger:avg('danger'),games:avg('games'),unknown:avg('unresolvedChecks')};}
 function distance(a,b){return Math.abs(a.mean-b.mean)*2+Math.abs(a.twoPlus-b.twoPlus)*3+Math.abs(a.parks-b.parks)*.18+Math.abs(a.wrongPark-b.wrongPark)*3;}
