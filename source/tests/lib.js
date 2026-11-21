@@ -130,6 +130,16 @@ function tune(page, changes) {
   }, changes);
 }
 
+// ---------- a grandma player (name starts with "Oma": every part of grandma mode is on unless switched off) ----------
+// Her dashboard settings (cfg events in the fake database) turn off every part except her own levels, so a test sees her
+// levels and nothing else changing the deal. t_golden_boards.js and t_saves.js share this.
+const PARTS_OFF = ['gentle', 'adapt', 'retry', 'rescue', 'nudge', 'shuffleLater', 'lucky', 'keepTools', 'pro', 'news'];   // every PARTS id except levels
+const GRANDMA = { name: 'OmaTest', pid: 'test-oma' };
+const GRANDMA_CFG = Object.fromEntries(PARTS_OFF.map(p => [p, false]));
+// dashboard settings {part: bool} as the events the game reads from plays/<cfg key> (a test- player's key is test-cfg-...)
+const cfgEvents = cfg => Object.fromEntries(Object.entries(cfg).map(([k, v], i) => ['e' + i, { k: 'cfg', t: 1000 + i, [k]: v }]));
+const cfgPath = pid => pid.startsWith('test-') ? 'test-cfg-' + pid.slice(5) : 'cfg-' + pid;
+
 // ---------- playing ----------
 const G = (page, fn, arg) => page.evaluate(fn, arg);
 async function startLevel(page, L, fresh = true) {
@@ -188,4 +198,4 @@ function buildBundle(v) {
   return { v, css: fs.readFileSync(path.join(WWW, 'style.css'), 'utf8'), body, js };
 }
 
-module.exports = { ROOT, WWW, CHROME, TODAY, IPHONE_UA, sleep, serve, FakeDB, setup, teardown, phone, tune, startLevel, closeModal, solve, fillTray, modal, click, buildBundle, get browser() { return browser; }, get server() { return server; } };
+module.exports = { PARTS_OFF, GRANDMA, GRANDMA_CFG, cfgEvents, cfgPath, ROOT, WWW, CHROME, TODAY, IPHONE_UA, sleep, serve, FakeDB, setup, teardown, phone, tune, startLevel, closeModal, solve, fillTray, modal, click, buildBundle, get browser() { return browser; }, get server() { return server; } };

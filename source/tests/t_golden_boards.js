@@ -7,7 +7,6 @@ const fs = require('fs'), path = require('path'), crypto = require('crypto');
 const FIXTURE = path.join(__dirname, 'fixtures', 'golden-boards.json');
 const range = (a, b) => Array.from({ length: b - a + 1 }, (_, i) => a + i);
 const dates = (() => { const out = []; for (let d = new Date(Date.UTC(2026, 9, 1)); d <= new Date(Date.UTC(2026, 10, 29)); d = new Date(d.getTime() + 864e5)) out.push(d.toISOString().slice(0, 10)); return out; })();
-const PARTS_OFF = ['gentle', 'adapt', 'retry', 'rescue', 'nudge', 'shuffleLater', 'lucky', 'keepTools', 'pro', 'news'];   // every PARTS id except levels
 const SPECIALS = { gold: 1, gift: 1, joker: 1, joker2: 1, ice: 1, lock: 1, clock: 1, clockMoves: 1, trayPair: 1 };
 
 const SETS = [
@@ -40,7 +39,7 @@ async function dealAll({ levels, dates }) {
 module.exports = [{
   name: 'golden boards: every level and daily puzzle deals exactly as recorded',
   cpu: true,
-  async run(t, { FakeDB }) {
+  async run(t, { FakeDB, GRANDMA, GRANDMA_CFG, cfgEvents, cfgPath }) {
     const record = process.env.GOLDEN === 'record';
     const fixture = record ? {} : JSON.parse(fs.readFileSync(FIXTURE, 'utf8'));
     const got = {};
@@ -49,9 +48,8 @@ module.exports = [{
       const t0 = Date.now();
       let db, state;
       if (grandma) {
-        const ev = {}; PARTS_OFF.forEach((p, i) => ev['e' + i] = { k: 'cfg', t: 1000 + i, [p]: false });
-        db = new FakeDB({ scores: {}, plays: { 'test-cfg-oma': ev } });
-        state = { name: 'OmaTest', pid: 'test-oma', seenSp: SPECIALS };
+        db = new FakeDB({ scores: {}, plays: { [cfgPath(GRANDMA.pid)]: cfgEvents(GRANDMA_CFG) } });
+        state = { ...GRANDMA, seenSp: SPECIALS };
       } else { db = new FakeDB({ scores: {} }); state = { seenSp: SPECIALS }; }
       const p = await t.phone({ state: { seenTray: true, seenDown: true, ...state }, size: set.size, db });
       if (grandma) await p.waitForFunction(() => Object.keys(S.cfg || {}).length >= 10, null, { timeout: 8000 });
