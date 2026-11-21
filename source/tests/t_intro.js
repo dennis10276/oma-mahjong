@@ -26,7 +26,7 @@ module.exports = [
     t.eq(tiles.map(x => x.html), own, 'tiles in the player\'s own theme');
     t.ok(await p.evaluate(() => $('#modalBox .intro-film').style.background.length > 0), 'on the player\'s own background');
     t.ok(await p.evaluate(() => !!$('#modalBox p.intro-line') && $('#modalBox p.intro-line').innerHTML === tx('intro_ice')), 'one line under the film says what to do');
-    t.ok(await p.evaluate(() => INTRO_FILM_MS >= 6000 && INTRO_FILM_MS <= 8000), 'a quick film: 6 to 8 seconds');
+    t.ok(await p.evaluate(() => INTRO_FILM_MS >= 4000 && INTRO_FILM_MS <= 5000), 'a quick film: 4 to 5 seconds');
     t.ok(await p.evaluate(() => $('#modalBox').scrollHeight <= $('#modalBox').clientHeight + 1), 'film, Dutch line and button fit the phone without scrolling');
     // back and taps on the board do not get around it
     await p.evaluate(() => { handleBack(); $('#modal').click(); });
@@ -36,9 +36,9 @@ module.exports = [
     t.ok(await p.locator('#ntGo').isDisabled(), 'still locked just before the film ends');
     await sleep(Math.max(0, opened + len + 500 - Date.now()));
     t.ok(await p.locator('#ntGo').isEnabled(), 'the button works after the film has played once');
-    t.ok(await filmTiles(p).then(ts => ts.every(x => !x.ice && x.hidden)), 'by the end the ice melted and every tile was taken');
-    t.eq(await p.evaluate(() => introRun.log), [['frozen', 'ice'], ['take', 'side'], ['crack', 'ice', 1], ['take', 'up'], ['melt', 'ice'], ['pair', 'side', 'up'],
-      ['covered', 'ice'], ['take', 'top'], ['take', 'ice']], 'the film shows every ice rule in order: frozen, beside, above, thick ice, still covered, freed');
+    t.ok(await filmTiles(p).then(ts => ts.every(x => !x.ice) && ts.filter(x => !x.hidden).length === 1), 'by the end the ice melted and every tile but the one beside it was taken');
+    t.eq(await p.evaluate(() => introRun.log), [['frozen', 'ice'], ['take', 'up'], ['crack', 'ice', 1], ['take', 'down'], ['melt', 'ice'], ['pair', 'up', 'down'],
+      ['covered', 'ice'], ['take', 'top'], ['take', 'ice']], 'the film shows every ice rule in order: frozen, above, below, thick ice, still covered, freed');
     await drain(p);
     const shown = helpMessages(p, pid).at(-1);
     t.eq(shown && [shown.topic, shown.why, shown.action], ['ice', 'intro', 'shown'], 'the dashboard sees the intro');
@@ -87,10 +87,10 @@ module.exports = [
       const rel = j => { const a = tiles[I], b = tiles[j]; return a.z !== b.z ? 'layer' : a.y === b.y ? 'beside' : 'above/below'; };
       return { touching: inb[I].map(j => [ids[j], rel(j)]).sort(), onTop: nb.above[I].map(j => ids[j]), outcome, need: ice[I], tiles: tiles.length };
     });
-    t.eq(r.touching, [['side', 'beside'], ['top', 'layer'], ['up', 'above/below']], 'the touching tiles are one beside, one above in the same layer and one in the layer on top');
+    t.eq(r.touching, [['down', 'above/below'], ['side', 'beside'], ['top', 'layer'], ['up', 'above/below']], 'the touching tiles: one above and one below in the same layer, one beside, one in the layer on top');
     t.eq(r.onTop, ['top'], 'the tile on the next layer lies on the frozen tile');
     t.eq(r.need, 2, 'thick ice: two touching tiles must go');
     t.ok(r.tiles <= 8, 'at most 8 tiles');
-    t.eq(r.outcome, [['ice', false], ['side', true], ['up', true], ['ice', false], ['top', true], ['ice', true]], 'each tap does what the game does');
+    t.eq(r.outcome, [['ice', false], ['up', true], ['down', true], ['ice', false], ['top', true], ['ice', true]], 'each tap does what the game does');
   }},
 ];

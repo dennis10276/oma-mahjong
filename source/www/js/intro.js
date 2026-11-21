@@ -12,7 +12,7 @@
      line:  the text key of the line under the film (lang.js) */
 'use strict';
 
-const INTRO_FILM_MS = 7200;      // one play of a film
+const INTRO_FILM_MS = 5000;      // one play of a film (Dennis: quick, "it goes so slow")
 const INTRO_REST_MS = 1500;      // the pause before it plays once more
 const INTRO_PLAYS = 2;           // then it rests on its last picture
 const INTRO_FILMS = {
@@ -23,23 +23,24 @@ const INTRO_FILMS = {
     tiles: [
       ['up', 8, 2, 0, 0],               // above it in the same layer
       ['ice', 31, 2, 2, 0, 2],          // the tile under thick ice
-      ['side', 8, 4, 2, 0],             // beside it
-      ['top', 27, 1, 3, 1],             // lying on it (half over it, one layer up)
+      ['down', 8, 2, 4, 0],             // below it in the same layer (same picture as up: they make a pair)
+      ['side', 12, 4, 2, 0],            // beside it (also touching; it stays)
+      ['top', 27, 1, 2, 1],             // lying on it (half over it, one layer up)
     ],
     steps: [
-      [150, F => F.point('ice')],
-      [550, F => F.tap('ice')],         // frozen (and covered): it shakes, the three touching tiles light up
-      [1500, F => F.point('side')],
-      [1900, F => F.tap('side')],       // a tile beside it leaves: ❄️❄️ cracks to ❄️
-      [2500, F => F.point('up')],
-      [2900, F => F.tap('up')],         // a tile above it leaves: the ice melts (and side + up are a pair)
-      [3600, F => F.point('ice')],
-      [4000, F => F.tap('ice')],        // thawed, but a tile still lies on it: it shakes, that tile lights up
-      [4800, F => F.point('top')],
-      [5200, F => F.tap('top')],        // the tile on top goes
-      [5800, F => F.point('ice')],
-      [6200, F => F.tap('ice')],        // now it is free: it can be taken
-      [6800, F => F.rest()],
+      [100, F => F.point('ice')],
+      [400, F => F.tap('ice')],         // frozen (and covered): it shakes, all four touching tiles light up
+      [1000, F => F.point('up')],
+      [1300, F => F.tap('up')],         // the tile above it leaves: ❄️❄️ cracks to ❄️
+      [1650, F => F.point('down')],
+      [1950, F => F.tap('down')],       // the tile below it leaves: the ice melts (up + down are a pair)
+      [2550, F => F.point('ice')],
+      [2850, F => F.tap('ice')],        // thawed, but a tile still lies on it: it shakes, that tile lights up
+      [3350, F => F.point('top')],
+      [3650, F => F.tap('top')],        // the tile on top goes
+      [4050, F => F.point('ice')],
+      [4350, F => F.tap('ice')],        // now it is free: it can be taken
+      [4800, F => F.rest()],
     ],
     line: 'intro_ice',
   },
@@ -109,11 +110,11 @@ function introActor(el, film, later, log) {
   const iceLeft = i => { let gone = 0; for (const j of inb[i]) if (!alive[j]) gone++; return Math.max(0, need[i] - gone); };
   const left = need.slice();
   // the size: the whole pile with the tray above it, small enough for the pop-up on a small phone
-  const ratio = 1.24, dF = 0.14;
+  const ratio = 1.24, dF = 0.24;     // (a bigger layer step than the board's, so a tile clearly lies on another on a phone)
   const ux = t => t.x / 2 - t.z * dF, uy = t => t.y / 2 * ratio - t.z * dF;
   const minX = Math.min(...tiles.map(ux)), maxX = Math.max(...tiles.map(t => ux(t) + 1));
   const minY = Math.min(...tiles.map(uy)), maxY = Math.max(...tiles.map(t => uy(t) + ratio));
-  const W = el.clientWidth || 300, maxH = Math.max(200, Math.min(340, innerHeight * 0.42));
+  const W = el.clientWidth || 300, maxH = Math.max(200, Math.min(380, innerHeight * 0.5));
   const tw = Math.min(80, (W - 24) / (maxX - minX + 1.2), (maxH - 40) / (maxY - minY + 1.25)), d = Math.max(2, tw * 0.085), sw = Math.round(tw * 0.64);
   el.dataset.step = 0;
   el.innerHTML = `<div class="intro-tray" style="--slotw:${sw}px;--sfs:${(sw * 0.62).toFixed(1)}px">${'<span class="intro-slot"></span>'.repeat(4)}</div>` +
@@ -127,7 +128,7 @@ function introActor(el, film, later, log) {
   const rect = tiles.map(t => ({ l: ox + ux(t) * tw, t: top + uy(t) * tw, w: tw - 1.5, h: tw * ratio - 1.5 }));
   const obKindOf = i => left[i] ? (left[i] > 1 ? 'ice2' : 'ice') : '';
   board.innerHTML = tiles.map((t, i) => { const r = rect[i];
-    return `<div class="tile" data-id="${ids[i]}" style="left:${r.l.toFixed(1)}px;top:${r.t.toFixed(1)}px;width:${r.w.toFixed(1)}px;height:${r.h.toFixed(1)}px;z-index:${t.z * 10000 + t.y * 100 + t.x}"><div class="face">${Tiles.faceHTML(S.theme, faces[i])}</div>${obHTML(obKindOf(i))}</div>`;
+    return `<div class="tile${t.z ? ' intro-raised' : ''}" data-id="${ids[i]}" style="left:${r.l.toFixed(1)}px;top:${r.t.toFixed(1)}px;width:${r.w.toFixed(1)}px;height:${r.h.toFixed(1)}px;z-index:${t.z * 10000 + t.y * 100 + t.x}"><div class="face">${Tiles.faceHTML(S.theme, faces[i])}</div>${obHTML(obKindOf(i))}</div>`;
   }).join('');
   const els = ids.map(id => board.querySelector(`.tile[data-id="${id}"]`));
   const mid = i => ({ x: rect[i].l + rect[i].w / 2, y: rect[i].t + rect[i].h / 2 });
@@ -150,7 +151,7 @@ function introActor(el, film, later, log) {
     s.dataset.i = i === undefined ? '' : i;
     s.innerHTML = i === undefined ? '' : `<div class="tmini${had !== String(i) ? ' land' : ''}">${Tiles.faceHTML(S.theme, faces[i])}</div>`;
   });
-  const flash = (list, cls) => { list.forEach(j => { els[j].classList.remove(cls); void els[j].offsetWidth; els[j].classList.add(cls); }); later(1300, () => list.forEach(j => els[j].classList.remove(cls))); };
+  const flash = (list, cls) => { list.forEach(j => { els[j].classList.remove(cls); void els[j].offsetWidth; els[j].classList.add(cls); }); later(900, () => list.forEach(j => els[j].classList.remove(cls))); };
   // the ice reacts to tiles leaving the board (specials.js updateObstacles): one layer per touching tile gone
   const thaw = () => need.forEach((n, i) => {
     if (!left[i] || !alive[i]) return;
@@ -166,16 +167,16 @@ function introActor(el, film, later, log) {
     alive[i] = 0; inTray.push(i); paintBlocked(); log.push(['take', ids[i]]);
     e.classList.remove('blocked', 'obhint', 'blocker', 'shake'); e.style.zIndex = 900000; e.classList.add('intro-moving');
     e.style.transform = `translate(${(to.x - from.x).toFixed(1)}px, ${(to.y - from.y).toFixed(1)}px) scale(${sc.toFixed(3)})`;
-    later(220, thaw);
-    later(380, () => {
+    later(150, thaw);
+    later(280, () => {
       e.classList.add('hidden'); paintTray();
       const twin = inTray.find(j => j !== i && faces[j] === faces[i]);
       if (twin === undefined) return;
-      later(200, () => {
+      later(120, () => {
         const a = slotAt(inTray.indexOf(twin)), b = slotAt(inTray.indexOf(i));
         [twin, i].forEach(j => { const m = slots[inTray.indexOf(j)].firstChild; if (m) m.classList.add('popout'); });
         sparkle((a.x + b.x) / 2, (a.y + b.y) / 2, ['✨']); log.push(['pair', ids[twin], ids[i]]);
-        later(250, () => { inTray.splice(inTray.indexOf(twin), 1); inTray.splice(inTray.indexOf(i), 1); paintTray(); });
+        later(230, () => { inTray.splice(inTray.indexOf(twin), 1); inTray.splice(inTray.indexOf(i), 1); paintTray(); });
       });
     });
   };

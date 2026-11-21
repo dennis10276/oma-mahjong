@@ -15,7 +15,7 @@ const RUNS = [
   { name: 'tablet-fruit', size: [768, 1024], theme: 'fruit', bg: 'sunrise', lang: 'en' },
 ];
 // key moments, in ms after the film opened
-const SHOTS = [[900, '1-frozen-tap'], [2350, '2-cracked-beside'], [3500, '3-melted-above'], [4500, '4-still-covered'], [7400, '5-done-button']];
+const SHOTS = [[600, '1-frozen-tap'], [1650, '2-cracked-above'], [2350, '3-melted-below'], [3100, '4-still-covered'], [5300, '5-done-button']];
 
 (async () => {
   fs.mkdirSync(OUT, { recursive: true });
@@ -44,7 +44,7 @@ const SHOTS = [[900, '1-frozen-tap'], [2350, '2-cracked-beside'], [3500, '3-melt
         await p.screenshot({ path: path.join(OUT, `${r.name}-${label}.png`) });
       }
       // the second play, then a tap on the button
-      await lib.sleep(Math.max(0, t0 + 16500 - Date.now()));
+      await lib.sleep(Math.max(0, t0 + 12000 - Date.now()));
       await p.locator('#ntGo').click();
       await lib.sleep(900);
       const video = p.video();
