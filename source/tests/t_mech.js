@@ -139,8 +139,8 @@ module.exports = [
       for (const L of [20, 30, 34]) { await startLevel(p, L); t.eq(await p.evaluate(() => __mj.G.ob), null, `level ${L}: no ice or locks`); }
       const q = await t.phone({ state: { ...DENNIS, level: 40, seenSp: { gold: 1, joker2: 1 } } });
       await q.evaluate(() => { localStorage.removeItem('omamj.cur'); __mj.startLevel(35); }); await sleep(1800);
-      const m = await modal(q);
-      t.ok(m && /Bevroren/.test(m.title), 'ice explained', m);
+      const m = await q.evaluate(() => $('#introPanel h2') && $('#introPanel h2').textContent);   // (the intro film on the game screen, js/intro.js)
+      t.ok(/Bevroren/.test(m || ''), 'ice explained', m);
     },
   },
   {

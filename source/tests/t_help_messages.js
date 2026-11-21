@@ -12,7 +12,7 @@ module.exports = [
       await startLevel(p, 80);
       for (const kind of ['ice', 'lock', 'trayPair', 'clock']) {
         await p.evaluate(k => k === 'clock' ? showClockLesson() : showTileLesson(k), kind);
-        const expected = await p.evaluate(() => [...$('#modalBox').querySelectorAll('p:not(.lesson-reminder)')].map(p => p.innerText.trim()).filter(Boolean).join('\n\n'));
+        const expected = await p.evaluate(() => [...($('#introPanel') || $('#modalBox')).querySelectorAll('p:not(.lesson-reminder)')].map(p => p.innerText.trim()).filter(Boolean).join('\n\n'));
         await drain();
         const shown = messages().at(-1);
         t.eq([shown.topic, shown.why, shown.action, shown.lang, shown.lv, shown.at], [kind, 'intro', 'shown', lang, 80, 1], 'shown message context');

@@ -42,7 +42,7 @@ module.exports = [
     await click(p, '#ntGo');
     await p.evaluate(() => { localStorage.removeItem(CZ_MINE); closeModal(); });
     await p.evaluate(() => showLessonMenu()); await click(p, '.cz-tilepick[data-tile="ice"]');
-    t.eq(await p.locator('.intro-film').getAttribute('data-kind'), 'ice', 'tile explanations open from the same menu (ice: the new intro film)');
+    t.eq(await p.locator('#introPanel').getAttribute('data-kind'), 'ice', 'tile explanations open from the same menu (ice: the new intro film)');
     await click(p, '#ntGo'); await p.evaluate(() => closeModal());
     for (const lv of [65, 95]) {
       await p.evaluate(lv => { S.fails['L' + lv] = 3; save(); }, lv);

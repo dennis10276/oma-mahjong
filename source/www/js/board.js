@@ -11,7 +11,7 @@ const CUR_V = 7;
 const loadCur = () => { try { const c = JSON.parse(localStorage.getItem(CUR) || 'null'); return c && c.v === CUR_V && !c.rp?.closed ? c : null; } catch (e) { return null; } };
 const clearCur = () => { try { localStorage.removeItem(CUR); } catch (e) { } };
 function saveCur() {
-  if (!G || G.done || G.logged) return;
+  if (!G || G.done || G.logged || G.film) return;     // (G.film: the intro film's tiny level, js/intro.js)
   syncClock();
   try {
     replayCapture();
@@ -165,10 +165,12 @@ function takeOff(i) { G.alive[i] = 0; G.down[i] = 0; if (G.peek === i) G.peek = 
 function afterFlight(ms, fn) { G.flights++; afterLogic(); setTimeout(() => { G.flights--; fn(); afterLand(); }, ms); }
 function afterLogic() {
   updateBlocked(); updateObstacles(); updateProgress(); checkClock();
+  if (G.film) return;
   if (aliveCount() === 0 && G.tray.length === 0) { G.done = true; clearCur(); return; }
   saveCur();
 }
 function afterLand() {
+  if (G.film) return;
   if (G.done) { if (G.flights === 0 && !G.winShown) { G.winShown = true; setTimeout(win, 450); } return; }
   if (G.flights === 0) { checkStuck(); obRelief(); jokerLeftover(); maybeLucky(); maybeAutoFinish(); }
 }
@@ -264,11 +266,13 @@ function boardGeo(W, H) {
   // At the top, 12 px between the tray and the pile: the tray's wooden edge and shadow hang 4-8 px below it, and with 2 px a
   // tall pile's top row sat under that edge (1.69, Gerda's phone, level 219; Dennis 2026-11-15). 2 px at the bottom.
   const TOP = 12, BOT = 2;
-  const twW = (W - 4) / (r - l + depthF + 0.04), twH = (H - TOP - BOT) / (b - t0 + depthF * 1.4 + 0.04), tw = Math.min(150, twW, twH);
+  // (maxTw: the intro film's tiles are as big as those of the player's own level, js/intro.js)
+  const twW = (W - 4) / (r - l + depthF + 0.04), twH = (H - TOP - BOT) / (b - t0 + depthF * 1.4 + 0.04), tw = Math.min(G.maxTw || 150, twW, twH);
   const th = tw * ratio, dz = tw * dF, d = Math.max(3, tw * depthF);
   // centred on what is really there: even space left and right, and between the tray and the buttons below (below the tray's edge)
   const ox = (W - (r - l) * tw - d) / 2 - l * tw, oy = TOP + (H - TOP - BOT - (b - t0) * tw - d * 1.4) / 2 - t0 * tw;
-  return { tw, th, dz, d, ox, oy, tall: twH < twW && twH < 150 };   // tall: the height of the pile area decides the tile size
+  // tall: the height of the pile area decides the tile size (the intro film keeps what the player's own level had)
+  return { tw, th, dz, d, ox, oy, tall: G.film ? G.tall : twH < twW && twH < 150 };
 }
 // remember the positions (t.r, G.tw); move the tiles that are on the screen already when asked
 function applyGeo(geo, move) {
@@ -541,6 +545,7 @@ function showDownTip(after = null) {
 
 // ---------- a pair is made ----------
 function onMatch(c, face, gold) {
+  if (G.film) { FX.burst(c.x, c.y - 10, 20, false); Sound.match(1); return; }   // the intro film: the pair pops, nothing is counted
   const now = performance.now(), comboMs = help().comboMs, sc = RULES.score;
   G.combo = now - G.lastMatch < comboMs ? G.combo + 1 : 1;
   G.lastMatch = now;

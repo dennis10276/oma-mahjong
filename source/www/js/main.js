@@ -66,6 +66,7 @@ document.addEventListener('visibilitychange', () => {
 
 // Android back button (called from the native wrapper). Return true when handled.
 window.handleBack = () => {
+  if (introRun) return true;        // the intro film (js/intro.js) ends with its button
   if (!modalFree()) { if (modalClosable) closeModal(); return true; }
   if (curScreen === 'game') { saveCur(); show('home'); return true; }
   if (curScreen !== 'home') { show('home'); return true; }

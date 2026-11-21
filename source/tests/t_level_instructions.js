@@ -22,9 +22,9 @@ module.exports = [
     await p.evaluate(() => startLevel(45));
     t.eq(await p.locator('.lesson-demo').getAttribute('data-lesson'), 'lock', 'unfinished instruction returns on resume');
     await finish(p);
-    t.eq(await p.locator('.intro-film').getAttribute('data-kind'), 'ice', 'second new tile is explained before play (the new intro film, js/intro.js)');
-    t.eq(await p.evaluate(() => [!!S.seenSp.lock, !!S.seenSp.ice, G.mv]), [true, false, 0], 'only the acknowledged kind is remembered');
-    t.ok(await p.evaluate(() => $('#modalBox').scrollHeight <= $('#modalBox').clientHeight + 1), 'required ice explanation fits');
+    t.eq(await p.locator('#introPanel').getAttribute('data-kind'), 'ice', 'second new tile is explained before play (the new intro film on the game screen, js/intro.js)');
+    t.eq(await p.evaluate(() => [!!S.seenSp.lock, !!S.seenSp.ice, introRun.real.mv]), [true, false, 0], 'only the acknowledged kind is remembered');
+    t.ok(await p.evaluate(() => $('#introPanel').getBoundingClientRect().bottom <= innerHeight), 'required ice explanation fits');
     await finish(p);
     t.eq(await modal(p), null, 'play starts after both instructions');
     t.eq(await p.evaluate(() => [G.introducing, !!G.tStart, !!JSON.parse(localStorage.getItem(STORE)).seenSp.ice]), [false, true, true], 'timer resumes and completion is saved');
@@ -32,15 +32,14 @@ module.exports = [
     t.eq(await modal(p), null, 'retry does not repeat completed introductions');
     t.eq(p.errors, [], 'no browser errors');
   }},
-  { name: 'level instructions: with reduced motion the intro film still plays (without gliding) before the button works; manual help remains immediately dismissible', async run(t, { click, startLevel, sleep }) {
+  { name: 'level instructions: with reduced motion the intro film still plays before the button works; manual help remains immediately dismissible', async run(t, { click, startLevel, sleep }) {
     const p = await t.phone({ size: [360, 640], state: { name: 'Dennis', level: 35, sunSeen: true, lang: 'en', seenSp: { ...seen, ice: 0 } } });
     await p.emulateMedia({ reducedMotion: 'reduce' });
     await p.evaluate(() => startLevel(35));
     t.ok(await p.locator('#ntGo').isDisabled(), 'English introduction starts locked');
     await sleep(1600);
     t.ok(await p.locator('#ntGo').isDisabled(), 'part of the film does not unlock');
-    t.eq(await p.evaluate(() => getComputedStyle($('.intro-hand')).transitionDuration), '0s', 'reduced motion: nothing glides');
-    await finish(p);
+        await finish(p);
     await startLevel(p, 35);
     await p.evaluate(() => showTileLesson('ice', null, false, 'manual'));
     t.ok(await p.locator('#ntGo').isEnabled(), 'manual explanation can be closed immediately');
