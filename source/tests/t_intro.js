@@ -86,6 +86,16 @@ const NEXT_FILMS = {
 };
 
 module.exports = [
+  { name: 'intro: every film is built like a real pile: a tile in a higher layer rests on 4 tiles or bridges 2, never a tower or on one corner', async run(t) {
+    const p = await t.phone({ state: { name: 'Dennis', level: 40, sunSeen: true, seenSp: seen } });
+    // layouts.js buildOnce: shiftXY (on 4, half a tile both ways), shiftX / shiftY (a bridge over 2); 'stack' (towers) only in some hard levels
+    const bad = await p.evaluate(() => Object.entries(INTRO_FILMS).flatMap(([kind, film]) => film.tiles.filter(([, , , , z]) => z >= 1).map(([id, , x, y, z]) => {
+      const has = (dx, dy) => film.tiles.some(b => b[4] === z - 1 && b[2] === x + dx && b[3] === y + dy);
+      const on4 = has(-1, -1) && has(1, -1) && has(-1, 1) && has(1, 1), bridge = (has(-1, 0) && has(1, 0)) || (has(0, -1) && has(0, 1));
+      return on4 || bridge ? null : `${kind} ${id} (${x},${y},${z})`;
+    })).filter(Boolean));
+    t.eq(bad, [], 'every upper tile rests like a tile of a real level');
+  }},
   { name: 'intro: the first ice film plays in a pop-up over the level, must be watched before the button works, and leaves the level as it was', async run(t) {
     const pid = 'test-intro-ice';
     const p = await t.phone({ state: { name: 'Dennis', pid, level: 35, sunSeen: true, theme: 'fruit', seenSp: { ...seen, ice: 0 } } });
@@ -147,7 +157,7 @@ module.exports = [
     await sleep(Math.max(0, opened + len + 500 - Date.now()));
     t.ok(await p.locator('#ntGo').isEnabled(), 'the button works after the film has played once');
     t.eq(await p.evaluate(() => introRun.log), await p.evaluate(takeableOutcome), 'every tap of the film does in the game what layouts.js takeable says');
-    t.eq(await p.evaluate(() => [Object.keys(G.ob.left).filter(k => G.ob.left[k]).length, INTRO_FILMS.ice.tiles.filter((x, i) => G.alive[i]).map(x => x[0])]), [0, ['ice', 'side']], 'the ice melted; the frozen tile and the tile beside it stay');
+    t.eq(await p.evaluate(() => [Object.keys(G.ob.left).filter(k => G.ob.left[k]).length, INTRO_FILMS.ice.tiles.filter((x, i) => G.alive[i]).map(x => x[0])]), [0, ['side', 'ice', 'sup', 'low']], 'the ice melted; the frozen tile and the tiles under the top one stay');
     t.eq(await p.evaluate(() => JSON.stringify(introRun.real.rp.events) === window.__rp), true, 'no replay frames for the level while the film plays');
     await drain(p);
     const shown = helpMessages(p, pid).at(-1);
@@ -231,7 +241,7 @@ module.exports = [
       return { thaw, hidden, touching: inb[I].map(j => [ids[j], rel(j)]).sort(), apart, onTop: nb.above[I].map(j => ids[j]), need: film.tiles[I][5], tiles: tiles.length, taps: taps.length,
         early: early.length === 2 && film.tiles[early[0]][1] === film.tiles[early[1]][1] && early.every(j => !inb[I].includes(j)) };
     });
-    t.eq(r.touching, [['side', 'beside'], ['top', 'layer'], ['up', 'above/below']], 'the touching tiles: one beside, one above in the same layer, one in the layer on top');
+    t.eq(r.touching, [['low', 'above/below'], ['side', 'beside'], ['top', 'layer'], ['up', 'above/below']], 'the touching tiles: one beside, one half above and one below in the same layer, one in the layer on top');
     t.eq(r.thaw, [['up', 1, 2, 0], ['top', 1, 1, 1]], 'the tiles that melt it touch it only a little: one is half above it, then one lies on a corner of it', r.thaw);
     t.ok(r.apart.some(([, dx, dy, dz]) => dx === 2 && dy === 2 && dz === 0), 'a diagonal corner tile that does not touch it', r.apart);
     t.ok(r.apart.some(([, dx, dy, dz]) => dx >= 4 && dy === 0 && dz === 0), 'a tile further along its row that does not touch it', r.apart);

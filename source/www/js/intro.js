@@ -29,20 +29,23 @@ const INTRO_FILMS = {
      have left the board. For a skilled player it shows only what is not obvious (Dennis 2026-11-22): a tap on a
      frozen tile lights up the tiles that thaw it; a diagonal tile (two across and two down) does not count; a tile
      that touches it only a little does: one half above it, one lying on just a corner of it. ❄️❄️ needs two. It ends
-     on the melt (taking a free tile is obvious). The board first rests a moment (the player takes it in), a tap
+     on the melt (taking a free tile is obvious). The tile on the next layer rests on 4 tiles, as in a real pile (Dennis
+   2026-11-22: no towers), the ice is one of them. The board first rests a moment (the player takes it in), a tap
      every 0.7 s, after a step with a caption a pause so it can be read (shown fully about 0.85 s), at most 7 s
      (Dennis 2026-11-22: 0.7 s; "start a bit slower before popping up. The player needs to process it. 7 s is okay"). */
   ice: {
     tiles: [
       ['up', 8, 3, 0, 0],               // half above it (half a tile to the right): touching (a pair with top)
+      ['side', 12, 0, 2, 0],            // beside it: touching (it stays, under top)
       ['ice', 31, 2, 2, 0, 2],          // the tile under thick ice
-      ['side', 12, 4, 2, 0],            // beside it: touching (it stays)
       ['far', 20, 6, 2, 0],             // further along its row: not touching (a pair with corner)
+      ['sup', 2, 0, 4, 0],              // diagonal, under top: not touching (it stays)
+      ['low', 27, 2, 4, 0],             // below it: touching (it stays, under top)
       ['corner', 20, 4, 4, 0],          // diagonal, two across and two down: not touching
-      ['top', 8, 1, 1, 1],              // on just its upper left corner, one layer up: touching (most of the ice and its ❄️ show)
+      ['top', 8, 1, 3, 1],              // one layer up on side, ice, sup and low, as in a real pile: on just the ice's lower left corner (its ❄️ shows)
     ],
     taps: [
-      [1300, 'ice', 'ic_tap'],          // frozen (and covered): it shakes, the three tiles that thaw it light up
+      [1300, 'ice', 'ic_tap'],          // frozen (and covered): it shakes, the four tiles that thaw it light up
       [2750, 'far'],                    // a pair that does not touch it leaves: the ice stays as it is
       [3450, 'corner', 'ic_diagonal'],  // (the diagonal one last, so the caption comes with its own tap)
       [4900, 'up', 'ic_half'],          // the tile half above it leaves: ❄️❄️ cracks to ❄️
@@ -60,15 +63,16 @@ const INTRO_FILMS = {
       ['k1', 4, 2, 0, 0],               // a key, free
       ['l2', 8, 6, 0, 0],               // a second lock: it opens with the first
       ['d', 20, 0, 2, 0],               // a pair with c
-      ['k2', 4, 4, 2, 0],               // the other key, under c
-      ['c', 20, 4, 2, 1],               // lies right on top of k2
+      ['e', 27, 2, 2, 0],               // under c (it stays)
+      ['k2', 4, 4, 2, 0],               // the other key, half under c
+      ['c', 20, 3, 2, 1],               // a bridge over e and k2, one layer up
     ],
     locks: ['l1', 'l2'], keys: ['k1', 'k2'],
     taps: [
       [1300, 'l1', 'lc_tap'],           // locked: it shakes, both keys wiggle, c turns see-through over the buried key
       [2750, 'k1', 'lc_one'],           // one key off the board: the locks stay shut
       [4200, 'd'],
-      [4900, 'c'],                      // a pair: the buried key is free now
+      [4900, 'c'],                      // a pair: the key under it is free now
       [5600, 'k2', 'lc_both'],          // the second key (a pair with k1): both locks spring open
     ],
     ms: 7000,
@@ -102,11 +106,11 @@ const INTRO_FILMS = {
      to leave the board (into the tray, its twin may wait), with the last move still in time. */
   clock: {
     tiles: [
-      ['t', 20, 1, 1, 1],               // on its upper left corner, one layer up (the clock's number sits at the upper right)
-      ['dn', 31, 6, 0, 0],              // face down
+      ['dn', 31, 0, 0, 0],              // face down
+      ['a', 8, 0, 2, 0],                // under t (it stays)
       ['ck', 12, 2, 2, 0],              // the clock tile
-      ['s', 8, 4, 2, 0],                // beside it (it stays)
-      ['x', 20, 6, 2, 0],               // a pair with t
+      ['x', 20, 4, 2, 0],               // beside it: a pair with t
+      ['t', 20, 1, 2, 1],               // a bridge over a and the clock tile's left half (the clock's number sits at the upper right)
     ],
     down: ['dn'], clock: ['ck', 3],
     taps: [
