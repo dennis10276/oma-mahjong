@@ -82,7 +82,6 @@ const TEXT = {
   set_vibrate: ['📳 Trillen', '📳 Vibration'],
   set_highlight: ['✨ Vastzittende stenen donker', '✨ Darken tiles that are stuck'],
   set_nums: ['🔢 Cijfers in de hoek', '🔢 Numbers in the corner'],
-  set_contrast: ['🌓 Extra duidelijk (hoog contrast)', '🌓 Extra clear (high contrast)'],
   set_lang: ['🌐 Taal', '🌐 Language'],
   howToPlay: ['Hoe speel je?', 'How to play'],
   wipe: ['🗑️ Voortgang wissen', '🗑️ Erase progress'],

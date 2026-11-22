@@ -1,7 +1,7 @@
 /* Oma's Mahjong — all styles.
    1 base · 2 buttons & chips · 3 home · 4 menu screens · 5 game screen · 6 tiles · 7 tray & tools
    8 pop-ups · 9 celebrations · 10 leaderboard & family · 11 tasks, stats, special tiles
-   12 themes (Zonnebloem, high contrast) · 13 small screens */
+   12 themes (including Zonnebloem) · 13 small screens */
 
 /* ========== 1 base ========== */
 @font-face { font-family: Nunito; font-weight: 700; src: url(fonts/nunito-latin-700-normal.woff2) format('woff2'); }
@@ -464,7 +464,7 @@ body.sunny .how-tray .hm, body.sunny .lesson-slot .lesson-tile { background: lin
 .heart-btn.sent { background: #e9f7df; box-shadow: none; font-size: 14px; opacity: .8; }
 /* avatars and the frames you can earn */
 .ra { display: inline-grid; place-items: center; border-radius: 50%; }
-.rrow .ra { width: 38px; height: 38px; font-size: 24px; text-align: center; justify-self: center; }
+.rrow .ra { position: relative; width: 38px; height: 38px; font-size: 24px; text-align: center; justify-self: center; }
 .ra.small { width: 28px; height: 28px; font-size: 18px; vertical-align: middle; }
 .ra.fr-bronze { box-shadow: 0 0 0 3px #c47a3a, inset 0 0 0 2px #f0b27a; background: #fbe7d3; }
 .ra.fr-silver { box-shadow: 0 0 0 3px #a9b4c0, inset 0 0 0 2px #eef2f6; background: #f1f4f8; }
@@ -481,10 +481,11 @@ body.sunny .how-tray .hm, body.sunny .lesson-slot .lesson-tile { background: lin
 .modal-box .fam-box { margin: 10px 0 6px; }
 .fam-title { font-size: 17px; font-weight: 900; color: #b8336a; margin: 0 0 4px 4px; }
 .fam-row { display: grid; grid-template-columns: 44px 36px 1fr auto; align-items: center; gap: 6px; padding: 5px 4px; border-radius: 12px; }
+.fam-row.passed-row { grid-template-columns: 36px minmax(0, 1fr) auto; }
 .fam-row + .fam-row { border-top: 2px dashed rgba(184,51,106,.25); }
 .fam-row.me { background: rgba(255,255,255,.65); }
 .fam-row .fr-rank { font-size: 20px; font-weight: 900; text-align: center; color: #8a3a5c; }
-.fam-row .ra { width: 34px; height: 34px; font-size: 22px; }
+.fam-row .ra { position: relative; width: 34px; height: 34px; font-size: 22px; }
 .fam-row .fr-name { font-size: 18px; font-weight: 900; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; }
 .modal-box .fam-row .fr-name { font-size: 16px; }
 .fam-row .fr-name i { font-style: normal; font-size: 13px; color: var(--muted); }
@@ -535,14 +536,15 @@ body.sunny .how-tray .hm, body.sunny .lesson-slot .lesson-tile { background: lin
 .compact .big-btn b { font-size: 24px; }
 .compact .link-btn { margin-top: 2px; padding: 6px 16px; font-size: 18px; }
 #wFamily { display: contents; }
-.compact .win-family .fam-row { grid-template-columns: 34px 28px minmax(0, 1fr) minmax(78px, auto); gap: 4px; padding: 2px 1px; }
+.compact .win-family .fam-row { grid-template-columns: 27px 28px minmax(0, 1fr) minmax(78px, auto); gap: 4px; padding: 2px 1px; }
 .compact .win-family .fr-name { white-space: nowrap; }
-.compact .win-family .ra { position: relative; }
 .compact .win-family .fr-val { display: flex; align-items: center; justify-content: flex-end; gap: 3px; }
 .compact .win-family .points { min-width: 43px; text-align: right; }
 .compact .win-family .heart-btn { display: inline-flex; align-items: center; justify-content: center; width: 32px; min-width: 32px; height: 28px; padding: 0; margin: 0; font-size: 19px; }
 .compact .win-family .heart-btn.sent { font-size: 14px; }
-.compact .win-family .fr-sub { white-space: nowrap; }
+.compact .win-family .fr-sub { white-space: normal; }
+.presence-sub { white-space: nowrap; }
+.presence-last { color: #775062; }
 .presence-dot { position: absolute; right: -2px; bottom: 0; width: 10px; height: 10px; border-radius: 50%; background: #299d3b; box-shadow: 0 0 0 2px #ffdeeb; }
 .presence-text { color: #237a2b; font-weight: 900; }
 /* The heart picker uses the win popup's measured height; smaller viewports can scroll. */
@@ -577,6 +579,11 @@ body.sunny .how-tray .hm, body.sunny .lesson-slot .lesson-tile { background: lin
 .compact .climb .rrow .rn { font-size: 16px; }
 .compact .climb .rrow .rn small { font-size: 12px; }
 .compact .climb .rrow .rp { font-size: 17px; }
+@media (max-width: 392px) {
+  .compact .climb .rrow { height: 44px; padding: 2px 6px; gap: 4px; grid-template-columns: 27px 32px minmax(0, 1fr) auto; }
+  .compact .climb .rrow .rn { line-height: 1; }
+  .compact .climb .rrow .rn small { white-space: normal; }
+}
 .compact .climb-msg { font-size: 16px; line-height: 1.3; min-height: 92px; }
 .compact .climb-msg small { font-size: 14.5px; }
 .compact .climb-up { font-size: 24px; }
@@ -849,7 +856,7 @@ body.sunny .cz-tray { background: linear-gradient(#f3b73a, #c98317); box-shadow:
 @keyframes luckyGlow { from { box-shadow: 0 0 0 3px #7ee36a, 0 0 10px 3px rgba(110,230,90,.6); } to { box-shadow: 0 0 0 5px #b7ff9e, 0 0 26px 10px rgba(140,255,110,.9); } }
 .tile.lucky .face::before { content: '🍀'; position: absolute; left: -10%; top: -10%; font-size: calc(var(--fs, 30px) * .45); line-height: 1; }
 
-/* ========== 12 themes: Zonnebloem prize and high contrast ========== */
+/* ========== 12 themes: Zonnebloem prize ========== */
 body.sunny .lesson-tile { background: linear-gradient(160deg, #fffef4 0%, #fff6d0 55%, #f9e39a 100%); }
 body.sunny .tile { background: linear-gradient(160deg, #fffef4 0%, #fff6d0 55%, #f9e39a 100%);
   box-shadow: calc(var(--d) * .5) calc(var(--d) * .6) 0 0 #efd27a, var(--d) calc(var(--d) * 1.2) 0 0 #5c9e34, calc(var(--d) * 1.1) calc(var(--d) * 1.5) calc(var(--d) * 1.2) 0 rgba(60,40,0,.35); }
@@ -862,14 +869,6 @@ body.sunny #progressBar::before { background: #fff27a; }
 #bg.sunfield::before { content: '🌻 🌻 🌻 🌻 🌻 🌻 🌻 🌻 🌻 🌻'; position: absolute; left: -30px; right: -30px; bottom: -14px; font-size: 64px; letter-spacing: -14px; white-space: nowrap; overflow: hidden; opacity: .85; }
 #bg.sunfield::after { background: radial-gradient(circle at 50% 35%, transparent 55%, rgba(120,70,0,.18) 100%); }
 
-body.contrast #board .tile:not(.back):not(.gold):not(.sp-joker) { background: #fff; }
-body.contrast .tile { outline: 2px solid #222; outline-offset: -2px; }
-body.contrast .tile .face svg, body.contrast .tile .face .fi { filter: contrast(1.6) saturate(1.3); }
-body.contrast .tile .emo { filter: saturate(1.4) contrast(1.2); }
-body.contrast #board.hl .tile.blocked::after { background: rgba(0,0,0,.42); }
-body.contrast .chip, body.contrast .rk-tabs button { background: rgba(0,0,0,.6); }
-body.contrast .modal-box, body.contrast .task, body.contrast .stat { color: #000; }
-body.contrast .tmini { border: 2px solid #222; background: #fff; }
 
 /* ========== 13 screen sizes ========== */
 @media (min-height: 760px) { .home-buttons { gap: 22px; } }
@@ -1015,7 +1014,8 @@ span.fx { font-size: inherit; }
   .compact .link-btn { padding-top: 3px; padding-bottom: 3px; }
 }
 
-#ranking .ra { position: relative; }
+#ranking { touch-action: pan-y pinch-zoom; }
+#ranking .name-chip .ra { position: relative; }
 
 /* Option A: a single family list in the original pink family-panel palette. */
 #ranking .header { gap: 12px; padding: 20px 20px 12px; }
@@ -1023,21 +1023,34 @@ span.fx { font-size: inherit; }
 #ranking .header .icon-btn { width: 44px; height: 44px; font-size: 23px; }
 #ranking #rankName { margin: 0; padding: 0; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; flex: none; }
 #ranking #rankName .ra { width: 32px; height: 32px; font-size: 24px; }
-#ranking > .scroll { padding: 12px 20px 28px; }
+#ranking > .scroll { padding: 12px 20px 28px; touch-action: pan-y pinch-zoom; }
 .ranking-intro { margin: 0 0 23px; color: white; text-shadow: 0 1px 2px #0003; }
 .ranking-intro p { font-size: 12px; text-transform: uppercase; letter-spacing: 1.7px; margin: 0 0 5px; opacity: .85; }
 .ranking-intro h3 { margin: 0 0 8px; font-size: 26px; line-height: 1.15; }
 #ranking #rkMine { font-size: 15px; }
-#ranking .rk-tabs { background: rgba(0,0,0,.2); padding: 5px; gap: 4px; border-radius: 18px; margin-bottom: 12px; }
-#ranking .rk-tabs button { border-radius: 13px; background: none; padding: 11px 4px; font-size: 15px; max-width: none; }
-#ranking .rk-tabs button.on { background: #ffe9f1; color: #963d62; box-shadow: 0 3px 0 #e85d8f; }
-#ranking .wk-info { font-size: 13px; margin-bottom: 18px; }
-#ranking #rankList { gap: 6px; padding: 8px; border: 3px solid #ff7aa8; border-radius: 24px; background: linear-gradient(135deg, #ffe9f1, #ffd6e6); box-shadow: 0 5px 0 #e85d8f; }
-#ranking .rrow { grid-template-columns: 24px 36px minmax(0, 1fr) auto; gap: 8px; height: auto; min-height: 76px; padding: 10px 8px; border-radius: 16px; border: 0; background: #fff5f8; box-shadow: 0 2px 0 #edb9cc; }
+#ranking .rk-tabs { position: relative; isolation: isolate; background: rgba(0,0,0,.2); padding: 5px; gap: 4px; border-radius: 18px; margin-bottom: 12px; }
+#ranking .rk-tabs[data-mode="all"] { --rank-slide: 1; }
+#ranking .rk-tabs::before {
+  content: ''; position: absolute; z-index: -1; inset: 5px auto 5px 5px;
+  width: calc((100% - 14px) / 2); border-radius: 13px; background: #ffe9f1; box-shadow: 0 3px 0 #e85d8f;
+  transform: translateX(calc(var(--rank-slide, 0) * (100% + 4px)));
+}
+#ranking .rk-tabs button, #ranking .rk-tabs button.on { border-radius: 13px; background: none; box-shadow: none; color: #fff; padding: 11px 4px; font-size: 15px; min-width: 0; max-width: none; }
+#ranking .rk-tabs[data-spot="week"] #rkWeek, #ranking .rk-tabs[data-spot="all"] #rkAll { color: #963d62; }
+#ranking .wk-info { min-height: 2.7em; font-size: 13px; margin-bottom: 18px; }
+.rank-viewport { position: relative; overflow: hidden; padding-bottom: 5px; }
+.rank-viewport.rank-moving .rank-list { pointer-events: none; }
+.rank-viewport #rankList { transform: translateX(var(--rank-x, 0px)); }
+.rank-next { position: absolute; inset: 0 0 auto; transform: translateX(calc(var(--rank-x, 0px) + var(--rank-side, 0px))); }
+.rank-next[hidden] { display: none; }
+.rank-settling .rank-list, .rk-tabs.rank-settling::before { transition: transform 260ms cubic-bezier(.2,.7,.2,1); }
+#ranking .rank-list { gap: 6px; padding: 8px; border: 3px solid #ff7aa8; border-radius: 24px; background: linear-gradient(135deg, #ffe9f1, #ffd6e6); box-shadow: 0 5px 0 #e85d8f; }
+#ranking .rrow { grid-template-columns: max-content 36px minmax(0, 1fr) auto; gap: 8px; height: auto; min-height: 76px; padding: 10px 8px; border-radius: 16px; border: 0; background: #fff5f8; box-shadow: 0 2px 0 #edb9cc; }
 #ranking .rrow.me { background: #fff; box-shadow: inset 0 0 0 2px #e85d8f, 0 2px 0 #e85d8f; }
-#ranking .rrow .rk { color: #ad4870; font-size: 18px; }
-#ranking .rrow .ra { width: 34px; height: 36px; font-size: 24px; }
+#ranking .rrow .rk { min-width: 29px; color: #ad4870; font-size: 18px; white-space: nowrap; }
+#ranking .rrow .ra { width: 34px; height: 36px; font-size: 24px; clip-path: inset(-15px -6px -6px); }
 #ranking .rrow .rn { font-size: 15px; line-height: 1.2; white-space: normal; overflow: visible; overflow-wrap: anywhere; }
+#ranking .ranking-name { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 #ranking .rrow .rn i { font-size: 11px; color: #a25b77; }
 #ranking .rrow .rn .fam-tag { display: none; }
 #ranking .rrow .rn small { font-size: 12px; margin-top: 5px; color: #9c6680; }
@@ -1049,10 +1062,10 @@ span.fx { font-size: inherit; }
 #ranking .rank-note { font-size: 12px; margin-top: 20px; }
 @media (min-width: 600px) { #ranking .header, #ranking > .scroll { width: min(100%, 560px); align-self: center; } }
 
-@media (max-width: 360px) {
-  #ranking .rrow { position: relative; grid-template-columns: 22px 32px minmax(0, 1fr); grid-template-rows: auto auto; gap: 3px 8px; padding: 10px 46px 10px 8px; }
+@media (max-width: 480px) {
+  #ranking .rrow { position: relative; grid-template-columns: max-content 32px minmax(0, 1fr); grid-template-rows: auto auto; gap: 3px 8px; padding: 10px 46px 10px 8px; }
   #ranking .rrow .rk { grid-column: 1; grid-row: 1 / 3; }
-  #ranking .rrow .ra { grid-column: 2; grid-row: 1 / 3; width: 30px; height: 32px; }
+  #ranking .rrow .ra { grid-column: 2; grid-row: 1 / 3; width: 28px; height: 28px; font-size: 21px; }
   #ranking .rrow .rn { grid-column: 3; grid-row: 1; }
   #ranking .rrow .rn small { margin-top: 3px; }
   #ranking .rrow .rp { grid-column: 3; grid-row: 2; justify-content: flex-start; font-size: 15px; }

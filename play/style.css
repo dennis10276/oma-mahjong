@@ -1,7 +1,7 @@
 /* Oma's Mahjong — all styles.
    1 base · 2 buttons & chips · 3 home · 4 menu screens · 5 game screen · 6 tiles · 7 tray & tools
    8 pop-ups · 9 celebrations · 10 leaderboard & family · 11 tasks, stats, special tiles
-   12 themes (Zonnebloem, high contrast) · 13 small screens */
+   12 themes (including Zonnebloem) · 13 small screens */
 
 /* ========== 1 base ========== */
 @font-face { font-family: Nunito; font-weight: 700; src: url(fonts/nunito-latin-700-normal.woff2) format('woff2'); }
@@ -856,7 +856,7 @@ body.sunny .cz-tray { background: linear-gradient(#f3b73a, #c98317); box-shadow:
 @keyframes luckyGlow { from { box-shadow: 0 0 0 3px #7ee36a, 0 0 10px 3px rgba(110,230,90,.6); } to { box-shadow: 0 0 0 5px #b7ff9e, 0 0 26px 10px rgba(140,255,110,.9); } }
 .tile.lucky .face::before { content: '🍀'; position: absolute; left: -10%; top: -10%; font-size: calc(var(--fs, 30px) * .45); line-height: 1; }
 
-/* ========== 12 themes: Zonnebloem prize and high contrast ========== */
+/* ========== 12 themes: Zonnebloem prize ========== */
 body.sunny .lesson-tile { background: linear-gradient(160deg, #fffef4 0%, #fff6d0 55%, #f9e39a 100%); }
 body.sunny .tile { background: linear-gradient(160deg, #fffef4 0%, #fff6d0 55%, #f9e39a 100%);
   box-shadow: calc(var(--d) * .5) calc(var(--d) * .6) 0 0 #efd27a, var(--d) calc(var(--d) * 1.2) 0 0 #5c9e34, calc(var(--d) * 1.1) calc(var(--d) * 1.5) calc(var(--d) * 1.2) 0 rgba(60,40,0,.35); }
@@ -869,14 +869,6 @@ body.sunny #progressBar::before { background: #fff27a; }
 #bg.sunfield::before { content: '🌻 🌻 🌻 🌻 🌻 🌻 🌻 🌻 🌻 🌻'; position: absolute; left: -30px; right: -30px; bottom: -14px; font-size: 64px; letter-spacing: -14px; white-space: nowrap; overflow: hidden; opacity: .85; }
 #bg.sunfield::after { background: radial-gradient(circle at 50% 35%, transparent 55%, rgba(120,70,0,.18) 100%); }
 
-body.contrast #board .tile:not(.back):not(.gold):not(.sp-joker) { background: #fff; }
-body.contrast .tile { outline: 2px solid #222; outline-offset: -2px; }
-body.contrast .tile .face svg, body.contrast .tile .face .fi { filter: contrast(1.6) saturate(1.3); }
-body.contrast .tile .emo { filter: saturate(1.4) contrast(1.2); }
-body.contrast #board.hl .tile.blocked::after { background: rgba(0,0,0,.42); }
-body.contrast .chip, body.contrast .rk-tabs button { background: rgba(0,0,0,.6); }
-body.contrast .modal-box, body.contrast .task, body.contrast .stat { color: #000; }
-body.contrast .tmini { border: 2px solid #222; background: #fff; }
 
 /* ========== 13 screen sizes ========== */
 @media (min-height: 760px) { .home-buttons { gap: 22px; } }

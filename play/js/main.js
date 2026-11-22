@@ -102,7 +102,6 @@ setInterval(() => {
   if (curScreen === 'ranking' && modalFree()) renderRanking();
 }, 30000);
 document.body.classList.toggle('nonum', !S.nums);
-document.body.classList.toggle('contrast', !!S.contrast);
 show('home');
 window.__mjReady = true;   // the boot script and the load-error banner look at this
 // dashboard: app opened, and how long it stays on screen
