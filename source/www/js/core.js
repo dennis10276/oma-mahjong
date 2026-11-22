@@ -11,14 +11,7 @@ const FILM_PARTS = /^#(board|boardWrap|tray|clockBadge|progressBar|gameMsg|toast
 const $ = s => (filmRoot && FILM_PARTS.test(s) ? filmRoot : document).querySelector(s);
 const STORE = 'omamj.v1', CUR = 'omamj.cur';
 const APP_VERSION = '1.72';
-// one-time clean start for every device (all progress from the test period is wiped once)
-const RESET_MARK = 'omamj.reset', RESET_ID = '2026-10-07';
-try {
-  if (localStorage.getItem(RESET_MARK) !== RESET_ID) {
-    Object.keys(localStorage).filter(k => k.startsWith('omamj.')).forEach(k => localStorage.removeItem(k));
-    localStorage.setItem(RESET_MARK, RESET_ID);
-  }
-} catch (e) { }
+// (the one-time wipe of 2026-10-07 is gone from the code; its key omamj.reset stays in old saves and is ignored)
 
 // ---------- backgrounds (unlocked with stars) ----------
 // (their names are in lang.js: bg_<id>)

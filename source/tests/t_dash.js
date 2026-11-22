@@ -244,5 +244,22 @@ module.exports = [
       } finally { await ctx.close(); site.close(); }
     },
   },
+  {
+    name: 'dashboard: no Voorspeltest card, the Voorspelling card is still there',
+    async run(t, { serve, FakeDB, browser, WWW }) {
+      const site = await serve(path.join(__dirname, '..', 'site'), { '/play/': WWW });
+      const ctx = await browser.newContext({ viewport: { width: 1400, height: 1000 } });
+      const db = new FakeDB(fixture());
+      await ctx.route(u => u.hostname.endsWith('firebasedatabase.app'), r => db.handle(r));
+      const p = await ctx.newPage(), errs = []; p.on('pageerror', e => errs.push(e.message));
+      try {
+        await p.goto(site.url + 'dash/?pred=1#pOma');   // ?pred=1: the Voorspelling card is hidden without it
+        await p.waitForFunction(() => !!PLAYS.pOma);
+        t.eq(await p.evaluate(() => [!!document.querySelector('#fcScore'), typeof ForecastScore, typeof loadForecasts, !!document.querySelector('#predTitle')]),
+          [false, 'undefined', 'undefined', true], 'no Voorspeltest card or code; the Voorspelling card stays');
+        t.eq(errs, [], 'no page errors');
+      } finally { await ctx.close(); site.close(); }
+    },
+  },
 ];
 module.exports.fixture = fixture;   // also used to make screenshots of the dashboard

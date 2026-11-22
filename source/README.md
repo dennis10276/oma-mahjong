@@ -21,10 +21,8 @@ Ad-free Mahjong solitaire for Android (and the web / iPhone), in Dutch or Englis
     | `specials.js` | gold pair, joker, ice, lock & key |
     | `rewards.js` | statistics, daily tasks and chest, lucky moment, daily gift |
     | `telemetry.js` | play log for the dashboard |
-    | `social.js` | ranking: family online, computer players, the weekly challenge, profile, climbing |
+    | `social.js` | ranking: family online, the weekly challenge, profile, climbing |
     | `hearts.js` | hearts (with a message) between family members |
-    | `stories.js` | the made-up neighbourhood stories (Dutch), about the computer players |
-    | `village.js` | grandma's news after a won level: real Apeldoorn news + story parts, Het krantje, 💬 in the ranking |
     | `win.js` | the win screen and the rewards after it |
     | `main.js` | buttons, touch, start-up |
   - `style.css` all styles
@@ -32,9 +30,8 @@ Ad-free Mahjong solitaire for Android (and the web / iPhone), in Dutch or Englis
   "send a heart" button (with a message), desktop notifications, how close she got, her difficulty
   step, all levels and a live feed. It loads `play/js/rules.js`, so it always matches the game.
 - `tests/`: the test suite (see below)
-- `tools/news.py`: collects friendly local news from Apeldoorn (Samen1, Apeldoorn Direct, Stedendriehoek)
-  into `news.json`; `tools/news.yml` is the GitHub workflow that would run it every two hours and
-  publish it on the `news` branch (not switched on yet: see "News from Apeldoorn" below)
+- Removed in the refactor of 1.73 (see "Removed features" below): the game tips, the 1.58 lessons, the win replays, the Apeldoorn news and
+  stories, the one-time wipe and the dashboard's Voorspeltest.
 - `firebase/rules.json`: database rules
 - Compact attempt replays: [recording, phone limits, storage measurements and deployment notes](analysis/replay-recording.md).
   `tools/replays.js` reconstructs exported attempts offline; `tools/measure_replays.js` measures
@@ -70,8 +67,6 @@ On Windows, `python tools/build_apk.py` uses the verified archives listed in
 - `GRANDMA`: grandma's player id (or a name starting with "Oma"); `like` = players who always get
   exactly what she gets (DennisTEST, to see what she sees).
 - `CARE`: who else has Super-omamodus by default (nobody now; Mama is not in grandma mode).
-- `VILLAGE`: grandma's news after a won level: 1 in 5 a story part (`storyShare`), how old news may be,
-  when stories may fill in because the news file is old, the star for a memory question.
 - `START_ENGLISH`: player ids that start in English (Mama). Anyone can switch in the settings
   (🌐 Language); that choice is saved in `S.lang` and always wins.
 - When ice and locks start is in `layouts.js` (`MECH`), the tray size there too (`SLOTS`).
@@ -210,34 +205,17 @@ ready-made lines, no typing). The heart stays in `hearts/<to>/<from>`; the messa
 `plays/msg-<to>` (pieces m0..m2 of at most 40 characters, so the database rules allow it) and is
 matched to the heart by sender and time.
 
-## News from Apeldoorn (grandma and DennisTEST)
+## Removed features
 
-After every won level grandma gets one item: about 4 in 5 are real local news (headline + the short
-summary the site puts in its feed, and its photo; the app shows no source or date), 1 in 5 is the next part of a made-up story about
-the computer players in her ranking, ending with a little cliffhanger; the next level's top bar
-teases what comes next. Before part 5 of a story she gets a memory question (right = a bonus star).
-Everything read is in Het krantje (📰 on the home screen), and 💬 next to a computer player in the
-ranking shows its story so far. When there is no fresh real news, nothing is shown, unless the news
-file has not been updated for 2 days; then the stories fill in.
+These are gone from the code (the refactor of 1.73). Old saves keep their fields (`S.vg`, `S.proSeen`, `S.czLoss`, the `omamj.reset` key, old
+settings such as `news` and `pro`); the game ignores them.
 
-The real news is filtered on purpose: no accidents, fires, police, illness, politics or columns
-(`SKIP_CATS`, `SKIP_IN`, `SKIP_START` in `tools/news.py`; also inside longer words, and no photo whose file name says police or accident). The game reads `news.json` from the `news` branch.
-That needs `tools/news.yml` as `.github/workflows/news.yml` in the GitHub repo (a scheduled job).
-
-### Switching it off, or removing it
-
-- **For one player:** on the family dashboard, pick the player and use the ⚙️ settings card
-  ("📰 Nieuws uit Apeldoorn" Aan/Uit). The phone picks it up within half a minute.
-- **For everyone, keeping the code:** set `VILLAGE.enabled = false` in `www/js/rules.js` and release.
-- **Stop collecting news:** in the GitHub repo, Actions → "Apeldoorn news" → Disable workflow
-  (or delete `.github/workflows/news.yml`; the `news` branch can then be deleted too).
-- **Removing it completely:** delete `www/js/village.js` and `www/js/stories.js` and take them out of
-  `FILES` in `index.html`; then remove the few lines that call it: `villageOn()` in `win.js` (the
-  `village` reward) and `board.js` (the teaser), `loadNews`/`openPaper` in `main.js`,
-  `renderPaperChip` in `screens.js`, `chatBtn`/`.vg-chat` in `social.js`, the `#btnPaper` button in
-  `index.html`, the `vg*` texts in `lang.js`, the `.vg`/`.paper-chip` styles in `style.css`,
-  `VILLAGE`/`getsNews` in `rules.js`, and `t_village.js`. Remove `tools/news.*` and the copying of
-  `tools/` in `release.py`.
+- The game tips and the 1.58 animated lessons (`coach.js`, `coach-clips.js`, `tools/coach`): the intro films (`js/intro.js`) explain a mechanic now.
+- The win replays after five lost tries (`pro.js`, `www/pro/`, `tools/pro`, `update_pro` in `release.py`).
+- The Apeldoorn news and the made-up stories (`village.js`, `stories.js`, the news job). The collected news stays on the `news` branch of the
+  GitHub repository as an archive.
+- The one-time wipe of 2026-10-07 in `core.js`.
+- The dashboard's Voorspeltest card (`forecast-score.js`); `firebase/rules.json` and the `forecasts/` data are untouched.
 
 ## Settings per player (family dashboard)
 
@@ -266,13 +244,12 @@ everyone.
 | `t_mech` | gold, joker (also as the last tile), ice, lock & key |
 | `t_progress` | tasks and chest, the weekly reset, unlocking backgrounds and the prize, wiping progress, resuming |
 | `t_rules` | changing `rules.js` really changes the game |
-| `t_ranking`, `t_hearts` | computer players, climbing, hearts with messages |
+| `t_ranking`, `t_hearts` | climbing, hearts with messages |
 | `t_screens` | every screen opens, themes, nothing needs scrolling on small phones |
 | `t_log`, `t_dash` | the play log and the family dashboard |
 | `t_lang` | every text in both languages, the language switch, Mama starts in English, equal layout |
-| `t_village` | news for grandma and DennisTEST only, dashboard settings per player, 80/20 news/stories, memory question, Het krantje, 💬, the helper's pace, the news filter |
 | `t_finish` | auto-finish: the exact check, the end playing itself from level 50, speed |
-| `t_smooth` | the pile as pictures in layer groups, glowing tiles above it, sparkles on the graphics chip, lessons that move instead of redrawing |
+| `t_smooth` | the pile as pictures in layer groups, glowing tiles above it, sparkles on the graphics chip, intro films that move instead of redrawing |
 | `t_update` | self-update from an old 1.5 app and the current one; a broken update is thrown away |
 | `t_online` | (with `--online`) a heart and the play log through the real database |
 
