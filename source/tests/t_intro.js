@@ -38,10 +38,10 @@ const popupLook = () => {
     tw: G.tw, levelTw: real && real.tw };
 };
 // every caption of the film, in the pop-up of this screen: inside the card on one line, below the board, the card does not scroll
-const captionsFit = () => {
+const captionsFit = (kind = 'ice') => {
   const cap = $('#modalBox .intro-cap'); if (!cap) return ['no caption chip'];
   const b = $('#modalBox'), keep = cap.textContent, r = el => el.getBoundingClientRect();
-  const out = INTRO_FILMS.ice.taps.filter(x => x[2]).map(x => {
+  const out = INTRO_FILMS[kind].taps.filter(x => x[2]).map(x => {
     cap.textContent = tx(x[2]);
     const c = r(cap), card = r(b), wrap = r(cap.previousElementSibling);
     const ok = { inCard: c.left >= card.left && c.right <= card.right && cap.scrollWidth <= cap.clientWidth, oneLine: c.height <= parseFloat(getComputedStyle(cap).lineHeight) * 1.5 + 16,
@@ -49,6 +49,40 @@ const captionsFit = () => {
     return { key: x[2], bad: Object.keys(ok).filter(k => !ok[k]), w: Math.round(c.width), top: c.top, wrap: wrap.bottom };
   });
   cap.textContent = keep; return out.filter(x => x.bad.length);
+};
+
+// One play of a film, frame by frame: per tap what the game did (taken or not, the tray, the open face-down tile, the
+// clock's number, the locks) and what was said, as in the ice test above.
+const filmSteps = kind => new Promise(done => {
+  const film = INTRO_FILMS[kind], ids = film.tiles.map(x => x[0]), frames = [];
+  playIntroFilm(kind, { why: 'manual' });
+  const marked = cls => [...document.querySelectorAll(`#modalBox #board .tile.${cls}`)].map(e => ids[+e.dataset.i]).filter(Boolean);
+  const rec = () => {
+    if (!introRun || introRun.plays > 1) {
+      return done(film.taps.map(([, id, cap], k) => {
+        const w = frames.filter(f => f.n === k + 1), want = cap ? tx(cap) : null, on = w.filter(f => f.text === want && f.op >= 0.95), end = w.at(-1) || {};
+        return { id, cap, frames: w.length, atTap: w.length ? w[0].op : 1, before: end.op ?? 1, shown: on.length > 0, full: on.length ? on.at(-1).t - on[0].t : 0,
+          other: w.some(f => f.op > 0.05 && f.text !== want), own: w.some(f => f.own), taken: end.taken, tray: end.tray, peek: end.peek, left: end.left, open: end.open,
+          hint: [...new Set(w.flatMap(f => f.hint))].sort(), xray: [...new Set(w.flatMap(f => f.xray))].sort() };
+      }));
+    }
+    const c = $('#modalBox .intro-cap'), last = introRun.log.at(-1);
+    frames.push({ t: performance.now(), n: introRun.log.length, text: c.textContent, op: +getComputedStyle(c).opacity, taken: last && last[1],
+      own: !!document.querySelector('#modalBox #board [class*="intro-"], #modalBox #board[class*="intro-"]'), tray: G.tray.length, peek: G.peek >= 0 ? ids[G.peek] : null,
+      left: clockOn() ? clockLeft() : null, open: !!(G.ob && G.ob.unlocked), hint: marked('obhint'), xray: marked('xray') });
+    requestAnimationFrame(rec);
+  };
+  rec();
+});
+/* The films of the next mechanics (preview for Dennis): per kind the level where it is first met, the steps of the step
+   table (tap, taken off the board, then what the game shows) and what the first tap lights up (the game's own hint). */
+const NEXT_FILMS = {
+  lock: { level: 45, steps: [['l1', false, { open: false }], ['k1', true, { open: false }], ['d', true, { open: false }], ['c', true, { open: false }], ['k2', true, { open: true }]],
+    first: { hint: ['k1', 'k2'], xray: ['c'] }, caps: ['l1', 'k1', 'k2'] },
+  trayPair: { level: 50, steps: [['d1', false, { tray: 3, peek: 'd1' }], ['d2', false, { tray: 3, peek: 'd2' }], ['t2', true, { tray: 3, peek: null }], ['d1', false, { tray: 3, peek: 'd1' }], ['d3', true, { tray: 3, peek: null }]],
+    first: { hint: [], xray: [] }, caps: ['d2', 't2', 'd3'] },
+  clock: { level: 80, steps: [['ck', false, { left: 3 }], ['dn', false, { left: 3, peek: 'dn' }], ['t', true, { left: 2 }], ['x', true, { left: 1 }], ['ck', true, { left: null }]],
+    first: { hint: [], xray: ['t'] }, caps: ['ck', 'dn', 'x', 'ck'] },
 };
 
 module.exports = [
@@ -281,6 +315,52 @@ module.exports = [
       // (Dennis: "make it behave like the game", no tap ring: what moves on the board is only what the game does for that tap)
       t.ok(!s.own, `${s.id}: nothing on the board but the game's own effects (no tap ring, no pulse)`, s);
     });
+    t.eq(p.errors, [], 'no browser errors');
+  }},
+  { name: 'intro: the lock, tray pair and clock films play by the game rules, say each subtle step and leave the level as it was', async run(t, { startLevel }) {
+    const pid = 'test-intro-next';
+    const p = await t.phone({ state: { name: 'Dennis', pid, level: 80, sunSeen: true, seenSp: seen } });
+    for (const [kind, want] of Object.entries(NEXT_FILMS)) {
+      await startLevel(p, want.level);
+      t.ok(await p.evaluate(kind => !!INTRO_FILMS[kind], kind), `${kind}: a film`);
+      if (!await p.evaluate(kind => !!INTRO_FILMS[kind], kind)) continue;
+      const before = await p.evaluate(([levelOf, phoneData]) => [eval(levelOf)(), eval(phoneData)()], [levelOf.toString(), phoneData.toString()]);
+      const film = await p.evaluate(kind => ({ taps: INTRO_FILMS[kind].taps, ms: INTRO_FILMS[kind].ms, line: TEXT[INTRO_FILMS[kind].line] }), kind);
+      const gaps = film.taps.slice(1).map((x, k) => [x[0] - film.taps[k][0], !!film.taps[k][2]]);
+      t.ok(gaps.every(([ms, cap]) => cap ? ms >= 1300 && ms <= 1600 : ms >= 650 && ms <= 750) && film.taps[0][0] >= 1200 && film.ms <= 7000 && film.ms >= film.taps.at(-1)[0] + 600,
+        `${kind}: the board at rest first, taps 0.7 s apart, a pause after a caption, at most 7 s`, [film.taps.map(x => x[0]), film.ms]);
+      t.ok(!!film.line, `${kind}: a line under the board`);
+      t.eq(film.taps.filter(x => x[2]).map(x => x[1]), want.caps, `${kind}: a caption for every subtle step, none for the obvious`);
+      t.ok(await p.evaluate(kind => INTRO_FILMS[kind].taps.filter(x => x[2]).every(x => TEXT[x[2]] && TEXT[x[2]].every(s => s && s.length <= 32)), kind), `${kind}: short captions in Dutch and English`);
+      const steps = await p.evaluate(filmSteps, kind);
+      t.eq(steps.map(s => [s.id, s.taken]), want.steps.map(s => [s[0], s[1]]), `${kind}: the step table: what each tap does in the game`);
+      want.steps.forEach(([id, , show], k) => Object.entries(show).forEach(([key, v]) => t.eq(steps[k][key], v, `${kind} step ${k + 1} (${id}): ${key}`)));
+      t.eq({ hint: steps[0].hint, xray: steps[0].xray }, want.first, `${kind}: the first tap shows the game's own hint`);
+      steps.forEach((s, k) => {
+        const last = k === steps.length - 1;
+        t.ok(s.frames > 10 && s.atTap <= 0.05 && !s.other && !s.own, `${kind} ${s.id}: nothing said at the tap, no other caption, nothing of the film's own on the board`, s);
+        t.ok(s.cap ? s.shown && (last || s.full >= 800) : true, `${kind} ${s.id}: its caption shows and can be read`, s);
+        t.ok(last ? (!s.cap || s.before >= 0.95) : s.before <= 0.05, `${kind} ${s.id}: gone before the next tap (the last one stays)`, s);
+      });
+      await p.evaluate(() => stopIntroFilm());
+      await p.waitForFunction(() => !G.film, null, { timeout: 3000 });
+      const after = await p.evaluate(([levelOf, phoneData]) => [eval(levelOf)(), eval(phoneData)()], [levelOf.toString(), phoneData.toString()]);
+      t.eq(after[0], before[0], `${kind}: the level is exactly as it was`);
+      t.eq(after[1], before[1], `${kind}: nothing on the phone changed (nothing saved or counted)`);
+    }
+    await drain(p);
+    const plays = p.db.plays(pid), start = plays.map(e => e.k).lastIndexOf('start');
+    t.eq(plays.slice(start + 1).map(e => e.k), ['help_msg'], 'the play log gains only the help message of the film');
+    for (const lang of ['en', 'nl']) {
+      await p.setViewportSize({ width: 360, height: 640 });
+      for (const kind of Object.keys(NEXT_FILMS)) {
+        await p.evaluate(([kind, lang]) => { S.lang = lang; playIntroFilm(kind, { why: 'manual' }); }, [kind, lang]);
+        await sleep(400);
+        t.eq(await p.evaluate(captionsFit, kind), [], `${kind}: every ${lang} caption fits a 360 px phone on one line, below the board`);
+        t.ok(await p.evaluate(() => { const b = $('#modalBox'); return b.getBoundingClientRect().bottom <= innerHeight && b.scrollHeight <= b.clientHeight + 1; }), `${kind}: the ${lang} pop-up fits a small phone`);
+        await p.evaluate(() => stopIntroFilm());
+      }
+    }
     t.eq(p.errors, [], 'no browser errors');
   }},
 ];

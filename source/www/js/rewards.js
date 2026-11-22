@@ -44,6 +44,7 @@ const tasksDone = () => ensureTasks().list.filter(t => t.done).length;
 const chestReady = () => tasksDone() === 3 && !S.tasks.chest;
 // amount: add to progress; or with max=true keep the highest value (e.g. a combo)
 function taskProgress(id, amount = 1, max = false) {
+  if (G && G.film) return;          // (the intro film counts nothing: js/intro.js)
   const T = ensureTasks();
   T.list.forEach(t => {
     if (t.id !== id || t.done) return;

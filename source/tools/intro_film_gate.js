@@ -3,14 +3,17 @@
    it, and compare-sunflower.png (the real level 35 after a tap on a frozen tile beside the film's first tap); on a
    tablet (768x1024, Dutch) a video; on a small phone (360x640, English) a still of the widest caption. Nothing is
    sent anywhere (a fake database).
-   Run from the worktree root:  CHROME=... node source/tools/intro_film_gate.js <output folder> [preview]
-   preview: only the first run (phone, sunflower, Dutch), no compare (a quick look before the full gate) */
+   Run from the worktree root:  CHROME=... node source/tools/intro_film_gate.js <output folder> [preview] [kind]
+   preview: only the first run (phone, sunflower, Dutch), no compare (a quick look before the full gate)
+   kind: ice (default), lock, trayPair or clock: the film over the level where it is first met, with a still at rest,
+   one per caption and one at the end of a play */
 'use strict';
 const fs = require('fs'), path = require('path');
 const lib = require('../tests/lib');
 
 const OUT = path.resolve(process.argv[2] || 'intro-ice');
-const SEEN = { gold: 1, gift: 1, joker: 1, joker2: 1, ice: 0, lock: 1, clock: 1, clockMoves: 1, trayPair: 1 };
+const KIND = process.argv[4] || 'ice', LEVEL = { ice: 35, lock: 45, trayPair: 50, clock: 80 }[KIND];
+const SEEN = { gold: 1, gift: 1, joker: 1, joker2: 1, ice: +(KIND !== 'ice'), lock: 1, clock: 1, clockMoves: 1, trayPair: 1 };
 // always in the sunflower theme for Dennis (2026-11-22); level 35 is past RULES.sunflower.level, so it is unlocked.
 // stills: which of SHOTS to take (all, and the level after it, when not given); video: false for a still only
 const RUNS = [
@@ -32,7 +35,7 @@ async function context(r, video) {
   const p = await ctx.newPage();
   await p.clock.setFixedTime(new Date(lib.TODAY + 'T15:00:00'));
   await p.goto(new URL('__blank__', lib.server.url).href);
-  const st = { name: 'Dennis', pid: 'test-intro-gate', level: 35, lang: r.lang, theme: 'sunflower', bg: 'sunfield', stars: { 1: 3, 2: 3, 3: 3 }, seenIntro: true, seenTray: true, seenDown: true, toolsSeen: true, sunSeen: true,
+  const st = { name: 'Dennis', pid: 'test-intro-gate', level: LEVEL, lang: r.lang, theme: 'sunflower', bg: 'sunfield', stars: { 1: 3, 2: 3, 3: 3 }, seenIntro: true, seenTray: true, seenDown: true, toolsSeen: true, sunSeen: true,
     sfx: false, music: false, vibrate: false, since: lib.TODAY, giftDay: lib.TODAY, iosTip: true, seenSp: SEEN };
   await p.evaluate(([st, today]) => { localStorage.clear(); localStorage.setItem('omamj.reset', today); localStorage.setItem('omamj.v1', JSON.stringify(st)); }, [st, lib.TODAY]);
   await p.goto(lib.server.url);
@@ -47,10 +50,10 @@ async function context(r, video) {
   try {
     for (const r of process.argv[3] === 'preview' ? [{ ...RUNS[0], compare: false }] : RUNS) {
       const vids = r.video !== false && path.join(OUT, '_video-' + r.name), { ctx, p } = await context(r, vids);
-      await p.evaluate(() => { localStorage.removeItem('omamj.cur'); __mj.startLevel(35); });
-      await p.waitForSelector('#introPanel');
+      const shots = KIND === 'ice' ? SHOTS : await openFilm(p);
+      if (KIND === 'ice') { await p.evaluate(() => { localStorage.removeItem('omamj.cur'); __mj.startLevel(35); }); await p.waitForSelector('#introPanel'); }
       const t0 = Date.now();
-      for (const [ms, label] of SHOTS.filter(([, label]) => !r.stills || r.stills.includes(label))) {
+      for (const [ms, label] of shots.filter(([, label]) => !r.stills || r.stills.includes(label))) {
         await lib.sleep(Math.max(0, t0 + ms - Date.now()));
         await p.screenshot({ path: path.join(OUT, `${r.name}-${label}.png`) });
       }
@@ -70,6 +73,15 @@ async function context(r, video) {
   } finally { await lib.teardown(); }
 })();
 
+// the other films (not yet shown by the game itself): the level opens, then the film as at the first meeting
+async function openFilm(p) {
+  await p.evaluate(L => { localStorage.removeItem('omamj.cur'); __mj.startLevel(L); }, LEVEL);
+  await p.waitForFunction(L => !document.querySelector('#buildMsg') && G && G.key === 'L' + L && !G.introducing, LEVEL, { timeout: 60000 });
+  await lib.sleep(900);
+  const film = await p.evaluate(kind => { playIntroFilm(kind, { required: true }); return INTRO_FILMS[kind]; }, KIND);
+  const caps = film.taps.filter(x => x[2]);
+  return [[900, '0-at-rest'], ...caps.map(([ms, , cap], k) => [ms + 650, `${k + 1}-${cap}`]), [film.ms + 400, `${caps.length + 1}-done-button`]];
+}
 // the real level 35 with a frozen tile tapped, beside the film at the same kind of moment
 async function compare(r) {
   const { ctx, p } = await context(r);

@@ -9,8 +9,10 @@
    saved, logged or counted (board.js saveCur, afterLogic, afterLand, onMatch, fitGeo). The first time, the button
    works only after one full play; seen again from the help menu it closes at once. It plays twice and then rests; a
    tap on the board plays it again.
-   Each film is INTRO_FILMS[kind] = { tiles, taps, ms, line }:
+   Each film is INTRO_FILMS[kind] = { tiles, taps, ms, line }, and what its kind needs:
      tiles: [id, face, x, y, z, ice layers]   x, y in half tiles and z the layer, as in layouts.js
+     locks, keys: ids of the locked tiles and the two key tiles; down: ids of the face-down tiles;
+     tray: the faces already waiting in the tray; clock: [id, moves] the alarm clock's tile and its number
      taps:  [ms from the start, id, caption]  each one an ordinary tap of the game; a step that is the lesson has a
             caption (a text key in lang.js) under the board, shown with its result, and a short pause after it; it
             goes before the next tap, the last one stays until the film plays again
@@ -48,6 +50,74 @@ const INTRO_FILMS = {
     ],
     ms: 7000,
     line: 'intro_ice',
+  },
+  /* Lock (specials.js lockedT / unlockAll): a locked tile cannot be taken, even when free, until both key tiles have
+     left the board. A tap on a lock makes the keys wiggle, and the tiles lying on a buried key turn see-through
+     (specials.js showKeys). One key gone: still locked; both gone: every lock opens at once. */
+  lock: {
+    tiles: [
+      ['l1', 12, 0, 0, 0],              // a free locked tile
+      ['k1', 4, 2, 0, 0],               // a key, free
+      ['l2', 8, 6, 0, 0],               // a second lock: it opens with the first
+      ['d', 20, 0, 2, 0],               // a pair with c
+      ['k2', 4, 4, 2, 0],               // the other key, under c
+      ['c', 20, 4, 2, 1],               // lies right on top of k2
+    ],
+    locks: ['l1', 'l2'], keys: ['k1', 'k2'],
+    taps: [
+      [1300, 'l1', 'lc_tap'],           // locked: it shakes, both keys wiggle, c turns see-through over the buried key
+      [2750, 'k1', 'lc_one'],           // one key off the board: the locks stay shut
+      [4200, 'd'],
+      [4900, 'c'],                      // a pair: the buried key is free now
+      [5600, 'k2', 'lc_both'],          // the second key (a pair with k1): both locks spring open
+    ],
+    ms: 7000,
+    line: 'intro_lock',
+  },
+  /* Tray pair (board.js tapTile, peekPair): with 3 tiles waiting, a free face-down tile that is turned over and a free
+     tile with the same picture leave together, without a slot. Only one face-down tile is open at a time (turning
+     another closes it); its twin may be face down too (it turns over as it goes). */
+  trayPair: {
+    tiles: [
+      ['d1', 20, 0, 0, 0],              // face down (a pair with d3)
+      ['m1', 27, 2, 0, 0],              // between two: not free
+      ['d2', 31, 4, 0, 0],              // face down (a pair with t2)
+      ['t2', 31, 0, 2, 0],
+      ['m2', 2, 2, 2, 0],
+      ['d3', 20, 4, 2, 0],              // face down
+    ],
+    down: ['d1', 'd2', 'd3'], tray: [4, 8, 12],
+    taps: [
+      [1300, 'd1'],                     // turned over: it stays on the board
+      [2000, 'd2', 'tp_one'],           // another one turned over: d1 closes again
+      [3450, 't2', 'tp_twin'],          // its open twin: they go together, the tray keeps its 3
+      [4900, 'd1'],
+      [5600, 'd3', 'tp_down'],          // a face-down twin: it turns over as they go together
+    ],
+    ms: 7000,
+    line: 'intro_trayPair',
+  },
+  /* Clock (board.js clockMove / checkClock): the number is the moves left, and a move is a tile taken off the board.
+     A tap on a blocked tile and turning a face-down tile over cost nothing; a pair costs 2; the clock tile only has
+     to leave the board (into the tray, its twin may wait), with the last move still in time. */
+  clock: {
+    tiles: [
+      ['t', 20, 1, 1, 1],               // on its upper left corner, one layer up (the clock's number sits at the upper right)
+      ['dn', 31, 6, 0, 0],              // face down
+      ['ck', 12, 2, 2, 0],              // the clock tile
+      ['s', 8, 4, 2, 0],                // beside it (it stays)
+      ['x', 20, 6, 2, 0],               // a pair with t
+    ],
+    down: ['dn'], clock: ['ck', 3],
+    taps: [
+      [1300, 'ck', 'ck_blocked'],       // covered: it shakes, the game points at t; still 3
+      [2750, 'dn', 'ck_peek'],          // turned over: still 3
+      [4200, 't'],                      // 2
+      [4900, 'x', 'ck_pair'],           // a pair: 1
+      [6350, 'ck', 'ck_last'],          // the last move, into the tray without its twin: the clock stops
+    ],
+    ms: 7000,
+    line: 'nt_clock_text',
   },
 };
 
@@ -104,14 +174,18 @@ function playIntroFilm(kind, opts = {}) {
 
 // the film's tiny level, as the game's own G (board.js begin), marked as a film
 function introLevel(film, real) {
-  const tiles = film.tiles.map(([, face, x, y, z]) => ({ x, y, z, face, el: null })), n = tiles.length;
+  const ix = id => film.tiles.findIndex(t => t[0] === id), [, , x0, y0] = film.tiles[0];
+  // (the tiles waiting in the tray are off the board: where the first tile lies, so the board keeps its size)
+  const tiles = [...film.tiles, ...(film.tray || []).map(face => [, face, x0, y0, 0])].map(([, face, x, y, z]) => ({ x, y, z, face, el: null })), n = tiles.length;
+  const tray = (film.tray || []).map((_, k) => film.tiles.length + k);
   // (G.film.maxTw: its tiles no bigger than the level's, board.js fitGeo)
   G = { film: { maxTw: (real && real.tw) || 150 }, mode: real ? real.mode : 'level', level: real ? real.level : S.level, date: real && real.date, key: 'film',
-    tiles, nb: Layouts.neighbors(tiles), gold: new Set(), lucky: null, alive: new Uint8Array(n).fill(1), down: new Uint8Array(n), peek: -1,
-    tray: [], arriving: new Set(), flights: 0, score: real ? real.score : 0, combo: 0, lastMatch: 0, elapsed: 0, tStart: 0, mile: 0,
-    done: false, busy: false, mv: 0, clock: null, rp: null, st: { tp: 0, bt: 0, fl: 0, mc: 0, tm: 0 },
+    tiles, nb: Layouts.neighbors(tiles), gold: new Set(), lucky: null, alive: new Uint8Array(n).fill(1).fill(0, film.tiles.length), down: new Uint8Array(n), peek: -1,
+    tray, arriving: new Set(), flights: 0, score: real ? real.score : 0, combo: 0, lastMatch: 0, elapsed: 0, tStart: 0, mile: 0,
+    done: false, busy: false, mv: 0, clock: film.clock ? { i: ix(film.clock[0]), n: film.clock[1] } : null, rp: null, st: { tp: 0, bt: 0, fl: 0, mc: 0, tm: 0 },
     cz: { taps: [] } };                // (the game tips keep no notes of the film: coach.js coachNote)
-  setObstacles({ need: Object.fromEntries(film.tiles.map((t, i) => [i, t[5] || 0]).filter(x => x[1])) });
+  (film.down || []).forEach(id => G.down[ix(id)] = 1);
+  setObstacles({ need: Object.fromEntries(film.tiles.map((t, i) => [i, t[5] || 0]).filter(x => x[1])), locks: (film.locks || []).map(ix), keys: (film.keys || []).map(ix) });
 }
 
 // The film ends: the pop-up closes, the player's own level carries on as it was, then what comes next (after).

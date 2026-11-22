@@ -37,7 +37,8 @@ async function flushLog() {
 }
 const lvInfo = () => G ? (G.mode === 'level' ? { lv: G.level } : { m: 'd', d: G.date, lv: S.level }) : { lv: S.level };
 // something happened in the level being played: which level, which try, after how long, tiles left
-function logLvl(k, extra = {}) { syncClock(); logEvt(k, { ...lvInfo(), aid: G.rp && G.rp.id, at: G.attempt, s: Math.round(G.elapsed), left: aliveCount(), ...extra }); }
+function logLvl(k, extra = {}) { if (G.film) return;   // (the intro film logs nothing: js/intro.js)
+  syncClock(); logEvt(k, { ...lvInfo(), aid: G.rp && G.rp.id, at: G.attempt, s: Math.round(G.elapsed), left: aliveCount(), ...extra }); }
 // Record the actual explanation shown, not a guess from a player's failures.
 // Firebase permits strings of at most 40 characters; preserve the full text in pieces.
 let helpMessageSeq = 0;

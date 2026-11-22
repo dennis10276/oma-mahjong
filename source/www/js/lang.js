@@ -162,11 +162,23 @@ const TEXT = {
     'You cannot take a frozen tile yet. Take <b>a touching tile off the board</b>: <b>beside, above, on top of or below it</b> all count. ❄️ needs 1 tile removed; ❄️❄️ needs 2. Just turning a tile over does not help. Once thawed, the tile must also be <b>free</b>.'],
   // the line under the intro film (js/intro.js): what to do
   intro_ice: ['Elke steen die het ijs raakt, ook erboven of eronder, smelt een laagje&nbsp;❄️.', 'Every tile touching the ice, also above or below, melts a layer&nbsp;❄️.'],
+  intro_lock: ['🔒 Op slot: speel eerst het&nbsp;🔑&#8209;paar&nbsp;weg', '🔒 Locked: first clear the&nbsp;🔑&nbsp;pair'],   // (lockedTap, on two even lines)
+  intro_trayPair: ['3 vakjes vol? Bekijk een dichte steen en tik dan zijn&nbsp;tweeling.', '3 slots full? Peek at a face-down tile, then tap its&nbsp;twin.'],
   // the captions of the steps of the intro film (INTRO_FILMS taps): only what a skilled player would not guess
   ic_tap: ['Tik erop: zie wat hem ontdooit', 'Tap it to see what thaws it'],
   ic_diagonal: ['Schuin telt niet', "Diagonal doesn't count"],
   ic_half: ['Half erboven telt: ❄️❄️ → ❄️', 'Half above counts: ❄️❄️ → ❄️'],
   ic_corner: ['Een hoekje raakt: ontdooid', 'Just a corner: thawed'],
+  lc_tap: ['Tik erop: zie waar de 🔑 liggen', 'Tap it to see where the 🔑 are'],
+  lc_one: ['Eén 🔑 weg: nog op slot', 'One 🔑 gone: still locked'],
+  lc_both: ['Beide 🔑 weg: alle sloten open', 'Both 🔑 gone: every lock opens'],
+  tp_one: ['Maar één tegelijk open', 'Only one open at a time'],
+  tp_twin: ['Tweeling erbij: geen vakje nodig', 'Its twin: no slot needed'],
+  tp_down: ['Dichte tweeling mag ook', 'A face-down twin works too'],
+  ck_blocked: ['Vast tikken kost geen zet', 'A blocked tap costs no move'],
+  ck_peek: ['Omdraaien kost geen zet', 'Peeking costs no move'],
+  ck_pair: ['Een paar kost 2 zetten', 'A pair costs 2 moves'],
+  ck_last: ['Laatste zet, geen paar: op tijd', 'Last move, no pair: in time'],
   nt_clock: ['De wekker', 'The alarm clock'],
   nt_clock_text: ['De <b>⏰ wekker</b> telt <b>zetten, geen seconden</b>. Je mag rustig nadenken.', 'The <b>⏰ clock</b> counts <b>moves, not seconds</b>. Take your time to think.'],
   clockMoves: ['Elke steen van het bord kost <b>1 zet</b>. Een paar kost altijd <b>2 zetten</b>.', 'Each tile taken off the board costs <b>1 move</b>. A pair always costs <b>2 moves</b>.'],
