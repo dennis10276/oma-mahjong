@@ -130,7 +130,6 @@ function begin(o, restart = false) {
   } catch (e) { logErr(e, 'begin'); }
   saveCur();
   setTimeout(() => praise(restart ? tx('againPraise') : o.mode === 'daily' ? tx('dailyPraise') : o.title), 150);
-  if (villageOn()) setTimeout(villageTease, 1800);
   const ready = () => {
     if (!S.seenTray) setTimeout(() => showIntro(), 700);
     else { setTimeout(checkStuck, 500); setTimeout(jokerLeftover, 700); }

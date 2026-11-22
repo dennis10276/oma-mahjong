@@ -53,7 +53,7 @@ const save = () => { try { localStorage.setItem(STORE, JSON.stringify(S)); } cat
 // 👵 Super-omamodus (grandma, or switched on the dashboard); each part of it can also be on by itself
 const careMode = () => isCarePlayer(S.pid, S.name, S.cfg || {});
 const part = id => partOn(id, S.pid, S.name, S.cfg || {});
-// this player's settings from the family dashboard (grandma mode, news); kept on the phone for offline starts
+// this player's settings from the family dashboard (grandma mode); kept on the phone for offline starts
 async function loadCfg() {
   if (!DB_URL || !S.pid) return;
   try {

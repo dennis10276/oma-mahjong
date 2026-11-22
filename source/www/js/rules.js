@@ -53,9 +53,7 @@ const HELP = {
 
 /* Grandma mode: one part, switchable per player on the family dashboard. 👵 Super-omamodus turns it
    on (by default only for grandma, see GRANDMA). Old settings for parts that no longer exist
-   (gentle, adapt, retry, rescue, nudge, shuffleLater, lucky, keepTools) are simply ignored. The
-   news ('news') has no switch on the dashboard any more: it follows
-   Super-omamodus unless an old setting says otherwise. (The win replay 'pro' is gone.) */
+   (gentle, adapt, retry, rescue, nudge, shuffleLater, lucky, keepTools, pro, news) are simply ignored. */
 const PARTS = [
   { id: 'levels', group: 'easy', label: 'Eigen, makkelijkere levels', note: 'langzamer moeilijker, weinig omgedraaide stenen' },
 ];
@@ -91,24 +89,7 @@ const isCarePlayer = (pid, name, cfg = {}) => 'super' in cfg ? cfg.super : isGra
 const partOn = (id, pid, name, cfg = {}) => id in cfg ? cfg[id] : isCarePlayer(pid, name, cfg);
 // the help one player gets: the same for everyone
 const helpFor = () => HELP.normal;
-// news from Apeldoorn (a part too; VILLAGE.enabled switches it off for everyone)
-const getsNews = (pid, name, cfg = {}) => VILLAGE.enabled && partOn('news', pid, name, cfg);
-
-/* News from Apeldoorn after a won level (js/village.js), only for grandma (and DennisTEST).
-   Mostly real local news (collected every two hours by tools/news.py), sometimes a made-up story
-   about the computer players in the ranking (js/stories.js), told one part per won level. */
-const VILLAGE = {
-  enabled: true,                               // false: the news is gone for everyone (see README: removing the news)
-  newsUrl: 'https://raw.githubusercontent.com/dennis10276/oma-mahjong/news/news.json',
-  storyShare: 0.2,                             // 1 in 5 items is a story part, the rest real news
-  newsDays: 7,                                 // real news older than this is not shown any more (events that are over: never)
-  staleDays: 2,                                // no fresh news file for this long: stories may fill in
-  active: 2,                                   // stories running at the same time
-  askStar: 1,                                  // a memory question answered right: a bonus star
-  refreshMin: 30,                              // fetch the news again after this many minutes
-};
-
-// ---------- the database (Firebase Realtime Database; empty = only the computer players) ----------
+// ---------- the database (Firebase Realtime Database) ----------
 const DB_URL = 'https://oma-mahjong-default-rtdb.europe-west1.firebasedatabase.app';
 const dbUrl = path => `${DB_URL}/${path}.json`;
 function dbSend(path, body, method = 'PUT', signal) {

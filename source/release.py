@@ -174,13 +174,11 @@ def main():
             shutil.copy(os.path.join(ROOT, 'android', 'AndroidManifest.xml'), os.path.join(REPO, 'source', 'android', 'AndroidManifest.xml'))
             for f in ['README.md', 'release.py']:
                 shutil.copy(os.path.join(ROOT, f), os.path.join(REPO, 'source', f))
-        # the news collector for grandma's village news (approved by Dennis on 2026-10-10): its script,
-        # and the GitHub workflow that runs it every two hours (switch it off under Actions in the repo)
+        # the tools, and the GitHub workflows that stay
         if not IN_REPO:
             shutil.rmtree(os.path.join(REPO, 'source', 'tools'), ignore_errors=True)
             shutil.copytree(os.path.join(ROOT, 'tools'), os.path.join(REPO, 'source', 'tools'), ignore=shutil.ignore_patterns('__pycache__'))
         os.makedirs(os.path.join(REPO, '.github', 'workflows'), exist_ok=True)
-        shutil.copy(os.path.join(ROOT, 'tools', 'news.yml'), os.path.join(REPO, '.github', 'workflows', 'news.yml'))
         shutil.copy(os.path.join(ROOT, 'tools', 'replay-retention.yml'), os.path.join(REPO, '.github', 'workflows', 'replay-retention.yml'))
         shutil.copy(os.path.join(ROOT, 'tools', 'apk.yml'), os.path.join(REPO, '.github', 'workflows', 'apk.yml'))
         if not IN_REPO:

@@ -99,4 +99,12 @@ module.exports = [
       t.ok(!(await p.locator('#modalBox').innerText()).includes('Speltips'), 'How to play has no Game tips link');
     },
   },
+  {
+    name: 'no news: the home screen has no news button',
+    async run(t) {
+      const p = await t.phone({ state: { name: 'OmaHanny', pid: 'test-oma-news', level: 30 } });
+      t.eq(await p.evaluate(() => [!!$('#btnPaper'), typeof showVillage, typeof loadNews, typeof VILLAGE, typeof STORIES]),
+        [false, 'undefined', 'undefined', 'undefined', 'undefined'], 'no news button, no news or story code');
+    },
+  },
 ];

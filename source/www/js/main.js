@@ -61,7 +61,7 @@ document.addEventListener('pointerdown', () => Sound.init(), { once: true });
 addEventListener('resize', () => { if (curScreen === 'game') layoutBoard(); else fitTexts(document.getElementById(curScreen)); });
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) { Sound.suspend(); if (curScreen === 'game') pauseClock(); }
-  else { Sound.resume(); resumeClock(); if (curScreen === 'home') { if (applyUpdate()) return; renderHome(); checkHearts(); } checkUpdate(); loadCfg().then(loadNews); }
+  else { Sound.resume(); resumeClock(); if (curScreen === 'home') { if (applyUpdate()) return; renderHome(); checkHearts(); } checkUpdate(); loadCfg(); }
 });
 
 // Android back button (called from the native wrapper). Return true when handled.
@@ -94,10 +94,9 @@ setInterval(() => {
 document.addEventListener('visibilitychange', () => updatePresence());
 addEventListener('pagehide', () => updatePresence(false));
 addEventListener('online', () => updatePresence());
-loadCfg().then(loadNews);
-$('#btnPaper').onclick = openPaper;
+loadCfg();
 // a heart can arrive any moment (the live stream can miss one): look again every half minute
-setInterval(() => { if (!document.hidden) { checkHearts(); loadCfg(); loadNews(); if (curScreen === 'home') checkSentHearts(); } }, 30000);
+setInterval(() => { if (!document.hidden) { checkHearts(); loadCfg(); if (curScreen === 'home') checkSentHearts(); } }, 30000);
 document.body.classList.toggle('nonum', !S.nums);
 document.body.classList.toggle('contrast', !!S.contrast);
 show('home');

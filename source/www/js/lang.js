@@ -384,23 +384,6 @@ const TEXT = {
   iosSteps: ['1. Tik onderaan op <b>Deel</b> <span style="font-size:24px">⬆️</span> (het vierkantje met de pijl).<br>2. Kies <b>Zet op beginscherm</b> ➕.<br>3. Tik op <b>Voeg toe</b>.', '1. Tap <b>Share</b> <span style="font-size:24px">⬆️</span> at the bottom (the square with the arrow).<br>2. Choose <b>Add to Home Screen</b> ➕.<br>3. Tap <b>Add</b>.'],
   iosNote: ["Dan staat Oma's Mahjong als app tussen je andere apps, zonder Safari eromheen.", "Then Oma's Mahjong sits among your other apps, without Safari around it."],
 
-  // ---------- news from Apeldoorn and the neighbourhood (village.js) ----------
-  vgNewsHead: ['📰 Nieuws uit Apeldoorn', '📰 News from Apeldoorn'],
-  vgStoryHead: [w => `Uit de buurt: ${w}`, w => `From the neighbourhood: ${w}`],
-  vgPart: [(p, n) => `deel ${p} van ${n}`, (p, n) => `part ${p} of ${n}`],
-  vgMore: ['Wordt vervolgd:', 'To be continued:'],
-  vgEnd: ['— Einde —', '— The end —'],
-  vgOn: ['Verder ▶', 'Continue ▶'],
-  vgNice: ['Mooi verhaal! 😊', 'Lovely story! 😊'],
-  vgTeaseNews: ['📰 Win dit level voor nieuws uit Apeldoorn', '📰 Win this level for news from Apeldoorn'],
-  vgTeaseNew: [(ico, t) => `${ico} Win dit level: een nieuw verhaal!`, (ico, t) => `${ico} Win this level: a new story!`],
-  vgAskHead: ['🧠 Weet je het nog?', '🧠 Do you remember?'],
-  vgAskRight: ['Goed onthouden! +⭐', 'Well remembered! +⭐'],
-  vgAskWrong: [a => `Het was: ${a}`, a => `It was: ${a}`],
-  vgPaper: ['📰 Het krantje', '📰 The paper'],
-  vgPaperLbl: ['Het krantje', 'The paper'],
-  vgPaperEmpty: ['Win een level, dan staat hier het eerste nieuws.', 'Win a level and the first news appears here.'],
-  vgChatLbl: ['Verhaal lezen', 'Read the story'],
 };
 // the text for key in the player's language (a function is called with the extra arguments)
 function tx(key, ...a) {

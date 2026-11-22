@@ -75,7 +75,6 @@ function win() {
   const tr = newTrophies();
   if (tr.length) rewards.push({ type: 'trophies', list: tr });
   if (unlocked.length) rewards.push({ type: 'bgs', list: unlocked });
-  if (villageOn()) rewards.push({ type: 'village' });     // news from Apeldoorn comes last, right before the next level
   const mins = Math.floor(G.elapsed / 60), secs = Math.round(G.elapsed % 60);
   Sound.win(); FX.confetti(); buzz([30, 60, 30, 60, 60]);
   const titles = tx('winTitles');
@@ -152,7 +151,6 @@ function runRewards(queue, then) {
   else if (r.type === 'tools') showToolsUnlock(next);
   else if (r.type === 'toolsEarn') showToolsEarn(r.st, next);
   else if (r.type === 'trophies') showTrophies(r.list, next);
-  else if (r.type === 'village') showVillage(next);
   else showUnlock(r.list.slice(), next);
 }
 function showToolsUnlock(then) {

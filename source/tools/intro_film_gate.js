@@ -31,7 +31,6 @@ async function context(r, video) {
   const ctx = await lib.browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 2, hasTouch: true, isMobile: true, ...(video ? { recordVideo: { dir: video, size: { width: w, height: h } } } : {}) });
   const db = new lib.FakeDB({ scores: {} });
   await ctx.route(/^https:\/\/[^/]*firebasedatabase\.app\//, q => db.handle(q));
-  await ctx.route('**/news.json*', q => q.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ updated: 4102444800000, items: [] }) }));
   const p = await ctx.newPage();
   await p.clock.setFixedTime(new Date(lib.TODAY + 'T15:00:00'));
   await p.goto(new URL('__blank__', lib.server.url).href);

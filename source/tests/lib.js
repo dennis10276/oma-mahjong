@@ -94,9 +94,6 @@ async function phone(opts = {}) {
   const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 1, hasTouch: true, isMobile: true, ...(opts.ios ? { userAgent: IPHONE_UA } : {}) });
   const db = opts.db || new FakeDB({ scores: {} });
   if (!opts.realDb) await ctx.route(/^https:\/\/[^/]*firebasedatabase\.app\//, r => db.handle(r));   // a pattern, not a function: the browser then only asks this (sometimes busy) process about database requests
-  // grandma's news from Apeldoorn (js/village.js): none unless the test brings its own (news: {items})
-  const news = opts.news || { updated: 4102444800000, items: [] };
-  await ctx.route('**/news.json*', r => r.fulfill({ status: 200, contentType: 'application/json', headers: { 'Access-Control-Allow-Origin': '*' }, body: JSON.stringify(news) }));
   if (opts.routes) for (const [pat, fn] of opts.routes) await ctx.route(pat, fn);
   if (opts.init) await ctx.addInitScript(opts.init, opts.initArg);   // runs before every page script, on every page of the context
   const page = await ctx.newPage();
@@ -126,7 +123,7 @@ async function phone(opts = {}) {
 function tune(page, changes) {
   return page.evaluate(ch => {
     const merge = (a, b) => { for (const k of Object.keys(b)) { if (b[k] && typeof b[k] === 'object' && !Array.isArray(b[k]) && a[k] && typeof a[k] === 'object') merge(a[k], b[k]); else a[k] = b[k]; } };
-    const roots = { RULES, HELP, VILLAGE };
+    const roots = { RULES, HELP };
     for (const [name, c] of Object.entries(ch)) merge(roots[name], c);
   }, changes);
 }
