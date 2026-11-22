@@ -42,7 +42,7 @@ const numBgs = BGS.filter(b => typeof b.need === 'number');
 const defaults = () => ({
   level: 1, stars: {}, daily: {}, theme: 'classic', bg: 'jade', frame: 'none',
   sfx: true, music: true, vibrate: true, highlight: true, nums: true, contrast: false,
-  seenIntro: false, sunSeen: false, seenSp: {},
+  seenIntro: false, sunSeen: false, seenSp: {}, tips: {},
   matches: 0, bestCombo: 0, bestStreak: 0, winStreak: 0, bonusStars: 0, bonusPts: 0, weekWins: 0,
   stats: {}, trophies: {}, att: {}, fails: {}, czLoss: {}, proSeen: {}, lvlPts: {}, dayPts: {},
   heartsSent: {}, heartsSeen: {}, heartsOut: {}, pendingHearts: [],

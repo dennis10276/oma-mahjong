@@ -89,11 +89,13 @@ async function menu(p, r) {
   await p.locator('#mTileHelp').click(); await shot('2-list');
   await p.locator('.lesson-pick[data-kind="lock"]').click(); await shot('3-lock-film-from-list', 2000);
   await lib.sleep(1500); await p.locator('#ntGo').click(); await shot('4-back-to-list', 1200);
-  await p.locator('.lesson-pick[data-kind="gold"]').click(); await shot('5-gold-card');
-  await p.locator('#ntGo').click(); await lib.sleep(700);
   await p.locator('#mClose').click(); await lib.sleep(500);
-  await p.evaluate(() => showTileCard('gold', null, 'intro')); await shot('7-gold-card-first-meeting');
-  await p.evaluate(() => closeModal()); await lib.sleep(400);
+  // the "Wist je dat?" tips: a level with a golden pair (25), a level with a joker (33)
+  for (const [L, label] of [[25, '5-tip-gold'], [33, '6-tip-joker']]) {
+    await p.evaluate(L => { localStorage.removeItem('omamj.cur'); __mj.startLevel(L); }, L);
+    await p.waitForFunction(L => G && G.key === 'L' + L, L);
+    await shot(label, 2300);
+  }
 }
 // the other films (not yet shown by the game itself): the level opens, then the film as at the first meeting
 async function openFilm(p) {

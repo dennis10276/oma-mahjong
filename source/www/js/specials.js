@@ -30,10 +30,17 @@ function specialMatch(face, gold, c) {
   if (face === JOKER) { praise(tx('twoJokers')); FX.emoji(c.x, c.y, ['🃏', '✨'], 8); bumpStat('jokers'); }
   return gold ? RULES.score.goldMult : 1;
 }
-// the first time a special tile shows up: a short explanation
+/* "Wist je dat?" (Dennis 2026-11-23): gold and the joker are not explained. When a level starts with one on its
+   board, the top bar says it, at most TIP_MAX times per player (S.tips); one tip per level start, the joker first
+   (it is rare: only some levels below RULES jokersGoneFrom). A player past those tiles never sees it. */
+const TIP_MAX = 3;
 function specialTip() {
   if (!G || G.done || !modalFree()) return;
-  if (G.gold.size > 0 && !S.seenSp.gold) { S.seenSp.gold = true; save(); toast(tx('goldNew'), 4200); }
+  const on = { joker: () => G.tiles.some((t, i) => G.alive[i] && t.face === JOKER), gold: () => [...G.gold].some(i => G.alive[i]) };
+  const k = Object.keys(on).find(k => (S.tips[k] || 0) < TIP_MAX && on[k]());
+  if (!k) return;
+  S.tips[k] = (S.tips[k] || 0) + 1; save();
+  toast(tx('tip_' + k), 4200);
 }
 
 /* ---------- the joker: it fits every picture ----------
@@ -223,7 +230,6 @@ function keepKeysPaired(faces) {
 // the first time a new kind of tile shows up: a short explanation before playing
 // (title and text in lang.js: nt_<key>, nt_<key>_text)
 const NEW_TILES = {
-  gold: { has: () => G.gold.size > 0, ico: '✨' },
   lock: { has: () => !!(G.ob && G.ob.keys.length), ico: '🔒' },
   ice: { has: () => !!(G.ob && Object.keys(G.ob.need).length), ico: '🧊' },
   trayPair: { has: () => G.down.some(Boolean), first: () => G.o.mode === 'level' && G.o.level === 50, ico: '🀄' },
@@ -448,15 +454,15 @@ function tileLessonPlay(kind, clip, after, why, required) {
   };
   coachPlay($('#modalBox .coach-demo'), clip);
 }
-// How to play: every special the player has met, in the order they come, each with its film (js/intro.js) or card
-// (the joker is not explained: it plays without an explanation and leaves the deal from RULES jokersGoneFrom; Dennis 2026-11-23)
-const MET_ORDER = ['gold', 'ice', 'lock', 'trayPair', 'clock'];
+// How to play: every special the player has met, in the order they come, each with its film (js/intro.js)
+// (gold and the joker have no explanation: a "Wist je dat?" tip, specialTip; Dennis 2026-11-23)
+const MET_ORDER = ['ice', 'lock', 'trayPair', 'clock'];
 function showLessonMenu() {
   const met = MET_ORDER.filter(k => S.seenSp[k] || (k === 'clock' && S.seenSp.clockMoves));
   openModal(`<h2>${tx('lessonMenu')}</h2>${met.map(k => `<button class="big-btn gold lesson-pick" data-kind="${k}"><span class="bb-text"><b>${NEW_TILES[k] ? NEW_TILES[k].ico : '⏰'} ${tx('nt_' + k)}</b></span></button>`).join('')}
     <button class="link-btn" id="mClose">${tx('gotIt')}</button>`, true, null, 'tile-help');
   $('#modalBox').querySelectorAll('.lesson-pick').forEach(b => { const k = b.dataset.kind;
-    b.onclick = () => INTRO_FILMS[k] ? playIntroFilm(k, { after: showLessonMenu, why: 'manual' }) : showTileCard(k, showLessonMenu, 'manual'); });
+    b.onclick = () => playIntroFilm(k, { after: showLessonMenu, why: 'manual' }); });
   $('#mClose').onclick = closeModal;
 }
 // The explanation at the first clock level, also available from the help menu.
@@ -480,15 +486,6 @@ function newTileIntro(after = null) {
   const k = Object.keys(NEW_TILES).find(k => !S.seenSp[k] && NEW_TILES[k].has() && (!NEW_TILES[k].first || NEW_TILES[k].first()));
   if (!k) return false;
   if (k === 'ice') { playIntroFilm('ice', { required: true, after }); return true; }
-  if (k !== 'gold') { showTileLesson(k, after, false, 'intro', true); return true; }
-  showTileCard(k, after, 'intro');
+  showTileLesson(k, after, false, 'intro', true);
   return true;
-}
-// gold has a card (no film): its icon, title and text
-function showTileCard(k, after = null, why = 'intro') {
-  const first = why === 'intro';
-  openModal(`<div class="nt-ico">${NEW_TILES[k].ico}</div><h2>${first ? tx('newTile', tx('nt_' + k)) : tx('nt_' + k)}</h2><p>${tx('nt_' + k + '_text')}</p>
-    <button class="big-btn play" id="ntGo"><span class="bb-text"><b>${tx(first ? 'lessonContinue' : 'gotIt')}</b></span></button>`, false);
-  const message = recordHelpMessage(k, why);
-  $('#ntGo').onclick = () => { S.seenSp[k] = true; save(); message('ack'); closeModal(); if (after) after(); };
 }

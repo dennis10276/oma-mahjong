@@ -141,7 +141,9 @@ const TEXT = {
   // special tiles
   goldPair: ['✨ Gouden paar! x2', '✨ Golden pair! x2'],
   twoJokers: ['🃏 Twee jokers!', '🃏 Two jokers!'],
-  goldNew: ['✨ Nieuw: een gouden paar geeft dubbele punten!', '✨ New: a golden pair gives double points!'],
+  // "Wist je dat?" in the top bar at the start of a level with that tile (specials.js specialTip)
+  tip_gold: ['Wist je dat? Een paar met goud telt dubbel.', 'Did you know? Gold pairs score double.'],   // (one gold tile is enough; at most two lines in the top bar on a 360 px phone)
+  tip_joker: ['Wist je dat? De 🃏 past bij elke steen.', 'Did you know? The 🃏 matches any tile.'],
   joker: ['🃏 Joker!', '🃏 Joker!'],
   jokerFinale: [n => `🃏 Joker-finale! +${n}`, n => `🃏 Joker finale! +${n}`],
   locksOpen: ['🔓 Sloten open!', '🔓 Locks open!'],
@@ -152,8 +154,6 @@ const TEXT = {
   lockedTap: ['🔒 Op slot: speel eerst het 🔑-paar weg', '🔒 Locked: first clear the 🔑 pair'],
   iceSun: ['☀️ Het ijs smelt vanzelf', '☀️ The ice melts by itself'],
   newTile: [t => `Nieuw: ${t}`, t => `New: ${t}`],
-  nt_gold: ['Gouden stenen', 'Golden tiles'],
-  nt_gold_text: ['Een paar met een <b>gouden steen</b> geeft <b>dubbele punten</b>, ook met een gewone tweeling.', 'A pair with a <b>golden tile</b> scores <b>double points</b>, even with a plain twin.'],
   nt_ice: ['Bevroren stenen', 'Frozen tiles'],
   nt_ice_text: ['Een bevroren steen kun je nog niet pakken. Haal <b>een aangrenzende steen van het bord</b>: <b>ernaast, erboven, erop én eronder</b> tellen mee. ❄️ heeft 1 steen nodig, ❄️❄️ heeft 2 nodig. Alleen omdraaien helpt niet. Na het smelten moet de steen ook <b>vrij</b> liggen.',
     'You cannot take a frozen tile yet. Take <b>a touching tile off the board</b>: <b>beside, above, on top of or below it</b> all count. ❄️ needs 1 tile removed; ❄️❄️ needs 2. Just turning a tile over does not help. Once thawed, the tile must also be <b>free</b>.'],
