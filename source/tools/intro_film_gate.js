@@ -60,8 +60,8 @@ async function context(r, video) {
       }
       if (!vids) { await ctx.close(); console.log('done', r.name); continue; }
       // the second play, then a tap on the button: the player's own level comes back
-      const ms = await p.evaluate(k => INTRO_FILMS[k].ms, KIND);
-      await lib.sleep(Math.max(0, t0 + 2 * ms + 1800 - Date.now()));
+      const [ms, plays] = await p.evaluate(k => { const f = INTRO_FILMS[k], parts = f.parts || [f]; return [parts.reduce((a, q) => a + q.ms, 0), f.plays || 2]; }, KIND);
+      await lib.sleep(Math.max(0, t0 + plays * ms + (plays - 1) * 1500 + 1800 - Date.now()));
       await p.locator('#ntGo').click();
       await lib.sleep(900);
       if (!r.stills) await p.screenshot({ path: path.join(OUT, `${r.name}-9-level-back.png`) });
@@ -105,8 +105,11 @@ async function openFilm(p) {
   await p.waitForFunction(L => !document.querySelector('#buildMsg') && G && G.key === 'L' + L && !G.introducing, LEVEL, { timeout: 60000 });
   await lib.sleep(900);
   const film = await p.evaluate(kind => { playIntroFilm(kind, { required: true }); return INTRO_FILMS[kind]; }, KIND);
-  const caps = film.taps.filter(x => x[2]);
-  return [[900, '0-at-rest'], ...caps.map(([ms, , cap], k) => [ms + 650, `${k + 1}-${cap}`]), [film.ms + 400, `${caps.length + 1}-done-button`]];
+  // (a film in parts: every part's taps on one clock, and a still at the end of each part but the last)
+  const parts = film.parts || [film], start = parts.map((_, p) => parts.slice(0, p).reduce((a, q) => a + q.ms, 0)), ms = start.at(-1) + parts.at(-1).ms;
+  const caps = parts.flatMap((part, p) => part.taps.filter(x => x[2]).map(([t, , cap]) => [start[p] + t, cap]));
+  const ends = parts.slice(0, -1).map((part, p) => [start[p] + part.ms - 400, `part${p + 1}-end`]);
+  return [[900, '0-at-rest'], ...caps.map(([t, cap], k) => [t + 650, `${k + 1}-${cap}`]), ...ends, [ms + 400, `${caps.length + 1}-done-button`]].sort((a, b) => a[0] - b[0]);
 }
 // the real level 35 with a frozen tile tapped, beside the film at the same kind of moment
 async function compare(r) {

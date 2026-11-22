@@ -178,6 +178,7 @@ const TEXT = {
   ck_blocked: ['Vast tikken kost geen zet', 'A blocked tap costs no move'],
   ck_peek: ['Omdraaien kost geen zet', 'Peeking costs no move'],
   ck_every: ['Elke steen die je pakt: 1 zet', 'Every tile you take: 1 move'],
+  ck_out: ['0 zetten: de wekker gaat af', '0 moves: the alarm goes off'],
   ck_last: ['Laatste zet, geen paar: op tijd', 'Last move, no pair: in time'],
   nt_clock: ['De wekker', 'The alarm clock'],
   nt_clock_text: ['De <b>⏰ wekker</b> telt <b>zetten, geen seconden</b>. Je mag rustig nadenken.', 'The <b>⏰ clock</b> counts <b>moves, not seconds</b>. Take your time to think.'],

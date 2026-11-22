@@ -18,6 +18,8 @@
             caption (a text key in lang.js) under the board, shown with its result, and a short pause after it; it
             goes before the next tap, the last one stays until the film plays again
      ms:    one play; line: the text key of the line in the pop-up (lang.js)
+     parts: instead of tiles, taps and ms, a film may play several tiny levels one after the other (each with its own
+            tiles, taps and ms; the board drops in anew for each); plays: how often it plays before it rests (2)
    The film's tiles are no bigger than those of the level behind it (G.film.maxTw, board.js fitGeo). */
 'use strict';
 
@@ -103,33 +105,47 @@ const INTRO_FILMS = {
     line: 'intro_trayPair',
   },
   /* Clock (board.js clockMove / checkClock): the number is the moves left, and a move is a tile taken off the board.
-     First, at length, that every tile taken costs 1 (a pair so costs 2: no caption for that); then what is not
-     obvious: a tap on a blocked tile and turning a face-down tile over cost nothing; the clock tile only has to leave
-     the board (into the tray, its twin may wait), with the last move still in time. Longer than the others, 10 s
-     (Dennis 2026-11-22: "a longer video and more in dept first time that every move costs 1"). */
+     Two parts (Dennis 2026-11-23: "a section before where you run out and lose to the clock. CLock really needs to be
+     clear for people seeing it the first time. Take the time there"). First the clock is lost: every tile taken
+     counts 1, and at 0 with the clock tile still there the alarm goes off, as in the game. Then what is not obvious:
+     a tap on a blocked tile and turning a face-down tile over cost nothing; the clock tile only has to leave the
+     board (into the tray, its twin may wait), with the last move still in time. 14.5 s: it plays once, then rests. */
   clock: {
-    tiles: [
-      ['a1', 4, 0, 0, 0],               // a pair with a2
-      ['dn', 31, 2, 0, 0],              // face down
-      ['a2', 4, 6, 0, 0],
-      ['a', 8, 0, 2, 0],                // under t (it stays)
-      ['ck', 12, 2, 2, 0],              // the clock tile
-      ['x', 27, 4, 2, 0],               // beside it, between it and b1
-      ['b1', 20, 6, 2, 0],              // a pair with t
-      ['t', 20, 1, 2, 1],               // a bridge over a and the clock tile's left half (the clock's number sits at the upper right)
-    ],
-    down: ['dn'], clock: ['ck', 6],
-    taps: [
-      [1300, 'a1', 'ck_every'],         // 6 → 5 (the game's own "5 moves left" in the top bar)
-      [2750, 'a2'],                     // a pair: 4
-      [3450, 'b1'],                     // 3
-      [4150, 'ck', 'ck_blocked'],       // covered: it shakes, the game points at t; still 3
-      [5600, 'dn', 'ck_peek'],          // turned over: still 3
-      [7050, 't'],                      // a pair with b1: 2; the clock tile's left is free
-      [7750, 'x'],                      // 1; its right is free
-      [8450, 'ck', 'ck_last'],          // the last move, into the tray without its twin: the clock stops
-    ],
-    ms: 10000,
+    parts: [{
+      tiles: [
+        ['a1', 4, 0, 0, 0],             // a pair with a2
+        ['b1', 8, 2, 0, 0],
+        ['a2', 4, 6, 0, 0],
+        ['a', 27, 0, 2, 0],             // under t
+        ['ck', 12, 2, 2, 0],            // the clock tile, held by t
+        ['t', 20, 1, 2, 1],             // a bridge over a and the clock tile's left half
+      ],
+      clock: ['ck', 3],
+      taps: [
+        [1300, 'a1', 'ck_every'],       // 3 → 2
+        [2750, 'a2'],                   // a pair: 1
+        [3450, 'b1', 'ck_out'],         // 0, the clock tile still there: the alarm goes off (the game's own message, on the board)
+      ],
+      ms: 7500,
+    }, {
+      tiles: [
+        ['dn', 31, 0, 0, 0],            // face down
+        ['a', 8, 0, 2, 0],              // under t (it stays)
+        ['ck', 12, 2, 2, 0],            // the clock tile
+        ['x', 20, 4, 2, 0],             // beside it: a pair with t
+        ['t', 20, 1, 2, 1],             // a bridge over a and the clock tile's left half (the clock's number sits at the upper right)
+      ],
+      down: ['dn'], clock: ['ck', 3],
+      taps: [
+        [1300, 'ck', 'ck_blocked'],     // covered: it shakes, the game points at t; still 3
+        [2750, 'dn', 'ck_peek'],        // turned over: still 3
+        [4200, 't'],                    // 2
+        [4900, 'x'],                    // a pair: 1
+        [6350, 'ck', 'ck_last'],        // the last move, into the tray without its twin: the clock stops
+      ],
+      ms: 7000,
+    }],
+    plays: 1,
     line: 'nt_clock_text',
   },
 };
@@ -154,21 +170,25 @@ function playIntroFilm(kind, opts = {}) {
   // the player's own level waits: its clock stops (G.introducing), its board stays as it is behind the pop-up
   const real = G, run = introRun = { real, stage, blockedTaps, introducing: real && real.introducing, ticking: !!(real && real.tStart), timers: [], plays: 0, log: [] };
   const later = (ms, fn) => { const id = setTimeout(() => { run.timers = run.timers.filter(x => x !== id); if (introRun === run) fn(); }, ms); run.timers.push(id); };
-  const ids = film.tiles.map(t => t[0]);
+  // every tap of every part, on one clock: [ms, part, id, caption]; a part starts where the one before ended
+  const parts = film.parts || [film], start = parts.map((_, p) => parts.slice(0, p).reduce((a, q) => a + q.ms, 0)), ms = start.at(-1) + parts.at(-1).ms;
+  const taps = parts.flatMap((part, p) => part.taps.map(([t, id, text]) => [start[p] + t, p, id, text]));
+  const begin = p => { introLevel(parts[p], real); renderBoard(true); renderTray(); updateProgress(); clearGameMsg(); cap.classList.remove('on'); };
   const play = () => {
-    run.plays++; run.log = []; stage.classList.remove('intro-end'); cap.classList.remove('on'); blockedTaps = 0; clearGameMsg();
-    introLevel(film, real);
-    renderBoard(true); renderTray(); updateProgress();
-    film.taps.forEach(([ms, id, text], k) => {
-      later(ms, () => { const i = ids.indexOf(id); onTap(i, true); run.log.push([id, !G.alive[i]]); });
+    run.plays++; run.log = []; stage.classList.remove('intro-end'); blockedTaps = 0;
+    begin(0);
+    parts.forEach((_, p) => { if (p) later(start[p], () => begin(p)); });
+    taps.forEach(([at, p, id, text], k) => {
+      later(at, () => { const i = parts[p].tiles.findIndex(t => t[0] === id); onTap(i, true); run.log.push([id, !G.alive[i]]); });
       if (!text) return;
       // the step says what it did, while its result shows
-      later(ms + INTRO_CAP_IN, () => { cap.textContent = tx(text); cap.classList.add('on'); });
-      if (film.taps[k + 1]) later(film.taps[k + 1][0] - INTRO_CAP_OUT, () => cap.classList.remove('on'));   // (the last one stays: the film ends on it)
+      later(at + INTRO_CAP_IN, () => { cap.textContent = tx(text); cap.classList.add('on'); });
+      // it goes before the next tap, or before the next part (the last one stays: the film ends on it)
+      if (taps[k + 1]) later(Math.min(taps[k + 1][0], start[p + 1] ?? ms) - INTRO_CAP_OUT, () => cap.classList.remove('on'));
     });
-    later(film.ms, () => {
+    later(ms, () => {
       if (run.plays === 1 && required) { go.disabled = false; go.querySelector('b').textContent = tx('lessonContinue'); }
-      if (run.plays < INTRO_PLAYS) later(INTRO_REST_MS, play); else stage.classList.add('intro-end');
+      if (run.plays < (film.plays || INTRO_PLAYS)) later(INTRO_REST_MS, play); else stage.classList.add('intro-end');
     });
   };
   stage.onclick = () => { if (introRun === run && stage.classList.contains('intro-end')) play(); };

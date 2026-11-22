@@ -778,13 +778,16 @@ function clockMove(i) {
 }
 function checkClock() {
   if (!G || G.done || G.overShown || !clockOn() || clockLeft() > 0) return;
-  G.busy = true; G.overShown = true; syncClock();
-  bumpStat('losses'); noteFail(); endLevel('stuck', { ck: 1 });
+  const g = G; G.busy = true; G.overShown = true;
+  if (!G.film) { syncClock(); bumpStat('losses'); noteFail(); endLevel('stuck', { ck: 1 }); }   // (the intro film: nothing is counted, saved or logged)
   setTimeout(() => {
+    if (G !== g) return;
     Sound.stuck(); buzz([40, 80, 40]);
     replay(G.tiles[G.clock.i].el, 'shake');
-    openModal(`<div class="nt-ico">⏰</div><h2>${tx('clockTitle')}</h2>
-      <p>${tx('clockText', G.clock.n)}</p>
+    const over = `<div class="nt-ico">⏰</div><h2>${tx('clockTitle')}</h2><p>${tx('clockText', G.clock.n)}</p>`;
+    // (in the intro film the same message shows on its board, without the buttons: the film's pop-up stays)
+    if (G.film) { $('#board').insertAdjacentHTML('beforeend', `<div class="film-over clock-help">${over}</div>`); return; }
+    openModal(`${over}
       <button class="big-btn play" id="sRetry"><span class="bb-text"><b>${tx('tryAgain')}</b></span></button>
       <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false, null, 'clock-help');
     $('#sRetry').onclick = () => { closeModal(); restart(); };
