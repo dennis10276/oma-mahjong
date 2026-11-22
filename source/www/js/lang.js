@@ -165,8 +165,8 @@ const TEXT = {
   // the captions of the steps of the intro film (INTRO_FILMS taps): only what a skilled player would not guess
   ic_tap: ['Tik erop: zie wat hem ontdooit', 'Tap it to see what thaws it'],
   ic_diagonal: ['Schuin telt niet', "Diagonal doesn't count"],
-  ic_corner: ['Een hoekje erop: ❄️❄️ → ❄️', 'Just a corner on it: ❄️❄️ → ❄️'],
-  ic_half: ['Half erboven telt: gesmolten', 'Half above counts: melted'],
+  ic_half: ['Half erboven telt: ❄️❄️ → ❄️', 'Half above counts: ❄️❄️ → ❄️'],
+  ic_corner: ['Een hoekje raakt: ontdooid', 'Just a corner: thawed'],
   nt_clock: ['De wekker', 'The alarm clock'],
   nt_clock_text: ['De <b>⏰ wekker</b> telt <b>zetten, geen seconden</b>. Je mag rustig nadenken.', 'The <b>⏰ clock</b> counts <b>moves, not seconds</b>. Take your time to think.'],
   clockMoves: ['Elke steen van het bord kost <b>1 zet</b>. Een paar kost altijd <b>2 zetten</b>.', 'Each tile taken off the board costs <b>1 move</b>. A pair always costs <b>2 moves</b>.'],

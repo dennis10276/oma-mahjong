@@ -72,11 +72,14 @@ module.exports = [
     t.eq([tiles.n, tiles.ice], [true, ['ice2']], 'the film\'s tiny level, one tile under thick ice');
     t.ok(tiles.faces, 'tiles drawn by the board in the player\'s own theme');
     t.ok(await p.evaluate(() => $('#introPanel p.intro-line').innerHTML === tx('intro_ice')), 'one line in the pop-up says what to do');
-    // pace: a tap every 0.65 to 0.75 s; after a step with a caption a short pause (0.3 to 0.4 s more); at most 6 s in all
+    // pace: a calm start (the board at rest first), a tap every 0.65 to 0.75 s, after a step with a caption a pause to read it; at most 7 s in all
     const taps = await p.evaluate(() => INTRO_FILMS.ice.taps);
     const gaps = taps.slice(1).map((x, k) => [x[0] - taps[k][0], !!taps[k][2]]);
-    t.ok(gaps.every(([ms, cap]) => cap ? ms >= 1000 && ms <= 1300 : ms >= 650 && ms <= 750), 'taps 0.7 s apart, with a short pause after each step that has a caption', gaps);
-    t.ok(await p.evaluate(() => INTRO_FILMS.ice.ms <= 6000 && INTRO_FILMS.ice.ms >= INTRO_FILMS.ice.taps.at(-1)[0] + 700), 'one play lasts at most 6 s (the last step can be seen)', await p.evaluate(() => INTRO_FILMS.ice.ms));
+    t.ok(gaps.every(([ms, cap]) => cap ? ms >= 1300 && ms <= 1600 : ms >= 650 && ms <= 750), 'taps 0.7 s apart, with a pause after each step that has a caption', gaps);
+    t.ok(taps[0][0] >= 1200, 'the player first sees the board at rest: the first tap comes after at least 1.2 s', taps[0][0]);
+    t.ok(await p.evaluate(() => { const a = getComputedStyle($('#modalBox')), bez = a.animationTimingFunction.match(/cubic-bezier\(([^)]*)\)/);
+      return parseFloat(a.animationDuration) >= 0.5 && !(bez && bez[1].split(',').map(parseFloat).some((v, k) => k % 2 && v > 1)); }), 'the pop-up opens calmly: slowly, without the bounce of other pop-ups');
+    t.ok(await p.evaluate(() => INTRO_FILMS.ice.ms <= 7000 && INTRO_FILMS.ice.ms >= INTRO_FILMS.ice.taps.at(-1)[0] + 600), 'one play lasts at most 7 s (the last step can be seen)', await p.evaluate(() => INTRO_FILMS.ice.ms));
     // back, the backdrop and taps on the film do not get around it; the level clock waits
     await p.evaluate(() => handleBack());
     const tile = await p.evaluate(() => { const r = G.tiles[0].el.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; });
@@ -194,7 +197,7 @@ module.exports = [
         early: early.length === 2 && film.tiles[early[0]][1] === film.tiles[early[1]][1] && early.every(j => !inb[I].includes(j)) };
     });
     t.eq(r.touching, [['side', 'beside'], ['top', 'layer'], ['up', 'above/below']], 'the touching tiles: one beside, one above in the same layer, one in the layer on top');
-    t.eq(r.thaw, [['top', 1, 1, 1], ['up', 1, 2, 0]], 'the tiles that melt it touch it only a little: one lies on a corner of it, one is half above it', r.thaw);
+    t.eq(r.thaw, [['up', 1, 2, 0], ['top', 1, 1, 1]], 'the tiles that melt it touch it only a little: one is half above it, then one lies on a corner of it', r.thaw);
     t.ok(r.apart.some(([, dx, dy, dz]) => dx === 2 && dy === 2 && dz === 0), 'a diagonal corner tile that does not touch it', r.apart);
     t.ok(r.apart.some(([, dx, dy, dz]) => dx >= 4 && dy === 0 && dz === 0), 'a tile further along its row that does not touch it', r.apart);
     t.ok(r.early, 'early in the film a pair that does not touch the ice is taken');
@@ -202,8 +205,8 @@ module.exports = [
     t.ok(r.hidden > 0 && r.hidden <= 0.25, 'the tile on top hides at most a quarter of the frozen tile, so its ice shows', r.hidden);
     t.eq(r.need, 2, 'thick ice: two touching tiles must go');
     t.ok(r.tiles <= 9 && r.taps <= 8, 'at most 9 tiles and 8 taps', r);
-    t.eq(await p.evaluate(takeableOutcome), [['ice', false], ['far', true], ['corner', true], ['top', true], ['up', true]],
-      'the step table: frozen, a pair that does not touch it (one diagonal), a corner on it, half above it');
+    t.eq(await p.evaluate(takeableOutcome), [['ice', false], ['far', true], ['corner', true], ['up', true], ['top', true]],
+      'the step table: frozen, a pair that does not touch it (one diagonal), half above it (cracks), a corner on it (thaws)');
     t.ok(await p.evaluate(() => { const film = INTRO_FILMS.ice, ids = film.tiles.map(x => x[0]), tiles = film.tiles.map(([, , x, y, z]) => ({ x, y, z })), alive0 = tiles.map(() => 1);
       const alive = alive0.map((_, i) => film.taps.some(([, id]) => id === ids[i] && id !== 'ice') ? 0 : 1), I = ids.indexOf('ice');
       return Layouts.takeable(I, alive, Layouts.neighbors(tiles), { iceNb: Layouts.iceNeighbors(tiles), ice: { [I]: 2 }, locks: null, keys: [] }, alive0); }), 'at the end the frozen tile is thawed and free');
@@ -223,7 +226,7 @@ module.exports = [
     await p.waitForFunction(() => introRun && G.film, null, { timeout: 3000 });
     t.eq(await p.evaluate(() => [introRun.real.flights, G.flights]), [0, 0], 'the film starts once that tile has landed');
     // the film's own texts (the ice cracks, the ice melted) stay inside the film
-    await p.waitForFunction(() => introRun.log.length >= 5, null, { timeout: 8000 });
+    await p.waitForFunction(() => introRun.log.length >= 5, null, { timeout: 10000 });
     const leaked = () => { const texts = [tx('iceCrack'), tx('iceMelted'), tx('iceThick'), tx('iceThin'), tx('stillStuck')];
       const msg = document.querySelector('#game #gameMsg').textContent, toastEl = [...document.querySelectorAll('#toast')].find(e => !e.closest('#modalBox'));
       return texts.filter(s => msg.includes(s) || (toastEl.classList.contains('on') && toastEl.textContent.includes(s))); };
@@ -247,7 +250,7 @@ module.exports = [
   { name: 'intro: every step of the ice film says what it does: its caption comes with the result and is gone before the next tap', async run(t) {
     const p = await t.phone({ state: { name: 'Dennis', level: 40, sunSeen: true, seenSp: seen } });
     t.eq(await p.evaluate(() => INTRO_FILMS.ice.taps.map(x => [x[1], x[2] || null])),
-      [['ice', 'ic_tap'], ['far', null], ['corner', 'ic_diagonal'], ['top', 'ic_corner'], ['up', 'ic_half']], 'a caption for every subtle step, none for the obvious');
+      [['ice', 'ic_tap'], ['far', null], ['corner', 'ic_diagonal'], ['up', 'ic_half'], ['top', 'ic_corner']], 'a caption for every subtle step, none for the obvious');
     t.ok(await p.evaluate(() => INTRO_FILMS.ice.taps.filter(x => x[2]).every(x => TEXT[x[2]] && TEXT[x[2]].every(s => s && s.length <= 32))), 'short captions in Dutch and English');
     t.ok(await p.evaluate(() => !['ic_covered', 'ic_top', 'ic_free'].some(k => k in TEXT)), 'no step about the ordinary covered-tile rule or the obvious (Dennis: for a skilled player)');
     // every frame of one play: which tap was last, the caption and how much of it shows, the ice tile pointed at
@@ -256,7 +259,7 @@ module.exports = [
       const I = INTRO_FILMS.ice.tiles.findIndex(x => x[0] === 'ice');
       const rec = () => { if (!introRun || introRun.plays > 1) return;
         const c = $('#modalBox .intro-cap');
-        __frames.push({ n: introRun.log.length, text: c ? c.textContent : null, op: c ? +getComputedStyle(c).opacity : 0, look: G.tiles[I].el.classList.contains('intro-look') });
+        __frames.push({ t: performance.now(), n: introRun.log.length, text: c ? c.textContent : null, op: c ? +getComputedStyle(c).opacity : 0, look: G.tiles[I].el.classList.contains('intro-look') });
         requestAnimationFrame(rec); };
       rec();
     });
@@ -264,12 +267,13 @@ module.exports = [
     const r = await p.evaluate(() => INTRO_FILMS.ice.taps.map(([, id, cap], k) => {
       const w = __frames.filter(f => f.n === k + 1), want = cap ? tx(cap) : null;
       return { id, cap, frames: w.length, atTap: w.length ? w[0].op : 1, before: w.length ? w.at(-1).op : 1,
-        shown: w.some(f => f.text === want && f.op >= 0.95), other: w.some(f => f.op > 0.05 && f.text !== want), look: w.some(f => f.look) };
+        shown: w.some(f => f.text === want && f.op >= 0.95), full: (on => on.length ? on.at(-1).t - on[0].t : 0)(w.filter(f => f.text === want && f.op >= 0.95)), other: w.some(f => f.op > 0.05 && f.text !== want), look: w.some(f => f.look) };
     }));
     r.forEach((s, k) => {
       const last = k === r.length - 1;
       t.ok(s.frames > 10 && s.atTap <= 0.05, `${s.id}: nothing is said at the moment of the tap`, s);
       t.ok(s.cap ? s.shown : !s.other, s.cap ? `${s.id}: its caption shows after the tap` : `${s.id}: no caption`, s);
+      if (s.cap && !last) t.ok(s.full >= 800, `${s.id}: its caption can be read (fully shown about 0.9 s)`, s.full);
       t.ok(!s.other, `${s.id}: no other caption in its step`, s);
       // (the last one stays until the film plays again: it ends on what it was about)
       t.ok(last ? s.before >= 0.95 : s.before <= 0.05, last ? `${s.id}: its caption stays at the end` : `${s.id}: its caption is gone before the next tap`, s);

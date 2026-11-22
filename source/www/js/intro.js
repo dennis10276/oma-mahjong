@@ -20,15 +20,16 @@
 const INTRO_REST_MS = 1500;      // the pause before it plays once more
 const INTRO_PLAYS = 2;           // then it rests on its last picture
 const INTRO_RING_MS = 200;       // the ring shows this long before the tap
-const INTRO_CAP_IN = 250;        // a caption comes this long after its tap (with the result: a pair pops after its flight, board.js FLY_MS)
-const INTRO_CAP_OUT = 250;       // and starts to fade this long before the next tap (.intro-cap fades in .2 s)
+const INTRO_CAP_IN = 200;        // a caption comes this long after its tap (with the result: a pair pops after its flight, board.js FLY_MS)
+const INTRO_CAP_OUT = 220;       // and starts to fade this long before the next tap (.intro-cap fades in .18 s)
 const INTRO_FILMS = {
   /* Ice (layouts.js iceNeighbors / frozenIn): a frozen tile cannot be taken until enough of the tiles touching it
      have left the board. For a skilled player it shows only what is not obvious (Dennis 2026-11-22): a tap on a
      frozen tile lights up the tiles that thaw it; a diagonal tile (two across and two down) does not count; a tile
-     that touches it only a little does: one lying on just a corner of it, one half above it. ❄️❄️ needs two. It ends
-     on the melt (taking a free tile is obvious). A tap every 0.7 s, a short pause after a step with a caption, at
-     most 6 s (Dennis on draft 6: 0.7 s, "the max thing should be 6 s"). */
+     that touches it only a little does: one half above it, one lying on just a corner of it. ❄️❄️ needs two. It ends
+     on the melt (taking a free tile is obvious). The board first rests a moment (the player takes it in), a tap
+     every 0.7 s, after a step with a caption a pause so it can be read (shown fully about 0.85 s), at most 7 s
+     (Dennis 2026-11-22: 0.7 s; "start a bit slower before popping up. The player needs to process it. 7 s is okay"). */
   ice: {
     focus: 'ice',
     tiles: [
@@ -40,13 +41,13 @@ const INTRO_FILMS = {
       ['top', 8, 1, 1, 1],              // on just its upper left corner, one layer up: touching (most of the ice and its ❄️ show)
     ],
     taps: [
-      [500, 'ice', 'ic_tap'],           // frozen (and covered): it shakes, the three tiles that thaw it light up
-      [1800, 'far'],                    // a pair that does not touch it leaves: the ice stays as it is
-      [2500, 'corner', 'ic_diagonal'],  // (the diagonal one last, so the caption comes with its own tap)
-      [3600, 'top', 'ic_corner'],       // the tile on its corner leaves: ❄️❄️ cracks to ❄️
-      [4700, 'up', 'ic_half'],          // the tile half above it leaves (a pair with top): the ice melts
+      [1300, 'ice', 'ic_tap'],          // frozen (and covered): it shakes, the three tiles that thaw it light up
+      [2750, 'far'],                    // a pair that does not touch it leaves: the ice stays as it is
+      [3450, 'corner', 'ic_diagonal'],  // (the diagonal one last, so the caption comes with its own tap)
+      [4900, 'up', 'ic_half'],          // the tile half above it leaves: ❄️❄️ cracks to ❄️
+      [6350, 'top', 'ic_corner'],       // the tile on just its corner leaves (a pair with up): the ice melts
     ],
-    ms: 5500,
+    ms: 7000,
     line: 'intro_ice',
   },
 };

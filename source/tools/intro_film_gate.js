@@ -3,22 +3,24 @@
    (level 35). On the phone it also makes compare-<theme>.png: the real level 35 after a tap on a frozen tile (its
    touching tiles light up) beside the film at the same kind of moment. Nothing is sent anywhere (a fake database).
    Run from the worktree root:  CHROME=... node source/tools/intro_film_gate.js <output folder> [preview]
-   preview: only the phone-classic run, no compare (a quick look before the full gate) */
+   preview: only the first run (phone, sunflower, Dutch), no compare (a quick look before the full gate) */
 'use strict';
 const fs = require('fs'), path = require('path');
 const lib = require('../tests/lib');
 
 const OUT = path.resolve(process.argv[2] || 'intro-ice');
 const SEEN = { gold: 1, gift: 1, joker: 1, joker2: 1, ice: 0, lock: 1, clock: 1, clockMoves: 1, trayPair: 1 };
+// always in the sunflower theme for Dennis (2026-11-22); level 35 is past RULES.sunflower.level, so it is unlocked
 const RUNS = [
-  { name: 'phone-classic', size: [390, 820], theme: 'classic', bg: 'jade', lang: 'nl', compare: true },
-  { name: 'phone-fruit', size: [390, 820], theme: 'fruit', bg: 'sunrise', lang: 'nl', compare: true },
-  { name: 'tablet-classic', size: [768, 1024], theme: 'classic', bg: 'jade', lang: 'en' },
-  { name: 'tablet-fruit', size: [768, 1024], theme: 'fruit', bg: 'sunrise', lang: 'en' },
+  { name: 'phone-sunflower', size: [390, 820], theme: 'sunflower', bg: 'sunfield', lang: 'nl', compare: true },
+  { name: 'phone-sunflower-en', size: [360, 640], theme: 'sunflower', bg: 'sunfield', lang: 'en' },
+  { name: 'tablet-sunflower', size: [768, 1024], theme: 'sunflower', bg: 'sunfield', lang: 'nl' },
+  { name: 'tablet-sunflower-en', size: [768, 1024], theme: 'sunflower', bg: 'sunfield', lang: 'en' },
 ];
-// key moments, in ms after the film opened: each step with its caption (taps at 0.5, 1.8, 2.5, 3.6, 4.7 s; one play is 5.5 s)
-const SHOTS = [[1100, '1-tap-shows-thawers'], [3000, '2-diagonal-no-count'], [4100, '3-corner-cracks'], [5200, '4-half-melts'], [6000, '5-done-button']];
-const FROZEN_SHOT = 1100;
+// key moments, in ms after the film opened: the board at rest, then each step with its caption (taps at 1.3, 2.75, 3.45,
+// 4.9, 6.35 s; one play is 7 s)
+const SHOTS = [[900, '0-at-rest'], [1900, '1-tap-shows-thawers'], [4050, '2-diagonal-no-count'], [5500, '3-half-cracks'], [6950, '4-corner-thaws'], [7400, '5-done-button']];
+const FROZEN_SHOT = 1900;
 
 async function context(r, video) {
   const [w, h] = r.size;
@@ -52,7 +54,7 @@ async function context(r, video) {
         await p.screenshot({ path: path.join(OUT, `${r.name}-${label}.png`) });
       }
       // the second play, then a tap on the button: the player's own level comes back
-      await lib.sleep(Math.max(0, t0 + 12800 - Date.now()));
+      await lib.sleep(Math.max(0, t0 + 15800 - Date.now()));
       await p.locator('#ntGo').click();
       await lib.sleep(900);
       await p.screenshot({ path: path.join(OUT, `${r.name}-6-level-back.png`) });
@@ -74,7 +76,7 @@ async function compare(r) {
   const t0 = Date.now();
   await lib.sleep(Math.max(0, t0 + FROZEN_SHOT - Date.now()));
   const film = await p.screenshot(), filmTw = await p.evaluate(() => G.tw);
-  await lib.sleep(Math.max(0, t0 + 6000 - Date.now()));
+  await lib.sleep(Math.max(0, t0 + 7400 - Date.now()));
   await p.locator('#ntGo').click();
   await lib.sleep(1500);
   const info = await p.evaluate(() => {
