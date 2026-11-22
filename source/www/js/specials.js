@@ -30,17 +30,33 @@ function specialMatch(face, gold, c) {
   if (face === JOKER) { praise(tx('twoJokers')); FX.emoji(c.x, c.y, ['🃏', '✨'], 8); bumpStat('jokers'); }
   return gold ? RULES.score.goldMult : 1;
 }
-/* "Wist je dat?" (Dennis 2026-11-23): gold and the joker are not explained. When a level starts with one on its
-   board, the top bar says it, at most TIP_MAX times per player (S.tips); one tip per level start, the joker first
-   (it is rare: only some levels below RULES jokersGoneFrom). A player past those tiles never sees it. */
-const TIP_MAX = 3;
+/* "Wist je dat?" (Dennis 2026-11-23): gold and the joker are not explained; a short tip says it, at most TIP_MAX
+   times per player (S.tips), one at a time, the joker first (it is rare: only some levels below RULES jokersGoneFrom).
+   Only players who still meet those tiles see it. Where (design choice for Dennis, TIP_AT):
+     'board': at the start of a level with that tile on its board, the text floats over the tiles and fades by itself
+     'home':  on the home screen, after a level that had that tile, while the next level can still have it */
+const TIP_MAX = 3; let TIP_AT = 'board';   // (a let: the preview tool shows both)
+function nextTip(has) {
+  const k = Object.keys(has).find(k => (S.tips[k] || 0) < TIP_MAX && has[k]());
+  if (k) { S.tips[k] = (S.tips[k] || 0) + 1; save(); }
+  return k;
+}
 function specialTip() {
-  if (!G || G.done || !modalFree()) return;
-  const on = { joker: () => G.tiles.some((t, i) => G.alive[i] && t.face === JOKER), gold: () => [...G.gold].some(i => G.alive[i]) };
-  const k = Object.keys(on).find(k => (S.tips[k] || 0) < TIP_MAX && on[k]());
+  if (TIP_AT !== 'board' || !G || G.done || !modalFree()) return;
+  const k = nextTip({ joker: () => G.tiles.some((t, i) => G.alive[i] && t.face === JOKER), gold: () => [...G.gold].some(i => G.alive[i]) });
   if (!k) return;
-  S.tips[k] = (S.tips[k] || 0) + 1; save();
-  toast(tx('tip_' + k), 4200);
+  // in the light text of the game's praise, over the tiles; taps go through it
+  const el = document.createElement('div'); el.className = 'tip-over'; el.textContent = tx('tip_' + k);
+  $('#boardWrap').appendChild(el); setTimeout(() => el.remove(), 3600);
+}
+// the home screen's tip line (renderHome): from the level just played, once per level
+function homeTip() {
+  const el = $('#homeTip'); el.hidden = true;
+  if (TIP_AT !== 'home' || !G || G.film || !G.o || G.tipDone) return;
+  const next = G.o.mode === 'level' ? S.level : Math.max(RULES.specials.goldFrom, S.level), o = G.o;
+  const k = nextTip({ joker: () => o.faces.includes(JOKER) && next < (help().jokersGoneFrom || Infinity), gold: () => (o.gold || []).length > 0 });
+  if (!k) return;
+  G.tipDone = true; el.textContent = tx('tip_' + k); el.hidden = false;
 }
 
 /* ---------- the joker: it fits every picture ----------

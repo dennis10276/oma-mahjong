@@ -20,6 +20,7 @@ function renderHome() {
   if (applyUpdate()) return;
   setTimeout(maybeDailyGift, 900);
   $('#greet').innerHTML = fx('greet', new Date().getHours());
+  homeTip();
   const ts = totalStars();
   $('#homeStars').textContent = '⭐ ' + ts;
   const cur = loadCur();

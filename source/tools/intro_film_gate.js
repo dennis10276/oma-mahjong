@@ -12,7 +12,7 @@ const fs = require('fs'), path = require('path');
 const lib = require('../tests/lib');
 
 const OUT = path.resolve(process.argv[2] || 'intro-ice');
-const KIND = process.argv[4] || 'ice', LEVEL = { ice: 35, lock: 45, trayPair: 50, clock: 80, menu: 80 }[KIND];
+const KIND = process.argv[4] || 'ice', LEVEL = { ice: 35, lock: 45, trayPair: 50, clock: 80, menu: 80, tips: 80 }[KIND];
 const SEEN = { gold: 1, gift: 1, joker: 1, joker2: 1, ice: +(KIND !== 'ice'), lock: 1, clock: 1, clockMoves: 1, trayPair: 1 };
 // always in the sunflower theme for Dennis (2026-11-22); level 35 is past RULES.sunflower.level, so it is unlocked.
 // stills: which of SHOTS to take (all, and the level after it, when not given); video: false for a still only
@@ -50,7 +50,7 @@ async function context(r, video) {
   try {
     for (const r of process.argv[3] === 'preview' ? [{ ...RUNS[0], compare: false }] : RUNS) {
       const vids = r.video !== false && path.join(OUT, '_video-' + r.name), { ctx, p } = await context(r, vids);
-      if (KIND === 'menu') { await menu(p, r); await saveVideo(p, ctx, r, vids); console.log('done', r.name); continue; }
+      if (KIND === 'menu' || KIND === 'tips') { await (KIND === 'menu' ? menu : tips)(p, r); await saveVideo(p, ctx, r, vids); console.log('done', r.name); continue; }
       const shots = KIND === 'ice' ? SHOTS : await openFilm(p);
       if (KIND === 'ice') { await p.evaluate(() => { localStorage.removeItem('omamj.cur'); __mj.startLevel(35); }); await p.waitForSelector('#introPanel'); }
       const t0 = Date.now();
@@ -90,11 +90,23 @@ async function menu(p, r) {
   await p.locator('.lesson-pick[data-kind="lock"]').click(); await shot('3-lock-film-from-list', 2000);
   await lib.sleep(1500); await p.locator('#ntGo').click(); await shot('4-back-to-list', 1200);
   await p.locator('#mClose').click(); await lib.sleep(500);
-  // the "Wist je dat?" tips: a level with a golden pair (25), a level with a joker (33)
-  for (const [L, label] of [[25, '5-tip-gold'], [33, '6-tip-joker']]) {
-    await p.evaluate(L => { localStorage.removeItem('omamj.cur'); __mj.startLevel(L); }, L);
-    await p.waitForFunction(L => G && G.key === 'L' + L, L);
-    await shot(label, 2300);
+}
+// the "Wist je dat?" tips, both places (specials.js TIP_AT): A over the tiles at a level start, B on the home screen
+async function tips(p, r) {
+  const shot = async (label, ms = 700) => { await lib.sleep(ms); await p.screenshot({ path: path.join(OUT, `${r.name}-${label}.png`) }); };
+  const start = async L => { await p.evaluate(L => { localStorage.removeItem('omamj.cur'); __mj.startLevel(L); }, L); await p.waitForFunction(L => G && G.key === 'L' + L && !G.introducing, L, { timeout: 60000 }); };
+  for (const [L, k] of [[25, 'gold'], [33, 'joker']]) {
+    await p.evaluate(() => { TIP_AT = 'board'; S.tips = {}; });
+    await start(L);
+    await p.waitForSelector('#boardWrap .tip-over', { timeout: 5000 });
+    await shot(`A-board-${k}`, 700);
+    await lib.sleep(3500);
+  }
+  for (const [L, k] of [[25, 'gold'], [33, 'joker']]) {
+    await p.evaluate(L => { TIP_AT = 'home'; S.tips = {}; S.level = L; }, L);   // (the player's level: the next one is this one)
+    await start(L); await lib.sleep(800);
+    await p.evaluate(() => show('home'));
+    await shot(`B-home-${k}`, 1200);
   }
 }
 // the other films (not yet shown by the game itself): the level opens, then the film as at the first meeting
