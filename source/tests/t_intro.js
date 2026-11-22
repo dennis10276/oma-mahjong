@@ -85,6 +85,19 @@ const NEXT_FILMS = {
     first: { hint: [], xray: ['t'] }, caps: ['ck', 'dn', 'x', 'ck'] },
 };
 
+// What the game shows for a tap on tile i that cannot be taken (board.js tapTile, specials.js obBlocked), checked
+// against its own rule: the tile shakes; a frozen tile lights the tiles that thaw it, a locked tile its keys (and the
+// tiles on a buried key turn see-through), any other tile gets arrows to what holds it (and what lies on it turns
+// see-through). Read 0.3 s after the tap.
+const hintOf = i => {
+  const B = $('#board'), set = c => [...B.querySelectorAll('.tile.' + c)].map(e => +e.dataset.i).sort((a, b) => a - b), eq = (a, b) => JSON.stringify(a) === JSON.stringify([...b].sort((x, y) => x - y));
+  const kind = frozen(i) ? 'ice' : lockedT(i) ? 'lock' : 'plain', keys = G.ob ? G.ob.keys.filter(k => G.alive[k]) : [];
+  const over = new Set(), todo = [...keys]; while (todo.length) for (const j of G.nb.above[todo.pop()]) if (G.alive[j] && !over.has(j)) { over.add(j); todo.push(j); }
+  const need = kind === 'ice' ? G.inb[i].filter(j => G.alive[j]) : kind === 'lock' ? keys : [], cover = kind === 'lock' ? [...over] : kind === 'ice' ? [] : G.nb.above[i].filter(j => G.alive[j]);
+  return { kind, held: !free(i), shake: eq(set('shake'), [i]), glow: set('obhint').length > 0 && eq(set('obhint'), need) || (!need.length && !set('obhint').length),
+    arrows: B.querySelectorAll('.blk-arrow').length, seeThrough: eq(set('xray'), cover), blockers: eq(set('blocker'), kind === 'plain' ? blockersOf(i).map(b => b.j) : []) };
+};
+
 module.exports = [
   { name: 'intro: every film is built like a real pile: a tile in a higher layer rests on 4 tiles or bridges 2, never a tower or on one corner', async run(t) {
     const p = await t.phone({ state: { name: 'Dennis', level: 40, sunSeen: true, seenSp: seen } });
@@ -370,6 +383,26 @@ module.exports = [
         t.ok(await p.evaluate(() => { const b = $('#modalBox'); return b.getBoundingClientRect().bottom <= innerHeight && b.scrollHeight <= b.clientHeight + 1; }), `${kind}: the ${lang} pop-up fits a small phone`);
         await p.evaluate(() => stopIntroFilm());
       }
+    }
+    t.eq(p.errors, [], 'no browser errors');
+  }},
+  { name: 'intro: a tap in a film that cannot be taken shows the same hint as the same tap in a real level', async run(t, { startLevel }) {
+    const p = await t.phone({ state: { name: 'Dennis', level: 80, sunSeen: true, seenSp: seen } });
+    const sleep = ms => new Promise(r => setTimeout(r, ms));
+    // [film, a real level with the same kind of tap, how to find that tile there]
+    for (const [kind, level, find] of [['ice', 37, 'frozen(i) && !free(i)'], ['lock', 45, 'lockedT(i) && free(i)'], ['clock', 80, 'G.clock && G.clock.i === i && !free(i)']]) {
+      await startLevel(p, level);
+      const i = await p.evaluate(f => G.tiles.findIndex((_, i) => G.alive[i] && eval(f)), find);
+      t.ok(i >= 0, `${kind}: level ${level} has such a tile`);
+      await p.evaluate(i => onTap(i), i); await sleep(300);
+      const real = await p.evaluate(hintOf, i);
+      await sleep(1600);
+      await p.evaluate(k => playIntroFilm(k, { why: 'manual' }), kind);
+      await p.waitForFunction(() => introRun.log.length >= 1, null, { polling: 10, timeout: 5000 }); await sleep(300);
+      const film = await p.evaluate(([k, h]) => eval(h)(INTRO_FILMS[k].tiles.findIndex(x => x[0] === INTRO_FILMS[k].taps[0][1])), [kind, hintOf.toString()]);
+      t.ok(real.shake && real.glow && real.seeThrough && real.blockers, `${kind}: the real level shows the game's hint for it`, real);
+      t.eq({ ...film, arrows: film.arrows > 0 }, { ...real, arrows: real.arrows > 0 }, `${kind}: the film's first tap shows the same hint as in level ${level}`, [real, film]);
+      await p.evaluate(() => stopIntroFilm()); await sleep(300);
     }
     t.eq(p.errors, [], 'no browser errors');
   }},
