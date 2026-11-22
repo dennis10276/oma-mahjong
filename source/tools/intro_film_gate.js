@@ -64,7 +64,7 @@ async function context(r, video) {
       await lib.sleep(Math.max(0, t0 + plays * ms + (plays - 1) * 1500 + 1800 - Date.now()));
       await p.locator('#ntGo').click();
       await lib.sleep(900);
-      if (!r.stills) await p.screenshot({ path: path.join(OUT, `${r.name}-9-level-back.png`) });
+      if (!r.stills) await p.screenshot({ path: path.join(OUT, `${r.name}-level-back.png`) });
       await saveVideo(p, ctx, r, vids);
       if (r.compare) await compare(r);
       console.log('done', r.name);

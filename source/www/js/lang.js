@@ -177,7 +177,7 @@ const TEXT = {
   tp_down: ['Dichte tweeling mag ook', 'A face-down twin works too'],
   ck_blocked: ['Vast tikken kost geen zet', 'A blocked tap costs no move'],
   ck_peek: ['Omdraaien kost geen zet', 'Peeking costs no move'],
-  ck_every: ['Elke steen die je pakt: 1 zet', 'Every tile you take: 1 move'],
+  ck_take: ['Een steen pakken kost een zet', 'Taking a tile costs a move'],
   ck_out: ['0 zetten: de wekker gaat af', '0 moves: the alarm goes off'],
   ck_last: ['Laatste zet, geen paar: op tijd', 'Last move, no pair: in time'],
   nt_clock: ['De wekker', 'The alarm clock'],

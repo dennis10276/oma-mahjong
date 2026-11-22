@@ -20,6 +20,7 @@
      ms:    one play; line: the text key of the line in the pop-up (lang.js)
      parts: instead of tiles, taps and ms, a film may play several tiny levels one after the other (each with its own
             tiles, taps and ms; the board drops in anew for each); plays: how often it plays before it rests (2)
+     count: (a part) under each caption the clock's number before → after the tap; a tap without id only says its caption
    The film's tiles are no bigger than those of the level behind it (G.film.maxTw, board.js fitGeo). */
 'use strict';
 
@@ -109,7 +110,7 @@ const INTRO_FILMS = {
      clear for people seeing it the first time. Take the time there"). First the clock is lost: every tile taken
      counts 1, and at 0 with the clock tile still there the alarm goes off, as in the game. Then what is not obvious:
      a tap on a blocked tile and turning a face-down tile over cost nothing; the clock tile only has to leave the
-     board (into the tray, its twin may wait), with the last move still in time. 14.5 s: it plays once, then rests. */
+     board (into the tray, its twin may wait), with the last move still in time. 16.5 s: it plays once, then rests. */
   clock: {
     parts: [{
       tiles: [
@@ -120,13 +121,16 @@ const INTRO_FILMS = {
         ['ck', 12, 2, 2, 0],            // the clock tile, held by t
         ['t', 20, 1, 2, 1],             // a bridge over a and the clock tile's left half
       ],
-      clock: ['ck', 3],
+      clock: ['ck', 3], count: true,
+      // a tap every 1.3 s, so each step of the number is seen on its own (Dennis 2026-11-23: "Een steen pakken kost
+      // een zet ... duidelijk dat de timer afloopt voor elke zet die je doet"); the caption stays up meanwhile
       taps: [
-        [1300, 'a1', 'ck_every'],       // 3 → 2
-        [2750, 'a2'],                   // a pair: 1
-        [3450, 'b1', 'ck_out'],         // 0, the clock tile still there: the alarm goes off (the game's own message, on the board)
+        [1300, 'a1', 'ck_take'],        // 3 → 2
+        [2600, 'a2', 'ck_take'],        // a pair: 2 → 1
+        [3900, 'b1', 'ck_take'],        // 1 → 0, the clock tile still there: the alarm goes off (the game's own message, on the board)
+        [5300, null, 'ck_out'],
       ],
-      ms: 7500,
+      ms: 8500,
     }, {
       tiles: [
         ['dn', 31, 0, 0, 0],            // face down
@@ -135,15 +139,17 @@ const INTRO_FILMS = {
         ['x', 20, 4, 2, 0],             // beside it: a pair with t
         ['t', 20, 1, 2, 1],             // a bridge over a and the clock tile's left half (the clock's number sits at the upper right)
       ],
-      down: ['dn'], clock: ['ck', 3],
+      down: ['dn'], clock: ['ck', 3], count: true,
+      // as in part 1, every tap with the clock's number under its caption (Dennis 2026-11-23: "Its about the 2nd part
+      // to make that clearer there too. Just like in part 1")
       taps: [
-        [1300, 'ck', 'ck_blocked'],     // covered: it shakes, the game points at t; still 3
-        [2750, 'dn', 'ck_peek'],        // turned over: still 3
-        [4200, 't'],                    // 2
-        [4900, 'x'],                    // a pair: 1
-        [6350, 'ck', 'ck_last'],        // the last move, into the tray without its twin: the clock stops
+        [1300, 'ck', 'ck_blocked'],     // covered: it shakes, the game points at t; 3 → 3
+        [2750, 'dn', 'ck_peek'],        // turned over: 3 → 3
+        [4200, 't', 'ck_take'],         // 3 → 2
+        [5500, 'x', 'ck_take'],         // a pair: 2 → 1
+        [6950, 'ck', 'ck_last'],        // the last move, into the tray without its twin: 1 → 0, the clock stops
       ],
-      ms: 7000,
+      ms: 8000,
     }],
     plays: 1,
     line: 'nt_clock_text',
@@ -157,34 +163,41 @@ let introRun = null;
 function playIntroFilm(kind, opts = {}) {
   stopIntroFilm();
   if (G && G.flights) { setTimeout(() => playIntroFilm(kind, opts), 40); return; }   // a tile in the air lands first (board.js afterFlight works on G)
-  const film = INTRO_FILMS[kind], required = !!opts.required, after = opts.after || null;
+  const film = INTRO_FILMS[kind], parts = film.parts || [film], required = !!opts.required, after = opts.after || null;
   const why = opts.why || (required ? 'intro' : 'manual');
   // the pop-up: title, the film's own top bar (the game's texts, core.js gameMsg), tray and board (core.js filmRoot), the line, the button
   openModal(`<div id="introPanel" data-kind="${kind}"><h2>${required ? tx('newTile', tx('nt_' + kind)) : tx('nt_' + kind)}</h2>
-    <div class="intro-stage"><div class="title-wrap intro-bar"><div id="gameMsg"></div></div><div id="tray">${'<div class="slot"></div>'.repeat(SLOTS)}</div><div id="boardWrap"><div id="board"></div></div><div class="intro-cap chip"></div>
+    <div class="intro-stage"><div class="title-wrap intro-bar"><div id="gameMsg"></div></div><div id="tray">${'<div class="slot"></div>'.repeat(SLOTS)}</div><div id="boardWrap"><div id="board"></div></div><div class="intro-cap chip"></div>${parts.some(q => q.count) ? '<div class="intro-count chip"></div>' : ''}
       <div hidden><div id="progressBar"></div><div id="toast"></div></div></div>
     <p class="intro-line">${tx(film.line)}</p>
     <button class="big-btn play" id="ntGo"${required ? ' disabled' : ''}><span class="bb-text"><b>${tx(required ? 'lessonWatch' : 'gotIt')}</b></span></button></div>`, false, null, 'intro-help');
-  const stage = $('#modalBox .intro-stage'), cap = stage.querySelector('.intro-cap'), go = $('#ntGo'), message = recordHelpMessage(kind, why);
+  const stage = $('#modalBox .intro-stage'), cap = stage.querySelector('.intro-cap'), count = stage.querySelector('.intro-count'), go = $('#ntGo'), message = recordHelpMessage(kind, why);
   stage.style.background = (BGS.find(b => b.id === S.bg && !bgLocked(b)) || BGS[0]).css;
   // the player's own level waits: its clock stops (G.introducing), its board stays as it is behind the pop-up
   const real = G, run = introRun = { real, stage, blockedTaps, introducing: real && real.introducing, ticking: !!(real && real.tStart), timers: [], plays: 0, log: [] };
   const later = (ms, fn) => { const id = setTimeout(() => { run.timers = run.timers.filter(x => x !== id); if (introRun === run) fn(); }, ms); run.timers.push(id); };
   // every tap of every part, on one clock: [ms, part, id, caption]; a part starts where the one before ended
-  const parts = film.parts || [film], start = parts.map((_, p) => parts.slice(0, p).reduce((a, q) => a + q.ms, 0)), ms = start.at(-1) + parts.at(-1).ms;
+  const start = parts.map((_, p) => parts.slice(0, p).reduce((a, q) => a + q.ms, 0)), ms = start.at(-1) + parts.at(-1).ms;
   const taps = parts.flatMap((part, p) => part.taps.map(([t, id, text]) => [start[p] + t, p, id, text]));
-  const begin = p => { introLevel(parts[p], real); renderBoard(true); renderTray(); updateProgress(); clearGameMsg(); cap.classList.remove('on'); };
+  const quiet = () => { cap.classList.remove('on'); if (count) count.classList.remove('on'); };
+  const begin = p => { introLevel(parts[p], real); renderBoard(true); renderTray(); updateProgress(); clearGameMsg(); quiet(); };
   const play = () => {
     run.plays++; run.log = []; stage.classList.remove('intro-end'); blockedTaps = 0;
     begin(0);
     parts.forEach((_, p) => { if (p) later(start[p], () => begin(p)); });
     taps.forEach(([at, p, id, text], k) => {
-      later(at, () => { const i = parts[p].tiles.findIndex(t => t[0] === id); onTap(i, true); run.log.push([id, !G.alive[i]]); });
+      let was = 0;
+      if (id) later(at, () => { const i = parts[p].tiles.findIndex(t => t[0] === id); was = clockLeft(); onTap(i, true); run.log.push([id, !G.alive[i]]); });
       if (!text) return;
-      // the step says what it did, while its result shows
-      later(at + INTRO_CAP_IN, () => { cap.textContent = tx(text); cap.classList.add('on'); });
-      // it goes before the next tap, or before the next part (the last one stays: the film ends on it)
-      if (taps[k + 1]) later(Math.min(taps[k + 1][0], start[p + 1] ?? ms) - INTRO_CAP_OUT, () => cap.classList.remove('on'));
+      // the step says what it did, while its result shows (with count: under it the clock's number, before → after)
+      later(at + INTRO_CAP_IN, () => {
+        cap.textContent = tx(text); cap.classList.add('on');
+        if (count) { count.textContent = parts[p].count && id ? `⏰ ${was} → ${clockLeft()}` : ''; count.classList.toggle('on', !!count.textContent); }
+      });
+      // it goes before the next tap, or before the next part (the last one stays: the film ends on it); the same
+      // caption on the next tap stays up
+      const next = taps[k + 1];
+      if (next && !(next[3] === text && next[1] === p)) later(Math.min(next[0], start[p + 1] ?? ms) - INTRO_CAP_OUT, quiet);
     });
     later(ms, () => {
       if (run.plays === 1 && required) { go.disabled = false; go.querySelector('b').textContent = tx('lessonContinue'); }
