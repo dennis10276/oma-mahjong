@@ -5,6 +5,7 @@
 
 // While the intro film plays (js/intro.js), the game's own board code draws into the film's pop-up: these parts of the
 // game screen are looked up there (filmRoot), the player's own level stays as it is behind the pop-up.
+// (add an id to FILM_PARTS only if the film's pop-up has an element with that id too: js/intro.js)
 let filmRoot = null;
 const FILM_PARTS = /^#(board|boardWrap|tray|clockBadge|progressBar|gameMsg|toast)\b/;
 const $ = s => (filmRoot && FILM_PARTS.test(s) ? filmRoot : document).querySelector(s);

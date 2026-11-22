@@ -25,14 +25,13 @@ const INTRO_FILMS = {
      game, 0.8 s on the game screen still too slow.) */
   ice: {
     tiles: [
-      ['up', 8, 2, 0, 0],               // above it in the same layer: touching
-      ['corner', 20, 4, 0, 0],          // diagonal, two across and two up: not touching
+      ['up', 8, 3, 0, 0],               // above it in the same layer (half a tile to the right): touching
       ['ice', 31, 2, 2, 0, 2],          // the tile under thick ice
       ['side', 12, 4, 2, 0],            // beside it: touching (it stays)
       ['far', 20, 6, 2, 0],             // further along its row: not touching (a pair with corner)
       ['down', 8, 2, 4, 0],             // below it in the same layer: touching (a pair with up)
-      ['corner2', 3, 4, 4, 0],          // the other diagonal: not touching (it stays)
-      ['top', 27, 1, 2, 1],             // lying half on it, one layer up: touching
+      ['corner', 20, 4, 4, 0],          // diagonal, two across and two down: not touching
+      ['top', 27, 1, 1, 1],             // on its upper left corner, one layer up: touching (most of the ice and its ❄️ show)
     ],
     taps: [
       [800, 'ice'],                     // frozen (and covered): it shakes, only the four touching tiles light up

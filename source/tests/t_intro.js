@@ -80,13 +80,21 @@ module.exports = [
     await p.waitForFunction(() => introRun.log.length >= 3, null, { polling: 10, timeout: 5000 });
     t.eq(await p.evaluate(() => { const I = INTRO_FILMS.ice.tiles.findIndex(x => x[0] === 'ice');
       return [introRun.log.slice(1, 3).every(x => x[1]), G.ob.left[I], G.tiles[I].el.querySelector('.ob').dataset.k]; }), [true, 2, 'ice2'], 'after a pair that does not touch it the ice is unchanged');
+    // the sparkles of that pair (fx.js, a layer above every pop-up) show only inside the film's board, not over the level
+    await p.waitForFunction(() => !!document.querySelector('#fxl .fxp'), null, { polling: 10, timeout: 3000 });
+    const clip = await p.evaluate(() => { const l = document.querySelector('#fxl'), s = $('#modalBox .intro-stage').getBoundingClientRect();
+      // inset(top right bottom left), shortened like margins when sides are equal
+      const m = getComputedStyle(l).clipPath.match(/^inset\(([\d.px ]+?)(?: round|\))/), v = m ? m[1].trim().split(' ').map(parseFloat) : [];
+      const [top, right = top, bottom = top, left = right] = v, near = (a, b) => Math.abs(a - b) < 1;
+      return { clip: m && m[0], sparkles: l.querySelectorAll('.fxp').length, inside: v.length > 0 && near(top, s.top) && near(innerWidth - right, s.right) && near(innerHeight - bottom, s.bottom) && near(left, s.left) }; });
+    t.ok(clip.sparkles > 0 && clip.inside, 'the sparkles of the pair stay inside the film', clip);
     const len = await p.evaluate(() => INTRO_FILMS.ice.ms);
     await sleep(Math.max(0, opened + len - 700 - Date.now()));
     t.ok(await p.locator('#ntGo').isDisabled(), 'still locked just before the film ends');
     await sleep(Math.max(0, opened + len + 500 - Date.now()));
     t.ok(await p.locator('#ntGo').isEnabled(), 'the button works after the film has played once');
     t.eq(await p.evaluate(() => introRun.log), await p.evaluate(takeableOutcome), 'every tap of the film does in the game what layouts.js takeable says');
-    t.eq(await p.evaluate(() => [Object.keys(G.ob.left).filter(k => G.ob.left[k]).length, INTRO_FILMS.ice.tiles.filter((x, i) => G.alive[i]).map(x => x[0])]), [0, ['side', 'corner2']], 'the ice melted; only tiles that were not needed stay');
+    t.eq(await p.evaluate(() => [Object.keys(G.ob.left).filter(k => G.ob.left[k]).length, INTRO_FILMS.ice.tiles.filter((x, i) => G.alive[i]).map(x => x[0])]), [0, ['side']], 'the ice melted; only the tile beside it stays');
     t.eq(await p.evaluate(() => JSON.stringify(introRun.real.rp.events) === window.__rp), true, 'no replay frames for the level while the film plays');
     await drain(p);
     const shown = helpMessages(p, pid).at(-1);
@@ -160,7 +168,8 @@ module.exports = [
       const apart = ids.map((id, j) => j).filter(j => j !== I && !inb[I].includes(j)).map(j => [ids[j], Math.abs(tiles[j].x - tiles[I].x), Math.abs(tiles[j].y - tiles[I].y), tiles[j].z - tiles[I].z]);
       const taps = film.taps.map(x => x[1]), firstTouch = taps.findIndex(id => inb[I].includes(ids.indexOf(id)));
       const early = taps.slice(1, firstTouch).map(id => ids.indexOf(id));
-      return { touching: inb[I].map(j => [ids[j], rel(j)]).sort(), apart, onTop: nb.above[I].map(j => ids[j]), need: film.tiles[I][5], tiles: tiles.length, taps: taps.length,
+      const hidden = nb.above[I].reduce((a, j) => a + (2 - Math.abs(tiles[j].x - tiles[I].x)) / 2 * (2 - Math.abs(tiles[j].y - tiles[I].y)) / 2, 0);   // (the part of it they cover)
+      return { hidden, touching: inb[I].map(j => [ids[j], rel(j)]).sort(), apart, onTop: nb.above[I].map(j => ids[j]), need: film.tiles[I][5], tiles: tiles.length, taps: taps.length,
         early: early.length === 2 && film.tiles[early[0]][1] === film.tiles[early[1]][1] && early.every(j => !inb[I].includes(j)) };
     });
     t.eq(r.touching, [['down', 'above/below'], ['side', 'beside'], ['top', 'layer'], ['up', 'above/below']], 'the touching tiles: one above and one below in the same layer, one beside, one in the layer on top');
@@ -168,6 +177,7 @@ module.exports = [
     t.ok(r.apart.some(([, dx, dy, dz]) => dx >= 4 && dy === 0 && dz === 0), 'a tile further along its row that does not touch it', r.apart);
     t.ok(r.early, 'early in the film a pair that does not touch the ice is taken');
     t.eq(r.onTop, ['top'], 'the tile on the next layer lies on the frozen tile');
+    t.ok(r.hidden > 0 && r.hidden <= 0.25, 'the tile on top hides at most a quarter of the frozen tile, so its ice shows', r.hidden);
     t.eq(r.need, 2, 'thick ice: two touching tiles must go');
     t.ok(r.tiles <= 9 && r.taps <= 8, 'at most 9 tiles and 8 taps', r);
     t.eq(await p.evaluate(takeableOutcome), [['ice', false], ['corner', true], ['far', true], ['up', true], ['down', true], ['ice', false], ['top', true], ['ice', true]],
@@ -197,6 +207,7 @@ module.exports = [
     await p.waitForFunction(() => !G.film, null, { timeout: 3000 });
     await sleep(1600);
     t.eq(await p.evaluate(leaked), [], 'after it, no text of the film shows up');
+    t.eq(await p.evaluate(() => { FX.burst(100, 100); return getComputedStyle(document.querySelector('#fxl')).clipPath; }), 'none', 'after it, the sparkles of the level show everywhere again');
     t.eq(await p.evaluate(() => [G === window.__realG, G.flights, G.lucky, document.querySelectorAll('#game #board .tile.lucky').length]), [true, 0, null, 0],
       'the level\'s tile that was in the air landed in the level; the lucky moment that ran out meanwhile is over');
     // a film that fails to start puts nothing aside: the level carries on
