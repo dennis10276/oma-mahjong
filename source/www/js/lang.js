@@ -142,8 +142,9 @@ const TEXT = {
   goldPair: ['✨ Gouden paar! x2', '✨ Golden pair! x2'],
   twoJokers: ['🃏 Twee jokers!', '🃏 Two jokers!'],
   // "Wist je dat?" in the top bar at the start of a level with that tile (specials.js specialTip)
-  tip_gold: ['Wist je dat? Een paar met goud telt dubbel.', 'Did you know? Gold pairs score double.'],   // (one gold tile is enough; at most two lines in the top bar on a 360 px phone)
-  tip_joker: ['Wist je dat? De 🃏 past bij elke steen.', 'Did you know? The 🃏 matches any tile.'],
+  tipHead: ['Wist je dat?', 'Did you know?'],
+  tip_gold: ['Een paar met goud telt dubbel.', 'Gold pairs score double.'],   // (one gold tile is enough; at most two lines in the top bar on a 360 px phone)
+  tip_joker: ['De 🃏 past bij elke steen.', 'The 🃏 matches any tile.'],
   joker: ['🃏 Joker!', '🃏 Joker!'],
   jokerFinale: [n => `🃏 Joker-finale! +${n}`, n => `🃏 Joker finale! +${n}`],
   locksOpen: ['🔓 Sloten open!', '🔓 Locks open!'],

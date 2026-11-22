@@ -91,31 +91,20 @@ async function menu(p, r) {
   await lib.sleep(1500); await p.locator('#ntGo').click(); await shot('4-back-to-list', 1200);
   await p.locator('#mClose').click(); await lib.sleep(500);
 }
-// the "Wist je dat?" tips, both places (specials.js TIP_AT): A over the tiles at a level start, B on the home screen
+// the "Wist je dat?" tips: three looks (specials.js TIP_LOOK) in a level (under the tray) and on the home screen; look 1 also in classic
 async function tips(p, r) {
-  const shot = async (label, ms = 700) => { await lib.sleep(ms); await p.screenshot({ path: path.join(OUT, `${r.name}-${label}.png`) }); };
   const start = async L => { await p.evaluate(L => { localStorage.removeItem('omamj.cur'); __mj.startLevel(L); }, L); await p.waitForFunction(L => G && G.key === 'L' + L && !G.introducing, L, { timeout: 60000 }); };
-  for (const [L, k] of [[25, 'gold'], [33, 'joker']]) {
-    await p.evaluate(() => { TIP_AT = 'board'; S.tips = {}; });
-    await start(L);
-    await p.waitForSelector('#boardWrap .tip-over', { timeout: 5000 });
-    await shot(`A-board-${k}`, 700);
-    await lib.sleep(3500);
-  }
-  // A on a small phone, and in the classic theme (a dark background)
-  for (const [name, size, classic] of [['phone360-sunflower', [360, 640], false], ['phone-classic', [390, 820], true]]) {
-    const c = await context({ ...r, size });
-    if (classic) await c.p.evaluate(() => { S.theme = 'classic'; S.bg = 'jade'; applyTheme(); applyBg(); });
-    await c.p.evaluate(() => { TIP_AT = 'board'; S.tips = {}; localStorage.removeItem('omamj.cur'); __mj.startLevel(25); });
-    await c.p.waitForSelector('#boardWrap .tip-over', { timeout: 8000 }); await lib.sleep(700);
-    await c.p.screenshot({ path: path.join(OUT, `${name}-A-board-gold.png`) }); await c.ctx.close();
-  }
-  for (const [L, k] of [[25, 'gold'], [33, 'joker']]) {
-    await p.evaluate(L => { TIP_AT = 'home'; S.tips = {}; S.level = L; }, L);   // (the player's level: the next one is this one)
-    await start(L); await lib.sleep(800);
-    await p.evaluate(() => show('home'));
-    await shot(`B-home-${k}`, 1200);
-  }
+  const shoot = async (look, where, theme) => {
+    await p.evaluate(([look, theme]) => { TIP_LOOK = look; S.tips = {}; S.theme = theme; if (theme === 'classic') S.bg = 'jade'; applyTheme(); applyBg(); }, [look, theme]);
+    const sfx = theme === 'classic' ? '-classic' : '';
+    await start(25); await p.waitForSelector('#boardWrap .tip-over', { timeout: 8000 }); await lib.sleep(600);
+    await p.screenshot({ path: path.join(OUT, `look${look}-level${sfx}.png`) });
+    await lib.sleep(2800);
+    await p.evaluate(() => show('home')); await lib.sleep(1000);
+    await p.screenshot({ path: path.join(OUT, `look${look}-home${sfx}.png`) });
+  };
+  for (const look of [1, 2, 3]) await shoot(look, 0, 'sunflower');
+  await shoot(1, 0, 'classic');
 }
 // the other films (not yet shown by the game itself): the level opens, then the film as at the first meeting
 async function openFilm(p) {
