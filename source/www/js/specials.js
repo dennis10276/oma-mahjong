@@ -226,7 +226,6 @@ const NEW_TILES = {
   gold: { has: () => G.gold.size > 0, ico: '✨' },
   lock: { has: () => !!(G.ob && G.ob.keys.length), ico: '🔒' },
   ice: { has: () => !!(G.ob && Object.keys(G.ob.need).length), ico: '🧊' },
-  joker2: { has: () => G.tiles.some(t => t.face === JOKER), ico: '🃏' },
   trayPair: { has: () => G.down.some(Boolean), first: () => G.o.mode === 'level' && G.o.level === 50, ico: '🀄' },
 };
 /* ---------- the animated lessons (1.58) ----------
@@ -450,7 +449,8 @@ function tileLessonPlay(kind, clip, after, why, required) {
   coachPlay($('#modalBox .coach-demo'), clip);
 }
 // How to play: every special the player has met, in the order they come, each with its film (js/intro.js) or card
-const MET_ORDER = ['gold', 'joker2', 'ice', 'lock', 'trayPair', 'clock'];
+// (the joker is not explained: it plays without an explanation and leaves the deal from RULES jokersGoneFrom; Dennis 2026-11-23)
+const MET_ORDER = ['gold', 'ice', 'lock', 'trayPair', 'clock'];
 function showLessonMenu() {
   const met = MET_ORDER.filter(k => S.seenSp[k] || (k === 'clock' && S.seenSp.clockMoves));
   openModal(`<h2>${tx('lessonMenu')}</h2>${met.map(k => `<button class="big-btn gold lesson-pick" data-kind="${k}"><span class="bb-text"><b>${NEW_TILES[k] ? NEW_TILES[k].ico : '⏰'} ${tx('nt_' + k)}</b></span></button>`).join('')}
@@ -480,11 +480,11 @@ function newTileIntro(after = null) {
   const k = Object.keys(NEW_TILES).find(k => !S.seenSp[k] && NEW_TILES[k].has() && (!NEW_TILES[k].first || NEW_TILES[k].first()));
   if (!k) return false;
   if (k === 'ice') { playIntroFilm('ice', { required: true, after }); return true; }
-  if (k !== 'joker2' && k !== 'gold') { showTileLesson(k, after, false, 'intro', true); return true; }
+  if (k !== 'gold') { showTileLesson(k, after, false, 'intro', true); return true; }
   showTileCard(k, after, 'intro');
   return true;
 }
-// gold and the joker have a card (no film): its icon, title and text
+// gold has a card (no film): its icon, title and text
 function showTileCard(k, after = null, why = 'intro') {
   const first = why === 'intro';
   openModal(`<div class="nt-ico">${NEW_TILES[k].ico}</div><h2>${first ? tx('newTile', tx('nt_' + k)) : tx('nt_' + k)}</h2><p>${tx('nt_' + k + '_text')}</p>

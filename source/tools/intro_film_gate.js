@@ -91,12 +91,8 @@ async function menu(p, r) {
   await lib.sleep(1500); await p.locator('#ntGo').click(); await shot('4-back-to-list', 1200);
   await p.locator('.lesson-pick[data-kind="gold"]').click(); await shot('5-gold-card');
   await p.locator('#ntGo').click(); await lib.sleep(700);
-  await p.locator('.lesson-pick[data-kind="joker2"]').click(); await shot('6-joker-card');
-  await p.locator('#ntGo').click(); await lib.sleep(700);
   await p.locator('#mClose').click(); await lib.sleep(500);
   await p.evaluate(() => showTileCard('gold', null, 'intro')); await shot('7-gold-card-first-meeting');
-  await p.evaluate(() => closeModal()); await lib.sleep(400);
-  await p.evaluate(() => showTileCard('joker2', null, 'intro')); await shot('8-joker-card-first-meeting');
   await p.evaluate(() => closeModal()); await lib.sleep(400);
 }
 // the other films (not yet shown by the game itself): the level opens, then the film as at the first meeting
