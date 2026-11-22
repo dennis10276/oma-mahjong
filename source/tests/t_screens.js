@@ -26,15 +26,21 @@ module.exports = [
     },
   },
   {
-    name: 'screens: Zonnebloem theme and high contrast; extra-large tiles are gone',
+    name: 'screens: Zonnebloem theme and retired display settings',
     async run(t, { startLevel }) {
       const p = await t.phone({ state: { ...PLAYER, level: 22, theme: 'sunflower', bg: 'sunfield', sunSeen: true } });
       await startLevel(p, 22);
       const faces = await p.evaluate(() => [...document.querySelectorAll('#board .tile .emo')].length);
       t.ok(faces > 50, 'sunflower tiles drawn', faces);
-      const q = await t.phone({ state: { ...PLAYER, level: 16, bigTiles: true, contrast: true } });
+      const q = await t.phone({ state: { ...PLAYER, level: 16, contrast: true, nums: false, highlight: true } });
       await startLevel(q, 16);
-      t.ok(await q.evaluate(() => document.body.classList.contains('contrast')), 'high contrast on');
+      t.ok(await q.evaluate(() => !document.body.classList.contains('contrast')), 'legacy contrast does not change the board');
+      t.eq(await q.evaluate(() => JSON.parse(__mj.G.rp.view).slice(6, 9)), [false, false, true], 'recorded view keeps the numbers, retired contrast and highlight fields in place');
+      await q.evaluate(() => openSettings());
+      for (const language of ['nl', 'en']) {
+        await q.locator(`.lp[data-lang="${language}"]`).click();
+        t.eq(await q.locator('.tog[data-k="contrast"]').count(), 0, 'contrast is removed from Settings in ' + language);
+      }
       // extra-large tiles are gone (1.54): an old saved setting changes nothing, and it is not offered
       const r = await t.phone({ state: { level: 60, bigTiles: true } });
       await startLevel(r, 60);

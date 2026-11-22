@@ -36,7 +36,7 @@ const numBgs = BGS.filter(b => typeof b.need === 'number');
 // the saved progress; every list and counter exists from the start, so code never has to check
 const defaults = () => ({
   level: 1, stars: {}, daily: {}, theme: 'classic', bg: 'jade', frame: 'none',
-  sfx: true, music: true, vibrate: true, highlight: true, nums: true, contrast: false,
+  sfx: true, music: true, vibrate: true, highlight: true, nums: true,
   seenIntro: false, sunSeen: false, seenSp: {},
   matches: 0, bestCombo: 0, bestStreak: 0, winStreak: 0, bonusStars: 0, bonusPts: 0, weekWins: 0,
   stats: {}, trophies: {}, att: {}, fails: {}, czLoss: {}, proSeen: {}, lvlPts: {}, dayPts: {},
@@ -44,6 +44,7 @@ const defaults = () => ({
 });
 let S;
 try { S = Object.assign(defaults(), JSON.parse(localStorage.getItem(STORE) || '{}')); } catch (e) { S = defaults(); }
+delete S.contrast;   // drop the retired preference from older saved games
 const save = () => { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) { } };
 // 👵 Super-omamodus (grandma, or switched on the dashboard); each part of it can also be on by itself
 const careMode = () => isCarePlayer(S.pid, S.name, S.cfg || {});
