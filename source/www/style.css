@@ -1066,16 +1066,6 @@ span.fx { font-size: inherit; }
 /* the caption of a step, under the board (its row is always there, so nothing moves when it comes and goes) */
 .intro-stage .intro-cap { max-width: calc(100% - 12px); margin: 2px 0 8px; min-height: 1.25em; font-size: 17px; line-height: 1.25; background: rgba(0,0,0,.42); opacity: 0; transition: opacity .18s; pointer-events: none; }
 .intro-stage .intro-cap.on { opacity: 1; }
-/* look here: the tile the film is about pulses, its ice mark pops */
-#board .tile.intro-look { animation: introLook .8s ease-in-out; }
-#board .tile.intro-look .ob::after { animation: introMark .8s ease-in-out; }
-@keyframes introLook { 40% { scale: 1.08; filter: drop-shadow(0 0 7px rgba(255,255,255,.95)); } }
-@keyframes introMark { 40% { scale: 1.5; } }
 #introPanel .intro-line { font-size: 19px; line-height: 1.3; margin: 10px 0 4px; }
 #introPanel .big-btn:disabled { opacity: .55; cursor: default; }
 #introPanel .big-btn:disabled b { font-size: 21px; }
-.intro-tap { position: absolute; z-index: 2000001; width: 54px; height: 54px; margin: -27px 0 0 -27px; border-radius: 50%; pointer-events: none;
-  border: 3px solid rgba(255,255,255,.95); background: rgba(255,255,255,.28); box-shadow: 0 0 0 2px rgba(0,0,0,.18), 0 0 12px rgba(255,255,255,.6);
-  opacity: 0; animation: introTap .7s ease-out forwards; }
-@keyframes introTap { 0% { transform: scale(1.5); opacity: 0; } 28% { transform: scale(.75); opacity: 1; } 100% { transform: scale(1.5); opacity: 0; } }
-@media (prefers-reduced-motion: reduce) { .intro-tap { animation: none; opacity: .9; transform: scale(.8); } }

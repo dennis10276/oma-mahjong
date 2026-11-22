@@ -253,13 +253,13 @@ module.exports = [
       [['ice', 'ic_tap'], ['far', null], ['corner', 'ic_diagonal'], ['up', 'ic_half'], ['top', 'ic_corner']], 'a caption for every subtle step, none for the obvious');
     t.ok(await p.evaluate(() => INTRO_FILMS.ice.taps.filter(x => x[2]).every(x => TEXT[x[2]] && TEXT[x[2]].every(s => s && s.length <= 32))), 'short captions in Dutch and English');
     t.ok(await p.evaluate(() => !['ic_covered', 'ic_top', 'ic_free'].some(k => k in TEXT)), 'no step about the ordinary covered-tile rule or the obvious (Dennis: for a skilled player)');
-    // every frame of one play: which tap was last, the caption and how much of it shows, the ice tile pointed at
+    // every frame of one play: which tap was last, the caption and how much of it shows, anything of the film's own on the board
     await p.evaluate(() => {
       window.__frames = []; playIntroFilm('ice', { why: 'manual' });
       const I = INTRO_FILMS.ice.tiles.findIndex(x => x[0] === 'ice');
       const rec = () => { if (!introRun || introRun.plays > 1) return;
         const c = $('#modalBox .intro-cap');
-        __frames.push({ t: performance.now(), n: introRun.log.length, text: c ? c.textContent : null, op: c ? +getComputedStyle(c).opacity : 0, look: G.tiles[I].el.classList.contains('intro-look') });
+        __frames.push({ t: performance.now(), n: introRun.log.length, text: c ? c.textContent : null, op: c ? +getComputedStyle(c).opacity : 0, own: !!document.querySelector('#modalBox #board [class*="intro-"], #modalBox #board[class*="intro-"]') });
         requestAnimationFrame(rec); };
       rec();
     });
@@ -267,7 +267,7 @@ module.exports = [
     const r = await p.evaluate(() => INTRO_FILMS.ice.taps.map(([, id, cap], k) => {
       const w = __frames.filter(f => f.n === k + 1), want = cap ? tx(cap) : null;
       return { id, cap, frames: w.length, atTap: w.length ? w[0].op : 1, before: w.length ? w.at(-1).op : 1,
-        shown: w.some(f => f.text === want && f.op >= 0.95), full: (on => on.length ? on.at(-1).t - on[0].t : 0)(w.filter(f => f.text === want && f.op >= 0.95)), other: w.some(f => f.op > 0.05 && f.text !== want), look: w.some(f => f.look) };
+        shown: w.some(f => f.text === want && f.op >= 0.95), full: (on => on.length ? on.at(-1).t - on[0].t : 0)(w.filter(f => f.text === want && f.op >= 0.95)), other: w.some(f => f.op > 0.05 && f.text !== want), own: w.some(f => f.own) };
     }));
     r.forEach((s, k) => {
       const last = k === r.length - 1;
@@ -277,7 +277,8 @@ module.exports = [
       t.ok(!s.other, `${s.id}: no other caption in its step`, s);
       // (the last one stays until the film plays again: it ends on what it was about)
       t.ok(last ? s.before >= 0.95 : s.before <= 0.05, last ? `${s.id}: its caption stays at the end` : `${s.id}: its caption is gone before the next tap`, s);
-      t.eq(s.look, !!s.cap && s.id !== 'ice', `${s.id}: ${s.cap && s.id !== 'ice' ? 'the eye is pointed at the ice tile' : 'the ice tile is not pointed at (the game shows this tap itself)'}`);
+      // (Dennis: "make it behave like the game", no tap ring: what moves on the board is only what the game does for that tap)
+      t.ok(!s.own, `${s.id}: nothing on the board but the game's own effects (no tap ring, no pulse)`, s);
     });
     t.eq(p.errors, [], 'no browser errors');
   }},
