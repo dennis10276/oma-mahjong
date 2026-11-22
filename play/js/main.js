@@ -48,8 +48,24 @@ $('#btnThemes').onclick = () => show('themes');
 $('#btnTrophies').onclick = () => show('trophies');
 $('#btnRanking').onclick = () => { if (!S.name) askName(() => show('ranking')); else show('ranking'); };
 $('#rankName').onclick = () => askName(() => renderRanking());
-$('#rkWeek').onclick = () => { rankMode = 'week'; renderRanking(); };
-$('#rkAll').onclick = () => { rankMode = 'all'; renderRanking(); };
+$('#rkWeek').onclick = () => setRankMode('week');
+$('#rkAll').onclick = () => setRankMode('all');
+const rankingScreen = $('#ranking');
+let rankingTouch = null;
+rankingScreen.addEventListener('touchstart', e => {
+  rankingTouch = e.touches.length === 1 ? e.touches[0] : null;
+}, { passive: true });
+rankingScreen.addEventListener('touchcancel', () => { rankingTouch = null; });
+rankingScreen.addEventListener('touchend', e => {
+  const start = rankingTouch;
+  rankingTouch = null;
+  const end = e.changedTouches[0];
+  if (!start || !end || end.identifier !== start.identifier || e.touches.length || curScreen !== 'ranking' || !modalFree()) return;
+  const dx = end.clientX - start.clientX, dy = end.clientY - start.clientY;
+  if (Math.abs(dx) <= 45 || Math.abs(dx) <= 1.5 * Math.abs(dy)) return;
+  if (e.cancelable) e.preventDefault();
+  setRankMode(dx < 0 ? 'all' : 'week');
+}, { passive: false });
 $('#btnTasks').onclick = () => { renderTaskChip(); if (chestReady()) openChest(); else openTasks(); };
 $('#btnSettings').onclick = openSettings;
 $('#btnPlayDaily').onclick = () => startDaily(selDate);
@@ -96,7 +112,12 @@ addEventListener('online', () => updatePresence());
 loadCfg().then(loadNews);
 $('#btnPaper').onclick = openPaper;
 // a heart can arrive any moment (the live stream can miss one): look again every half minute
-setInterval(() => { if (!document.hidden) { checkHearts(); loadCfg(); loadNews(); if (curScreen === 'home') checkSentHearts(); } }, 30000);
+setInterval(() => {
+  if (document.hidden) return;
+  checkHearts(); loadCfg(); loadNews();
+  if (curScreen === 'home') checkSentHearts();
+  if (curScreen === 'ranking' && modalFree()) renderRanking();
+}, 30000);
 document.body.classList.toggle('nonum', !S.nums);
 document.body.classList.toggle('contrast', !!S.contrast);
 show('home');

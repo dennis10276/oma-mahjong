@@ -49,8 +49,31 @@ const myRank = (v, mode = 'all') => ranking(v, mode).findIndex(e => e.me) + 1;
 const isFam = e => !e.bot && !e.me;
 // value shown on the right of a row
 const rowVal = (e, mode) => mode === 'week' ? fmtN(e.points) : tx('levelWord', e.level);
+const THREE_DAYS = 3 * 86400000;
+function presenceOf(e, now = Date.now()) {
+  if (!isFam(e)) return null;
+  const heartbeatAge = now - e.online;
+  if (e.online > 0 && heartbeatAge >= 0 && heartbeatAge < 90000) return { online: true, text: tx('playerOnline') };
+
+  const sentHeart = S.heartsOut?.[e.id];
+  // A receipt records when we checked it. Its send time is the earliest the other player could have seen it.
+  const seenHeartAtLeast = sentHeart?.seen ? Number(sentHeart.t) || 0 : 0;
+  const last = Math.max(Number(e.online) || 0, Number(e.t) || 0,
+    Number(S.heartsSeen?.[e.id]) || 0, seenHeartAtLeast);
+  const age = now - last;
+  if (last <= 0 || age < 0 || age > THREE_DAYS) return null;
+
+  const minutes = Math.floor(age / 60000), hours = Math.floor(minutes / 60), days = Math.floor(hours / 24);
+  const text = minutes < 5 ? tx('lastOnlineNow') : hours < 1 ? tx('lastOnlineMinutes', minutes)
+    : days < 1 ? tx('lastOnlineHours', hours) : days === 1 ? tx('lastOnlineYesterday') : tx('lastOnlineDays', days);
+  return { online: false, text };
+}
+function presenceSubHTML(presence, hasSubtitle = true) {
+  if (!presence) return '';
+  const { online, text } = presence;
+  return `${hasSubtitle ? ' ' : ''}<span class="presence-sub">${hasSubtitle ? '· ' : ''}<span class="${online ? 'presence-text' : 'presence-last'}">${text}</span></span>`;
+}
 /* the family (real players) at a glance: everyone with their place */
-const playerIsOnline = e => !e.me && e.online > 0 && Date.now() - e.online >= 0 && Date.now() - e.online < 90000;
 function famHTML(mode, list, title = tx('family'), withHearts = false, activity = false) {
   list = list || ranking(undefined, mode);
   const fam = list.map((e, i) => ({ e, r: i + 1 })).filter(x => !x.e.bot);
@@ -59,9 +82,9 @@ function famHTML(mode, list, title = tx('family'), withHearts = false, activity 
   const limit = innerHeight < 740 ? 3 : 6;
   const visible = activity && fam.length > limit ? fam.slice(Math.max(0, Math.min(mine - 1, fam.length - limit)), Math.max(0, Math.min(mine - 1, fam.length - limit)) + limit) : fam;
   return `<div class="fam-box${activity ? ' win-family' : ''}"><div class="fam-title">${title}</div>${visible.map(({ e, r }) => {
-    const online = activity && playerIsOnline(e), heart = withHearts && !e.me ? heartBtn(e) : '';
-    const avatar = avatarHTML(e).replace('</span>', `${online ? '<span class="presence-dot" aria-hidden="true"></span>' : ''}</span>`);
-    return `<div class="fam-row${e.me ? ' me' : ''}"><span class="fr-rank">${medal(r)}</span>${avatar}<span class="fr-name">${esc(e.name)}${e.me ? ` <i>${tx('youTag')}</i>` : ''}<small class="fr-sub">${mode === 'week' ? `🧩 ${tx('levelWord', e.level)}` : tx('points', fmtN(e.points))}${online ? ` · <span class="presence-text">${tx('playerOnline')}</span>` : ''}</small>${!e.me && !activity ? heartState(e.id) : ''}</span><span class="fr-val">${activity ? `${heart}<span class="points">${rowVal(e, mode)}</span>` : `${rowVal(e, mode)}${heart}`}</span></div>`;
+    const presence = presenceOf(e), heart = withHearts && !e.me ? heartBtn(e) : '';
+    const avatar = avatarHTML(e, 'ra', presence?.online);
+    return `<div class="fam-row${e.me ? ' me' : ''}"><span class="fr-rank">${medal(r)}</span>${avatar}<span class="fr-name">${esc(e.name)}${e.me ? ` <i>${tx('youTag')}</i>` : ''}<small class="fr-sub">${mode === 'week' ? `🧩 ${tx('levelWord', e.level)}` : tx('points', fmtN(e.points))}${presenceSubHTML(presence)}</small>${!e.me && !activity ? heartState(e.id) : ''}</span><span class="fr-val">${activity ? `${heart}<span class="points">${rowVal(e, mode)}</span>` : `${rowVal(e, mode)}${heart}`}</span></div>`;
   }).join('')}</div>`;
 }
 /* Passed by family: who was below you in the all-time ranking (highest level, then points) the
@@ -79,7 +102,7 @@ function checkPassed() {
   const by = l.slice(0, me).filter(e => S.famBelow.includes(e.id));
   notePassedBaseline(true);
   if (!by.length) return;
-  S.passedNews = { t: Date.now(), rank: me + 1, mine: S.level, by: by.map(e => ({ id: e.id, name: e.name, avatar: e.avatar, frame: e.frame, level: e.level })) };
+  S.passedNews = { t: Date.now(), rank: me + 1, mine: S.level, by: by.map(e => ({ id: e.id, name: e.name, avatar: e.avatar, frame: e.frame, level: e.level, online: e.online, t: e.t })) };
   save();
   logEvt('passed', { by: by.map(e => e.name).join(', ').slice(0, 40), lv: S.level, rk: me + 1 });
   showPassed();
@@ -91,7 +114,11 @@ function showPassed() {
   if (curScreen !== 'home' || !modalFree()) { clearTimeout(showPassed.t); showPassed.t = setTimeout(showPassed, 1500); return; }
   S.passedNews = null; save();
   Sound.blocked(); buzz([30, 60, 30]);
-  const rows = n.by.map(e => `<div class="fam-row passed-row">${avatarHTML(e)}<span class="fr-name">${esc(e.name)}<small class="fr-sub">${tx('passedNow', e.level)}</small></span><span class="fr-val">${tx('levelWord', e.level)}</span></div>`).join('');
+  const latest = new Map(onlineEntries('all').map(e => [e.id, e]));
+  const rows = n.by.map(e => {
+    const presence = presenceOf(latest.get(e.id) || e);
+    return `<div class="fam-row passed-row">${avatarHTML(e, 'ra', presence?.online)}<span class="fr-name">${esc(e.name)}<small class="fr-sub">${tx('passedNow', e.level)}${presenceSubHTML(presence)}</small></span><span class="fr-val">${tx('levelWord', e.level)}</span></div>`;
+  }).join('');
   openModal(`<div class="nt-ico">🏃</div><h2>${tx(n.by.length > 1 ? 'passedTitleMany' : 'passedTitle')}</h2>
     <p>${tx('passedText', n.by.length > 1 ? n.by.map(e => esc(e.name)).join(' & ') : esc(n.by[0].name), n.by.length)}</p>
     <div class="fam-box">${rows}</div>
@@ -109,39 +136,48 @@ async function fetchOnline() {
     if (!res.ok) return false;
     const data = await res.json() || {};
     const list = Object.entries(data).filter(([id, v]) => v && typeof v.points === 'number' && !id.startsWith('test-') && !String(v.name || '').startsWith('test-') && !hiddenFromRanking(id, v.name))
-      .map(([id, v]) => ({ id, name: String(v.name || '?').slice(0, 24), avatar: String(v.avatar || '🙂').slice(0, 8), frame: String(v.frame || 'none').slice(0, 12), points: v.points, level: v.level || 1, wk: v.wk || '', wkPts: v.wkPts || 0, online: Number(v.online) || 0 }));
+      .map(([id, v]) => ({ id, name: String(v.name || '?').slice(0, 24), avatar: String(v.avatar || '🙂').slice(0, 8), frame: String(v.frame || 'none').slice(0, 12), points: v.points, level: v.level || 1, wk: v.wk || '', wkPts: v.wkPts || 0, online: Number(v.online) || 0, t: Number(v.t) || 0 }));
     localStorage.setItem(LB_CACHE, JSON.stringify(list));
     S.lbOnlineAt = Date.now(); save();
     return true;
   } catch (e) { return false; }
 }
+// Serialize score uploads and presence changes so a delayed win cannot undo a later hide.
+let scoreQueue = Promise.resolve();
+function queueScoreWrite(write) {
+  scoreQueue = scoreQueue.then(write).catch(() => {});
+  return scoreQueue;
+}
 async function pushScore() {
   if (!DB_URL || !S.name) return;
   ensureId();
-  const base = { name: S.name.slice(0, 24), avatar: (S.avatar || '😊').slice(0, 8), points: myPoints(), level: S.level, t: Date.now() };
-  const full = { ...base, frame: (S.frame || 'none').slice(0, 12), wk: ensureWeek().id, wkPts: S.wk.pts, online: document.hidden ? 0 : Date.now() };
-  try {
-    const r = await dbSend(`scores/${S.pid}`, full);
+  const path = `scores/${S.pid}`, t = Date.now();
+  const base = { name: S.name.slice(0, 24), avatar: (S.avatar || '😊').slice(0, 8), points: myPoints(), level: S.level, t };
+  const full = { ...base, frame: (S.frame || 'none').slice(0, 12), wk: ensureWeek().id, wkPts: S.wk.pts, online: document.hidden ? 0 : t };
+  return queueScoreWrite(async () => {
+    const r = await dbSend(path, full);
     // older database rules only know the basic fields: fall back to those
     if (!r.ok) {
       const { online, ...legacy } = full;
-      const old = await dbSend(`scores/${S.pid}`, legacy);
-      if (!old.ok) await dbSend(`scores/${S.pid}`, base);
+      const old = await dbSend(path, legacy);
+      if (!old.ok) await dbSend(path, base);
     }
-  } catch (e) { }
+  });
 }
 
-// A foreground heartbeat is distinct from the last score update; older apps remain unknown.
-let presenceQueue = Promise.resolve();
 function updatePresence(active = !document.hidden) {
   if (!DB_URL || !S.name || !S.pid || !navigator.onLine) return Promise.resolve();
-  const value = active ? Date.now() : 0;
-  presenceQueue = presenceQueue.then(async () => {
+  const path = `scores/${S.pid}`, t = Date.now(), online = active ? t : 0;
+  // pushScore creates the record. A visit only edits activity on an existing score.
+  return queueScoreWrite(async () => {
     const ctl = new AbortController(), timeout = setTimeout(() => ctl.abort(), 6000);
-    try { await fetch(dbUrl(`scores/${S.pid}/online`), { method: 'PUT', body: JSON.stringify(value), headers: { 'Content-Type': 'application/json' }, keepalive: true, signal: ctl.signal }); }
-    catch (e) { } finally { clearTimeout(timeout); }
+    try {
+      await fetch(dbUrl(path), {
+        method: 'PATCH', body: JSON.stringify({ online, t }),
+        headers: { 'Content-Type': 'application/json' }, keepalive: true, signal: ctl.signal,
+      });
+    } finally { clearTimeout(timeout); }
   });
-  return presenceQueue;
 }
 
 // ---- avatar frames, earned through prizes ----
@@ -158,7 +194,7 @@ const FRAMES = [
 ];
 FRAMES.forEach(f => Object.defineProperty(f, 'name', { get: () => tx('fr_' + f.id) }));
 const frameOk = id => (FRAMES.find(f => f.id === id) || FRAMES[0]).ok();
-const avatarHTML = (e, cls = 'ra') => `<span class="${cls} fr-${e.frame && e.frame !== 'none' ? e.frame : 'none'}">${e.avatar}</span>`;
+const avatarHTML = (e, cls = 'ra', online = false) => `<span class="${cls} fr-${e.frame && e.frame !== 'none' ? e.frame : 'none'}">${e.avatar}${online ? '<span class="presence-dot" aria-hidden="true"></span>' : ''}</span>`;
 
 const AVATARS = ['👵', '👴', '😊', '🌻', '🐱', '🐶', '🌷', '⭐', '🦋', '🍀', '🎩', '🚀'];
 function askName(then) {
@@ -186,12 +222,18 @@ function askName(then) {
   };
 }
 
-function rowHTML(e, rank, withHeart = false, mode = 'week') {
-  const heart = withHeart && !e.me && !e.bot ? heartBtn(e) : '';
-  const sub = mode === 'week' ? tx('levelWord', e.level) : tx('points', fmtN(e.points));
-  return `<span class="rk">${medal(rank)}</span>${avatarHTML(e).replace('</span>', `${playerIsOnline(e) ? '<span class="presence-dot" aria-hidden="true"></span>' : ''}</span>`)}<span class="rn">${esc(e.name)}${e.me ? ` <i>${tx('youTag')}</i>` : ''}${e.me ? '' : ' <i class="fam-tag">👪</i>'}<small>${sub}</small>${withHeart && !e.me ? heartState(e.id) : ''}</span><span class="rp">${rowVal(e, mode)}${heart}</span>`;
+function rowHTML(e, rank, mode, rankingCard = false) {
+  const presence = presenceOf(e), withHeart = rankingCard && isFam(e);
+  const sub = mode === 'week' ? tx('levelWord', e.level) : rankingCard ? '' : tx('points', fmtN(e.points));
+  const subtitle = sub + presenceSubHTML(presence, !!sub);
+  return `<span class="rk">${medal(rank)}</span>${avatarHTML(e, 'ra', presence?.online)}<span class="rn">${esc(e.name)}${e.me ? ` <i>${tx('youTag')}</i>` : ' <i class="fam-tag">👪</i>'}${subtitle ? `<small>${subtitle}</small>` : ''}${withHeart ? heartState(e.id) : ''}</span><span class="rp">${rowVal(e, mode)}${withHeart ? heartBtn(e) : ''}</span>`;
 }
 let rankMode = 'week';
+function setRankMode(mode) {
+  if (mode === rankMode) return;
+  rankMode = mode;
+  renderRanking();
+}
 function renderRanking() {
   ensureId(); ensureWeek();
   const list = ranking(undefined, rankMode);
@@ -203,7 +245,7 @@ function renderRanking() {
     ? tx('weekEnds', weekLeftText())
     : tx('allInfo');
 
-  $('#rankList').innerHTML = list.map((e, i) => `<div class="rrow${e.me ? ' me' : ''}${isFam(e) ? ' fam' : ''}">${rowHTML(e, i + 1, true, rankMode)}</div>`).join('');
+  $('#rankList').innerHTML = list.map((e, i) => `<div class="rrow${e.me ? ' me' : ''}${isFam(e) ? ' fam' : ''}">${rowHTML(e, i + 1, rankMode, true)}</div>`).join('');
   document.querySelectorAll('.heart-btn').forEach(b => b.onclick = ev => { ev.stopPropagation(); if (!b.classList.contains('sent')) sendHeart(b.dataset.pid, b.dataset.name, b); else toast(tx('heartAlreadyShort')); });
   const online = !!DB_URL;
   $('#rankNote').innerHTML = tx(S.lbOnlineAt && Date.now() - S.lbOnlineAt < 60000 ? 'rankNoteOnline' : 'rankNoteCached');
@@ -251,8 +293,8 @@ function showClimb(oldPts, newPts, then, mode = 'all') {
   };
   openModal(`<h2>${tx(mode === 'week' ? 'climbWeek' : 'climbAll')}</h2>
     <div class="climb" style="height:${(rows.length + 1) * RH}px">
-      ${rows.map((e, k) => `<div class="rrow crow${isFam(e) ? ' fam' : ''}" data-k="${k}" style="transform:translateY(${k * RH}px)">${rowHTML(e, rankOf(k, false), false, mode)}</div>`).join('')}
-      <div class="rrow me crow" id="meRow" style="transform:translateY(${startIdx * RH}px)">${rowHTML(myEntry(oldPts, mode), oldRank, false, mode)}</div>
+      ${rows.map((e, k) => `<div class="rrow crow${isFam(e) ? ' fam' : ''}" data-k="${k}" style="transform:translateY(${k * RH}px)">${rowHTML(e, rankOf(k, false), mode)}</div>`).join('')}
+      <div class="rrow me crow" id="meRow" style="transform:translateY(${startIdx * RH}px)">${rowHTML(myEntry(oldPts, mode), oldRank, mode)}</div>
     </div>
     <div class="climb-msg" id="climbMsg">&nbsp;</div>
     <button class="big-btn play" id="clOk"><span class="bb-text"><b>${tx('next')}</b></span></button>`, false, null, 'compact');

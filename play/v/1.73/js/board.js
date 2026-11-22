@@ -61,7 +61,12 @@ function begin(o, restart = false) {
   $('.toolbar').classList.toggle('gone', toolsGoneFor(o));   // (before measuring: without tools the pile gets their space)
   // shape the pile after the free space on this screen
   const wrap = $('#boardWrap');
-  const aspect = Math.max(0.4, Math.min(2.4, Math.round(wrap.clientHeight / Math.max(1, wrap.clientWidth) * 10) / 10)) || 1.5;
+  disarmTool();
+  $('#game').classList.remove('compact');   // the shape is measured on the ordinary screen (fitGeo may narrow the bars for the board before)
+  // Levels made for this screen (1-50, 52, grandma's track) must stay the same now that hint and shuffle sit beside the tray:
+  // their row under the pile was always 48 px high, so the shape is measured as if it were still there.
+  const toolRow = toolsGoneFor(o) ? 0 : OLD_TOOLBAR_H;
+  const aspect = Math.max(0.4, Math.min(2.4, Math.round((wrap.clientHeight - toolRow) / Math.max(1, wrap.clientWidth) * 10) / 10)) || 1.5;
   const cur = restart ? null : loadCur();
   // A same-page resume may follow a drained tail. Adopt its cursor only when the saved
   // position matches, without writing over saves replaced by an update/reset.
@@ -173,11 +178,8 @@ function decorate(i) {
   const t = G.tiles[i], el = t.el; if (!el) return;
   el.classList.toggle('gold', G.gold.has(i));
   el.classList.toggle('sp-joker', t.face === JOKER);
-  // ice, lock or key: an overlay on the tile
-  const k = obKind(i);
-  let ov = el.querySelector('.ob');
-  if (!k) { if (ov) ov.remove(); }
-  else { if (!ov) { ov = document.createElement('div'); ov.className = 'ob'; el.appendChild(ov); } ov.dataset.k = k; }
+  // Ice keeps its overlay, with the key/lock badge above it when both apply.
+  paintOb(el, obKind(i), obMarker(i));
   if (G.clock && G.clock.i === i) clockBadge();
 }
 // the alarm clock: a badge with the moves left, above everything (so tiles on top never hide it)
@@ -192,8 +194,13 @@ function clockBadge() {
   // one move used: the number gives a little hop, so you see every tile counts (1.58)
   if (+ck.dataset.n > left) try { ck.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.4)', offset: .35 }, { transform: 'scale(1)' }], { duration: 380, easing: 'ease-out' }); } catch (e) { }
   ck.dataset.n = left;
-  ck.style.left = (r.l + r.w * 0.55).toFixed(1) + 'px'; ck.style.top = (r.t - r.h * 0.16).toFixed(1) + 'px';
   ck.style.fontSize = (G.tw * 0.24).toFixed(1) + 'px';
+  // the timer stays whole: a clock in the top row or at the right edge used to push it out of the board, where it was cut off
+  const bd = $('#board'), bw = bd.clientWidth, bh = bd.clientHeight, cw = ck.offsetWidth, ch = ck.offsetHeight;
+  let x = r.l + r.w * 0.55, y = r.t - r.h * 0.16;
+  if (bw && cw) x = Math.max(2, Math.min(x, bw - cw - 2));
+  if (bh && ch) y = Math.max(2, Math.min(y, bh - ch - 2));
+  ck.style.left = x.toFixed(1) + 'px'; ck.style.top = y.toFixed(1) + 'px';
   ck.classList.toggle('urgent', left <= 5);
 }
 const setFace = i => { G.tiles[i].el.querySelector('.face').innerHTML = Tiles.boardFace(S.theme, faceOf(i)); decorate(i); };
@@ -208,7 +215,7 @@ function renderBoard(enter) {
   board.innerHTML = '';
   board.classList.toggle('hl', S.highlight);
   Tiles.useFaces(S.theme, G.tiles.map(t => t.face));
-  const geo = boardGeo(wrap.clientWidth, wrap.clientHeight);
+  const geo = fitGeo();
   if (!geo) return;
   sizeTray();                      // (measured now, while measuring is free: nothing changed since the read above)
   applyGeo(geo, false);
@@ -217,7 +224,7 @@ function renderBoard(enter) {
   for (const i of order) {
     const t = G.tiles[i], r = t.r, k = obKind(i);
     const cls = 'tile' + (G.alive[i] ? '' : ' hidden') + (G.down[i] && G.peek !== i ? ' back' : '') + (G.gold.has(i) ? ' gold' : '') + (t.face === JOKER ? ' sp-joker' : '') + (G.alive[i] && !free(i) ? ' blocked' : '');
-    const html = `<div class="${cls}" data-i="${i}" style="left:${r.l}px;top:${r.t}px;width:${r.w.toFixed(1)}px;height:${r.h.toFixed(1)}px;z-index:${r.zi % 10000}"><div class="face">${Tiles.boardFace(S.theme, t.face)}</div>${k ? `<div class="ob" data-k="${k}"></div>` : ''}</div>`;
+    const html = `<div class="${cls}" data-i="${i}" style="left:${r.l}px;top:${r.t}px;width:${r.w.toFixed(1)}px;height:${r.h.toFixed(1)}px;z-index:${r.zi % 10000}"><div class="face">${Tiles.boardFace(S.theme, t.face)}</div>${obHTML(k, obMarker(i))}</div>`;
     if (!layers.has(t.z)) layers.set(t.z, []);
     layers.get(t.z).push([i, html]);
   }
@@ -253,11 +260,15 @@ function boardGeo(W, H) {
     l = Math.min(l, x); r = Math.max(r, x + 1); t0 = Math.min(t0, y); b = Math.max(b, y + ratio);
   }
   const depthF = 0.085;            // the tile's side, drawn right and below it
-  const tw = Math.min(150, (W - 8) / (r - l + depthF + 0.04), (H - 8) / (b - t0 + depthF * 1.4 + 0.04));
+  // 2 px of room on each side (was 4 until 1.68): a pile seven tiles wide keeps 54 px tiles on a 392 px screen (Dennis 2026-11-14)
+  // At the top, 12 px between the tray and the pile: the tray's wooden edge and shadow hang 4-8 px below it, and with 2 px a
+  // tall pile's top row sat under that edge (1.69, Gerda's phone, level 219; Dennis 2026-11-15). 2 px at the bottom.
+  const TOP = 12, BOT = 2;
+  const twW = (W - 4) / (r - l + depthF + 0.04), twH = (H - TOP - BOT) / (b - t0 + depthF * 1.4 + 0.04), tw = Math.min(150, twW, twH);
   const th = tw * ratio, dz = tw * dF, d = Math.max(3, tw * depthF);
-  // centred on what is really there: even space left and right, and between the tray and the buttons below
-  const ox = (W - (r - l) * tw - d) / 2 - l * tw, oy = (H - (b - t0) * tw - d * 1.4) / 2 - t0 * tw;
-  return { tw, th, dz, d, ox, oy };
+  // centred on what is really there: even space left and right, and between the tray and the buttons below (below the tray's edge)
+  const ox = (W - (r - l) * tw - d) / 2 - l * tw, oy = TOP + (H - TOP - BOT - (b - t0) * tw - d * 1.4) / 2 - t0 * tw;
+  return { tw, th, dz, d, ox, oy, tall: twH < twW && twH < 150 };   // tall: the height of the pile area decides the tile size
 }
 // remember the positions (t.r, G.tw); move the tiles that are on the screen already when asked
 function applyGeo(geo, move) {
@@ -272,10 +283,19 @@ function applyGeo(geo, move) {
     if (move && t.el) { const s = t.el.style; s.left = lf + 'px'; s.top = tp + 'px'; s.width = (tw - 1.5).toFixed(1) + 'px'; s.height = (th - 1.5).toFixed(1) + 'px'; }
   }
 }
+// The pile area for this board. A pile that is limited by the height (nine rows, or a short screen) gets a little more room:
+// the top bar and the tray lose some of their padding (#game.compact in style.css), nothing gets smaller (Dennis 2026-11-14).
+function fitGeo() {
+  const game = $('#game'), wrap = $('#boardWrap');
+  game.classList.remove('compact');
+  let geo = boardGeo(wrap.clientWidth, wrap.clientHeight);
+  if (geo && geo.tall) { game.classList.add('compact'); geo = boardGeo(wrap.clientWidth, wrap.clientHeight); }
+  return geo;
+}
 // after a change of screen size: the same tiles, moved
 function layoutBoard() {
   if (!G) return;
-  const wrap = $('#boardWrap'), geo = boardGeo(wrap.clientWidth, wrap.clientHeight);
+  const geo = fitGeo();
   if (!geo) return;
   applyGeo(geo, true);
   sizeTray();
@@ -295,6 +315,7 @@ function addScore(pts) { G.score += pts; updateScore(); floatScore('+' + pts); }
 // that block has 3 stars. So they are checked again every 5 levels, and come back as soon as the
 // missing levels are played again for 3 stars. Without them the toolbar is not shown and the pile
 // gets its space; with them the pile leaves room for the buttons, as before level 50.
+const OLD_TOOLBAR_H = 48;   // height of the hint/shuffle row under the pile until 1.69 (same on every screen and language)
 const toolLevel = o => o.mode === 'level' ? o.level : S.level;
 const toolBlock = L => { const g = help().toolsGoneFrom, k = RULES.tools.earn.every; return g + Math.floor((L - g) / k) * k; };
 function toolsMissing(L) { const m = []; for (let l = 1; l < toolBlock(L); l++) if ((S.stars[l] || 0) < RULES.tools.earn.stars) m.push(l); return m; }
@@ -397,6 +418,7 @@ function showBlockers(i) {
 // ---------- tapping ----------
 let blockedTaps = 0, comboTimer;
 function onTap(i, auto = false, point = null) {
+  if (!auto) disarmTool();
   if (!G || G.done || G.introducing) return;
   if (G.busy || !G.alive[i] || (G.autoFin && !auto)) {
     replayMark('ignored', [i, auto ? 1 : 0, point, G.busy ? 'busy' : !G.alive[i] ? 'gone' : 'auto']);
@@ -411,8 +433,9 @@ function tapTile(i) {
   G.st.tp++;
   if (!free(i)) {
     G.st.bt++;
-    replay(el, 'shake'); showBlockers(i);
-    if (lockedT(i)) showKeys();       // a covered locked tile: the keys show too
+    replay(el, 'shake');
+    // a special tile that cannot be taken shows what it needs, not what lies on it (Dennis 2026-11-14): the tiles that thaw it, or the keys
+    if (frozen(i)) showThaw(i); else if (lockedT(i)) showKeys(); else showBlockers(i);
     Sound.blocked(); buzz(30);
     if (++blockedTaps === 3) toast(tx('stillStuck'), 3000);
     return;
@@ -646,6 +669,21 @@ function gameOver() {
 }
 
 // ---------- 💡 hint and 🔀 shuffle (once per level each) ----------
+// Hint and shuffle are earned and used at once, and they sit just below home and restart: the first tap only wakes the
+// button (it glows, the top bar says "tap again"), a second tap within 3 s uses it. A slip from home or restart costs nothing
+// (Dennis 2026-11-15). When it cannot be used (used, locked, too early, busy) the first tap says why, as before.
+let armedTool = null, armTimer = 0;
+function disarmTool() { clearTimeout(armTimer); if (armedTool) $(armedTool).classList.remove('armed'); armedTool = null; }
+function armTool(id, use, againKey) {
+  const used = id === '#btnHint' ? G && G.usedHint : G && G.usedShuffle;
+  const w = help().shuffleAfter, early = id === '#btnShuffle' && G && w && G.tiles.length - aliveCount() < w.taken && G.tray.length < w.tray;
+  if (!G || G.done || G.busy || G.autoFin || !toolsOpen() || used || early) { disarmTool(); return use(); }
+  if (armedTool === id) { disarmTool(); return use(); }
+  disarmTool(); Sound.init();
+  armedTool = id; $(id).classList.add('armed');
+  toast(tx(againKey), 3000);
+  armTimer = setTimeout(disarmTool, 3000);
+}
 function toolUsable(used, usedMsg) {
   if (!G || G.done || G.busy || G.autoFin) return false;
   Sound.init();

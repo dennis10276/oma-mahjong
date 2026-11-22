@@ -129,7 +129,9 @@
       board += `<g class="watch-slot${i === undefined ? ' vacant' : ''}" ${i === undefined ? '' : `data-tile="${i}"`} transform="translate(${x},${y})"><rect width="${slotW}" height="${slotH}" rx="10" fill="${i === undefined ? '#57341f' : '#fff8e8'}"/>${i === undefined ? '' : faceMarkup(state.f[i], theme, 3, 3, slotW - 6, slotH - 6)}</g>`;
     }
     board += '</g>';
-    if (view[10] !== false) {
+    // Older recordings only stored whether the tools were earned, not the Level 15 unlock.
+    const regularLevel = initial.key.startsWith('L') ? Number(initial.key.slice(1)) : null;
+    if (view[10] !== false && (regularLevel === null || regularLevel >= RULES.tools.fromLevel)) {
       const cy = trayY + slotH + trayPad - 22;
       for (const [cx, icon, label, used] of [[32, '💡', 'Hint', replay.hintUsed], [vw - 32, '🔀', 'Schudden', replay.shuffleUsed]]) {
         board += `<g opacity="${used ? '.45' : '1'}"><title>${label}</title><circle cx="${cx}" cy="${cy + 3}" r="22" fill="${used ? '#8c867a' : '#a86f00'}"/><circle cx="${cx}" cy="${cy}" r="22" fill="${used ? '#c9c4b8' : '#f2b01e'}" stroke="${used ? '#f2f0ea' : '#fff4b8'}" stroke-width="2"/><text x="${cx}" y="${cy + 8}" text-anchor="middle" font-size="22">${icon}</text></g>`;
