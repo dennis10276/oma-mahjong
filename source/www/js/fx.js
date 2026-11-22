@@ -21,9 +21,10 @@ const FX = (() => {
   const MAX_FLYING = 140;          // enough for a super combo; many pairs at once (the end playing itself) share it
   function fly(p) {
     if (!layer) { layer = document.createElement('div'); layer.id = 'fxl'; document.body.appendChild(layer); }
-    // while the intro film plays (js/intro.js), its sparkles show only inside the film's board, not over the level behind it
-    const r = filmRoot && filmRoot.getBoundingClientRect();
-    layer.style.clipPath = r ? `inset(${r.top}px ${innerWidth - r.right}px ${innerHeight - r.bottom}px ${r.left}px round 18px)` : '';
+    // while the intro film plays (js/intro.js), its sparkles show only inside the film's tray and board, not over the level
+    // behind it, nor over its caption under the board
+    const r = filmRoot && filmRoot.getBoundingClientRect(), b = filmRoot && $('#boardWrap').getBoundingClientRect();
+    layer.style.clipPath = r ? `inset(${r.top}px ${innerWidth - r.right}px ${innerHeight - b.bottom}px ${r.left}px round 18px)` : '';
     if (layer.childElementCount >= MAX_FLYING) return;
     // the same motion as the canvas particles: speed, gravity and drag per frame of 1/60 s
     const pos = [];

@@ -2,7 +2,8 @@
    phone (390x820) and a tablet (768x1024), each in two themes, as a player meets ice for the first time
    (level 35). On the phone it also makes compare-<theme>.png: the real level 35 after a tap on a frozen tile (its
    touching tiles light up) beside the film at the same kind of moment. Nothing is sent anywhere (a fake database).
-   Run from the worktree root:  CHROME=... node source/tools/intro_film_gate.js <output folder> */
+   Run from the worktree root:  CHROME=... node source/tools/intro_film_gate.js <output folder> [preview]
+   preview: only the phone-classic run, no compare (a quick look before the full gate) */
 'use strict';
 const fs = require('fs'), path = require('path');
 const lib = require('../tests/lib');
@@ -15,9 +16,9 @@ const RUNS = [
   { name: 'tablet-classic', size: [768, 1024], theme: 'classic', bg: 'jade', lang: 'en' },
   { name: 'tablet-fruit', size: [768, 1024], theme: 'fruit', bg: 'sunrise', lang: 'en' },
 ];
-// key moments, in ms after the film opened (taps every 0.6 s from 0.8 to 5.0 s; one play is 5.7 s)
-const SHOTS = [[1000, '1-frozen-tap'], [2350, '2-pair-apart-taken'], [2850, '3-cracked-above'], [3450, '4-melted-below'], [4000, '5-still-covered'], [6000, '6-done-button']];
-const FROZEN_SHOT = 1000;
+// key moments, in ms after the film opened: each step with its caption (taps at 0.5, 1.8, 2.5, 3.6, 4.7 s; one play is 5.5 s)
+const SHOTS = [[1100, '1-tap-shows-thawers'], [3000, '2-diagonal-no-count'], [4100, '3-corner-cracks'], [5200, '4-half-melts'], [6000, '5-done-button']];
+const FROZEN_SHOT = 1100;
 
 async function context(r, video) {
   const [w, h] = r.size;
@@ -41,7 +42,7 @@ async function context(r, video) {
   fs.mkdirSync(OUT, { recursive: true });
   await lib.setup();
   try {
-    for (const r of RUNS) {
+    for (const r of process.argv[3] === 'preview' ? [{ ...RUNS[0], compare: false }] : RUNS) {
       const vids = path.join(OUT, '_video-' + r.name), { ctx, p } = await context(r, vids);
       await p.evaluate(() => { localStorage.removeItem('omamj.cur'); __mj.startLevel(35); });
       await p.waitForSelector('#introPanel');
@@ -51,10 +52,10 @@ async function context(r, video) {
         await p.screenshot({ path: path.join(OUT, `${r.name}-${label}.png`) });
       }
       // the second play, then a tap on the button: the player's own level comes back
-      await lib.sleep(Math.max(0, t0 + 13200 - Date.now()));
+      await lib.sleep(Math.max(0, t0 + 12800 - Date.now()));
       await p.locator('#ntGo').click();
       await lib.sleep(900);
-      await p.screenshot({ path: path.join(OUT, `${r.name}-7-level-back.png`) });
+      await p.screenshot({ path: path.join(OUT, `${r.name}-6-level-back.png`) });
       const video = p.video();
       await ctx.close();
       fs.renameSync(await video.path(), path.join(OUT, r.name + '.webm'));

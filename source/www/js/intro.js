@@ -8,42 +8,45 @@
    saved, logged or counted (board.js saveCur, afterLogic, afterLand, onMatch, fitGeo). The first time, the button
    works only after one full play; seen again from the help menu it closes at once. It plays twice and then rests; a
    tap on the board plays it again.
-   Each film is INTRO_FILMS[kind] = { tiles, taps, ms, line }:
+   Each film is INTRO_FILMS[kind] = { tiles, taps, ms, line, focus }:
      tiles: [id, face, x, y, z, ice layers]   x, y in half tiles and z the layer, as in layouts.js
-     taps:  [ms from the start, id]           each one an ordinary tap of the game
-     ms:    one play; line: the text key of the line in the pop-up (lang.js) */
+     taps:  [ms from the start, id, caption]  each one an ordinary tap of the game; a step that is the lesson has a
+            caption (a text key in lang.js) under the board, shown with its result, and a short pause after it; it
+            goes before the next tap, the last one stays until the film plays again
+     ms:    one play; line: the text key of the line in the pop-up (lang.js)
+     focus: the tile the film is about: a step with a caption on another tile makes it pulse (look here) */
 'use strict';
 
 const INTRO_REST_MS = 1500;      // the pause before it plays once more
 const INTRO_PLAYS = 2;           // then it rests on its last picture
 const INTRO_RING_MS = 200;       // the ring shows this long before the tap
+const INTRO_CAP_IN = 250;        // a caption comes this long after its tap (with the result: a pair pops after its flight, board.js FLY_MS)
+const INTRO_CAP_OUT = 250;       // and starts to fade this long before the next tap (.intro-cap fades in .2 s)
 const INTRO_FILMS = {
   /* Ice (layouts.js iceNeighbors / frozenIn): a frozen tile cannot be taken until enough of the tiles touching it
-     have left the board: beside it, above or below it, lying on it or under it. ❄️❄️ needs two. A corner tile
-     (two across and two down) does not touch it. A thawed tile that is still covered must be freed like any other
-     tile. (A tap every 0.6 s: Dennis found 1 s "so slow" and 0.55 s "too fast" in a film that did not look like the
-     game, 0.8 s on the game screen still too slow.) */
+     have left the board. For a skilled player it shows only what is not obvious (Dennis 2026-11-22): a tap on a
+     frozen tile lights up the tiles that thaw it; a diagonal tile (two across and two down) does not count; a tile
+     that touches it only a little does: one lying on just a corner of it, one half above it. ❄️❄️ needs two. It ends
+     on the melt (taking a free tile is obvious). A tap every 0.7 s, a short pause after a step with a caption, at
+     most 6 s (Dennis on draft 6: 0.7 s, "the max thing should be 6 s"). */
   ice: {
+    focus: 'ice',
     tiles: [
-      ['up', 8, 3, 0, 0],               // above it in the same layer (half a tile to the right): touching
+      ['up', 8, 3, 0, 0],               // half above it (half a tile to the right): touching (a pair with top)
       ['ice', 31, 2, 2, 0, 2],          // the tile under thick ice
       ['side', 12, 4, 2, 0],            // beside it: touching (it stays)
       ['far', 20, 6, 2, 0],             // further along its row: not touching (a pair with corner)
-      ['down', 8, 2, 4, 0],             // below it in the same layer: touching (a pair with up)
       ['corner', 20, 4, 4, 0],          // diagonal, two across and two down: not touching
-      ['top', 27, 1, 1, 1],             // on its upper left corner, one layer up: touching (most of the ice and its ❄️ show)
+      ['top', 8, 1, 1, 1],              // on just its upper left corner, one layer up: touching (most of the ice and its ❄️ show)
     ],
     taps: [
-      [800, 'ice'],                     // frozen (and covered): it shakes, only the four touching tiles light up
-      [1400, 'corner'],                 // a pair that does not touch it leaves: the ice stays as it is
-      [2000, 'far'],
-      [2600, 'up'],                     // the tile above it leaves: ❄️❄️ cracks to ❄️
-      [3200, 'down'],                   // the tile below it leaves: the ice melts
-      [3800, 'ice'],                    // thawed, but a tile still lies on it: it shakes, an arrow points at that tile
-      [4400, 'top'],                    // the tile on top goes
-      [5000, 'ice'],                    // now it is free: it can be taken
+      [500, 'ice', 'ic_tap'],           // frozen (and covered): it shakes, the three tiles that thaw it light up
+      [1800, 'far'],                    // a pair that does not touch it leaves: the ice stays as it is
+      [2500, 'corner', 'ic_diagonal'],  // (the diagonal one last, so the caption comes with its own tap)
+      [3600, 'top', 'ic_corner'],       // the tile on its corner leaves: ❄️❄️ cracks to ❄️
+      [4700, 'up', 'ic_half'],          // the tile half above it leaves (a pair with top): the ice melts
     ],
-    ms: 5700,
+    ms: 5500,
     line: 'intro_ice',
   },
 };
@@ -59,11 +62,11 @@ function playIntroFilm(kind, opts = {}) {
   const why = opts.why || (required ? 'intro' : 'manual');
   // the pop-up: title, the film's own tray and board (core.js filmRoot; its top-bar texts stay hidden in it), the line, the button
   openModal(`<div id="introPanel" data-kind="${kind}"><h2>${required ? tx('newTile', tx('nt_' + kind)) : tx('nt_' + kind)}</h2>
-    <div class="intro-stage"><div id="tray">${'<div class="slot"></div>'.repeat(SLOTS)}</div><div id="boardWrap"><div id="board"></div></div>
+    <div class="intro-stage"><div id="tray">${'<div class="slot"></div>'.repeat(SLOTS)}</div><div id="boardWrap"><div id="board"></div></div><div class="intro-cap chip"></div>
       <div hidden><div><div id="gameMsg"></div></div><div id="progressBar"></div><div id="toast"></div></div></div>
     <p class="intro-line">${tx(film.line)}</p>
     <button class="big-btn play" id="ntGo"${required ? ' disabled' : ''}><span class="bb-text"><b>${tx(required ? 'lessonWatch' : 'gotIt')}</b></span></button></div>`, false, null, 'intro-help');
-  const stage = $('#modalBox .intro-stage'), go = $('#ntGo'), message = recordHelpMessage(kind, why);
+  const stage = $('#modalBox .intro-stage'), cap = stage.querySelector('.intro-cap'), go = $('#ntGo'), message = recordHelpMessage(kind, why);
   stage.style.background = (BGS.find(b => b.id === S.bg && !bgLocked(b)) || BGS[0]).css;
   // the player's own level waits: its clock stops (G.introducing), its board stays as it is behind the pop-up
   const real = G, run = introRun = { real, stage, blockedTaps, introducing: real && real.introducing, ticking: !!(real && real.tStart), timers: [], plays: 0, log: [] };
@@ -75,13 +78,20 @@ function playIntroFilm(kind, opts = {}) {
     $('#board').appendChild(m); later(800, () => m.remove());
   };
   const play = () => {
-    run.plays++; run.log = []; stage.classList.remove('intro-end'); blockedTaps = 0;
+    run.plays++; run.log = []; stage.classList.remove('intro-end'); cap.classList.remove('on'); blockedTaps = 0;
     introLevel(film, real);
     renderBoard(true); renderTray(); updateProgress();
-    for (const [ms, id] of film.taps) {
+    film.taps.forEach(([ms, id, text], k) => {
       later(ms - INTRO_RING_MS, () => ring(id));
       later(ms, () => { const i = ids.indexOf(id); onTap(i, true); run.log.push([id, !G.alive[i]]); });
-    }
+      if (!text) return;
+      // the step says what it did, while its result shows; the tile the film is about pulses when another tile was tapped
+      later(ms + INTRO_CAP_IN, () => {
+        cap.textContent = tx(text); cap.classList.add('on');
+        if (id !== film.focus) replay(G.tiles[ids.indexOf(film.focus)].el, 'intro-look', 800);
+      });
+      if (film.taps[k + 1]) later(film.taps[k + 1][0] - INTRO_CAP_OUT, () => cap.classList.remove('on'));   // (the last one stays: the film ends on it)
+    });
     later(film.ms, () => {
       if (run.plays === 1 && required) { go.disabled = false; go.querySelector('b').textContent = tx('lessonContinue'); }
       if (run.plays < INTRO_PLAYS) later(INTRO_REST_MS, play); else stage.classList.add('intro-end');
@@ -104,7 +114,8 @@ function playIntroFilm(kind, opts = {}) {
 // the film's tiny level, as the game's own G (board.js begin), marked as a film
 function introLevel(film, real) {
   const tiles = film.tiles.map(([, face, x, y, z]) => ({ x, y, z, face, el: null })), n = tiles.length;
-  G = { film: true, mode: real ? real.mode : 'level', level: real ? real.level : S.level, date: real && real.date, key: 'film',
+  // (G.film.maxTw: its tiles no bigger than the level's, board.js fitGeo)
+  G = { film: { maxTw: (real && real.tw) || 150 }, mode: real ? real.mode : 'level', level: real ? real.level : S.level, date: real && real.date, key: 'film',
     tiles, nb: Layouts.neighbors(tiles), gold: new Set(), lucky: null, alive: new Uint8Array(n).fill(1), down: new Uint8Array(n), peek: -1,
     tray: [], arriving: new Set(), flights: 0, score: real ? real.score : 0, combo: 0, lastMatch: 0, elapsed: 0, tStart: 0, mile: 0,
     done: false, busy: false, mv: 0, clock: null, rp: null, st: { tp: 0, bt: 0, fl: 0, mc: 0, tm: 0 },

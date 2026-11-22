@@ -34,7 +34,20 @@ const popupLook = () => {
     order: parts.every((b, k) => k === 0 || parts[k - 1].bottom <= b.top + 1),
     fits: r(card).bottom <= innerHeight && card.scrollHeight <= card.clientHeight + 1,
     behind: !real || (real.tiles.every(t => t.el.isConnected && !!t.el.closest('#game')) && document.querySelectorAll('#game #board .tile').length === real.tiles.length),
-    tw: G.tw };
+    tw: G.tw, levelTw: real && real.tw };
+};
+// every caption of the film, in the pop-up of this screen: inside the card on one line, below the board, the card does not scroll
+const captionsFit = () => {
+  const cap = $('#modalBox .intro-cap'); if (!cap) return ['no caption chip'];
+  const b = $('#modalBox'), keep = cap.textContent, r = el => el.getBoundingClientRect();
+  const out = INTRO_FILMS.ice.taps.filter(x => x[2]).map(x => {
+    cap.textContent = tx(x[2]);
+    const c = r(cap), card = r(b), wrap = r(cap.previousElementSibling);
+    const ok = { inCard: c.left >= card.left && c.right <= card.right && cap.scrollWidth <= cap.clientWidth, oneLine: c.height <= parseFloat(getComputedStyle(cap).lineHeight) * 1.5 + 16,
+      belowBoard: cap.previousElementSibling.id === 'boardWrap' && c.top >= wrap.bottom - 0.5, noScroll: b.scrollHeight <= b.clientHeight + 1 && card.bottom <= innerHeight };
+    return { key: x[2], bad: Object.keys(ok).filter(k => !ok[k]), w: Math.round(c.width), top: c.top, wrap: wrap.bottom };
+  });
+  cap.textContent = keep; return out.filter(x => x.bad.length);
 };
 
 module.exports = [
@@ -53,15 +66,17 @@ module.exports = [
     t.eq([look.popup, look.filmTiles, look.slots, look.inside, look.order, look.fits], [true, true, 4, true, true, true], 'a pop-up with the film\'s own board and tray inside it: title, tray, board, line, button', look);
     t.ok(look.behind, 'the player\'s own level stays on the screen behind the pop-up');
     t.ok(look.tw >= 44, 'tiles big enough to see the ice and the faces', look.tw);
+    t.ok(look.tw <= look.levelTw + 0.5, "the film's tiles are no bigger than the level's own tiles", [look.tw, look.levelTw]);
     const tiles = await p.evaluate(() => ({ n: G.tiles.length === INTRO_FILMS.ice.tiles.length, ice: [...document.querySelectorAll('#modalBox #board .tile .ob')].map(e => e.dataset.k),
       faces: [...document.querySelectorAll('#modalBox #board .tile .face')].every(e => e.innerHTML === Tiles.boardFace(S.theme, G.tiles[+e.parentNode.dataset.i].face)) }));
     t.eq([tiles.n, tiles.ice], [true, ['ice2']], 'the film\'s tiny level, one tile under thick ice');
     t.ok(tiles.faces, 'tiles drawn by the board in the player\'s own theme');
     t.ok(await p.evaluate(() => $('#introPanel p.intro-line').innerHTML === tx('intro_ice')), 'one line in the pop-up says what to do');
-    // pace: a tap every 0.55 to 0.65 s, at most about 6 s in all
-    const taps = await p.evaluate(() => INTRO_FILMS.ice.taps.map(x => x[0]));
-    t.ok(taps.slice(1).every((ms, k) => ms - taps[k] >= 550 && ms - taps[k] <= 650), 'taps 0.55 to 0.65 s apart', taps);
-    t.ok(await p.evaluate(() => INTRO_FILMS.ice.ms <= 6000 && INTRO_FILMS.ice.ms >= INTRO_FILMS.ice.taps.at(-1)[0] + 500), 'the film lasts at most about 6 s');
+    // pace: a tap every 0.65 to 0.75 s; after a step with a caption a short pause (0.3 to 0.4 s more); at most 6 s in all
+    const taps = await p.evaluate(() => INTRO_FILMS.ice.taps);
+    const gaps = taps.slice(1).map((x, k) => [x[0] - taps[k][0], !!taps[k][2]]);
+    t.ok(gaps.every(([ms, cap]) => cap ? ms >= 1000 && ms <= 1300 : ms >= 650 && ms <= 750), 'taps 0.7 s apart, with a short pause after each step that has a caption', gaps);
+    t.ok(await p.evaluate(() => INTRO_FILMS.ice.ms <= 6000 && INTRO_FILMS.ice.ms >= INTRO_FILMS.ice.taps.at(-1)[0] + 700), 'one play lasts at most 6 s (the last step can be seen)', await p.evaluate(() => INTRO_FILMS.ice.ms));
     // back, the backdrop and taps on the film do not get around it; the level clock waits
     await p.evaluate(() => handleBack());
     const tile = await p.evaluate(() => { const r = G.tiles[0].el.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; });
@@ -82,19 +97,19 @@ module.exports = [
       return [introRun.log.slice(1, 3).every(x => x[1]), G.ob.left[I], G.tiles[I].el.querySelector('.ob').dataset.k]; }), [true, 2, 'ice2'], 'after a pair that does not touch it the ice is unchanged');
     // the sparkles of that pair (fx.js, a layer above every pop-up) show only inside the film's board, not over the level
     await p.waitForFunction(() => !!document.querySelector('#fxl .fxp'), null, { polling: 10, timeout: 3000 });
-    const clip = await p.evaluate(() => { const l = document.querySelector('#fxl'), s = $('#modalBox .intro-stage').getBoundingClientRect();
+    const clip = await p.evaluate(() => { const l = document.querySelector('#fxl'), s = $('#modalBox .intro-stage').getBoundingClientRect(), w = $('#modalBox #boardWrap').getBoundingClientRect();
       // inset(top right bottom left), shortened like margins when sides are equal
       const m = getComputedStyle(l).clipPath.match(/^inset\(([\d.px ]+?)(?: round|\))/), v = m ? m[1].trim().split(' ').map(parseFloat) : [];
       const [top, right = top, bottom = top, left = right] = v, near = (a, b) => Math.abs(a - b) < 1;
-      return { clip: m && m[0], sparkles: l.querySelectorAll('.fxp').length, inside: v.length > 0 && near(top, s.top) && near(innerWidth - right, s.right) && near(innerHeight - bottom, s.bottom) && near(left, s.left) }; });
-    t.ok(clip.sparkles > 0 && clip.inside, 'the sparkles of the pair stay inside the film', clip);
+      return { clip: m && m[0], sparkles: l.querySelectorAll('.fxp').length, inside: v.length > 0 && near(top, s.top) && near(innerWidth - right, s.right) && near(innerHeight - bottom, w.bottom) && near(left, s.left) }; });
+    t.ok(clip.sparkles > 0 && clip.inside, 'the sparkles of the pair stay inside the film, above its caption', clip);
     const len = await p.evaluate(() => INTRO_FILMS.ice.ms);
     await sleep(Math.max(0, opened + len - 700 - Date.now()));
     t.ok(await p.locator('#ntGo').isDisabled(), 'still locked just before the film ends');
     await sleep(Math.max(0, opened + len + 500 - Date.now()));
     t.ok(await p.locator('#ntGo').isEnabled(), 'the button works after the film has played once');
     t.eq(await p.evaluate(() => introRun.log), await p.evaluate(takeableOutcome), 'every tap of the film does in the game what layouts.js takeable says');
-    t.eq(await p.evaluate(() => [Object.keys(G.ob.left).filter(k => G.ob.left[k]).length, INTRO_FILMS.ice.tiles.filter((x, i) => G.alive[i]).map(x => x[0])]), [0, ['side']], 'the ice melted; only the tile beside it stays');
+    t.eq(await p.evaluate(() => [Object.keys(G.ob.left).filter(k => G.ob.left[k]).length, INTRO_FILMS.ice.tiles.filter((x, i) => G.alive[i]).map(x => x[0])]), [0, ['ice', 'side']], 'the ice melted; the frozen tile and the tile beside it stay');
     t.eq(await p.evaluate(() => JSON.stringify(introRun.real.rp.events) === window.__rp), true, 'no replay frames for the level while the film plays');
     await drain(p);
     const shown = helpMessages(p, pid).at(-1);
@@ -128,10 +143,13 @@ module.exports = [
     t.eq(await p.evaluate(() => $('#introPanel h2').textContent), 'Frozen tiles', 'English title');
     const look = await p.evaluate(popupLook);
     t.eq([look.popup, look.filmTiles, look.inside, look.order, look.fits, look.behind], [true, true, true, true, true, true], 'pop-up with board, tray, line and button fits a small phone, the level behind it', look);
-    t.ok(look.tw >= 40, 'tiles big enough on a small phone', look.tw);
+    t.ok(look.tw >= Math.min(40, look.levelTw - 0.5), 'tiles big enough on a small phone', look.tw);
+    t.ok(look.tw <= look.levelTw + 0.5, "and no bigger than the level's own tiles", [look.tw, look.levelTw]);
+    await sleep(500);
+    t.eq(await p.evaluate(captionsFit), [], 'every English caption fits a 360 px phone on one line, below the board');
     // two plays, then it rests; a tap plays it again
-    await p.waitForFunction(() => introRun && introRun.plays === 2, null, { timeout: 20000 });
-    await p.waitForFunction(() => $('#modalBox .intro-stage').classList.contains('intro-end'), null, { timeout: 20000 });
+    await p.waitForFunction(() => introRun && introRun.plays === 2, null, { timeout: 30000 });
+    await p.waitForFunction(() => $('#modalBox .intro-stage').classList.contains('intro-end'), null, { timeout: 30000 });
     t.eq(await p.evaluate(() => introRun.timers.length), 0, 'after two plays the film rests');
     await click(p, '#modalBox .intro-stage');
     t.eq(await p.evaluate(() => [introRun.plays, $('#modalBox .intro-stage').classList.contains('intro-end'), [...G.alive].every(Boolean)]), [3, false, true], 'a tap plays it again from the start');
@@ -151,6 +169,8 @@ module.exports = [
     await p.evaluate(() => { closeModal(); S.lang = 'nl'; showTileLesson('ice', null, false, 'manual'); });
     t.ok(await p.evaluate(() => $('#introPanel p.intro-line').textContent.includes('erboven')), 'Dutch line');
     t.ok(await p.evaluate(() => { const b = $('#modalBox'); return b.getBoundingClientRect().bottom <= innerHeight && b.scrollHeight <= b.clientHeight + 1; }), 'the Dutch line fits a small phone too');
+    await sleep(500);
+    t.eq(await p.evaluate(captionsFit), [], 'every Dutch caption fits a 360 px phone on one line, below the board');
     await click(p, '#ntGo');
     // from the home screen: the pop-up opens over home and home stays
     await p.evaluate(() => { show('home'); showTileLesson('ice', null, false, 'manual'); });
@@ -169,10 +189,12 @@ module.exports = [
       const taps = film.taps.map(x => x[1]), firstTouch = taps.findIndex(id => inb[I].includes(ids.indexOf(id)));
       const early = taps.slice(1, firstTouch).map(id => ids.indexOf(id));
       const hidden = nb.above[I].reduce((a, j) => a + (2 - Math.abs(tiles[j].x - tiles[I].x)) / 2 * (2 - Math.abs(tiles[j].y - tiles[I].y)) / 2, 0);   // (the part of it they cover)
-      return { hidden, touching: inb[I].map(j => [ids[j], rel(j)]).sort(), apart, onTop: nb.above[I].map(j => ids[j]), need: film.tiles[I][5], tiles: tiles.length, taps: taps.length,
+      const thaw = taps.filter(id => inb[I].includes(ids.indexOf(id))).map(id => { const j = ids.indexOf(id); return [id, Math.abs(tiles[j].x - tiles[I].x), Math.abs(tiles[j].y - tiles[I].y), tiles[j].z - tiles[I].z]; });
+      return { thaw, hidden, touching: inb[I].map(j => [ids[j], rel(j)]).sort(), apart, onTop: nb.above[I].map(j => ids[j]), need: film.tiles[I][5], tiles: tiles.length, taps: taps.length,
         early: early.length === 2 && film.tiles[early[0]][1] === film.tiles[early[1]][1] && early.every(j => !inb[I].includes(j)) };
     });
-    t.eq(r.touching, [['down', 'above/below'], ['side', 'beside'], ['top', 'layer'], ['up', 'above/below']], 'the touching tiles: one above and one below in the same layer, one beside, one in the layer on top');
+    t.eq(r.touching, [['side', 'beside'], ['top', 'layer'], ['up', 'above/below']], 'the touching tiles: one beside, one above in the same layer, one in the layer on top');
+    t.eq(r.thaw, [['top', 1, 1, 1], ['up', 1, 2, 0]], 'the tiles that melt it touch it only a little: one lies on a corner of it, one is half above it', r.thaw);
     t.ok(r.apart.some(([, dx, dy, dz]) => dx === 2 && dy === 2 && dz === 0), 'a diagonal corner tile that does not touch it', r.apart);
     t.ok(r.apart.some(([, dx, dy, dz]) => dx >= 4 && dy === 0 && dz === 0), 'a tile further along its row that does not touch it', r.apart);
     t.ok(r.early, 'early in the film a pair that does not touch the ice is taken');
@@ -180,8 +202,11 @@ module.exports = [
     t.ok(r.hidden > 0 && r.hidden <= 0.25, 'the tile on top hides at most a quarter of the frozen tile, so its ice shows', r.hidden);
     t.eq(r.need, 2, 'thick ice: two touching tiles must go');
     t.ok(r.tiles <= 9 && r.taps <= 8, 'at most 9 tiles and 8 taps', r);
-    t.eq(await p.evaluate(takeableOutcome), [['ice', false], ['corner', true], ['far', true], ['up', true], ['down', true], ['ice', false], ['top', true], ['ice', true]],
-      'the step table: frozen, a pair that does not touch it, above, below, still covered, top, freed');
+    t.eq(await p.evaluate(takeableOutcome), [['ice', false], ['far', true], ['corner', true], ['top', true], ['up', true]],
+      'the step table: frozen, a pair that does not touch it (one diagonal), a corner on it, half above it');
+    t.ok(await p.evaluate(() => { const film = INTRO_FILMS.ice, ids = film.tiles.map(x => x[0]), tiles = film.tiles.map(([, , x, y, z]) => ({ x, y, z })), alive0 = tiles.map(() => 1);
+      const alive = alive0.map((_, i) => film.taps.some(([, id]) => id === ids[i] && id !== 'ice') ? 0 : 1), I = ids.indexOf('ice');
+      return Layouts.takeable(I, alive, Layouts.neighbors(tiles), { iceNb: Layouts.iceNeighbors(tiles), ice: { [I]: 2 }, locks: null, keys: [] }, alive0); }), 'at the end the frozen tile is thawed and free');
   }},
   { name: 'intro: the ice film waits for a tile in the air, ends a lucky moment that ran out, keeps its texts to itself and survives a failing start', async run(t, { startLevel }) {
     const p = await t.phone({ state: { name: 'Dennis', level: 40, sunSeen: true, seenSp: seen } });
@@ -218,5 +243,38 @@ module.exports = [
       return [G === window.__realG, introRun, !!document.querySelector('#introPanel'), modalFree(), window.__after, G.introducing, !!G.tStart, $('#board') === document.querySelector('#game #board')];
     });
     t.eq(failed, [true, null, false, true, 1, false, true, true], 'a failing start gives the level back and carries on');
+  }},
+  { name: 'intro: every step of the ice film says what it does: its caption comes with the result and is gone before the next tap', async run(t) {
+    const p = await t.phone({ state: { name: 'Dennis', level: 40, sunSeen: true, seenSp: seen } });
+    t.eq(await p.evaluate(() => INTRO_FILMS.ice.taps.map(x => [x[1], x[2] || null])),
+      [['ice', 'ic_tap'], ['far', null], ['corner', 'ic_diagonal'], ['top', 'ic_corner'], ['up', 'ic_half']], 'a caption for every subtle step, none for the obvious');
+    t.ok(await p.evaluate(() => INTRO_FILMS.ice.taps.filter(x => x[2]).every(x => TEXT[x[2]] && TEXT[x[2]].every(s => s && s.length <= 32))), 'short captions in Dutch and English');
+    t.ok(await p.evaluate(() => !['ic_covered', 'ic_top', 'ic_free'].some(k => k in TEXT)), 'no step about the ordinary covered-tile rule or the obvious (Dennis: for a skilled player)');
+    // every frame of one play: which tap was last, the caption and how much of it shows, the ice tile pointed at
+    await p.evaluate(() => {
+      window.__frames = []; playIntroFilm('ice', { why: 'manual' });
+      const I = INTRO_FILMS.ice.tiles.findIndex(x => x[0] === 'ice');
+      const rec = () => { if (!introRun || introRun.plays > 1) return;
+        const c = $('#modalBox .intro-cap');
+        __frames.push({ n: introRun.log.length, text: c ? c.textContent : null, op: c ? +getComputedStyle(c).opacity : 0, look: G.tiles[I].el.classList.contains('intro-look') });
+        requestAnimationFrame(rec); };
+      rec();
+    });
+    await p.waitForFunction(() => introRun.plays > 1, null, { timeout: 20000, polling: 50 });
+    const r = await p.evaluate(() => INTRO_FILMS.ice.taps.map(([, id, cap], k) => {
+      const w = __frames.filter(f => f.n === k + 1), want = cap ? tx(cap) : null;
+      return { id, cap, frames: w.length, atTap: w.length ? w[0].op : 1, before: w.length ? w.at(-1).op : 1,
+        shown: w.some(f => f.text === want && f.op >= 0.95), other: w.some(f => f.op > 0.05 && f.text !== want), look: w.some(f => f.look) };
+    }));
+    r.forEach((s, k) => {
+      const last = k === r.length - 1;
+      t.ok(s.frames > 10 && s.atTap <= 0.05, `${s.id}: nothing is said at the moment of the tap`, s);
+      t.ok(s.cap ? s.shown : !s.other, s.cap ? `${s.id}: its caption shows after the tap` : `${s.id}: no caption`, s);
+      t.ok(!s.other, `${s.id}: no other caption in its step`, s);
+      // (the last one stays until the film plays again: it ends on what it was about)
+      t.ok(last ? s.before >= 0.95 : s.before <= 0.05, last ? `${s.id}: its caption stays at the end` : `${s.id}: its caption is gone before the next tap`, s);
+      t.eq(s.look, !!s.cap && s.id !== 'ice', `${s.id}: ${s.cap && s.id !== 'ice' ? 'the eye is pointed at the ice tile' : 'the ice tile is not pointed at (the game shows this tap itself)'}`);
+    });
+    t.eq(p.errors, [], 'no browser errors');
   }},
 ];

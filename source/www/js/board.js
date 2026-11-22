@@ -252,7 +252,7 @@ function glow(i, cls, on) {
   else if (lifted && el._lyr && el._lyr.isConnected) { el._lyr.appendChild(el); el._lyr = null; }
 }
 /* Where the tiles go for a board of W x H pixels (nothing is read from or written to the page). */
-function boardGeo(W, H) {
+function boardGeo(W, H, maxTw = 150) {
   if (!W || !H) return null;
   const ratio = 1.24, dF = 0.14;   // tile height / width; each layer shifts up-left this much, so more of the tiles below shows
   // where the tiles really land, in tile widths (an upper layer only reaches the edge if its tiles do)
@@ -266,7 +266,7 @@ function boardGeo(W, H) {
   // At the top, 12 px between the tray and the pile: the tray's wooden edge and shadow hang 4-8 px below it, and with 2 px a
   // tall pile's top row sat under that edge (1.69, Gerda's phone, level 219; Dennis 2026-11-15). 2 px at the bottom.
   const TOP = 12, BOT = 2;
-  const twW = (W - 4) / (r - l + depthF + 0.04), twH = (H - TOP - BOT) / (b - t0 + depthF * 1.4 + 0.04), tw = Math.min(150, twW, twH);
+  const twW = (W - 4) / (r - l + depthF + 0.04), twH = (H - TOP - BOT) / (b - t0 + depthF * 1.4 + 0.04), tw = Math.min(maxTw, twW, twH);
   const th = tw * ratio, dz = tw * dF, d = Math.max(3, tw * depthF);
   // centred on what is really there: even space left and right, and between the tray and the buttons below (below the tray's edge)
   const ox = (W - (r - l) * tw - d) / 2 - l * tw, oy = TOP + (H - TOP - BOT - (b - t0) * tw - d * 1.4) / 2 - t0 * tw;
@@ -289,7 +289,7 @@ function applyGeo(geo, move) {
 // the top bar and the tray lose some of their padding (#game.compact in style.css), nothing gets smaller (Dennis 2026-11-14).
 function fitGeo() {
   const game = $('#game'), wrap = $('#boardWrap');
-  if (G.film) return boardGeo(wrap.clientWidth, wrap.clientHeight);   // (the intro film's board, in its pop-up: the game screen stays as it is)
+  if (G.film) return boardGeo(wrap.clientWidth, wrap.clientHeight, G.film.maxTw);   // (the intro film's board, in its pop-up, tiles no bigger than the level's: the game screen stays as it is)
   game.classList.remove('compact');
   let geo = boardGeo(wrap.clientWidth, wrap.clientHeight);
   if (geo && geo.tall) { game.classList.add('compact'); geo = boardGeo(wrap.clientWidth, wrap.clientHeight); }
