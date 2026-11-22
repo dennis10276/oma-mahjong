@@ -4,7 +4,8 @@
    shake and the hints of a blocked tap. The pop-up holds a small board and tray of its own (#board, #tray), and while
    the film plays the game's code finds those (core.js filmRoot), so the player's own level stays on the screen
    behind the pop-up, untouched. Everything that moves on the board is what the game does for that tap (Dennis:
-   "make it behave like the game"); the film's own is only the caption under the board. Meanwhile the player's
+   "make it behave like the game"); the film's own is only the caption under the board. The game's texts for a tap
+   (the top bar while playing, core.js gameMsg/toast) show in a top bar of the film's own, above its tray. Meanwhile the player's
    own level (G) is put aside and comes back exactly as it was; the film's level carries G.film, so nothing of it is
    saved, logged or counted (board.js saveCur, afterLogic, afterLand, onMatch, fitGeo). The first time, the button
    works only after one full play; seen again from the help menu it closes at once. It plays twice and then rests; a
@@ -134,10 +135,10 @@ function playIntroFilm(kind, opts = {}) {
   if (G && G.flights) { setTimeout(() => playIntroFilm(kind, opts), 40); return; }   // a tile in the air lands first (board.js afterFlight works on G)
   const film = INTRO_FILMS[kind], required = !!opts.required, after = opts.after || null;
   const why = opts.why || (required ? 'intro' : 'manual');
-  // the pop-up: title, the film's own tray and board (core.js filmRoot; its top-bar texts stay hidden in it), the line, the button
+  // the pop-up: title, the film's own top bar (the game's texts, core.js gameMsg), tray and board (core.js filmRoot), the line, the button
   openModal(`<div id="introPanel" data-kind="${kind}"><h2>${required ? tx('newTile', tx('nt_' + kind)) : tx('nt_' + kind)}</h2>
-    <div class="intro-stage"><div id="tray">${'<div class="slot"></div>'.repeat(SLOTS)}</div><div id="boardWrap"><div id="board"></div></div><div class="intro-cap chip"></div>
-      <div hidden><div><div id="gameMsg"></div></div><div id="progressBar"></div><div id="toast"></div></div></div>
+    <div class="intro-stage"><div class="title-wrap intro-bar"><div id="gameMsg"></div></div><div id="tray">${'<div class="slot"></div>'.repeat(SLOTS)}</div><div id="boardWrap"><div id="board"></div></div><div class="intro-cap chip"></div>
+      <div hidden><div id="progressBar"></div><div id="toast"></div></div></div>
     <p class="intro-line">${tx(film.line)}</p>
     <button class="big-btn play" id="ntGo"${required ? ' disabled' : ''}><span class="bb-text"><b>${tx(required ? 'lessonWatch' : 'gotIt')}</b></span></button></div>`, false, null, 'intro-help');
   const stage = $('#modalBox .intro-stage'), cap = stage.querySelector('.intro-cap'), go = $('#ntGo'), message = recordHelpMessage(kind, why);
@@ -147,7 +148,7 @@ function playIntroFilm(kind, opts = {}) {
   const later = (ms, fn) => { const id = setTimeout(() => { run.timers = run.timers.filter(x => x !== id); if (introRun === run) fn(); }, ms); run.timers.push(id); };
   const ids = film.tiles.map(t => t[0]);
   const play = () => {
-    run.plays++; run.log = []; stage.classList.remove('intro-end'); cap.classList.remove('on'); blockedTaps = 0;
+    run.plays++; run.log = []; stage.classList.remove('intro-end'); cap.classList.remove('on'); blockedTaps = 0; clearGameMsg();
     introLevel(film, real);
     renderBoard(true); renderTray(); updateProgress();
     film.taps.forEach(([ms, id, text], k) => {
@@ -171,6 +172,7 @@ function playIntroFilm(kind, opts = {}) {
   };
   try {
     if (real) { syncClock(); real.tStart = 0; real.introducing = true; }
+    clearGameMsg();                  // (a text of the level waiting to be shown does not come up in the film)
     filmRoot = stage;
     play();
   } catch (e) { logErr(e, 'intro'); stopIntroFilm(after); }   // a film that fails to start gives the level back

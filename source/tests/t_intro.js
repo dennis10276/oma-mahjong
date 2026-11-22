@@ -63,13 +63,14 @@ const filmSteps = kind => new Promise(done => {
         const w = frames.filter(f => f.n === k + 1), want = cap ? tx(cap) : null, on = w.filter(f => f.text === want && f.op >= 0.95), end = w.at(-1) || {};
         return { id, cap, frames: w.length, atTap: w.length ? w[0].op : 1, before: end.op ?? 1, shown: on.length > 0, full: on.length ? on.at(-1).t - on[0].t : 0,
           other: w.some(f => f.op > 0.05 && f.text !== want), own: w.some(f => f.own), taken: end.taken, tray: end.tray, peek: end.peek, left: end.left, open: end.open,
-          hint: [...new Set(w.flatMap(f => f.hint))].sort(), xray: [...new Set(w.flatMap(f => f.xray))].sort() };
+          hint: [...new Set(w.flatMap(f => f.hint))].sort(), xray: [...new Set(w.flatMap(f => f.xray))].sort(),
+          said: [...new Set(w.filter(f => f.msg && f.msg !== (frames[frames.indexOf(f) - 1] || {}).msg).map(f => f.msg))] };
       }));
     }
     const c = $('#modalBox .intro-cap'), last = introRun.log.at(-1);
     frames.push({ t: performance.now(), n: introRun.log.length, text: c.textContent, op: +getComputedStyle(c).opacity, taken: last && last[1],
       own: !!document.querySelector('#modalBox #board [class*="intro-"], #modalBox #board[class*="intro-"]'), tray: G.tray.length, peek: G.peek >= 0 ? ids[G.peek] : null,
-      left: clockOn() ? clockLeft() : null, open: !!(G.ob && G.ob.unlocked), hint: marked('obhint'), xray: marked('xray') });
+      left: clockOn() ? clockLeft() : null, open: !!(G.ob && G.ob.unlocked), hint: marked('obhint'), xray: marked('xray'), msg: $('#gameMsg') ? $('#gameMsg').textContent : null });
     requestAnimationFrame(rec);
   };
   rec();
@@ -77,11 +78,13 @@ const filmSteps = kind => new Promise(done => {
 /* The films of the next mechanics (preview for Dennis): per kind the level where it is first met, the steps of the step
    table (tap, taken off the board, then what the game shows) and what the first tap lights up (the game's own hint). */
 const NEXT_FILMS = {
-  lock: { level: 45, steps: [['l1', false, { open: false }], ['k1', true, { open: false }], ['d', true, { open: false }], ['c', true, { open: false }], ['k2', true, { open: true }]],
+  ice: { level: 35, steps: [['ice', false, { said: [] }], ['far', true, { said: [] }], ['corner', true, { said: [] }], ['up', true, { said: ['iceCrack'] }], ['top', true, { said: ['iceMelted'] }]],
+    first: { hint: ['low', 'side', 'top', 'up'], xray: [] }, caps: ['ice', 'corner', 'up', 'top'] },
+  lock: { level: 45, steps: [['l1', false, { open: false, said: ['lockedTap'] }], ['k1', true, { open: false, said: [] }], ['d', true, { open: false, said: [] }], ['c', true, { open: false, said: [] }], ['k2', true, { open: true, said: ['locksOpen'] }]],
     first: { hint: ['k1', 'k2'], xray: ['c'] }, caps: ['l1', 'k1', 'k2'] },
-  trayPair: { level: 50, steps: [['d1', false, { tray: 3, peek: 'd1' }], ['d2', false, { tray: 3, peek: 'd2' }], ['t2', true, { tray: 3, peek: null }], ['d1', false, { tray: 3, peek: 'd1' }], ['d3', true, { tray: 3, peek: null }]],
+  trayPair: { level: 50, steps: [['d1', false, { tray: 3, peek: 'd1', said: [] }], ['d2', false, { tray: 3, peek: 'd2', said: [] }], ['t2', true, { tray: 3, peek: null, said: [] }], ['d1', false, { tray: 3, peek: 'd1', said: [] }], ['d3', true, { tray: 3, peek: null, said: [] }]],
     first: { hint: [], xray: [] }, caps: ['d2', 't2', 'd3'] },
-  clock: { level: 80, steps: [['ck', false, { left: 3 }], ['dn', false, { left: 3, peek: 'dn' }], ['t', true, { left: 2 }], ['x', true, { left: 1 }], ['ck', true, { left: null }]],
+  clock: { level: 80, steps: [['ck', false, { left: 3, said: [] }], ['dn', false, { left: 3, peek: 'dn', said: [] }], ['t', true, { left: 2, said: [] }], ['x', true, { left: 1, said: [] }], ['ck', true, { left: null, said: ['clockSaved'] }]],
     first: { hint: [], xray: ['t'] }, caps: ['ck', 'dn', 'x', 'ck'] },
 };
 
@@ -357,7 +360,8 @@ module.exports = [
       t.ok(await p.evaluate(kind => INTRO_FILMS[kind].taps.filter(x => x[2]).every(x => TEXT[x[2]] && TEXT[x[2]].every(s => s && s.length <= 32)), kind), `${kind}: short captions in Dutch and English`);
       const steps = await p.evaluate(filmSteps, kind);
       t.eq(steps.map(s => [s.id, s.taken]), want.steps.map(s => [s[0], s[1]]), `${kind}: the step table: what each tap does in the game`);
-      want.steps.forEach(([id, , show], k) => Object.entries(show).forEach(([key, v]) => t.eq(steps[k][key], v, `${kind} step ${k + 1} (${id}): ${key}`)));
+      const texts = await p.evaluate(() => Object.fromEntries(Object.keys(TEXT).map(k => [k, tx(k)]).filter(x => typeof x[1] === 'string')));
+      want.steps.forEach(([id, , show], k) => Object.entries(show).forEach(([key, v]) => t.eq(steps[k][key], key === 'said' ? v.map(x => texts[x]) : v, `${kind} step ${k + 1} (${id}): ${key === 'said' ? "the game's top-bar text in the film" : key}`)));
       t.eq({ hint: steps[0].hint, xray: steps[0].xray }, want.first, `${kind}: the first tap shows the game's own hint`);
       steps.forEach((s, k) => {
         const last = k === steps.length - 1;
@@ -394,14 +398,16 @@ module.exports = [
       await startLevel(p, level);
       const i = await p.evaluate(f => G.tiles.findIndex((_, i) => G.alive[i] && eval(f)), find);
       t.ok(i >= 0, `${kind}: level ${level} has such a tile`);
-      await p.evaluate(i => onTap(i), i); await sleep(300);
-      const real = await p.evaluate(hintOf, i);
+      await p.evaluate(i => { clearGameMsg(); blockedTaps = 0; onTap(i); }, i); await sleep(300);
+      const real = { ...await p.evaluate(hintOf, i), said: await p.evaluate(() => $('#gameMsg').textContent) };
       await sleep(1600);
       await p.evaluate(k => playIntroFilm(k, { why: 'manual' }), kind);
       await p.waitForFunction(() => introRun.log.length >= 1, null, { polling: 10, timeout: 5000 }); await sleep(300);
-      const film = await p.evaluate(([k, h]) => eval(h)(INTRO_FILMS[k].tiles.findIndex(x => x[0] === INTRO_FILMS[k].taps[0][1])), [kind, hintOf.toString()]);
+      const film = await p.evaluate(([k, h]) => ({ ...eval(h)(INTRO_FILMS[k].tiles.findIndex(x => x[0] === INTRO_FILMS[k].taps[0][1])), said: $('#gameMsg').textContent }), [kind, hintOf.toString()]);
       t.ok(real.shake && real.glow && real.seeThrough && real.blockers, `${kind}: the real level shows the game's hint for it`, real);
-      t.eq({ ...film, arrows: film.arrows > 0 }, { ...real, arrows: real.arrows > 0 }, `${kind}: the film's first tap shows the same hint as in level ${level}`, [real, film]);
+      t.eq({ ...film, arrows: film.arrows > 0 }, { ...real, arrows: real.arrows > 0 }, `${kind}: the film's first tap shows the same hint and top-bar text as in level ${level}`, [real, film]);
+      if (real.said) t.ok(await p.evaluate(() => { const m = $('#gameMsg'), r = m.getBoundingClientRect(), c = $('#modalBox').getBoundingClientRect(), w = $('#modalBox #tray').getBoundingClientRect();
+        return m.closest('#modalBox') && r.height > 0 && r.top >= c.top && r.bottom <= w.top + 1 && getComputedStyle(m.firstChild).opacity > 0.5; }), `${kind}: its top-bar text shows in the pop-up, above the film's tray`);
       await p.evaluate(() => stopIntroFilm()); await sleep(300);
     }
     t.eq(p.errors, [], 'no browser errors');

@@ -121,7 +121,7 @@ function buzz(ms) {
 }
 let toastT;
 function toast(msg, ms = 2400) {
-  if (inPlay()) return gameMsg(msg, ms);   // while playing: in the top bar, never over the tiles
+  if (inPlay() || (G && G.film)) return gameMsg(msg, ms);   // while playing (or in the intro film): in the top bar, never over the tiles
   const t = $('#toast'); t.textContent = msg;
   t.classList.toggle('top', !modalFree());   // above a pop-up, so it never hides its buttons
   t.classList.add('on');
