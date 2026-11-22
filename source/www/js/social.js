@@ -303,8 +303,10 @@ function bindRankingNavigation() {
     }
   }, { passive: true });
   viewport.addEventListener('touchmove', e => {
+    if (!touch) return;
+    if (e.touches.length !== 1) { cancelTouch(); return; }
     const moving = e.touches[0];
-    if (!touch || e.touches.length !== 1 || moving.identifier !== touch.identifier) return;
+    if (moving.identifier !== touch.identifier) return;
     const dx = moving.clientX - touch.clientX, dy = moving.clientY - touch.clientY;
     if (!touch.horizontal) {
       if (Math.abs(dy) > 10 && Math.abs(dy) >= Math.abs(dx)) { cancelTouch(); return; }
@@ -319,7 +321,8 @@ function bindRankingNavigation() {
   viewport.addEventListener('touchend', e => {
     const start = touch;
     touch = null;
-    if (!start?.horizontal || e.touches.length) return;
+    if (e.touches.length) { settle(false); return; }
+    if (!start?.horizontal) return;
     if (e.cancelable) e.preventDefault();
     if (!motion) return;
     const travel = Math.abs(motion.progress - position(rankMode)) * motion.stride;

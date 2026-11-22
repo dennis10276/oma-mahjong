@@ -176,6 +176,20 @@ module.exports = [
       await touch('touchEnd');
       await settled(p);
       t.eq(await geometry(), begin, 'short drag snaps the block and highlight back');
+      await p.evaluate(() => {
+        const row = $('#rankList .rrow'), header = $('#ranking .header');
+        const first = new Touch({ identifier: 1, target: row, clientX: 250, clientY: 440 });
+        const drag = new Touch({ identifier: 1, target: row, clientX: 187, clientY: 440 });
+        const second = new Touch({ identifier: 2, target: header, clientX: 100, clientY: 45 });
+        row.dispatchEvent(new TouchEvent('touchstart', { bubbles: true, touches: [first] }));
+        row.dispatchEvent(new TouchEvent('touchmove', { bubbles: true, touches: [drag] }));
+        header.dispatchEvent(new TouchEvent('touchstart', { bubbles: true, touches: [drag, second] }));
+        row.dispatchEvent(new TouchEvent('touchend', { bubbles: true, touches: [second], changedTouches: [drag] }));
+        header.dispatchEvent(new TouchEvent('touchend', { bubbles: true, changedTouches: [second] }));
+      });
+      const unstuck = await p.waitForFunction(() => $('#rankNext').hidden, null, { timeout: 1300 }).then(() => true, () => false);
+      if (!t.ok(unstuck, 'a second contact outside the standings cannot strand the drag')) { await cdp.detach(); return; }
+      t.eq(await geometry(), begin, 'an interrupted drag restores the original standings and highlight');
       await swipe(250, 440, -105, 5);
       t.eq(await tab(), 'rkAll', 'left swipe switches to All-time');
       await swipe(105, 440, 105, 5);
