@@ -1,6 +1,7 @@
 'use strict';
 /* The intro film (js/intro.js): the first time a player meets a mechanic, a tiny level is played for them in a pop-up
-   over the level, by the game's own code, with one line saying what to do. The first time the button works only after
+   over the level, by the game's own code, with one line saying what to do and a short caption under the board for
+   each subtle step (nothing else of the film's own moves on the board). The first time the button works only after
    the film has played once; from the help menu it can be closed at once. The player's own level stays visible behind
    the pop-up, comes back exactly as it was, and nothing of the film is saved, logged or counted. */
 const seen = { gold: 1, joker2: 1, ice: 1, lock: 1, clock: 1, clockMoves: 1, trayPair: 1 };
@@ -98,7 +99,7 @@ module.exports = [
     await p.waitForFunction(() => introRun.log.length >= 3, null, { polling: 10, timeout: 5000 });
     t.eq(await p.evaluate(() => { const I = INTRO_FILMS.ice.tiles.findIndex(x => x[0] === 'ice');
       return [introRun.log.slice(1, 3).every(x => x[1]), G.ob.left[I], G.tiles[I].el.querySelector('.ob').dataset.k]; }), [true, 2, 'ice2'], 'after a pair that does not touch it the ice is unchanged');
-    // the sparkles of that pair (fx.js, a layer above every pop-up) show only inside the film's board, not over the level
+    // the sparkles of that pair (fx.js, a layer above every pop-up) show only inside the film, above its caption, not over the level
     await p.waitForFunction(() => !!document.querySelector('#fxl .fxp'), null, { polling: 10, timeout: 3000 });
     const clip = await p.evaluate(() => { const l = document.querySelector('#fxl'), s = $('#modalBox .intro-stage').getBoundingClientRect(), w = $('#modalBox #boardWrap').getBoundingClientRect();
       // inset(top right bottom left), shortened like margins when sides are equal

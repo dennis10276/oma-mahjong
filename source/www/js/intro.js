@@ -3,8 +3,8 @@
    tiles, the tray, the taps (board.js onTap), the flight into the tray, the pair, the ice that cracks and melts, the
    shake and the hints of a blocked tap. The pop-up holds a small board and tray of its own (#board, #tray), and while
    the film plays the game's code finds those (core.js filmRoot), so the player's own level stays on the screen
-   behind the pop-up, untouched. Nothing on the board is the film's own (Dennis: "make it behave like the game"; no
-   tap ring, no pulses): only the caption under it. Meanwhile the player's
+   behind the pop-up, untouched. Everything that moves on the board is what the game does for that tap (Dennis:
+   "make it behave like the game"); the film's own is only the caption under the board. Meanwhile the player's
    own level (G) is put aside and comes back exactly as it was; the film's level carries G.film, so nothing of it is
    saved, logged or counted (board.js saveCur, afterLogic, afterLand, onMatch, fitGeo). The first time, the button
    works only after one full play; seen again from the help menu it closes at once. It plays twice and then rests; a
@@ -14,7 +14,8 @@
      taps:  [ms from the start, id, caption]  each one an ordinary tap of the game; a step that is the lesson has a
             caption (a text key in lang.js) under the board, shown with its result, and a short pause after it; it
             goes before the next tap, the last one stays until the film plays again
-     ms:    one play; line: the text key of the line in the pop-up (lang.js) */
+     ms:    one play; line: the text key of the line in the pop-up (lang.js)
+   The film's tiles are no bigger than those of the level behind it (G.film.maxTw, board.js fitGeo). */
 'use strict';
 
 const INTRO_REST_MS = 1500;      // the pause before it plays once more

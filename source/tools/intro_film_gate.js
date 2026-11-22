@@ -1,7 +1,8 @@
-/* Throwaway: records the ice intro film pop-up (js/intro.js) for Dennis to judge: a video and a few screenshots on a
-   phone (390x820) and a tablet (768x1024), each in two themes, as a player meets ice for the first time
-   (level 35). On the phone it also makes compare-<theme>.png: the real level 35 after a tap on a frozen tile (its
-   touching tiles light up) beside the film at the same kind of moment. Nothing is sent anywhere (a fake database).
+/* Throwaway: records the ice intro film pop-up (js/intro.js) for Dennis to judge, in the sunflower theme, as a player
+   meets ice for the first time (level 35): on a phone (390x820, Dutch) a video, a still per step and the level after
+   it, and compare-sunflower.png (the real level 35 after a tap on a frozen tile beside the film's first tap); on a
+   tablet (768x1024, Dutch) a video; on a small phone (360x640, English) a still of the widest caption. Nothing is
+   sent anywhere (a fake database).
    Run from the worktree root:  CHROME=... node source/tools/intro_film_gate.js <output folder> [preview]
    preview: only the first run (phone, sunflower, Dutch), no compare (a quick look before the full gate) */
 'use strict';
@@ -10,12 +11,12 @@ const lib = require('../tests/lib');
 
 const OUT = path.resolve(process.argv[2] || 'intro-ice');
 const SEEN = { gold: 1, gift: 1, joker: 1, joker2: 1, ice: 0, lock: 1, clock: 1, clockMoves: 1, trayPair: 1 };
-// always in the sunflower theme for Dennis (2026-11-22); level 35 is past RULES.sunflower.level, so it is unlocked
+// always in the sunflower theme for Dennis (2026-11-22); level 35 is past RULES.sunflower.level, so it is unlocked.
+// stills: which of SHOTS to take (all, and the level after it, when not given); video: false for a still only
 const RUNS = [
-  { name: 'phone-sunflower', size: [390, 820], theme: 'sunflower', bg: 'sunfield', lang: 'nl', compare: true },
-  { name: 'phone-sunflower-en', size: [360, 640], theme: 'sunflower', bg: 'sunfield', lang: 'en' },
-  { name: 'tablet-sunflower', size: [768, 1024], theme: 'sunflower', bg: 'sunfield', lang: 'nl' },
-  { name: 'tablet-sunflower-en', size: [768, 1024], theme: 'sunflower', bg: 'sunfield', lang: 'en' },
+  { name: 'phone-sunflower', size: [390, 820], lang: 'nl', compare: true },
+  { name: 'tablet-sunflower', size: [768, 1024], lang: 'nl', stills: [] },
+  { name: 'phone360-sunflower-en', size: [360, 640], lang: 'en', stills: ['3-half-cracks'], video: false },   // "Half above counts: ❄️❄️ → ❄️", the widest
 ];
 // key moments, in ms after the film opened: the board at rest, then each step with its caption (taps at 1.3, 2.75, 3.45,
 // 4.9, 6.35 s; one play is 7 s)
@@ -31,7 +32,7 @@ async function context(r, video) {
   const p = await ctx.newPage();
   await p.clock.setFixedTime(new Date(lib.TODAY + 'T15:00:00'));
   await p.goto(new URL('__blank__', lib.server.url).href);
-  const st = { name: 'Dennis', pid: 'test-intro-gate', level: 35, lang: r.lang, theme: r.theme, bg: r.bg, stars: { 1: 3, 2: 3, 3: 3 }, seenIntro: true, seenTray: true, seenDown: true, toolsSeen: true, sunSeen: true,
+  const st = { name: 'Dennis', pid: 'test-intro-gate', level: 35, lang: r.lang, theme: 'sunflower', bg: 'sunfield', stars: { 1: 3, 2: 3, 3: 3 }, seenIntro: true, seenTray: true, seenDown: true, toolsSeen: true, sunSeen: true,
     sfx: false, music: false, vibrate: false, since: lib.TODAY, giftDay: lib.TODAY, iosTip: true, seenSp: SEEN };
   await p.evaluate(([st, today]) => { localStorage.clear(); localStorage.setItem('omamj.reset', today); localStorage.setItem('omamj.v1', JSON.stringify(st)); }, [st, lib.TODAY]);
   await p.goto(lib.server.url);
@@ -45,19 +46,20 @@ async function context(r, video) {
   await lib.setup();
   try {
     for (const r of process.argv[3] === 'preview' ? [{ ...RUNS[0], compare: false }] : RUNS) {
-      const vids = path.join(OUT, '_video-' + r.name), { ctx, p } = await context(r, vids);
+      const vids = r.video !== false && path.join(OUT, '_video-' + r.name), { ctx, p } = await context(r, vids);
       await p.evaluate(() => { localStorage.removeItem('omamj.cur'); __mj.startLevel(35); });
       await p.waitForSelector('#introPanel');
       const t0 = Date.now();
-      for (const [ms, label] of SHOTS) {
+      for (const [ms, label] of SHOTS.filter(([, label]) => !r.stills || r.stills.includes(label))) {
         await lib.sleep(Math.max(0, t0 + ms - Date.now()));
         await p.screenshot({ path: path.join(OUT, `${r.name}-${label}.png`) });
       }
+      if (!vids) { await ctx.close(); console.log('done', r.name); continue; }
       // the second play, then a tap on the button: the player's own level comes back
       await lib.sleep(Math.max(0, t0 + 15800 - Date.now()));
       await p.locator('#ntGo').click();
       await lib.sleep(900);
-      await p.screenshot({ path: path.join(OUT, `${r.name}-6-level-back.png`) });
+      if (!r.stills) await p.screenshot({ path: path.join(OUT, `${r.name}-6-level-back.png`) });
       const video = p.video();
       await ctx.close();
       fs.renameSync(await video.path(), path.join(OUT, r.name + '.webm'));
@@ -91,6 +93,6 @@ async function compare(r) {
   await p.setContent(`<body style="margin:0;background:#222;color:#fff;font:600 15px sans-serif;display:flex;gap:10px;padding:5px 5px 0">
     <figure style="margin:0"><figcaption>Level 35, tap on a frozen tile (tile ${info.tw.toFixed(1)} px)</figcaption><img src="${img(real)}" style="width:${w}px;height:${h}px"></figure>
     <figure style="margin:0"><figcaption>Intro film, tap on the frozen tile (tile ${filmTw.toFixed(1)} px)</figcaption><img src="${img(film)}" style="width:${w}px;height:${h}px"></figure></body>`);
-  await p.screenshot({ path: path.join(OUT, `compare-${r.theme}.png`) });
+  await p.screenshot({ path: path.join(OUT, 'compare-sunflower.png') });
   await ctx.close();
 }
