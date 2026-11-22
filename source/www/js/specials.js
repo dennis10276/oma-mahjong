@@ -258,13 +258,13 @@ function showLessonMenu() {
   $('#mClose').onclick = closeModal;
 }
 function clockIntro(after = null) {
-  if (!clockOn() || S.seenSp.clockMoves) return false;
+  if (!clockOn() || S.seenSp.clockMoves || introFailed.has('clock')) return false;
   playIntroFilm('clock', { required: true, after });
   return true;
 }
 function newTileIntro(after = null) {
   if (!G || G.done) return false;
-  const k = Object.keys(NEW_TILES).find(k => !S.seenSp[k] && NEW_TILES[k].has() && (!NEW_TILES[k].first || NEW_TILES[k].first()));
+  const k = Object.keys(NEW_TILES).find(k => !S.seenSp[k] && !introFailed.has(k) && NEW_TILES[k].has() && (!NEW_TILES[k].first || NEW_TILES[k].first()));
   if (!k) return false;
   playIntroFilm(k, { required: true, after });
   return true;

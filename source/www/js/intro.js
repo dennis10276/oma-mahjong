@@ -157,6 +157,7 @@ const INTRO_FILMS = {
 };
 
 let introRun = null;
+const introFailed = new Set();   // kinds whose film failed to start this session: not asked again (not saved as seen)
 
 /* required: the first meeting (the button waits until the film has played once). after: what comes next once the
    button is pressed. why: for the dashboard (intro, manual). */
@@ -177,7 +178,7 @@ function playIntroFilm(kind, opts = {}) {
   const real = G, run = introRun = { real, stage, blockedTaps, introducing: real && real.introducing, ticking: !!(real && real.tStart), timers: [], plays: 0, log: [] };
   const later = (ms, fn) => { const id = setTimeout(() => { run.timers = run.timers.filter(x => x !== id); if (introRun === run) fn(); }, ms); run.timers.push(id); };
   // every tap of every part, on one clock: [ms, part, id, caption]; a part starts where the one before ended
-  const start = parts.map((_, p) => parts.slice(0, p).reduce((a, q) => a + q.ms, 0)), ms = start.at(-1) + parts.at(-1).ms;
+  const start = parts.map((_, p) => parts.slice(0, p).reduce((a, q) => a + q.ms, 0)), ms = start[start.length - 1] + parts[parts.length - 1].ms;
   const taps = parts.flatMap((part, p) => part.taps.map(([t, id, text]) => [start[p] + t, p, id, text]));
   const quiet = () => { cap.classList.remove('on'); if (count) count.classList.remove('on'); };
   const begin = p => { introLevel(parts[p], real); renderBoard(true); renderTray(); updateProgress(); clearGameMsg(); quiet(); };
@@ -217,7 +218,7 @@ function playIntroFilm(kind, opts = {}) {
     clearGameMsg();                  // (a text of the level waiting to be shown does not come up in the film)
     filmRoot = stage;
     play();
-  } catch (e) { logErr(e, 'intro'); stopIntroFilm(after); }   // a film that fails to start gives the level back
+  } catch (e) { logErr(e, 'intro'); introFailed.add(kind); stopIntroFilm(after); }   // a film that fails to start gives the level back
 }
 
 // the film's tiny level, as the game's own G (board.js begin), marked as a film

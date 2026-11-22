@@ -101,6 +101,20 @@ const hintOf = i => {
 };
 
 module.exports = [
+  { name: 'intro: no www script calls Array.prototype.at (older Android WebViews lack it)', async run(t) {
+    const fs = require('fs'), path = require('path'), dir = path.join(__dirname, '..', 'www', 'js');
+    const hits = fs.readdirSync(dir).filter(f => f.endsWith('.js')).flatMap(f => fs.readFileSync(path.join(dir, f), 'utf8').split('\n')
+      .map((l, k) => /\.at\(/.test(l) ? f + ':' + (k + 1) : null).filter(Boolean));
+    t.eq(hits, [], 'no .at( call in source/www/js');
+  }},
+  { name: 'intro: a film that throws is not started again: the level stays playable and the film is not saved as seen', async run(t) {
+    const p = await t.phone({ state: { name: 'Dennis', pid: 'test-intro-throw', level: 35, sunSeen: true, theme: 'fruit', seenSp: { ...seen, ice: 0 } } });
+    await p.evaluate(() => { window.__starts = 0; const o = playIntroFilm; playIntroFilm = (k, x) => { window.__starts++; return o(k, x); };
+      introLevel = () => { throw new Error('film broke'); }; localStorage.removeItem('omamj.cur'); __mj.startLevel(35); });
+    await p.waitForFunction(() => G && !G.film && !G.introducing, null, { timeout: 5000 });
+    await sleep(500);
+    t.eq(await p.evaluate(() => [window.__starts, !!G.film, G.introducing, !!S.seenSp.ice, !!document.querySelector('#introPanel')]), [1, false, false, false, false], 'one start, no film left, the level is playable, ice not saved as seen');
+  }},
   { name: 'intro: every film is built like a real pile: a tile in a higher layer rests on 4 tiles or bridges 2, never a tower or on one corner', async run(t) {
     const p = await t.phone({ state: { name: 'Dennis', level: 40, sunSeen: true, seenSp: seen } });
     // layouts.js buildOnce: shiftXY (on 4, half a tile both ways), shiftX / shiftY (a bridge over 2); 'stack' (towers) only in some hard levels
