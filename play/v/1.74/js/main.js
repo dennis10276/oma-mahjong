@@ -29,8 +29,8 @@ $('#boardWrap').addEventListener('pointerdown', e => {
   if (i >= 0) { e.preventDefault(); onTap(i, false, point); }
   else if (G && !G.done) replayMark('miss', point);
 });
-$('#btnHint').onclick = hint;
-$('#btnShuffle').onclick = shuffle;
+$('#btnHint').onclick = () => armTool('#btnHint', hint, 'hintAgain');
+$('#btnShuffle').onclick = () => armTool('#btnShuffle', shuffle, 'shuffleAgain');
 $('#btnRestart').onclick = () => {
   if (!G || G.done || G.busy) return;
   openModal(`<h2>${tx('restartTitle')}</h2>
@@ -48,8 +48,7 @@ $('#btnThemes').onclick = () => show('themes');
 $('#btnTrophies').onclick = () => show('trophies');
 $('#btnRanking').onclick = () => { if (!S.name) askName(() => show('ranking')); else show('ranking'); };
 $('#rankName').onclick = () => askName(() => renderRanking());
-$('#rkWeek').onclick = () => { rankMode = 'week'; renderRanking(); };
-$('#rkAll').onclick = () => { rankMode = 'all'; renderRanking(); };
+bindRankingNavigation();
 $('#btnTasks').onclick = () => { renderTaskChip(); if (chestReady()) openChest(); else openTasks(); };
 $('#btnSettings').onclick = openSettings;
 $('#btnPlayDaily').onclick = () => startDaily(selDate);
@@ -96,7 +95,12 @@ addEventListener('online', () => updatePresence());
 loadCfg().then(loadNews);
 $('#btnPaper').onclick = openPaper;
 // a heart can arrive any moment (the live stream can miss one): look again every half minute
-setInterval(() => { if (!document.hidden) { checkHearts(); loadCfg(); loadNews(); if (curScreen === 'home') checkSentHearts(); } }, 30000);
+setInterval(() => {
+  if (document.hidden) return;
+  checkHearts(); loadCfg(); loadNews();
+  if (curScreen === 'home') checkSentHearts();
+  if (curScreen === 'ranking' && modalFree()) renderRanking();
+}, 30000);
 document.body.classList.toggle('nonum', !S.nums);
 document.body.classList.toggle('contrast', !!S.contrast);
 show('home');

@@ -11,7 +11,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Mahjong">
-<link rel="stylesheet" href="v/1.73/style.css" id="css">
+<link rel="stylesheet" href="v/1.74/style.css" id="css">
 <script>
   // if anything fails to load, say so instead of showing a dead screen
   window.addEventListener('error', function (e) {
@@ -121,7 +121,10 @@
       <div class="ranking-intro"><p data-t="rankTogether">Samen puzzelen</p><h3 data-t="rankFamilyTurn">De familie aan zet</h3><span id="rkMine"></span></div>
       <div class="rk-tabs"><button id="rkWeek" class="on" data-t="thisWeek">📅 Deze week</button><button id="rkAll" data-t="allTime">🏆 All-time</button></div>
       <p class="wk-info" id="wkInfo"></p>
-      <div class="rank-list" id="rankList"></div>
+      <div class="rank-viewport" id="rankViewport">
+        <div class="rank-list" id="rankList"></div>
+        <div class="rank-list rank-next" id="rankNext" aria-hidden="true" inert hidden></div>
+      </div>
       <p class="rank-note" id="rankNote"></p>
     </div>
   </section>
@@ -155,7 +158,7 @@
    and keeps them on the phone. On start we use that downloaded version when it is newer
    than the one built into the app; if it does not start properly, we fall back at once. */
 (function () {
-  var BUILT = '1.73', KEY = 'omamj.code', FILES = ['v/1.73/tiles.js', 'v/1.73/audio.js', 'v/1.73/layouts.js', 'v/1.73/hard.js', 'v/1.73/levels-hard.js', 'v/1.73/levels-early.js', 'v/1.73/coach-clips.js', 'v/1.73/js/rules.js', 'v/1.73/js/lang.js', 'v/1.73/js/core.js', 'v/1.73/js/fx.js', 'v/1.73/js/update.js', 'v/1.73/js/screens.js', 'v/1.73/js/board.js', 'v/1.73/js/help.js', 'v/1.73/js/specials.js', 'v/1.73/js/coach.js', 'v/1.73/js/pro.js', 'v/1.73/js/rewards.js', 'v/1.73/js/telemetry.js', 'v/1.73/js/social.js', 'v/1.73/js/hearts.js', 'v/1.73/js/stories.js', 'v/1.73/js/village.js', 'v/1.73/js/win.js', 'v/1.73/js/main.js'];
+  var BUILT = '1.74', KEY = 'omamj.code', FILES = ['v/1.74/tiles.js', 'v/1.74/audio.js', 'v/1.74/layouts.js', 'v/1.74/hard.js', 'v/1.74/levels-hard.js', 'v/1.74/levels-early.js', 'v/1.74/coach-clips.js', 'v/1.74/js/rules.js', 'v/1.74/js/lang.js', 'v/1.74/js/core.js', 'v/1.74/js/fx.js', 'v/1.74/js/update.js', 'v/1.74/js/screens.js', 'v/1.74/js/board.js', 'v/1.74/js/help.js', 'v/1.74/js/specials.js', 'v/1.74/js/coach.js', 'v/1.74/js/pro.js', 'v/1.74/js/rewards.js', 'v/1.74/js/telemetry.js', 'v/1.74/js/social.js', 'v/1.74/js/hearts.js', 'v/1.74/js/stories.js', 'v/1.74/js/village.js', 'v/1.74/js/win.js', 'v/1.74/js/main.js'];
   function newer(a, b) { a = String(a).split('.'); b = String(b).split('.'); for (var i = 0; i < Math.max(a.length, b.length); i++) { var x = +a[i] || 0, y = +b[i] || 0; if (x !== y) return x > y; } return false; }
   function builtIn() { FILES.forEach(function (f) { var s = document.createElement('script'); s.src = f; s.async = false; document.body.appendChild(s); }); }
   var c = null;

@@ -226,27 +226,131 @@ function rowHTML(e, rank, mode, rankingCard = false) {
   const presence = presenceOf(e), withHeart = rankingCard && isFam(e);
   const sub = mode === 'week' ? tx('levelWord', e.level) : rankingCard ? '' : tx('points', fmtN(e.points));
   const subtitle = sub + presenceSubHTML(presence, !!sub);
-  return `<span class="rk">${medal(rank)}</span>${avatarHTML(e, 'ra', presence?.online)}<span class="rn">${esc(e.name)}${e.me ? ` <i>${tx('youTag')}</i>` : ' <i class="fam-tag">👪</i>'}${subtitle ? `<small>${subtitle}</small>` : ''}${withHeart ? heartState(e.id) : ''}</span><span class="rp">${rowVal(e, mode)}${withHeart ? heartBtn(e) : ''}</span>`;
+  const name = esc(e.name) + (e.me ? ` <i>${tx('youTag')}</i>` : ' <i class="fam-tag">👪</i>');
+  const nameLine = rankingCard ? `<span class="ranking-name fit-row">${name}</span>` : name;
+  return `<span class="rk">${medal(rank)}</span>${avatarHTML(e, 'ra', presence?.online)}<span class="rn">${nameLine}${subtitle ? `<small>${subtitle}</small>` : ''}${withHeart ? heartState(e.id) : ''}</span><span class="rp">${rowVal(e, mode)}${withHeart ? heartBtn(e) : ''}</span>`;
 }
 let rankMode = 'week';
-function setRankMode(mode) {
-  if (mode === rankMode) return;
-  rankMode = mode;
-  renderRanking();
+const rankRowsHTML = (list, mode) => list.map((e, i) =>
+  `<div class="rrow${e.me ? ' me' : ''}${isFam(e) ? ' fam' : ''}">${rowHTML(e, i + 1, mode, true)}</div>`).join('');
+
+function bindRankingNavigation() {
+  const viewport = $('#rankViewport'), current = $('#rankList'), next = $('#rankNext'), tabs = $('#ranking .rk-tabs');
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const position = mode => mode === 'week' ? 0 : 1;
+  let touch = null, motion = null;
+
+  function paint(progress) {
+    motion.progress = progress;
+    const offset = (position(rankMode) - progress) * motion.stride;
+    viewport.style.setProperty('--rank-x', offset + 'px');
+    tabs.style.setProperty('--rank-slide', progress);
+    tabs.dataset.spot = progress < .5 ? 'week' : 'all';
+  }
+  function prepare() {
+    const origin = position(rankMode);
+    motion = { mode: origin === 0 ? 'all' : 'week', stride: viewport.clientWidth + 8, settling: false };
+    next.innerHTML = rankRowsHTML(ranking(undefined, motion.mode), motion.mode);
+    viewport.style.setProperty('--rank-side', (origin === 0 ? motion.stride : -motion.stride) + 'px');
+    next.hidden = false;
+    viewport.classList.add('rank-moving');
+    paint(origin);
+    fitTexts(next);
+  }
+  function finish(mode) {
+    clearTimeout(motion.timer);
+    motion = null;
+    rankMode = mode;
+    viewport.classList.remove('rank-moving', 'rank-settling');
+    viewport.style.removeProperty('--rank-x');
+    viewport.style.removeProperty('--rank-side');
+    tabs.classList.remove('rank-settling');
+    tabs.style.removeProperty('--rank-slide');
+    next.hidden = true;
+    next.replaceChildren();
+    if (curScreen === 'ranking') renderRanking();
+  }
+  function settle(commit) {
+    if (!motion || motion.settling) return;
+    const mode = commit ? motion.mode : rankMode, target = position(mode);
+    if (reduceMotion.matches || motion.progress === target) { finish(mode); return; }
+    motion.settling = true;
+    // Establish the drag position before adding a transition, including on a direct tab tap.
+    viewport.getBoundingClientRect();
+    viewport.classList.add('rank-settling');
+    tabs.classList.add('rank-settling');
+    paint(target);
+    motion.done = () => finish(mode);
+    motion.timer = setTimeout(motion.done, 340);
+  }
+  current.addEventListener('transitionend', e => {
+    if (e.target === current && e.propertyName === 'transform') motion?.done?.();
+  });
+  function switchTab(mode) {
+    if (mode === rankMode || motion) return;
+    prepare();
+    settle(true);
+  }
+  $('#rkWeek').onclick = () => switchTab('week');
+  $('#rkAll').onclick = () => switchTab('all');
+
+  function cancelTouch() { touch = null; settle(false); }
+  viewport.addEventListener('touchstart', e => {
+    if (e.touches.length !== 1) { cancelTouch(); return; }
+    if (!motion && modalFree()) {
+      const { identifier, clientX, clientY } = e.touches[0];
+      touch = { identifier, clientX, clientY, horizontal: false };
+    }
+  }, { passive: true });
+  viewport.addEventListener('touchmove', e => {
+    if (!touch) return;
+    if (e.touches.length !== 1) { cancelTouch(); return; }
+    const moving = e.touches[0];
+    if (moving.identifier !== touch.identifier) return;
+    const dx = moving.clientX - touch.clientX, dy = moving.clientY - touch.clientY;
+    if (!touch.horizontal) {
+      if (Math.abs(dy) > 10 && Math.abs(dy) >= Math.abs(dx)) { cancelTouch(); return; }
+      if (Math.abs(dx) < 10 || Math.abs(dx) <= 1.5 * Math.abs(dy)) return;
+      touch.horizontal = true;
+    }
+    const towardOther = rankMode === 'week' ? dx < 0 : dx > 0;
+    if (!motion && towardOther) prepare();
+    if (motion) paint(Math.max(0, Math.min(1, position(rankMode) - dx / motion.stride)));
+  }, { passive: true });
+  viewport.addEventListener('touchcancel', cancelTouch);
+  viewport.addEventListener('touchend', e => {
+    const start = touch;
+    touch = null;
+    if (e.touches.length) { settle(false); return; }
+    if (!start?.horizontal) return;
+    if (e.cancelable) e.preventDefault();
+    if (!motion) return;
+    const travel = Math.abs(motion.progress - position(rankMode)) * motion.stride;
+    const threshold = Math.min(100, viewport.clientWidth * .3);
+    settle(curScreen === 'ranking' && modalFree() && travel >= threshold);
+  }, { passive: false });
 }
+
 function renderRanking() {
+  if ($('#rankViewport').classList.contains('rank-moving')) return;
   ensureId(); ensureWeek();
   const list = ranking(undefined, rankMode);
   const me = list.findIndex(e => e.me);
   $('#rkMine').textContent = tx('rankYourPlace', me + 1, list.length);
-  $('#rkWeek').classList.toggle('on', rankMode === 'week');
-  $('#rkAll').classList.toggle('on', rankMode === 'all');
+  const tabs = $('#ranking .rk-tabs');
+  tabs.dataset.mode = tabs.dataset.spot = rankMode;
+  for (const [id, mode] of [['#rkWeek', 'week'], ['#rkAll', 'all']]) {
+    $(id).classList.toggle('on', rankMode === mode);
+    $(id).setAttribute('aria-pressed', rankMode === mode);
+  }
   $('#wkInfo').innerHTML = rankMode === 'week'
     ? tx('weekEnds', weekLeftText())
     : tx('allInfo');
 
-  $('#rankList').innerHTML = list.map((e, i) => `<div class="rrow${e.me ? ' me' : ''}${isFam(e) ? ' fam' : ''}">${rowHTML(e, i + 1, rankMode, true)}</div>`).join('');
-  document.querySelectorAll('.heart-btn').forEach(b => b.onclick = ev => { ev.stopPropagation(); if (!b.classList.contains('sent')) sendHeart(b.dataset.pid, b.dataset.name, b); else toast(tx('heartAlreadyShort')); });
+  const rankList = $('#rankList');
+  rankList.innerHTML = rankRowsHTML(list, rankMode);
+  fitTexts(rankList);
+  rankList.querySelectorAll('.heart-btn').forEach(b => b.onclick = ev => { ev.stopPropagation(); if (!b.classList.contains('sent')) sendHeart(b.dataset.pid, b.dataset.name, b); else toast(tx('heartAlreadyShort')); });
   const online = !!DB_URL;
   $('#rankNote').innerHTML = tx(S.lbOnlineAt && Date.now() - S.lbOnlineAt < 60000 ? 'rankNoteOnline' : 'rankNoteCached');
   $('#rankName').innerHTML = avatarHTML(myEntry(0), 'ra small');

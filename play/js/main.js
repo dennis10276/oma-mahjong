@@ -48,24 +48,7 @@ $('#btnThemes').onclick = () => show('themes');
 $('#btnTrophies').onclick = () => show('trophies');
 $('#btnRanking').onclick = () => { if (!S.name) askName(() => show('ranking')); else show('ranking'); };
 $('#rankName').onclick = () => askName(() => renderRanking());
-$('#rkWeek').onclick = () => setRankMode('week');
-$('#rkAll').onclick = () => setRankMode('all');
-const rankingScreen = $('#ranking');
-let rankingTouch = null;
-rankingScreen.addEventListener('touchstart', e => {
-  rankingTouch = e.touches.length === 1 ? e.touches[0] : null;
-}, { passive: true });
-rankingScreen.addEventListener('touchcancel', () => { rankingTouch = null; });
-rankingScreen.addEventListener('touchend', e => {
-  const start = rankingTouch;
-  rankingTouch = null;
-  const end = e.changedTouches[0];
-  if (!start || !end || end.identifier !== start.identifier || e.touches.length || curScreen !== 'ranking' || !modalFree()) return;
-  const dx = end.clientX - start.clientX, dy = end.clientY - start.clientY;
-  if (Math.abs(dx) <= 45 || Math.abs(dx) <= 1.5 * Math.abs(dy)) return;
-  if (e.cancelable) e.preventDefault();
-  setRankMode(dx < 0 ? 'all' : 'week');
-}, { passive: false });
+bindRankingNavigation();
 $('#btnTasks').onclick = () => { renderTaskChip(); if (chestReady()) openChest(); else openTasks(); };
 $('#btnSettings').onclick = openSettings;
 $('#btnPlayDaily').onclick = () => startDaily(selDate);
