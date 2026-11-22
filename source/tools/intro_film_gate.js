@@ -102,6 +102,14 @@ async function tips(p, r) {
     await shot(`A-board-${k}`, 700);
     await lib.sleep(3500);
   }
+  // A on a small phone, and in the classic theme (a dark background)
+  for (const [name, size, classic] of [['phone360-sunflower', [360, 640], false], ['phone-classic', [390, 820], true]]) {
+    const c = await context({ ...r, size });
+    if (classic) await c.p.evaluate(() => { S.theme = 'classic'; S.bg = 'jade'; applyTheme(); applyBg(); });
+    await c.p.evaluate(() => { TIP_AT = 'board'; S.tips = {}; localStorage.removeItem('omamj.cur'); __mj.startLevel(25); });
+    await c.p.waitForSelector('#boardWrap .tip-over', { timeout: 8000 }); await lib.sleep(700);
+    await c.p.screenshot({ path: path.join(OUT, `${name}-A-board-gold.png`) }); await c.ctx.close();
+  }
   for (const [L, k] of [[25, 'gold'], [33, 'joker']]) {
     await p.evaluate(L => { TIP_AT = 'home'; S.tips = {}; S.level = L; }, L);   // (the player's level: the next one is this one)
     await start(L); await lib.sleep(800);

@@ -33,8 +33,8 @@ function specialMatch(face, gold, c) {
 /* "Wist je dat?" (Dennis 2026-11-23): gold and the joker are not explained; a short tip says it, at most TIP_MAX
    times per player (S.tips), one at a time, the joker first (it is rare: only some levels below RULES jokersGoneFrom).
    Only players who still meet those tiles see it. Where (design choice for Dennis, TIP_AT):
-     'board': at the start of a level with that tile on its board, the text floats over the tiles and fades by itself
-     'home':  on the home screen, after a level that had that tile, while the next level can still have it */
+     'board': at the start of a level with that tile on its board, a small light card right under the tray, fading by itself
+     'home':  the same card on the home screen, after a level that had that tile, while the next level can still have it */
 const TIP_MAX = 3; let TIP_AT = 'board';   // (a let: the preview tool shows both)
 function nextTip(has) {
   const k = Object.keys(has).find(k => (S.tips[k] || 0) < TIP_MAX && has[k]());
@@ -45,8 +45,8 @@ function specialTip() {
   if (TIP_AT !== 'board' || !G || G.done || !modalFree()) return;
   const k = nextTip({ joker: () => G.tiles.some((t, i) => G.alive[i] && t.face === JOKER), gold: () => [...G.gold].some(i => G.alive[i]) });
   if (!k) return;
-  // in the light text of the game's praise, over the tiles; taps go through it
-  const el = document.createElement('div'); el.className = 'tip-over'; el.textContent = tx('tip_' + k);
+  // a small light card right under the tray, over the top of the board; taps go through it
+  const el = document.createElement('div'); el.className = 'tip-box tip-over'; el.textContent = tx('tip_' + k);
   $('#boardWrap').appendChild(el); setTimeout(() => el.remove(), 3600);
 }
 // the home screen's tip line (renderHome): from the level just played, once per level
