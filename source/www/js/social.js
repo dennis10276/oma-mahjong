@@ -326,7 +326,7 @@ function bindRankingNavigation() {
     if (e.cancelable) e.preventDefault();
     if (!motion) return;
     const travel = Math.abs(motion.progress - position(rankMode)) * motion.stride;
-    const threshold = Math.min(100, viewport.clientWidth * .3);
+    const threshold = 24;
     settle(curScreen === 'ranking' && modalFree() && travel >= threshold);
   }, { passive: false });
 }

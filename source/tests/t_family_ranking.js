@@ -166,16 +166,16 @@ module.exports = [
           block: x('#rankList'), highlight: highlight.m41, incoming: !!next && !next.hidden && next.inert };
       });
       const begin = await geometry();
-      await drag(250, 440, -62, 4);
+      await drag(250, 440, -17, 2);
       const sliding = await geometry();
       t.eq([sliding.header, sliding.sky, sliding.tabs], [begin.header, begin.sky, begin.tabs], 'header, scene and labels stay anchored');
-      t.ok(sliding.block < begin.block - 45, 'the standings block follows the finger before release', sliding);
-      t.ok(sliding.highlight > begin.highlight + 10, 'the pink tab highlight moves with the drag', sliding);
+      t.ok(sliding.block < begin.block - 12, 'the standings block follows the finger before release', sliding);
+      t.ok(sliding.highlight > begin.highlight + 5, 'the pink tab highlight moves with the drag', sliding);
       t.ok(sliding.incoming, 'adjacent standings are visible during drag and inert');
       t.eq(await tab(), 'rkWeek', 'a drag does not commit before release');
       await touch('touchEnd');
       await settled(p);
-      t.eq(await geometry(), begin, 'short drag snaps the block and highlight back');
+      t.eq(await geometry(), begin, 'a tiny drag snaps the block and highlight back');
       await p.evaluate(() => {
         const row = $('#rankList .rrow'), header = $('#ranking .header');
         const first = new Touch({ identifier: 1, target: row, clientX: 250, clientY: 440 });
@@ -190,10 +190,10 @@ module.exports = [
       const unstuck = await p.waitForFunction(() => $('#rankNext').hidden, null, { timeout: 1300 }).then(() => true, () => false);
       if (!t.ok(unstuck, 'a second contact outside the standings cannot strand the drag')) { await cdp.detach(); return; }
       t.eq(await geometry(), begin, 'an interrupted drag restores the original standings and highlight');
-      await swipe(250, 440, -105, 5);
-      t.eq(await tab(), 'rkAll', 'left swipe switches to All-time');
-      await swipe(105, 440, 105, 5);
-      t.eq(await tab(), 'rkWeek', 'right swipe returns to Deze week');
+      await swipe(250, 440, -28, 4);
+      t.eq(await tab(), 'rkAll', 'a short left swipe switches to All-time');
+      await swipe(105, 440, 28, 4);
+      t.eq(await tab(), 'rkWeek', 'a short right swipe returns to Deze week');
       await swipe(220, 520, -50, -145);
       t.eq(await tab(), 'rkWeek', 'mostly vertical gesture keeps tab');
       const scroll = p.locator('#ranking > .scroll');
@@ -209,7 +209,7 @@ module.exports = [
       const heart = p.locator('#rankList .heart-btn').first();
       await heart.scrollIntoViewIfNeeded();
       const box = await heart.boundingBox();
-      await swipe(box.x + box.width / 2, box.y + box.height / 2, -105, 0);
+      await swipe(box.x + box.width / 2, box.y + box.height / 2, -28, 0);
       t.eq(await tab(), 'rkAll', 'a swipe beginning on a heart still switches tabs');
       t.eq(await p.locator('.heart-compose').count(), 0, 'swiping from a button does not open the heart composer');
       await p.emulateMedia({ reducedMotion: 'reduce' });
