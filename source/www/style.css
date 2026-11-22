@@ -743,6 +743,17 @@ body.contrast .tmini { border: 2px solid #222; background: #fff; }
 .msg-pick .mp:active { transform: scale(.97); }
 
 
+.toolbar.gone { display: none; }
+/* auto-finish: a big message over the pile, which plays itself now */
+#autoBanner { position: absolute; left: 50%; top: 50%; z-index: 3000000; width: min(86%, 380px); transform: translate(-50%, -50%) scale(.85); opacity: 0; pointer-events: none;
+  display: grid; justify-items: center; gap: 4px; text-align: center; padding: 18px 16px; border-radius: 24px; color: #fff;
+  background: rgba(16, 70, 52, .86); box-shadow: 0 10px 30px rgba(0,0,0,.35), inset 0 0 0 3px rgba(255,215,90,.75); transition: opacity .35s, transform .35s cubic-bezier(.3,1.5,.6,1); }
+#autoBanner.on { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+#autoBanner .ab-ico { font-size: 44px; line-height: 1; }
+#autoBanner b { font-size: clamp(22px, 6.4vw, 30px); line-height: 1.15; text-wrap: balance; }
+#autoBanner span:last-child { font-size: clamp(18px, 5vw, 23px); font-weight: 800; color: #ffe27a; }
+@media (prefers-reduced-motion: reduce) { #autoBanner { transition: opacity .2s; transform: translate(-50%, -50%); } }
+
 /* translated text (lang.js fx): takes the size of where it sits; fitTexts may make it smaller */
 span.fx { font-size: inherit; }
 /* Home fits the available safe area; decoration gives way before controls. */
