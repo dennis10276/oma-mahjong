@@ -605,9 +605,7 @@ function render() {
       case 'chest': return ['🎁', `Schatkist geopend (+${e.pts} punten)`];
       case 'clock': return ['⏰', `${lvlName(e)}: wekkersteen op tijd weg (nog ${e.ml} zetten over)`];
       case 'help_msg': {
-        const topics = { ice: ['🧊', 'IJs'], lock: ['🔑', 'Slot en sleutel'], trayPair: ['🀄', 'Paar bij 3 stenen'], clock: ['⏰', 'Wekker'],
-          // how Dennisisdebeste won the level, after 5 lost tries (js/pro.js, from 1.65)
-          pro: ['🎬', 'Replay van Dennisisdebeste'] };
+        const topics = { ice: ['🧊', 'IJs'], lock: ['🔑', 'Slot en sleutel'], trayPair: ['🀄', 'Paar bij 3 stenen'], clock: ['⏰', 'Wekker'] };
         const [icon, topic] = topics[e.topic] || ['📖', 'Speluitleg'];
         const reasons = { intro: 'eerste uitleg', retry: `herinnering na ${Number(e.fails) || 3} mislukte pogingen`, manual: 'zelf geopend', timeout: 'na afloop van de wekker', fails: `na ${Number(e.fails) || 5} mislukte pogingen` };
         const actions = { shown: 'Uitleg getoond', ack: 'Uitleg bevestigd', retry: 'Uitleg gesloten · opnieuw proberen', menu: 'Uitleg gesloten · naar menu', skip: `Weggeklikt na ${Number(e.s) || 0} s`, done: 'Helemaal bekeken' };

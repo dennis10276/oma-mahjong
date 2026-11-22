@@ -118,4 +118,11 @@ module.exports = [
       t.eq(await p.evaluate(() => __mj.S.level), 77, 'only once');
     },
   },
+  {
+    name: 'rules: no win replays: RULES.pro and proCheck are gone',
+    async run(t) {
+      const p = await t.phone({ state: { name: 'Anna', level: 60 } });
+      t.ok(await p.evaluate(() => typeof RULES.pro === 'undefined' && typeof proCheck === 'undefined' && typeof proShow === 'undefined'), 'no win replay code');
+    },
+  },
 ];

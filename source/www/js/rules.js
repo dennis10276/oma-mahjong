@@ -13,14 +13,6 @@ const RULES = {
     earn: { every: 5, stars: 3 } },            // from HELP.toolsGoneFrom on they have to be earned, per block of 5 levels (see board.js)
   // from this level: when no order of the remaining taps can fill the tray any more, the rest plays itself
   // (checked exactly, for at most maxTiles tiles left and within a search budget)
-  // Game tips are opened manually from the menu. Automatic tips between attempts were removed
-  // (the owner, 2026-11-12); new tile introductions must finish before play starts.
-  // replay of a win (js/pro.js, decisions the owner 2026-11-06; on per player on the dashboard, part 'pro'): after
-  // `after` lost tries of a level not passed yet (restarts count), once per level a winning try of that exact
-  // board (Dennisisdebeste's, else the fewest tries), at `speed` × its pace
-  // (pauses longer than maxGapMs, after speeding up, are shortened); only a small × at the top, after closeAfterMs
-  pro: { after: 5, speed: 2, maxGapMs: 3000, closeAfterMs: 3000, waitMs: 5000,
-    url: 'https://dennis10276.github.io/oma-mahjong/play/pro/' },
   autoFinish: { fromLevel: 50, maxTiles: 24, budget: 200000, stepMs: 260 },
   // the harder levels (www/hard.js): from measureFrom the test player designs each level so a
   // sensible player wins about `sense` of first tries; from `from` the levels get harder (a tile on
@@ -62,8 +54,8 @@ const HELP = {
 /* Grandma mode: one part, switchable per player on the family dashboard. 👵 Super-omamodus turns it
    on (by default only for grandma, see GRANDMA). Old settings for parts that no longer exist
    (gentle, adapt, retry, rescue, nudge, shuffleLater, lucky, keepTools) are simply ignored. The
-   replay ('pro') and the news ('news') have no switch on the dashboard any more: they follow
-   Super-omamodus unless an old setting says otherwise. */
+   news ('news') has no switch on the dashboard any more: it follows
+   Super-omamodus unless an old setting says otherwise. (The win replay 'pro' is gone.) */
 const PARTS = [
   { id: 'levels', group: 'easy', label: 'Eigen, makkelijkere levels', note: 'langzamer moeilijker, weinig omgedraaide stenen' },
 ];
