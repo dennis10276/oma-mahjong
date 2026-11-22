@@ -226,7 +226,8 @@ h3.sec { color: #fff; font-size: 22px; margin: 6px 4px 10px; text-shadow: 0 2px 
 #gameMsg .msg { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; background: rgba(25,18,5,.62); color: #fff; font-size: 14.5px; font-weight: 800; line-height: 1.15; padding: 3px 10px; border-radius: 12px; }
 /* a "Wist je dat?" tip (specials.js tipEl): a cream card like the menu buttons with a small tile on the left showing what the tip is about;
    in the game right under the tray for 3 s, fading by itself, taps go through it; on the home screen under the greeting, always there */
-.tip-box { display: flex; align-items: center; gap: 12px; text-align: left; text-shadow: none; line-height: 1.15; color: var(--ink); position: relative; background: var(--cream); border-radius: 18px; padding: 8px 16px 8px 10px; box-shadow: 0 5px 0 var(--cream2), 0 8px 14px rgba(0,0,0,.25); }
+.tip-box { display: flex; align-items: center; gap: 12px; text-align: left; text-shadow: none; line-height: 1.15; color: var(--ink); position: relative; background: var(--cream); border-radius: 14px; padding: 6px 14px 6px 8px; border: 1px solid var(--cream2); box-shadow: 0 2px 8px rgba(0,0,0,.18); }
+.tip-box::before { content: ""; position: absolute; left: 22px; bottom: -6px; width: 10px; height: 10px; background: var(--cream); border-right: 1px solid var(--cream2); border-bottom: 1px solid var(--cream2); transform: rotate(45deg); }
 .tip-txt { display: flex; flex-direction: column; min-width: 0; }
 .tip-txt small { font-size: 12px; font-weight: 900; letter-spacing: .4px; text-transform: uppercase; color: var(--muted); }
 .tip-txt b { font-size: 15px; font-weight: 900; }
