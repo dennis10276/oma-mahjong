@@ -23,6 +23,32 @@ module.exports = [
     },
   },
   {
+    name: 'family ranking: a slow score upload finishes before a later hide',
+    async run(t, { FakeDB, sleep }) {
+      const db = new FakeDB({ scores: { pOma: score('Oma', 11, 10000, NOW - DAY) } });
+      const p = await t.phone({ db, state: me });
+      let reached, release;
+      const pendingPut = new Promise(resolve => { reached = resolve; });
+      const allowPut = new Promise(resolve => { release = resolve; });
+      await p.ctx.route(/\/scores\/pOma\.json$/, async route => {
+        if (route.request().method() === 'PUT') { reached(); await allowPut; }
+        await route.fallback();
+      });
+      try {
+        await p.evaluate(() => { window.scoreUpload = pushScore(); });
+        await pendingPut;
+        await p.clock.setFixedTime(NOW + MINUTE);
+        await p.evaluate(() => { window.hideUpload = updatePresence(false); });
+        await sleep(6300);
+        t.eq(db.get('scores/pOma/online'), NOW, 'a pending win delays its subsequent hide');
+      } finally { release(); }
+      await p.evaluate(() => Promise.all([window.scoreUpload, window.hideUpload]));
+      t.eq(db.get('scores/pOma/level'), 12, 'full score succeeds on a slow connection');
+      t.eq(db.get('scores/pOma/online'), 0, 'hide lands after the completed upload');
+      t.eq(db.get('scores/pOma/t'), NOW + MINUTE, 'hide is the newest recorded activity');
+    },
+  },
+  {
     name: 'family ranking: both tabs use fresh activity up to 72 hours and All-time shows levels instead of points',
     async run(t, { FakeDB }) {
       const db = new FakeDB({ scores: {
@@ -36,16 +62,22 @@ module.exports = [
         pPuck: score('Puck', 25, 2000, NOW + MINUTE, NOW + MINUTE),
         pBram: score('Bram', 24, 1000, 0),
         pSven: score('Sven', 20, 500, NOW - 4 * DAY),
-      } });
+        pTess: score('Tess', 19, 400, NOW - 5 * DAY),
+      }, hearts: { pTess: { pOma: { name: 'Oma', t: -(NOW - 5 * DAY) } } } });
       const p = await t.phone({ db, size: [360, 730], state: {
         ...me, heartsSeen: { pBram: NOW - 4 * MINUTE },
-        heartsOut: { pSven: { t: NOW - 4 * DAY, seen: NOW - 2 * DAY }, pLina: { t: NOW - 3 * HOUR, seen: NOW - 2 * HOUR } },
+        heartsOut: {
+          pTess: { t: NOW - 5 * DAY, seen: 0 }, pSven: { t: NOW - 2 * DAY, seen: NOW - HOUR },
+          pLina: { t: NOW - 3 * HOUR, seen: NOW - 2 * HOUR },
+        },
       } });
+      await p.evaluate(() => checkSentHearts());
+      t.eq(await p.evaluate(() => S.heartsOut.pTess.seen), NOW, 'viewer has just discovered a five-day-old receipt');
       await p.locator('#btnRanking').click();
       const row = name => person(p, '#rankList .rrow', name);
       const expected = {
         Rosa: ['online'], Noor: ['zojuist'], Iris: ['18m geleden'], Lina: ['2u geleden'], Emma: ['gisteren'],
-        Sara: ['3d geleden'], Milo: [], Puck: [], Bram: ['zojuist'], Sven: ['2d geleden'], Oma: [],
+        Sara: ['3d geleden'], Milo: [], Puck: [], Bram: ['zojuist'], Sven: ['2d geleden'], Tess: [], Oma: [],
       };
       for (const tab of ['#rkWeek', '#rkAll']) {
         await p.locator(tab).click();
@@ -132,6 +164,12 @@ module.exports = [
       t.eq(await tab(), 'rkAll', 'All-time tap still works');
       await p.locator('#rkWeek').tap();
       t.eq(await tab(), 'rkWeek', 'Deze week tap still works');
+      const heart = p.locator('#rankList .heart-btn').first();
+      await heart.scrollIntoViewIfNeeded();
+      const box = await heart.boundingBox();
+      await swipe(box.x + box.width / 2, box.y + box.height / 2, -105, 0);
+      t.eq(await tab(), 'rkAll', 'a swipe beginning on a heart still switches tabs');
+      t.eq(await p.locator('.heart-compose').count(), 0, 'swiping from a button does not open the heart composer');
       await cdp.detach();
     },
   },

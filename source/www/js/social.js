@@ -55,8 +55,11 @@ function presenceOf(e, now = Date.now()) {
   const heartbeatAge = now - e.online;
   if (e.online > 0 && heartbeatAge >= 0 && heartbeatAge < 90000) return { online: true, text: tx('playerOnline') };
 
+  const sentHeart = S.heartsOut?.[e.id];
+  // A receipt records when we checked it. Its send time is the earliest the other player could have seen it.
+  const seenHeartAtLeast = sentHeart?.seen ? Number(sentHeart.t) || 0 : 0;
   const last = Math.max(Number(e.online) || 0, Number(e.t) || 0,
-    Number(S.heartsSeen?.[e.id]) || 0, Number(S.heartsOut?.[e.id]?.seen) || 0);
+    Number(S.heartsSeen?.[e.id]) || 0, seenHeartAtLeast);
   const age = now - last;
   if (last <= 0 || age < 0 || age > THREE_DAYS) return null;
 
@@ -142,11 +145,7 @@ async function fetchOnline() {
 // Serialize score uploads and presence changes so a delayed win cannot undo a later hide.
 let scoreQueue = Promise.resolve();
 function queueScoreWrite(write) {
-  scoreQueue = scoreQueue.then(async () => {
-    const ctl = new AbortController(), timeout = setTimeout(() => ctl.abort(), 6000);
-    try { await write(ctl.signal); }
-    catch (e) { } finally { clearTimeout(timeout); }
-  });
+  scoreQueue = scoreQueue.then(write).catch(() => {});
   return scoreQueue;
 }
 async function pushScore() {
@@ -155,13 +154,13 @@ async function pushScore() {
   const path = `scores/${S.pid}`, t = Date.now();
   const base = { name: S.name.slice(0, 24), avatar: (S.avatar || '😊').slice(0, 8), points: myPoints(), level: S.level, t };
   const full = { ...base, frame: (S.frame || 'none').slice(0, 12), wk: ensureWeek().id, wkPts: S.wk.pts, online: document.hidden ? 0 : t };
-  return queueScoreWrite(async signal => {
-    const r = await dbSend(path, full, 'PUT', signal);
+  return queueScoreWrite(async () => {
+    const r = await dbSend(path, full);
     // older database rules only know the basic fields: fall back to those
     if (!r.ok) {
       const { online, ...legacy } = full;
-      const old = await dbSend(path, legacy, 'PUT', signal);
-      if (!old.ok) await dbSend(path, base, 'PUT', signal);
+      const old = await dbSend(path, legacy);
+      if (!old.ok) await dbSend(path, base);
     }
   });
 }
@@ -170,10 +169,15 @@ function updatePresence(active = !document.hidden) {
   if (!DB_URL || !S.name || !S.pid || !navigator.onLine) return Promise.resolve();
   const path = `scores/${S.pid}`, t = Date.now(), online = active ? t : 0;
   // pushScore creates the record. A visit only edits activity on an existing score.
-  return queueScoreWrite(signal => fetch(dbUrl(path), {
-    method: 'PATCH', body: JSON.stringify({ online, t }),
-    headers: { 'Content-Type': 'application/json' }, keepalive: true, signal,
-  }));
+  return queueScoreWrite(async () => {
+    const ctl = new AbortController(), timeout = setTimeout(() => ctl.abort(), 6000);
+    try {
+      await fetch(dbUrl(path), {
+        method: 'PATCH', body: JSON.stringify({ online, t }),
+        headers: { 'Content-Type': 'application/json' }, keepalive: true, signal: ctl.signal,
+      });
+    } finally { clearTimeout(timeout); }
+  });
 }
 
 // ---- avatar frames, earned through prizes ----
