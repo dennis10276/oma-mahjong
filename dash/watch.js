@@ -93,12 +93,13 @@
     const left = Math.min(...points.map(t => t.x)), top = Math.min(...points.map(t => t.y));
     const spanX = Math.max(...points.map(t => t.x + 1)) - left, spanY = Math.max(...points.map(t => t.y + 1.24)) - top;
     const tw = dimension(view[4], Math.min((bw - 8) / (spanX + .125), (bh - 8) / (spanY + .16)));
-    const depth = Math.max(3, tw * .085), ox = origin[0] + (bw - spanX * tw - depth) / 2 - left * tw, oy = origin[1] + (bh - spanY * tw - depth * 1.4) / 2 - top * tw;
-    const slotW = Math.min(vw * .125, 60, vh * .07), slotH = slotW * 1.24, trayW = slotW * 4 + 30, trayX = (vw - trayW) / 2, trayY = Math.max(50, origin[1] - slotH - 16);
+    const depth = Math.max(3, tw * .085), ox = origin[0] + (bw - spanX * tw - depth) / 2 - left * tw, oy = origin[1] + 5 + (bh - spanY * tw - depth * 1.4) / 2 - top * tw;
+    const slotW = Math.min(vw * .125, 60, vh * .07), slotH = slotW * 1.24, trayW = slotW * 4 + 30, trayX = (vw - trayW) / 2;
+    const compact = origin[1] < slotH + 76, topY = compact ? 2 : 8, trayPad = compact ? 6 : 12, trayY = Math.max(topY + 46, origin[1] - slotH - trayPad - (compact ? 0 : 4));
     const tileW = 1 - 1.5 / tw, tileH = 1.24 - 1.5 / tw;
     const level = initial.key.startsWith('L') ? `Level ${initial.key.slice(1)}` : `Dagpuzzel ${initial.key.slice(1)}`;
     const progress = (initial.tiles.length - state.a.reduce((n, a) => n + a, 0) - state.tr.length) / initial.tiles.length;
-    let board = `<defs><linearGradient id="watchTileBack" x2=".5" y2="1"><stop stop-color="#3dbb90"/><stop offset="1" stop-color="#1b8063"/></linearGradient><pattern id="watchCross" width=".18" height=".18" patternUnits="userSpaceOnUse"><path d="M0 0L.18 .18M.18 0L0 .18" stroke="#ffffff" opacity=".13" stroke-width=".025"/></pattern></defs><rect width="${vw}" height="${vh}" fill="#0b4d3c"/><g aria-label="Spelkop"><rect x="10" y="8" width="44" height="44" rx="14" fill="#fff8e8"/><text x="32" y="38" text-anchor="middle" font-size="24">🏠</text><text x="${vw / 2}" y="28" text-anchor="middle" font-size="19" font-weight="800" fill="white">${escape(level)}</text><rect x="64" y="36" width="${Math.max(1, vw - 128)}" height="10" rx="5" fill="#073b2e"/><rect x="64" y="36" width="${Math.max(0, (vw - 128) * progress)}" height="10" rx="5" fill="#ffc531"/><rect x="${vw - 54}" y="8" width="44" height="44" rx="14" fill="#fff8e8"/><text x="${vw - 32}" y="38" text-anchor="middle" font-size="26">↻</text></g>`;
+    let board = `<defs><linearGradient id="watchTileBack" x2=".5" y2="1"><stop stop-color="#3dbb90"/><stop offset="1" stop-color="#1b8063"/></linearGradient><pattern id="watchCross" width=".18" height=".18" patternUnits="userSpaceOnUse"><path d="M0 0L.18 .18M.18 0L0 .18" stroke="#ffffff" opacity=".13" stroke-width=".025"/></pattern></defs><rect width="${vw}" height="${vh}" fill="#0b4d3c"/><g aria-label="Spelkop"><rect x="10" y="${topY}" width="44" height="44" rx="14" fill="#fff8e8"/><text x="32" y="${topY + 30}" text-anchor="middle" font-size="24">🏠</text><text x="${vw / 2}" y="${topY + 20}" text-anchor="middle" font-size="19" font-weight="800" fill="white">${escape(level)}</text><rect x="64" y="${topY + 28}" width="${Math.max(1, vw - 128)}" height="10" rx="5" fill="#073b2e"/><rect x="64" y="${topY + 28}" width="${Math.max(0, (vw - 128) * progress)}" height="10" rx="5" fill="#ffc531"/><rect x="${vw - 54}" y="${topY}" width="44" height="44" rx="14" fill="#fff8e8"/><text x="${vw - 32}" y="${topY + 30}" text-anchor="middle" font-size="26">↻</text></g>`;
     for (const tile of [...points].sort((a, b) => a.order - b.order)) {
       const i = tile.i; if (!state.a[i]) continue;
       const back = state.d[i] && state.p !== i, gold = initial.gold.includes(i), ob = state.ob;
@@ -122,20 +123,21 @@
       const tile = points[state.ck.i];
       board += `<g transform="translate(${ox + (tile.x + .55) * tw},${oy + (tile.y - .08) * tw}) scale(${tw})"><rect x="-.1" y="-.28" width=".95" height=".4" rx=".1" fill="#fff8e8"/><text x=".36" y="0" text-anchor="middle" font-size=".25">⏰ ${Math.max(0, state.ck.n - state.m)}</text></g>`;
     }
-    board += `<g id="watchTray" role="group" aria-label="De vier vakjes"><rect x="${trayX}" y="${trayY}" width="${trayW}" height="${slotH + 12}" rx="16" fill="${theme === 'sunflower' ? '#cf8c1f' : '#8a5a33'}"/>`;
+    board += `<g id="watchTray" role="group" aria-label="De vier vakjes"><rect x="${trayX}" y="${trayY}" width="${trayW}" height="${slotH + trayPad}" rx="16" fill="${theme === 'sunflower' ? '#cf8c1f' : '#8a5a33'}"/>`;
     for (let slot = 0; slot < 4; slot++) {
-      const i = state.tr[slot], x = trayX + 6 + slot * (slotW + 6), y = trayY + 6;
+      const i = state.tr[slot], x = trayX + 6 + slot * (slotW + 6), y = trayY + trayPad / 2;
       board += `<g class="watch-slot${i === undefined ? ' vacant' : ''}" ${i === undefined ? '' : `data-tile="${i}"`} transform="translate(${x},${y})"><rect width="${slotW}" height="${slotH}" rx="10" fill="${i === undefined ? '#57341f' : '#fff8e8'}"/>${i === undefined ? '' : faceMarkup(state.f[i], theme, 3, 3, slotW - 6, slotH - 6)}</g>`;
     }
     board += '</g>';
     if (view[10] !== false) {
-      const cy = trayY + slotH - 10;
+      const cy = trayY + slotH + trayPad - 22;
       for (const [cx, icon, label, used] of [[32, '💡', 'Hint', replay.hintUsed], [vw - 32, '🔀', 'Schudden', replay.shuffleUsed]]) {
         board += `<g opacity="${used ? '.45' : '1'}"><title>${label}</title><circle cx="${cx}" cy="${cy + 3}" r="22" fill="${used ? '#8c867a' : '#a86f00'}"/><circle cx="${cx}" cy="${cy}" r="22" fill="${used ? '#c9c4b8' : '#f2b01e'}" stroke="${used ? '#f2f0ea' : '#fff4b8'}" stroke-width="2"/><text x="${cx}" y="${cy + 8}" text-anchor="middle" font-size="22">${icon}</text></g>`;
       }
     }
     const touch = replay.tapEvent && replay.tapEvent.data && replay.tapEvent.data[3];
     if (Array.isArray(touch) && touch.length === 2 && touch.every(Number.isFinite) && clock.cursor - replay.tapEvent.wall < 600) board += `<circle class="watch-touch" cx="${touch[0]}" cy="${touch[1]}" r="13" fill="#ffc53155" stroke="#ffc531" stroke-width="3"/>`;
+    el('watchScreen').style.maxWidth = vw + 'px';
     el('watchBoard').setAttribute('viewBox', `0 0 ${vw} ${vh}`);
     el('watchBoard').setAttribute('aria-label', 'Opgenomen scherm: ' + level);
     el('watchBoard').classList.toggle('nonum', view[6] === false);

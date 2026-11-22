@@ -242,7 +242,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .watch-status { color: var(--ink-2); font-size: 12.5px; margin-bottom: 12px; }
 .watch-status.on { color: var(--good-ink); }
 .watch-status.on::before { content: ''; display: inline-block; width: 8px; height: 8px; background: var(--good); border-radius: 50%; margin-right: 6px; }
-.watch-screen { position: relative; flex: 0 0 auto; background: #0b4d3c; border-radius: 12px; overflow: hidden; }
+.watch-screen { position: relative; flex: 0 0 auto; width: 100%; margin: 0 auto; background: #0b4d3c; border-radius: 12px; overflow: hidden; }
 .watch-screen[hidden], .watch-empty[hidden] { display: none; }
 .watch-board { display: block; width: 100%; height: auto; flex: none; min-height: 0; }
 .watch-board.nonum .cn { display: none; }
@@ -332,7 +332,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 <script src="replay-state.js?v=537f6d4c1bc1"></script>
 <script src="playback.js?v=0d43a0656209"></script>
 <script src="forecast-score.js?v=e6a78ebc2be0"></script>
-<script src="watch.js?v=5c378224468a"></script>
+<script src="watch.js?v=ca989de6010b"></script>
 <script>
 /* Predictions are off (Dennis, 2026-10-22: not good enough). Codex and Gemini are making better ones,
    to show in the live game and the level cards. dash/?pred=1 still shows the old Voorspelling card for
