@@ -134,7 +134,7 @@ function begin(o, restart = false) {
   if (villageOn()) setTimeout(villageTease, 1800);
   const ready = () => {
     if (!S.seenTray) setTimeout(() => showIntro(), 700);
-    else { setTimeout(checkStuck, 500); setTimeout(jokerLeftover, 700); setTimeout(specialTip, 1200); }
+    else { setTimeout(checkStuck, 500); setTimeout(jokerLeftover, 700); }
   };
   // Finish every new-tile introduction before starting play or any optional replay.
   const introductions = () => {

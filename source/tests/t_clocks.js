@@ -11,9 +11,9 @@ module.exports=[
       await p.evaluate(()=>__mj.startLevel(80));
       t.ok((await modal(p)).buttons.includes('ntGo'),'explanation is present before the first move '+lang);
       t.eq(await p.evaluate(()=>[G.mv,!!S.seenSp.clockMoves]),[0,false],'acknowledgment required '+lang);
-      const text=await p.evaluate(()=>['nt_clock_text','clockMoves','clockFree','clockGoal'].map(k=>tx(k).replace(/<[^>]+>/g,'')));
+      const text=await p.evaluate(()=>['nt_clock_text'].map(k=>tx(k).replace(/<[^>]+>/g,'')));
       const full=await p.evaluate(()=>$('#modalBox').textContent);
-      for(const part of text)t.ok(full.includes(part),'complete move explanation (part folds open under the film) '+lang);
+      for(const part of text)t.ok(full.includes(part),'the film line is shown '+lang);
       await sleep(1400);t.ok((await modal(p)).buttons.includes('ntGo'),'other tile tips do not replace the clock explanation '+lang);
       t.ok(await p.evaluate(()=>$('#modalBox').scrollHeight<=$('#modalBox').clientHeight+1),'intro and acknowledgment fit on a small phone '+lang);
       await p.waitForFunction(() => !$('#ntGo').disabled, null, { timeout: 60000 });

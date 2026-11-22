@@ -94,7 +94,7 @@ module.exports = [
   {
     name: 'hard saves: old designs start fresh while the current design resumes',
     async run(t, {startLevel,sleep}) {
-      const p=await t.phone({state:{name:'Dennis',pid:'test-save-curve',level:83,seenSp:{clock:1,ice:1,lock:1,gold:1,joker:1}}});
+      const p=await t.phone({state:{name:'Dennis',pid:'test-save-curve',level:83,seenSp:{clock:1,clockMoves:1,ice:1,lock:1,gold:1,joker:1}}});
       await startLevel(p,83);
       t.eq(p.db.plays('test-save-curve').find(e=>e.k==='start').pm,'focused','new level telemetry identifies the calibrated player');
       t.eq(p.db.plays('test-save-curve').find(e=>e.k==='start').pr,await p.evaluate(()=>G.o.spec.made.info.strong),'logged win chance belongs to the focused player');

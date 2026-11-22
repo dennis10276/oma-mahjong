@@ -42,17 +42,5 @@ module.exports = [
     await sleep(1600);
     t.eq(await p.evaluate(() => document.querySelectorAll('#fxl .fxp').length), 0, 'and are cleaned up');
   }},
-  { name: 'smooth: the clock film (1.59) keeps its tiles from step to step; the clock counts down on its own tile', async run(t, { startLevel, sleep }) {
-    const p = await t.phone({ size: [360, 640], state: { name: 'Dennis', level: 80, seenSp: seen } });
-    await startLevel(p, 80);
-    await p.evaluate(() => showClockLesson());
-    const first = await p.evaluate(() => { const c = coachClockClip(); window.__ck = $(`.cz-board .tile[data-i="${c.segs[0].start.ck.i}"]`); window.__n = document.querySelectorAll('.cz-board .tile').length; return [$('.cz-ck i').textContent, String(c.segs[0].start.ck.left), !!__ck]; });
-    t.eq(first[0], first[1], 'the moves left show on the clock');
-    t.ok(first[2], 'the clock tile is on the pile');
-    await sleep(3400);
-    const after = await p.evaluate(() => [+$('.lesson-demo').dataset.step >= 1, $(`.cz-board .tile[data-i="${coachClockClip().segs[0].start.ck.i}"]`) === __ck, $('.cz-ck i') && $('.cz-ck i').textContent, document.querySelectorAll('.cz-board .tile').length < __n]);
-    t.eq(after, [true, true, String(+first[1] - 1), true], 'same tile, one move used, the taken tile left the pile');
-    await p.evaluate(() => closeModal());
-    t.eq(await p.evaluate(() => [lessonTimer, lessonJobs.length, coachRun]), [null, 0, null], 'closing stops every timer');
-  }},
+
 ];

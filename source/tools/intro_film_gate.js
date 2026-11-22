@@ -91,18 +91,10 @@ async function menu(p, r) {
   await lib.sleep(1500); await p.locator('#ntGo').click(); await shot('4-back-to-list', 1200);
   await p.locator('#mClose').click(); await lib.sleep(500);
 }
-// the "Wist je dat?" tips: the joker tip in level 33 under the tray, and the home card with two different tips
+// the "Wist je dat?" tips: the home card with two different tips (390 px) and two on a 360 px phone
 async function tips(p, r) {
-  await p.evaluate(() => { S.tips = {}; });
-  await p.evaluate(() => { localStorage.removeItem('omamj.cur'); __mj.startLevel(33); });
-  await p.waitForFunction(() => G && G.key === 'L33' && !G.introducing, null, { timeout: 60000 });
-  if (r.size[0] === 390) {
-    await p.waitForSelector('#boardWrap .tip-over', { timeout: 8000 }); await lib.sleep(600);
-    await p.screenshot({ path: path.join(OUT, `${r.name}-level33-joker-tip.png`) });
-    await lib.sleep(2800);
-  }
   for (const [n, k] of [[1, 'hint'], [2, 'daily'], [3, 'ice'], [4, 'trayPair']].filter(([n]) => r.size[0] === 390 ? n < 3 : n > 2)) {
-    await p.evaluate(k => { show('home'); const i = HOME_TIPS.findIndex(t => t[1] === k); lastHomeTip = -1; const el = $('#homeTip'), t = HOME_TIPS[i], x = tipEl(t[0], t[1], 'home-tip'); el.replaceWith(x); x.id = 'homeTip'; }, k);
+    await p.evaluate(k => { show('home'); const i = HOME_TIPS.findIndex(t => t[1] === k); const el = $('#homeTip'), t = HOME_TIPS[i], x = tipEl(t[0], t[1], 'home-tip'); el.replaceWith(x); x.id = 'homeTip'; }, k);
     await lib.sleep(800);
     await p.screenshot({ path: path.join(OUT, `${r.name}-home-${k}.png`) });
   }

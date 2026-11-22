@@ -27,21 +27,21 @@ module.exports = [
     const p = await t.phone({ state: { name: 'Dennis', level: 55, sunSeen: true, seenSp: seen } });
     await p.evaluate(() => showLessonMenu());
     t.eq(await p.locator('.lesson-pick:not(.cz-pick)').count(), 4, 'below 60: the tile lessons');
-    await p.evaluate(() => { closeModal(); S.level = 95; save(); showLessonMenu(); });
+    await p.evaluate(() => { closeModal(); S.level = 95; save(); showCoachMenu(); });
     t.eq(await p.locator('.cz-pick[data-kind]').count(), 8, 'from 60: the game tips in the menu');
     t.eq(await p.locator('.cz-tilepick').count(), 4, 'and the explanations of the special tiles');
     await click(p, '.cz-pick[data-kind="remember"]');
     t.ok(await p.evaluate(() => !!$('#modalBox .coach-demo')), 'a tip opens from the menu');
     await click(p, '#ntGo');
     // an own film that was shown is kept with its tip: the menu marks it and the tip can play it
-    await p.evaluate(() => { const c = coachTipClip('twin'); localStorage.setItem(CZ_MINE, JSON.stringify({ twin: { t: 1, lv: 95, clip: c } })); showLessonMenu(); });
+    await p.evaluate(() => { const c = coachTipClip('twin'); localStorage.setItem(CZ_MINE, JSON.stringify({ twin: { t: 1, lv: 95, clip: c } })); showCoachMenu(); });
     t.eq(await p.locator('.cz-pick[data-kind="twin"] .cz-mine').count(), 1, 'the menu marks a tip with an own example');
     await click(p, '.cz-pick[data-kind="twin"]');
     await click(p, '.cz-sw[data-w="mine"]');
     t.ok(await p.evaluate(() => $('#modalBox .coach-demo').classList.contains('coach-own') && !!coachRun), 'the own example plays in the tip');
     await click(p, '#ntGo');
     await p.evaluate(() => { localStorage.removeItem(CZ_MINE); closeModal(); });
-    await p.evaluate(() => showLessonMenu()); await click(p, '.cz-tilepick[data-tile="ice"]');
+    await p.evaluate(() => showCoachMenu()); await click(p, '.cz-tilepick[data-tile="ice"]');
     t.eq(await p.locator('#introPanel').getAttribute('data-kind'), 'ice', 'tile explanations open from the same menu (ice: the new intro film)');
     await click(p, '#ntGo'); await p.evaluate(() => closeModal());
     for (const lv of [65, 95]) {

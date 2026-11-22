@@ -8,19 +8,19 @@ module.exports = [
   { name: 'level instructions: required ice and lock examples run in order, block play and back, survive reopening and persist only after acknowledgment', async run(t, { click, modal }) {
     const p = await t.phone({ size: [360, 640], state: { name: 'Dennis', level: 45, sunSeen: true, seenSp: { ...seen, ice: 0, lock: 0 } } });
     await p.evaluate(() => startLevel(45));
-    t.eq(await p.locator('.lesson-demo').getAttribute('data-lesson'), 'lock', 'introduce a present lock first');
+    t.eq(await p.locator('#introPanel').getAttribute('data-kind'), 'lock', 'introduce a present lock first (the lock film)');
     t.ok(await p.locator('#ntGo').isDisabled(), 'cannot acknowledge an unfinished example');
-    t.ok(await p.evaluate(() => $('#modalBox').scrollHeight <= $('#modalBox').clientHeight + 1), 'required instructions fit a small phone');
+    t.ok(await p.evaluate(() => { const b = $('#modalBox'); return b.scrollHeight <= b.clientHeight + 1 && b.getBoundingClientRect().bottom <= innerHeight; }), 'required instructions fit a small phone');
     await click(p, '#ntGo');
     await p.evaluate(() => {
       handleBack(); $('#modal').click();
       const i = G.tiles.findIndex((_, i) => canTake(i)); onTap(i);
       resumeClock();
     });
-    t.eq(await p.evaluate(() => [modalFree(), G.mv, !!G.tStart, !!S.seenSp.lock]), [false, 0, false, false], 'back, backdrop, early confirmation and taps cannot bypass instructions');
+    t.eq(await p.evaluate(() => [modalFree(), introRun.real.mv, !!introRun.real.tStart, !!S.seenSp.lock]), [false, 0, false, false], 'back, backdrop, early confirmation and taps cannot bypass instructions');
     await p.reload(); await p.waitForFunction(() => window.__mjReady);
     await p.evaluate(() => startLevel(45));
-    t.eq(await p.locator('.lesson-demo').getAttribute('data-lesson'), 'lock', 'unfinished instruction returns on resume');
+    t.eq(await p.locator('#introPanel').getAttribute('data-kind'), 'lock', 'unfinished instruction returns on resume');
     await finish(p);
     t.eq(await p.locator('#introPanel').getAttribute('data-kind'), 'ice', 'second new tile is explained before play (the new intro film, a pop-up over the level, js/intro.js)');
     t.eq(await p.evaluate(() => [!!S.seenSp.lock, !!S.seenSp.ice, introRun.real.mv]), [true, false, 0], 'only the acknowledged kind is remembered');
@@ -46,16 +46,8 @@ module.exports = [
     await click(p, '#ntGo');
     t.eq(p.errors, [], 'no browser errors');
   }},
-  { name: 'level instructions: gold and joker explanations require confirmation and face-down tiles cannot be dismissed with back', async run(t, { click, modal }) {
-    const p = await t.phone({ state: { name: 'Dennis', level: 45, sunSeen: true, seenSp: { ...seen, gold: 0, joker2: 0 } } });
-    await p.evaluate(() => startLevel(20));
-    t.ok((await modal(p)).title.includes('Gouden'), 'first golden pair has instructions');
-    t.eq(await p.evaluate(() => [!!S.seenSp.gold, modalClosable]), [false, false], 'gold waits for confirmation');
-    await click(p, '#ntGo');
-    await p.evaluate(() => { G.tiles[0].face = JOKER; G.o.faces[0] = JOKER; newTileIntro(); });
-    t.eq(await p.evaluate(() => [!!S.seenSp.joker2, modalClosable]), [false, false], 'joker also waits for confirmation');
-    await click(p, '#ntGo');
-    t.ok(await p.evaluate(() => S.seenSp.joker2), 'joker confirmation is saved');
+  { name: 'level instructions: face-down tiles cannot be dismissed with back', async run(t, { click, modal }) {
+    const p = await t.phone({ state: { name: 'Dennis', level: 45, sunSeen: true, seenSp: seen } });
     await p.evaluate(() => { S.seenDown = false; startLevel(35); });
     t.ok((await modal(p)).buttons.includes('mGo'), 'face-down instructions appear before play');
     await p.evaluate(() => handleBack());

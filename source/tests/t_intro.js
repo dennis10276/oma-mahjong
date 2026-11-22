@@ -41,7 +41,7 @@ const popupLook = () => {
 const captionsFit = (kind = 'ice') => {
   const cap = $('#modalBox .intro-cap'); if (!cap) return ['no caption chip'];
   const b = $('#modalBox'), keep = cap.textContent, r = el => el.getBoundingClientRect();
-  const out = INTRO_FILMS[kind].taps.filter(x => x[2]).map(x => {
+  const out = (INTRO_FILMS[kind].parts || [INTRO_FILMS[kind]]).flatMap(q => q.taps).filter(x => x[2]).map(x => {
     cap.textContent = tx(x[2]);
     const c = r(cap), card = r(b), wrap = r(cap.previousElementSibling);
     const ok = { inCard: c.left >= card.left && c.right <= card.right && cap.scrollWidth <= cap.clientWidth, oneLine: c.height <= parseFloat(getComputedStyle(cap).lineHeight) * 1.5 + 16,
@@ -76,7 +76,7 @@ const filmSteps = kind => new Promise(done => {
   };
   rec();
 });
-/* The films of the next mechanics (preview for Dennis): per kind the level where it is first met, the steps of the step
+/* The films of lock and tray pair (the clock film has two parts: its own test): per kind the level where it is first met, the steps of the step
    table (tap, taken off the board, then what the game shows) and what the first tap lights up (the game's own hint). */
 const NEXT_FILMS = {
   ice: { level: 35, steps: [['ice', false, { said: [] }], ['far', true, { said: [] }], ['corner', true, { said: [] }], ['up', true, { said: ['iceCrack'] }], ['top', true, { said: ['iceMelted'] }]],
@@ -85,10 +85,6 @@ const NEXT_FILMS = {
     first: { hint: ['k1', 'k2'], xray: ['c'] }, caps: ['l1', 'k1', 'k2'] },
   trayPair: { level: 50, steps: [['d1', false, { tray: 3, peek: 'd1', said: [] }], ['d2', false, { tray: 3, peek: 'd2', said: [] }], ['t2', true, { tray: 3, peek: null, said: [] }], ['d1', false, { tray: 3, peek: 'd1', said: [] }], ['d3', true, { tray: 3, peek: null, said: [] }]],
     first: { hint: [], xray: [] }, caps: ['d2', 't2', 'd3'] },
-  // (Dennis 2026-11-22: "a longer video and more in dept first time that every move costs 1")
-  clock: { level: 80, ms: 12000, steps: [['a1', true, { left: 5, said: ['clockHurry'] }], ['a2', true, { left: 4, said: [] }], ['b1', true, { left: 3, said: [] }], ['ck', false, { left: 3, said: [] }],
-    ['dn', false, { left: 3, peek: 'dn', said: [] }], ['t', true, { left: 2, said: [] }], ['x', true, { left: 1, said: [] }], ['ck', true, { left: null, said: ['clockSaved'] }]],
-    first: { hint: [], xray: [] }, caps: ['a1', 'ck', 'dn', 'ck'] },
 };
 
 // What the game shows for a tap on tile i that cannot be taken (board.js tapTile, specials.js obBlocked), checked
@@ -108,11 +104,11 @@ module.exports = [
   { name: 'intro: every film is built like a real pile: a tile in a higher layer rests on 4 tiles or bridges 2, never a tower or on one corner', async run(t) {
     const p = await t.phone({ state: { name: 'Dennis', level: 40, sunSeen: true, seenSp: seen } });
     // layouts.js buildOnce: shiftXY (on 4, half a tile both ways), shiftX / shiftY (a bridge over 2); 'stack' (towers) only in some hard levels
-    const bad = await p.evaluate(() => Object.entries(INTRO_FILMS).flatMap(([kind, film]) => film.tiles.filter(([, , , , z]) => z >= 1).map(([id, , x, y, z]) => {
+    const bad = await p.evaluate(() => Object.entries(INTRO_FILMS).flatMap(([kind, f]) => (f.parts || [f]).flatMap(film => film.tiles.filter(([, , , , z]) => z >= 1).map(([id, , x, y, z]) => {
       const has = (dx, dy) => film.tiles.some(b => b[4] === z - 1 && b[2] === x + dx && b[3] === y + dy);
       const on4 = has(-1, -1) && has(1, -1) && has(-1, 1) && has(1, 1), bridge = (has(-1, 0) && has(1, 0)) || (has(0, -1) && has(0, 1));
       return on4 || bridge ? null : `${kind} ${id} (${x},${y},${z})`;
-    })).filter(Boolean));
+    }))).filter(Boolean));
     t.eq(bad, [], 'every upper tile rests like a tile of a real level');
   }},
   { name: 'intro: the first ice film plays in a pop-up over the level, must be watched before the button works, and leaves the level as it was', async run(t) {
@@ -232,7 +228,8 @@ module.exports = [
     t.ok(await p.evaluate(() => G.elapsed === window.__el && G.tStart > 0), 'the level clock waited during the film and runs again after it');
     t.eq(after[1], before[1], 'nothing on the phone changed');
     await click(p, '.lesson-pick[data-kind="lock"]');
-    t.ok(await p.evaluate(() => !$('#introPanel') && !!$('#modalBox .lesson-demo')), 'the other tiles keep their old film for now');
+    t.eq(await p.evaluate(() => $('#introPanel') && $('#introPanel').dataset.kind), 'lock', 'the lock has its film too');
+    await click(p, '#ntGo');
     await p.evaluate(() => { closeModal(); S.lang = 'nl'; showTileLesson('ice', null, false, 'manual'); });
     t.ok(await p.evaluate(() => $('#introPanel p.intro-line').textContent.includes('erboven')), 'Dutch line');
     t.ok(await p.evaluate(() => { const b = $('#modalBox'); return b.getBoundingClientRect().bottom <= innerHeight && b.scrollHeight <= b.clientHeight + 1; }), 'the Dutch line fits a small phone too');
@@ -383,7 +380,7 @@ module.exports = [
     t.eq(plays.slice(start + 1).map(e => e.k), ['help_msg'], 'the play log gains only the help message of the film');
     for (const lang of ['en', 'nl']) {
       await p.setViewportSize({ width: 360, height: 640 });
-      for (const kind of Object.keys(NEXT_FILMS)) {
+      for (const kind of [...Object.keys(NEXT_FILMS), 'clock']) {
         await p.evaluate(([kind, lang]) => { S.lang = lang; playIntroFilm(kind, { why: 'manual' }); }, [kind, lang]);
         await sleep(400);
         t.eq(await p.evaluate(captionsFit, kind), [], `${kind}: every ${lang} caption fits a 360 px phone on one line, below the board`);
@@ -406,14 +403,67 @@ module.exports = [
       const real = { ...await p.evaluate(hintOf, i), said: await p.evaluate(`(${said})()`) };
       await sleep(1600);
       await p.evaluate(k => playIntroFilm(k, { why: 'manual' }), kind);
-      await p.waitForFunction(n => introRun.log.length > n, tap, { polling: 10, timeout: 8000 }); await sleep(300);
-      const film = await p.evaluate(([k, h, s, n]) => ({ ...eval(h)(INTRO_FILMS[k].tiles.findIndex(x => x[0] === INTRO_FILMS[k].taps[n][1])), said: eval(s)() }), [kind, hintOf.toString(), `(${said})`, tap]);
+      await p.waitForFunction(n => introRun.log.length > n, tap, { polling: 10, timeout: 15000 }); await sleep(300);
+      const film = await p.evaluate(([k, h, s, n]) => { const f = INTRO_FILMS[k], q = f.parts ? f.parts[1] : f, m = f.parts ? n - 3 : n; return { ...eval(h)(q.tiles.findIndex(x => x[0] === q.taps[m][1])), said: eval(s)() }; }, [kind, hintOf.toString(), `(${said})`, tap]);
       t.ok(real.shake && real.glow && real.seeThrough && real.blockers, `${kind}: the real level shows the game's hint for it`, real);
       t.eq({ ...film, arrows: film.arrows > 0 }, { ...real, arrows: real.arrows > 0 }, `${kind}: the film's tap that cannot be taken shows the same hint and top-bar text as in level ${level}`, [real, film]);
       if (real.said) t.ok(await p.evaluate(() => { const m = $('#gameMsg'), r = m.getBoundingClientRect(), c = $('#modalBox').getBoundingClientRect(), w = $('#modalBox #tray').getBoundingClientRect();
         return m.closest('#modalBox') && r.height > 0 && r.top >= c.top && r.bottom <= w.top + 1 && getComputedStyle(m.firstChild).opacity > 0.5; }), `${kind}: its top-bar text shows in the pop-up, above the film's tray`);
       await p.evaluate(() => stopIntroFilm()); await sleep(300);
     }
+    t.eq(p.errors, [], 'no browser errors');
+  }},
+  // ---- round 2: the films are the game's first meeting and its How to play list ----
+  { name: 'intro: the first meeting of lock, tray pair and clock is a required film; a player who has seen the old lesson gets no pop-up', async run(t, { click }) {
+    for (const [kind, level, others] of [['lock', 45, { ice: 1, trayPair: 1 }], ['trayPair', 50, { ice: 1, lock: 1 }], ['clock', 80, { ice: 1, lock: 1, trayPair: 1 }]]) {
+      const pid = 'test-meet-' + kind;
+      const p = await t.phone({ size: [360, 640], state: { name: 'Dennis', pid, level, sunSeen: true, seenSp: { ...others } } });
+      await p.evaluate(l => startLevel(l), level);
+      t.eq(await p.evaluate(() => [$('#introPanel') && $('#introPanel').dataset.kind, introRun.real.mv, !!document.querySelector('.lesson-demo')]), [kind, 0, false], kind + ': the film is the first meeting, not the old lesson');
+      t.ok(await p.locator('#ntGo').isDisabled(), kind + ': the button waits for one play');
+      await p.waitForFunction(() => !$('#ntGo').disabled, null, { timeout: 60000 });
+      t.eq(await p.evaluate(k => !!S.seenSp[k], kind), false, kind + ': nothing is remembered before the button');
+      await click(p, '#ntGo');
+      t.eq(await p.evaluate(k => [!!S.seenSp[k], !!S.seenSp.clockMoves, !!JSON.parse(localStorage.getItem(STORE)).seenSp[k], G.introducing, modalFree()], kind), [true, kind === 'clock', true, false, true], kind + ': the button saves it (the clock also its old moves note) and starts the level');
+      await drain(p);
+      t.eq(helpMessages(p, pid).map(e => [e.topic, e.why, e.action]), [[kind, 'intro', 'shown'], [kind, 'intro', 'ack']], kind + ': the dashboard sees the film');
+      await p.evaluate(l => { clearCur(); startLevel(l); }, level);
+      t.eq(await p.evaluate(() => [modalFree(), !!$('#introPanel')]), [true, false], kind + ': not again');
+      t.eq(p.errors, [], 'no browser errors');
+      // seen the old lesson before: no pop-up at all
+      const q = await t.phone({ state: { name: 'Dennis', level, sunSeen: true, seenSp: { ...others, [kind]: 1, clockMoves: 1 } } });
+      await q.evaluate(l => startLevel(l), level);
+      t.eq(await q.evaluate(() => [modalFree(), !!$('#introPanel'), !!document.querySelector('.lesson-demo')]), [true, false, false], kind + ': the old lesson counts as seen');
+    }
+  }},
+  { name: 'intro: How to play lists the met films only, opens each closable at once and comes back to the list; the clock button sets the old moves note', async run(t, { click }) {
+    const p = await t.phone({ size: [360, 640], state: { name: 'Dennis', level: 80, sunSeen: true, seenSp: { ice: 1, clock: 1, gold: 1, joker2: 1 } } });
+    await p.evaluate(() => startLevel(80));
+    await p.evaluate(() => showLessonMenu());
+    t.eq(await p.evaluate(() => [...document.querySelectorAll('.lesson-pick')].map(b => b.dataset.kind)), ['ice', 'clock'], 'only the met, filmed mechanics');
+    await click(p, '.lesson-pick[data-kind="clock"]');
+    t.eq(await p.evaluate(() => [$('#introPanel').dataset.kind, $('#ntGo').disabled]), ['clock', false], 'the clock film opens, closable at once');
+    await click(p, '#ntGo');
+    await p.waitForFunction(() => !G.film && document.querySelectorAll('.lesson-pick').length === 2);
+    t.eq(await p.evaluate(() => [!!S.seenSp.clockMoves, document.querySelectorAll('.lesson-pick').length]), [true, 2], 'back at the list; the clock button set the moves note');
+    t.eq(p.errors, [], 'no browser errors');
+  }},
+  { name: 'intro: the clock film has two parts: the clock is lost first (every tile 1 move), then what is free, and the level is left as it was', async run(t, { startLevel }) {
+    const p = await t.phone({ size: [360, 640], state: { name: 'Dennis', pid: 'test-intro-clock', level: 80, sunSeen: true, seenSp: seen } });
+    await startLevel(p, 80);
+    const before = await p.evaluate(([levelOf, phoneData]) => [eval(levelOf)(), eval(phoneData)()], [levelOf.toString(), phoneData.toString()]);
+    // the number under each caption, as it shows (before → after the tap), and whether the clock tile was still there at 0
+    await p.evaluate(() => { window.__counts = []; window.__alarm = false; playIntroFilm('clock', { why: 'manual' });
+      new MutationObserver(() => { const c = $('#modalBox .intro-count'); if (c && c.textContent) window.__counts.push(c.textContent); }).observe($('#modalBox .intro-count'), { childList: true, characterData: true, subtree: true });
+      const tick = setInterval(() => { if (!introRun) return clearInterval(tick); if (G.clock && G.clock.n <= G.mv && G.alive[G.clock.i]) window.__alarm = true; }, 20); });
+    await p.waitForFunction(() => $('#modalBox .intro-stage').classList.contains('intro-end'), null, { timeout: 30000 });
+    t.eq(await p.evaluate(() => window.__counts), ['⏰ 3 → 2', '⏰ 2 → 1', '⏰ 1 → 0', '⏰ 3 → 3', '⏰ 3 → 3', '⏰ 3 → 2', '⏰ 2 → 1', '⏰ 1 → 0'], 'part 1: every tile costs 1; part 2: a blocked tap and a peek cost nothing, the last move is in time');
+    t.ok(await p.evaluate(() => window.__alarm), 'part 1 ends with the clock at 0 and its tile still there: the alarm');
+    t.eq(await p.evaluate(() => [introRun.plays, G.clock && G.alive[G.clock.i]]), [1, 0], 'it plays once, and the clock tile is gone at the end');
+    await p.evaluate(() => stopIntroFilm());
+    await p.waitForFunction(() => !G.film, null, { timeout: 3000 });
+    const after = await p.evaluate(([levelOf, phoneData]) => [eval(levelOf)(), eval(phoneData)()], [levelOf.toString(), phoneData.toString()]);
+    t.eq(after, before, 'the level and the phone are exactly as they were');
     t.eq(p.errors, [], 'no browser errors');
   }},
 ];

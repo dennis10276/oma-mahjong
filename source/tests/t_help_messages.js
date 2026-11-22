@@ -26,7 +26,7 @@ module.exports = [
       await p.evaluate(() => { S.fails.L55 = 3; clearCur(); __mj.startLevel(55); });
       await drain();
       t.eq(messages().length, 8, 'retry no longer emits a help message');
-      await p.evaluate(() => showLessonMenu());
+      await p.evaluate(() => showCoachMenu());
       await click(p, '.cz-pick[data-kind="clockFirst"]'); await drain();
       t.eq(messages().at(-1).why, 'manual', 'manually reopened clock explanation is distinguished');
       await click(p, '#ntGo'); await p.evaluate(() => closeModal());
@@ -44,7 +44,7 @@ module.exports = [
       t.eq(messages().length, before, 'no automatic lesson or help event on any clock timeout');
       await click(p, '#sMenu');
       await p.evaluate(() => { RULES.coach.fromLevel = 60; });
-      await p.evaluate(() => showLessonMenu()); await click(p, '.cz-pick[data-kind="three"]'); await drain();
+      await p.evaluate(() => showCoachMenu()); await click(p, '.cz-pick[data-kind="three"]'); await drain();
       t.eq([messages().at(-1).why, messages().at(-1).scr, messages().at(-1).at], ['manual', 'home', undefined], 'help from home is not assigned to an old attempt');
     }
   }},

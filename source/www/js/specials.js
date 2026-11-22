@@ -30,37 +30,30 @@ function specialMatch(face, gold, c) {
   if (face === JOKER) { praise(tx('twoJokers')); FX.emoji(c.x, c.y, ['🃏', '✨'], 8); bumpStat('jokers'); }
   return gold ? RULES.score.goldMult : 1;
 }
-/* "Wist je dat?" (Dennis 2026-11-23): gold and the joker are not explained; a short tip says it, at most TIP_MAX
-   times per player (S.tips), one at a time, the joker first (it is rare: only some levels below RULES jokersGoneFrom).
-   Only players who still meet those tiles see it. Where: in a level (3 s, under the tray; only the joker) and on the home screen (always, a new tip each time) */
-const TIP_MAX = 3;
-// the home screen's pool (preview: texts only, no "who sees it" yet): [the picture on the little tile, lang key]
-const HOME_TIPS = [['💡', 'hint'], ['💡', 'hintCost'], ['🔀', 'shuffle'], ['⭐', 'toolsBack'], ['📅', 'daily'], ['🔥', 'streak'], ['🌻', 'sunflower'], ['⭐', 'stars'],
-  ['❄️', 'ice'], ['🔑', 'lock'], ['🀄', 'trayPair'], ['⏰', 'clock']];
-function nextTip(has) {
-  const k = Object.keys(has).find(k => (S.tips[k] || 0) < TIP_MAX && has[k]());
-  if (k) { S.tips[k] = (S.tips[k] || 0) + 1; save(); }
-  return k;
-}
+/* "Wist je dat?" (Dennis 2026-11-23): gold and the joker are not explained, and there are no tips in a level and none about the joker:
+   only the home screen shows a tip (always one that fits the player, a new one each time) */
+// the home screen's pool: [the picture on the little tile, lang key, who sees it]; tools open at level L (board.js toolsEarned)
+const toolsAt = L => L >= RULES.tools.fromLevel && !(toolsEarnLevel(L) && !toolsEarned(L));
+const met = k => () => !!S.seenSp[k];
+const HOME_TIPS = [
+  ['💡', 'hint', () => toolsAt(S.level)], ['💡', 'hintCost', () => toolsAt(S.level)], ['🔀', 'shuffle', () => toolsAt(S.level)],
+  ['⭐', 'toolsBack', () => toolsEarnLevel(S.level) && !toolsAt(S.level)],
+  ['📅', 'daily', () => true], ['🔥', 'streak', () => Object.keys(S.daily).length > 0],
+  ['🌻', 'sunflower', () => !sunUnlocked()], ['⭐', 'stars', () => numBgs.some(b => bgLocked(b))],
+  ['❄️', 'ice', met('ice')], ['🔑', 'lock', met('lock')], ['🀄', 'trayPair', met('trayPair')], ['⏰', 'clock', () => S.seenSp.clock || S.seenSp.clockMoves]];
 // one tip: a cream card, the small tile on the left shows what the tip is about
 function tipEl(ico, k, extra) {
   const el = document.createElement('div'); el.className = 'tip-box ' + extra;
   el.innerHTML = '<i class="tip-tile">' + ico + '</i><span class="tip-txt"><small>' + tx('tipHead') + '</small><b>' + tx('tip_' + k) + '</b></span>';
   return el;
 }
-function specialTip() {
-  if (!G || G.done || !modalFree()) return;
-  const k = nextTip({ joker: () => G.tiles.some((t, i) => G.alive[i] && t.face === JOKER) });
-  if (!k) return;
-  // right under the tray, over the top of the board, 3 s, then it fades; taps go through it
-  const el = tipEl('🃏', k, 'tip-over'); $('#boardWrap').appendChild(el); setTimeout(() => el.remove(), 3000);
-}
-// the home screen's tip under the greeting: a new one each time, never the same twice in a row
-let lastHomeTip = -1;
+// the home screen's tip under the greeting: one that fits the player, never the same twice in a row (S.lastTip); none if none fits
+const homeTips = () => HOME_TIPS.filter(t => t[2]());
 function homeTip() {
-  let i; do i = Math.floor(Math.random() * HOME_TIPS.length); while (i === lastHomeTip);
-  lastHomeTip = i;
-  const el = $('#homeTip'), n = tipEl(HOME_TIPS[i][0], HOME_TIPS[i][1], 'home-tip'); el.replaceWith(n); n.id = 'homeTip';
+  const fit = homeTips(), fresh = fit.filter(t => t[1] !== S.lastTip), pool = fresh.length ? fresh : fit, el = $('#homeTip');
+  if (!pool.length) { el.hidden = true; return; }
+  const t = pool[Math.floor(Math.random() * pool.length)], n = tipEl(t[0], t[1], 'home-tip');
+  S.lastTip = t[1]; el.replaceWith(n); n.id = 'homeTip';
 }
 
 /* ---------- the joker: it fits every picture ----------
@@ -447,15 +440,8 @@ function startLessonDemo() {
   demo.querySelector('.lesson-replay').onclick = () => { step = 0; playing = true; paint(); fresh(true); run(); };
   paint(); fresh(false); run();
 }
-function showTileLesson(kind, after = null, reminder = false, why = reminder ? 'retry' : 'intro', required = false) {
-  if (kind === 'ice') { playIntroFilm('ice', { required, after, why }); return; }      // the new intro film (js/intro.js)
-  // (from 1.60: a film of a real game in the player's own tiles, background and tray, js/coach.js;
-  // the explanation folds open under it)
-  openModal(`${reminder ? `<p class="lesson-reminder">${tx('lessonReminder')}</p>` : ''}<h2>${required ? tx('newTile', tx('nt_' + kind)) : tx('nt_' + kind)}</h2>
-    ${coachDemoHTML(false, kind)}${required ? `<p>${tx('nt_' + kind + '_text')}</p>` : `<details class="cz-more"><summary>${tx('czMore')}</summary><p>${tx('nt_' + kind + '_text')}</p></details>`}
-    ${tileLessonButton(required)}`, false, null, 'tile-help coach-help' + (required ? ' tile-intro' : ''));
-  tileLessonPlay(kind, coachTileClip(kind), after, why, required);
-}
+// (the old lessons for these kinds show nothing any more: the films, js/intro.js; the old code below goes in Task 8)
+function showTileLesson(kind, after = null, reminder = false, why = reminder ? 'retry' : 'intro', required = false) { playIntroFilm(kind, { required, after, why }); }
 const tileLessonButton = required => `<button class="big-btn play" id="ntGo"${required ? ' disabled' : ''}><span class="bb-text"><b>${tx(required ? 'lessonWatch' : 'gotIt')}</b></span></button>`;
 function tileLessonPlay(kind, clip, after, why, required) {
   const go = $('#ntGo'), message = recordHelpMessage(kind, why);
@@ -475,7 +461,7 @@ function tileLessonPlay(kind, clip, after, why, required) {
   coachPlay($('#modalBox .coach-demo'), clip);
 }
 // How to play: every special the player has met, in the order they come, each with its film (js/intro.js)
-// (gold and the joker have no explanation: a "Wist je dat?" tip, specialTip; Dennis 2026-11-23)
+// (gold and the joker have no explanation: a "Wist je dat?" Dennis 2026-11-23)
 const MET_ORDER = ['ice', 'lock', 'trayPair', 'clock'];
 function showLessonMenu() {
   const met = MET_ORDER.filter(k => S.seenSp[k] || (k === 'clock' && S.seenSp.clockMoves));
@@ -489,23 +475,16 @@ function showLessonMenu() {
 const clockHelpText = () => ['nt_clock_text', 'clockMoves', 'clockFree', 'clockGoal'].map(k => `<p>${tx(k)}</p>`).join('');
 // (from 1.59, with the film: the first line shows, the rest folds open, so the film can be big)
 const clockHelpShort = () => `<p>${tx('nt_clock_text')}</p><details class="cz-more"><summary>${tx('czMore')}</summary>${['clockMoves', 'clockFree', 'clockGoal'].map(k => `<p>${tx(k)}</p>`).join('')}</details>`;
-function showClockLesson(after = null, reminder = false, why = reminder ? 'retry' : 'intro', required = false) {
-  // (from 1.59: a film of a real game in the player's own tiles, js/coach.js)
-  openModal(`${reminder ? `<p class="lesson-reminder">${tx('lessonReminder')}</p>` : ''}<h2>${required ? tx('newTile', tx('nt_clock')) : tx('nt_clock')}</h2>${coachDemoHTML(false, 'clock')}${clockHelpShort()}
-    ${tileLessonButton(required)}`, false, null, 'clock-help coach-help');
-  replayMark('clock-help', 'intro');
-  tileLessonPlay('clock', coachClockClip(), after, why, required);
-}
+function showClockLesson(after = null, reminder = false, why = reminder ? 'retry' : 'intro', required = false) { playIntroFilm('clock', { required, after, why }); }
 function clockIntro(after = null) {
   if (!clockOn() || S.seenSp.clockMoves) return false;
-  showClockLesson(after, false, 'intro', true);
+  playIntroFilm('clock', { required: true, after });
   return true;
 }
 function newTileIntro(after = null) {
   if (!G || G.done) return false;
   const k = Object.keys(NEW_TILES).find(k => !S.seenSp[k] && NEW_TILES[k].has() && (!NEW_TILES[k].first || NEW_TILES[k].first()));
   if (!k) return false;
-  if (k === 'ice') { playIntroFilm('ice', { required: true, after }); return true; }
-  showTileLesson(k, after, false, 'intro', true);
+  playIntroFilm(k, { required: true, after });
   return true;
 }

@@ -2,45 +2,6 @@
 const fs = require('fs'), path = require('path');
 const seen = { gold: 1, joker2: 1, ice: 1, lock: 1, clockMoves: 1, trayPair: 1 };
 module.exports = [
-  { name: 'tile help: all four animated lessons fit a small phone in both languages and leave the game untouched', async run(t, { startLevel, click, sleep }) {
-    for (const lang of ['nl', 'en']) {
-      const p = await t.phone({ size: [360, 640], state: { name: 'Dennis', level: 80, sunSeen: true, lang, seenSp: seen } });
-      await startLevel(p, 80);
-      for (const kind of ['lock', 'trayPair', 'clock']) {        // (ice has the new intro film: t_intro.js)
-        const before = await p.evaluate(() => JSON.stringify([G.mv, G.tray, [...G.alive], [...G.down], obState(), G.clock]));
-        await p.evaluate(k => k === 'clock' ? showClockLesson() : showTileLesson(k), kind);
-        t.eq(await p.locator('.lesson-demo').getAttribute('data-lesson'), kind, 'correct demonstration');
-        // (from 1.60 a real game in the player's own tiles: the ice and the locks lie on the pile)
-        if (kind === 'lock') t.ok(await p.evaluate(() => !!$('.cz-board .tile .ob[data-k="lock"]') && !!$('.cz-board .tile .ob[data-k="key"]')), 'lock film shows locks and keys on a real pile');
-        if (kind === 'clock') t.ok(!/hint|schudden|shuffle/i.test(await p.locator('#modalBox').innerText), 'clock explanation does not mention tools');
-        t.ok(await p.evaluate(() => $('#modalBox').scrollHeight <= $('#modalBox').clientHeight + 1), 'lesson and button fit: ' + lang + ' ' + kind);
-        await click(p, '.lesson-toggle');
-        const step = await p.locator('.lesson-demo').getAttribute('data-step');
-        await sleep(2600);
-        t.eq(await p.locator('.lesson-demo').getAttribute('data-step'), step, 'pause freezes demonstration');
-        await click(p, '.lesson-replay');
-        t.eq(await p.locator('.lesson-demo').getAttribute('data-step'), '0', 'replay returns to first step');
-        // (the films start their first tap after 1.5 s; under load timers can run late)
-        const moved = await p.waitForFunction(() => $('.lesson-demo').dataset.step !== '0', null, { timeout: 6000 }).then(() => true, () => false);
-        t.ok(moved, 'animation advances');
-        t.eq(await p.evaluate(() => JSON.stringify([G.mv, G.tray, [...G.alive], [...G.down], obState(), G.clock])), before, 'demo does not touch game state');
-        if (process.env.CAPTURE_TILE_HELP_DIR) {
-          fs.mkdirSync(process.env.CAPTURE_TILE_HELP_DIR, { recursive: true });
-          await p.screenshot({ path: path.join(process.env.CAPTURE_TILE_HELP_DIR, kind + '-' + lang + '.png') });
-        }
-        await click(p, '#ntGo');
-        t.eq(await p.evaluate(() => lessonTimer), null, 'closing cleans up timer');
-      }
-      await p.evaluate(() => showTileLesson('lock', null, true));
-      t.ok(await p.evaluate(() => $('#modalBox').scrollHeight <= $('#modalBox').clientHeight + 1), 'lock reminder also fits: ' + lang);
-      await click(p, '#ntGo');
-      await p.evaluate(() => showIntro()); await click(p, '#mTileHelp');
-      t.eq([await p.locator('.cz-pick[data-kind]').count(), await p.locator('.cz-tilepick').count()], [8, 4], 'from level 60 How to play opens the game tips and the tile explanations (js/coach.js)');
-      await p.emulateMedia({ reducedMotion: 'reduce' });
-      await p.evaluate(() => showTileLesson('trayPair'));
-      t.eq(await p.evaluate(() => lessonTimer), null, 'reduced motion starts paused');
-    }
-  }},
   { name: 'tile help: face-down first clears a different pair with three tray tiles; taking a fourth unrelated tile loses', async run(t, { startLevel, sleep }) {
     const p = await t.phone({ state: { name: 'Dennis', level: 20, seenSp: seen } });
     await startLevel(p, 20);

@@ -208,7 +208,8 @@ function playIntroFilm(kind, opts = {}) {
   go.onclick = () => {
     if (go.disabled) return;
     // remembered only once the player has pressed the button
-    S.seenSp[kind] = true; save(); message('ack');
+    S.seenSp[kind] = true; if (kind === 'clock') S.seenSp.clockMoves = true;    // (the clock's old note: clockIntro)
+    save(); message('ack');
     stopIntroFilm(after);
   };
   try {
