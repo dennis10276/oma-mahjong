@@ -22,7 +22,7 @@ module.exports = [
     await p.evaluate(() => startLevel(45));
     t.eq(await p.locator('.lesson-demo').getAttribute('data-lesson'), 'lock', 'unfinished instruction returns on resume');
     await finish(p);
-    t.eq(await p.locator('#introPanel').getAttribute('data-kind'), 'ice', 'second new tile is explained before play (the new intro film on the game screen, js/intro.js)');
+    t.eq(await p.locator('#introPanel').getAttribute('data-kind'), 'ice', 'second new tile is explained before play (the new intro film, a pop-up over the level, js/intro.js)');
     t.eq(await p.evaluate(() => [!!S.seenSp.lock, !!S.seenSp.ice, introRun.real.mv]), [true, false, 0], 'only the acknowledged kind is remembered');
     t.ok(await p.evaluate(() => $('#introPanel').getBoundingClientRect().bottom <= innerHeight), 'required ice explanation fits');
     await finish(p);

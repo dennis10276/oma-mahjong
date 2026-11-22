@@ -266,13 +266,11 @@ function boardGeo(W, H) {
   // At the top, 12 px between the tray and the pile: the tray's wooden edge and shadow hang 4-8 px below it, and with 2 px a
   // tall pile's top row sat under that edge (1.69, Gerda's phone, level 219; Dennis 2026-11-15). 2 px at the bottom.
   const TOP = 12, BOT = 2;
-  // (maxTw: the intro film's tiles are as big as those of the player's own level, js/intro.js)
-  const twW = (W - 4) / (r - l + depthF + 0.04), twH = (H - TOP - BOT) / (b - t0 + depthF * 1.4 + 0.04), tw = Math.min(G.maxTw || 150, twW, twH);
+  const twW = (W - 4) / (r - l + depthF + 0.04), twH = (H - TOP - BOT) / (b - t0 + depthF * 1.4 + 0.04), tw = Math.min(150, twW, twH);
   const th = tw * ratio, dz = tw * dF, d = Math.max(3, tw * depthF);
   // centred on what is really there: even space left and right, and between the tray and the buttons below (below the tray's edge)
   const ox = (W - (r - l) * tw - d) / 2 - l * tw, oy = TOP + (H - TOP - BOT - (b - t0) * tw - d * 1.4) / 2 - t0 * tw;
-  // tall: the height of the pile area decides the tile size (the intro film keeps what the player's own level had)
-  return { tw, th, dz, d, ox, oy, tall: G.film ? G.tall : twH < twW && twH < 150 };
+  return { tw, th, dz, d, ox, oy, tall: twH < twW && twH < 150 };   // tall: the height of the pile area decides the tile size
 }
 // remember the positions (t.r, G.tw); move the tiles that are on the screen already when asked
 function applyGeo(geo, move) {
@@ -291,6 +289,7 @@ function applyGeo(geo, move) {
 // the top bar and the tray lose some of their padding (#game.compact in style.css), nothing gets smaller (Dennis 2026-11-14).
 function fitGeo() {
   const game = $('#game'), wrap = $('#boardWrap');
+  if (G.film) return boardGeo(wrap.clientWidth, wrap.clientHeight);   // (the intro film's board, in its pop-up: the game screen stays as it is)
   game.classList.remove('compact');
   let geo = boardGeo(wrap.clientWidth, wrap.clientHeight);
   if (geo && geo.tall) { game.classList.add('compact'); geo = boardGeo(wrap.clientWidth, wrap.clientHeight); }

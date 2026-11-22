@@ -1,4 +1,4 @@
-/* Throwaway: records the ice intro film (js/intro.js) for Dennis to judge: a video and a few screenshots on a
+/* Throwaway: records the ice intro film pop-up (js/intro.js) for Dennis to judge: a video and a few screenshots on a
    phone (390x820) and a tablet (768x1024), each in two themes, as a player meets ice for the first time
    (level 35). On the phone it also makes compare-<theme>.png: the real level 35 after a tap on a frozen tile (its
    touching tiles light up) beside the film at the same kind of moment. Nothing is sent anywhere (a fake database).
@@ -15,8 +15,8 @@ const RUNS = [
   { name: 'tablet-classic', size: [768, 1024], theme: 'classic', bg: 'jade', lang: 'en' },
   { name: 'tablet-fruit', size: [768, 1024], theme: 'fruit', bg: 'sunrise', lang: 'en' },
 ];
-// key moments, in ms after the film opened (taps at 0.7, 1.5, 2.3, 3.1, 3.9 and 4.7 s; one play is 5.6 s)
-const SHOTS = [[1000, '1-frozen-tap'], [1850, '2-cracked-above'], [2650, '3-melted-below'], [3400, '4-still-covered'], [5800, '5-done-button']];
+// key moments, in ms after the film opened (taps every 0.6 s from 0.8 to 5.0 s; one play is 5.7 s)
+const SHOTS = [[1000, '1-frozen-tap'], [2350, '2-pair-apart-taken'], [2850, '3-cracked-above'], [3450, '4-melted-below'], [4000, '5-still-covered'], [6000, '6-done-button']];
 const FROZEN_SHOT = 1000;
 
 async function context(r, video) {
@@ -54,7 +54,7 @@ async function context(r, video) {
       await lib.sleep(Math.max(0, t0 + 13200 - Date.now()));
       await p.locator('#ntGo').click();
       await lib.sleep(900);
-      await p.screenshot({ path: path.join(OUT, `${r.name}-6-level-back.png`) });
+      await p.screenshot({ path: path.join(OUT, `${r.name}-7-level-back.png`) });
       const video = p.video();
       await ctx.close();
       fs.renameSync(await video.path(), path.join(OUT, r.name + '.webm'));
@@ -73,7 +73,7 @@ async function compare(r) {
   const t0 = Date.now();
   await lib.sleep(Math.max(0, t0 + FROZEN_SHOT - Date.now()));
   const film = await p.screenshot(), filmTw = await p.evaluate(() => G.tw);
-  await lib.sleep(Math.max(0, t0 + 5800 - Date.now()));
+  await lib.sleep(Math.max(0, t0 + 6000 - Date.now()));
   await p.locator('#ntGo').click();
   await lib.sleep(1500);
   const info = await p.evaluate(() => {

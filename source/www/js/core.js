@@ -3,7 +3,11 @@
    (the tunable numbers are in js/rules.js). */
 'use strict';
 
-const $ = s => document.querySelector(s);
+// While the intro film plays (js/intro.js), the game's own board code draws into the film's pop-up: these parts of the
+// game screen are looked up there (filmRoot), the player's own level stays as it is behind the pop-up.
+let filmRoot = null;
+const FILM_PARTS = /^#(board|boardWrap|tray|clockBadge|progressBar|gameMsg|toast)\b/;
+const $ = s => (filmRoot && FILM_PARTS.test(s) ? filmRoot : document).querySelector(s);
 const STORE = 'omamj.v1', CUR = 'omamj.cur';
 const APP_VERSION = '1.72';
 // one-time clean start for every device (all progress from the test period is wiped once)

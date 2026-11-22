@@ -41,8 +41,9 @@ function logLvl(k, extra = {}) { syncClock(); logEvt(k, { ...lvInfo(), aid: G.rp
 // Record the actual explanation shown, not a guess from a player's failures.
 // Firebase permits strings of at most 40 characters; preserve the full text in pieces.
 let helpMessageSeq = 0;
-function recordHelpMessage(topic, why, box = $('#modalBox')) {
+function recordHelpMessage(topic, why) {
   const playing = typeof curScreen !== 'undefined' && curScreen === 'game' && G;
+  const box = $('#modalBox');
   const meta = { mid: SES + '-' + (++helpMessageSeq).toString(36), topic, why, lang: isEn() ? 'en' : 'nl',
     title: box.querySelector('h2')?.textContent || topic, scr: curScreen,
     ...(playing ? { ...lvInfo(), aid: G.rp && G.rp.id, at: G.attempt, fails: S.fails[G.key] || 0 } : { lv: S.level }) };
