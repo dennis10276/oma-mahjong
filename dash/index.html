@@ -352,10 +352,17 @@ const lvlKey = e => e.m === 'd' ? 'D' + e.d : 'L' + e.lv;
 // ---------- data in ----------
 function events(pid) { return Object.values(PLAYS[pid] || {}).filter(e => e && e.t).sort((a, b) => a.t - b.t); }
 function nameOf(pid) { const s = SCORES[pid]; if (s && s.name) return s.name; const op = events(pid).filter(e => e.name).pop(); return op ? op.name : pid; }
+const PREVIEW_PIDS = new Set([
+  'pmwgzp93mvo2psl', 'pmwgzpljzss9e0h', 'pmws0idd8lno0xg', 'pmws0j4gtb12zdt',
+  'pmws15bvy8yp0rx', 'pmws15gadu9cmxd', 'pmws15ko02pn6lh', 'pmws15p279h08yb',
+  'pmws161tbr6t4j8', 'pmws16aktdl468e', 'pmws16eyumbbv6p', 'pmws16jd35h7v5m',
+  'pmws16nrgacauq9',
+]);
+const isPreviewNoise = (id, name) => PREVIEW_PIDS.has(id) || (!SCORES[id] && /^(x|test.*|omatest)$/i.test(String(name || '').trim()));
 function players() {
   const ids = new Set([...Object.keys(PLAYS), ...Object.keys(SCORES)].filter(id => !isMsgKey(id) && !isCfgKey(id) && (!id.startsWith('test-') || id === want)));
   return [...ids].map(id => ({ id, name: nameOf(id), last: (events(id).pop() || {}).t || (SCORES[id] || {}).t || 0 }))
-    .filter(p => p.name !== p.id || p.id === want)   // visitors who never chose a name are left out
+    .filter(p => (p.name !== p.id && !isPreviewNoise(p.id, p.name)) || p.id === want)   // visitors who never chose a name and leaked test previews are left out
     .sort((a, b) => b.last - a.last);
 }
 function fillPicker() {
@@ -386,7 +393,7 @@ function playerActivity(pid, ev = events(pid)) {
   return { online, lastSeen: Math.max(last ? last.t : 0, Number(score.t) || 0, heartbeat || 0) };
 }
 function renderRanking() {
-  const ps = players().filter(p => !p.id.startsWith('test-') && !hiddenFromRanking(p.id, p.name)).map(p => ({ ...p, level: currentLevel(p.id) }))
+  const ps = players().filter(p => !p.id.startsWith('test-') && !hiddenFromRanking(p.id, p.name) && !isPreviewNoise(p.id, p.name)).map(p => ({ ...p, level: currentLevel(p.id) }))
     .sort((a, b) => b.level - a.level || a.name.localeCompare(b.name, 'nl') || a.id.localeCompare(b.id));
   let rank = 0;
   $('#ranking').innerHTML = ps.length ? `<table><thead><tr><th scope="col" class="num">#</th><th scope="col">Speler</th><th scope="col" class="num">Level</th></tr></thead><tbody>${ps.map((p, i) => {
@@ -903,6 +910,7 @@ function stream() {
     if (!parts.length) { PLAYS = type === 'put' ? (data || {}) : Object.assign(PLAYS, data || {}); }
     else if (parts.length === 1) { if (type === 'put') PLAYS[parts[0]] = data || {}; else PLAYS[parts[0]] = Object.assign(PLAYS[parts[0]] || {}, data || {}); }
     else { const p = PLAYS[parts[0]] = PLAYS[parts[0]] || {}; if (data === null) delete p[parts[1]]; else p[parts[1]] = type === 'put' ? data : Object.assign(p[parts[1]] || {}, data); }
+    for (const id of PREVIEW_PIDS) if (id !== want) delete PLAYS[id];
     liveOK = true; fillPicker(); render();
   };
   es.addEventListener('put', m => apply('put', m));
