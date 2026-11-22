@@ -48,9 +48,9 @@ async function context(r, video) {
   fs.mkdirSync(OUT, { recursive: true });
   await lib.setup();
   try {
-    for (const r of process.argv[3] === 'preview' ? [{ ...RUNS[0], compare: false }] : RUNS) {
+    for (const r of process.argv[3] === 'preview' ? [{ ...RUNS[0], compare: false }] : KIND === 'tips' ? [RUNS[0], RUNS[2]] : RUNS) {
       const vids = r.video !== false && path.join(OUT, '_video-' + r.name), { ctx, p } = await context(r, vids);
-      if (KIND === 'menu' || KIND === 'tips') { await (KIND === 'menu' ? menu : tips)(p, r); await saveVideo(p, ctx, r, vids); console.log('done', r.name); continue; }
+      if (KIND === 'menu' || KIND === 'tips') { await (KIND === 'menu' ? menu : tips)(p, r); if (vids) await saveVideo(p, ctx, r, vids); else await ctx.close(); console.log('done', r.name); continue; }
       const shots = KIND === 'ice' ? SHOTS : await openFilm(p);
       if (KIND === 'ice') { await p.evaluate(() => { localStorage.removeItem('omamj.cur'); __mj.startLevel(35); }); await p.waitForSelector('#introPanel'); }
       const t0 = Date.now();
@@ -91,20 +91,21 @@ async function menu(p, r) {
   await lib.sleep(1500); await p.locator('#ntGo').click(); await shot('4-back-to-list', 1200);
   await p.locator('#mClose').click(); await lib.sleep(500);
 }
-// the "Wist je dat?" tips: three looks (specials.js TIP_LOOK) in a level (under the tray) and on the home screen; look 1 also in classic
+// the "Wist je dat?" tips: the joker tip in level 33 under the tray, and the home card with two different tips
 async function tips(p, r) {
-  const start = async L => { await p.evaluate(L => { localStorage.removeItem('omamj.cur'); __mj.startLevel(L); }, L); await p.waitForFunction(L => G && G.key === 'L' + L && !G.introducing, L, { timeout: 60000 }); };
-  const shoot = async (look, where, theme) => {
-    await p.evaluate(([look, theme]) => { TIP_LOOK = look; S.tips = {}; S.theme = theme; if (theme === 'classic') S.bg = 'jade'; applyTheme(); applyBg(); }, [look, theme]);
-    const sfx = theme === 'classic' ? '-classic' : '';
-    await start(25); await p.waitForSelector('#boardWrap .tip-over', { timeout: 8000 }); await lib.sleep(600);
-    await p.screenshot({ path: path.join(OUT, `look${look}-level${sfx}.png`) });
+  await p.evaluate(() => { S.tips = {}; });
+  await p.evaluate(() => { localStorage.removeItem('omamj.cur'); __mj.startLevel(33); });
+  await p.waitForFunction(() => G && G.key === 'L33' && !G.introducing, null, { timeout: 60000 });
+  if (r.size[0] === 390) {
+    await p.waitForSelector('#boardWrap .tip-over', { timeout: 8000 }); await lib.sleep(600);
+    await p.screenshot({ path: path.join(OUT, `${r.name}-level33-joker-tip.png`) });
     await lib.sleep(2800);
-    await p.evaluate(() => show('home')); await lib.sleep(1000);
-    await p.screenshot({ path: path.join(OUT, `look${look}-home${sfx}.png`) });
-  };
-  for (const look of [1, 2, 3]) await shoot(look, 0, 'sunflower');
-  await shoot(1, 0, 'classic');
+  }
+  for (const [n, k] of [[1, 'hint'], [2, 'daily'], [3, 'ice'], [4, 'trayPair']].filter(([n]) => r.size[0] === 390 ? n < 3 : n > 2)) {
+    await p.evaluate(k => { show('home'); const i = HOME_TIPS.findIndex(t => t[1] === k); lastHomeTip = -1; const el = $('#homeTip'), t = HOME_TIPS[i], x = tipEl(t[0], t[1], 'home-tip'); el.replaceWith(x); x.id = 'homeTip'; }, k);
+    await lib.sleep(800);
+    await p.screenshot({ path: path.join(OUT, `${r.name}-home-${k}.png`) });
+  }
 }
 // the other films (not yet shown by the game itself): the level opens, then the film as at the first meeting
 async function openFilm(p) {

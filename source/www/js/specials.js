@@ -32,32 +32,35 @@ function specialMatch(face, gold, c) {
 }
 /* "Wist je dat?" (Dennis 2026-11-23): gold and the joker are not explained; a short tip says it, at most TIP_MAX
    times per player (S.tips), one at a time, the joker first (it is rare: only some levels below RULES jokersGoneFrom).
-   Only players who still meet those tiles see it. Where: in a level (3 s, under the tray) and on the home screen (always, a new tip each time):
-   */
+   Only players who still meet those tiles see it. Where: in a level (3 s, under the tray; only the joker) and on the home screen (always, a new tip each time) */
 const TIP_MAX = 3;
-let TIP_LOOK = 1;   // design preview (Dennis picks one): 1 = card with a 💡 block, 2 = speech bubble from the tile it is about, 3 = strip like the goal bar
+// the home screen's pool (preview: texts only, no "who sees it" yet): [the picture on the little tile, lang key]
+const HOME_TIPS = [['💡', 'hint'], ['💡', 'hintCost'], ['🔀', 'shuffle'], ['⭐', 'toolsBack'], ['📅', 'daily'], ['🔥', 'streak'], ['🌻', 'sunflower'], ['⭐', 'stars'],
+  ['❄️', 'ice'], ['🔑', 'lock'], ['🀄', 'trayPair'], ['⏰', 'clock']];
 function nextTip(has) {
   const k = Object.keys(has).find(k => (S.tips[k] || 0) < TIP_MAX && has[k]());
   if (k) { S.tips[k] = (S.tips[k] || 0) + 1; save(); }
   return k;
 }
-// one tip in the chosen look: k = 'gold' | 'joker'; the little tile is the one the tip is about
-function tipEl(k, extra) {
-  const el = document.createElement('div'); el.className = 'tip-box tip-l' + TIP_LOOK + ' ' + extra;
-  const pic = k === 'joker' ? '<i class="tip-tile">🃏</i>' : '<i class="tip-tile gold">✨</i>';
-  el.innerHTML = (TIP_LOOK === 2 ? pic : '<i class="tip-ico">💡</i>') + '<span class="tip-txt"><small>' + tx('tipHead') + '</small><b>' + tx('tip_' + k) + '</b></span>' + (TIP_LOOK === 3 ? '<u class="tip-bar"></u>' : '');
+// one tip: a cream card, the small tile on the left shows what the tip is about
+function tipEl(ico, k, extra) {
+  const el = document.createElement('div'); el.className = 'tip-box ' + extra;
+  el.innerHTML = '<i class="tip-tile">' + ico + '</i><span class="tip-txt"><small>' + tx('tipHead') + '</small><b>' + tx('tip_' + k) + '</b></span>';
   return el;
 }
 function specialTip() {
   if (!G || G.done || !modalFree()) return;
-  const k = nextTip({ joker: () => G.tiles.some((t, i) => G.alive[i] && t.face === JOKER), gold: () => [...G.gold].some(i => G.alive[i]) });
+  const k = nextTip({ joker: () => G.tiles.some((t, i) => G.alive[i] && t.face === JOKER) });
   if (!k) return;
   // right under the tray, over the top of the board, 3 s, then it fades; taps go through it
-  const el = tipEl(k, 'tip-over'); $('#boardWrap').appendChild(el); setTimeout(() => el.remove(), 3000);
+  const el = tipEl('🃏', k, 'tip-over'); $('#boardWrap').appendChild(el); setTimeout(() => el.remove(), 3000);
 }
-// the home screen's tip under the greeting (preview: always the gold tip; the real one picks a new tip each time from a pool)
+// the home screen's tip under the greeting: a new one each time, never the same twice in a row
+let lastHomeTip = -1;
 function homeTip() {
-  const el = $('#homeTip'), n = tipEl('gold', 'home-tip'); el.replaceWith(n); n.id = 'homeTip';
+  let i; do i = Math.floor(Math.random() * HOME_TIPS.length); while (i === lastHomeTip);
+  lastHomeTip = i;
+  const el = $('#homeTip'), n = tipEl(HOME_TIPS[i][0], HOME_TIPS[i][1], 'home-tip'); el.replaceWith(n); n.id = 'homeTip';
 }
 
 /* ---------- the joker: it fits every picture ----------
