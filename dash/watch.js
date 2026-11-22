@@ -129,10 +129,9 @@
     }
     board += '</g>';
     if (view[10] !== false) {
-      const y = Math.min(vh - 42, origin[1] + bh + 4), w = Math.min(140, (vw - 42) / 2);
-      for (const [k, label, used] of [[0, '💡 Hint', replay.hintUsed], [1, '🔀 Schudden', replay.shuffleUsed]]) {
-        const x = vw / 2 + (k ? 7 : -w - 7);
-        board += `<g opacity="${used ? '.45' : '1'}"><rect x="${x}" y="${y}" width="${w}" height="34" rx="12" fill="#fff8e8"/><text x="${x + w / 2}" y="${y + 23}" text-anchor="middle" font-size="16" font-weight="700">${label}</text></g>`;
+      const cy = trayY + slotH - 10;
+      for (const [cx, icon, label, used] of [[32, '💡', 'Hint', replay.hintUsed], [vw - 32, '🔀', 'Schudden', replay.shuffleUsed]]) {
+        board += `<g opacity="${used ? '.45' : '1'}"><title>${label}</title><circle cx="${cx}" cy="${cy + 3}" r="22" fill="${used ? '#8c867a' : '#a86f00'}"/><circle cx="${cx}" cy="${cy}" r="22" fill="${used ? '#c9c4b8' : '#f2b01e'}" stroke="${used ? '#f2f0ea' : '#fff4b8'}" stroke-width="2"/><text x="${cx}" y="${cy + 8}" text-anchor="middle" font-size="22">${icon}</text></g>`;
       }
     }
     const touch = replay.tapEvent && replay.tapEvent.data && replay.tapEvent.data[3];
