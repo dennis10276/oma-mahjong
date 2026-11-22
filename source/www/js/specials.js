@@ -449,11 +449,14 @@ function tileLessonPlay(kind, clip, after, why, required) {
   };
   coachPlay($('#modalBox .coach-demo'), clip);
 }
+// How to play: every special the player has met, in the order they come, each with its film (js/intro.js) or card
+const MET_ORDER = ['gold', 'joker2', 'ice', 'lock', 'trayPair', 'clock'];
 function showLessonMenu() {
-  if (coachOn(S.level)) { showCoachMenu(); return; }      // from RULES.coach.fromLevel the game tips replace these
-  openModal(`<h2>${tx('lessonMenu')}</h2>${['ice', 'lock', 'clock', 'trayPair'].map(k => `<button class="big-btn lesson-pick" data-kind="${k}"><span class="bb-text"><b>${tx('nt_' + k)}</b></span></button>`).join('')}
+  const met = MET_ORDER.filter(k => S.seenSp[k] || (k === 'clock' && S.seenSp.clockMoves));
+  openModal(`<h2>${tx('lessonMenu')}</h2>${met.map(k => `<button class="big-btn gold lesson-pick" data-kind="${k}"><span class="bb-text"><b>${NEW_TILES[k] ? NEW_TILES[k].ico : '⏰'} ${tx('nt_' + k)}</b></span></button>`).join('')}
     <button class="link-btn" id="mClose">${tx('gotIt')}</button>`, true, null, 'tile-help');
-  $('#modalBox').querySelectorAll('.lesson-pick').forEach(b => { b.onclick = () => b.dataset.kind === 'clock' ? showClockLesson(showLessonMenu, false, 'manual') : showTileLesson(b.dataset.kind, showLessonMenu, false, 'manual'); });
+  $('#modalBox').querySelectorAll('.lesson-pick').forEach(b => { const k = b.dataset.kind;
+    b.onclick = () => INTRO_FILMS[k] ? playIntroFilm(k, { after: showLessonMenu, why: 'manual' }) : showTileCard(k, showLessonMenu, 'manual'); });
   $('#mClose').onclick = closeModal;
 }
 // The explanation at the first clock level, also available from the help menu.
@@ -478,10 +481,14 @@ function newTileIntro(after = null) {
   if (!k) return false;
   if (k === 'ice') { playIntroFilm('ice', { required: true, after }); return true; }
   if (k !== 'joker2' && k !== 'gold') { showTileLesson(k, after, false, 'intro', true); return true; }
-  const t = NEW_TILES[k];
-  openModal(`<div class="nt-ico">${t.ico}</div><h2>${tx('newTile', tx('nt_' + k))}</h2><p>${tx('nt_' + k + '_text')}</p>
-    <button class="big-btn play" id="ntGo"><span class="bb-text"><b>${tx('lessonContinue')}</b></span></button>`, false);
-  const message = recordHelpMessage(k, 'intro');
-  $('#ntGo').onclick = () => { S.seenSp[k] = true; save(); message('ack'); closeModal(); if (after) after(); };
+  showTileCard(k, after, 'intro');
   return true;
+}
+// gold and the joker have a card (no film): its icon, title and text
+function showTileCard(k, after = null, why = 'intro') {
+  const first = why === 'intro';
+  openModal(`<div class="nt-ico">${NEW_TILES[k].ico}</div><h2>${first ? tx('newTile', tx('nt_' + k)) : tx('nt_' + k)}</h2><p>${tx('nt_' + k + '_text')}</p>
+    <button class="big-btn play" id="ntGo"><span class="bb-text"><b>${tx(first ? 'lessonContinue' : 'gotIt')}</b></span></button>`, false);
+  const message = recordHelpMessage(k, why);
+  $('#ntGo').onclick = () => { S.seenSp[k] = true; save(); message('ack'); closeModal(); if (after) after(); };
 }

@@ -255,7 +255,7 @@ function showIntro(after) {
     <p>${fx('intro2')}</p>
     <p>${fx('intro3', RULES.tools.fromLevel)}</p>
     <button class="big-btn play" id="mGo"><span class="bb-text"><b>${tx('gotIt')}</b></span></button>
-    <button class="link-btn" id="mTileHelp">${tx(coachOn(S.level) ? 'czMenu' : 'lessonMenu')}</button>
+    <button class="link-btn" id="mTileHelp">${tx('lessonMenu')}</button>
     <button class="link-btn" id="mLang">${tx('introLang')}</button>`, true, after);
   $('#mGo').onclick = closeModal;
   $('#mTileHelp').onclick = showLessonMenu;

@@ -12,7 +12,7 @@ const fs = require('fs'), path = require('path');
 const lib = require('../tests/lib');
 
 const OUT = path.resolve(process.argv[2] || 'intro-ice');
-const KIND = process.argv[4] || 'ice', LEVEL = { ice: 35, lock: 45, trayPair: 50, clock: 80 }[KIND];
+const KIND = process.argv[4] || 'ice', LEVEL = { ice: 35, lock: 45, trayPair: 50, clock: 80, menu: 80 }[KIND];
 const SEEN = { gold: 1, gift: 1, joker: 1, joker2: 1, ice: +(KIND !== 'ice'), lock: 1, clock: 1, clockMoves: 1, trayPair: 1 };
 // always in the sunflower theme for Dennis (2026-11-22); level 35 is past RULES.sunflower.level, so it is unlocked.
 // stills: which of SHOTS to take (all, and the level after it, when not given); video: false for a still only
@@ -50,6 +50,7 @@ async function context(r, video) {
   try {
     for (const r of process.argv[3] === 'preview' ? [{ ...RUNS[0], compare: false }] : RUNS) {
       const vids = r.video !== false && path.join(OUT, '_video-' + r.name), { ctx, p } = await context(r, vids);
+      if (KIND === 'menu') { await menu(p, r); await saveVideo(p, ctx, r, vids); console.log('done', r.name); continue; }
       const shots = KIND === 'ice' ? SHOTS : await openFilm(p);
       if (KIND === 'ice') { await p.evaluate(() => { localStorage.removeItem('omamj.cur'); __mj.startLevel(35); }); await p.waitForSelector('#introPanel'); }
       const t0 = Date.now();
@@ -59,20 +60,45 @@ async function context(r, video) {
       }
       if (!vids) { await ctx.close(); console.log('done', r.name); continue; }
       // the second play, then a tap on the button: the player's own level comes back
-      await lib.sleep(Math.max(0, t0 + 15800 - Date.now()));
+      const ms = await p.evaluate(k => INTRO_FILMS[k].ms, KIND);
+      await lib.sleep(Math.max(0, t0 + 2 * ms + 1800 - Date.now()));
       await p.locator('#ntGo').click();
       await lib.sleep(900);
-      if (!r.stills) await p.screenshot({ path: path.join(OUT, `${r.name}-6-level-back.png`) });
-      const video = p.video();
-      await ctx.close();
-      fs.renameSync(await video.path(), path.join(OUT, r.name + '.webm'));
-      fs.rmSync(vids, { recursive: true, force: true });
+      if (!r.stills) await p.screenshot({ path: path.join(OUT, `${r.name}-9-level-back.png`) });
+      await saveVideo(p, ctx, r, vids);
       if (r.compare) await compare(r);
       console.log('done', r.name);
     }
   } finally { await lib.teardown(); }
 })();
 
+async function saveVideo(p, ctx, r, vids) {
+  const video = p.video();
+  await ctx.close();
+  fs.renameSync(await video.path(), path.join(OUT, r.name + '.webm'));
+  fs.rmSync(vids, { recursive: true, force: true });
+}
+// How to play (settings) and its list of the specials met so far: a film and a card opened from it, and the first-meeting cards
+async function menu(p, r) {
+  const shot = async (label, ms = 700) => { await lib.sleep(ms); await p.screenshot({ path: path.join(OUT, `${r.name}-${label}.png`) }); };
+  await p.evaluate(L => { localStorage.removeItem('omamj.cur'); __mj.startLevel(L); }, LEVEL);
+  await p.waitForFunction(L => !document.querySelector('#buildMsg') && G && G.key === 'L' + L && !G.introducing, LEVEL, { timeout: 60000 });
+  await lib.sleep(900);
+  await p.evaluate(() => openSettings()); await shot('0-settings');
+  await p.locator('#mHow').click(); await shot('1-how-to-play');
+  await p.locator('#mTileHelp').click(); await shot('2-list');
+  await p.locator('.lesson-pick[data-kind="lock"]').click(); await shot('3-lock-film-from-list', 2000);
+  await lib.sleep(1500); await p.locator('#ntGo').click(); await shot('4-back-to-list', 1200);
+  await p.locator('.lesson-pick[data-kind="gold"]').click(); await shot('5-gold-card');
+  await p.locator('#ntGo').click(); await lib.sleep(700);
+  await p.locator('.lesson-pick[data-kind="joker2"]').click(); await shot('6-joker-card');
+  await p.locator('#ntGo').click(); await lib.sleep(700);
+  await p.locator('#mClose').click(); await lib.sleep(500);
+  await p.evaluate(() => showTileCard('gold', null, 'intro')); await shot('7-gold-card-first-meeting');
+  await p.evaluate(() => closeModal()); await lib.sleep(400);
+  await p.evaluate(() => showTileCard('joker2', null, 'intro')); await shot('8-joker-card-first-meeting');
+  await p.evaluate(() => closeModal()); await lib.sleep(400);
+}
 // the other films (not yet shown by the game itself): the level opens, then the film as at the first meeting
 async function openFilm(p) {
   await p.evaluate(L => { localStorage.removeItem('omamj.cur'); __mj.startLevel(L); }, LEVEL);

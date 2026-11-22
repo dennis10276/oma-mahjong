@@ -54,6 +54,7 @@ const captionsFit = (kind = 'ice') => {
 // One play of a film, frame by frame: per tap what the game did (taken or not, the tray, the open face-down tile, the
 // clock's number, the locks) and what was said, as in the ice test above.
 const filmSteps = kind => new Promise(done => {
+  const shownMsg = () => { const s = $('#gameMsg') && $('#gameMsg').firstChild; return s && !s.classList.contains('out') ? s.textContent : ''; };
   const film = INTRO_FILMS[kind], ids = film.tiles.map(x => x[0]), frames = [];
   playIntroFilm(kind, { why: 'manual' });
   const marked = cls => [...document.querySelectorAll(`#modalBox #board .tile.${cls}`)].map(e => ids[+e.dataset.i]).filter(Boolean);
@@ -70,7 +71,7 @@ const filmSteps = kind => new Promise(done => {
     const c = $('#modalBox .intro-cap'), last = introRun.log.at(-1);
     frames.push({ t: performance.now(), n: introRun.log.length, text: c.textContent, op: +getComputedStyle(c).opacity, taken: last && last[1],
       own: !!document.querySelector('#modalBox #board [class*="intro-"], #modalBox #board[class*="intro-"]'), tray: G.tray.length, peek: G.peek >= 0 ? ids[G.peek] : null,
-      left: clockOn() ? clockLeft() : null, open: !!(G.ob && G.ob.unlocked), hint: marked('obhint'), xray: marked('xray'), msg: $('#gameMsg') ? $('#gameMsg').textContent : null });
+      left: clockOn() ? clockLeft() : null, open: !!(G.ob && G.ob.unlocked), hint: marked('obhint'), xray: marked('xray'), msg: shownMsg() });
     requestAnimationFrame(rec);
   };
   rec();
@@ -84,8 +85,10 @@ const NEXT_FILMS = {
     first: { hint: ['k1', 'k2'], xray: ['c'] }, caps: ['l1', 'k1', 'k2'] },
   trayPair: { level: 50, steps: [['d1', false, { tray: 3, peek: 'd1', said: [] }], ['d2', false, { tray: 3, peek: 'd2', said: [] }], ['t2', true, { tray: 3, peek: null, said: [] }], ['d1', false, { tray: 3, peek: 'd1', said: [] }], ['d3', true, { tray: 3, peek: null, said: [] }]],
     first: { hint: [], xray: [] }, caps: ['d2', 't2', 'd3'] },
-  clock: { level: 80, steps: [['ck', false, { left: 3, said: [] }], ['dn', false, { left: 3, peek: 'dn', said: [] }], ['t', true, { left: 2, said: [] }], ['x', true, { left: 1, said: [] }], ['ck', true, { left: null, said: ['clockSaved'] }]],
-    first: { hint: [], xray: ['t'] }, caps: ['ck', 'dn', 'x', 'ck'] },
+  // (Dennis 2026-11-22: "a longer video and more in dept first time that every move costs 1")
+  clock: { level: 80, ms: 12000, steps: [['a1', true, { left: 5, said: ['clockHurry'] }], ['a2', true, { left: 4, said: [] }], ['b1', true, { left: 3, said: [] }], ['ck', false, { left: 3, said: [] }],
+    ['dn', false, { left: 3, peek: 'dn', said: [] }], ['t', true, { left: 2, said: [] }], ['x', true, { left: 1, said: [] }], ['ck', true, { left: null, said: ['clockSaved'] }]],
+    first: { hint: [], xray: [] }, caps: ['a1', 'ck', 'dn', 'ck'] },
 };
 
 // What the game shows for a tap on tile i that cannot be taken (board.js tapTile, specials.js obBlocked), checked
@@ -353,8 +356,8 @@ module.exports = [
       const before = await p.evaluate(([levelOf, phoneData]) => [eval(levelOf)(), eval(phoneData)()], [levelOf.toString(), phoneData.toString()]);
       const film = await p.evaluate(kind => ({ taps: INTRO_FILMS[kind].taps, ms: INTRO_FILMS[kind].ms, line: TEXT[INTRO_FILMS[kind].line] }), kind);
       const gaps = film.taps.slice(1).map((x, k) => [x[0] - film.taps[k][0], !!film.taps[k][2]]);
-      t.ok(gaps.every(([ms, cap]) => cap ? ms >= 1300 && ms <= 1600 : ms >= 650 && ms <= 750) && film.taps[0][0] >= 1200 && film.ms <= 7000 && film.ms >= film.taps.at(-1)[0] + 600,
-        `${kind}: the board at rest first, taps 0.7 s apart, a pause after a caption, at most 7 s`, [film.taps.map(x => x[0]), film.ms]);
+      t.ok(gaps.every(([ms, cap]) => cap ? ms >= 1300 && ms <= 1600 : ms >= 650 && ms <= 750) && film.taps[0][0] >= 1200 && film.ms <= (want.ms || 7000) && film.ms >= film.taps.at(-1)[0] + 600,
+        `${kind}: the board at rest first, taps 0.7 s apart, a pause after a caption, at most ${(want.ms || 7000) / 1000} s`, [film.taps.map(x => x[0]), film.ms]);
       t.ok(!!film.line, `${kind}: a line under the board`);
       t.eq(film.taps.filter(x => x[2]).map(x => x[1]), want.caps, `${kind}: a caption for every subtle step, none for the obvious`);
       t.ok(await p.evaluate(kind => INTRO_FILMS[kind].taps.filter(x => x[2]).every(x => TEXT[x[2]] && TEXT[x[2]].every(s => s && s.length <= 32)), kind), `${kind}: short captions in Dutch and English`);
@@ -394,18 +397,19 @@ module.exports = [
     const p = await t.phone({ state: { name: 'Dennis', level: 80, sunSeen: true, seenSp: seen } });
     const sleep = ms => new Promise(r => setTimeout(r, ms));
     // [film, a real level with the same kind of tap, how to find that tile there]
-    for (const [kind, level, find] of [['ice', 37, 'frozen(i) && !free(i)'], ['lock', 45, 'lockedT(i) && free(i)'], ['clock', 80, 'G.clock && G.clock.i === i && !free(i)']]) {
+    const said = () => { const s = $('#gameMsg').firstChild; return s && !s.classList.contains('out') ? s.textContent : ''; };
+    for (const [kind, level, find, tap] of [['ice', 37, 'frozen(i) && !free(i)', 0], ['lock', 45, 'lockedT(i) && free(i)', 0], ['clock', 80, 'G.clock && G.clock.i === i && !free(i)', 3]]) {
       await startLevel(p, level);
       const i = await p.evaluate(f => G.tiles.findIndex((_, i) => G.alive[i] && eval(f)), find);
       t.ok(i >= 0, `${kind}: level ${level} has such a tile`);
       await p.evaluate(i => { clearGameMsg(); blockedTaps = 0; onTap(i); }, i); await sleep(300);
-      const real = { ...await p.evaluate(hintOf, i), said: await p.evaluate(() => $('#gameMsg').textContent) };
+      const real = { ...await p.evaluate(hintOf, i), said: await p.evaluate(`(${said})()`) };
       await sleep(1600);
       await p.evaluate(k => playIntroFilm(k, { why: 'manual' }), kind);
-      await p.waitForFunction(() => introRun.log.length >= 1, null, { polling: 10, timeout: 5000 }); await sleep(300);
-      const film = await p.evaluate(([k, h]) => ({ ...eval(h)(INTRO_FILMS[k].tiles.findIndex(x => x[0] === INTRO_FILMS[k].taps[0][1])), said: $('#gameMsg').textContent }), [kind, hintOf.toString()]);
+      await p.waitForFunction(n => introRun.log.length > n, tap, { polling: 10, timeout: 8000 }); await sleep(300);
+      const film = await p.evaluate(([k, h, s, n]) => ({ ...eval(h)(INTRO_FILMS[k].tiles.findIndex(x => x[0] === INTRO_FILMS[k].taps[n][1])), said: eval(s)() }), [kind, hintOf.toString(), `(${said})`, tap]);
       t.ok(real.shake && real.glow && real.seeThrough && real.blockers, `${kind}: the real level shows the game's hint for it`, real);
-      t.eq({ ...film, arrows: film.arrows > 0 }, { ...real, arrows: real.arrows > 0 }, `${kind}: the film's first tap shows the same hint and top-bar text as in level ${level}`, [real, film]);
+      t.eq({ ...film, arrows: film.arrows > 0 }, { ...real, arrows: real.arrows > 0 }, `${kind}: the film's tap that cannot be taken shows the same hint and top-bar text as in level ${level}`, [real, film]);
       if (real.said) t.ok(await p.evaluate(() => { const m = $('#gameMsg'), r = m.getBoundingClientRect(), c = $('#modalBox').getBoundingClientRect(), w = $('#modalBox #tray').getBoundingClientRect();
         return m.closest('#modalBox') && r.height > 0 && r.top >= c.top && r.bottom <= w.top + 1 && getComputedStyle(m.firstChild).opacity > 0.5; }), `${kind}: its top-bar text shows in the pop-up, above the film's tray`);
       await p.evaluate(() => stopIntroFilm()); await sleep(300);

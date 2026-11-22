@@ -103,25 +103,33 @@ const INTRO_FILMS = {
     line: 'intro_trayPair',
   },
   /* Clock (board.js clockMove / checkClock): the number is the moves left, and a move is a tile taken off the board.
-     A tap on a blocked tile and turning a face-down tile over cost nothing; a pair costs 2; the clock tile only has
-     to leave the board (into the tray, its twin may wait), with the last move still in time. */
+     First, at length, that every tile taken costs 1 (a pair so costs 2: no caption for that); then what is not
+     obvious: a tap on a blocked tile and turning a face-down tile over cost nothing; the clock tile only has to leave
+     the board (into the tray, its twin may wait), with the last move still in time. Longer than the others, 10 s
+     (Dennis 2026-11-22: "a longer video and more in dept first time that every move costs 1"). */
   clock: {
     tiles: [
-      ['dn', 31, 0, 0, 0],              // face down
+      ['a1', 4, 0, 0, 0],               // a pair with a2
+      ['dn', 31, 2, 0, 0],              // face down
+      ['a2', 4, 6, 0, 0],
       ['a', 8, 0, 2, 0],                // under t (it stays)
       ['ck', 12, 2, 2, 0],              // the clock tile
-      ['x', 20, 4, 2, 0],               // beside it: a pair with t
+      ['x', 27, 4, 2, 0],               // beside it, between it and b1
+      ['b1', 20, 6, 2, 0],              // a pair with t
       ['t', 20, 1, 2, 1],               // a bridge over a and the clock tile's left half (the clock's number sits at the upper right)
     ],
-    down: ['dn'], clock: ['ck', 3],
+    down: ['dn'], clock: ['ck', 6],
     taps: [
-      [1300, 'ck', 'ck_blocked'],       // covered: it shakes, the game points at t; still 3
-      [2750, 'dn', 'ck_peek'],          // turned over: still 3
-      [4200, 't'],                      // 2
-      [4900, 'x', 'ck_pair'],           // a pair: 1
-      [6350, 'ck', 'ck_last'],          // the last move, into the tray without its twin: the clock stops
+      [1300, 'a1', 'ck_every'],         // 6 → 5 (the game's own "5 moves left" in the top bar)
+      [2750, 'a2'],                     // a pair: 4
+      [3450, 'b1'],                     // 3
+      [4150, 'ck', 'ck_blocked'],       // covered: it shakes, the game points at t; still 3
+      [5600, 'dn', 'ck_peek'],          // turned over: still 3
+      [7050, 't'],                      // a pair with b1: 2; the clock tile's left is free
+      [7750, 'x'],                      // 1; its right is free
+      [8450, 'ck', 'ck_last'],          // the last move, into the tray without its twin: the clock stops
     ],
-    ms: 7000,
+    ms: 10000,
     line: 'nt_clock_text',
   },
 };
