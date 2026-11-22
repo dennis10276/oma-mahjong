@@ -92,6 +92,7 @@ module.exports = [
       f.scores.pmuxw2uqkzcnbgx = { name: 'Renamed test account', level: 999, points: 9999999 };
       f.scores.pNamedTest = { name: 'dennisTest', level: 999, points: 9999999 };
       f.plays.pLog = { a: { k: 'open', name: 'Logspeler', lv: 15, t: Date.now() }, b: { k: 'start', m: 'd', lv: 999, t: Date.now() + 1 } };
+      f.plays.pPreview = { a: { k: 'open', name: 'X', lv: 999, t: Date.now() } };
       f.plays['msg-pOma'] = { a: { k: 'msg', name: 'Message', lv: 999, t: Date.now() } };
       f.plays['cfg-pOma'] = { a: { k: 'cfg', name: 'Settings', lv: 999, t: Date.now() } };
       const db = new FakeDB(f);
@@ -101,7 +102,10 @@ module.exports = [
       const rows = () => p.locator('#ranking tbody tr').evaluateAll(rs => rs.map(r => [...r.cells].map(c => (c.querySelector('a') || c).textContent.trim())));
       try {
         await p.goto(site.url + 'dash/#pOma');
-        await p.waitForFunction(() => document.querySelectorAll('#ranking tbody tr').length === 4);
+        await p.waitForFunction(() => [...document.querySelectorAll('#ranking tbody tr')].some(r => r.textContent.includes('Logspeler')));
+        t.eq(await p.locator('#fcScore, #fcTitle').count(), 0, 'retired forecast scorecard is absent');
+        t.eq(db.log.filter(e => e.p === 'forecasts').length, 0, 'dashboard does not request the retired scorecard feed');
+        t.eq(await p.locator('#who option[value="pPreview"]').count(), 0, 'leaked X preview is hidden from the picker');
         t.eq(await rows(), [['1', '🌷 Anna <3', '27'], ['1', '😊 Dennis', '27'], ['3', '🙂 Logspeler', '15'], ['4', '👵 OmaHanny', '12']], 'levels rank above points, ties share places, logs work without scores and daily/message/settings/test entries are excluded');
         await p.locator('#ranking a').filter({ hasText: 'Anna <3' }).click();
         t.eq(await p.locator('#name').textContent(), 'Anna <3', 'click opens that player');
