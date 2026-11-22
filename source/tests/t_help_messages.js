@@ -29,7 +29,7 @@ module.exports = [
       await p.evaluate(() => showLessonMenu());
       await click(p, '.cz-pick[data-kind="clockFirst"]'); await drain();
       t.eq(messages().at(-1).why, 'manual', 'manually reopened clock explanation is distinguished');
-      await click(p, '#ntGo'); await p.evaluate(() => closeModal());
+      await click(p, '#ntGo'); await p.evaluate(() => closeModal()); await drain();
       // a level with game tips: the plain loss window (no film) is not a lesson and is not logged as help
       const before = messages().length;
       await p.evaluate(() => { clearCur(); __mj.startLevel(80); });
