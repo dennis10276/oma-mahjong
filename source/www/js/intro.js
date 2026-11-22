@@ -3,7 +3,7 @@
    tiles, the tray, the taps (board.js onTap), the flight into the tray, the pair, the ice that cracks and melts, the
    shake and the hints of a blocked tap. The pop-up holds a small board and tray of its own (#board, #tray), and while
    the film plays the game's code finds those (core.js filmRoot), so the player's own level stays on the screen
-   behind the pop-up, untouched. Everything that moves on the board is what the game does for that tap (Dennis:
+   behind the pop-up, untouched. Everything that moves on the board is what the game does for that tap (the owner:
    "make it behave like the game"); the film's own is only the caption under the board. The game's texts for a tap
    (the top bar while playing, core.js gameMsg/toast) show in a top bar of the film's own, above its tray. Meanwhile the player's
    own level (G) is put aside and comes back exactly as it was; the film's level carries G.film, so nothing of it is
@@ -30,13 +30,13 @@ const INTRO_CAP_IN = 200;        // a caption comes this long after its tap (wit
 const INTRO_CAP_OUT = 220;       // and starts to fade this long before the next tap (.intro-cap fades in .18 s)
 const INTRO_FILMS = {
   /* Ice (layouts.js iceNeighbors / frozenIn): a frozen tile cannot be taken until enough of the tiles touching it
-     have left the board. For a skilled player it shows only what is not obvious (Dennis 2026-11-22): a tap on a
+     have left the board. For a skilled player it shows only what is not obvious (the owner 2026-11-22): a tap on a
      frozen tile lights up the tiles that thaw it; a diagonal tile (two across and two down) does not count; a tile
      that touches it only a little does: one half above it, one lying on just a corner of it. ❄️❄️ needs two. It ends
-     on the melt (taking a free tile is obvious). The tile on the next layer rests on 4 tiles, as in a real pile (Dennis
+     on the melt (taking a free tile is obvious). The tile on the next layer rests on 4 tiles, as in a real pile (the owner
    2026-11-22: no towers), the ice is one of them. The board first rests a moment (the player takes it in), a tap
      every 0.7 s, after a step with a caption a pause so it can be read (shown fully about 0.85 s), at most 7 s
-     (Dennis 2026-11-22: 0.7 s; "start a bit slower before popping up. The player needs to process it. 7 s is okay"). */
+     (the owner 2026-11-22: 0.7 s; "start a bit slower before popping up. The player needs to process it. 7 s is okay"). */
   ice: {
     tiles: [
       ['up', 8, 3, 0, 0],               // half above it (half a tile to the right): touching (a pair with top)
@@ -106,7 +106,7 @@ const INTRO_FILMS = {
     line: 'intro_trayPair',
   },
   /* Clock (board.js clockMove / checkClock): the number is the moves left, and a move is a tile taken off the board.
-     Two parts (Dennis 2026-11-23: "a section before where you run out and lose to the clock. CLock really needs to be
+     Two parts (the owner 2026-11-23: "a section before where you run out and lose to the clock. CLock really needs to be
      clear for people seeing it the first time. Take the time there"). First the clock is lost: every tile taken
      counts 1, and at 0 with the clock tile still there the alarm goes off, as in the game. Then what is not obvious:
      a tap on a blocked tile and turning a face-down tile over cost nothing; the clock tile only has to leave the
@@ -122,7 +122,7 @@ const INTRO_FILMS = {
         ['t', 20, 1, 2, 1],             // a bridge over a and the clock tile's left half
       ],
       clock: ['ck', 3], count: true,
-      // a tap every 1.3 s, so each step of the number is seen on its own (Dennis 2026-11-23: "Een steen pakken kost
+      // a tap every 1.3 s, so each step of the number is seen on its own (the owner 2026-11-23: "Een steen pakken kost
       // een zet ... duidelijk dat de timer afloopt voor elke zet die je doet"); the caption stays up meanwhile
       taps: [
         [1300, 'a1', 'ck_take'],        // 3 → 2
@@ -140,7 +140,7 @@ const INTRO_FILMS = {
         ['t', 20, 1, 2, 1],             // a bridge over a and the clock tile's left half (the clock's number sits at the upper right)
       ],
       down: ['dn'], clock: ['ck', 3], count: true,
-      // as in part 1, every tap with the clock's number under its caption (Dennis 2026-11-23: "Its about the 2nd part
+      // as in part 1, every tap with the clock's number under its caption (the owner 2026-11-23: "Its about the 2nd part
       // to make that clearer there too. Just like in part 1")
       taps: [
         [1300, 'ck', 'ck_blocked'],     // covered: it shakes, the game points at t; 3 → 3
@@ -230,8 +230,7 @@ function introLevel(film, real) {
   G = { film: { maxTw: (real && real.tw) || 150 }, mode: real ? real.mode : 'level', level: real ? real.level : S.level, date: real && real.date, key: 'film',
     tiles, nb: Layouts.neighbors(tiles), gold: new Set(), lucky: null, alive: new Uint8Array(n).fill(1).fill(0, film.tiles.length), down: new Uint8Array(n), peek: -1,
     tray, arriving: new Set(), flights: 0, score: real ? real.score : 0, combo: 0, lastMatch: 0, elapsed: 0, tStart: 0, mile: 0,
-    done: false, busy: false, mv: 0, clock: film.clock ? { i: ix(film.clock[0]), n: film.clock[1] } : null, rp: null, st: { tp: 0, bt: 0, fl: 0, mc: 0, tm: 0 },
-    cz: { taps: [] } };                // (the game tips keep no notes of the film: coach.js coachNote)
+    done: false, busy: false, mv: 0, clock: film.clock ? { i: ix(film.clock[0]), n: film.clock[1] } : null, rp: null, st: { tp: 0, bt: 0, fl: 0, mc: 0, tm: 0 } };
   (film.down || []).forEach(id => G.down[ix(id)] = 1);
   setObstacles({ need: Object.fromEntries(film.tiles.map((t, i) => [i, t[5] || 0]).filter(x => x[1])), locks: (film.locks || []).map(ix), keys: (film.keys || []).map(ix) });
 }

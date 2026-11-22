@@ -24,8 +24,7 @@ module.exports=[
         await p.evaluate(()=>{const i=G.tiles.findIndex((t,i)=>i!==G.clock.i&&G.alive[i]&&!G.down[i]&&canTake(i));if(i<0)throw Error('No free non-clock tile');G.clock.n=G.mv+1;__mj.onTap(i);});
         await sleep(900);
         const m=await modal(p);t.eq(m.title,await p.evaluate(()=>tx('clockTitle')),'clock timeout explains the loss '+lang);
-        // from level 60 (RULES.coach) no lesson of its own after a timeout: the film of the own try, or only what happened
-        t.ok(await p.evaluate(()=>!$('#modalBox .lesson-demo:not(.coach-demo)')&&(!!$('#modalBox .coach-own')||$('#modalBox').innerText.includes(tx('clockText',G.clock.n).replace(/<[^>]+>/g,'')))),'own film or what happened, no standard lesson after timeout '+lang);
+        t.ok(await p.evaluate(()=>!$('#modalBox .lesson-demo')&&$('#modalBox').innerText.includes(tx('clockText',G.clock.n).replace(/<[^>]+>/g,''))),'what happened, no lesson after timeout '+lang);
         t.eq(m.buttons,['sRetry','sMenu'],'retry and menu are available '+lang);
         t.ok(await p.evaluate(()=>$('#modalBox').scrollHeight<=$('#modalBox').clientHeight+1),'explanation, retry and menu fit on a small phone '+lang);
         if(!attempt){await click(p,'#sRetry');await sleep(1400);t.eq(await modal(p),null,'retry starts directly after explanation '+lang);}

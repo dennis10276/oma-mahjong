@@ -14,9 +14,8 @@ const RULES = {
   // from this level: when no order of the remaining taps can fill the tray any more, the rest plays itself
   // (checked exactly, for at most maxTiles tiles left and within a search budget)
   // Game tips are opened manually from the menu. Automatic tips between attempts were removed
-  // (Dennis, 2026-11-12); new tile introductions must finish before play starts.
-  coach: { fromLevel: 60 },
-  // replay of a win (js/pro.js, decisions Dennis 2026-11-06; on per player on the dashboard, part 'pro'): after
+  // (the owner, 2026-11-12); new tile introductions must finish before play starts.
+  // replay of a win (js/pro.js, decisions the owner 2026-11-06; on per player on the dashboard, part 'pro'): after
   // `after` lost tries of a level not passed yet (restarts count), once per level a winning try of that exact
   // board (Dennisisdebeste's, else the fewest tries), at `speed` × its pace
   // (pauses longer than maxGapMs, after speeding up, are shortened); only a small × at the top, after closeAfterMs

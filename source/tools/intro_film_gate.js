@@ -1,4 +1,4 @@
-/* Throwaway: records the ice intro film pop-up (js/intro.js) for Dennis to judge, in the sunflower theme, as a player
+/* Throwaway: records the ice intro film pop-up (js/intro.js) for the owner to judge, in the sunflower theme, as a player
    meets ice for the first time (level 35): on a phone (390x820, Dutch) a video, a still per step and the level after
    it, and compare-sunflower.png (the real level 35 after a tap on a frozen tile beside the film's first tap); on a
    tablet (768x1024, Dutch) a video; on a small phone (360x640, English) a still of the widest caption. Nothing is
@@ -14,7 +14,7 @@ const lib = require('../tests/lib');
 const OUT = path.resolve(process.argv[2] || 'intro-ice');
 const KIND = process.argv[4] || 'ice', LEVEL = { ice: 35, lock: 45, trayPair: 50, clock: 80, menu: 80, tips: 80 }[KIND];
 const SEEN = { gold: 1, gift: 1, joker: 1, joker2: 1, ice: +(KIND !== 'ice'), lock: 1, clock: 1, clockMoves: 1, trayPair: 1 };
-// always in the sunflower theme for Dennis (2026-11-22); level 35 is past RULES.sunflower.level, so it is unlocked.
+// always in the sunflower theme for the owner (2026-11-22); level 35 is past RULES.sunflower.level, so it is unlocked.
 // stills: which of SHOTS to take (all, and the level after it, when not given); video: false for a still only
 const RUNS = [
   { name: 'phone-sunflower', size: [390, 820], lang: 'nl', compare: true },
@@ -35,7 +35,7 @@ async function context(r, video) {
   const p = await ctx.newPage();
   await p.clock.setFixedTime(new Date(lib.TODAY + 'T15:00:00'));
   await p.goto(new URL('__blank__', lib.server.url).href);
-  const st = { name: 'Dennis', pid: 'test-intro-gate', level: LEVEL, lang: r.lang, theme: 'sunflower', bg: 'sunfield', stars: { 1: 3, 2: 3, 3: 3 }, seenIntro: true, seenTray: true, seenDown: true, toolsSeen: true, sunSeen: true,
+  const st = { name: 'Anna', pid: 'test-intro-gate', level: LEVEL, lang: r.lang, theme: 'sunflower', bg: 'sunfield', stars: { 1: 3, 2: 3, 3: 3 }, seenIntro: true, seenTray: true, seenDown: true, toolsSeen: true, sunSeen: true,
     sfx: false, music: false, vibrate: false, since: lib.TODAY, giftDay: lib.TODAY, iosTip: true, seenSp: SEEN };
   await p.evaluate(([st, today]) => { localStorage.clear(); localStorage.setItem('omamj.reset', today); localStorage.setItem('omamj.v1', JSON.stringify(st)); }, [st, lib.TODAY]);
   await p.goto(lib.server.url);

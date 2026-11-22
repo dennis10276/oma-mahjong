@@ -11,7 +11,7 @@ module.exports = [
       const messages = () => p.db.plays(pid).filter(e => e.k === 'help_msg');
       await startLevel(p, 80);
       for (const kind of ['ice', 'lock', 'trayPair', 'clock']) {
-        await p.evaluate(k => k === 'clock' ? showClockLesson() : showTileLesson(k), kind);
+        await p.evaluate(k => playIntroFilm(k, { why: 'intro' }), kind);
         const expected = await p.evaluate(() => [...($('#introPanel') || $('#modalBox')).querySelectorAll('p:not(.lesson-reminder)')].map(p => p.innerText.trim()).filter(Boolean).join('\n\n'));
         await drain();
         const shown = messages().at(-1);
@@ -26,25 +26,19 @@ module.exports = [
       await p.evaluate(() => { S.fails.L55 = 3; clearCur(); __mj.startLevel(55); });
       await drain();
       t.eq(messages().length, 8, 'retry no longer emits a help message');
-      await p.evaluate(() => showCoachMenu());
-      await click(p, '.cz-pick[data-kind="clockFirst"]'); await drain();
+      await p.evaluate(() => showLessonMenu());
+      await click(p, '.lesson-pick[data-kind="clock"]'); await drain();
       t.eq(messages().at(-1).why, 'manual', 'manually reopened clock explanation is distinguished');
       await click(p, '#ntGo'); await p.evaluate(() => closeModal());
-      // a level with game tips: the plain loss window (no film) is not a lesson and is not logged as help
+      // the plain loss window (no film) is not a lesson and is not logged as help
       const before = messages().length;
       await p.evaluate(() => { clearCur(); __mj.startLevel(80); });
       await p.evaluate(() => { G.clock.n = G.mv; checkClock(); });
       await p.waitForSelector('#sMenu', { state: 'visible' }); await drain();
-      t.eq(await p.evaluate(() => !!$('#modalBox .coach-demo')), false, 'no film after a timeout without an own film');
-      t.eq(messages().length, before, 'plain loss window of a game-tip level is not logged as help');
+      t.eq(await p.evaluate(() => !!$('#introPanel')), false, 'no film after a timeout');
+      t.eq(messages().length, before, 'plain loss window is not logged as help');
       await click(p, '#sMenu');
-      // Plain losses also stay quiet below the coach menu threshold.
-      await p.evaluate(() => { RULES.coach.fromLevel = 999; clearCur(); __mj.startLevel(80); G.clock.n = G.mv; checkClock(); });
-      await p.waitForSelector('#sMenu', { state: 'visible' }); await drain();
-      t.eq(messages().length, before, 'no automatic lesson or help event on any clock timeout');
-      await click(p, '#sMenu');
-      await p.evaluate(() => { RULES.coach.fromLevel = 60; });
-      await p.evaluate(() => showCoachMenu()); await click(p, '.cz-pick[data-kind="three"]'); await drain();
+      await p.evaluate(() => showLessonMenu()); await click(p, '.lesson-pick[data-kind="ice"]'); await drain();
       t.eq([messages().at(-1).why, messages().at(-1).scr, messages().at(-1).at], ['manual', 'home', undefined], 'help from home is not assigned to an old attempt');
     }
   }},

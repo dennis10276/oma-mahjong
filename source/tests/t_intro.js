@@ -230,14 +230,14 @@ module.exports = [
     await click(p, '.lesson-pick[data-kind="lock"]');
     t.eq(await p.evaluate(() => $('#introPanel') && $('#introPanel').dataset.kind), 'lock', 'the lock has its film too');
     await click(p, '#ntGo');
-    await p.evaluate(() => { closeModal(); S.lang = 'nl'; showTileLesson('ice', null, false, 'manual'); });
+    await p.evaluate(() => { closeModal(); S.lang = 'nl'; playIntroFilm('ice', { why: 'manual' }); });
     t.ok(await p.evaluate(() => $('#introPanel p.intro-line').textContent.includes('erboven')), 'Dutch line');
     t.ok(await p.evaluate(() => { const b = $('#modalBox'); return b.getBoundingClientRect().bottom <= innerHeight && b.scrollHeight <= b.clientHeight + 1; }), 'the Dutch line fits a small phone too');
     await sleep(500);
     t.eq(await p.evaluate(captionsFit), [], 'every Dutch caption fits a 360 px phone on one line, below the board');
     await click(p, '#ntGo');
     // from the home screen: the pop-up opens over home and home stays
-    await p.evaluate(() => { show('home'); showTileLesson('ice', null, false, 'manual'); });
+    await p.evaluate(() => { show('home'); playIntroFilm('ice', { why: 'manual' }); });
     t.eq(await p.evaluate(() => [curScreen, !!G.film, modalFree()]), ['home', true, false], 'from home the film opens over home');
     await click(p, '#ntGo');
     t.eq(await p.evaluate(() => [curScreen, !!G.film, modalFree()]), ['home', false, true], 'and home stays');

@@ -41,7 +41,7 @@ module.exports = [
     t.ok(await p.locator('#ntGo').isDisabled(), 'part of the film does not unlock');
         await finish(p);
     await startLevel(p, 35);
-    await p.evaluate(() => showTileLesson('ice', null, false, 'manual'));
+    await p.evaluate(() => playIntroFilm('ice', { why: 'manual' }));
     t.ok(await p.locator('#ntGo').isEnabled(), 'manual explanation can be closed immediately');
     await click(p, '#ntGo');
     t.eq(p.errors, [], 'no browser errors');
@@ -58,24 +58,21 @@ module.exports = [
   { name: 'level instructions: no automatic tips after losses or restarts at any old reminder threshold', async run(t, { startLevel, click, modal, sleep }) {
     const p = await t.phone({ state: { name: 'Dennis', level: 100, sunSeen: true, seenSp: seen } });
     for (const lv of [55, 100]) for (const losses of [3, 9, 21]) {
-      await p.evaluate(([lv, losses]) => { S.fails['L' + lv] = losses; S.czLoss['L' + lv] = { n: losses, shown: 0 }; }, [lv, losses]);
+      await p.evaluate(([lv, losses]) => { S.fails['L' + lv] = losses; }, [lv, losses]);
       await startLevel(p, lv);
       t.eq(await modal(p), null, `no retry reminder at ${lv}/${losses}`);
       await click(p, '#btnRestart');
-      t.eq(await p.locator('.coach-demo').count(), 0, 'restart confirmation has no tip');
       await click(p, '#rYes');
       t.eq(await modal(p), null, 'confirmed restart starts directly');
       await p.evaluate(() => { G.tray = [0, 1, 2, 3]; checkStuck(); });
       await sleep(600);
       t.eq((await modal(p)).buttons, ['sRetry', 'sMenu'], 'loss has only retry and menu');
-      t.eq(await p.locator('.coach-demo').count(), 0, 'tray loss has no tip');
       await click(p, '#sRetry');
       t.eq(await modal(p), null, 'lost try restarts without a tip');
     }
     await startLevel(p, 80);
     await p.evaluate(() => { G.clock.n = G.mv; checkClock(); });
     await sleep(800);
-    t.eq(await p.locator('.coach-demo').count(), 0, 'clock timeout has no automatic tip');
     t.eq((await modal(p)).buttons, ['sRetry', 'sMenu'], 'clock loss keeps normal actions');
     t.eq(p.errors, [], 'no browser errors');
   }},

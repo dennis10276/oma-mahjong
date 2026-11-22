@@ -91,22 +91,12 @@ module.exports = [
     },
   },
   {
-    name: 'ui markers: coach replay shows combined badges and removes ice after neighbouring takes',
+    name: 'no game tips: How to play has no Game tips link at level 60+',
     async run(t) {
-      const p = await t.phone({ state: { level: 5, theme: 'classic' } });
-      await p.evaluate(({ tiles, obst }) => {
-        $('#modal').classList.remove('hidden'); $('#modalBox').innerHTML = coachDemoHTML();
-        const n = tiles.length;
-        coachPlay($('.coach-demo'), { tiles, faces: tiles.map((_, i) => i % 2),
-          ob: { need: obst.ice, locks: obst.locks, keys: obst.keys, unlocked: false },
-          segs: [{ start: { a: Array(n).fill(1), d: Array(n).fill(0), tray: [] },
-            acts: [['take', 4], ['take', 8], ['end', 'ok']], caps: ['', ''], marks: [] }] });
-      }, { tiles: markerTiles, obst: markerOb });
-      t.eq(await p.locator('.cz-board .ob[data-marker="key"]').count(), 2, 'coach draws frozen key badges');
-      t.eq(await p.locator('.cz-board .ob[data-marker="lock"]').count(), 2, 'coach draws frozen lock badges');
-      await p.waitForSelector('.cz-board [data-i="0"] .ob[data-k="key"]', { timeout: 12000 });
-      t.eq(await p.locator('.cz-board [data-i="0"] .ob').getAttribute('data-marker'), null, 'coach thaw removes ice and the secondary badge');
-      await p.evaluate(() => stopCoach());
+      const p = await t.phone({ state: { name: 'Anna', level: 60, theme: 'classic' } });
+      t.ok(await p.evaluate(() => typeof showCoachMenu === 'undefined' && typeof coachPlay === 'undefined'), 'the game tips code is gone');
+      await p.evaluate(() => showIntro());
+      t.ok(!(await p.locator('#modalBox').innerText()).includes('Speltips'), 'How to play has no Game tips link');
     },
   },
 ];

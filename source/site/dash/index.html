@@ -333,7 +333,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 <script src="forecast-score.js?v=e6a78ebc2be0"></script>
 <script src="watch.js?v=52084f41b0eb"></script>
 <script>
-/* Predictions are off (Dennis, 2026-10-22: not good enough). Codex and Gemini are making better ones,
+/* Predictions are off (the owner, 2026-10-22: not good enough). Codex and Gemini are making better ones,
    to show in the live game and the level cards. dash/?pred=1 still shows the old Voorspelling card for
    whoever works on them; predict*.json stay in place. */
 const PREDICTIONS = /[?&]pred=1\b/.test(location.search);
@@ -606,8 +606,6 @@ function render() {
       case 'clock': return ['⏰', `${lvlName(e)}: wekkersteen op tijd weg (nog ${e.ml} zetten over)`];
       case 'help_msg': {
         const topics = { ice: ['🧊', 'IJs'], lock: ['🔑', 'Slot en sleutel'], trayPair: ['🀄', 'Paar bij 3 stenen'], clock: ['⏰', 'Wekker'],
-          // the game tips from level 90 (js/coach.js)
-          'coach-three': ['🀄', 'Speltip: drie in het bakje'], 'coach-twin': ['👆', 'Speltip: tik op het maatje'], 'coach-lookTray': ['👀', 'Speltip: kijk eerst naar alle plaatjes'], 'coach-remember': ['🧠', 'Speltip: onthoud wat je bekeek'], 'coach-uncover': ['🔍', 'Speltip: maak meer open'], 'coach-clockFirst': ['⏰', 'Speltip: eerst naar de wekker'], 'coach-clockSlot': ['⏰', 'Speltip: wekker heeft een vakje nodig'], 'coach-retry': ['🔁', 'Speltip: opnieuw is hetzelfde spel'],
           // how Dennisisdebeste won the level, after 5 lost tries (js/pro.js, from 1.65)
           pro: ['🎬', 'Replay van Dennisisdebeste'] };
         const [icon, topic] = topics[e.topic] || ['📖', 'Speluitleg'];

@@ -177,7 +177,6 @@ function setLang(code) {
 // ---------- modal ----------
 let modalClosable = true, modalOnClose = null;
 function openModal(html, closable = true, onClose = null, cls = '') {
-  if (typeof stopLessonDemo === 'function') stopLessonDemo();
   const box = $('#modalBox');
   box.style.removeProperty('--heart-dialog-height');
   box.className = 'modal-box' + (cls ? ' ' + cls : '');   // 'compact': the after-level screens, they must fit without scrolling
@@ -186,7 +185,6 @@ function openModal(html, closable = true, onClose = null, cls = '') {
   modalClosable = closable; modalOnClose = onClose;
 }
 function closeModal() {
-  if (typeof stopLessonDemo === 'function') stopLessonDemo();
   $('#modal').classList.add('hidden');
   const f = modalOnClose; modalOnClose = null; if (f) f();
 }

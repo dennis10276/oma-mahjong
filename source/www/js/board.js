@@ -53,7 +53,6 @@ function begin(o, restart = false) {
     return;
   }
   const previousReplay = G && G.rp;
-  stopLessonDemo();
   if (previousReplay) { replayCapture(); replayDrain(G); }
   $('#modal').classList.add('hidden'); modalOnClose = null;
   $('#comboTag').classList.remove('on'); clearGameMsg(); FX.clear(); if ($('#autoBanner')) autoBanner(false);
@@ -262,9 +261,9 @@ function boardGeo(W, H, maxTw = 150) {
     l = Math.min(l, x); r = Math.max(r, x + 1); t0 = Math.min(t0, y); b = Math.max(b, y + ratio);
   }
   const depthF = 0.085;            // the tile's side, drawn right and below it
-  // 2 px of room on each side (was 4 until 1.68): a pile seven tiles wide keeps 54 px tiles on a 392 px screen (Dennis 2026-11-14)
+  // 2 px of room on each side (was 4 until 1.68): a pile seven tiles wide keeps 54 px tiles on a 392 px screen (the owner 2026-11-14)
   // At the top, 12 px between the tray and the pile: the tray's wooden edge and shadow hang 4-8 px below it, and with 2 px a
-  // tall pile's top row sat under that edge (1.69, Gerda's phone, level 219; Dennis 2026-11-15). 2 px at the bottom.
+  // tall pile's top row sat under that edge (1.69, Gerda's phone, level 219; the owner 2026-11-15). 2 px at the bottom.
   const TOP = 12, BOT = 2;
   const twW = (W - 4) / (r - l + depthF + 0.04), twH = (H - TOP - BOT) / (b - t0 + depthF * 1.4 + 0.04), tw = Math.min(maxTw, twW, twH);
   const th = tw * ratio, dz = tw * dF, d = Math.max(3, tw * depthF);
@@ -286,7 +285,7 @@ function applyGeo(geo, move) {
   }
 }
 // The pile area for this board. A pile that is limited by the height (nine rows, or a short screen) gets a little more room:
-// the top bar and the tray lose some of their padding (#game.compact in style.css), nothing gets smaller (Dennis 2026-11-14).
+// the top bar and the tray lose some of their padding (#game.compact in style.css), nothing gets smaller (the owner 2026-11-14).
 function fitGeo() {
   const game = $('#game'), wrap = $('#boardWrap');
   if (G.film) return boardGeo(wrap.clientWidth, wrap.clientHeight, G.film.maxTw);   // (the intro film's board, in its pop-up, tiles no bigger than the level's: the game screen stays as it is)
@@ -437,7 +436,7 @@ function tapTile(i) {
   if (!free(i)) {
     G.st.bt++;
     replay(el, 'shake');
-    // a special tile that cannot be taken shows what it needs, not what lies on it (Dennis 2026-11-14): the tiles that thaw it, or the keys
+    // a special tile that cannot be taken shows what it needs, not what lies on it (the owner 2026-11-14): the tiles that thaw it, or the keys
     if (frozen(i)) showThaw(i); else if (lockedT(i)) showKeys(); else showBlockers(i);
     Sound.blocked(); buzz(30);
     if (++blockedTaps === 3) toast(tx('stillStuck'), 3000);
@@ -445,7 +444,6 @@ function tapTile(i) {
   }
   if (frozen(i) || lockedT(i)) { G.st.bt++; obBlocked(i); return; }
   blockedTaps = 0;
-  coachNote(i);                     // the game tips' own film of this try (coach.js)
   let reveal = false;
   if (G.down[i] && G.peek !== i) {
     const pk = G.peek;
@@ -673,7 +671,7 @@ function gameOver() {
 // ---------- 💡 hint and 🔀 shuffle (once per level each) ----------
 // Hint and shuffle are earned and used at once, and they sit just below home and restart: the first tap only wakes the
 // button (it glows, the top bar says "tap again"), a second tap within 3 s uses it. A slip from home or restart costs nothing
-// (Dennis 2026-11-15). When it cannot be used (used, locked, too early, busy) the first tap says why, as before.
+// (the owner 2026-11-15). When it cannot be used (used, locked, too early, busy) the first tap says why, as before.
 let armedTool = null, armTimer = 0;
 function disarmTool() { clearTimeout(armTimer); if (armedTool) $(armedTool).classList.remove('armed'); armedTool = null; }
 function armTool(id, use, againKey) {
@@ -709,7 +707,6 @@ function hint() {
 }
 function shuffle() {
   if (!toolUsable(G && G.usedShuffle, tx('shuffleUsed'))) return;
-  coachForget();
   G.usedShuffle = true; updateTools();
   logLvl('shuf', { tray: G.tray.length });
   G.busy = true;
