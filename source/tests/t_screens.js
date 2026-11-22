@@ -15,7 +15,7 @@ module.exports = [
       await p.evaluate(() => __mj.show('ranking')); await sleep(300);
       const fam = await p.evaluate(() => document.querySelector('#rankList').innerText);
       t.ok(fam.includes('Dennis') && fam.includes('level 18'), 'family box shows names and levels', fam);
-      await click(p, '#rkAll'); await sleep(200);
+      await click(p, '#rkAll'); await p.waitForSelector('#rkAll.on');
       await p.evaluate(() => __mj.show('home'));
       for (const b of ['#btnSettings', '#btnTasks', '#rankName']) {
         await click(p, b); await sleep(250);

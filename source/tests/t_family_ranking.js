@@ -7,6 +7,7 @@ const score = (name, level, wkPts, t, online = 0) =>
 const me = { name: 'Oma', pid: 'pOma', level: 12 };
 const person = (p, scope, name) => p.locator(scope).filter({ hasText: name });
 const statuses = row => row.locator('.presence-text, .presence-last').allTextContents();
+const settled = p => p.waitForFunction(() => !document.querySelector('#rankViewport')?.classList.contains('rank-moving'));
 
 module.exports = [
   {
@@ -81,6 +82,7 @@ module.exports = [
       };
       for (const tab of ['#rkWeek', '#rkAll']) {
         await p.locator(tab).click();
+        await settled(p);
         for (const [name, want] of Object.entries(expected)) t.eq(await statuses(row(name)), want, tab + ' status for ' + name);
       }
       t.eq(await row('Rosa').locator('.presence-dot').count(), 1, 'active avatar gets a dot');
@@ -144,13 +146,36 @@ module.exports = [
       const p = await t.phone({ db: new FakeDB({ scores }), size: [360, 700], state: me });
       await p.locator('#btnRanking').click();
       const cdp = await p.ctx.newCDPSession(p);
-      async function swipe(x, y, dx, dy) {
-        const touch = (type, x, y) => cdp.send('Input.dispatchTouchEvent', { type, touchPoints: type === 'touchEnd' ? [] : [{ x, y }] });
+      const touch = (type, x, y) => cdp.send('Input.dispatchTouchEvent', { type, touchPoints: type === 'touchEnd' ? [] : [{ x, y }] });
+      async function drag(x, y, dx, dy) {
         await touch('touchStart', x, y);
         for (let step = 1; step <= 5; step++) await touch('touchMove', x + dx * step / 5, y + dy * step / 5);
+      }
+      async function swipe(x, y, dx, dy) {
+        await drag(x, y, dx, dy);
         await touch('touchEnd');
+        await settled(p);
       }
       const tab = () => p.locator('#ranking .rk-tabs .on').getAttribute('id');
+      const geometry = () => p.evaluate(() => {
+        const x = sel => document.querySelector(sel).getBoundingClientRect().left;
+        const tabs = document.querySelector('#ranking .rk-tabs');
+        const highlight = new DOMMatrixReadOnly(getComputedStyle(tabs, '::before').transform);
+        const next = document.querySelector('#rankNext');
+        return { header: x('#ranking .header'), sky: x('#bg'), tabs: tabs.getBoundingClientRect().left,
+          block: x('#rankList'), highlight: highlight.m41, incoming: !!next && !next.hidden && next.inert };
+      });
+      const begin = await geometry();
+      await drag(250, 440, -62, 4);
+      const sliding = await geometry();
+      t.eq([sliding.header, sliding.sky, sliding.tabs], [begin.header, begin.sky, begin.tabs], 'header, scene and labels stay anchored');
+      t.ok(sliding.block < begin.block - 45, 'the standings block follows the finger before release', sliding);
+      t.ok(sliding.highlight > begin.highlight + 10, 'the pink tab highlight moves with the drag', sliding);
+      t.ok(sliding.incoming, 'adjacent standings are visible during drag and inert');
+      t.eq(await tab(), 'rkWeek', 'a drag does not commit before release');
+      await touch('touchEnd');
+      await settled(p);
+      t.eq(await geometry(), begin, 'short drag snaps the block and highlight back');
       await swipe(250, 440, -105, 5);
       t.eq(await tab(), 'rkAll', 'left swipe switches to All-time');
       await swipe(105, 440, 105, 5);
@@ -158,11 +183,14 @@ module.exports = [
       await swipe(220, 520, -50, -145);
       t.eq(await tab(), 'rkWeek', 'mostly vertical gesture keeps tab');
       const scroll = p.locator('#ranking > .scroll');
+      await p.waitForFunction(() => document.querySelector('#ranking > .scroll').scrollTop > 0);
       t.ok(await scroll.evaluate(el => el.scrollTop > 0), 'vertical gesture scrolls the leaderboard');
       await scroll.evaluate(el => { el.scrollTop = 0; });
       await p.locator('#rkAll').tap();
+      await settled(p);
       t.eq(await tab(), 'rkAll', 'All-time tap still works');
       await p.locator('#rkWeek').tap();
+      await settled(p);
       t.eq(await tab(), 'rkWeek', 'Deze week tap still works');
       const heart = p.locator('#rankList .heart-btn').first();
       await heart.scrollIntoViewIfNeeded();
@@ -170,7 +198,42 @@ module.exports = [
       await swipe(box.x + box.width / 2, box.y + box.height / 2, -105, 0);
       t.eq(await tab(), 'rkAll', 'a swipe beginning on a heart still switches tabs');
       t.eq(await p.locator('.heart-compose').count(), 0, 'swiping from a button does not open the heart composer');
+      await p.emulateMedia({ reducedMotion: 'reduce' });
+      await p.locator('#rkWeek').evaluate(button => button.click());
+      t.eq(await tab(), 'rkWeek', 'reduced motion commits tab selection immediately');
+      t.ok(!(await geometry()).incoming, 'reduced motion leaves no preview list');
       await cdp.detach();
+    },
+  },
+  {
+    name: 'family ranking: long names and framed avatars fit beside multi-digit ranks on phones',
+    async run(t, { FakeDB }) {
+      const scores = Object.fromEntries(Array.from({ length: 9 }, (_, i) => ['pFam' + i, score('Speler ' + i, 500 + i, 20000 + i, NOW)]));
+      scores.pLong = { ...score('rashmiisdebeste', 455, 18000, NOW, NOW - MINUTE), avatar: '🌻', frame: 'crown' };
+      const p = await t.phone({ db: new FakeDB({ scores }), size: [392, 730], state: me });
+      await p.locator('#btnRanking').click();
+      await p.locator('#rkAll').click();
+      await settled(p);
+      for (const width of [392, 360]) {
+        await p.setViewportSize({ width, height: 730 });
+        const row = person(p, '#rankList .rrow', 'rashmiisdebeste');
+        const layout = await row.evaluate(el => {
+          const rank = el.querySelector('.rk');
+          const name = el.querySelector('.ranking-name, .rn .fit-row') || el.querySelector('.rn');
+          const range = new Range();
+          range.selectNodeContents(name.firstChild);
+          const title = range.getBoundingClientRect();
+          const lines = range.getClientRects().length;
+          range.selectNodeContents(rank);
+          const place = range.getBoundingClientRect();
+          const avatar = el.querySelector('.ra').getBoundingClientRect();
+          return { lines, fits: title.width <= name.clientWidth + 1, gap: avatar.left - place.right,
+            rank: rank.textContent, rankFits: place.width <= rank.clientWidth + 1 };
+        });
+        t.eq(layout.rank, '#10', 'multi-digit place at ' + width + ' px');
+        t.ok(layout.rankFits && layout.gap >= 8, 'rank stays clear of the framed avatar at ' + width + ' px', layout);
+        t.ok(layout.lines === 1 && layout.fits, 'the entire name fits on one line at ' + width + ' px', layout);
+      }
     },
   },
 ];

@@ -121,7 +121,10 @@
       <div class="ranking-intro"><p data-t="rankTogether">Samen puzzelen</p><h3 data-t="rankFamilyTurn">De familie aan zet</h3><span id="rkMine"></span></div>
       <div class="rk-tabs"><button id="rkWeek" class="on" data-t="thisWeek">📅 Deze week</button><button id="rkAll" data-t="allTime">🏆 All-time</button></div>
       <p class="wk-info" id="wkInfo"></p>
-      <div class="rank-list" id="rankList"></div>
+      <div class="rank-viewport" id="rankViewport">
+        <div class="rank-list" id="rankList"></div>
+        <div class="rank-list rank-next" id="rankNext" aria-hidden="true" inert hidden></div>
+      </div>
       <p class="rank-note" id="rankNote"></p>
     </div>
   </section>
