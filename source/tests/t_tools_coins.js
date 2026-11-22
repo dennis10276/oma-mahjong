@@ -1,5 +1,5 @@
 'use strict';
-/* Hint and shuffle beside the tray (Dennis 2026-11-15): they sit just below home and restart, so a slip must cost nothing. */
+/* Hint and shuffle beside the tray (the owner 2026-11-15): they sit just below home and restart, so a slip must cost nothing. */
 module.exports = [
   {
     name: 'hint and shuffle: a first tap only wakes the coin, a second uses it; it sleeps again after 3 s; the top and bottom strips ignore taps; room under home; not shown until earned',

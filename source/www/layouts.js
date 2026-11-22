@@ -249,7 +249,7 @@ const Layouts = (() => {
   const careEff = level => level <= 6 ? level : 6 + (level - 6) / 4;
   const careDownN = level => level < 10 ? 0 : Math.min(6, 2 + Math.floor((level - 10) / 15));
   const careRate = level => level <= 50 ? 0.88 : Math.max(0.75, 0.88 - (level - 50) * 0.0026);
-  /* Catching up with the family (decision Dennis 2026-10-24, release 1.61): she plays well now, so
+  /* Catching up with the family (owner decision 2026-10-24, release 1.61): she plays well now, so
      from level 119 her face-down tiles follow the family's rule (any tile, a share of the pile) and
      her deals aim at the family's first-try target, both climbing evenly from where she was at 118
      (8% face-down, 75% first try) to the family's values (40%, 42%) at level 143. Pile sizes stay

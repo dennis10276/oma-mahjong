@@ -1,5 +1,5 @@
-/* How hard are the levels for the three test players (strong ~ Dennisisdebeste, sensible,
-   average ~ Mrs. Doubtfire)? Old levels (as the game made them before) and the new ones.
+/* How hard are the levels for the three test players (strong ~ the strong real player, sensible,
+   average ~ the middle real player)? Old levels (as the game made them before) and the new ones.
      node tools/sim/survey.js 70 130 1.5,1.6 > tools/sim/survey.json */
 'use strict';
 const { game, L } = require('./levels.js');

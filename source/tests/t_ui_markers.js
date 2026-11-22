@@ -77,7 +77,7 @@ module.exports = [
       t.eq(await p.evaluate(() => G.tiles.flatMap((t, i) => t.el.classList.contains('obhint') ? [i] : [])), [1, 3, 5, 9], 'all and only alive ice-neighbours are hinted');
       t.eq(await p.evaluate(() => JSON.stringify([Array.from(G.alive), obState(), G.mv, G.tray])), before, 'blocked tap changes no board, obstacle, move or tray state');
       t.ok(await p.evaluate(() => {
-        const el = G.tiles[3].el, r = el.getBoundingClientRect();   // the same subtle glow as on free tiles (Dennis 2026-11-14), no extra rim or tint
+        const el = G.tiles[3].el, r = el.getBoundingClientRect();   // the same subtle glow as on free tiles (the owner 2026-11-14), no extra rim or tint
         let visible = false;
         for (const x of [.1, .3, .7, .9]) for (const y of [.1, .3, .7, .9]) {
           const hit = document.elementFromPoint(r.left + r.width * x, r.top + r.height * y);

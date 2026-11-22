@@ -1,4 +1,4 @@
-/* The standard for levels 1-69 is the board Gerda played (Dennis, 2026-10-16): this takes her boards
+/* The standard for levels 1-69 is the board Gerda played (owner, 2026-10-16): this takes her boards
    from her recorded tries (Firebase replays/, exported to analysis/archive/replays/<pid>.json) and
    writes analysis/early-gerda.json. Every try of a level gave her the same board.
      node tools/early_from_replays.js [replays file]

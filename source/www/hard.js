@@ -9,7 +9,7 @@
      tray: how full the tray gets, how deep the twins of the waiting tiles are buried, how many
      tiles and pairs are free afterwards, and how much time the alarm clock leaves,
    - makes human mistakes: it picks among the moves by their score with some noise (`temp`).
-   Its settings (P) were fitted to how Dennisisdebeste and Mrs. Doubtfire did on levels 50-74.
+   Its settings (P) were fitted to how a strong player and a middle player did on levels 50-74.
 
    A level for the test player: { tiles, nb, faces, down (0/1 per tile), rules (ice/locks, or
    null), clock ({ i, n }: tile i must be off the board within n moves, or null) }. */
@@ -18,8 +18,8 @@ const Hard = (() => {
   const L = typeof Layouts !== 'undefined' ? Layouts : require('./layouts.js');
   const SLOTS = L.SLOTS;
   // the sensible player (fitted, see tools/sim/calibrate.js)
-  // temp: how much noise in its choices. Fitted: Dennisisdebeste plays like temp 2 (won 89% of his
-  // tries on 50-74, the test player 85-91%), Mrs. Doubtfire like temp 6 (43%; test player 33-52%,
+  // temp: how much noise in its choices. Fitted: a strong player plays like temp 2 (won 89% of his
+  // tries on 50-74, the test player 85-91%), a middle player like temp 6 (43%; test player 33-52%,
   // and it finds the same levels hard: level 51 3% vs her 5 tries). The sensible player sits between.
   // end: with this many tiles left and all of them seen, it works out the rest exactly (a good
   // player plans the last part of a level; the average one does not)
@@ -182,7 +182,7 @@ const Hard = (() => {
   const DEF = { measureFrom: 70, from: 75, rebuildFrom: 80, clockFrom: 80, sense: 0.69, start: 0.42, end: 0.22, endLevel: 120, strongSense: 0.88, strongCurve: [[75, 0.70], [85, 0.60], [100, 0.45], [120, 0.35], [150, 0.30]], minTile: 54, minTileBig: 48, runs: 36, risky: 5, pile: 'classic', twin: 0.5, rounds: 12, deals: 6, steps: 12, extraEvery: 10, extraMax: 8, screen: 20, piles: 8, maxTiles: 88 };
   const cfg = () => Object.assign({}, DEF, (typeof RULES !== 'undefined' && RULES.hard) || {});
   // the share of first tries the sensible and the strong test player should win (the strong one
-  // plays like Dennisisdebeste: a level that only suits the middle player can still be a coin flip
+  // plays like a strong player: a level that only suits the middle player can still be a coin flip
   // or a walk-over for him, so both count)
   function target(level, who = 'sensible') {
     const c = cfg(), st = who === 'strong';

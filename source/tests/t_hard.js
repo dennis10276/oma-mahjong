@@ -39,7 +39,7 @@ module.exports = [
     },
   },
   {
-    name: 'hard: the test player knows only what a person can see, and is fitted to real players (strong ~ Dennisisdebeste, average ~ Mrs. Doubtfire)',
+    name: 'hard: the test player knows only what a person can see, and is fitted to real players (strong ~ the strong real player, average ~ the middle real player)',
     cpu: true,
     async run(t) {
       const cal = require(path.join(__dirname, '..', 'tools', 'sim', 'calibration.json'));

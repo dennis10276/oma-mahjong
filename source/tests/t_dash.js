@@ -153,7 +153,7 @@ module.exports = [
         t.ok(when.order[0] === 27 && when.ago >= 29 && when.ago <= 32, 'a level continued later shows when it was last played (not when it was first started)', when);
         t.ok(/↩/.test(tbl) && /6 over/.test(tbl), 'table shows the rescue and the closest try', tbl.slice(0, 300));
         t.ok(/Stenen teruggelegd/.test(feed) && /tijd onbekend/.test(feed) && /Foutje in de app: test error/.test(feed), 'feed shows the new events', feed.slice(0, 600));
-        // send a heart from the PC as Dennis
+        // send a heart from the PC as a player
         await p.evaluate(() => { const s = document.querySelector('#alerts select'); s.value = 'pDen'; s.dispatchEvent(new Event('change', { bubbles: true })); document.querySelector('#alerts .hmsg').value = 'Goed bezig oma, wie haalt level 13 eerst? 😉'; document.querySelector('#alerts [data-heart]').click(); });
         await sleep(800);
         const h = db.get('hearts/pOma/pDen');
@@ -168,7 +168,7 @@ module.exports = [
         db.set('hearts/pOma/pDen', { name: 'Dennis', t: -h.t });       // Oma's app marks it seen
         await p.evaluate(() => checkHeartsSeen()); await sleep(500);
         t.ok(/gezien/.test(await txt('#alerts')), 'shows it was seen');
-        // Dennis fails twice too: a new alert, with a notification
+        // that player fails twice too: a new alert, with a notification
         const now = Date.now();
         db.set('plays/pDen/-x1', { k: 'end', r: 'stuck', lv: 27, at: 1, n: 80, left: 10, dur: 100, tp: 50, t: now, v: '1.14' });
         db.set('plays/pDen/-x2', { k: 'end', r: 'restart', lv: 27, at: 2, n: 80, left: 70, dur: 20, tp: 5, t: now + 1, v: '1.14' });
@@ -215,7 +215,7 @@ module.exports = [
     async run(t, { serve, FakeDB, browser, sleep, WWW }) {
       const site = await serve(path.join(__dirname, '..', 'site'), { '/play/': WWW });
       const f = fixture();
-      f.plays['cfg-pDen'] = { a: { k: 'cfg', t: 1, adapt: true, rescue: true, nudge: true, gentle: true, retry: true, super: false } };   // Dennis: old settings of deleted parts only
+      f.plays['cfg-pDen'] = { a: { k: 'cfg', t: 1, adapt: true, rescue: true, nudge: true, gentle: true, retry: true, super: false } };   // a player with old settings of deleted parts only
       f.scores.pRash = { name: 'Rashmi', avatar: '🌷', level: 5, points: 500, t: Date.now() };   // nothing switched on
       const db = new FakeDB(f);
       const ctx = await browser.newContext({ viewport: { width: 1200, height: 1100 } });

@@ -1,5 +1,5 @@
 /* The peek pair (board.js peekPair): with 3 tiles waiting, a face-down tile and its free twin still go together
-   without a tray slot. The hint's solver and the solution check know it (Dennis, 2026-11-06). */
+   without a tray slot. The hint's solver and the solution check know it (owner decision, 2026-11-06). */
 'use strict';
 const path = require('path');
 const L = global.Layouts = require(path.join(__dirname, '..', 'www', 'layouts.js'));

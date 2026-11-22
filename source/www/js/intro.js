@@ -3,8 +3,7 @@
    tiles, the tray, the taps (board.js onTap), the flight into the tray, the pair, the ice that cracks and melts, the
    shake and the hints of a blocked tap. The pop-up holds a small board and tray of its own (#board, #tray), and while
    the film plays the game's code finds those (core.js filmRoot), so the player's own level stays on the screen
-   behind the pop-up, untouched. Everything that moves on the board is what the game does for that tap (the owner:
-   "make it behave like the game"); the film's own is only the caption under the board. The game's texts for a tap
+   behind the pop-up, untouched. Everything that moves on the board is what the game does for that tap (the owner asked that the film behave like the game); the film's own is only the caption under the board. The game's texts for a tap
    (the top bar while playing, core.js gameMsg/toast) show in a top bar of the film's own, above its tray. Meanwhile the player's
    own level (G) is put aside and comes back exactly as it was; the film's level carries G.film, so nothing of it is
    saved, logged or counted (board.js saveCur, afterLogic, afterLand, onMatch, fitGeo). The first time, the button
@@ -36,7 +35,7 @@ const INTRO_FILMS = {
      on the melt (taking a free tile is obvious). The tile on the next layer rests on 4 tiles, as in a real pile (the owner
    2026-11-22: no towers), the ice is one of them. The board first rests a moment (the player takes it in), a tap
      every 0.7 s, after a step with a caption a pause so it can be read (shown fully about 0.85 s), at most 7 s
-     (the owner 2026-11-22: 0.7 s; "start a bit slower before popping up. The player needs to process it. 7 s is okay"). */
+     (the owner 2026-11-22: 0.7 s; start a bit slower before popping up, the player needs time to take it in; 7 s is fine). */
   ice: {
     tiles: [
       ['up', 8, 3, 0, 0],               // half above it (half a tile to the right): touching (a pair with top)
@@ -106,8 +105,8 @@ const INTRO_FILMS = {
     line: 'intro_trayPair',
   },
   /* Clock (board.js clockMove / checkClock): the number is the moves left, and a move is a tile taken off the board.
-     Two parts (the owner 2026-11-23: "a section before where you run out and lose to the clock. CLock really needs to be
-     clear for people seeing it the first time. Take the time there"). First the clock is lost: every tile taken
+     Two parts (the owner 2026-11-23: show first how the clock runs out and is lost, since the clock must be
+     clear to a first-time viewer; take the time there). First the clock is lost: every tile taken
      counts 1, and at 0 with the clock tile still there the alarm goes off, as in the game. Then what is not obvious:
      a tap on a blocked tile and turning a face-down tile over cost nothing; the clock tile only has to leave the
      board (into the tray, its twin may wait), with the last move still in time. 16.5 s: it plays once, then rests. */
@@ -122,8 +121,8 @@ const INTRO_FILMS = {
         ['t', 20, 1, 2, 1],             // a bridge over a and the clock tile's left half
       ],
       clock: ['ck', 3], count: true,
-      // a tap every 1.3 s, so each step of the number is seen on its own (the owner 2026-11-23: "Een steen pakken kost
-      // een zet ... duidelijk dat de timer afloopt voor elke zet die je doet"); the caption stays up meanwhile
+      // a tap every 1.3 s, so each step of the number is seen on its own (the owner 2026-11-23: taking a tile costs
+      // a move, and it must be clear that the timer runs down with every move); the caption stays up meanwhile
       taps: [
         [1300, 'a1', 'ck_take'],        // 3 → 2
         [2600, 'a2', 'ck_take'],        // a pair: 2 → 1
@@ -140,8 +139,8 @@ const INTRO_FILMS = {
         ['t', 20, 1, 2, 1],             // a bridge over a and the clock tile's left half (the clock's number sits at the upper right)
       ],
       down: ['dn'], clock: ['ck', 3], count: true,
-      // as in part 1, every tap with the clock's number under its caption (the owner 2026-11-23: "Its about the 2nd part
-      // to make that clearer there too. Just like in part 1")
+      // as in part 1, every tap with the clock's number under its caption (the owner 2026-11-23: part 2 should be as
+      // clear as part 1)
       taps: [
         [1300, 'ck', 'ck_blocked'],     // covered: it shakes, the game points at t; 3 → 3
         [2750, 'dn', 'ck_peek'],        // turned over: 3 → 3

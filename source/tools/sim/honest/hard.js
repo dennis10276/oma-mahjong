@@ -9,7 +9,7 @@
      tray: how full the tray gets, how deep the twins of the waiting tiles are buried, how many
      tiles and pairs are free afterwards, and how much time the alarm clock leaves,
    - makes human mistakes: it picks among the moves by their score with some noise (`temp`).
-   Its settings (P) were fitted to how Dennisisdebeste and Mrs. Doubtfire did on levels 50-74.
+   Its settings (P) were fitted to how the strong real player and the middle real player did on levels 50-74.
 
    A level for the test player: { tiles, nb, faces, down (0/1 per tile), rules (ice/locks, or
    null), clock ({ i, n }: tile i must be off the board within n moves, or null) }. */
@@ -21,12 +21,12 @@ const Hard = (() => {
   // (tools/sim/refit, analysis/honest-refit.md):
   // - unknown 0: real players are not afraid of a tray tile whose twin they have not seen yet;
   // - reveal 8: they dig where the uncovered tiles are likely to fit something (smart guessing,
-  //   found in Dennisisdebeste's replay of level 102: the test player had 0%, he won);
+  //   found in the strong real player's replay of level 102: the test player had 0%, he won);
   // - plan 10: with 10 moves or fewer left on the alarm clock they plan the way to the clock tile
   //   (his replay of level 105: from his opening the test player lost 9 of 10, now about 9 of 10 won).
-  // strong ~ Dennisisdebeste (first tries 80-89: 0.71 real, 0.70 test player), average ~ Mrs. Doubtfire.
+  // strong ~ the strong real player (first tries 80-89: 0.71 real, 0.70 test player), average ~ the middle real player.
   // memory: on a retry, the chance to remember a picture seen at the start / middle / end of the lost
-  //   try (rate2; fitted to real retries 2026-10-16: Dennisisdebeste 75% throughout, Mrs. Doubtfire and
+  //   try (rate2; fitted to real retries 2026-10-16: the strong real player 75% throughout, the middle real player and
   //   Gerda none; sensible kept at 50/30/50). One test player per person: tools/sim/refit/players.
   // focused: the old clock-focused calibration model, kept for comparison.
   // end: with this many tiles left and all of them seen, it works out the rest exactly
@@ -158,7 +158,7 @@ const Hard = (() => {
     // planning for the alarm clock (p.plan: how many moves ahead): with the moves that are left,
     // find a way to take the clock tile in time using only what it can see now, without filling
     // the tray, and ending with at most 2 waiting (or a seen tile that fits). A face-down tile
-    // that a move would uncover cannot be planned with. Dennisisdebeste on level 105: from his
+    // that a move would uncover cannot be planned with. the strong real player on level 105: from his
     // opening the test player lost 9 of 10 games; he planned the 11 moves to the clock tile.
     let cplan = null;
     const seen0 = new Uint8Array(n);
@@ -227,7 +227,7 @@ const Hard = (() => {
       if (plan && plan.length) { if (!commit(plan.shift())) return end(false, 'clock'); continue; }
       // a tile that fits a waiting one is taken at once, unless the alarm clock cannot wait: then the
       // clock tile (or the way to it) comes first and the match is just one of the options
-      // (Dennisisdebeste on level 105: took the clock tile as move 13 of 13, the match after it)
+      // (the strong real player on level 105: took the clock tile as move 13 of 13, the match after it)
       if (m !== undefined && !clockTight()) { if (!commit(m)) return end(false, 'clock'); continue; }
       // the options: a pair (two tiles that are free), or one tile into the tray. With 3 tiles
       // waiting only a pair with a face-down tile in it is left: turned over, it matches its twin
@@ -350,7 +350,7 @@ const Hard = (() => {
   const DEF = { measureFrom: 70, from: 75, rebuildFrom: 80, clockFrom: 80, sense: 0.69, start: 0.42, end: 0.22, endLevel: 120, strongSense: 0.88, strongCurve: [[75, 0.70], [85, 0.60], [100, 0.45], [120, 0.35], [150, 0.30], [269, 0.18]], maxDown: 0.20, minTile: 54, minTileBig: 48, runs: 36, risky: 5, pile: 'classic', twin: 0.5, rounds: 12, deals: 6, steps: 12, extraEvery: 10, extraMax: 8, screen: 20, piles: 8, maxTiles: 88 };
   const cfg = () => Object.assign({}, DEF, (typeof RULES !== 'undefined' && RULES.hard) || {});
   // the share of first tries the sensible and the strong test player should win (the strong one
-  // plays like Dennisisdebeste: a level that only suits the middle player can still be a coin flip
+  // plays like the strong real player: a level that only suits the middle player can still be a coin flip
   // or a walk-over for him, so both count)
   function target(level, who = 'sensible') {
     const c = cfg(), st = who === 'strong';

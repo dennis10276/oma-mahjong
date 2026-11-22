@@ -1,5 +1,5 @@
 /* The level lock (RULES.levels.blockedFrom, added by Codex while the harder levels waited for
-   approval; Dennis opened them on 2026-10-11, so it is off: null). */
+   approval; the owner opened them on 2026-10-11, so it is off: null). */
 'use strict';
 
 module.exports = [

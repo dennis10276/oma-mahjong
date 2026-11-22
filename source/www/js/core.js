@@ -58,7 +58,7 @@ async function loadCfg() {
     if (typeof curScreen !== 'undefined' && curScreen === 'home') renderHome();
   } catch (e) { }
 }
-/* "Redo from level n" (set on the dashboard or by Dennis): the player goes back to level n; stars,
+/* "Redo from level n" (set on the dashboard or by hand): the player goes back to level n; stars,
    points and tries of level n and up are wiped, once per request (redoId). */
 function applyRedo(c) {
   const n = +c.redo;

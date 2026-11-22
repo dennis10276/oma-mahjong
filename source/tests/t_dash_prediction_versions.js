@@ -1,7 +1,7 @@
 'use strict';
 const path = require('path');
 module.exports = [{
-  name: 'dashboard: no predictions by default (Dennis 2026-10-22); dash/?pred=1 still shows the old card',
+  name: 'dashboard: no predictions by default (owner decision 2026-10-22); dash/?pred=1 still shows the old card',
   async run(t, { serve, FakeDB, browser, WWW }) {
     const site = await serve(path.join(__dirname, '../site'), { '/play/': WWW });
     const pid = 'pmv16kj3jr35750', now = Date.now();

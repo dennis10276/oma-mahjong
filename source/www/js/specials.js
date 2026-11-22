@@ -207,9 +207,9 @@ function obBlocked(i) {
 }
 function showThaw(i) { G.inb[i].filter(j => G.alive[j]).forEach(j => replay(G.tiles[j].el, 'obhint', 1300)); }
 // the key tiles wiggle: they open the locks (also when the tapped locked tile is still covered;
-// the owner 2026-10-30: "when you click a locked tile even when buried I want the keys to shake")
+// the owner 2026-10-30: wanted the keys to shake when a locked tile is tapped even while buried)
 // A key under the pile shows through it: every tile lying on top of it turns see-through for a moment
-// (the owner 2026-10-30: "I can't see the other key under the pile ... I want to see it through the pile").
+// (the owner 2026-10-30: could not see the other key under the pile and wanted to see it through the pile).
 function showKeys() {
   const keys = G.ob.keys.filter(k => G.alive[k]), over = new Set(), todo = [...keys];
   while (todo.length) for (const j of G.nb.above[todo.pop()]) if (G.alive[j] && !over.has(j)) { over.add(j); todo.push(j); }

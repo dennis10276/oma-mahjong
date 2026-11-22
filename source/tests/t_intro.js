@@ -327,7 +327,7 @@ module.exports = [
     t.eq(await p.evaluate(() => INTRO_FILMS.ice.taps.map(x => [x[1], x[2] || null])),
       [['ice', 'ic_tap'], ['far', null], ['corner', 'ic_diagonal'], ['up', 'ic_half'], ['top', 'ic_corner']], 'a caption for every subtle step, none for the obvious');
     t.ok(await p.evaluate(() => INTRO_FILMS.ice.taps.filter(x => x[2]).every(x => TEXT[x[2]] && TEXT[x[2]].every(s => s && s.length <= 32))), 'short captions in Dutch and English');
-    t.ok(await p.evaluate(() => !['ic_covered', 'ic_top', 'ic_free'].some(k => k in TEXT)), 'no step about the ordinary covered-tile rule or the obvious (Dennis: for a skilled player)');
+    t.ok(await p.evaluate(() => !['ic_covered', 'ic_top', 'ic_free'].some(k => k in TEXT)), 'no step about the ordinary covered-tile rule or the obvious (the owner: for a skilled player)');
     // every frame of one play: which tap was last, the caption and how much of it shows, anything of the film's own on the board
     await p.evaluate(() => {
       window.__frames = []; playIntroFilm('ice', { why: 'manual' });
@@ -352,7 +352,7 @@ module.exports = [
       t.ok(!s.other, `${s.id}: no other caption in its step`, s);
       // (the last one stays until the film plays again: it ends on what it was about)
       t.ok(last ? s.before >= 0.95 : s.before <= 0.05, last ? `${s.id}: its caption stays at the end` : `${s.id}: its caption is gone before the next tap`, s);
-      // (Dennis: "make it behave like the game", no tap ring: what moves on the board is only what the game does for that tap)
+      // (the owner: the film behaves like the game, no tap ring: what moves on the board is only what the game does for that tap)
       t.ok(!s.own, `${s.id}: nothing on the board but the game's own effects (no tap ring, no pulse)`, s);
     });
     t.eq(p.errors, [], 'no browser errors');

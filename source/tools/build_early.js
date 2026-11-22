@@ -1,4 +1,4 @@
-/* Levels 51 and 53-69, ready-made for everyone (www/levels-early.js; Dennis, 2026-10-16). The family
+/* Levels 51 and 53-69, ready-made for everyone (www/levels-early.js; owner, 2026-10-16). The family
    had passed 52 when this started, so lower levels stay as they were (made for each screen).
    The standard is the board Gerda played: levels she has a recording of are her exact board
    (analysis/early-gerda.json, from tools/early_from_replays.js); the others are made with the game's

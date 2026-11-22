@@ -49,7 +49,7 @@ module.exports = [
       t.eq(await bar(p), { shown: true, open: true }, 'level 54: same block, still there (51 having 2 stars counts from 55)');
       await startLevel(p, 55);
       t.eq(await bar(p), { shown: false, open: false }, 'level 55: checked again, gone (level 51 has 2 stars)');
-      // hint and shuffle sit beside the tray (Dennis 2026-11-15): with or without them the pile has the same room
+      // hint and shuffle sit beside the tray (the owner 2026-11-15): with or without them the pile has the same room
       t.eq(await room(p), withTools, 'the buttons take no room from the pile');
       t.eq(await p.evaluate(() => toolsMissing(55)), [51], 'knows which level is missing');
       await p.evaluate(() => { __mj.S.stars[51] = 3; });
