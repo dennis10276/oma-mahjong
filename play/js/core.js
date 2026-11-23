@@ -3,17 +3,15 @@
    (the tunable numbers are in js/rules.js). */
 'use strict';
 
-const $ = s => document.querySelector(s);
+// While the intro film plays (js/intro.js), the game's own board code draws into the film's pop-up: these parts of the
+// game screen are looked up there (filmRoot), the player's own level stays as it is behind the pop-up.
+// (add an id to FILM_PARTS only if the film's pop-up has an element with that id too: js/intro.js)
+let filmRoot = null;
+const FILM_PARTS = /^#(board|boardWrap|tray|clockBadge|progressBar|gameMsg|toast)\b/;
+const $ = s => (filmRoot && FILM_PARTS.test(s) ? filmRoot : document).querySelector(s);
 const STORE = 'omamj.v1', CUR = 'omamj.cur';
-const APP_VERSION = '1.75';
-// one-time clean start for every device (all progress from the test period is wiped once)
-const RESET_MARK = 'omamj.reset', RESET_ID = '2026-10-07';
-try {
-  if (localStorage.getItem(RESET_MARK) !== RESET_ID) {
-    Object.keys(localStorage).filter(k => k.startsWith('omamj.')).forEach(k => localStorage.removeItem(k));
-    localStorage.setItem(RESET_MARK, RESET_ID);
-  }
-} catch (e) { }
+const APP_VERSION = '1.76';
+// (the one-time wipe of 2026-10-07 is gone from the code; its key omamj.reset stays in old saves and is ignored)
 
 // ---------- backgrounds (unlocked with stars) ----------
 // (their names are in lang.js: bg_<id>)
@@ -49,7 +47,7 @@ const save = () => { try { localStorage.setItem(STORE, JSON.stringify(S)); } cat
 // 👵 Super-omamodus (grandma, or switched on the dashboard); each part of it can also be on by itself
 const careMode = () => isCarePlayer(S.pid, S.name, S.cfg || {});
 const part = id => partOn(id, S.pid, S.name, S.cfg || {});
-// this player's settings from the family dashboard (grandma mode, news); kept on the phone for offline starts
+// this player's settings from the family dashboard (grandma mode); kept on the phone for offline starts
 async function loadCfg() {
   if (!DB_URL || !S.pid) return;
   try {
@@ -61,7 +59,7 @@ async function loadCfg() {
     if (typeof curScreen !== 'undefined' && curScreen === 'home') renderHome();
   } catch (e) { }
 }
-/* "Redo from level n" (set on the dashboard or by Dennis): the player goes back to level n; stars,
+/* "Redo from level n" (set on the dashboard or by hand): the player goes back to level n; stars,
    points and tries of level n and up are wiped, once per request (redoId). */
 function applyRedo(c) {
   const n = +c.redo;
@@ -98,7 +96,8 @@ function streak() {
 // ---------- helpers ----------
 const modalFree = () => $('#modal').classList.contains('hidden');   // no pop-up open
 const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-function bumpStat(k, n = 1) { S.stats[k] = (S.stats[k] || 0) + n; }
+function bumpStat(k, n = 1) { if (G && G.film) return;   // (the intro film counts nothing: js/intro.js)
+  S.stats[k] = (S.stats[k] || 0) + n; }
 // extra stars and points outside a level (tasks, chest, gift, streak); points also count for the week
 function giveBonus(stars = 0, pts = 0) { S.bonusStars += stars; S.bonusPts += pts; if (pts) ensureWeek().pts += pts; }
 // play a CSS animation again from the start (optionally remove the class after ms)
@@ -116,7 +115,7 @@ function buzz(ms) {
 }
 let toastT;
 function toast(msg, ms = 2400) {
-  if (inPlay()) return gameMsg(msg, ms);   // while playing: in the top bar, never over the tiles
+  if (inPlay() || (G && G.film)) return gameMsg(msg, ms);   // while playing (or in the intro film): in the top bar, never over the tiles
   const t = $('#toast'); t.textContent = msg;
   t.classList.toggle('top', !modalFree());   // above a pop-up, so it never hides its buttons
   t.classList.add('on');

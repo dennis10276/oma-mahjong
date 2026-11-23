@@ -13,15 +13,6 @@ const RULES = {
     earn: { every: 5, stars: 3 } },            // from HELP.toolsGoneFrom on they have to be earned, per block of 5 levels (see board.js)
   // from this level: when no order of the remaining taps can fill the tray any more, the rest plays itself
   // (checked exactly, for at most maxTiles tiles left and within a search budget)
-  // Game tips are opened manually from the menu. Automatic tips between attempts were removed
-  // (Dennis, 2026-11-12); new tile introductions must finish before play starts.
-  coach: { fromLevel: 60 },
-  // replay of a win (js/pro.js, decisions Dennis 2026-11-06; on per player on the dashboard, part 'pro'): after
-  // `after` lost tries of a level not passed yet (restarts count), once per level a winning try of that exact
-  // board (Dennisisdebeste's, else the fewest tries), at `speed` × its pace
-  // (pauses longer than maxGapMs, after speeding up, are shortened); only a small × at the top, after closeAfterMs
-  pro: { after: 5, speed: 2, maxGapMs: 3000, closeAfterMs: 3000, waitMs: 5000,
-    url: 'https://dennis10276.github.io/oma-mahjong/play/pro/' },
   autoFinish: { fromLevel: 50, maxTiles: 24, budget: 200000, stepMs: 260 },
   // the harder levels (www/hard.js): from measureFrom the test player designs each level so a
   // sensible player wins about `sense` of first tries; from `from` the levels get harder (a tile on
@@ -49,59 +40,24 @@ const RULES = {
 
 const levelBlocked = level => RULES.levels.blockedFrom != null && level >= RULES.levels.blockedFrom;
 
-/* Help: `normal` is what everyone gets; `care` holds the gentler values. Which of them a player gets
-   is decided per part (PARTS below): a part that is on takes its values from `care`.
-   Change a value here to change it for everyone, e.g. normal.rescue = true. */
+/* Help: what every player gets. (Grandma's extra help is gone; she keeps only her own, easier levels:
+   PARTS below.) */
 const HELP = {
   normal: {
     comboMs: 10000,                            // time to keep a combo going (everyone)
     lucky: { fromLevel: 10, perLevel: 1, chance: 0.3 },
-    gentle: 0,                                 // 0 = the normal deal (see Layouts.ease)
-    easierAfterFails: 0,                       // 0 = never
-    rescue: false,                             // a full tray: put the tiles back once per level
-    nudge: null,                               // the helper that makes a pair glow
-    shuffleAfter: null,                        // no shuffle right at the start of a level
-    adapt: null,                               // difficulty that follows her own results
     toolsGoneFrom: 50,                         // from this level on 💡 Hint and 🔀 Schudden only when earned: every level so far on 3 stars
     jokersGoneFrom: 50,                        // ... and no 🃏 jokers in the deal
   },
-  care: {
-    lucky: { fromLevel: 1, perLevel: 2, chance: 0.5 },
-    gentle: 1,                                 // on top of her own gentle levels (layouts.js, track 'care'); her results move it
-    easierAfterFails: 3,
-    rescue: true,
-    // the helper: a pair with a face-down tile glows after downS seconds, a visible pair after upS.
-    // pace: the waits follow her last n tries: won ≥ high -> × slow (she can do it herself),
-    // won ≤ low or already failed this level -> × fast (sooner help), in between gradually
-    nudge: { downS: 6, upS: 14, pace: { n: 8, min: 3, low: 0.4, high: 0.85, fast: 0.7, slow: 2.8 } },
-    shuffleAfter: { taken: 8, tray: 2 },       // Schudden works after 8 tiles are gone or with 2 in the tray
-    // her last n tries: won < low -> half a step easier, > high -> half a step back (only when a new
-    // level starts, after at least `min` tries since the last change); starting over within
-    // quickRestartS seconds does not count
-    adapt: { n: 10, min: 5, low: 0.6, high: 0.85, minStep: -2, maxStep: 2, quickRestartS: 30 },
-    toolsGoneFrom: null,                       // grandma mode keeps Hint and Schudden at every level
-    jokersGoneFrom: null,                      // ... and the jokers
-  },
 };
-const ADAPT_STEPS = { '-2': 'normaal (zoals de familie)', '-1': 'iets moeilijker', 0: 'zacht (haar standaard)', 1: 'iets makkelijker', 2: 'makkelijker' };
 
-/* Grandma mode in parts, each switchable per player on the family dashboard. 👵 Super-omamodus
-   turns them all on (by default only for grandma, see GRANDMA); a part switched on its own (PUK:
-   only `adapt`) works without the others. `help`: the HELP.care values the part brings. */
+/* Grandma mode: one part, switchable per player on the family dashboard. 👵 Super-omamodus turns it
+   on (by default only for grandma, see GRANDMA). Old settings for parts that no longer exist
+   (gentle, adapt, retry, rescue, nudge, shuffleLater, lucky, keepTools, pro, news) are simply ignored. */
 const PARTS = [
   { id: 'levels', group: 'easy', label: 'Eigen, makkelijkere levels', note: 'langzamer moeilijker, weinig omgedraaide stenen' },
-  { id: 'gentle', group: 'easy', help: ['gentle'], label: 'Elk level een stapje makkelijker', note: 'meer dezelfde plaatjes' },
-  { id: 'adapt', group: 'easy', help: ['adapt'], label: 'Past zich aan de resultaten aan', note: 'laatste 10 pogingen: makkelijker als het vaak misgaat' },
-  { id: 'retry', group: 'easy', help: ['easierAfterFails'], label: 'Makkelijker na 3 keer mis', note: 'de 4e poging van hetzelfde level' },
-  { id: 'rescue', group: 'help', help: ['rescue'], label: 'Stenen terugleggen', note: 'vol bakje: 1× per level terugleggen (kost een ster)' },
-  { id: 'nudge', group: 'help', help: ['nudge'], label: 'Het hulpje', note: 'een paar licht op na een tijdje niets doen' },
-  { id: 'shuffleLater', group: 'help', help: ['shuffleAfter'], label: 'Schudden niet meteen', note: 'pas na een paar zetten (bewaart de ster)' },
-  { id: 'lucky', group: 'extra', help: ['lucky'], label: 'Meer geluksmomentjes', note: 'vanaf level 1, tot 2 per level' },
-  { id: 'keepTools', group: 'extra', help: ['toolsGoneFrom', 'jokersGoneFrom'], label: 'Hint, Schudden en jokers na level 50', note: 'blijven, ook na level 50' },
-  { id: 'pro', group: 'help', label: 'Replay na 5 keer mis', note: 'hoe Dennisisdebeste (of wie het snelst won) het level haalde, 2× zo snel' },
-  { id: 'news', group: 'news', label: 'Nieuws uit Apeldoorn', note: 'na een gewonnen level een nieuwtje of buurtverhaal' },
 ];
-const PART_GROUPS = { easy: 'Makkelijker spelen', help: 'Hulp', extra: "Extra's", news: 'Nieuws' };
+const PART_GROUPS = { easy: 'Makkelijker spelen' };
 
 /* Grandma: her player id, or a name starting with "Oma" (in case she ever reinstalls the app).
    `like` = players who always get exactly what grandma gets (DennisTEST: to see what she sees). */
@@ -131,30 +87,9 @@ function playerCfg(list) {
 // 👵 Super-omamodus: all parts at once
 const isCarePlayer = (pid, name, cfg = {}) => 'super' in cfg ? cfg.super : isGrandma(pid, name) || CARE.pids.includes(pid);
 const partOn = (id, pid, name, cfg = {}) => id in cfg ? cfg[id] : isCarePlayer(pid, name, cfg);
-// the help one player gets: the normal values, with the gentler ones of every part that is on
-function helpFor(pid, name, cfg = {}) {
-  const h = { ...HELP.normal };
-  for (const p of PARTS) if (p.help && partOn(p.id, pid, name, cfg)) for (const k of p.help) h[k] = HELP.care[k];
-  return h;
-}
-// news from Apeldoorn (a part too; VILLAGE.enabled switches it off for everyone)
-const getsNews = (pid, name, cfg = {}) => VILLAGE.enabled && partOn('news', pid, name, cfg);
-
-/* News from Apeldoorn after a won level (js/village.js), only for grandma (and DennisTEST).
-   Mostly real local news (collected every two hours by tools/news.py), sometimes a made-up story
-   about the computer players in the ranking (js/stories.js), told one part per won level. */
-const VILLAGE = {
-  enabled: true,                               // false: the news is gone for everyone (see README: removing the news)
-  newsUrl: 'https://raw.githubusercontent.com/dennis10276/oma-mahjong/news/news.json',
-  storyShare: 0.2,                             // 1 in 5 items is a story part, the rest real news
-  newsDays: 7,                                 // real news older than this is not shown any more (events that are over: never)
-  staleDays: 2,                                // no fresh news file for this long: stories may fill in
-  active: 2,                                   // stories running at the same time
-  askStar: 1,                                  // a memory question answered right: a bonus star
-  refreshMin: 30,                              // fetch the news again after this many minutes
-};
-
-// ---------- the database (Firebase Realtime Database; empty = only the computer players) ----------
+// the help one player gets: the same for everyone
+const helpFor = () => HELP.normal;
+// ---------- the database (Firebase Realtime Database) ----------
 const DB_URL = 'https://oma-mahjong-default-rtdb.europe-west1.firebasedatabase.app';
 const dbUrl = path => `${DB_URL}/${path}.json`;
 function dbSend(path, body, method = 'PUT', signal) {

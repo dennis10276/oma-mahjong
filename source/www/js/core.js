@@ -10,7 +10,7 @@ let filmRoot = null;
 const FILM_PARTS = /^#(board|boardWrap|tray|clockBadge|progressBar|gameMsg|toast)\b/;
 const $ = s => (filmRoot && FILM_PARTS.test(s) ? filmRoot : document).querySelector(s);
 const STORE = 'omamj.v1', CUR = 'omamj.cur';
-const APP_VERSION = '1.75';
+const APP_VERSION = '1.76';
 // (the one-time wipe of 2026-10-07 is gone from the code; its key omamj.reset stays in old saves and is ignored)
 
 // ---------- backgrounds (unlocked with stars) ----------

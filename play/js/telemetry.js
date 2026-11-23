@@ -37,7 +37,8 @@ async function flushLog() {
 }
 const lvInfo = () => G ? (G.mode === 'level' ? { lv: G.level } : { m: 'd', d: G.date, lv: S.level }) : { lv: S.level };
 // something happened in the level being played: which level, which try, after how long, tiles left
-function logLvl(k, extra = {}) { syncClock(); logEvt(k, { ...lvInfo(), aid: G.rp && G.rp.id, at: G.attempt, s: Math.round(G.elapsed), left: aliveCount(), ...extra }); }
+function logLvl(k, extra = {}) { if (G.film) return;   // (the intro film logs nothing: js/intro.js)
+  syncClock(); logEvt(k, { ...lvInfo(), aid: G.rp && G.rp.id, at: G.attempt, s: Math.round(G.elapsed), left: aliveCount(), ...extra }); }
 // Record the actual explanation shown, not a guess from a player's failures.
 // Firebase permits strings of at most 40 characters; preserve the full text in pieces.
 let helpMessageSeq = 0;
@@ -71,7 +72,6 @@ function endLevel(r, extra = {}) {
   // Losses keep their board on screen for the retry/review dialog, but are no
   // longer resumable. In particular, hiding the app must not save them again.
   clearCur();
-  adaptNote(r);
   const st = G.st || {};
   logEvt('end', { ...lvInfo(), aid: G.rp && G.rp.id, r, at: G.attempt || 1, dur: Math.round(G.elapsed), sc: G.score, n: G.tiles.length, left: aliveCount(), h: !!G.usedHint, sh: !!G.usedShuffle, rb: G.rescued ? 1 : undefined, ez: G.ez || undefined, mc: st.mc || 0, tm: st.tm || 0, bt: st.bt || 0, fl: st.fl || 0, tp: st.tp || 0, ...extra });
 }
@@ -103,7 +103,6 @@ function replayBegin(cur, resumed) {
           gen: G.o.mode === 'level' ? Hard.designVersion(G.o.level) : Hard.GENV, tiles: G.tiles.map(t => [t.x, t.y, t.z]), gold: [...G.gold], state: replayState(),
           help: JSON.parse(JSON.stringify(help())), cfg: { ...S.cfg }, aspect: G.o.aspect,
           seenClock: !!S.seenSp.clockMoves } };
-      G.sig = typeof proSig === 'function' ? proSig(G.rp.init) : null;   // which board this is (js/pro.js)
     }
     replayMark(resumed ? 'resume' : 'begin');
     replayCapture();

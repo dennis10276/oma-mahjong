@@ -60,11 +60,12 @@ document.addEventListener('pointerdown', () => Sound.init(), { once: true });
 addEventListener('resize', () => { if (curScreen === 'game') layoutBoard(); else fitTexts(document.getElementById(curScreen)); });
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) { Sound.suspend(); if (curScreen === 'game') pauseClock(); }
-  else { Sound.resume(); resumeClock(); if (curScreen === 'home') { if (applyUpdate()) return; renderHome(); checkHearts(); } checkUpdate(); loadCfg().then(loadNews); }
+  else { Sound.resume(); resumeClock(); if (curScreen === 'home') { if (applyUpdate()) return; renderHome(); checkHearts(); } checkUpdate(); loadCfg(); }
 });
 
 // Android back button (called from the native wrapper). Return true when handled.
 window.handleBack = () => {
+  if (introRun) return true;        // the intro film (js/intro.js) ends with its button
   if (!modalFree()) { if (modalClosable) closeModal(); return true; }
   if (curScreen === 'game') { saveCur(); show('home'); return true; }
   if (curScreen !== 'home') { show('home'); return true; }
@@ -92,12 +93,11 @@ setInterval(() => {
 document.addEventListener('visibilitychange', () => updatePresence());
 addEventListener('pagehide', () => updatePresence(false));
 addEventListener('online', () => updatePresence());
-loadCfg().then(loadNews);
-$('#btnPaper').onclick = openPaper;
+loadCfg();
 // a heart can arrive any moment (the live stream can miss one): look again every half minute
 setInterval(() => {
   if (document.hidden) return;
-  checkHearts(); loadCfg(); loadNews();
+  checkHearts(); loadCfg();
   if (curScreen === 'home') checkSentHearts();
   if (curScreen === 'ranking' && modalFree()) renderRanking();
 }, 30000);

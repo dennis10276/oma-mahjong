@@ -1,5 +1,5 @@
 /* Oma's Mahjong — one level: the pile, the 4 tray slots, tapping, matching, hint and shuffle.
-   Extra help (grandma) is in help.js, special tiles and ice/locks in specials.js. */
+   Special tiles and ice/locks in specials.js. */
 'use strict';
 
 const SLOTS = Layouts.SLOTS;
@@ -11,7 +11,7 @@ const CUR_V = 7;
 const loadCur = () => { try { const c = JSON.parse(localStorage.getItem(CUR) || 'null'); return c && c.v === CUR_V && !c.rp?.closed ? c : null; } catch (e) { return null; } };
 const clearCur = () => { try { localStorage.removeItem(CUR); } catch (e) { } };
 function saveCur() {
-  if (!G || G.done || G.logged) return;
+  if (!G || G.done || G.logged || G.film) return;     // (G.film: the intro film's tiny level, js/intro.js)
   syncClock();
   try {
     replayCapture();
@@ -53,7 +53,6 @@ function begin(o, restart = false) {
     return;
   }
   const previousReplay = G && G.rp;
-  stopLessonDemo();
   if (previousReplay) { replayCapture(); replayDrain(G); }
   $('#modal').classList.add('hidden'); modalOnClose = null;
   $('#comboTag').classList.remove('on'); clearGameMsg(); FX.clear(); if ($('#autoBanner')) autoBanner(false);
@@ -76,7 +75,7 @@ function begin(o, restart = false) {
     (o.mode !== 'level' || (Hard.applies(o.level, o.track) ? o.level < RULES.hard.rebuildFrom || cur.hv === Hard.designVersion(o.level) : !Hard.appliesEarly(o.level, o.track) || cur.hv == null || cur.hv === boardVer(o)));
   // (a save from before the table (no hv) resumes when its screen shape and tile count fit the level)
   // A new hard-level design starts fresh; earlier levels and grandma's saved boards still resume.
-  const ez = cur && cur.key === o.key && sameTrack ? (cur.ez || 0) : easeFor(o.key);
+  const ez = cur && cur.key === o.key && sameTrack ? (cur.ez || 0) : 0;      // (only a level saved with an easier deal resumes easier; a new deal is never eased)
   if (!o.spec || (o.ez || 0) !== ez) {
     if (!o.spec) o.aspect = o.fixedAspect || aspect;
     let sp = o.makeSpec(o.aspect);
@@ -115,13 +114,13 @@ function begin(o, restart = false) {
   }
   // the clock and the play log come first, so they are right even if drawing the board goes wrong
   // (in 1.10 a level could be played without them: logged as won in 0 seconds with 0 taps)
-  G.tStart = performance.now(); G.lastMove = performance.now(); G.nudge = null;
+  G.tStart = performance.now();
   G.st = { tp: 0, bt: 0, fl: 0, mc: 0, tm: 0, ...(resumed && cur.st || {}) };    // counters continue across closing/reopening
   if (!resumed || !S.att[o.key]) { S.att[o.key] = (S.att[o.key] || 0) + 1; save(); }
   G.attempt = S.att[o.key];
   replayBegin(cur, resumed);
   const focused = !!spec.made && o.mode === 'level' && o.level >= RULES.hard.rebuildFrom;
-  logEvt('start', { ...lvInfo(), aid: G.rp && G.rp.id, at: G.attempt, n, res: resumed || undefined, rs: restart || undefined, ez: ez || undefined, ad: adaptStepFor(o), tk: o.track || undefined, pr: spec.made && spec.made.info ? (focused ? spec.made.info.strong : spec.made.info.rate) : undefined, pm: focused ? Hard.ratingModel(o.level) : undefined, ck: G.clock ? G.clock.n : undefined, tl: toolsEarnLevel(toolLevel(o)) ? (toolsGoneFor(o) ? 0 : 1) : undefined });
+  logEvt('start', { ...lvInfo(), aid: G.rp && G.rp.id, at: G.attempt, n, res: resumed || undefined, rs: restart || undefined, ez: ez || undefined, tk: o.track || undefined, pr: spec.made && spec.made.info ? (focused ? spec.made.info.strong : spec.made.info.rate) : undefined, pm: focused ? Hard.ratingModel(o.level) : undefined, ck: G.clock ? G.clock.n : undefined, tl: toolsEarnLevel(toolLevel(o)) ? (toolsGoneFor(o) ? 0 : 1) : undefined });
   $('#gameTitle').textContent = o.title;
   try {
     show('game');
@@ -131,10 +130,9 @@ function begin(o, restart = false) {
   } catch (e) { logErr(e, 'begin'); }
   saveCur();
   setTimeout(() => praise(restart ? tx('againPraise') : o.mode === 'daily' ? tx('dailyPraise') : o.title), 150);
-  if (villageOn()) setTimeout(villageTease, 1800);
   const ready = () => {
     if (!S.seenTray) setTimeout(() => showIntro(), 700);
-    else { setTimeout(checkStuck, 500); setTimeout(jokerLeftover, 700); setTimeout(specialTip, 1200); }
+    else { setTimeout(checkStuck, 500); setTimeout(jokerLeftover, 700); }
   };
   // Finish every new-tile introduction before starting play or any optional replay.
   const introductions = () => {
@@ -142,7 +140,6 @@ function begin(o, restart = false) {
     if (!S.seenDown && G.down.some(Boolean)) { showDownTip(introductions); return; }
     G.introducing = false; resumeClock();
     ready();
-    if (!resumed) proCheck();
   };
   G.introducing = true; syncClock(); G.tStart = 0;
   introductions();
@@ -164,11 +161,13 @@ function takeOff(i) { G.alive[i] = 0; G.down[i] = 0; if (G.peek === i) G.peek = 
    Taps never wait for this: the game state has changed already, the animation just catches up. */
 function afterFlight(ms, fn) { G.flights++; afterLogic(); setTimeout(() => { G.flights--; fn(); afterLand(); }, ms); }
 function afterLogic() {
-  updateBlocked(); updateObstacles(); updateProgress(); updateNudge(); checkClock();
+  updateBlocked(); updateObstacles(); updateProgress(); checkClock();
+  if (G.film) return;
   if (aliveCount() === 0 && G.tray.length === 0) { G.done = true; clearCur(); return; }
   saveCur();
 }
 function afterLand() {
+  if (G.film) return;
   if (G.done) { if (G.flights === 0 && !G.winShown) { G.winShown = true; setTimeout(win, 450); } return; }
   if (G.flights === 0) { checkStuck(); obRelief(); jokerLeftover(); maybeLucky(); maybeAutoFinish(); }
 }
@@ -246,11 +245,11 @@ function glow(i, cls, on) {
   const el = G && G.tiles[i] && G.tiles[i].el; if (!el) return;
   el.classList.toggle(cls, on);
   const board = $('#board'), lifted = el.parentNode === board;
-  if (el.classList.contains('lucky') || el.classList.contains('nudge')) { if (!lifted) { el._lyr = el.parentNode; board.appendChild(el); } }
+  if (el.classList.contains('lucky')) { if (!lifted) { el._lyr = el.parentNode; board.appendChild(el); } }
   else if (lifted && el._lyr && el._lyr.isConnected) { el._lyr.appendChild(el); el._lyr = null; }
 }
 /* Where the tiles go for a board of W x H pixels (nothing is read from or written to the page). */
-function boardGeo(W, H) {
+function boardGeo(W, H, maxTw = 150) {
   if (!W || !H) return null;
   const ratio = 1.24, dF = 0.14;   // tile height / width; each layer shifts up-left this much, so more of the tiles below shows
   // where the tiles really land, in tile widths (an upper layer only reaches the edge if its tiles do)
@@ -260,11 +259,11 @@ function boardGeo(W, H) {
     l = Math.min(l, x); r = Math.max(r, x + 1); t0 = Math.min(t0, y); b = Math.max(b, y + ratio);
   }
   const depthF = 0.085;            // the tile's side, drawn right and below it
-  // 2 px of room on each side (was 4 until 1.68): a pile seven tiles wide keeps 54 px tiles on a 392 px screen (Dennis 2026-11-14)
+  // 2 px of room on each side (was 4 until 1.68): a pile seven tiles wide keeps 54 px tiles on a 392 px screen (the owner 2026-11-14)
   // At the top, 12 px between the tray and the pile: the tray's wooden edge and shadow hang 4-8 px below it, and with 2 px a
-  // tall pile's top row sat under that edge (1.69, Gerda's phone, level 219; Dennis 2026-11-15). 2 px at the bottom.
+  // tall pile's top row sat under that edge (1.69, Gerda's phone, level 219; the owner 2026-11-15). 2 px at the bottom.
   const TOP = 12, BOT = 2;
-  const twW = (W - 4) / (r - l + depthF + 0.04), twH = (H - TOP - BOT) / (b - t0 + depthF * 1.4 + 0.04), tw = Math.min(150, twW, twH);
+  const twW = (W - 4) / (r - l + depthF + 0.04), twH = (H - TOP - BOT) / (b - t0 + depthF * 1.4 + 0.04), tw = Math.min(maxTw, twW, twH);
   const th = tw * ratio, dz = tw * dF, d = Math.max(3, tw * depthF);
   // centred on what is really there: even space left and right, and between the tray and the buttons below (below the tray's edge)
   const ox = (W - (r - l) * tw - d) / 2 - l * tw, oy = TOP + (H - TOP - BOT - (b - t0) * tw - d * 1.4) / 2 - t0 * tw;
@@ -284,9 +283,10 @@ function applyGeo(geo, move) {
   }
 }
 // The pile area for this board. A pile that is limited by the height (nine rows, or a short screen) gets a little more room:
-// the top bar and the tray lose some of their padding (#game.compact in style.css), nothing gets smaller (Dennis 2026-11-14).
+// the top bar and the tray lose some of their padding (#game.compact in style.css), nothing gets smaller (the owner 2026-11-14).
 function fitGeo() {
   const game = $('#game'), wrap = $('#boardWrap');
+  if (G.film) return boardGeo(wrap.clientWidth, wrap.clientHeight, G.film.maxTw);   // (the intro film's board, in its pop-up, tiles no bigger than the level's: the game screen stays as it is)
   game.classList.remove('compact');
   let geo = boardGeo(wrap.clientWidth, wrap.clientHeight);
   if (geo && geo.tall) { game.classList.add('compact'); geo = boardGeo(wrap.clientWidth, wrap.clientHeight); }
@@ -434,7 +434,7 @@ function tapTile(i) {
   if (!free(i)) {
     G.st.bt++;
     replay(el, 'shake');
-    // a special tile that cannot be taken shows what it needs, not what lies on it (Dennis 2026-11-14): the tiles that thaw it, or the keys
+    // a special tile that cannot be taken shows what it needs, not what lies on it (the owner 2026-11-14): the tiles that thaw it, or the keys
     if (frozen(i)) showThaw(i); else if (lockedT(i)) showKeys(); else showBlockers(i);
     Sound.blocked(); buzz(30);
     if (++blockedTaps === 3) toast(tx('stillStuck'), 3000);
@@ -442,8 +442,6 @@ function tapTile(i) {
   }
   if (frozen(i) || lockedT(i)) { G.st.bt++; obBlocked(i); return; }
   blockedTaps = 0;
-  coachNote(i);                     // the game tips' own film of this try (coach.js)
-  G.lastMove = performance.now();   // the board moved: the helper waits again
   let reveal = false;
   if (G.down[i] && G.peek !== i) {
     const pk = G.peek;
@@ -542,6 +540,7 @@ function showDownTip(after = null) {
 
 // ---------- a pair is made ----------
 function onMatch(c, face, gold) {
+  if (G.film) { FX.burst(c.x, c.y - 10, 20, false); Sound.match(1); return; }   // the intro film: the pair pops, nothing is counted
   const now = performance.now(), comboMs = help().comboMs, sc = RULES.score;
   G.combo = now - G.lastMatch < comboMs ? G.combo + 1 : 1;
   G.lastMatch = now;
@@ -630,7 +629,7 @@ function autoBanner(on) {
 }
 function maybeAutoFinish() {
   if (!autoFinishOK()) return;
-  G.autoFin = true; clearNudge(); clearHint();
+  G.autoFin = true; clearHint();
   replayMark('auto');
   autoBanner(true);      // big over the pile (nobody needs to see it any more); combo texts stay in the top bar
   logLvl('auto');
@@ -651,7 +650,6 @@ function checkStuck() {
   if (!G || G.done || G.overShown || G.tray.length < SLOTS) return;
   G.busy = true; G.overShown = true;
   syncClock();
-  if (help().rescue && !G.rescued) { setTimeout(offerRescue, 450); return; }
   gameOver();
 }
 function failTry() { bumpStat('losses'); noteFail(); endLevel('stuck'); }
@@ -671,13 +669,12 @@ function gameOver() {
 // ---------- 💡 hint and 🔀 shuffle (once per level each) ----------
 // Hint and shuffle are earned and used at once, and they sit just below home and restart: the first tap only wakes the
 // button (it glows, the top bar says "tap again"), a second tap within 3 s uses it. A slip from home or restart costs nothing
-// (Dennis 2026-11-15). When it cannot be used (used, locked, too early, busy) the first tap says why, as before.
+// (the owner 2026-11-15). When it cannot be used (used, locked, too early, busy) the first tap says why, as before.
 let armedTool = null, armTimer = 0;
 function disarmTool() { clearTimeout(armTimer); if (armedTool) $(armedTool).classList.remove('armed'); armedTool = null; }
 function armTool(id, use, againKey) {
   const used = id === '#btnHint' ? G && G.usedHint : G && G.usedShuffle;
-  const w = help().shuffleAfter, early = id === '#btnShuffle' && G && w && G.tiles.length - aliveCount() < w.taken && G.tray.length < w.tray;
-  if (!G || G.done || G.busy || G.autoFin || !toolsOpen() || used || early) { disarmTool(); return use(); }
+  if (!G || G.done || G.busy || G.autoFin || !toolsOpen() || used) { disarmTool(); return use(); }
   if (armedTool === id) { disarmTool(); return use(); }
   disarmTool(); Sound.init();
   armedTool = id; $(id).classList.add('armed');
@@ -708,9 +705,7 @@ function hint() {
 }
 function shuffle() {
   if (!toolUsable(G && G.usedShuffle, tx('shuffleUsed'))) return;
-  if (shuffleTooEarly()) return;
-  coachForget();
-  G.usedShuffle = true; updateTools(); clearNudge();
+  G.usedShuffle = true; updateTools();
   logLvl('shuf', { tray: G.tray.length });
   G.busy = true;
   if (G.peek >= 0) { if (G.alive[G.peek]) turn(G.peek, true); G.peek = -1; }
@@ -778,13 +773,16 @@ function clockMove(i) {
 }
 function checkClock() {
   if (!G || G.done || G.overShown || !clockOn() || clockLeft() > 0) return;
-  G.busy = true; G.overShown = true; syncClock();
-  bumpStat('losses'); noteFail(); endLevel('stuck', { ck: 1 });
+  const g = G; G.busy = true; G.overShown = true;
+  if (!G.film) { syncClock(); bumpStat('losses'); noteFail(); endLevel('stuck', { ck: 1 }); }   // (the intro film: nothing is counted, saved or logged)
   setTimeout(() => {
+    if (G !== g) return;
     Sound.stuck(); buzz([40, 80, 40]);
     replay(G.tiles[G.clock.i].el, 'shake');
-    openModal(`<div class="nt-ico">⏰</div><h2>${tx('clockTitle')}</h2>
-      <p>${tx('clockText', G.clock.n)}</p>
+    const over = `<div class="nt-ico">⏰</div><h2>${tx('clockTitle')}</h2><p>${tx('clockText', G.clock.n)}</p>`;
+    // (in the intro film the same message shows on its board, without the buttons: the film's pop-up stays)
+    if (G.film) { $('#board').insertAdjacentHTML('beforeend', `<div class="film-over clock-help">${over}</div>`); return; }
+    openModal(`${over}
       <button class="big-btn play" id="sRetry"><span class="bb-text"><b>${tx('tryAgain')}</b></span></button>
       <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false, null, 'clock-help');
     $('#sRetry').onclick = () => { closeModal(); restart(); };

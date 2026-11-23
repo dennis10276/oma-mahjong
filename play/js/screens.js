@@ -20,6 +20,7 @@ function renderHome() {
   if (applyUpdate()) return;
   setTimeout(maybeDailyGift, 900);
   $('#greet').innerHTML = fx('greet', new Date().getHours());
+  homeTip();
   const ts = totalStars();
   $('#homeStars').textContent = '⭐ ' + ts;
   const cur = loadCur();
@@ -34,7 +35,7 @@ function renderHome() {
   renderGoal($('#nextUnlock'));
   $('#trophyCount').textContent = `${trophyCount()}/${TROPHIES.length}`;
   $('#rankBadge').textContent = '#' + myRank(undefined, 'week');
-  renderTaskChip(); renderPaperChip();
+  renderTaskChip();
   if (S.lastWeek) setTimeout(() => { if (curScreen === 'home') checkLastWeek(); }, 400);
   else if (S.pendingHearts.length) setTimeout(() => { if (curScreen === 'home' && modalFree() && S.pendingHearts.length) { const h = S.pendingHearts; S.pendingHearts = []; save(); showHearts(h, () => renderHome()); } }, 400);
   if (sunUnlocked() && !S.sunSeen) setTimeout(() => { if (curScreen === 'home' && modalFree()) showSunflowerUnlock(() => renderHome()); }, 500);
@@ -176,7 +177,6 @@ function setLang(code) {
 // ---------- modal ----------
 let modalClosable = true, modalOnClose = null;
 function openModal(html, closable = true, onClose = null, cls = '') {
-  if (typeof stopLessonDemo === 'function') stopLessonDemo();
   const box = $('#modalBox');
   box.style.removeProperty('--heart-dialog-height');
   box.className = 'modal-box' + (cls ? ' ' + cls : '');   // 'compact': the after-level screens, they must fit without scrolling
@@ -185,7 +185,6 @@ function openModal(html, closable = true, onClose = null, cls = '') {
   modalClosable = closable; modalOnClose = onClose;
 }
 function closeModal() {
-  if (typeof stopLessonDemo === 'function') stopLessonDemo();
   $('#modal').classList.add('hidden');
   const f = modalOnClose; modalOnClose = null; if (f) f();
 }
@@ -254,7 +253,7 @@ function showIntro(after) {
     <p>${fx('intro2')}</p>
     <p>${fx('intro3', RULES.tools.fromLevel)}</p>
     <button class="big-btn play" id="mGo"><span class="bb-text"><b>${tx('gotIt')}</b></span></button>
-    <button class="link-btn" id="mTileHelp">${tx(coachOn(S.level) ? 'czMenu' : 'lessonMenu')}</button>
+    <button class="link-btn" id="mTileHelp">${tx('lessonMenu')}</button>
     <button class="link-btn" id="mLang">${tx('introLang')}</button>`, true, after);
   $('#mGo').onclick = closeModal;
   $('#mTileHelp').onclick = showLessonMenu;
