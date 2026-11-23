@@ -140,7 +140,7 @@ const TEXT = {
   // special tiles
   goldPair: ['✨ Gouden paar! x2', '✨ Golden pair! x2'],
   twoJokers: ['🃏 Twee jokers!', '🃏 Two jokers!'],
-  // "Wist je dat?" tips on the home screen (specials.js HOME_TIPS)
+  // "Wist je dat?" tips on the home screen (features/tips/tips.js HOME_TIPS)
   tipHead: ['Wist je dat?', 'Did you know?'],
   // at most 37 characters, one line on a 360 px phone
   tip_hint: ['De 💡 laat je de volgende zet zien', 'The 💡 shows you the next move'],

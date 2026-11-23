@@ -1,4 +1,4 @@
-// uses: core/*, rules, lang, board, rewards, family/*
+// uses: core/*, rules, lang, board, looks, trophies, rewards/*, family/*
 /* Oma's Mahjong — finishing a level: the win screen and the rewards that follow it. */
 'use strict';
 
@@ -30,13 +30,7 @@ function win() {
   if (!G.usedHint && !G.usedShuffle && !G.rescued && (toolsOpen() || toolsGone())) taskProgress('nohelp');
   delete S.fails[G.key];   // won: the next level starts without easier retries
   // levels won in a row (a failed try breaks the streak): a bonus star now and then
-  let streakBonus = false;
-  if (G.mode === 'level') {
-    const ws = RULES.winStreak;
-    S.winStreak++;
-    if (S.winStreak === ws.first || S.winStreak % ws.every === 0) { giveBonus(1); streakBonus = true; bumpStat('streakStars'); }
-    if (S.winStreak > (S.bestWinStreak || 0)) S.bestWinStreak = S.winStreak;
-  }
+  const streakBonus = winStreakStep();
   taskProgress('points', G.score);
   bumpStat('wins'); bumpStat('playSec', Math.round(G.elapsed));
   if (G.mode === 'level') S.lvlPts[G.level] = Math.max(S.lvlPts[G.level] || 0, G.score);
@@ -178,16 +172,6 @@ function showToolsEarn(st, then) {
     ${first || !st.on ? `<p class="note">${tx('toolsRule', help().toolsGoneFrom, RULES.tools.earn.every)}</p>` : ''}
     <button class="big-btn play" id="tgOk"><span class="bb-text"><b>${tx(st.on ? 'top' : 'toolsOffOk')}</b></span></button>`, false);
   $('#tgOk').onclick = () => { closeModal(); then(); };
-}
-function showSunflowerUnlock(then) {
-  S.sunSeen = true; save();
-  Sound.sunflower(); FX.sunRain(); buzz([30, 60, 30, 60, 30, 60, 80]);
-  openModal(`<div class="sun-big">🌻</div><h2>${tx('sunWin')}</h2>
-    <p>${tx('sunWinText')}</p>
-    <button class="big-btn gold" id="sunUse"><span class="bb-text"><b>${tx('sunUse')}</b></span></button>
-    <button class="link-btn" id="sunLater">${tx('sunLater')}</button>`, false);
-  $('#sunUse').onclick = () => { S.theme = 'sunflower'; S.bg = 'sunfield'; save(); applyBg(); applyTheme(); closeModal(); FX.emoji(innerWidth / 2, innerHeight / 2, ['🌻', '🌼', '🐝', '✨'], 16); then(); };
-  $('#sunLater').onclick = () => { closeModal(); then(); };
 }
 function showTrophies(list, then) {
   Sound.trophy(); FX.confetti(); buzz([20, 40, 20, 40, 60]);

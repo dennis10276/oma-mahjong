@@ -1,5 +1,5 @@
-// uses: tiles, core/*, rules, lang, board, specials, rewards, family/*, win
-/* Oma's Mahjong — the menu screens (home, levels, calendar, themes, prizes), pop-ups and settings. */
+// uses: tiles, core/*, rules, lang, board, specials, tips, looks, trophies, rewards/*, grandma, family/*, win
+/* Oma's Mahjong — the menu screens (home, levels, calendar), pop-ups and the language switch. */
 'use strict';
 
 // ---------- screens ----------
@@ -42,25 +42,6 @@ function renderHome() {
   if (sunUnlocked() && !S.sunSeen) setTimeout(() => { if (curScreen === 'home' && modalFree()) showSunflowerUnlock(() => renderHome()); }, 500);
   fitTexts($('#home'));
 }
-// the Zonnebloem prize: levels played so far, out of the levels needed
-const sunProgress = () => { const need = RULES.sunflower.level, done = Math.min(need, S.level - 1); return { need, done, left: need - done, pct: Math.round(done / need * 100) }; };
-function renderGoal(el) {
-  if (!sunUnlocked()) {
-    // the big prize comes first
-    const { left, pct } = sunProgress();
-    el.classList.add('sun');
-    el.innerHTML = `<span class="g-ico">🌻</span><div>${fx('goalSun', left)}<div class="bar"><i style="width:${pct}%"></i></div></div>`;
-    return;
-  }
-  el.classList.remove('sun');
-  const ts = totalStars();
-  const next = numBgs.find(b => b.need > ts);
-  if (!next) { el.innerHTML = tx('goalAllBgs'); return; }
-  const prev = [...numBgs].reverse().find(b => b.need <= ts);
-  const pct = Math.round((ts - prev.need) / (next.need - prev.need) * 100);
-  el.innerHTML = `${fx('goalBg', next.need - ts, next.name)}<div class="bar"><i style="width:${pct}%"></i></div>`;
-}
-
 function starsStr(n) { return '★'.repeat(n) + `<span class="off">${'★'.repeat(3 - n)}</span>`; }
 function renderLevels() {
   $('#lvStars').textContent = '⭐ ' + totalStars();
@@ -118,54 +99,6 @@ function renderDaily() {
   $('#dailyDateLabel').textContent = (selDate === tk ? tx('puzzleToday') : tx('puzzleOf', sd.getDate(), monthName(sd.getMonth()))) + (S.daily[selDate] ? tx('playAgain') : '');
 }
 
-function renderThemes() {
-  $('#thStars').textContent = '⭐ ' + totalStars();
-  const un = sunUnlocked(), sc = $('#sunCard'), sp = sunProgress();
-  sc.innerHTML = `<button class="suncard${un ? '' : ' locked'}${S.theme === 'sunflower' ? ' on' : ''}">
-    <span class="sun-ico">🌻</span>
-    <span class="sun-txt"><b>${tx('sunName')}</b><small>${un ? tx(S.theme === 'sunflower' ? 'inUse' : 'tapToUse') : tx('sunLocked', sp.need)}</small>
-    ${un ? `<small>${tx('sunAbout')}</small>` : `<span class="bar"><i style="width:${sp.pct}%"></i></span><small>${tx('sunProgress', sp.done, sp.need)}</small>`}</span>
-    <span class="sun-pv">${[0, 1, 2].map(k => `<span class="mini">${Tiles.faceHTML('sunflower', k)}</span>`).join('')}</span></button>`;
-  sc.firstElementChild.onclick = () => {
-    if (!un) { toast(tx('sunNeedMore', sp.left)); Sound.blocked(); return; }
-    S.theme = 'sunflower'; S.bg = 'sunfield'; save(); applyBg(); applyTheme(); renderThemes(); Sound.sunflower(); FX.emoji(innerWidth / 2, innerHeight / 3, ['🌻', '🌼', '🐝'], 12);
-  };
-  const tl = $('#tileThemes'); tl.innerHTML = '';
-  for (const [id, t] of Object.entries(Tiles.THEMES)) {
-    if (t.prize) continue;
-    const b = document.createElement('button');
-    b.className = 'th' + (S.theme === id ? ' on' : '');
-    const sample = id === 'classic' ? [0, 31, 22] : [0, 5, 13];
-    b.innerHTML = `<div class="pv">${sample.map(k => `<div class="mini">${Tiles.faceHTML(id, k)}</div>`).join('')}</div>${tx('theme_' + id)}`;
-    b.onclick = () => { S.theme = id; save(); applyTheme(); renderThemes(); Sound.select(); };
-    tl.appendChild(b);
-  }
-  const bl = $('#bgThemes'); bl.innerHTML = '';
-  const ts = totalStars();
-  for (const bg of BGS) {
-    const b = document.createElement('button');
-    const locked = bgLocked(bg);
-    b.className = 'bgc' + (locked ? ' locked' : '') + (S.bg === bg.id ? ' on' : '');
-    b.style.background = bg.css;
-    b.innerHTML = locked ? `<div class="lock">🔒<br>${bg.sun ? tx('levelWord', RULES.sunflower.level) : bg.need + ' ⭐'}</div>` : bg.name;
-    b.onclick = () => {
-      if (locked) { toast(bg.sun ? tx('bgSunLocked', RULES.sunflower.level) : tx('bgNeedStars', bg.need - ts, bg.name)); Sound.blocked(); return; }
-      S.bg = bg.id; save(); applyBg(); renderThemes(); Sound.select();
-    };
-    bl.appendChild(b);
-  }
-}
-
-function renderTrophies() {
-  $('#statsBox').innerHTML = statsHTML();
-  $('#trCount').textContent = `🏅 ${trophyCount()}/${TROPHIES.length}`;
-  $('#trophyGrid').innerHTML = TROPHIES.map(t => {
-    const got = S.trophies[t.id];
-    const [v, n] = t.prog();
-    return `<div class="trophy${got ? ' got' : ''}"><span class="t-ico">${t.ico}</span><b>${fx('tr_' + t.id)}</b><small>${fx('tr_' + t.id + '_d', RULES.sunflower.level)}</small>${got ? `<em>${tx('won')}</em>` : `<span class="bar"><i style="width:${Math.round(Math.min(1, v / n) * 100)}%"></i></span><em>${Math.min(v, n)} / ${n}</em>`}</div>`;
-  }).join('');
-}
-
 // ---------- language ----------
 function setLang(code) {
   S.lang = code; save();
@@ -201,50 +134,6 @@ function keepModal() {
   };
 }
 $('#modal').addEventListener('click', e => { if (e.target.id === 'modal' && modalClosable) closeModal(); });
-
-function openSettings() {
-  const rows = ['sfx', 'music', 'vibrate', 'highlight', 'nums'];
-  const cur = langOf(S);
-  openModal(`<h2>${tx('settings')}</h2>
-    <div class="set-row">${fx('set_lang')}<span class="lang-pick">${Object.entries(LANGS).map(([c, n]) => `<button class="lp${c === cur ? ' on' : ''}" data-lang="${c}">${n}</button>`).join('')}</span></div>
-    ${rows.map(k => `<div class="set-row">${fx('set_' + k)}<button class="tog ${S[k] ? 'on' : ''}" data-k="${k}"></button></div>`).join('')}
-    <button class="big-btn gold" id="mHow"><span class="bb-text"><b>${tx('howToPlay')}</b></span></button>
-    <button class="link-btn" id="mClose">${tx('close')}</button>
-    <button class="reset-btn" id="mReset">${tx('wipe')}</button>
-    <div class="version">${tx('version', APP_VERSION)}</div>`);
-  $('#modalBox').querySelectorAll('.lp').forEach(b => b.onclick = () => { setLang(b.dataset.lang); openSettings(); });
-  $('#modalBox').querySelectorAll('.tog').forEach(t => t.onclick = () => {
-    const k = t.dataset.k; S[k] = !S[k]; t.classList.toggle('on', S[k]); save();
-    if (k === 'sfx') Sound.setSfx(S.sfx);
-    if (k === 'music') Sound.setMusic(S.music);
-    if (k === 'vibrate' && S.vibrate) buzz(40);
-    if (k === 'highlight') $('#board').classList.toggle('hl', S.highlight);
-    if (k === 'nums') document.body.classList.toggle('nonum', !S.nums);
-  });
-  $('#mHow').onclick = () => showIntro();
-  $('#mReset').onclick = confirmReset;
-  $('#mClose').onclick = closeModal;
-}
-
-// wipe levels, stars, daily puzzles and prizes; keep the sound/vibration/display settings
-function confirmReset() {
-  openModal(`<h2>${tx('wipeTitle')}</h2>
-    <p>${tx('wipeText')}</p>
-    <p style="font-size:17px;color:#a33">${tx('wipeWarn')}</p>
-    <button class="big-btn play" id="rsNo"><span class="bb-text"><b>${tx('wipeNo')}</b></span></button>
-    <button class="reset-btn" id="rsYes">${tx('wipeYes')}</button>`);
-  $('#rsNo').onclick = closeModal;
-  $('#rsYes').onclick = () => {
-    const keep = { sfx: S.sfx, music: S.music, vibrate: S.vibrate, highlight: S.highlight, nums: S.nums, seenIntro: true, seenTray: true, seenDown: !!S.seenDown, seenSp: S.seenSp, pid: S.pid, name: S.name, avatar: S.avatar, heartsSeen: S.heartsSeen, lang: S.lang };
-    const theme = Tiles.THEMES[S.theme] && !Tiles.THEMES[S.theme].prize ? S.theme : 'classic';
-    Object.keys(S).forEach(k => delete S[k]);
-    Object.assign(S, defaults(), keep, { theme });
-    save(); clearCur(); G = null; pushScore();
-    applyTheme(); applyBg();
-    closeModal(); show('home');
-    toast(tx('wiped'));
-  };
-}
 
 function showIntro(after) {
   const f = Tiles.faceHTML(S.theme, 31), g = Tiles.faceHTML(S.theme, 4);

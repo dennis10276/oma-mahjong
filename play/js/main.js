@@ -1,4 +1,4 @@
-// uses: tiles, core/*, layouts, lang, board, specials, intro, rewards, family/*, win
+// uses: tiles, core/*, layouts, lang, board, specials, intro, settings, rewards/*, family/*, win
 /* Oma's Mahjong — wiring: buttons, touch, app lifecycle and start-up. */
 'use strict';
 

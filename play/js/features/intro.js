@@ -249,7 +249,7 @@ function stopIntroFilm(after = null) {
     clearGameMsg(); $('#toast').classList.remove('on');                 // (no text of the film comes after it)
     if (G) {
       G.introducing = run.introducing; if (run.ticking) G.tStart = performance.now();
-      if (G.lucky && Date.now() > G.lucky.until) { glow(G.lucky.i, 'lucky', false); G.lucky = null; }   // its end (rewards.js maybeLucky) fell in the film
+      if (G.lucky && Date.now() > G.lucky.until) { glow(G.lucky.i, 'lucky', false); G.lucky = null; }   // its end (rewards/lucky.js maybeLucky) fell in the film
       if (curScreen === 'game') layoutBoard();                         // (in case the screen turned meanwhile)
     }
     if (after) after();
