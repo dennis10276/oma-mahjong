@@ -3,7 +3,7 @@
 'use strict';
 
 const STORE = 'omamj.v1', CUR = 'omamj.cur';
-const APP_VERSION = '1.76';
+const APP_VERSION = '1.77';
 // (the one-time wipe of 2026-10-07 is gone from the code; its key omamj.reset stays in old saves and is ignored)
 
 // the saved progress; every list and counter exists from the start, so code never has to check

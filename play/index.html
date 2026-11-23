@@ -11,7 +11,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Mahjong">
-<link rel="stylesheet" href="v/1.76/style.css" id="css">
+<link rel="stylesheet" href="v/1.77/style.css" id="css">
 <script>
   // if anything fails to load, say so instead of showing a dead screen
   window.addEventListener('error', function (e) {
@@ -158,7 +158,7 @@
    and keeps them on the phone. On start we use that downloaded version when it is newer
    than the one built into the app; if it does not start properly, we fall back at once. */
 (function () {
-  var BUILT = '1.76', KEY = 'omamj.code', FILES = ['v/1.76/tiles.js', 'v/1.76/audio.js', 'v/1.76/layouts.js', 'v/1.76/hard.js', 'v/1.76/levels-hard.js', 'v/1.76/levels-early.js', 'v/1.76/js/rules.js', 'v/1.76/js/lang.js', 'v/1.76/js/core.js', 'v/1.76/js/fx.js', 'v/1.76/js/update.js', 'v/1.76/js/screens.js', 'v/1.76/js/board.js', 'v/1.76/js/specials.js', 'v/1.76/js/intro.js', 'v/1.76/js/rewards.js', 'v/1.76/js/telemetry.js', 'v/1.76/js/social.js', 'v/1.76/js/hearts.js', 'v/1.76/js/win.js', 'v/1.76/js/main.js'];
+  var BUILT = '1.77', KEY = 'omamj.code', FILES = ['v/1.77/tiles.js', 'v/1.77/js/core/audio.js', 'v/1.77/layouts.js', 'v/1.77/hard.js', 'v/1.77/levels-hard.js', 'v/1.77/levels-early.js', 'v/1.77/js/rules.js', 'v/1.77/js/lang.js', 'v/1.77/js/core/util.js', 'v/1.77/js/core/save.js', 'v/1.77/js/core/prizes.js', 'v/1.77/js/core/fx.js', 'v/1.77/js/core/update.js', 'v/1.77/js/core/screens.js', 'v/1.77/js/board.js', 'v/1.77/js/specials.js', 'v/1.77/js/features/intro.js', 'v/1.77/js/features/rewards.js', 'v/1.77/js/core/telemetry.js', 'v/1.77/js/features/family/week.js', 'v/1.77/js/features/family/ranking.js', 'v/1.77/js/features/family/presence.js', 'v/1.77/js/features/family/passed.js', 'v/1.77/js/features/family/profile.js', 'v/1.77/js/features/family/hearts.js', 'v/1.77/js/features/win.js', 'v/1.77/js/main.js'];
   function newer(a, b) { a = String(a).split('.'); b = String(b).split('.'); for (var i = 0; i < Math.max(a.length, b.length); i++) { var x = +a[i] || 0, y = +b[i] || 0; if (x !== y) return x > y; } return false; }
   function builtIn() { FILES.forEach(function (f) { var s = document.createElement('script'); s.src = f; s.async = false; document.body.appendChild(s); }); }
   var c = null;
