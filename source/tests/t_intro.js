@@ -103,7 +103,7 @@ const hintOf = i => {
 module.exports = [
   { name: 'intro: no www script calls Array.prototype.at (older Android WebViews lack it)', async run(t) {
     const fs = require('fs'), path = require('path'), dir = path.join(__dirname, '..', 'www', 'js');
-    const hits = fs.readdirSync(dir).filter(f => f.endsWith('.js')).flatMap(f => fs.readFileSync(path.join(dir, f), 'utf8').split('\n')
+    const hits = fs.readdirSync(dir, { recursive: true }).filter(f => f.endsWith('.js')).flatMap(f => fs.readFileSync(path.join(dir, f), 'utf8').split('\n')
       .map((l, k) => /\.at\(/.test(l) ? f + ':' + (k + 1) : null).filter(Boolean));
     t.eq(hits, [], 'no .at( call in source/www/js');
   }},

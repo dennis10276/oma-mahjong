@@ -14,7 +14,7 @@ module.exports = [
       const keys = await p.evaluate(() => Object.fromEntries(Object.entries(TEXT).map(([k, v]) => [k, Array.isArray(v) && v.length === 2 && v.every(x => x !== '' && x != null) && typeof v[0] === typeof v[1]])));
       const bad = Object.entries(keys).filter(([, ok]) => !ok).map(([k]) => k);
       t.eq(bad, [], 'every text has a Dutch and an English version of the same kind');
-      const src = [path.join(WWW, 'index.html'), path.join(WWW, 'tiles.js'), ...fs.readdirSync(path.join(WWW, 'js')).map(f => path.join(WWW, 'js', f))].map(f => fs.readFileSync(f, 'utf8')).join('\n');
+      const src = [path.join(WWW, 'index.html'), path.join(WWW, 'tiles.js'), ...fs.readdirSync(path.join(WWW, 'js'), { recursive: true }).map(f => path.join(WWW, 'js', f)).filter(f => f.endsWith('.js'))].map(f => fs.readFileSync(f, 'utf8')).join('\n');
       const used = new Set([...src.matchAll(/\btx\('(\w+)'[,)]/g), ...src.matchAll(/data-t(?:-label)?="(\w+)"/g)].map(m => m[1]));
       const missing = [...used].filter(k => !(k in keys) && k !== 'key');
       t.eq(missing, [], 'no text is missing');
