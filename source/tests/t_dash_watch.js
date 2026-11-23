@@ -353,4 +353,41 @@ module.exports.push({
     } finally { await ctx.close(); site.close(); }
   },
 });
+module.exports.push({
+  name: 'dashboard: recorded viewport caps the replay and coins follow tool availability',
+  async run(t, { serve, FakeDB, browser, WWW }) {
+    const site = await serve(SITE, { '/play/': WWW }), born = Date.now() - 3600000;
+    const recordings = [
+      { aid: 'locked', key: 'L14', lv: 14, coins: 0 },
+      { aid: 'unlocked', key: 'L15', lv: 15, coins: 2 },
+      { aid: 'unearned', key: 'L60', lv: 60, recorded: false, coins: 0 },
+      { aid: 'daily-replay', key: 'D2026-10-07', lv: 15, daily: true, coins: 2 },
+    ];
+    const plays = {}, replays = {};
+    for (const [i, { aid, key, lv, recorded, daily }] of recordings.entries()) {
+      const s = sample(aid, born + 3000 * i);
+      const first = JSON.parse(s.first.data);
+      first.init.key = key;
+      if (recorded === false) first.events[1][2][10] = false;
+      s.first.data = JSON.stringify(first);
+      replays[aid] = { ...s, finish: { ...s.next, seq: 2, data: JSON.stringify({ events: [[1500, 'end', { r: 'stuck' }]] }) } };
+      const day = daily ? { m: 'd', d: '2026-10-07' } : {};
+      plays[aid + '-start'] = { ...day, k: 'start', aid, lv, t: s.createdAt };
+      plays[aid + '-end'] = { ...day, k: 'end', aid, lv, r: 'stuck', t: s.createdAt + 1500 };
+    }
+    const db = new FakeDB({ scores: { pA: { name: 'Anna', level: 60 } }, plays: { pA: plays }, replays: { pA: replays } });
+    const ctx = await browser.newContext({ viewport: { width: 1800, height: 1200 } });
+    await ctx.route(u => u.hostname.endsWith('firebasedatabase.app'), r => db.handle(r));
+    const p = await ctx.newPage();
+    try {
+      await p.goto(site.url + 'dash/#pA');
+      for (const { aid, key, coins } of recordings) {
+        await p.locator(`#tbl button[data-aid="${aid}"]`).click();
+        await p.locator('#watchBoard[aria-label$="' + key.slice(1) + '"]').waitFor();
+        t.eq(await p.locator('#watchScreen').evaluate(el => el.style.maxWidth), '390px', aid + ' uses the recorded viewport width');
+        t.eq(await p.locator('#watchBoard > g:has(> circle[r="22"]) > title').allTextContents(), coins ? ['Hint', 'Schudden'] : [], aid + ' shows coins only if available');
+      }
+    } finally { await ctx.close(); site.close(); }
+  },
+});
 module.exports.sample = sample;

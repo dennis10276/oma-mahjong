@@ -11,7 +11,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Mahjong">
-<link rel="stylesheet" href="v/1.72/style.css" id="css">
+<link rel="stylesheet" href="v/1.75/style.css" id="css">
 <script>
   // if anything fails to load, say so instead of showing a dead screen
   window.addEventListener('error', function (e) {
@@ -121,7 +121,10 @@
       <div class="ranking-intro"><p data-t="rankTogether">Samen puzzelen</p><h3 data-t="rankFamilyTurn">De familie aan zet</h3><span id="rkMine"></span></div>
       <div class="rk-tabs"><button id="rkWeek" class="on" data-t="thisWeek">📅 Deze week</button><button id="rkAll" data-t="allTime">🏆 All-time</button></div>
       <p class="wk-info" id="wkInfo"></p>
-      <div class="rank-list" id="rankList"></div>
+      <div class="rank-viewport" id="rankViewport">
+        <div class="rank-list" id="rankList"></div>
+        <div class="rank-list rank-next" id="rankNext" aria-hidden="true" inert hidden></div>
+      </div>
       <p class="rank-note" id="rankNote"></p>
     </div>
   </section>
@@ -155,7 +158,7 @@
    and keeps them on the phone. On start we use that downloaded version when it is newer
    than the one built into the app; if it does not start properly, we fall back at once. */
 (function () {
-  var BUILT = '1.72', KEY = 'omamj.code', FILES = ['v/1.72/tiles.js', 'v/1.72/audio.js', 'v/1.72/layouts.js', 'v/1.72/hard.js', 'v/1.72/levels-hard.js', 'v/1.72/levels-early.js', 'v/1.72/coach-clips.js', 'v/1.72/js/rules.js', 'v/1.72/js/lang.js', 'v/1.72/js/core.js', 'v/1.72/js/fx.js', 'v/1.72/js/update.js', 'v/1.72/js/screens.js', 'v/1.72/js/board.js', 'v/1.72/js/help.js', 'v/1.72/js/specials.js', 'v/1.72/js/coach.js', 'v/1.72/js/pro.js', 'v/1.72/js/rewards.js', 'v/1.72/js/telemetry.js', 'v/1.72/js/social.js', 'v/1.72/js/hearts.js', 'v/1.72/js/stories.js', 'v/1.72/js/village.js', 'v/1.72/js/win.js', 'v/1.72/js/main.js'];
+  var BUILT = '1.75', KEY = 'omamj.code', FILES = ['v/1.75/tiles.js', 'v/1.75/audio.js', 'v/1.75/layouts.js', 'v/1.75/hard.js', 'v/1.75/levels-hard.js', 'v/1.75/levels-early.js', 'v/1.75/coach-clips.js', 'v/1.75/js/rules.js', 'v/1.75/js/lang.js', 'v/1.75/js/core.js', 'v/1.75/js/fx.js', 'v/1.75/js/update.js', 'v/1.75/js/screens.js', 'v/1.75/js/board.js', 'v/1.75/js/help.js', 'v/1.75/js/specials.js', 'v/1.75/js/coach.js', 'v/1.75/js/pro.js', 'v/1.75/js/rewards.js', 'v/1.75/js/telemetry.js', 'v/1.75/js/social.js', 'v/1.75/js/hearts.js', 'v/1.75/js/stories.js', 'v/1.75/js/village.js', 'v/1.75/js/win.js', 'v/1.75/js/main.js'];
   function newer(a, b) { a = String(a).split('.'); b = String(b).split('.'); for (var i = 0; i < Math.max(a.length, b.length); i++) { var x = +a[i] || 0, y = +b[i] || 0; if (x !== y) return x > y; } return false; }
   function builtIn() { FILES.forEach(function (f) { var s = document.createElement('script'); s.src = f; s.async = false; document.body.appendChild(s); }); }
   var c = null;

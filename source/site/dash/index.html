@@ -237,7 +237,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .watch-status { color: var(--ink-2); font-size: 12.5px; margin-bottom: 12px; }
 .watch-status.on { color: var(--good-ink); }
 .watch-status.on::before { content: ''; display: inline-block; width: 8px; height: 8px; background: var(--good); border-radius: 50%; margin-right: 6px; }
-.watch-screen { position: relative; flex: 0 0 auto; background: #0b4d3c; border-radius: 12px; overflow: hidden; }
+.watch-screen { position: relative; flex: 0 0 auto; width: 100%; margin: 0 auto; background: #0b4d3c; border-radius: 12px; overflow: hidden; }
 .watch-screen[hidden], .watch-empty[hidden] { display: none; }
 .watch-board { display: block; width: 100%; height: auto; flex: none; min-height: 0; }
 .watch-board.nonum .cn { display: none; }
@@ -324,7 +324,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 <script src="../play/tiles.js"></script>
 <script src="replay-state.js?v=537f6d4c1bc1"></script>
 <script src="playback.js?v=0d43a0656209"></script>
-<script src="watch.js?v=52084f41b0eb"></script>
+<script src="watch.js?v=fd2c9443d33f"></script>
 <script>
 /* Predictions are off (the owner, 2026-10-22: not good enough). Codex and Gemini are making better ones,
    to show in the live game and the level cards. dash/?pred=1 still shows the old Voorspelling card for
@@ -350,10 +350,17 @@ const lvlKey = e => e.m === 'd' ? 'D' + e.d : 'L' + e.lv;
 // ---------- data in ----------
 function events(pid) { return Object.values(PLAYS[pid] || {}).filter(e => e && e.t).sort((a, b) => a.t - b.t); }
 function nameOf(pid) { const s = SCORES[pid]; if (s && s.name) return s.name; const op = events(pid).filter(e => e.name).pop(); return op ? op.name : pid; }
+const PREVIEW_PIDS = new Set([
+  'pmwgzp93mvo2psl', 'pmwgzpljzss9e0h', 'pmws0idd8lno0xg', 'pmws0j4gtb12zdt',
+  'pmws15bvy8yp0rx', 'pmws15gadu9cmxd', 'pmws15ko02pn6lh', 'pmws15p279h08yb',
+  'pmws161tbr6t4j8', 'pmws16aktdl468e', 'pmws16eyumbbv6p', 'pmws16jd35h7v5m',
+  'pmws16nrgacauq9',
+]);
+const isPreviewNoise = (id, name) => PREVIEW_PIDS.has(id) || (!SCORES[id] && /^(x|test.*|omatest)$/i.test(String(name || '').trim()));
 function players() {
   const ids = new Set([...Object.keys(PLAYS), ...Object.keys(SCORES)].filter(id => !isMsgKey(id) && !isCfgKey(id) && (!id.startsWith('test-') || id === want)));
   return [...ids].map(id => ({ id, name: nameOf(id), last: (events(id).pop() || {}).t || (SCORES[id] || {}).t || 0 }))
-    .filter(p => p.name !== p.id || p.id === want)   // visitors who never chose a name are left out
+    .filter(p => (p.name !== p.id && !isPreviewNoise(p.id, p.name)) || p.id === want)   // visitors who never chose a name and leaked test previews are left out
     .sort((a, b) => b.last - a.last);
 }
 function fillPicker() {
@@ -384,7 +391,7 @@ function playerActivity(pid, ev = events(pid)) {
   return { online, lastSeen: Math.max(last ? last.t : 0, Number(score.t) || 0, heartbeat || 0) };
 }
 function renderRanking() {
-  const ps = players().filter(p => !p.id.startsWith('test-') && !hiddenFromRanking(p.id, p.name)).map(p => ({ ...p, level: currentLevel(p.id) }))
+  const ps = players().filter(p => !p.id.startsWith('test-') && !hiddenFromRanking(p.id, p.name) && !isPreviewNoise(p.id, p.name)).map(p => ({ ...p, level: currentLevel(p.id) }))
     .sort((a, b) => b.level - a.level || a.name.localeCompare(b.name, 'nl') || a.id.localeCompare(b.id));
   let rank = 0;
   $('#ranking').innerHTML = ps.length ? `<table><thead><tr><th scope="col" class="num">#</th><th scope="col">Speler</th><th scope="col" class="num">Level</th></tr></thead><tbody>${ps.map((p, i) => {
@@ -876,6 +883,7 @@ function stream() {
     if (!parts.length) { PLAYS = type === 'put' ? (data || {}) : Object.assign(PLAYS, data || {}); }
     else if (parts.length === 1) { if (type === 'put') PLAYS[parts[0]] = data || {}; else PLAYS[parts[0]] = Object.assign(PLAYS[parts[0]] || {}, data || {}); }
     else { const p = PLAYS[parts[0]] = PLAYS[parts[0]] || {}; if (data === null) delete p[parts[1]]; else p[parts[1]] = type === 'put' ? data : Object.assign(p[parts[1]] || {}, data); }
+    for (const id of PREVIEW_PIDS) if (id !== want) delete PLAYS[id];
     liveOK = true; fillPicker(); render();
   };
   es.addEventListener('put', m => apply('put', m));
