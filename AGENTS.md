@@ -255,6 +255,6 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 ## Players
 
 - Resetting a player to a level: a settings event `{ k: 'cfg', t, redo: <level>, redoId }` in
-  `plays/cfg-<pid>` (see `applyRedo` in `www/js/core.js`). Only when Dennis asks.
+  `plays/cfg-<pid>` (see `applyRedo` in `www/js/core/save.js`). Only when Dennis asks.
 - DennisTEST (`pmuxw2uqkzcnbgx`) is a test account: it follows grandma's settings and is hidden
   from the rankings.

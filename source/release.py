@@ -15,7 +15,7 @@ OMA_KEYSTORE and OMA_KEYSTORE_PASSWORD); it is on the download page a few minute
   --no-tests                         skip the test suite (tests/run.js), which otherwise must pass first
 
 What it does:
-  - sets the version in www/js/core.js (APP_VERSION) and www/index.html (the boot loader)
+  - sets the version in www/js/core/save.js (APP_VERSION) and www/index.html (the boot loader)
   - writes site/play/ (the game in the browser, scripts in play/v/<version>/) + site/play/bundle.json
     (what the app downloads)
   - bumps versionCode/versionName, builds the APK, puts it on the download page (unless --no-apk)
@@ -91,7 +91,7 @@ def main():
     if '--no-tests' not in sys.argv:
         run_tests()
 
-    sub(os.path.join(WWW, 'js', 'core.js'), r"const APP_VERSION = '[^']*'", f"const APP_VERSION = '{v}'")
+    sub(os.path.join(WWW, 'js', 'core', 'save.js'), r"const APP_VERSION = '[^']*'", f"const APP_VERSION = '{v}'")
     FILES = game_files()
     sub(os.path.join(WWW, 'index.html'), r"var BUILT = '[^']*'", f"var BUILT = '{v}'")
 
