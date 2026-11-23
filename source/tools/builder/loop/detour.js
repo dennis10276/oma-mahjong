@@ -118,4 +118,104 @@ function priceMove(C, s, t, o = {}) {
   const result = need.k != null ? 'win' : need.lost ? 'lose' : 'unknown';
   return { cost, result, need: need.k, exact: !!need.exact, after: s2 };
 }
-module.exports = { work, clockGames, clockNeed, temptingMoves, playMove, priceMove, SAFE_MS };
+// Profile visible opening choices that lose for different reasons. Continuation
+// is a proved count capped at five tile removals, not a prediction of play.
+const OPENING_DELAY = 5;
+
+function openingChoices(g) {
+  const free = E.legal(g, E.start(g)).filter(i => Number.isInteger(i) && !g.down[i]);
+  const groups = new Map();
+  for (const i of free) {
+    if (i === g.clock.i) continue;
+    const face = g.faces[i];
+    if (!groups.has(face)) groups.set(face, []);
+    groups.get(face).push(i);
+  }
+  return [
+    ...(free.includes(g.clock.i) ? [{ take: [g.clock.i], kind: 'early-clock' }] : []),
+    ...[...groups.values()].flatMap(tiles => tiles.flatMap((i, at) =>
+      tiles.slice(at + 1).map(j => ({ take: [i, j], kind: 'late-pair' })))),
+  ];
+}
+
+// Mark a visible frozen target when the pair supplies a melter or
+// removes a roof on the way to one. A tile below that ice cannot thaw it first.
+function openingIceGoals(g, take) {
+  if (!g.iceH.some(Boolean)) return [];
+  const { measure } = require('../chained_special_readability.js');
+  const visible = measure({ ...g.design, down: g.design.down || [] }).rows
+    .filter(row => row.kind === 'ice' && row.clear);
+  const covers = tile => {
+    const seen = new Set();
+    const todo = [...g.nb.above[tile]];
+    while (todo.length) {
+      const above = todo.pop();
+      if (seen.has(above)) continue;
+      seen.add(above);
+      todo.push(...g.nb.above[above]);
+    }
+    return seen;
+  };
+  return visible.map(row => row.tile).filter(ice => g.iceNb[ice].some(melter => {
+    const roofs = covers(melter);
+    return !roofs.has(ice) && take.some(tile => tile === melter || roofs.has(tile));
+  }));
+}
+
+function openingPlans(design) {
+  if (!design.clock) return { plans: [], unknown: 0 };
+  const C = clockGames(design);
+  const g = C.at(design.clock.n);
+  const w = work(350000, 6000);
+  const plans = [];
+  let unknown = 0;
+  for (const choice of openingChoices(g)) {
+    const state = playMove(g, E.start(g), choice);
+    if (!state) continue;
+    const loss = w.win(g, state, 50000).result;
+    if (loss === 'unknown') unknown++;
+    if (loss !== 'lose') continue;
+    const delayed = E.longest(g, state, OPENING_DELAY, 5000);
+    if (!delayed.exact) {
+      unknown++;
+      continue;
+    }
+    if (delayed.depth < OPENING_DELAY) continue;
+    if (choice.kind === 'early-clock') {
+      plans.push({ ...choice, continuation: delayed.depth });
+      continue;
+    }
+    const later = clockNeed(C, state, { upTo: design.clock.n + 3, w, nodes: 50000 });
+    if (!later.exact) unknown++;
+    else if (later.k != null) plans.push({ ...choice, continuation: delayed.depth, needsClock: later.k,
+      movesTowardIce: openingIceGoals(g, choice.take) });
+  }
+  return { plans, unknown };
+}
+
+function preserveOpeningPlans(design, plans) {
+  if (!plans.length) return { ok: true };
+  const C = clockGames(design);
+  const g = C.at(design.clock.n);
+  const w = work(350000, 6000);
+  const available = new Set(openingChoices(g).map(choice => choice.take.join(',')));
+  for (const plan of plans) {
+    const key = plan.take.join(',');
+    const fail = { ok: false, why: 'opening-plan:' + key };
+    if (!available.has(key)) return fail;
+    const state = playMove(g, E.start(g), plan);
+    if (!state || w.win(g, state, 50000).result !== 'lose') return fail;
+    if (E.longest(g, state, plan.continuation, 5000).depth < plan.continuation) return fail;
+    if (plan.kind === 'late-pair') {
+      const later = clockNeed(C, state, { upTo: plan.needsClock, w, nodes: 50000 });
+      if (!later.exact || later.k !== plan.needsClock) return fail;
+      if (plan.movesTowardIce?.length) {
+        const goals = openingIceGoals(g, plan.take);
+        if (!plan.movesTowardIce.every(tile => goals.includes(tile))) return fail;
+      }
+    }
+  }
+  return { ok: true };
+}
+
+module.exports = { work, clockGames, clockNeed, temptingMoves, playMove, priceMove, openingPlans, preserveOpeningPlans, SAFE_MS };

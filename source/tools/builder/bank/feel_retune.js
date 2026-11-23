@@ -27,6 +27,8 @@ function tuneFeel(design, opts = {}) {
   // how far from the target (0 = met); three waiting is capped so the tray is full of choices, not one slip from losing all the time
   // target.parks = 'pressure parks': how many times per game an expert has to put a tile in the tray while one or two already wait
   const miss = f => Math.max(0, target.parks - f.pp) / 4 + Math.max(0, f.pp - (target.parksMax ?? 99)) / 4 + 3 * Math.max(0, f.waiting[3] - (target.max3 ?? 0.25)) + (f.lostGames ? 2 : 0) + (target.greedyMin==null?0:2*Math.max(0,target.greedyMin-f.tailGreedyWin));
+  const D = require('../loop/detour.js');
+  const { plans } = D.openingPlans(design);
   const before = feel(design, { playouts: 400, seed: 9 });
   let cur = structuredClone(design), curF = fl(cur), curM = miss(curF), best = null, proposals = 0, accepted = 0; const fails = {};
   const fail = k => { fails[k] = (fails[k] || 0) + 1; };
@@ -44,6 +46,8 @@ function tuneFeel(design, opts = {}) {
       const f2 = feel(d, { playouts: 400, seed: 9 }), m2 = miss(f2);
       if (best && m2 >= best.m) continue;
       const vr = opts.validate ? opts.validate(d) : { ok: true }; if (!vr.ok) { fail('proof:' + vr.why); continue; }
+      const opening = D.preserveOpeningPlans(d, plans);
+      if (!opening.ok) { fail('proof:' + opening.why); continue; }
       best = { design: structuredClone(d), feel: f2, m: m2 };
       if (m2 <= (opts.tolerance ?? 0.1)) break;
     }

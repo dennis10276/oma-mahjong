@@ -87,3 +87,32 @@ test('an authored plan proves the commitment, five purposeful moves and clock co
   const truncated = { ...plan, steps: plan.steps.slice(0, 4) };
   assert.equal(auditPlan(design, truncated).result, 'too-short');
 });
+
+test('the released level 320 retains two mechanically different plausible starts', () => {
+  const { openingPlans } = require('../tools/builder/loop/detour');
+  const { design } = require('../analysis/builder/bank/repeat-pressure-300/level-320.json');
+  const { plans } = openingPlans(design);
+  assert.deepEqual(plans.find(p => p.take.length === 1 && p.take[0] === 0),
+    { take: [0], kind: 'early-clock', continuation: 5 });
+  assert.deepEqual(plans.find(p => p.take.join(',') === '5,94'),
+    { take: [5, 94], kind: 'late-pair', continuation: 5, needsClock: 13, movesTowardIce: [71] });
+});
+
+test('pressure validation preserves the one-move-late opening and the face-up pair', () => {
+  const { openingPlans, preserveOpeningPlans } = require('../tools/builder/loop/detour');
+  const { design } = require('../analysis/builder/bank/repeat-pressure-300/level-320.json');
+  const { plans } = openingPlans(design);
+  assert.equal(preserveOpeningPlans(design, plans).ok, true);
+
+  const changed = structuredClone(design);
+  // Hiding only the tempting tile leaves the winning sequence intact.
+  changed.down.push(94);
+  const E = require('../tools/builder/engine');
+  assert.equal(E.replay(changed, changed.solution).ok, true);
+  assert.deepEqual(preserveOpeningPlans(changed, plans),
+    { ok: false, why: 'opening-plan:5,94' });
+
+  const loosened = { ...design, clock: { ...design.clock, n: 13 } };
+  assert.deepEqual(preserveOpeningPlans(loosened, plans),
+    { ok: false, why: 'opening-plan:5,94' });
+});

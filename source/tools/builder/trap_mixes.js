@@ -331,6 +331,7 @@ function prove(name, d, roles, ctx, opts = {}) {
   const card={type:name,trapType:f.trapType,see:f.see,recipe:f.recipe,dials:f.dials,k,spare,priceHorizon:Math.min(19,k+3),baits,control,effects,firstMoves:first,mechanism:{...roles.bait.mix,repeat:roles.bait.repeat||null,relay:roles.bait.relay||null},
     ...(f.chained?{signature:f.signature,baseSignature:f.baseSignature,links:f.links,obviousness:subtle,twoTraps:f.sixIdea?{kind:newLinks.length>1||['earlyClock','repeatKeys','roofKey'].includes(f.mode)?'composedWrongIdeas':'singleHardChain',hardLinks:f.links,ideas:[...newLinks.map(q=>q.kind),...({earlyClock:['waitForTwin'],repeatKeys:['lookalikeChoice'],roofKey:['clockRoof']}[f.mode]||[])],baits:newLinks.map(q=>q.take),note:'Every authored new decision is separately proven lost; no additive sequential-cost claim.'}:{kind:'hardChainAndMediumBait',hardLinks:f.links,mediumLinks:2,mediumEvidence:require('./chained_facts.js').mediumEvidence(d,roles,baits),baits:baits.map(p=>p.tiles),note:'Two separately priced bad decisions on one connected chain; no claim of additive sequential costs.'}}:{}),
     ...(newLink?{newLink}:{}),...(newLinks.length?{newLinks}:{}),...(keyRoof?{keyRoofReadability:{...keyRoof,minimum:roles.bait.keyRoofShownMin??0,roofMinimum:roles.bait.keyRoofTopMin??0}}:{}),combinedBadges:combined,needsUi:combined.length?'TASK-13':null};
+  if (f.chained && first) card.openingPlans = D.openingPlans(d);
   return {ok:true,card};
 }
 
