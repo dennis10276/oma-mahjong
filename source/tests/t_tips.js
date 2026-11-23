@@ -1,5 +1,5 @@
 'use strict';
-/* "Wist je dat?" tips (specials.js): only on the home screen: the tip
+/* "Wist je dat?" tips (features/tips/tips.js): only on the home screen: the tip
    (always one that fits the player, never the same twice in a row), and no full stop after a one-sentence text. */
 const keysFor = (p, st) => p.evaluate(st => { Object.assign(S, { seenSp: {}, daily: {}, stars: {} }, st); return homeTips().map(t => t[1]); }, st);
 module.exports = [
