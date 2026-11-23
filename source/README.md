@@ -13,10 +13,10 @@ Ad-free Mahjong solitaire for Android (and the web / iPhone), in Dutch or Englis
     |---|---|
     | `rules.js` | **every number you may want to tune** (see below); also used by the dashboard |
     | `lang.js` | every text of the game in Dutch and English (`tx('key')`), the language switch; `fx('key')` + `fitTexts()` keep English in the exact Dutch layout |
-    | `core/` | `util.js` helpers, dates, messages; `save.js` saved progress (`S`); `prizes.js` backgrounds and trophies; `fx.js` particles; `update.js` self-update; `screens.js` menus and pop-ups; `telemetry.js` play log; `audio.js` sounds |
+    | `core/` | `util.js` helpers, dates, messages; `save.js` saved progress (`S`); `fx.js` particles; `update.js` self-update; `screens.js` menus and pop-ups; `telemetry.js` play log; `audio.js` sounds |
     | `board.js` | playing a level: the pile, the tray, tapping, matching, hint, shuffle |
     | `specials.js` | gold pair, joker, ice, lock & key |
-    | `features/` | `intro.js` the intro films; `rewards.js` statistics, daily tasks, chest, gift; `win.js` the win screen; `family/` `week.js`, `ranking.js`, `presence.js`, `passed.js`, `profile.js`, `hearts.js` |
+    | `features/` | `intro.js` the intro films; `win.js` the win screen; `tips/`, `looks/` (themes, backgrounds, Zonnebloem), `trophies/` (and the prize cabinet), `settings/`, `rewards/` (tasks, chest, lucky, gift, streak), `grandma/`, `redo/`; `family/` `week.js`, `ranking.js`, `presence.js`, `passed.js`, `profile.js`, `hearts.js` |
     | `main.js` | buttons, touch, start-up (always last) |
   - `style.css` all styles
 - `site/dash/`: the family dashboard (live play data from the database): stuck alert with a

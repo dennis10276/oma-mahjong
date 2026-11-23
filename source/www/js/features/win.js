@@ -1,4 +1,4 @@
-// uses: core/*, rules, lang, board, rewards, family/*
+// uses: core/*, rules, lang, board, looks, trophies, rewards/*, family/*
 /* Oma's Mahjong — finishing a level: the win screen and the rewards that follow it. */
 'use strict';
 

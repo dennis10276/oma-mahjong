@@ -16,17 +16,30 @@ Files in the first group are read by Node tools or the dashboard by path, so the
 ## core/
 - `audio.js` sounds and music (loaded early, before the level data)
 - `util.js` the `$` lookup, dates, small helpers, game messages, floating score, flash, bee
-- `save.js` saved progress `S`, `save()`, `APP_VERSION`, family settings, "redo from level n"
-- `prizes.js` backgrounds, themes, trophies
+- `save.js` saved progress `S`, `save()`, `APP_VERSION`, stars, bonus, counters
 - `fx.js` confetti, sparkles, flying emoji
 - `update.js` self-update from the website
-- `screens.js` menus, calendar, themes, prize cabinet, pop-ups, settings
+- `screens.js` home, levels, calendar, pop-ups, language, intro
 - `telemetry.js` play log for the dashboard
 
 ## features/
 - `intro.js` the intro films that explain a mechanic
-- `rewards.js` statistics, daily tasks and chest, lucky moment, daily gift
 - `win.js` the win screen and the rewards after it
+
+## features/ (one folder per part; a part's screen is in its `screen.js`)
+- `tips/tips.js` the "Wist je dat?" tips on the home screen
+- `looks/looks.js` backgrounds, themes, applying them
+- `looks/screen.js` Zonnebloem goal on home, the themes screen, the sunflower unlock pop-up
+- `trophies/trophies.js` the trophies and when they are earned
+- `trophies/screen.js` the prize cabinet: statistics and the trophy grid
+- `settings/settings.js` the settings pop-up and wiping all progress
+- `rewards/tasks.js` the three daily tasks and their chip
+- `rewards/chest.js` the chest that the three tasks open
+- `rewards/lucky.js` the lucky moment in a level
+- `rewards/gift.js` the daily gift
+- `rewards/streak.js` days in a row (`streak()`) and levels won in a row (`winStreakStep()`)
+- `grandma/grandma.js` Super-omamodus: `careMode`, `part`, `help`, settings from the dashboard
+- `redo/redo.js` "redo from level n", set on the dashboard
 
 ## features/family/
 - `week.js` the week, my points, result of last week
