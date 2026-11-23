@@ -52,13 +52,6 @@ const help = () => helpFor(S.pid, S.name, S.cfg || {});
 
 
 const totalStars = () => sum(S.stars) + sum(S.daily) + S.bonusStars;
-function streak() {
-  const d = new Date();
-  if (!S.daily[dkey(d)]) d.setDate(d.getDate() - 1);
-  let n = 0;
-  while (S.daily[dkey(d)]) { n++; d.setDate(d.getDate() - 1); }
-  return n;
-}
 
 function bumpStat(k, n = 1) { if (G && G.film) return;   // (the intro film counts nothing: js/intro.js)
   S.stats[k] = (S.stats[k] || 0) + n; }

@@ -30,13 +30,7 @@ function win() {
   if (!G.usedHint && !G.usedShuffle && !G.rescued && (toolsOpen() || toolsGone())) taskProgress('nohelp');
   delete S.fails[G.key];   // won: the next level starts without easier retries
   // levels won in a row (a failed try breaks the streak): a bonus star now and then
-  let streakBonus = false;
-  if (G.mode === 'level') {
-    const ws = RULES.winStreak;
-    S.winStreak++;
-    if (S.winStreak === ws.first || S.winStreak % ws.every === 0) { giveBonus(1); streakBonus = true; bumpStat('streakStars'); }
-    if (S.winStreak > (S.bestWinStreak || 0)) S.bestWinStreak = S.winStreak;
-  }
+  const streakBonus = winStreakStep();
   taskProgress('points', G.score);
   bumpStat('wins'); bumpStat('playSec', Math.round(G.elapsed));
   if (G.mode === 'level') S.lvlPts[G.level] = Math.max(S.lvlPts[G.level] || 0, G.score);
