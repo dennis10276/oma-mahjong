@@ -229,7 +229,6 @@ h3.sec { color: #fff; font-size: 22px; margin: 6px 4px 10px; text-shadow: 0 2px 
 .tip-box { display: flex; align-items: center; gap: 12px; text-align: left; text-shadow: none; line-height: 1.15; color: var(--ink); position: relative; background: var(--cream); border-radius: 14px; padding: 6px 14px 6px 8px; border: 1px solid var(--cream2); box-shadow: 0 2px 8px rgba(0,0,0,.18); }
 .tip-box::before { content: ""; position: absolute; left: 22px; bottom: -6px; width: 10px; height: 10px; background: var(--cream); border-right: 1px solid var(--cream2); border-bottom: 1px solid var(--cream2); transform: rotate(45deg); }
 .tip-txt { display: flex; flex-direction: column; min-width: 0; }
-.tip-txt small { font-size: 12px; font-weight: 900; letter-spacing: .4px; text-transform: uppercase; color: var(--muted); }
 .tip-txt b { font-size: 15px; font-weight: 900; }
 .tip-tile { flex: none; width: 34px; height: 44px; margin-right: 4px; border-radius: 8px; background: linear-gradient(#fffef8, #f4ead2); box-shadow: 3px 3px 0 #d9caa0, 4px 5px 0 #1f7a5c, 4px 7px 8px rgba(0,0,0,.3); display: grid; place-items: center; font-style: normal; font-size: 22px; }
 #home .home-tip { max-width: 96%; margin-top: 8px; }
@@ -891,11 +890,18 @@ span.fx { font-size: inherit; }
 #introPanel .big-btn:disabled { opacity: .55; cursor: default; }
 #introPanel .big-btn:disabled b { font-size: 21px; }
 
-/* tall phones: title, hero tiles and tip keep their own size at the top, the buttons follow them with a normal gap, and the
-   leftover height goes to the bottom (the owner 2026-11-23: no gap under the tip, buttons higher) */
+/* tall phones (Dennis's app: 392x785): the hero tiles grow first (up to 66 px), the height left after that is split above the
+   tiles and below the bottom bar; the buttons follow the tip with a normal gap (the owner 2026-11-23, option C, "not perfect yet").
+   The logo block is dissolved (display: contents) so its tiles are home's own flex item: a grown-out flex item lets the
+   auto margins share the rest. */
 @media (min-height: 741px) {
-  #home { gap: clamp(14px, 2.2vh, 24px); }
-  #home .logo { flex: 0 0 auto; overflow: visible; padding-bottom: 0; }
-  #home .logo-tiles { --lt: clamp(36px, 24vh - 160px, 66px); height: calc(var(--lt) * 1.85); flex: none; max-height: none; container-type: normal; }
-  #home .lt { --lt: clamp(36px, 24vh - 160px, 66px); }
+  #home { --hg: clamp(14px, 2.2vh, 24px); gap: 0; }
+  #home .logo { display: contents; }
+  #home .logo-tiles { --lt: initial; height: auto; flex: 1 1 0; min-height: 0; max-height: calc(122px + var(--hg)); padding-top: var(--hg); margin-top: auto; container-type: size; align-self: center; }
+  #home .lt { --lt: min(66px, calc((100cqh - 6px) / 1.65)); }
+  #home .logo h1, #home .greet { text-align: center; align-self: center; }
+  #home .logo h1 { margin-top: 12px; }
+  #home .home-tip { align-self: center; }
+  #home .home-buttons, #home #nextUnlock { margin-top: var(--hg); }
+  #home #nextUnlock { margin-bottom: auto; }
 }
