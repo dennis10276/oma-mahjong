@@ -1,5 +1,5 @@
 // uses: tiles, core/*, rules, lang, board, specials, tips, looks, trophies, rewards/*, grandma, family/*, win
-/* Oma's Mahjong — the menu screens (home, levels, calendar, themes, prizes), pop-ups and settings. */
+/* Oma's Mahjong — the menu screens (home, levels, calendar), pop-ups and the language switch. */
 'use strict';
 
 // ---------- screens ----------

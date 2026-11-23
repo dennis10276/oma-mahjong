@@ -22,11 +22,9 @@ Files in the first group are read by Node tools or the dashboard by path, so the
 - `screens.js` home, levels, calendar, pop-ups, language, intro
 - `telemetry.js` play log for the dashboard
 
-## features/
+## features/ (one folder per part; a part's screen is in its `screen.js`)
 - `intro.js` the intro films that explain a mechanic
 - `win.js` the win screen and the rewards after it
-
-## features/ (one folder per part; a part's screen is in its `screen.js`)
 - `tips/tips.js` the "Wist je dat?" tips on the home screen
 - `looks/looks.js` backgrounds, themes, applying them
 - `looks/screen.js` Zonnebloem goal on home, the themes screen, the sunflower unlock pop-up
