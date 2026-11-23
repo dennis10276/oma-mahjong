@@ -43,6 +43,13 @@ Use `engine.js` for game-rule proofs, including peek pairs and the after-action
 clock check. `{strict:true}` retains the older single-tile rules for comparison.
 The independent review and current limits are in `analysis/builder/codex-review.md`.
 
+The earned-tray recipe deals new boards around two ice fronts. Use
+`node source/tools/builder/bank/earned_tray.js <clock|keys> <seed> <output.json> [tries]`.
+It requires a complete win and a competing local thaw that fills the tray without
+a way out, even with the clock relaxed. The `keys` variant also proves that taking
+the first exposed key can strand the tray. Mixed-chain builds can request the
+local thaw check with `targets.requireStrandedThaw`.
+
 Task 10 uses `task10_study.js prepare <dir>`, then `measure <dir> all <workers>`.
 The preparation freezes 24 same-puzzle bases, their variants, and the complete
 range grid before any bot call. Run `task10_study.js traps <dir>` only after the

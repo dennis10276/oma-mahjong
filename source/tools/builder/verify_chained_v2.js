@@ -9,6 +9,9 @@ function verify(r,opts={}){
     const failure = require('./builder.js').fullTrayFailure(d);
     if (failure) errors.push(failure);
   }
+  if (r.brief.targets?.requireStrandedThaw && !require('./bank/thaw_trap.js').findThawTrap(d)) {
+    errors.push('strandedThawUnproven');
+  }
   if(!f)errors.push('unknownShape');else{errors.push(...C.chainStructure(r,f).map(x=>'chain:'+x));if(t.signature!==f.signature||t.links!==f.links||f.links<3)errors.push('signature');}
   if(f?.newIdea){
     const offers=require('./chained_new_ideas.js').candidates(f.newIdea,d),q=t.newLink;

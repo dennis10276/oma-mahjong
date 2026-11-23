@@ -446,9 +446,13 @@ function build(name, brief = {}, opts = {}) {
     const card={layout,shape,tiles:c.n,trapType:f.trapType,clock:{fewestMoves:k,spare,n:d.clock.n,tile:d.clock.i},trap:p.card,attempt};
     if (layout >= 1000) card.layoutGeometry = d.tiles;
     const fitted=require('./compact_footprint.js').compact({design:d,roles:r,brief:used,card,fails,ms:Date.now()-t0},opts.footprint);
-    const failure = fitted.design
+    let failure = fitted.design
       ? (used.targets.requireFullTray ? B.fullTrayFailure(fitted.design) : null)
       : fitted.fail;
+    if (!failure && used.targets.requireStrandedThaw
+        && !require('./bank/thaw_trap.js').findThawTrap(fitted.design)) {
+      failure = 'strandedThawUnproven';
+    }
     if (!failure) return fitted;
     fails[failure] = (fails[failure] || 0) + 1;
     }finally{opts.onAttempt?.({attempt,fails:{...fails}});}
