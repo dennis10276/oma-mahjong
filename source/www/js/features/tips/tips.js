@@ -15,7 +15,7 @@ const HOME_TIPS = [
 // one tip: a cream card, the small tile on the left shows what the tip is about
 function tipEl(ico, k, extra) {
   const el = document.createElement('div'); el.className = 'tip-box ' + extra;
-  el.innerHTML = '<i class="tip-tile">' + ico + '</i><span class="tip-txt"><small>' + tx('tipHead') + '</small><b>' + tx('tip_' + k) + '</b></span>';
+  el.innerHTML = '<i class="tip-tile">' + ico + '</i><span class="tip-txt"><b>' + tx('tip_' + k) + '</b></span>';
   return el;
 }
 // the home screen's tip under the greeting: one that fits the player, never the same twice in a row (S.lastTip); none if none fits
