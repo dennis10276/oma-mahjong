@@ -17,6 +17,15 @@ test('invalid briefs fail without a search',()=>{
   assert.equal(M.build('not-a-story').fail,'unknownMix');assert.equal(M.build('freeClockIce',{layout:999}).fail,'unknownLayout');
   assert.equal(M.build('freeClockIce',{frame:{spare:0}}).fail,'invalidSpare');
 });
+test('new composed boards only use the all-badges check when the brief requests it', () => {
+  const name = 'waitThawWay_clockCount';
+  const brief = { layout: 21, seed: 113, obviousnessDial: 2, targets: { digBefore: [2, 8] } };
+  const budget = { tries: 5 };
+  const ordinary = M.build(name, brief, budget);
+  const explicit = M.build(name, { ...brief, readabilityProfile: 'clear-specials-v1' }, budget);
+  assert.equal(ordinary.fails.specialReadability, undefined);
+  assert.ok(explicit.fails.specialReadability > 0);
+});
 test('independent oracle checks deadline, capacity, illegality and exact prices',()=>{
   assert.equal(V.oracle(toy,1),'win');assert.equal(V.oracle(toy,1,[1]),'lose');
   assert.equal(V.oracle(toy,99,[0,1,2,3]),'lose');assert.equal(V.oracle(toy,99,[0,0]),'illegal');

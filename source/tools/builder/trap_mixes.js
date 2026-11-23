@@ -357,7 +357,7 @@ function build(name, brief = {}, opts = {}) {
   const layout=brief.layout ?? 0, lay=B.LAYOUTS[layout]; if(!lay) return {fail:'unknownLayout'};
   if(/^blob|^block/.test(lay.shape)) return {fail:'bannedLayout'};
   const c=B.context(lay.tiles), f=FAMILIES[name];
-  const used={...brief,layout,story:name,readabilityProfile:brief.readabilityProfile??(f.sixIdea?'clear-specials-v1':undefined),frame:{spare:1,...brief.frame},targets:{trayRoom:0,maxDown:.2,hiddenOnWay:0,tailPairWidth:2,...brief.targets}};
+  const used={...brief,layout,story:name,frame:{spare:1,...brief.frame},targets:{trayRoom:0,maxDown:.2,hiddenOnWay:0,tailPairWidth:2,...brief.targets}};
   if(![1,2,3].includes(used.frame.spare))return {fail:'invalidSpare'};
   for(let attempt=0;attempt<(opts.tries ?? 30)&&Date.now()-t0<wallMs;attempt++) {
     try{
