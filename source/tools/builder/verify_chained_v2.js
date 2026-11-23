@@ -5,6 +5,10 @@ const V=require('./verify_trap_mixes.js'),C=require('./verify_chained_mixes.js')
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 function verify(r,opts={}){
   const v=V.verify(r,{...opts,tailBand:[0,1]}),errors=v.errors.slice(),d=r.design,t=r.card.trap,f=SHAPES[t.type];
+  if (r.brief.targets?.requireFullTray) {
+    const failure = require('./builder.js').fullTrayFailure(d);
+    if (failure) errors.push(failure);
+  }
   if(!f)errors.push('unknownShape');else{errors.push(...C.chainStructure(r,f).map(x=>'chain:'+x));if(t.signature!==f.signature||t.links!==f.links||f.links<3)errors.push('signature');}
   if(f?.newIdea){
     const offers=require('./chained_new_ideas.js').candidates(f.newIdea,d),q=t.newLink;

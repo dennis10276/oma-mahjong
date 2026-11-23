@@ -2,7 +2,7 @@
 const F=require('./footprint.js'),G=require('./bank/compact_geometry.js'),P=require('./preserve_trap.js');
 function compact(record,opts={}){
   if(!record.design)return record;
-  const before=F.measure(record.design);
+  const before=F.measureForBuild(record.design,record.brief);
   if(before.ok)return {...record,footprint:{...record.footprint,...before,changed:record.footprint?.changed??false}};
   const start=Date.now(),failures={},windows=G.enumerateWindows(record.design);
   let attempts=0,placed=0;
@@ -12,7 +12,7 @@ function compact(record,opts={}){
     const design=G.buildRestackedTiles(record.design,record.level??record.design.level??record.brief?.seed??1,window,{seed,extraCount,useStripShift:false});
     if(!design){failures.noPlacement=(failures.noPlacement||0)+1;continue;}
     placed++;
-    const fit=F.measure(design);if(!fit.ok){failures.renderedBounds=(failures.renderedBounds||0)+1;continue;}
+    const fit=F.measureForBuild(design,record.brief);if(!fit.ok){failures.renderedBounds=(failures.renderedBounds||0)+1;continue;}
     const proof=P.verify(record,{design},opts.proof);
     if(!proof.ok){for(const why of proof.errors)failures[why]=(failures[why]||0)+1;continue;}
     return {...record,design,brief:record.brief?{...record.brief,tiles:design.tiles}:record.brief,

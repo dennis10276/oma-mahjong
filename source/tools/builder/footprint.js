@@ -16,4 +16,8 @@ function measure(input,opts={}) {
   const minimum=opts.minimum??PROFILE.target;
   return { ok: tilePx >= minimum && rows <= PROFILE.maxRows, profile: minimum===PROFILE.target?PROFILE.name:'phone-near-60-v1', tilePx, rows, compact, target: PROFILE.target, minimum, limit: tilePx < twW ? 'height' : 'width' };
 }
-module.exports = { PROFILE, measure };
+function measureForBuild(design, brief) {
+  return measure(design, { minimum: brief?.targets?.ordinaryTileFloor ? 58 : PROFILE.target });
+}
+
+module.exports = { PROFILE, measure, measureForBuild };

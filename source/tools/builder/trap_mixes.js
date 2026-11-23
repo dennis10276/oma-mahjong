@@ -354,8 +354,11 @@ function registerChain(name,{base=null,links}){
 function build(name, brief = {}, opts = {}) {
   if(!FAMILIES[name]) return {fail:'unknownMix'};
   const t0=Date.now(), wallMs=opts.wallMs ?? 20000, fails={};
-  const layout=brief.layout ?? 0, lay=B.LAYOUTS[layout]; if(!lay) return {fail:'unknownLayout'};
-  if(/^blob|^block/.test(lay.shape)) return {fail:'bannedLayout'};
+  const layout = brief.layout ?? 0;
+  const lay = B.LAYOUTS[layout] ?? (layout >= 1000 ? require('./bank/hand.js').layouts()[layout] : undefined);
+  if (!lay) return {fail:'unknownLayout'};
+  const shape = lay.shape ?? lay.name;
+  if (/^blob|^block/.test(shape)) return {fail:'bannedLayout'};
   const c=B.context(lay.tiles), f=FAMILIES[name];
   const used={...brief,layout,story:name,frame:{spare:1,...brief.frame},targets:{trayRoom:0,maxDown:.2,hiddenOnWay:0,tailPairWidth:2,...brief.targets}};
   if(![1,2,3].includes(used.frame.spare))return {fail:'invalidSpare'};
@@ -440,10 +443,14 @@ function build(name, brief = {}, opts = {}) {
       p=prove(name,d,r,{k,spare,obviousnessDial:used.obviousnessDial},opts.proof || {});
     }
     if(!p.ok){fails[p.why]=(fails[p.why]||0)+1;continue;}
-    const card={layout,shape:lay.shape,tiles:c.n,trapType:f.trapType,clock:{fewestMoves:k,spare,n:d.clock.n,tile:d.clock.i},trap:p.card,attempt};
+    const card={layout,shape,tiles:c.n,trapType:f.trapType,clock:{fewestMoves:k,spare,n:d.clock.n,tile:d.clock.i},trap:p.card,attempt};
+    if (layout >= 1000) card.layoutGeometry = d.tiles;
     const fitted=require('./compact_footprint.js').compact({design:d,roles:r,brief:used,card,fails,ms:Date.now()-t0},opts.footprint);
-    if(fitted.design)return fitted;
-    fails[fitted.fail]=(fails[fitted.fail]||0)+1;
+    const failure = fitted.design
+      ? (used.targets.requireFullTray ? B.fullTrayFailure(fitted.design) : null)
+      : fitted.fail;
+    if (!failure) return fitted;
+    fails[failure] = (fails[failure] || 0) + 1;
     }finally{opts.onAttempt?.({attempt,fails:{...fails}});}
   }
   return {fail:'noProvenMix',fails,ms:Date.now()-t0};

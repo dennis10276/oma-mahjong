@@ -633,6 +633,13 @@ function canReachWithin(d, limit, nodes = 200000) {
 }
 const BUDGETX = { budget: true };
 
+// This profile requires a full tray on every route that can reach the clock in time.
+function fullTrayFailure(design, nodes) {
+  const result = canReachWithin(design, 2, nodes);
+  if (result === 'no') return null;
+  return result === 'yes' ? 'lowPressureClockRoute' : 'fullTrayUnproven';
+}
+
 // one try at pictures + face-down tiles on a fixed dig; forced: the quick proof with the clock at |P| + spare
 // (the real n is never larger: k <= |P|), so a 'no' here stays a 'no'
 function picturesFor(c, roles, P, hold, brief, rng, N, cap, spare, variants, note) {
@@ -908,4 +915,4 @@ function fits(storyId, tiles, brief = {}) {
   if (plain) { if (!FITS.has(tiles)) FITS.set(tiles, {}); FITS.get(tiles)[storyId] = ok; }
   return ok;
 }
-module.exports = { build, fits, context, placeRoles, planDig, needSet, placePictures, chooseHolders, coveredDuringDig, necessary, canReachWithin, trayOnWay, LAYOUTS, STORIES };
+module.exports = { build, fits, context, placeRoles, planDig, needSet, placePictures, chooseHolders, coveredDuringDig, necessary, canReachWithin, fullTrayFailure, trayOnWay, LAYOUTS, STORIES };
