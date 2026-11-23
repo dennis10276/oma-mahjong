@@ -93,7 +93,7 @@ module.exports = [
       const root = path.resolve(__dirname, '..'), read = p => fs.readFileSync(path.join(root, p), 'utf8');
       const rules = JSON.parse(read('firebase/rules.json')).rules.replays.$pid;
       t.eq(config.days, 30, 'cleaner uses 30 days');
-      t.ok(/retentionDays: 30/.test(read('www/js/telemetry.js')), 'phone uses the same retention period');
+      t.ok(/retentionDays: 30/.test(read('www/js/core/telemetry.js')), 'phone uses the same retention period');
       t.eq(rules['.indexOn'], ['createdAt'], 'queries have a database index');
       // Evaluate the actual write predicate against snapshots: not a substitute for emulator integration.
       const write = new Function('data', 'newData', 'now', 'return ' + rules.$attempt['.write']);
