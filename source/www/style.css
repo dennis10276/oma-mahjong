@@ -232,7 +232,7 @@ h3.sec { color: #fff; font-size: 22px; margin: 6px 4px 10px; text-shadow: 0 2px 
 .tip-txt small { font-size: 12px; font-weight: 900; letter-spacing: .4px; text-transform: uppercase; color: var(--muted); }
 .tip-txt b { font-size: 15px; font-weight: 900; }
 .tip-tile { flex: none; width: 34px; height: 44px; margin-right: 4px; border-radius: 8px; background: linear-gradient(#fffef8, #f4ead2); box-shadow: 3px 3px 0 #d9caa0, 4px 5px 0 #1f7a5c, 4px 7px 8px rgba(0,0,0,.3); display: grid; place-items: center; font-style: normal; font-size: 22px; }
-#home .home-tip { max-width: 96%; margin-top: 10px; }
+#home .home-tip { max-width: 96%; margin-top: 8px; }
 #home .home-tip[hidden] { display: none; }
 #gameMsg .big { font-size: 23px; font-weight: 900; color: #fff; line-height: 1; white-space: nowrap; -webkit-text-stroke: 1px rgba(120,60,0,.35); text-shadow: 0 3px 0 #e08a00, 0 6px 14px rgba(0,0,0,.35); }
 @keyframes msgIn { from { opacity: 0; transform: scale(.4); } to { opacity: 1; transform: scale(1); } }
@@ -713,13 +713,11 @@ body.contrast .tmini { border: 2px solid #222; background: #fff; }
 
 /* ========== 13 screen sizes ========== */
 @media (min-height: 760px) { .home-buttons { gap: 22px; } }
-@media (max-height: 620px) { .logo-tiles { display: none; } .logo { margin: 6px 0; } }
+@media (max-height: 620px) { .logo { margin: 6px 0; } }
 /* short screens (Safari with its bars): compact home screen, which also scrolls */
 @media (max-height: 740px) {
   #home { padding-top: 10px; padding-bottom: 12px; }
   .logo { margin: 16px 0 8px; }
-  .logo-tiles { height: 74px; }
-  .logo-tiles .lt { width: 54px; height: 70px; }
   .logo h1 { font-size: clamp(32px, 9.5vw, 44px); margin-top: 4px; }
   .home-buttons { gap: 12px; }
   .home-buttons .big-btn { padding-top: 12px; padding-bottom: 12px; }
@@ -757,8 +755,20 @@ body.contrast .tmini { border: 2px solid #222; background: #fff; }
 /* translated text (lang.js fx): takes the size of where it sits; fitTexts may make it smaller */
 span.fx { font-size: inherit; }
 /* Home fits the available safe area; decoration gives way before controls. */
-#home .logo { min-height: 0; flex: 1 1 0; margin: 0; padding-bottom: 14px; overflow: hidden; }
-#home .logo-tiles { flex-shrink: 1; min-height: 0; }
+#home .logo { min-height: 0; flex: 1 1 0; margin: 0; padding-bottom: 8px; overflow: hidden; }
+#home .logo h1 { line-height: 1.05; margin-top: 6px; }
+#home .greet { margin-top: 2px; }
+/* the three hero tiles take whatever height the logo block has left under the title, greeting and tip, and the figure on
+   each tile scales with the tile (--lt = tile width), so the tiles always show whole and the figure stays inside its tile */
+#home .logo-tiles { --lt: clamp(26px, 8.4vh - 10px, 66px); height: calc(var(--lt) * 1.85); }
+@supports (height: 1cqh) {
+  #home .logo-tiles { flex: 1 1 0; min-height: 0; max-height: 122px; width: 100%; justify-content: center; container-type: size; height: auto; }
+  #home .lt { --lt: min(66px, calc((100cqh - 6px) / 1.65)); }
+}
+@container (max-height: 40px) { #home .lt { display: none; } }
+#home .lt { width: var(--lt); height: calc(var(--lt) * 1.3); padding: calc(var(--lt) * .06); border-radius: calc(var(--lt) * .18); }
+#home .lt .emo { font-size: calc(var(--lt) * .56) !important; line-height: 1; overflow: hidden; }
+#home .lt.t2 { margin-bottom: calc(var(--lt) * .27); }
 @media (max-height: 520px) { #home .logo { padding-bottom: 0; } }   /* (the logo is squeezed to nothing there: its room under the tip must go too) */
 #home .home-buttons { gap: clamp(8px, 1.7vh, 18px); }
 #home #nextUnlock { margin-top: 0; }
@@ -769,9 +779,8 @@ span.fx { font-size: inherit; }
 #wRanking { font-size: 15px; margin: 4px auto; padding: 3px 10px; }
 @keyframes rankRise { from { transform: translateY(12px); background: #ffe58a; } to { transform: translateY(0); } }
 .win-rank-rise { animation: rankRise .8s ease-out; }
-@media (max-height: 680px) {
+@media (max-height: 740px), (max-width: 500px) and (max-height: 800px) {
   #home { padding: 8px 12px 12px; gap: 8px; }
-  #home .logo-tiles { display: none; }
   #home .logo h1 { font-size: clamp(26px, 8vw, 36px); }
   #home .greet { font-size: 17px; }
   #home .home-buttons .big-btn { padding: 10px 14px; gap: 12px; }
