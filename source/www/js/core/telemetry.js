@@ -1,3 +1,4 @@
+// uses: hard, rules, lang, core/*, board, specials, family/presence
 /* Oma's Mahjong — play log for the family dashboard (dash/). */
 'use strict';
 

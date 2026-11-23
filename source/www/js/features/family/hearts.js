@@ -1,3 +1,4 @@
+// uses: core/*, rules, lang, board, family/*
 /* Oma's Mahjong — hearts between family members, with an optional short message.
    hearts/<to>/<from> = { name, t }: t < 0 means "seen" (the receiver turns it negative).
    The message goes to plays/msg-<to> (see MSG in rules.js). Timings are in RULES.hearts. */

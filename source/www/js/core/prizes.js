@@ -1,6 +1,5 @@
-/* Oma's Mahjong — core/prizes: backgrounds, themes unlocked with stars, and the trophies.
-   All game scripts share one global scope and are loaded in the order of index.html
-   (the tunable numbers are in js/rules.js). */
+// uses: core/*, rules, lang
+/* Oma's Mahjong — core/prizes: backgrounds, themes unlocked with stars, and the trophies. */
 'use strict';
 
 // ---------- backgrounds (unlocked with stars) ----------

@@ -1,3 +1,4 @@
+// uses: lang, core/save, core/screens, board
 /* Oma's Mahjong — core/util: the $ lookup, dates, small helpers, game messages, floating score, flash, bee.
    All game scripts share one global scope and are loaded in the order of index.html
    (the tunable numbers are in js/rules.js). */

@@ -1,5 +1,5 @@
 'use strict';
-/* The intro film (js/intro.js): the first time a player meets a mechanic, a tiny level is played for them in a pop-up
+/* The intro film (js/features/intro.js): the first time a player meets a mechanic, a tiny level is played for them in a pop-up
    over the level, by the game's own code, with one line saying what to do and a short caption under the board for
    each subtle step (nothing else of the film's own moves on the board). The first time the button works only after
    the film has played once; from the help menu it can be closed at once. The player's own level stays visible behind

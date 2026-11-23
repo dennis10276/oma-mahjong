@@ -1,3 +1,4 @@
+// uses: tiles, core/*, rules, lang, board, specials, rewards, family/*, win
 /* Oma's Mahjong — the menu screens (home, levels, calendar, themes, prizes), pop-ups and settings. */
 'use strict';
 

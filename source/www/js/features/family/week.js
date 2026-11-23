@@ -1,3 +1,4 @@
+// uses: core/*, rules, lang
 /* Oma's Mahjong — family/week: the week (Monday to Sunday), my points and the result of last week. */
 'use strict';
 

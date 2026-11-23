@@ -1,6 +1,5 @@
-/* Oma's Mahjong — core/save: the saved progress (S), its counters, the family settings and "redo from level n".
-   All game scripts share one global scope and are loaded in the order of index.html
-   (the tunable numbers are in js/rules.js). */
+// uses: rules, core/*, board, family/week, family/presence
+/* Oma's Mahjong — core/save: the saved progress (S), its counters, the family settings and "redo from level n". */
 'use strict';
 
 const STORE = 'omamj.v1', CUR = 'omamj.cur';

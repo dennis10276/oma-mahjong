@@ -1,3 +1,4 @@
+// uses: rules, lang, core/util, core/save, family/week, family/ranking
 /* Oma's Mahjong — family/presence: who is online, uploading my score, my id. */
 'use strict';
 

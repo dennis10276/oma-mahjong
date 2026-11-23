@@ -1,3 +1,4 @@
+// uses: board, win
 /* All sounds are synthesized with WebAudio: no files, instant, works offline. */
 const Sound = (() => {
   let ctx = null, master, sfx, music, verb, noiseBuf;

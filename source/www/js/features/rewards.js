@@ -1,3 +1,4 @@
+// uses: core/*, layouts, rules, lang, board, specials, family/week, family/presence
 /* Oma's Mahjong — little rewards outside the win screen: statistics, daily tasks with the chest,
    the lucky moment in a level and the daily gift (amounts in rules.js). */
 'use strict';

@@ -1,3 +1,4 @@
+// uses: core/*, rules, lang, family/*, win
 /* Oma's Mahjong — family/ranking: the ranking list and its screen, rows, the family at a glance, the climb animation. */
 'use strict';
 

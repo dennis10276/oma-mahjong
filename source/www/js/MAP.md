@@ -1,0 +1,37 @@
+# Where things are in `www/js/`
+
+No build step: the game loads classic scripts one after another, in the order of `FILES` in `www/index.html`.
+All files share one global scope. Each moved file starts with a `// uses:` line naming the files it calls.
+Files in the first group are read by Node tools or the dashboard by path, so they stay put.
+
+## Stay in place
+- `../tiles.js` tile pictures and themes (also loaded by the dashboard)
+- `../layouts.js`, `../hard.js`, `../levels-hard.js`, `../levels-early.js` engine, hard levels, level data (Node tools read them)
+- `rules.js` every tunable number (the dashboard loads it)
+- `lang.js` every text, Dutch and English
+- `board.js` playing a level: pile, tray, tapping, matching, hint, shuffle
+- `specials.js` gold pair, joker, ice, lock and key
+- `main.js` buttons, touch, start-up; always the last file
+
+## core/
+- `audio.js` sounds and music (loaded early, before the level data)
+- `util.js` the `$` lookup, dates, small helpers, game messages, floating score, flash, bee
+- `save.js` saved progress `S`, `save()`, `APP_VERSION`, family settings, "redo from level n"
+- `prizes.js` backgrounds, themes, trophies
+- `fx.js` confetti, sparkles, flying emoji
+- `update.js` self-update from the website
+- `screens.js` menus, calendar, themes, prize cabinet, pop-ups, settings
+- `telemetry.js` play log for the dashboard
+
+## features/
+- `intro.js` the intro films that explain a mechanic
+- `rewards.js` statistics, daily tasks and chest, lucky moment, daily gift
+- `win.js` the win screen and the rewards after it
+
+## features/family/
+- `week.js` the week, my points, result of last week
+- `ranking.js` ranking list and screen, rows, the family at a glance, the climb animation
+- `presence.js` who is online, uploading my score, my id
+- `passed.js` "someone passed you"
+- `profile.js` avatar frames, avatars, asking for the name
+- `hearts.js` hearts with a message between family members

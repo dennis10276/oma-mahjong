@@ -1,3 +1,4 @@
+// uses: core/*, rules, lang, family/presence, family/hearts
 /* Oma's Mahjong — family/profile: avatar frames, avatars, asking for the name. */
 'use strict';
 

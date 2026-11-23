@@ -1,3 +1,4 @@
+// uses: core/*, rules, lang, family/*
 /* Oma's Mahjong — family/passed: "someone in the family passed you". */
 'use strict';
 

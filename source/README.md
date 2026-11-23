@@ -6,25 +6,18 @@ Ad-free Mahjong solitaire for Android (and the web / iPhone), in Dutch or Englis
 
 - `OmasMahjong.apk`: the app, ready to install
 - `www/`: the game itself (HTML/JS, open `www/index.html` in a browser to play)
-  - `tiles.js` tile pictures and themes, `audio.js` sounds,
+  - `tiles.js` tile pictures and themes,
     `layouts.js` the engine: piles, deals, difficulty, solver, ice/lock placement (also runs in Node for tests)
-  - `js/` the game, loaded in this order (the list is in the boot loader in `index.html`):
+  - `js/` the game, in folders (one job per file; `js/MAP.md` has the full list). The load order is the `FILES` list in the boot loader in `index.html`:
     | file | what |
     |---|---|
     | `rules.js` | **every number you may want to tune** (see below); also used by the dashboard |
-    | `lang.js` | every text of the game in Dutch and English (`tx('key')`), the language switch; `fx('key')` + `fitTexts()` keep English in the exact Dutch layout (smaller font instead of an extra line) |
-    | `core.js` | saved progress (`S`), dates, small helpers, backgrounds, prizes |
-    | `fx.js` | particles: confetti, sparkles, flying emoji |
-    | `update.js` | self-update from the website |
-    | `screens.js` | menus, calendar, themes, prize cabinet, pop-ups, settings |
+    | `lang.js` | every text of the game in Dutch and English (`tx('key')`), the language switch; `fx('key')` + `fitTexts()` keep English in the exact Dutch layout |
+    | `core/` | `util.js` helpers, dates, messages; `save.js` saved progress (`S`); `prizes.js` backgrounds and trophies; `fx.js` particles; `update.js` self-update; `screens.js` menus and pop-ups; `telemetry.js` play log; `audio.js` sounds |
     | `board.js` | playing a level: the pile, the tray, tapping, matching, hint, shuffle |
     | `specials.js` | gold pair, joker, ice, lock & key |
-    | `rewards.js` | statistics, daily tasks and chest, lucky moment, daily gift |
-    | `telemetry.js` | play log for the dashboard |
-    | `social.js` | ranking: family online, the weekly challenge, profile, climbing |
-    | `hearts.js` | hearts (with a message) between family members |
-    | `win.js` | the win screen and the rewards after it |
-    | `main.js` | buttons, touch, start-up |
+    | `features/` | `intro.js` the intro films; `rewards.js` statistics, daily tasks, chest, gift; `win.js` the win screen; `family/` `week.js`, `ranking.js`, `presence.js`, `passed.js`, `profile.js`, `hearts.js` |
+    | `main.js` | buttons, touch, start-up (always last) |
   - `style.css` all styles
 - `site/dash/`: the family dashboard (live play data from the database): stuck alert with a
   "send a heart" button (with a message), desktop notifications, how close she got, her difficulty
@@ -214,7 +207,7 @@ settings such as `news` and `pro`); the game ignores them.
 - The win replays after five lost tries (`pro.js`, `www/pro/`, `tools/pro`, `update_pro` in `release.py`).
 - The Apeldoorn news and the made-up stories (`village.js`, `stories.js`, the news job). The collected news stays on the `news` branch of the
   GitHub repository as an archive.
-- The one-time wipe of 2026-10-07 in `core.js`.
+- The one-time wipe of 2026-10-07 in `js/core/save.js`.
 - The dashboard's Voorspeltest card (`forecast-score.js`); `firebase/rules.json` and the `forecasts/` data are untouched.
 
 ## Settings per player (family dashboard)

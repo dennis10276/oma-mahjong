@@ -1,3 +1,4 @@
+// uses: layouts, lang, core/*, board, specials
 /* Oma's Mahjong — the intro film (from 1.73): the first time a player meets a new kind of tile, a tiny level is
    played for them in a pop-up over the level that is about to start, by the game's own code: the board and its
    tiles, the tray, the taps (board.js onTap), the flight into the tray, the pair, the ice that cracks and melts, the

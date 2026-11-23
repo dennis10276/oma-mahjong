@@ -4,6 +4,7 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 
 ## Where things are
 
+- `source/www/js/MAP.md` says which file in `js/` holds what.
 - `source/` is the complete source: `www/` (the game), `site/` (download page and family
   dashboard), `tests/`, `tools/`, `android/`, `firebase/`, `analysis/`, `release.py`.
 - The repository root (`play/`, `dash/`, `index.html`, `OmasMahjong.apk`) is the published site.
@@ -177,11 +178,13 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
   tile only rises above tiles of its own group: use `glow(i, 'lucky'|'nudge', on)` to show one above
   the pile. Classic faces on the board are shared pictures (`Tiles.boardFace`), not live SVG.
 - Build the pile with `renderBoard` (positions first, one insertion); do not measure the page in
-  code that runs on every tap. Sparkles are `FX.burst`/`FX.emoji` (graphics chip, `fx.js`).
+  code that runs on every tap. Sparkles are `FX.burst`/`FX.emoji` (graphics chip, `js/core/fx.js`).
 - Lessons: `LESSON_SCENES` / `LESSON_STEPS` in `specials.js`. Findings and numbers:
   `source/analysis/smooth-1.58.md`; `tests/perf_probe.js` and `tests/perf_trace.js` measure.
 
 ## Game tips (from 1.59, js/coach.js; decisions by Dennis, 2026-10-22)
+
+> Removed in the refactor (see source/README.md "Removed features"): the game tips and animated lessons are gone; the intro films (js/features/intro.js) explain a mechanic now. Kept as history only.
 
 - Release 1.68 (Dennis, 2026-11-12): automatic tips between attempts
   are removed, including retry reminders, restart reviews and clock/tray loss films. Tips remain
@@ -205,6 +208,8 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 
 ## Level replays (from 1.65, js/pro.js; decisions by Dennis, 2026-11-06)
 
+> Removed in the refactor (see source/README.md "Removed features"): the win replays (pro.js) are gone. Kept as history only.
+
 - Switched on per player on the dashboard (part `pro`, "Replay na 5 keer mis"; off by default).
 - After the 5th lost try of a level the player has not passed (restarts count, `S.fails`), once per level
   (`S.proSeen`): a full-screen replay of a win of that exact board at 2x speed (pauses capped at 3 s), in the
@@ -217,6 +222,8 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
   removed). Loaded from the website (`RULES.pro.url`) only when due. Dashboard feed: "Replay van ...".
 
 ## Voorspeltest: locked predictions (Dennis, 2026-10-22)
+
+> Removed in the refactor (see source/README.md "Removed features"): the dashboard card Voorspeltest is gone; the forecasts data stays untouched. Kept as history only.
 
 - Bot predictions of a player's winning try are only judged when they were locked in Firebase
   BEFORE the player first opened that level: `forecasts/<pid>/<level>` =
