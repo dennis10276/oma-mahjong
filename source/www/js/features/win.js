@@ -179,16 +179,6 @@ function showToolsEarn(st, then) {
     <button class="big-btn play" id="tgOk"><span class="bb-text"><b>${tx(st.on ? 'top' : 'toolsOffOk')}</b></span></button>`, false);
   $('#tgOk').onclick = () => { closeModal(); then(); };
 }
-function showSunflowerUnlock(then) {
-  S.sunSeen = true; save();
-  Sound.sunflower(); FX.sunRain(); buzz([30, 60, 30, 60, 30, 60, 80]);
-  openModal(`<div class="sun-big">🌻</div><h2>${tx('sunWin')}</h2>
-    <p>${tx('sunWinText')}</p>
-    <button class="big-btn gold" id="sunUse"><span class="bb-text"><b>${tx('sunUse')}</b></span></button>
-    <button class="link-btn" id="sunLater">${tx('sunLater')}</button>`, false);
-  $('#sunUse').onclick = () => { S.theme = 'sunflower'; S.bg = 'sunfield'; save(); applyBg(); applyTheme(); closeModal(); FX.emoji(innerWidth / 2, innerHeight / 2, ['🌻', '🌼', '🐝', '✨'], 16); then(); };
-  $('#sunLater').onclick = () => { closeModal(); then(); };
-}
 function showTrophies(list, then) {
   Sound.trophy(); FX.confetti(); buzz([20, 40, 20, 40, 60]);
   openModal(`<h2>${tx('newTrophies', list.length)}</h2>
