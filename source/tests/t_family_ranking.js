@@ -200,11 +200,14 @@ module.exports = [
       await p.waitForFunction(() => document.querySelector('#ranking > .scroll').scrollTop > 0);
       t.ok(await scroll.evaluate(el => el.scrollTop > 0), 'vertical gesture scrolls the leaderboard');
       await scroll.evaluate(el => { el.scrollTop = 0; });
+      // (on a busy machine the tap can land before the switch starts, so settled() alone may return too early:
+      // wait up to 3 s for the tab itself; a tap that is really ignored still fails)
+      const tabIs = id => p.waitForFunction(id => document.querySelector('#ranking .rk-tabs .on')?.id === id, id, { timeout: 3000 }).catch(() => {});
       await p.locator('#rkAll').tap();
-      await settled(p);
+      await tabIs('rkAll'); await settled(p);
       t.eq(await tab(), 'rkAll', 'All-time tap still works');
       await p.locator('#rkWeek').tap();
-      await settled(p);
+      await tabIs('rkWeek'); await settled(p);
       t.eq(await tab(), 'rkWeek', 'Deze week tap still works');
       const heart = p.locator('#rankList .heart-btn').first();
       await heart.scrollIntoViewIfNeeded();
