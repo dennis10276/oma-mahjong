@@ -3,10 +3,10 @@ const path = require('node:path');
 const { spawnSync } = require('node:child_process');
 
 module.exports = {
-  name: 'level builder board check verifies plan evidence and calibration',
+  name: 'level builder board check verifies plan evidence, calibration and finish pressure',
   run(t) {
-    const test = path.join(__dirname, 'board_check.test.js');
-    const result = spawnSync(process.execPath, ['--test', test], { encoding: 'utf8', timeout: 10000 });
-    t.ok(result.status === 0, 'board check tests pass', result.error?.message || result.stdout + result.stderr);
+    const tests = ['board_check.test.js', 'feel.test.js'].map(file => path.join(__dirname, file));
+    const result = spawnSync(process.execPath, ['--test', ...tests], { encoding: 'utf8', timeout: 10000 });
+    t.ok(result.status === 0, 'builder tests pass', result.error?.message || result.stdout + result.stderr);
   },
 };

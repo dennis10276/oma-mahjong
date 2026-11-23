@@ -70,7 +70,20 @@ if (require.main === module) {
 function expert(design, opts = {}) {
   const E = require('../engine.js'), g = E.game(structuredClone(design)), F = g.faces, n = g.n;
   const rand = rngOf((opts.seed ?? 1) * 2654435761 + 3), playouts = opts.playouts ?? 20, per = { nodes: opts.nodes ?? 30000, ms: opts.ms ?? 300 };
-  let s0 = E.start(g); const ci = design.solution.indexOf(design.clock.i); for (const t of design.solution.slice(0, ci + 1)) s0 = E.step(g, s0, t);
+  let s0 = E.start(g);
+  const solution = design.solution;
+  for (let i = 0; i < solution.length && !s0.clockTaken; i++) {
+    const tile = solution[i], partner = solution[i + 1];
+    let next = E.step(g, s0, tile);
+    const clockInPair = partner === g.clock.i && next?.moves === g.clock.n;
+    if (!next || clockInPair) {
+      next = E.step(g, s0, { pair: [tile, partner] });
+      i++;
+    }
+    if (!next) throw new Error('Cannot replay the stored route to the clock for finish pressure');
+    s0 = next;
+  }
+  if (!s0.clockTaken) throw new Error('Stored route never reaches the clock for finish pressure');
   const hist = [0, 0, 0, 0]; let steps = 0, parks = 0, danger = 0, lost = 0, done = 0; const parkAt = [0, 0, 0]; let wrongSum = 0, wrongN = 0;
   const depth = (alive, j) => { const seen = new Set(), todo = [j]; while (todo.length) for (const k of g.nb.above[todo.pop()]) if (alive[k] && !seen.has(k)) { seen.add(k); todo.push(k); } return seen.size; };
   const safe = s2 => E.winnable(g, s2, per).result !== 'lose';
