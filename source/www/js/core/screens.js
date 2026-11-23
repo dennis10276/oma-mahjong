@@ -99,16 +99,6 @@ function renderDaily() {
   $('#dailyDateLabel').textContent = (selDate === tk ? tx('puzzleToday') : tx('puzzleOf', sd.getDate(), monthName(sd.getMonth()))) + (S.daily[selDate] ? tx('playAgain') : '');
 }
 
-function renderTrophies() {
-  $('#statsBox').innerHTML = statsHTML();
-  $('#trCount').textContent = `🏅 ${trophyCount()}/${TROPHIES.length}`;
-  $('#trophyGrid').innerHTML = TROPHIES.map(t => {
-    const got = S.trophies[t.id];
-    const [v, n] = t.prog();
-    return `<div class="trophy${got ? ' got' : ''}"><span class="t-ico">${t.ico}</span><b>${fx('tr_' + t.id)}</b><small>${fx('tr_' + t.id + '_d', RULES.sunflower.level)}</small>${got ? `<em>${tx('won')}</em>` : `<span class="bar"><i style="width:${Math.round(Math.min(1, v / n) * 100)}%"></i></span><em>${Math.min(v, n)} / ${n}</em>`}</div>`;
-  }).join('');
-}
-
 // ---------- language ----------
 function setLang(code) {
   S.lang = code; save();

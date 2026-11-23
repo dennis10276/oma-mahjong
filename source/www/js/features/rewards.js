@@ -3,20 +3,6 @@
    the lucky moment in a level and the daily gift (amounts in rules.js). */
 'use strict';
 
-// ---------- statistics (prize cabinet) ----------
-function fmtTime(sec) { return tx('hoursMin', Math.floor(sec / 3600), Math.round(sec % 3600 / 60)); }
-const daysText = n => tx('days', n);
-function statsHTML() {
-  const st = S.stats;
-  const items = [
-    ['🧩', 'st_levels', S.level - 1], ['⭐', 'st_stars', totalStars()], ['🀄', 'st_pairs', S.matches],
-    ['💰', 'st_points', fmtN(myPoints())], ['📅', 'st_daily', Object.keys(S.daily).length], ['🔥', 'st_streak', daysText(S.bestStreak)],
-    ['🌈', 'st_combo', S.bestCombo], ['⏱️', 'st_time', fmtTime(st.playSec || 0)], ['🎁', 'st_chests', st.chests || 0],
-    ['💛', 'st_hearts', st.hearts || 0], ['🍀', 'st_lucky', st.lucky || 0], ['🥇', 'st_weeks', S.weekWins],
-  ].map(([i, k, v]) => [i, tx(k), v]);
-  return `<div class="stats-card"><h3>${tx('myStats')}</h3><div class="stats-grid">${items.map(([i, l, v]) => `<div class="stat"><span>${i}</span><b>${v}</b><small>${l}</small></div>`).join('')}</div></div>`;
-}
-
 // ---------- daily tasks: 3 a day, each +1 star; all 3 open the chest ----------
 // (texts in lang.js: task_<id>)
 const TASK_TYPES = [

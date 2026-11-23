@@ -1,4 +1,4 @@
-// uses: core/*, rules, lang, board (toolsEarnLevel, toolsEarned), prizes (sunUnlocked, bgLocked, numBgs)
+// uses: core/*, rules, lang, board (toolsEarnLevel, toolsEarned), looks (sunUnlocked, bgLocked, numBgs)
 /* Oma's Mahjong — tips/tips: the "Wist je dat?" tips on the home screen. */
 'use strict';
 /* "Wist je dat?" (the owner 2026-11-23): gold and the joker are not explained, and there are no tips in a level and none about the joker:

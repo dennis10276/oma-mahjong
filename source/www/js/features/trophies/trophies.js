@@ -1,5 +1,5 @@
 // uses: core/*, rules, lang
-/* Oma's Mahjong — core/prizes: backgrounds, themes unlocked with stars, and the trophies. */
+/* Oma's Mahjong — trophies/trophies: the trophies and when they are earned. */
 'use strict';
 
 // ---------- trophies ----------
