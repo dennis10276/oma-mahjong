@@ -1,15 +1,42 @@
 'use strict';
-// The lighter profile is an explicit revision after Dennis's Task 18 verdicts.
-// Historical boards keep their historical band; no acceptance is rewritten.
-const PROFILES={
-  standard:{parks:1.5,parksMax:3,max3:.1},
-  'light-after-verdict':{parks:.5,parksMax:1.5,max3:.05,greedyMin:.55},
+
+// Stored cards keep their historical bands. New builds name their finish profile.
+const PROFILES = {
+  standard: { parks: 1.5, parksMax: 3, max3: .1 },
+  'light-after-verdict': { parks: .5, parksMax: 1.5, max3: .05, greedyMin: .55 },
+  'new-idea': { parks: 2, parksMax: 2, max3: .1 },
+  'existing-idea': { parks: 3, parksMax: 5, max3: .25 },
 };
-function check(r,feel,tail){
-  const name=r.card.finishProfile||'standard',p=PROFILES[name];
-  if(!p)return false;
-  if(name!=='standard'&&(!r.reviewRevision?.sourceFile||!r.reviewRevision?.reason))return false;
-  const pp=+(feel.parkAt[1]+feel.parkAt[2]).toFixed(1);
-  return pp>=p.parks&&pp<=p.parksMax&&feel.waiting[3]<=p.max3&&!feel.lostGames&&(p.greedyMin==null||tail.tailGreedyWin>=p.greedyMin);
+
+function targetFor(idea) {
+  const target = PROFILES[idea + '-idea'];
+  if (!target) throw new Error('Expected --idea new or existing');
+  return target;
 }
-module.exports={PROFILES,check};
+
+function tuningTarget(arg, defaultIdea) {
+  const target = targetFor(arg('idea', defaultIdea));
+  const lower = arg('parks', null);
+  const upper = arg('parks-max', lower == null ? target.parksMax : null);
+  return {
+    parks: lower == null ? target.parks : +lower,
+    ...(upper == null ? {} : { parksMax: +upper }),
+    max3: +arg('max3', target.max3),
+  };
+}
+
+function meets(target, feel, tail) {
+  const parks = +(feel.parkAt[1] + feel.parkAt[2]).toFixed(1);
+  return parks >= target.parks && parks <= target.parksMax && feel.waiting[3] <= target.max3
+    && !feel.lostGames && (target.greedyMin == null || tail.tailGreedyWin >= target.greedyMin);
+}
+
+function check(r, feel, tail) {
+  const name = r.card.finishProfile || 'standard';
+  const target = PROFILES[name];
+  if (!target) return false;
+  if (name === 'light-after-verdict' && (!r.reviewRevision?.sourceFile || !r.reviewRevision?.reason)) return false;
+  return meets(target, feel, tail);
+}
+
+module.exports = { PROFILES, targetFor, tuningTarget, meets, check };

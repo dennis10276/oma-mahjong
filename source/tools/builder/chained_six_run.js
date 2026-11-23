@@ -8,7 +8,7 @@ if(!isMainThread&&require.main===module){
     if(j.mode==='finish'){
       const raw=JSON.parse(fs.readFileSync(j.file));
       const obsolete=(raw.roles.bait.sixLinks||[raw.roles.bait.six]).some(q=>q.kind==='clockCount'&&!Number.isInteger(q.parkSide));
-      r=obsolete?{fail:'obsoleteClockCountRecipe'}:require('./chained_v2_finish.js').finish(raw,{seed:j.seed,tuneMs:j.tuneMs??30000,repairMs:j.repairMs??20000});
+      r=obsolete?{fail:'obsoleteClockCountRecipe'}:require('./chained_v2_finish.js').finish(raw,{seed:j.seed,tuneMs:j.tuneMs??30000,repairMs:j.repairMs??20000,idea:j.idea});
     }
     else if(j.mode==='refresh'){
       const row=JSON.parse(fs.readFileSync(j.file)),roles={...row.roles,locks:new Set(row.roles.locks),holderSpecials:new Set(row.roles.holderSpecials)};
@@ -20,7 +20,7 @@ if(!isMainThread&&require.main===module){
       }
     }
     else if(j.mode==='verify')r=require('./verify_chained_v2.js').verify(JSON.parse(fs.readFileSync(j.file)));
-    else r=M.build(j.name,{layout:j.layout,seed:j.seed,obviousnessDial:2,...(j.readabilityProfile?{readabilityProfile:j.readabilityProfile}:{}),frame:{spare:1,...(j.depth!=null?{depth:j.depth}:{})},targets:{digBefore:[2,8],maxDown:.2,...j.targets}},{tries:j.tries??250,wallMs:j.ms-500,onAttempt:x=>parentPort.postMessage({progress:x})});
+    else r=M.build(j.name,{layout:j.layout,seed:j.seed,obviousnessDial:2,...(j.idea?{idea:j.idea}:{}),...(j.readabilityProfile?{readabilityProfile:j.readabilityProfile}:{}),frame:{spare:1,...(j.depth!=null?{depth:j.depth}:{})},targets:{digBefore:[2,8],maxDown:.2,...j.targets}},{tries:j.tries??250,wallMs:j.ms-500,onAttempt:x=>parentPort.postMessage({progress:x})});
     if(r.design){r.roles.locks=[...r.roles.locks];r.roles.holderSpecials=[...r.roles.holderSpecials];}
     parentPort.postMessage({result:r});
   }catch(e){parentPort.postMessage({result:{fail:'exception',detail:e.stack}});}
@@ -47,7 +47,7 @@ async function run(){
   if(arg('reverse','0')==='1')jobs.reverse();
   let cursor=0;const log=path.join(OUT,'runs',`${mode}-s${seed}-${Date.now()}.jsonl`);
   await Promise.all(Array.from({length:workers},async()=>{while(cursor<jobs.length&&Date.now()<until){
-    const j={...jobs[cursor++],...(arg('readability',null)?{readabilityProfile:arg('readability')}:{}),...(arg('depth',null)!=null?{depth:+arg('depth',0)}:{})},r=await job({...j,repairMs:+arg('repair-ms',20000),tuneMs:+arg('tune-ms',30000),ms:Math.min(j.ms,until-Date.now())});
+    const j={...jobs[cursor++],...(arg('idea',null)?{idea:arg('idea')}:{}),...(arg('readability',null)?{readabilityProfile:arg('readability')}:{}),...(arg('depth',null)!=null?{depth:+arg('depth',0)}:{})},r=await job({...j,repairMs:+arg('repair-ms',20000),tuneMs:+arg('tune-ms',30000),ms:Math.min(j.ms,until-Date.now())});
     const row={...j,file:j.file&&path.basename(j.file),ok:!!r.design||(mode==='verify'&&r.ok),fail:r.fail,errors:r.errors,detail:r.detail,fails:r.fails,wall:r.wall,attempts:r.progress?.attempt};
     if(r.design){const file=j.file?path.basename(j.file):`${j.name}-L${j.layout}-s${seed}-p1.json`;fs.writeFileSync(path.join(OUT,mode==='refresh'?'checked':mode==='finish'?'examples':'raw',file),JSON.stringify(r,null,2)+'\n');row.output=file;}
     else if(mode==='finish'){
@@ -60,7 +60,7 @@ async function run(){
     }
     fs.appendFileSync(log,JSON.stringify(row)+'\n');console.log(JSON.stringify(row));
     if(r.design&&mode==='build'&&arg('finish-each','0')==='1'){
-      const file=path.join(OUT,'raw',row.output),fin=await job({mode:'finish',file,seed,ms:Math.min(+arg('finish-ms',90000),until-Date.now())});
+      const file=path.join(OUT,'raw',row.output),fin=await job({mode:'finish',file,seed,idea:j.idea,ms:Math.min(+arg('finish-ms',90000),until-Date.now())});
       const fr={mode:'finish',file:row.output,ok:!!fin.design,fail:fin.fail,wall:fin.wall};
       if(fin.design)fs.writeFileSync(path.join(OUT,'examples',row.output),JSON.stringify(fin,null,2)+'\n');
       else if(fin.checkpoint)fs.writeFileSync(file,JSON.stringify(fin.checkpoint,null,2)+'\n');

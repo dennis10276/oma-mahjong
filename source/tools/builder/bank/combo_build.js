@@ -4,8 +4,8 @@
    two or more Task 18 link kinds (three of a kind, the melter's twin under the ice, count the clock), on Gemini's six-wide layouts
    (data/layouts-6wide.json, wip/gemini-six-wide 106be26f) placed after the old catalogue (layout index 1000 + i).
      node source/tools/builder/bank/combo_build.js --jobs <jobs.json> [--workers 3] [--ms 60000] [--minutes 20]
-   jobs: [{ base, links:[..], layout, seed }]; output: analysis/builder/bank/combo-350/{raw,checked,runs}. Build -> finish (feel 1.5-3
-   pressure parks) -> independent verify (verify_chained_v2.js); only verified boards go to checked/. */
+   jobs: [{ base, links:[..], layout, seed, idea:'existing' }]; output: analysis/builder/bank/combo-350/{raw,checked,runs}.
+   Build -> finish (3-5 pressure parks for known ideas, 2 when the job marks the idea as new) -> independent verify (verify_chained_v2.js); only verified boards go to checked/. */
 const fs=require('fs'),path=require('path'),{Worker,isMainThread,parentPort,workerData}=require('worker_threads');
 const OUT=path.resolve(__dirname,'../../../analysis/builder/bank/combo-350');
 const DATA=path.resolve(__dirname,'../../../analysis/builder/data');
@@ -45,7 +45,7 @@ if(!isMainThread){
       const DT=require('./detower.js'),T=r.design.tiles,hang=T.filter((p,i)=>!DT.supportedAt(T,p,i)).length;   // every corner must rest on a tile one layer down (released boards always do)
       if(hang){parentPort.postMessage({result:{fail:'hanging:'+hang}});return;}
       const raw=JSON.parse(JSON.stringify(r));
-      const f=require('../chained_v2_finish.js').finish(raw,{seed:j.seed,tuneMs:30000,repairMs:20000});
+      const f=require('../chained_v2_finish.js').finish(raw,{seed:j.seed,tuneMs:30000,repairMs:20000,idea:j.idea??'existing'});
       if(!f.design)r={fail:'finish:'+(f.fail||'?')};
       else{const v=require('../verify_chained_v2.js').verify(f);r=v.ok?f:{fail:'verify',errors:v.errors};if(v.ok)f.verification=v;}
     }

@@ -32,3 +32,25 @@ test('replay imports join chunks by attempt and sequence, and exclude the docume
   const r=replaySummary(raw,manifest,['qa']);assert.equal(r.attempts.length,1);
   assert.equal(r.attempts[0].continuous,true);assert.equal(r.attempts[0].reachedClock,true);assert.equal(r.attempts[0].end,'restart');
 });
+
+test('new ideas target 2 parks and existing ideas accept 3 through 5', () => {
+  const feel = parks => ({ parkAt: [0, parks, 0], waiting: [0, 0, 0, 0], lostGames: 0 });
+  const newIdea = { card: { finishProfile: 'new-idea' } };
+  const existing = { card: { finishProfile: 'existing-idea' } };
+  assert.deepEqual(P.targetFor('new'), { parks: 2, parksMax: 2, max3: .1 });
+  assert.deepEqual(P.targetFor('existing'), { parks: 3, parksMax: 5, max3: .25 });
+  for (const [parks, accepted] of [[1.9, false], [2, true], [2.1, false]]) {
+    assert.equal(P.check(newIdea, feel(parks), {}), accepted, 'new at ' + parks);
+  }
+  for (const [parks, accepted] of [[2.9, false], [3, true], [4, true], [5, true], [5.1, false]]) {
+    assert.equal(P.check(existing, feel(parks), {}), accepted, 'existing at ' + parks);
+  }
+});
+
+test('pressure tuning resolves new and existing defaults and explicit bounds', () => {
+  const args = values => (key, other) => values[key] ?? other;
+  assert.deepEqual(P.tuningTarget(args({}), 'existing'), { parks: 3, parksMax: 5, max3: .25 });
+  assert.deepEqual(P.tuningTarget(args({ idea: 'new' }), 'existing'), { parks: 2, parksMax: 2, max3: .1 });
+  assert.deepEqual(P.tuningTarget(args({ parks: '7', 'parks-max': '8', max3: '.2' }), 'existing'),
+    { parks: 7, parksMax: 8, max3: .2 });
+});

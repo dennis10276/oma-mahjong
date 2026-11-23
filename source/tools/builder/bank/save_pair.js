@@ -88,7 +88,7 @@ function one(file, out) {
     const g = E.game(structuredClone(x)); if (E.winnable(g, E.step(g, E.step(g, E.start(g), sp.free[0]), sp.free[1]), { nodes: 150000, ms: 1500 }).result !== 'lose') return { ok: false, why: 'baitNotLost' };
     return C.prove(rt.design, k); };
   const freeze = [...new Set([...C.freeze, ...d.obst.keys, ...sp.free, sp.inTheDig, sp.buried])];
-  const tuned = tuneFeel(d, { target: { parks: +arg('parks', 1.5), parksMax: +arg('parks-max', 3.2), max3: 0.12 }, ms: +arg('tail-ms', 60000), seed: 1, freeze, validate });
+  const tuned = tuneFeel(d, { target: require('../chained_finish_profiles.js').tuningTarget(arg, 'existing'), tolerance: 0, ms: +arg('tail-ms', 60000), seed: 1, freeze, validate });
   const fin = tuned.ok ? tuned.design : d, card = { ...(j.card || C.card0 || {}), wrongIdea: [...new Set([...((j.card && j.card.wrongIdea) || (C.card0 ? C.card0.trap.baits.map(b => b.name) : [])), 'savePair'])].sort(), savePair: sp, feel: tuned.after };
   card.trap = { ...(card.trap || {}), see: ((card.trap && card.trap.see) || card.see || '') + ' And: the free pair is not free: the same picture lies in the dig, so keep one of the two for it.' };
   fs.writeFileSync(path.join(out, id.replace(/-s(\d+)-/, '-s$1sp-') + '.json'), JSON.stringify({ ...j, design: fin, card, savedFrom: id }));
