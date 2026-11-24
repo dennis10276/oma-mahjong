@@ -122,3 +122,25 @@ test('builds a key-directed opening with a trapped release on the opposite shelf
   assert.equal(forcesReleaseAfterClock({ ...design, clock: { ...design.clock, n: 18 } }, finishRelease), false);
   assert.ok(E.replay(design, design.solution).ok);
 });
+
+test('builds the same visible finish pair with a win and a delayed loss after spending a slot', () => {
+  const { design, finishContext, finishPressure, independentFinishPressure, fail } = buildBoard(
+    { mode: 'earnedTray', variant: 'pair-context', seed: 11 }, { tries: 1 },
+  );
+  assert.ok(design, fail);
+  assert.ok(E.replay(design, design.solution).ok);
+  assert.equal(finishContext.before.outcome, 'win');
+  assert.equal(finishContext.after.outcome, 'lose');
+  assert.equal(finishContext.after.at, finishContext.before.at + 1);
+  assert.ok(finishContext.after.runway >= 5);
+  assert.equal(finishContext.sidePair.length, 2);
+  const { auditPairContext } = require('../tools/builder/bank/choice_checks');
+  const prefix = design.solution.slice(0, finishContext.before.at);
+  assert.equal(auditPairContext(design, prefix, finishContext.pair, finishContext.park,
+    { roofs: finishContext.pair, hidden: [] }), null);
+  assert.equal(finishContext.coveredPair.length, 2);
+  assert.ok(finishContext.coveredPair.every(tile => design.down.includes(tile)));
+  assert.deepEqual(finishContext.sideRoute.filter(move => move.pair).map(move => move.pair),
+    finishContext.pair.map((tile, i) => [tile, finishContext.coveredPair[i]]));
+  assert.ok([finishPressure, independentFinishPressure].every(p => p >= 3 && p <= 5));
+});

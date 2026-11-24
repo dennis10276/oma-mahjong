@@ -12,16 +12,18 @@ const { expert } = require('./feel');
 const { tuneFeel } = require('./feel_retune');
 const { findThawTrap } = require('./thaw_trap');
 const {
-  auditRefundFork, auditTrayRelease, forcesReleaseAfterClock, findOpeningSweep, findOpeningChoices, findFinishPair,
+  auditRefundFork, auditTrayRelease, forcesReleaseAfterClock, auditPairContext,
+  findOpeningSweep, findOpeningChoices, findFinishPair,
 } = require('./choice_checks');
 const { supportedAt } = require('./detower');
 const { measure } = require('../footprint');
-const variants = ['clock', 'keys', 'reserve', 'competing', 'refund', 'release', 'release-roofs', 'release-keys'];
+const variants = ['clock', 'keys', 'reserve', 'competing', 'refund', 'release', 'release-roofs', 'release-keys', 'pair-context'];
 
 function recipe(variant) {
   const keyRelease = variant === 'release-keys';
   const keysFirst = variant === 'keys' || variant === 'competing' || keyRelease;
   const refund = variant === 'refund';
+  const pairContext = variant === 'pair-context';
   const roofs = variant === 'release-roofs';
   const hasRelease = variant === 'release' || roofs || keyRelease;
   const tiles = [];
@@ -95,7 +97,8 @@ function recipe(variant) {
     down: .23,
     pairs,
   };
-  if (variant === 'reserve' || refund) {
+  let context;
+  if (variant === 'reserve' || refund || pairContext) {
     const upperRoof = at(8, 1, 2), upperFace = at(9, 1, 1), upperRefund = at(10, 2, 0);
     const lowerRoof = at(8, 9, 2), lowerFace = at(9, 9, 1), lowerRefund = at(10, 8, 0);
     const openUpper = at(3, 3, 1), openLower = at(3, 9, 1);
@@ -107,6 +110,25 @@ function recipe(variant) {
     spec.tail = [upperRoof, [openUpper, upperFace], upperRefund, lowerRoof, [openLower, lowerFace], lowerRefund];
     spec.peek = true;
     spec.downTiles = [upperFace, lowerFace];
+    if (pairContext) {
+      const handoff = at(1, 1, 1);
+      const sideRefund = at(10, 0, 0);
+      const pair = [openUpper, openLower];
+      pairs.lock[1] = handoff;
+      pairs.leftIce[1] = at(10, 10, 0);
+      // The covered twins need both roofs out. Each refund stays behind the
+      // other roof's twin, so one open lane alone cannot return a slot.
+      pairs.upperRoof.push(lowerRefund);
+      pairs.lowerRoof.push(upperRefund);
+      spec.tail = [handoff, ...pair, upperRoof, lowerRoof, [upperFace, lowerFace], lowerRefund, upperRefund];
+      const prefix = [...route, handoff];
+      const fixed = [...Object.values(pairs).flat(), sideRefund];
+      const offers = releaseOffers(tiles, spec, prefix, fixed, [], false, (i, drawn) => {
+        const [x, y] = tiles[i], [sx, sy] = tiles[sideRefund];
+        return drawn[i].picture && Math.max(Math.abs(x - sx), Math.abs(y - sy)) > 2;
+      });
+      context = { prefix, pair, sideRefund, offers, roofs: [upperRoof, lowerRoof], hidden: [upperFace, lowerFace] };
+    }
   }
   let release;
   if (keyRelease) {
@@ -139,12 +161,12 @@ function recipe(variant) {
     release.offers = releaseOffers(tiles, spec, release.prefix, release.route, release.belowMate, release.roofs);
   }
   const fork = refund ? { prefix: opening.slice(0, -1), intended: rightIce, decoy: at(1, 9, 1) } : null;
-  return { tiles, spec, earlyKey: variant === 'keys' ? [...opening, nearKey] : null, fork, release };
+  return { tiles, spec, earlyKey: variant === 'keys' ? [...opening, nearKey] : null, fork, release, context };
 }
 
 // Select real pairs that a wrong park can open. Tile ids stand in for unfilled
 // pictures so this pass depends on the pile and its fixed route, not the deal.
-function releaseOffers(tiles, spec, prefix, route, belowMate, roofs) {
+function releaseOffers(tiles, spec, prefix, route, belowMate, roofs, eligiblePark = () => true) {
   const faces = tiles.map((_, i) => i);
   for (const [first, mate] of Object.values(spec.pairs)) {
     if (mate !== undefined) faces[mate] = faces[first];
@@ -158,13 +180,20 @@ function releaseOffers(tiles, spec, prefix, route, belowMate, roofs) {
   const used = new Set([...prefix, ...route, ...belowMate]);
   const available = free.filter(i => !used.has(i));
   const farEnough = (a, b) => Math.max(Math.abs(tiles[a][0] - tiles[b][0]), Math.abs(tiles[a][1] - tiles[b][1])) > 2;
-  const parks = roofs ? available.filter(i => tiles[i][2] === 2) : available;
+  const parks = available.filter(i => (!roofs || tiles[i][2] === 2) && eligiblePark(i, drawn));
   return parks.flatMap(park => {
     const opened = E.legal(game, E.step(game, state, park)).filter(i =>
       Number.isInteger(i) && !used.has(i) && !free.includes(i) && drawn[i].picture);
     return opened.flatMap(tile => available.filter(i => i !== park && drawn[i].picture && farEnough(tile, i))
       .map(mate => ({ park, pair: [tile, mate] })));
   });
+}
+
+function arrangePairContext(spec, context, seed) {
+  const bait = context.offers[seed % context.offers.length];
+  if (!bait) return null;
+  const pairs = { ...spec.pairs, sideCover: [bait.park, context.sideRefund], sidePair: bait.pair };
+  return { ...spec, pairs, pressure: 1.4 + (seed % 6) * .3 };
 }
 
 function arrangeRelease(spec, { route, belowMate, offers }, seed) {
@@ -246,7 +275,7 @@ function build({ variant = 'clock', seed = 1, tries = 200 } = {}) {
   if (!Number.isSafeInteger(seed) || seed < 1 || !Number.isSafeInteger(tries) || tries < 1
       || !Number.isSafeInteger(seed + tries)) throw new Error('Expected a positive seed and try count');
 
-  const { tiles, spec, earlyKey, fork, release } = recipe(variant);
+  const { tiles, spec, earlyKey, fork, release, context } = recipe(variant);
   const { tilePx } = measure(tiles, { minimum: 60 });
   if (tilePx < 60 || !tiles.every((tile, i) => supportedAt(tiles, tile, i))) return { fail: 'layout' };
   const finish = targetFor('existing');
@@ -256,21 +285,23 @@ function build({ variant = 'clock', seed = 1, tries = 200 } = {}) {
   const spare = keyRelease ? 0 : 1;
   for (let deal = seed; deal < seed + tries; deal++) {
     const pressure = reserve ? 2 + (deal % 5) * .25 : 1.2 + (deal % 4) * .2;
-    const dealSpec = release ? arrangeRelease(spec, release, deal) : { ...spec, pressure };
+    const dealSpec = context ? arrangePairContext(spec, context, deal)
+      : release ? arrangeRelease(spec, release, deal) : { ...spec, pressure };
     if (!dealSpec) continue;
     let { design, fail } = H.fill(dealSpec, tiles, deal);
     if (!design) {
-      if (release) continue;
+      if (release || context) continue;
       return { fail };
     }
-    if (release) {
+    if (release || context) {
       design = separateRelease(design, dealSpec, deal);
       if (!design) continue;
     } else if (!closeTwins(design).meets) continue;
 
     design.clock.n = spec.route.length + spare;
     const timing = clockNeed(design, spec.route.length);
-    if (!timing.exact || timing.k == null || timing.k < 10 || (release && timing.k !== spec.route.length)) continue;
+    if (!timing.exact || timing.k == null || timing.k < 10
+        || ((release || context) && timing.k !== spec.route.length)) continue;
     design.clock.n = timing.k + spare;
     if (!E.replay(design, design.solution).ok) continue;
 
@@ -279,6 +310,8 @@ function build({ variant = 'clock', seed = 1, tries = 200 } = {}) {
     if (earlyKey && !strandsWithEarlyKey(design, earlyKey)) continue;
     let finishPair = reserve ? findFinishPair(design) : null;
     if (reserve && !finiteFinish(finishPair)) continue;
+    const finishContext = context && auditPairContext(design, context.prefix, context.pair, dealSpec.pairs.sideCover[0], context);
+    if (context && !finishContext) continue;
     const finishRelease = release && auditTrayRelease(design, release.prefix, release.route);
     if (release) {
       const decoys = finishRelease?.decoys.filter(move => !release.roofs || tiles[move.take][2] === 2);
@@ -327,6 +360,7 @@ function build({ variant = 'clock', seed = 1, tries = 200 } = {}) {
       variant, seed: deal, minimum: timing.k, proof, secondWrongTurn: earlyKey, finishPair, openingChoices,
       ...(refundFork ? { refundFork } : {}),
       ...(finishRelease ? { finishRelease } : {}),
+      ...(finishContext ? { finishContext } : {}),
       finishPressure: pressureParks(feel), independentFinishPressure: pressureParks(independent), design,
     };
   }

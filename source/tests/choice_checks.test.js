@@ -27,6 +27,23 @@ test('finds a winning clock arrival with a visible pair that becomes a delayed l
   assert.equal(findFinishPair(easy), null);
 });
 
+test('distinguishes the first take from completing the same visible finish pair', () => {
+  const { auditFinishMatch } = require('../tools/builder/bank/choice_checks');
+  const pair = [62, 52];
+  const arrival = auditFinishMatch(live324, live324.solution.slice(0, 12), pair);
+  const later = auditFinishMatch(live324, live324.solution.slice(0, 16), pair);
+  assert.equal(arrival?.kind, 'pair');
+  assert.equal(arrival.first, 'lose');
+  assert.equal(arrival.outcome, 'lose');
+  assert.equal(later?.first, 'win');
+  assert.equal(later.outcome, 'lose');
+  assert.ok(later.runway >= 5);
+  const refund = auditFinishMatch(live324, [...live324.solution.slice(0, 16), 62], [52, 62]);
+  assert.equal(refund?.kind, 'refund');
+  assert.equal(refund.outcome, 'lose');
+  assert.equal(auditFinishMatch(live324, live324.solution.slice(0, 16), [62, 62]), null);
+});
+
 test('distinguishes two opening goals seen in the live 327 replays', () => {
   const choices = findOpeningChoices(live327);
   const key = choices.find(choice => choice.tile === 71);

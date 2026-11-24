@@ -131,17 +131,80 @@ function openedPair(game, state, free, visible) {
   return null;
 }
 
-function auditTrayRelease(design, prefix, route) {
-  if (route.length !== 3 || !route.every(Number.isInteger)) return null;
-  const game = E.game(design);
-  if (!game.clock) return null;
-  let state = E.start(game);
+function replayPrefix(game, prefix, initial = E.start(game)) {
+  let state = initial;
   for (const take of prefix) {
     if (!legalTake(E.legal(game, state), take)) return null;
     state = E.step(game, state, take);
     if (!state) return null;
   }
-  if (!state.clockTaken || state.tray.length !== 1) return null;
+  return state;
+}
+
+function finishMatchAt(game, state, [tile, mate]) {
+  if (!state?.clockTaken || tile === mate || game.faces[tile] !== game.faces[mate]) return null;
+  const free = singles(game, state);
+  const visible = O.visibility(game, state);
+  if (!free.includes(tile) || !visible[tile].picture) return null;
+  const refund = state.tray.includes(mate);
+  if (!refund && (!free.includes(mate) || !visible[mate].picture || state.tray.length >= E.SLOTS - 1
+      || state.tray.some(i => game.faces[i] === game.faces[tile]))) return null;
+  const first = E.step(game, state, tile);
+  const matched = refund ? first : E.step(game, first, mate);
+  const outcome = prove(game, matched).result;
+  const report = { at: state.moves, waiting: state.tray.slice(), kind: refund ? 'refund' : 'pair',
+    first: refund ? outcome : prove(game, first).result, outcome };
+  if (outcome === 'lose') {
+    const { depth, exact } = E.longest(game, matched, runwaySurvey, 250000);
+    return { ...report, runway: depth, runwayExact: exact && depth < runwaySurvey };
+  }
+  return report;
+}
+
+function auditFinishMatch(design, prefix, pair) {
+  const game = E.game(design);
+  if (!game.clock) return null;
+  const state = replayPrefix(game, prefix);
+  if (!state?.clockTaken || prove(game, state).result !== 'win') return null;
+  return finishMatchAt(game, state, pair);
+}
+
+function auditPairContext(design, prefix, pair, park, { roofs, hidden, sideRefund } = {}) {
+  const game = E.game(design);
+  if (!game.clock || pair.includes(park) || roofs?.length !== 2 || hidden?.length !== 2) return null;
+  if (!hidden.every((tile, i) => game.down[tile] && game.faces[tile] === game.faces[pair[0]]
+      && game.nb.above[tile].includes(roofs[i]))) return null;
+  const state = replayPrefix(game, prefix);
+  if (!state?.clockTaken || state.tray.length !== 1) return null;
+  const free = singles(game, state);
+  const visible = O.visibility(game, state);
+  if (!free.includes(park) || !visible[park].picture) return null;
+  const changed = E.step(game, state, park);
+  if (changed.tray.length !== 2) return null;
+  const sidePair = openedPair(game, changed, free, visible);
+  if (!sidePair || sidePair.some(tile => pair.includes(tile))) return null;
+  const sideRoute = [...sidePair, roofs[0], { pair: [pair[0], hidden[0]] }, sideRefund,
+    roofs[1], { pair: [pair[1], hidden[1]] }];
+  const sideFinish = replayPrefix(game, sideRoute, changed);
+  if (!sideFinish || prove(game, sideFinish).result !== 'win') return null;
+
+  const before = finishMatchAt(game, state, pair);
+  const after = finishMatchAt(game, changed, pair);
+  if (before?.kind !== 'pair' || before.outcome !== 'win' || after?.kind !== 'pair' || after.outcome !== 'lose'
+      || [before.first, after.first].includes('unknown') || after.runway < minimumRunway) return null;
+  const full = replayPrefix(game, [...pair, ...roofs], state);
+  if (full?.tray.length !== E.SLOTS - 1) return null;
+  const peeked = replayPrefix(game, [{ pair: hidden }], full);
+  if (!peeked || prove(game, peeked).result !== 'win') return null;
+  return { pair, park, sidePair, sideRoute, roofs, coveredPair: hidden, sideRefund, before, after };
+}
+
+function auditTrayRelease(design, prefix, route) {
+  if (route.length !== 3 || !route.every(Number.isInteger)) return null;
+  const game = E.game(design);
+  if (!game.clock) return null;
+  const state = replayPrefix(game, prefix);
+  if (!state?.clockTaken || state.tray.length !== 1) return null;
   const [waiting] = state.tray;
   const mate = route[2];
   const matching = game.faceTiles.get(game.faces[waiting]).filter(i => state.alive[i]);
@@ -287,5 +350,5 @@ function findFinishPair(design) {
 
 module.exports = {
   auditOpeningTrace, auditRefundFork, auditTrayRelease, forcesReleaseAfterClock,
-  findOpeningSweep, findOpeningChoices, findFinishPair,
+  auditFinishMatch, auditPairContext, findOpeningSweep, findOpeningChoices, findFinishPair,
 };
