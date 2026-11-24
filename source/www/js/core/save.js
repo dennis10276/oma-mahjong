@@ -1,4 +1,4 @@
-// uses: rules, core/*, board, family/week, family/presence, rewards/*
+// uses: features/shop/shop, rules, core/*, board, family/week, family/presence, rewards/*
 /* Oma's Mahjong — core/save: the saved progress (S) and its counters. */
 'use strict';
 
@@ -6,20 +6,13 @@ const STORE = 'omamj.v1', CUR = 'omamj.cur';
 const APP_VERSION = '1.79';
 // (the one-time wipe of 2026-10-07 is gone from the code; its key omamj.reset stays in old saves and is ignored)
 
-// the saved progress; every list and counter exists from the start, so code never has to check
-const defaults = () => ({
-  level: 1, stars: {}, daily: {}, theme: 'classic', bg: 'jade', frame: 'none',
-  sfx: true, music: true, vibrate: true, highlight: true, nums: true,
-  seenIntro: false, sunSeen: false, seenSp: {},
-  matches: 0, bestCombo: 0, bestStreak: 0, winStreak: 0, bonusStars: 0, bonusPts: 0, weekWins: 0,
-  stats: {}, trophies: {}, att: {}, fails: {}, czLoss: {}, proSeen: {}, lvlPts: {}, dayPts: {},
-  heartsSent: {}, heartsSeen: {}, heartsOut: {}, pendingHearts: [],
-});
-let S;
-try { S = Object.assign(defaults(), JSON.parse(localStorage.getItem(STORE) || '{}')); } catch (e) { S = defaults(); }
-delete S.contrast;   // drop the retired preference from older saved games
+const defaults = ShopEconomy.econDefaults;
+let savedProgress;
+try { savedProgress = localStorage.getItem(STORE); } catch { }
+const progress = ShopEconomy.loadAndMigrateSave(savedProgress);
+let S = progress.S;
 const save = () => { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) { } };
-
+if (progress.migrated) save();
 
 const totalStars = () => sum(S.stars) + sum(S.daily) + S.bonusStars;
 

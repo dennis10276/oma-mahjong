@@ -23,6 +23,8 @@ Files in the first group are read by Node tools or the dashboard by path, so the
 - `telemetry.js` play log for the dashboard
 
 ## features/ (one folder per part; a part's screen is in its `screen.js`)
+- `shop/catalog.js` coin prices, legacy unlock IDs and economy rules
+- `shop/shop.js` wallet, one-time save migration, and shop actions (both scripts load before `core/save.js`)
 - `intro.js` the intro films that explain a mechanic
 - `win.js` the win screen and the rewards after it
 - `tips/tips.js` the "Wist je dat?" tips on the home screen

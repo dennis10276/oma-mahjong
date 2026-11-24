@@ -36,6 +36,14 @@ function win() {
   if (G.mode === 'level') S.lvlPts[G.level] = Math.max(S.lvlPts[G.level] || 0, G.score);
   else S.dayPts[G.date] = Math.max(S.dayPts[G.date] || 0, G.score);
   const ptsAfter = myPoints();
+  if (!G.film) {
+    const today = todayKey();
+    const prevStars = G.mode === 'level' ? S.stars[G.level] : S.daily[G.date];
+    const fresh = G.mode === 'level' ? G.level === S.level && !prevStars : G.date === today && !prevStars;
+    ShopEconomy.rewardWin(S, {
+      mode: G.mode, level: G.level, date: G.date, today, fresh, stars, prevStars, boardCoins: G.boardCoins,
+    });
+  }
   if (G.mode === 'level') {
     S.stars[G.level] = Math.max(S.stars[G.level] || 0, stars);
     if (G.level === S.level) { S.level++; notePassedBaseline(false); }

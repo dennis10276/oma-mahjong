@@ -38,6 +38,7 @@ function taskProgress(id, amount = 1, max = false) {
     if (t.prog < t.goal) return;
     t.prog = t.goal; t.done = true;
     giveBonus(1); bumpStat('tasks');
+    ShopEconomy.addCoins(S, SHOP_RULES.coins.task);
     setTimeout(() => { toast(tx('taskDone', taskType(t.id).text(t.goal)), 2800); Sound.star(2); }, 600);
     if (T.list.every(x => x.done)) setTimeout(() => { if (!ensureTasks().chest) toast(tx('allTasksDone'), 3200); }, 3600);
   });
