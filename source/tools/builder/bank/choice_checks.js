@@ -2,6 +2,7 @@
 
 const E = require('../engine');
 const O = require('../loop/obvious');
+const D = require('../loop/detour');
 
 const openingLength = 5;
 const minimumRunway = 5;
@@ -9,6 +10,113 @@ const runwaySurvey = 30;
 const finishWindow = 14;
 const prove = (game, state) => E.winnable(game, state, { nodes: 60000, ms: 450 });
 const singles = (game, state) => E.legal(game, state).filter(Number.isInteger);
+const legalTake = (legal, take) => Number.isInteger(take) ? legal.includes(take)
+  : Array.isArray(take?.pair) && take.pair.length === 2 && legal.some(move => move.pair?.every(i => take.pair.includes(i)));
+const frozen = (game, state, tile) => game.iceH[tile] > 0
+  && game.iceNb[tile].filter(i => !state.alive[i]).length < game.iceH[tile];
+
+// Look at the physical effect of a take, including a fourth take that the
+// tray cannot hold. Key covers count when lifting them reveals the badge.
+function openingTargets(game, state, tile, previous) {
+  if (game.down[tile]) return [];
+  const clock = game.clock.i;
+  const goals = [];
+  if (tile === clock || game.nb.above[clock].includes(tile)) goals.push({ kind: 'clock', tile: clock });
+  const visible = O.visibility(game, state);
+  if (game.isKey[tile] && visible[tile].role) goals.push({ kind: 'key', tile });
+  // The badge disappears on thaw. Only count a thaw on the last visible action.
+  if (previous && visible[tile].role && frozen(game, previous, tile) && O.visibility(game, previous)[tile].role) {
+    goals.push({ kind: 'ice', tile });
+  }
+  for (const ice of game.iceRev[tile]) {
+    if (state.alive[ice] && visible[ice].role && frozen(game, state, ice)) {
+      goals.push({ kind: 'ice', tile: ice });
+    }
+  }
+  const coveredKeys = game.below[tile].filter(i => state.alive[i] && game.isKey[i]);
+  if (coveredKeys.length) {
+    const after = { ...state, alive: state.alive.slice() };
+    after.alive[tile] = 0;
+    const exposed = O.visibility(game, after);
+    for (const key of coveredKeys) {
+      if (exposed[key].role && (!visible[key].role || game.nb.above[key].every(i => !after.alive[i]))) {
+        goals.push({ kind: 'key', tile: key });
+      }
+    }
+  }
+  return goals;
+}
+
+function auditOpeningTrace(design, actions) {
+  const game = E.game(design);
+  if (!game.clock) return { result: 'no-clock' };
+  let state = E.start(game);
+  let previous;
+  const fullTray = [];
+  for (const take of actions) {
+    if (state.moves >= game.clock.n) return { result: 'timeout', moves: state.moves, fullTray };
+    const legal = E.legal(game, state);
+    if (!legalTake(legal, take)) return { result: 'illegal', moves: state.moves, fullTray };
+    if (state.tray.length === E.SLOTS - 1) {
+      const waiting = new Set(state.tray.map(i => game.faces[i]));
+      const faceUpMatches = legal.filter(i => Number.isInteger(i) && !game.down[i] && waiting.has(game.faces[i]));
+      fullTray.push({ at: state.moves, take, faceUpMatches });
+    }
+    const next = E.step(game, state, take);
+    if (!next) {
+      return {
+        result: 'overflow', moves: state.moves, fullTray,
+        overflow: { take, from: prove(game, state).result, goals: openingTargets(game, state, take, previous) },
+      };
+    }
+    previous = state;
+    state = next;
+    if (state.clockTaken) {
+      return { result: 'clock', moves: state.moves, fullTray, clockContinuation: prove(game, state).result };
+    }
+  }
+  return { result: state.moves >= game.clock.n ? 'timeout' : 'open', moves: state.moves, fullTray };
+}
+
+function auditRefundFork(design, prefix, intended, decoy) {
+  const game = E.game(design);
+  if (!game.clock || intended === decoy || game.faces[intended] !== game.faces[decoy]) return null;
+  let state = E.start(game);
+  let previous;
+  for (const take of prefix) {
+    if (!legalTake(E.legal(game, state), take)) return null;
+    previous = state;
+    state = E.step(game, state, take);
+    if (!state || state.clockTaken) return null;
+  }
+  if (state.tray.length !== E.SLOTS - 1) return null;
+  const free = singles(game, state);
+  if (!free.includes(intended) || !free.includes(decoy)) return null;
+  const visible = O.visibility(game, state);
+  if (![intended, decoy].every(i => visible[i].picture)) return null;
+  const waiting = state.tray.find(i => game.faces[i] === game.faces[intended]);
+  if (waiting === undefined) return null;
+
+  const intendedTargets = openingTargets(game, state, intended, previous);
+  const decoyTargets = openingTargets(game, state, decoy, previous);
+  const distinct = (targets, other) => targets.find(goal => other.every(alt => alt.tile !== goal.tile));
+  const intendedGoal = distinct(intendedTargets, decoyTargets);
+  const decoyGoal = distinct(decoyTargets, intendedTargets);
+  if (!intendedGoal || !decoyGoal) return null;
+
+  const right = E.step(game, state, intended);
+  const wrong = E.step(game, state, decoy);
+  const proof = D.work(450000, 4000);
+  if (!right || !wrong || proof.win(game, right, 120000).result !== 'win'
+      || proof.win(game, wrong, 120000).result !== 'lose') return null;
+  const runway = E.longest(game, wrong, minimumRunway, 12000).depth;
+  if (runway < minimumRunway) return null;
+  const time = D.clockNeed(D.clockGames(design), wrong, {
+    upTo: game.clock.n + 8, nodes: 75000, w: proof,
+  });
+  if (!time.exact || time.k === null || time.k <= game.clock.n) return null;
+  return { at: state.moves, waiting, intended, decoy, intendedGoal, decoyGoal, decoyClock: time.k, runway };
+}
 
 // Follow only causal, visible takes. A sequence of unrelated nearby tiles or
 // a sequence that already loses is not a winning shortcut.
@@ -106,4 +214,4 @@ function findFinishPair(design) {
   return null;
 }
 
-module.exports = { findOpeningSweep, findOpeningChoices, findFinishPair };
+module.exports = { auditOpeningTrace, auditRefundFork, findOpeningSweep, findOpeningChoices, findFinishPair };

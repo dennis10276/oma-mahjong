@@ -45,3 +45,23 @@ test('builds separate tempting key and clock goals like the live opening traces'
   assert.ok(result.openingChoices.some(choice => choice.goal === 'clock' && choice.runway >= 5));
   assert.ok(result.independentFinishPressure >= 3 && result.independentFinishPressure <= 5);
 });
+
+test('builds a supported shelf with rival matches that help different ice goals', () => {
+  const result = buildBoard({ mode: 'earnedTray', variant: 'refund', seed: 102 }, { tries: 1 });
+  assert.ok(result.design, result.fail);
+  assert.equal(result.design.tiles.length, 72);
+  assert.ok(E.replay(result.design, result.design.solution).ok);
+  const { prefix, intendedGoal, decoyGoal, decoyClock, runway } = result.refundFork;
+  assert.equal(prefix.length, 5);
+  assert.equal(intendedGoal.kind, 'ice');
+  assert.equal(decoyGoal.kind, 'ice');
+  assert.notEqual(intendedGoal.tile, decoyGoal.tile);
+  assert.ok(decoyClock > result.design.clock.n && runway >= 5);
+  assert.ok(result.finishPair?.runway >= 5);
+  assert.ok(result.independentFinishPressure >= 3 && result.independentFinishPressure <= 5);
+  const { auditRefundFork } = require('../tools/builder/bank/choice_checks');
+  const { design } = result;
+  const { intended, decoy } = result.refundFork;
+  const stale = { ...design, obst: { ...design.obst, ice: { ...design.obst.ice, [intended]: 1 } } };
+  assert.deepEqual(auditRefundFork(stale, prefix, intended, decoy)?.intendedGoal, { kind: 'key', tile: 23 });
+});

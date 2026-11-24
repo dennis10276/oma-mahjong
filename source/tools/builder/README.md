@@ -44,14 +44,18 @@ clock check. `{strict:true}` retains the older single-tile rules for comparison.
 The independent review and current limits are in `analysis/builder/codex-review.md`.
 
 The earned-tray recipe deals new boards around two ice fronts. Use
-`node source/tools/builder/bank/earned_tray.js <clock|keys|reserve|competing> <seed> <output.json> [tries]`.
+`node source/tools/builder/bank/earned_tray.js <clock|keys|reserve|competing|refund> <seed> <output.json> [tries]`.
 It requires a complete win and a competing local thaw that fills the tray without
 a way out, even with the clock relaxed. The `keys` variant also proves that taking
 the first exposed key can strand the tray. The `reserve` variant checks a
 visible pair that can be played after the clock but makes the board unsolvable.
 The `competing` variant requires a visible key and a separate clock-directed
 opening that can both be played and make the board unwinnable.
-All four screen for a winning opening sweep and verify finish pressure on two
+The `refund` variant builds a shelf layout. With a full tray, either matching
+copy releases the same slot and helps a different ice goal. The certificate
+records the earliest winning clock for the decoy and a playable continuation.
+It rechecks the finish after rewiring the shared picture.
+All variants screen for a winning opening sweep and verify finish pressure on two
 samples. The main builder exposes these recipes through
 `build({ mode: 'earnedTray', variant: 'reserve', seed: 454 }, { tries: 1 })`.
 Mixed-chain builds can request the local thaw check with
