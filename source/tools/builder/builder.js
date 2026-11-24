@@ -598,36 +598,49 @@ function trayOnWay(d, flat) {
   return { max, three, luck, firstTwo, firstOne };
 }
 
-/* Forced tray pressure: can the clock be taken within its n moves while never more than `limit` tiles wait (peek
-   pairs need no slot; the rest of the board is ignored, so a 'no' is a proof that every way to the clock in time
-   fills the tray beyond `limit`)? -> 'no' | 'yes' | 'unknown' */
-function canReachWithin(d, limit, nodes = 200000) {
-  const g = E.game(d), n = d.faces.length, F = d.faces, ck = d.clock.i, init = new Uint8Array(n).fill(1);
+/* Can the clock be taken in time without parking more than `limit` tiles at once?
+   requireWin also checks that the arrival can be finished under the normal tray rules. */
+function canReachWithin(d, limit, nodes = 200000, { requireWin = false } = {}) {
+  const game = E.game(d);
+  // Keep the proof budget reproducible across calls while sharing proofs among arrivals here.
+  const g = requireWin ? { ...game, dead: new Set(), win: new Map() } : game;
+  const n = d.faces.length, F = d.faces, ck = d.clock.i, init = new Uint8Array(n).fill(1);
   const rules = g.rules, can = (i, al) => al[i] && (rules ? L.takeable(i, al, g.nb, rules, init) : L.isFree(i, al, g.nb));
-  const lb = g.lb, seen = new Set(); let count = 0;
+  const lb = g.lb, seen = new Set(); let count = 0, unproven = false;
   const rec = (al, tray, m) => {
     if (++count > nodes) throw BUDGETX;
-    if (m >= d.clock.n) return false;
-    if (m + lb(al) > d.clock.n) return false;
-    const key = al.join('') + '|' + tray.slice().sort((a, b) => a - b).join(',');
+    const clockTaken = !al[ck];
+    if (!clockTaken && (m >= d.clock.n || m + lb(al) > d.clock.n)) return false;
+    const key = al.join('') + '|' + tray.map(i => F[i]).sort((a, b) => a - b).join(',');
     if (seen.has(key)) return false; seen.add(key);
+
+    if (clockTaken) {
+      // Leave room to examine other arrivals when one finish is expensive to prove.
+      const finish = E.winnable(g, { alive: al, tray, moves: m, clockTaken }, {
+        nodes: Math.min(6000, nodes - count), ms: Infinity,
+      });
+      count += finish.nodes;
+      if (finish.result === 'unknown') unproven = true;
+      return finish.result === 'win';
+    }
+
     const free = []; for (let i = 0; i < n; i++) if (can(i, al)) free.push(i);
     for (const i of free) {
-      const q = tray.indexOf(F[i]);
+      const q = tray.findIndex(j => F[j] === F[i]);
       if (q < 0 && tray.length >= limit) continue;
-      if (i === ck) return m + 1 <= d.clock.n;
+      if (i === ck && !requireWin) return true;
       const a2 = al.slice(); a2[i] = 0;
-      if (rec(a2, q >= 0 ? tray.filter((_, k) => k !== q) : tray.concat(F[i]), m + 1)) return true;
+      if (rec(a2, q >= 0 ? tray.filter((_, k) => k !== q) : tray.concat(i), m + 1)) return true;
     }
-    for (const i of free) for (const j of free) if (i < j && F[i] === F[j] && (g.down[i] || g.down[j]) && !tray.includes(F[i])) {
-      if (i === ck || j === ck) return m + 1 <= d.clock.n; // one action, checked after both removals
+    for (const i of free) for (const j of free) if (i < j && F[i] === F[j] && (g.down[i] || g.down[j]) && !tray.some(k => F[k] === F[i])) {
+      if ((i === ck || j === ck) && !requireWin) return true;
       const a2 = al.slice(); a2[i] = 0; a2[j] = 0;
       if (rec(a2, tray, m + 2)) return true;
     }
     return false;
   };
   let out;
-  try { out = rec(init.slice(), [], 0) ? 'yes' : 'no'; } catch (e) { if (e === BUDGETX) out = 'unknown'; else throw e; }
+  try { out = rec(init.slice(), [], 0) ? 'yes' : unproven ? 'unknown' : 'no'; } catch (e) { if (e === BUDGETX) out = 'unknown'; else throw e; }
   spend(count);
   return out;
 }
@@ -638,6 +651,13 @@ function fullTrayFailure(design, nodes) {
   const result = canReachWithin(design, 2, nodes);
   if (result === 'no') return null;
   return result === 'yes' ? 'lowPressureClockRoute' : 'fullTrayUnproven';
+}
+
+// Earned-tray boards can let a tempting low-tray route take the clock and lose later.
+function winningFullTrayFailure(design, nodes) {
+  const result = canReachWithin(design, 2, nodes, { requireWin: true });
+  if (result === 'no') return null;
+  return result === 'yes' ? 'lowPressureWinningRoute' : 'fullTrayUnproven';
 }
 
 // one try at pictures + face-down tiles on a fixed dig; forced: the quick proof with the clock at |P| + spare
@@ -918,4 +938,4 @@ function fits(storyId, tiles, brief = {}) {
   if (plain) { if (!FITS.has(tiles)) FITS.set(tiles, {}); FITS.get(tiles)[storyId] = ok; }
   return ok;
 }
-module.exports = { build, fits, context, placeRoles, planDig, needSet, placePictures, chooseHolders, coveredDuringDig, necessary, canReachWithin, fullTrayFailure, trayOnWay, LAYOUTS, STORIES };
+module.exports = { build, fits, context, placeRoles, planDig, needSet, placePictures, chooseHolders, coveredDuringDig, necessary, canReachWithin, fullTrayFailure, winningFullTrayFailure, trayOnWay, LAYOUTS, STORIES };

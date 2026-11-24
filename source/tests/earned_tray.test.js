@@ -4,7 +4,7 @@ const assert = require('node:assert/strict');
 const test = require('node:test');
 const { build } = require('../tools/builder/bank/earned_tray');
 const E = require('../tools/builder/engine');
-const { build: buildBoard, fullTrayFailure } = require('../tools/builder/builder');
+const { build: buildBoard, fullTrayFailure, winningFullTrayFailure } = require('../tools/builder/builder');
 const { closeTwins } = require('../tools/builder/bank/separate');
 const { findOpeningSweep, findFinishPair } = require('../tools/builder/bank/choice_checks');
 
@@ -34,6 +34,21 @@ test('builds a standard-rule second chain with a believable wrong finish pair', 
   assert.deepEqual(finishPair, findFinishPair(design));
   assert.ok(finishPair.runway >= 5);
   assert.ok(finishPair.runway <= 18 && finishPair.runwayExact);
+  assert.ok(result.independentFinishPressure >= 3 && result.independentFinishPressure <= 5);
+});
+
+test('builds an exposed clock that looks won early and still needs a full tray to win', () => {
+  const result = buildBoard({ mode: 'earnedTray', variant: 'early-clock', seed: 10 }, { tries: 1 });
+  const { design, proof, openingChoices } = result;
+  assert.ok(design, result.fail);
+  assert.equal(result.minimum, 11);
+  assert.equal(design.clock.n, 12);
+  assert.ok(E.replay(design, design.solution).ok);
+  assert.equal(fullTrayFailure(design), 'lowPressureClockRoute');
+  assert.equal(winningFullTrayFailure(design), null);
+  assert.ok(proof.wrongThaw.length >= 3);
+  assert.ok(openingChoices.some(c => c.tile === design.clock.i && c.runway >= 5 && c.relaxed === 'lose'));
+  assert.ok(result.finishPressure >= 3 && result.finishPressure <= 5);
   assert.ok(result.independentFinishPressure >= 3 && result.independentFinishPressure <= 5);
 });
 

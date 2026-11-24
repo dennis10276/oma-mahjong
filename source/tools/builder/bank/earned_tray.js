@@ -5,7 +5,7 @@ const H = require('./hand');
 const E = require('../engine');
 const D = require('../loop/detour');
 const O = require('../loop/obvious');
-const { fullTrayFailure } = require('../builder');
+const { winningFullTrayFailure } = require('../builder');
 const { targetFor, meets } = require('../chained_finish_profiles');
 const { closeTwins, swapStage } = require('./separate');
 const { expert } = require('./feel');
@@ -17,7 +17,7 @@ const {
 } = require('./choice_checks');
 const { supportedAt } = require('./detower');
 const { measure } = require('../footprint');
-const variants = ['clock', 'keys', 'reserve', 'competing', 'refund', 'release', 'release-roofs', 'release-keys', 'pair-context'];
+const variants = ['clock', 'early-clock', 'keys', 'reserve', 'competing', 'refund', 'release', 'release-roofs', 'release-keys', 'pair-context'];
 
 function recipe(variant) {
   const keyRelease = variant === 'release-keys';
@@ -97,6 +97,14 @@ function recipe(variant) {
     down: .23,
     pairs,
   };
+  if (variant === 'early-clock') {
+    // The clock is visible on the far side while its picture is locked on the
+    // left. Parking the clock early spends a slot needed for the right thaw.
+    spec.clock = at(9, 11, 1);
+    route.push(spec.clock);
+    pairs.lock.push(melter);
+    pairs.clock = [clock, spec.clock];
+  }
   let context;
   if (variant === 'reserve' || refund || pairContext) {
     const upperRoof = at(8, 1, 2), upperFace = at(9, 1, 1), upperRefund = at(10, 2, 0);
@@ -281,10 +289,11 @@ function build({ variant = 'clock', seed = 1, tries = 200 } = {}) {
   const finish = targetFor('existing');
   const reserve = variant === 'reserve' || !!fork;
   const keyRelease = variant === 'release-keys';
+  const earlyClock = variant === 'early-clock';
   // One spare move lets the player park a cover from the left shelf early.
   const spare = keyRelease ? 0 : 1;
   for (let deal = seed; deal < seed + tries; deal++) {
-    const pressure = reserve ? 2 + (deal % 5) * .25 : 1.2 + (deal % 4) * .2;
+    const pressure = reserve || earlyClock ? 2 + (deal % 5) * .25 : 1.2 + (deal % 4) * .2;
     const dealSpec = context ? arrangePairContext(spec, context, deal)
       : release ? arrangeRelease(spec, release, deal) : { ...spec, pressure };
     if (!dealSpec) continue;
@@ -303,10 +312,16 @@ function build({ variant = 'clock', seed = 1, tries = 200 } = {}) {
     if (!timing.exact || timing.k == null || timing.k < 10
         || ((release || context) && timing.k !== spec.route.length)) continue;
     design.clock.n = timing.k + spare;
+    if (earlyClock && !E.replay(design, design.solution).ok) {
+      const game = E.game(design);
+      const timed = E.winnable(game, E.start(game), { nodes: 90000, ms: Infinity });
+      if (timed.result !== 'win') continue;
+      design.solution = E.flatten(timed.path);
+    }
     if (!E.replay(design, design.solution).ok) continue;
 
     let proof = keyRelease ? null : findThawTrap(design);
-    if ((!keyRelease && !proof) || findOpeningSweep(design) || fullTrayFailure(design)) continue;
+    if ((!keyRelease && !proof) || findOpeningSweep(design) || winningFullTrayFailure(design)) continue;
     if (earlyKey && !strandsWithEarlyKey(design, earlyKey)) continue;
     let finishPair = reserve ? findFinishPair(design) : null;
     if (reserve && !finiteFinish(finishPair)) continue;
@@ -328,7 +343,7 @@ function build({ variant = 'clock', seed = 1, tries = 200 } = {}) {
         validate(candidate) {
           const timingAgain = clockNeed(candidate, timing.k);
           const ok = timingAgain.exact && timingAgain.k === timing.k
-            && findThawTrap(candidate) && !findOpeningSweep(candidate) && !fullTrayFailure(candidate)
+            && findThawTrap(candidate) && !findOpeningSweep(candidate) && !winningFullTrayFailure(candidate)
             && finiteFinish(findFinishPair(candidate)) && meets(finish, finishFeel(candidate, 64, 844));
           return { ok, why: 'reserveProof' };
         },
@@ -348,14 +363,15 @@ function build({ variant = 'clock', seed = 1, tries = 200 } = {}) {
       refundFork = forked.proof;
       proof = findThawTrap(design);
       finishPair = findFinishPair(design);
-      if (!proof || !finiteFinish(finishPair) || findOpeningSweep(design) || fullTrayFailure(design)) continue;
+      if (!proof || !finiteFinish(finishPair) || findOpeningSweep(design) || winningFullTrayFailure(design)) continue;
       feel = finishFeel(design, 16, 9);
       independent = finishFeel(design, 64, 844);
     }
     if (!meets(finish, feel) || !meets(finish, independent)) continue;
     const competing = variant === 'competing' || keyRelease;
-    const openingChoices = competing ? findOpeningChoices(design) : [];
+    const openingChoices = competing || earlyClock ? findOpeningChoices(design) : [];
     if (competing && new Set(openingChoices.map(choice => choice.goal)).size < 2) continue;
+    if (earlyClock && !openingChoices.some(choice => choice.tile === design.clock.i && choice.relaxed === 'lose')) continue;
     return {
       variant, seed: deal, minimum: timing.k, proof, secondWrongTurn: earlyKey, finishPair, openingChoices,
       ...(refundFork ? { refundFork } : {}),
