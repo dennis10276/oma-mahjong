@@ -29,6 +29,8 @@ module.exports = {
       t.eq(state.theme, old.theme || 'classic', filename + ' equipped tiles');
       t.eq(state.bg, old.bg || 'jade', filename + ' equipped table');
       t.eq(state.frame, old.frame || 'none', filename + ' equipped frame');
+      const frame = await page.evaluate(() => ShopEconomy.resolveEquippedItem(__mj.S, 'frame'));
+      t.eq(frame, state.frame, filename + ' equipped frame remains selectable');
       for (const [id, value] of Object.entries(old.trophies || {})) {
         t.eq(state.trophies?.[id], value, filename + ' keeps trophy ' + id);
       }
@@ -84,6 +86,49 @@ module.exports = {
       first: true, repeat: false, attempts: 1, overlap: false, failed: false,
       remaining: result.expected, expected: result.expected, lastFull: 6, tapered: 2, replay: 0, nextWeek: 6,
     }, 'one purchase, gift failure preserves coins, and the new week restores full earnings');
+
+    const helpers = await page.evaluate(() => {
+      const state = __mj.S;
+      const sunday = new Date(2026, 10, 29, 18);
+      const monday = new Date(2026, 10, 30, 9);
+      state.wk = ShopEconomy.newWeekObj(sunday);
+      state.undoStock = 3;
+      state.peekStock = 0;
+      state.coins = 10 * (SHOP_RULES.undo.price + SHOP_RULES.peek.price);
+      const startCoins = state.coins;
+
+      const fullClaim = ShopEconomy.claimFreeUndo(state, {}, sunday);
+      const openBoard = { mode: 'level', level: 55, tray: [2], alive: [1, 1, 0], down: [0, 0, 0], nb: { above: [[1], [], []] } };
+      const returned = ShopEconomy.consumeUndoInLevel(state, openBoard);
+      const freeUndo = ShopEconomy.claimFreeUndo(state, {}, sunday);
+      const repeatUndo = ShopEconomy.claimFreeUndo(state, {}, sunday);
+
+      const freePeek = ShopEconomy.claimFreePeek(state, {}, sunday);
+      const coveredPeek = ShopEconomy.consumePeekInLevel(state, openBoard);
+      const firstPurchase = ShopEconomy.buyPeekToken(state, {}, sunday);
+      const secondPurchase = ShopEconomy.buyPeekToken(state, {}, sunday);
+      openBoard.down[0] = 1;
+      const reveal = ShopEconomy.consumePeekInLevel(state, openBoard);
+      const repeatedReveal = ShopEconomy.consumePeekInLevel(state, openBoard);
+      const extraPurchase = ShopEconomy.buyPeekToken(state, {}, sunday);
+      const mondayClaim = ShopEconomy.claimFreePeek(state, {}, monday);
+
+      return {
+        full: fullClaim.reason, returned: returned.ok, freeUndo: freeUndo.ok, repeatUndo: repeatUndo.reason,
+        freePeek: freePeek.ok, coveredPeek: coveredPeek.reason, purchases: firstPurchase.ok && secondPurchase.ok,
+        reveal: reveal.ok, repeatedReveal: repeatedReveal.reason, extraPurchase: extraPurchase.reason,
+        mondayClaim: mondayClaim.ok, stock: state.peekStock, spent: startCoins - state.coins,
+        price: firstPurchase.spent, stillFaceDown: openBoard.down[0], perfectForfeited: openBoard.rescued,
+      };
+    });
+    t.eq(helpers, {
+      full: 'stock_full', returned: true, freeUndo: true, repeatUndo: 'already_claimed',
+      freePeek: true, coveredPeek: 'nothing_hidden', purchases: true,
+      reveal: true, repeatedReveal: 'level_limit', extraPurchase: 'week_limit',
+      mondayClaim: true, stock: 3, spent: helpers.price * 2, price: helpers.price,
+      stillFaceDown: 1, perfectForfeited: true,
+    }, 'helper claims and spending enforce weekly, stock and board limits without charging an unusable peek');
+
 
     const before = await page.evaluate(() => {
       const state = __mj.S;

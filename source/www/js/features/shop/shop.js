@@ -127,7 +127,7 @@
       peekStock: 0,
       owned: cloneStarterOwned(),
       grit: { petals: 0, lastDay: '' },
-      wk: newWeekObj(now),
+      wk: { id: weekIdOf(now), pts: 0 },
       giftsSeen: {},
       pendingGifts: [],
       stats: {},
@@ -184,7 +184,7 @@
       S.coins = Math.max(0, Math.floor(Number(S.coins) || 0));
       S.undoStock = clampInt(S.undoStock, 0, RULES.undo.maxStock);
       S.peekStock = clampInt(S.peekStock, 0, RULES.peek.maxStock);
-      if (!S.wk || typeof S.wk !== 'object') S.wk = newWeekObj(now);
+      if (!S.wk || typeof S.wk !== 'object') S.wk = { id: weekIdOf(now), pts: 0 };
       return { S, migrated: false, freshInstall: false };
     }
 
@@ -305,9 +305,13 @@
     if (cat === 'title') {
       return cur && CAT.findCatalogItem('title', cur) && ownsItem(S, 'title', cur) ? cur : '';
     }
-    if (cur && CAT.findCatalogItem(cat, cur) && ownsItem(S, cat, cur)) return cur;
+    if (cur && isEquippable(cat, cur) && ownsItem(S, cat, cur)) return cur;
     const starters = CAT.STARTER_OWNED[cat];
     return Array.isArray(starters) && starters.length ? starters[0] : '';
+  }
+
+  function isEquippable(cat, id) {
+    return Boolean(CAT.findCatalogItem(cat, id) || (cat === 'frame' && CAT.EARNED_FRAMES.includes(id)));
   }
 
   function equipItem(S, cat, id, hooks = {}) {
@@ -317,7 +321,7 @@
       if (typeof hooks.pushScore === 'function') hooks.pushScore();
       return { ok: true, cat, id: '' };
     }
-    if (!CAT.findCatalogItem(cat, id)) return { ok: false, reason: 'unknown_item' };
+    if (!isEquippable(cat, id)) return { ok: false, reason: 'unknown_item' };
     if (!ownsItem(S, cat, id)) return { ok: false, reason: 'not_owned' };
     const slot = SLOT_BY_CAT[cat];
     if (!slot) return { ok: false, reason: 'not_equippable' };
@@ -355,7 +359,7 @@
 
   /** Validate & build Firebase gift payload WITHOUT deducting Coins yet (wait for network OK). */
   function prepareGiftPayload(S, cat, id, toPid, nowMs = Date.now()) {
-    if (cat === 'helper' || id === 'undo' || id === 'peek') return { ok: false, reason: 'not_giftable' };
+    if (!canGiftShopItem(cat, id)) return { ok: false, reason: 'not_giftable' };
     const item = CAT.findCatalogItem(cat, id);
     if (!item || !SLOT_BY_CAT[cat] || item.price <= 0) return { ok: false, reason: 'not_giftable' };
     if (!toPid) return { ok: false, reason: 'missing_recipient' };
@@ -494,7 +498,320 @@
     return receipt;
   }
 
+  const UNDO_RULES = RULES.undo;
+  const PEEK_RULES = RULES.peek;
+
+  const UNDO_SPEC = Object.freeze({
+    id: 'undo',
+    rules: UNDO_RULES,
+    stockKey: 'undoStock',
+    freeKey: 'freeUndo',
+    boughtKey: 'boughtUndo',
+    freeLog: 'undo_free',
+    buyId: 'undo',
+    levelKey: 'undoUsed',
+    useLog: 'undo_use',
+  });
+
+  const PEEK_SPEC = Object.freeze({
+    id: 'peek',
+    rules: PEEK_RULES,
+    stockKey: 'peekStock',
+    freeKey: 'freePeek',
+    boughtKey: 'boughtPeek',
+    freeLog: 'peek_free',
+    buyId: 'peek',
+    levelKey: 'peekUsed',
+    useLog: 'peek_use',
+  });
+
+  // Exact `TEXT` shape used by `source/www/js/lang.js` (`key: [nl, en]`, zero trailing `.` on single sentences, no `💰`)
+
+  function mergeRules(base, overrides) {
+    return overrides ? Object.assign({}, base, overrides) : base;
+  }
+
+  /**
+   * Normalize helper stocks/coins and ensure `S.wk` is on the current Monday–Sunday week.
+   * Always delegates rollover to `hooks.ensureWeek()` when supplied so Monday snapshots (`S.prevWk`,
+   * `S.lastWeek`, `S.bestWeekPts`, `save()`, `pushScore()`) are never clobbered.
+   */
+  function ensureHelperWeek(S, spec, now = new Date(), rulesOverrides, hooks = {}) {
+    const r = mergeRules(spec.rules, rulesOverrides);
+    const undoMaxBuy = spec.id === 'undo' ? r.maxBuyPerWeek : UNDO_RULES.maxBuyPerWeek;
+    const peekMaxBuy = spec.id === 'peek' ? r.maxBuyPerWeek : PEEK_RULES.maxBuyPerWeek;
+    const wkId = weekIdOf(now);
+    const wasDifferent = !S.wk || S.wk.id !== wkId || (S.wk.v !== undefined && S.wk.v !== 2);
+
+    S.undoStock = clampInt(S.undoStock, 0, spec.id === 'undo' ? r.maxStock : UNDO_RULES.maxStock);
+    S.peekStock = clampInt(S.peekStock, 0, spec.id === 'peek' ? r.maxStock : PEEK_RULES.maxStock);
+    S.coins = Math.max(0, Math.floor(Number(S.coins) || 0));
+
+    if (typeof hooks.ensureWeek === 'function') {
+      hooks.ensureWeek();
+    } else if (wasDifferent) {
+      S.wk = newWeekObj(now);
+    }
+
+    if (S.wk) {
+      S.wk.freeUndo = Boolean(S.wk.freeUndo);
+      S.wk.boughtUndo = clampInt(S.wk.boughtUndo, 0, undoMaxBuy);
+      S.wk.freePeek = Boolean(S.wk.freePeek);
+      S.wk.boughtPeek = clampInt(S.wk.boughtPeek, 0, peekMaxBuy);
+    }
+
+    return { wk: S.wk, rolledOver: wasDifferent };
+  }
+
+  /**
+   * Strictly read-only view of whether a player can claim the weekly free token or buy an extra one.
+   * Never mutates `S`, `S.wk`, stock fields, or `S.coins`.
+   */
+  function helperStatus(S, spec, now = new Date(), rulesOverrides) {
+    const r = mergeRules(spec.rules, rulesOverrides);
+    const wkId = weekIdOf(now);
+    const wkObj = S && S.wk;
+    const sameWeek = Boolean(wkObj && wkObj.id === wkId && (wkObj.v === undefined || wkObj.v === 2));
+
+    const stock = clampInt(S && S[spec.stockKey], 0, r.maxStock);
+    const coins = Math.max(0, Math.floor(Number(S && S.coins) || 0));
+    const freeClaimed = sameWeek ? Boolean(wkObj[spec.freeKey]) : false;
+    const boughtThisWeek = sameWeek ? clampInt(wkObj[spec.boughtKey], 0, r.maxBuyPerWeek) : 0;
+    const buyRemaining = Math.max(0, r.maxBuyPerWeek - boughtThisWeek);
+
+    let freeReason = null;
+    if (!r.enabled) freeReason = 'disabled';
+    else if (freeClaimed) freeReason = 'already_claimed';
+    else if (stock >= r.maxStock) freeReason = 'stock_full';
+
+    let buyReason = null;
+    if (!r.enabled) buyReason = 'disabled';
+    else if (boughtThisWeek >= r.maxBuyPerWeek) buyReason = 'week_limit';
+    else if (stock >= r.maxStock) buyReason = 'stock_full';
+    else if (pendingGiftSpends.has(S)) buyReason = 'gift_pending';
+    else if (coins < r.price) buyReason = 'not_enough_coins';
+
+    return {
+      id: spec.id,
+      enabled: Boolean(r.enabled),
+      weekId: wkId,
+      price: r.price,
+      stock,
+      maxStock: r.maxStock,
+      freeClaimed,
+      boughtThisWeek,
+      maxBuyPerWeek: r.maxBuyPerWeek,
+      buyRemaining,
+      canClaimFree: freeReason === null,
+      freeReason,
+      canBuy: buyReason === null,
+      buyReason,
+      needCoins: Math.max(0, r.price - coins),
+      giftable: false,
+    };
+  }
+
+  function undoStatus(S, now = new Date(), rulesOverrides) {
+    return helperStatus(S, UNDO_SPEC, now, rulesOverrides);
+  }
+
+  function peekStatus(S, now = new Date(), rulesOverrides) {
+    return helperStatus(S, PEEK_SPEC, now, rulesOverrides);
+  }
+
+  /**
+   * Claim the weekly free token for a helper (`undo` or `peek`).
+   * Intentionally does NOT consume the weekly flag when stock is already `maxStock`,
+   * so the player keeps their weekly claim for later that week once they use one.
+   */
+  function claimFreeHelper(S, spec, hooks = {}, now = new Date(), rulesOverrides) {
+    const r = mergeRules(spec.rules, rulesOverrides);
+    if (!r.enabled) {
+      return { ok: false, reason: 'disabled', status: helperStatus(S, spec, now, r) };
+    }
+
+    ensureHelperWeek(S, spec, now, r, hooks);
+    const st = helperStatus(S, spec, now, r);
+    if (!st.canClaimFree) {
+      return { ok: false, reason: st.freeReason, status: st };
+    }
+
+    S.wk[spec.freeKey] = true;
+    S[spec.stockKey] += 1;
+    if (typeof hooks.save === 'function') hooks.save();
+    if (typeof hooks.log === 'function') hooks.log(spec.freeLog, { stock: S[spec.stockKey] });
+
+    return { ok: true, stock: S[spec.stockKey], status: helperStatus(S, spec, now, r) };
+  }
+
+  function claimFreeUndo(S, hooks = {}, now = new Date(), rulesOverrides) {
+    return claimFreeHelper(S, UNDO_SPEC, hooks, now, rulesOverrides);
+  }
+
+  function claimFreePeek(S, hooks = {}, now = new Date(), rulesOverrides) {
+    return claimFreeHelper(S, PEEK_SPEC, hooks, now, rulesOverrides);
+  }
+
+  /** Buy 1 extra helper token (max 2 bought/week, max 3 in stock) after confirm dialog. */
+  function buyHelperToken(S, spec, hooks = {}, now = new Date(), rulesOverrides) {
+    const r = mergeRules(spec.rules, rulesOverrides);
+    if (!r.enabled) {
+      return { ok: false, reason: 'disabled', need: 0, status: helperStatus(S, spec, now, r) };
+    }
+
+    ensureHelperWeek(S, spec, now, r, hooks);
+    const st = helperStatus(S, spec, now, r);
+    if (!st.canBuy) {
+      return {
+        ok: false,
+        reason: st.buyReason,
+        need: st.buyReason === 'not_enough_coins' ? st.needCoins : 0,
+        status: st,
+      };
+    }
+
+    if (!spendCoins(S, r.price)) {
+      return { ok: false, reason: 'not_enough_coins', need: st.needCoins, status: st };
+    }
+    S[spec.stockKey] += 1;
+    S.wk[spec.boughtKey] += 1;
+
+    if (typeof hooks.save === 'function') hooks.save();
+    if (typeof hooks.log === 'function') {
+      hooks.log('shop_buy', {
+        cat: 'helper',
+        id: spec.buyId,
+        p: r.price,
+        wkBought: S.wk[spec.boughtKey],
+        stock: S[spec.stockKey],
+      });
+    }
+
+    return {
+      ok: true,
+      spent: r.price,
+      coinsLeft: S.coins,
+      stock: S[spec.stockKey],
+      boughtThisWeek: S.wk[spec.boughtKey],
+      status: helperStatus(S, spec, now, r),
+    };
+  }
+
+  function buyUndoToken(S, hooks = {}, now = new Date(), rulesOverrides) {
+    return buyHelperToken(S, UNDO_SPEC, hooks, now, rulesOverrides);
+  }
+
+  function buyPeekToken(S, hooks = {}, now = new Date(), rulesOverrides) {
+    return buyHelperToken(S, PEEK_SPEC, hooks, now, rulesOverrides);
+  }
+
+  /** Shared live `board.js` lifecycle checks before consuming any board helper token. */
+  function boardBusyReason(G) {
+    if (!G || G.film) return 'no_board';
+    if (G.done || G.busy || G.overShown || G.autoFin || G.introducing) return 'board_busy';
+    if ((Number(G.flights) || 0) > 0) return 'tiles_in_flight';
+    if (G.clockOut) return 'clock_out';
+    return null;
+  }
+
+  /** True when at least one alive board tile is face-down (for Spieken). */
+  function hasHiddenTilesOnBoard(G) {
+    if (!G || !G.alive) return false;
+    const n = G.tiles ? G.tiles.length : G.alive.length;
+    for (let i = 0; i < n; i++) {
+      if (G.alive[i] && G.down && G.down[i]) return true;
+    }
+    return false;
+  }
+
+  /**
+   * Check whether a "Steen terugleggen" token can be used on the current level board.
+   * Matches live `board.js` lifecycle guards; Prep A `checkClock()` must set `G.clockOut = true`.
+   */
+  function canUseUndoInLevel(S, G, rulesOverrides) {
+    const r = mergeRules(UNDO_RULES, rulesOverrides);
+    if (!r.enabled) return { ok: false, reason: 'disabled' };
+    const busy = boardBusyReason(G);
+    if (busy) return { ok: false, reason: busy };
+    if (!Array.isArray(G.tray) || G.tray.length === 0) return { ok: false, reason: 'tray_empty' };
+    if (G.arriving && typeof G.arriving.has === 'function' && G.tray.every(t => G.arriving.has(t))) {
+      return { ok: false, reason: 'tiles_in_flight' };
+    }
+    if ((Number(G.undoUsed) || 0) >= r.maxUsePerLevel) return { ok: false, reason: 'level_limit' };
+    if (clampInt(S && S.undoStock, 0, r.maxStock) <= 0) return { ok: false, reason: 'no_stock' };
+    return { ok: true, reason: null };
+  }
+
+  /**
+   * Check whether a "Spieken" face-down peek token can be used on the current level board.
+   * Requires at least one alive face-down tile so tokens are never wasted when none exist.
+   */
+  function canUsePeekInLevel(S, G, rulesOverrides) {
+    const r = mergeRules(PEEK_RULES, rulesOverrides);
+    if (!r.enabled) return { ok: false, reason: 'disabled' };
+    const busy = boardBusyReason(G);
+    if (busy) return { ok: false, reason: busy };
+    if (!hasHiddenTilesOnBoard(G)) return { ok: false, reason: 'nothing_hidden' };
+    if ((Number(G.peekUsed) || 0) >= r.maxUsePerLevel) return { ok: false, reason: 'level_limit' };
+    if (clampInt(S && S.peekStock, 0, r.maxStock) <= 0) return { ok: false, reason: 'no_stock' };
+    return { ok: true, reason: null };
+  }
+
+  function recordHelperConsume(S, G, spec, r, hooks) {
+    S[spec.stockKey] = clampInt(S && S[spec.stockKey], 0, r.maxStock) - 1;
+    G[spec.levelKey] = (Number(G[spec.levelKey]) || 0) + 1;
+    G.rescued = true; // Forfeits 3-star Shining Eremedaille (Perfect) and `nohelp` task
+
+    if (typeof hooks.save === 'function') hooks.save();
+    if (typeof hooks.logLvl === 'function') {
+      hooks.logLvl(spec.useLog, { stock: S[spec.stockKey] });
+    } else if (typeof hooks.log === 'function') {
+      const lv = G.mode === 'level' ? G.level : S.level;
+      hooks.log(spec.useLog, { lv, stock: S[spec.stockKey] });
+    }
+  }
+
+  /**
+   * Consume 1 "Steen terugleggen" token (max 1/level) and forfeit 3-star Perfect (`G.rescued = true`).
+   * Callers MUST persist `undoUsed` (alongside `rescued` & parked spot) in `omamj.cur`, keep `G.mv`
+   * unchanged, and clear `G.clock = null` if returning a former clock tile so it returns plain.
+   */
+  function consumeUndoInLevel(S, G, hooks = {}, rulesOverrides) {
+    const r = mergeRules(UNDO_RULES, rulesOverrides);
+    const check = canUseUndoInLevel(S, G, r);
+    if (!check.ok) return check;
+    recordHelperConsume(S, G, UNDO_SPEC, r, hooks);
+    return { ok: true, stock: S.undoStock, undoUsed: G.undoUsed, rescued: true, perfect: false };
+  }
+
+  /**
+   * Consume 1 "Spieken" token (max 1/level), forfeit 3-star Perfect (`G.rescued = true`),
+   * and return `{ durationMs: 4500 }` for temporary face-down reveal (no `G.down` or `G.mv` mutation).
+   */
+  function consumePeekInLevel(S, G, hooks = {}, rulesOverrides) {
+    const r = mergeRules(PEEK_RULES, rulesOverrides);
+    const check = canUsePeekInLevel(S, G, r);
+    if (!check.ok) return check;
+    recordHelperConsume(S, G, PEEK_SPEC, r, hooks);
+    return { ok: true, stock: S.peekStock, peekUsed: G.peekUsed, durationMs: r.durationMs, rescued: true, perfect: false };
+  }
+
+  /** Helpers are strictly non-giftable across family accounts. */
+  function canGiftShopItem(cat, id) {
+    return cat !== 'helper' && id !== 'undo' && id !== 'peek';
+  }
+
   const exportsObj = {
+    undoStatus,
+    peekStatus,
+    claimFreeUndo,
+    claimFreePeek,
+    buyUndoToken,
+    buyPeekToken,
+    canUseUndoInLevel,
+    canUsePeekInLevel,
+    consumeUndoInLevel,
+    consumePeekInLevel,
     SLOT_BY_CAT,
     localDateKey,
     weekIdOf,

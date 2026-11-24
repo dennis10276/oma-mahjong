@@ -24,7 +24,7 @@ Files in the first group are read by Node tools or the dashboard by path, so the
 
 ## features/ (one folder per part; a part's screen is in its `screen.js`)
 - `shop/catalog.js` coin prices, legacy unlock IDs and economy rules
-- `shop/shop.js` wallet, one-time save migration, and shop actions (both scripts load before `core/save.js`)
+- `shop/shop.js` wallet, one-time save migration, shop actions, and helper guardrails (both scripts load before `core/save.js`)
 - `intro.js` the intro films that explain a mechanic
 - `win.js` the win screen and the rewards after it
 - `tips/tips.js` the "Wist je dat?" tips on the home screen
@@ -37,6 +37,7 @@ Files in the first group are read by Node tools or the dashboard by path, so the
 - `rewards/chest.js` the chest that the three tasks open
 - `rewards/lucky.js` the lucky moment in a level
 - `rewards/gift.js` the daily gift
+- `rewards/grit.js` Grit, Lucky lookahead, Momentum and board-helper logic
 - `rewards/streak.js` days in a row (`streak()`) and levels won in a row (`winStreakStep()`)
 - `grandma/grandma.js` Super-omamodus: `careMode`, `part`, `help`, settings from the dashboard
 - `redo/redo.js` "redo from level n", set on the dashboard
