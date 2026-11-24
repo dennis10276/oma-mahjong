@@ -76,6 +76,7 @@ function swapped(d, edits) { const c = clone(d); for (const [u, v] of edits) { c
 
 function swapStage(design, opts = {}) {
   const t0 = Date.now(), wallMs = opts.wallMs ?? 60000, rand = rngOf((opts.seed ?? 1) * 104729 + 7), notes = [];
+  const { targetCost = 0, iterationsPerRound = 6000 } = opts;
   const protect = new Set(opts.protect || []), parent = clone(design), geo = geometry(parent);
   const freezeFaces = new Set((opts.freeze || []).map(t => parent.faces[t]));
   const validate = opts.validate || defaultValidator(parent, opts.k);
@@ -92,10 +93,11 @@ function swapStage(design, opts = {}) {
     // ---- greedy cheap phase on the current state
     let faces = cur.faces.slice(), grp = groupsOf(faces), accepted = [], costs = [];
     const cost0 = totalCost(faces);
-    if (cost0 === 0) break;
+    if (cost0 <= targetCost) break;
     let cost = cost0, bestCost = cost0, bestLen = 0, stall = 0;
     const budget = t0 + wallMs * (round === 0 ? 0.55 : 0.2) ;
-    for (let it = 0; it < 6000 && Date.now() < Math.min(budget, t0 + wallMs) && stall < 250 && cost > 0; it++) {
+    for (let it = 0; it < iterationsPerRound && Date.now() < Math.min(budget, t0 + wallMs)
+        && stall < 250 && cost > targetCost; it++) {
       // a close pair, the heavier ones more often
       const list = []; for (const tiles of grp.values()) for (const p of groupClose(geo, tiles)) list.push({ p, w: (geo.vis[p[0]] && geo.vis[p[1]] ? W_VIS : tiles.length >= 4 ? W_FOUR : W_ANY) });
       if (!list.length) break;

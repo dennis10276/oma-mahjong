@@ -4,19 +4,25 @@ const fs = require('node:fs');
 const H = require('./hand');
 const E = require('../engine');
 const D = require('../loop/detour');
+const O = require('../loop/obvious');
 const { fullTrayFailure } = require('../builder');
 const { targetFor, meets } = require('../chained_finish_profiles');
-const { closeTwins } = require('./separate');
+const { closeTwins, swapStage } = require('./separate');
 const { expert } = require('./feel');
 const { tuneFeel } = require('./feel_retune');
 const { findThawTrap } = require('./thaw_trap');
-const { auditRefundFork, findOpeningSweep, findOpeningChoices, findFinishPair } = require('./choice_checks');
+const {
+  auditRefundFork, auditTrayRelease, forcesReleaseAfterClock, findOpeningSweep, findOpeningChoices, findFinishPair,
+} = require('./choice_checks');
 const { supportedAt } = require('./detower');
 const { measure } = require('../footprint');
+const variants = ['clock', 'keys', 'reserve', 'competing', 'refund', 'release', 'release-roofs'];
 
 function recipe(variant) {
   const keysFirst = variant === 'keys' || variant === 'competing';
   const refund = variant === 'refund';
+  const roofs = variant === 'release-roofs';
+  const hasRelease = variant === 'release' || roofs;
   const tiles = [];
   function row(z, y, xs) {
     for (const x of xs) tiles.push([x, y, z]);
@@ -33,6 +39,8 @@ function recipe(variant) {
   row(2, 7, keysFirst ? [4, 8] : [8]);
   row(2, 9, [8]);
   if (keysFirst) row(2, 11, [2]);
+  if (hasRelease) tiles.push([5, 9, 1], [5, 11, 1]);
+  if (roofs) tiles.push([2, 9, 2], [8, 11, 2]);
 
   function at(x, y, z) {
     const tile = tiles.findIndex(([tx, ty, tz]) => tx === x && ty === y && tz === z);
@@ -98,8 +106,82 @@ function recipe(variant) {
     spec.peek = true;
     spec.downTiles = [upperFace, lowerFace];
   }
+  let release;
+  if (hasRelease) {
+    const handoff = at(8, 1, 2);
+    const lowerShelf = [at(8, 9, 2), at(9, 9, 1), at(7, 9, 1)];
+    const belowMate = [at(6, 8, 0), at(8, 8, 0), at(6, 10, 0), at(8, 10, 0)];
+    pairs.lock.push(handoff);
+    pairs.leftIce.push(lowerShelf[2]);
+    spec.tail = [handoff, ...lowerShelf];
+    spec.peek = true;
+    const prefix = [...route, handoff];
+    const offers = releaseOffers(tiles, spec, prefix, lowerShelf, belowMate, roofs);
+    release = { prefix, route: lowerShelf, belowMate, offers, roofs };
+  }
   const fork = refund ? { prefix: opening.slice(0, -1), intended: rightIce, decoy: at(1, 9, 1) } : null;
-  return { tiles, spec, earlyKey: variant === 'keys' ? [...opening, nearKey] : null, fork };
+  return { tiles, spec, earlyKey: variant === 'keys' ? [...opening, nearKey] : null, fork, release };
+}
+
+// Select real pairs that a wrong park can open. Tile ids stand in for unfilled
+// pictures so this pass depends on the pile and its fixed route, not the deal.
+function releaseOffers(tiles, spec, prefix, route, belowMate, roofs) {
+  const faces = tiles.map((_, i) => i);
+  for (const [first, mate] of Object.values(spec.pairs)) {
+    if (mate !== undefined) faces[mate] = faces[first];
+  }
+  const obst = { ice: spec.ice, keys: spec.keys, locks: spec.locks };
+  const game = E.game({ tiles, faces, obst, clock: { i: spec.clock, n: prefix.length } });
+  let state = E.start(game);
+  for (const tile of prefix) state = E.step(game, state, tile);
+  const free = E.legal(game, state).filter(Number.isInteger);
+  const drawn = O.visibility(game, state);
+  const used = new Set([...prefix, ...route, ...belowMate]);
+  const available = free.filter(i => !used.has(i));
+  const farEnough = (a, b) => Math.max(Math.abs(tiles[a][0] - tiles[b][0]), Math.abs(tiles[a][1] - tiles[b][1])) > 2;
+  const parks = roofs ? available.filter(i => tiles[i][2] === 2) : available;
+  return parks.flatMap(park => {
+    const opened = E.legal(game, E.step(game, state, park)).filter(i =>
+      Number.isInteger(i) && !used.has(i) && !free.includes(i) && drawn[i].picture);
+    return opened.flatMap(tile => available.filter(i => i !== park && drawn[i].picture && farEnough(tile, i))
+      .map(mate => ({ park, pair: [tile, mate] })));
+  });
+}
+
+function arrangeRelease(spec, { route, belowMate, offers }, seed) {
+  const first = offers[(seed % offers.length) * 7 % offers.length];
+  if (!first) return null;
+  const used = new Set([first.park, ...first.pair]);
+  const others = offers.filter(({ park, pair }) => ![park, ...pair].some(i => used.has(i)));
+  if (!others.length) return null;
+  const second = others[(seed % others.length) * 11 % others.length];
+  const offset = seed % belowMate.length;
+  const [underFirst, underSecond, underBait, underOther] = [...belowMate.slice(offset), ...belowMate.slice(0, offset)];
+  // Keep the blockers' and baits' twins beneath the carried picture's mate.
+  // A wrong park can make a different match, but cannot earn its own slot back.
+  const pairs = {
+    ...spec.pairs, visiblePair: first.pair, otherPair: second.pair,
+    cover1: [route[0], underFirst], cover2: [route[1], underSecond],
+    falsePark: [first.park, underBait], otherPark: [second.park, underOther],
+  };
+  return { ...spec, pairs, pressure: 1.6 + (seed % 6) * .21 };
+}
+
+function separateRelease(design, spec, seed) {
+  const spacing = closeTwins(design);
+  if (spacing.meets) return design;
+  const freeze = [...spec.route, ...Object.values(spec.pairs).flat()];
+  const fixed = new Set(freeze.map(i => design.faces[i]));
+  const protectedPair = ([i]) => fixed.has(design.faces[i]);
+  if (spacing.closeVisible.some(protectedPair) || spacing.closeFour.some(protectedPair)
+      || spacing.close.filter(protectedPair).length / spacing.pairs > .05) return null;
+  // These piles allow one close pair. Stop there, with a fixed search budget
+  // so a scheduled pause cannot change the seeded deal.
+  const swap = swapStage(design, {
+    seed, freeze, targetCost: 1, iterationsPerRound: 500, wallMs: Infinity,
+    validate: candidate => E.replay(candidate, candidate.solution).ok,
+  });
+  return swap.validated && swap.after.meets ? swap.design : null;
 }
 
 function strandsWithEarlyKey(design, path) {
@@ -141,26 +223,32 @@ function addRefundFork(design, { prefix, intended, decoy }, minimum) {
 }
 
 function build({ variant = 'clock', seed = 1, tries = 200 } = {}) {
-  if (!['clock', 'keys', 'reserve', 'competing', 'refund'].includes(variant)) {
-    throw new Error('Expected clock, keys, reserve, competing or refund');
-  }
+  if (!variants.includes(variant)) throw new Error(`Expected variant ${variants.join(', ')}`);
   if (!Number.isSafeInteger(seed) || seed < 1 || !Number.isSafeInteger(tries) || tries < 1
       || !Number.isSafeInteger(seed + tries)) throw new Error('Expected a positive seed and try count');
 
-  const { tiles, spec, earlyKey, fork } = recipe(variant);
+  const { tiles, spec, earlyKey, fork, release } = recipe(variant);
   const { tilePx } = measure(tiles, { minimum: 60 });
   if (tilePx < 60 || !tiles.every((tile, i) => supportedAt(tiles, tile, i))) return { fail: 'layout' };
   const finish = targetFor('existing');
   const reserve = variant === 'reserve' || !!fork;
   for (let deal = seed; deal < seed + tries; deal++) {
     const pressure = reserve ? 2 + (deal % 5) * .25 : 1.2 + (deal % 4) * .2;
-    let { design, fail } = H.fill({ ...spec, pressure }, tiles, deal);
-    if (!design) return { fail };
-    if (!closeTwins(design).meets) continue;
+    const dealSpec = release ? arrangeRelease(spec, release, deal) : { ...spec, pressure };
+    if (!dealSpec) continue;
+    let { design, fail } = H.fill(dealSpec, tiles, deal);
+    if (!design) {
+      if (release) continue;
+      return { fail };
+    }
+    if (release) {
+      design = separateRelease(design, dealSpec, deal);
+      if (!design) continue;
+    } else if (!closeTwins(design).meets) continue;
 
     design.clock.n = spec.route.length + 1;
     const timing = clockNeed(design, spec.route.length);
-    if (!timing.exact || timing.k == null || timing.k < 10) continue;
+    if (!timing.exact || timing.k == null || timing.k < 10 || (release && timing.k !== spec.route.length)) continue;
     design.clock.n = timing.k + 1;
     if (!E.replay(design, design.solution).ok) continue;
 
@@ -169,6 +257,12 @@ function build({ variant = 'clock', seed = 1, tries = 200 } = {}) {
     if (earlyKey && !strandsWithEarlyKey(design, earlyKey)) continue;
     let finishPair = reserve ? findFinishPair(design) : null;
     if (reserve && !finiteFinish(finishPair)) continue;
+    const finishRelease = release && auditTrayRelease(design, release.prefix, release.route);
+    if (release) {
+      const decoys = finishRelease?.decoys.filter(move => !release.roofs || tiles[move.take][2] === 2);
+      const pairs = new Set(decoys?.map(move => move.pair.slice().sort().join(',')));
+      if (pairs.size < 2 || !forcesReleaseAfterClock(design, finishRelease)) continue;
+    }
     let feel = finishFeel(design, 16, 9);
     let independent = finishFeel(design, 64, 844);
     if (reserve && (!meets(finish, feel) || !meets(finish, independent))) {
@@ -209,6 +303,7 @@ function build({ variant = 'clock', seed = 1, tries = 200 } = {}) {
     return {
       variant, seed: deal, minimum: timing.k, proof, secondWrongTurn: earlyKey, finishPair, openingChoices,
       ...(refundFork ? { refundFork } : {}),
+      ...(finishRelease ? { finishRelease } : {}),
       finishPressure: pressureParks(feel), independentFinishPressure: pressureParks(independent), design,
     };
   }
@@ -217,7 +312,7 @@ function build({ variant = 'clock', seed = 1, tries = 200 } = {}) {
 
 if (require.main === module) {
   const [variant, seed, output, tries] = process.argv.slice(2);
-  if (!output) throw new Error('Usage: node earned_tray.js <clock|keys|reserve|competing|refund> <seed> <output.json> [tries]');
+  if (!output) throw new Error(`Usage: node earned_tray.js <${variants.join('|')}> <seed> <output.json> [tries]`);
   const result = build({ variant, seed: Number(seed), tries: tries === undefined ? undefined : Number(tries) });
   if (result.design) {
     fs.writeFileSync(output, JSON.stringify(result, null, 2) + '\n');

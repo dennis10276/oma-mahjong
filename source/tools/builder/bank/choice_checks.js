@@ -118,6 +118,77 @@ function auditRefundFork(design, prefix, intended, decoy) {
   return { at: state.moves, waiting, intended, decoy, intendedGoal, decoyGoal, decoyClock: time.k, runway };
 }
 
+// A visible pair that a second park makes takeable, even though the old
+// waiting picture can no longer be cleared on a winning route.
+function openedPair(game, state, free, visible) {
+  const after = singles(game, state);
+  const waiting = new Set(state.tray.map(i => game.faces[i]));
+  for (const a of after) {
+    if (free.includes(a) || !visible[a].picture || waiting.has(game.faces[a])) continue;
+    const b = after.find(i => i !== a && visible[i].picture && game.faces[i] === game.faces[a]);
+    if (b !== undefined) return [a, b];
+  }
+  return null;
+}
+
+function auditTrayRelease(design, prefix, route) {
+  if (route.length !== 3 || !route.every(Number.isInteger)) return null;
+  const game = E.game(design);
+  if (!game.clock) return null;
+  let state = E.start(game);
+  for (const take of prefix) {
+    if (!legalTake(E.legal(game, state), take)) return null;
+    state = E.step(game, state, take);
+    if (!state) return null;
+  }
+  if (!state.clockTaken || state.tray.length !== 1) return null;
+  const [waiting] = state.tray;
+  const mate = route[2];
+  const matching = game.faceTiles.get(game.faces[waiting]).filter(i => state.alive[i]);
+  const visible = O.visibility(game, state);
+  if (matching.length !== 1 || matching[0] !== mate || !visible[mate].picture) return null;
+
+  const free = singles(game, state);
+  if (free.includes(route[1]) || free.includes(mate)
+      || free.some(i => singles(game, E.step(game, state, i)).includes(mate))) return null;
+  let release = state;
+  for (const [index, tile] of route.entries()) {
+    if (!O.visibility(game, release)[tile]?.picture || !singles(game, release).includes(tile)) return null;
+    release = E.step(game, release, tile);
+    if (!release || release.tray.length !== [2, 3, 2][index]) return null;
+  }
+  if (release.tray.includes(waiting) || prove(game, release).result !== 'win') return null;
+
+  const decoys = [];
+  for (const take of free) {
+    if (route.includes(take) || !visible[take].picture) continue;
+    const wrong = E.step(game, state, take);
+    if (wrong.tray.length !== 2) continue;
+    const pair = openedPair(game, wrong, free, visible);
+    if (!pair || prove(game, wrong).result !== 'lose') continue;
+    const afterPair = E.step(game, E.step(game, wrong, pair[0]), pair[1]);
+    const runway = pair.length + E.longest(game, afterPair, minimumRunway - pair.length, 12000).depth;
+    if (runway >= minimumRunway) decoys.push({ take, pair, runway });
+  }
+  return { at: state.moves, waiting, route, decoys };
+}
+
+function forcesReleaseAfterClock(design, { waiting, route }) {
+  const game = E.game(design);
+  const obst = design.obst;
+  if (!game.clock || obst?.keys2?.length || obst?.locks2?.length) return false;
+  const { i: clock } = game.clock;
+  if (!game.nb.above[clock].includes(waiting)) return false;
+  const proof = D.work(150000);
+  return route.every(tile => {
+    // One cover is already required. The extra lock in this solver copy asks
+    // whether the clock can be won with this release tile also taken early.
+    if (game.faces[tile] === game.faces[clock]) return false;
+    const test = E.game({ ...design, obst: { ...obst, keys2: [waiting, tile], locks2: [clock] } });
+    return proof.win(test, E.start(test), 45000).result === 'lose';
+  });
+}
+
 // Follow only causal, visible takes. A sequence of unrelated nearby tiles or
 // a sequence that already loses is not a winning shortcut.
 function findOpeningSweep(design) {
@@ -214,4 +285,7 @@ function findFinishPair(design) {
   return null;
 }
 
-module.exports = { auditOpeningTrace, auditRefundFork, findOpeningSweep, findOpeningChoices, findFinishPair };
+module.exports = {
+  auditOpeningTrace, auditRefundFork, auditTrayRelease, forcesReleaseAfterClock,
+  findOpeningSweep, findOpeningChoices, findFinishPair,
+};

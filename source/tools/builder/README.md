@@ -44,7 +44,7 @@ clock check. `{strict:true}` retains the older single-tile rules for comparison.
 The independent review and current limits are in `analysis/builder/codex-review.md`.
 
 The earned-tray recipe deals new boards around two ice fronts. Use
-`node source/tools/builder/bank/earned_tray.js <clock|keys|reserve|competing|refund> <seed> <output.json> [tries]`.
+`node source/tools/builder/bank/earned_tray.js <variant> <seed> <output.json> [tries]`.
 It requires a complete win and a competing local thaw that fills the tray without
 a way out, even with the clock relaxed. The `keys` variant also proves that taking
 the first exposed key can strand the tray. The `reserve` variant checks a
@@ -55,6 +55,13 @@ The `refund` variant builds a shelf layout. With a full tray, either matching
 copy releases the same slot and helps a different ice goal. The certificate
 records the earliest winning clock for the decoy and a playable continuation.
 It rechecks the finish after rewiring the shared picture.
+In `release`, a waiting picture needs both spare tray slots to reach its visible
+mate. Each of two wrong parks opens a different playable match and leaves the
+old slot occupied. Both branches have a proved loss and a legal continuation.
+The clock proof requires the three release tiles to stay on the board until
+the clock is taken on every on-time winning route.
+`release-roofs` puts the two wrong parks on separate top-layer roofs. Both
+release variants can re-pair filler tiles and recheck the entire board.
 All variants screen for a winning opening sweep and verify finish pressure on two
 samples. The main builder exposes these recipes through
 `build({ mode: 'earnedTray', variant: 'reserve', seed: 454 }, { tries: 1 })`.

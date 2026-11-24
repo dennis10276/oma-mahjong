@@ -65,3 +65,39 @@ test('builds a supported shelf with rival matches that help different ice goals'
   const stale = { ...design, obst: { ...design.obst, ice: { ...design.obst.ice, [intended]: 1 } } };
   assert.deepEqual(auditRefundFork(stale, prefix, intended, decoy)?.intendedGoal, { kind: 'key', tile: 23 });
 });
+
+test('builds a finish with two useful losing parks and a visible three-take release', () => {
+  const { design, finishRelease, minimum, independentFinishPressure, fail } = buildBoard(
+    { mode: 'earnedTray', variant: 'release', seed: 63 }, { tries: 1 },
+  );
+  assert.ok(design, fail);
+  assert.equal(design.clock.n, minimum + 1);
+  assert.ok(E.replay(design, design.solution).ok);
+  assert.equal(finishRelease.route.length, 3);
+  const seen = new Set(finishRelease.decoys.map(move => move.pair.slice().sort().join(',')));
+  assert.ok(seen.size >= 2);
+  assert.ok(finishRelease.decoys.every(move => move.runway >= 5));
+  assert.ok(independentFinishPressure >= 3 && independentFinishPressure <= 5);
+  const { forcesReleaseAfterClock } = require('../tools/builder/bank/choice_checks');
+  assert.ok(forcesReleaseAfterClock(design, finishRelease));
+  assert.equal(forcesReleaseAfterClock({ ...design, clock: { ...design.clock, n: 26 } }, finishRelease), false);
+});
+
+test('separates the filler twins without weakening the release traps', () => {
+  const { design, finishRelease, fail } = buildBoard({ mode: 'earnedTray', variant: 'release', seed: 463 }, { tries: 1 });
+  assert.ok(design, fail);
+  assert.ok(closeTwins(design).meets);
+  assert.ok(E.replay(design, design.solution).ok);
+  assert.ok(finishRelease.decoys.length >= 2);
+});
+
+test('adds two alternative roofs with playable matches to the release finish', () => {
+  const { design, finishRelease, fail } = buildBoard(
+    { mode: 'earnedTray', variant: 'release-roofs', seed: 1259 }, { tries: 1 },
+  );
+  assert.ok(design, fail);
+  const roofs = finishRelease.decoys.filter(move => design.tiles[move.take][2] === 2);
+  assert.equal(roofs.length, 2);
+  assert.notDeepEqual(roofs[0].pair, roofs[1].pair);
+  assert.ok(E.replay(design, design.solution).ok);
+});
