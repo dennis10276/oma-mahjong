@@ -683,7 +683,9 @@ function picturesFor(c, roles, P, hold, brief, rng, N, cap, spare, variants, not
 
 function build(briefIn, opts = {}) {
   if (opts.mode === 'earnedTray' || briefIn?.mode === 'earnedTray') {
-    return require('./bank/earned_tray.js').build({ variant: briefIn?.variant, seed: briefIn?.seed, idea: briefIn?.idea, tries: opts.tries });
+    return require('./bank/earned_tray.js').build({
+      variant: briefIn?.variant, seed: briefIn?.seed, idea: briefIn?.idea, layout: briefIn?.layout, tries: opts.tries,
+    });
   }
   if (opts.mode === 'keyedChoice' || briefIn?.mode === 'keyedChoice') {
     return require('./keyed_choice.js').build(briefIn, opts);

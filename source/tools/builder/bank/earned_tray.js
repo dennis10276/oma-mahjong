@@ -15,11 +15,36 @@ const {
   auditRefundFork, auditTrayRelease, forcesReleaseAfterClock, auditPairContext, auditClockCover,
   findOpeningSweep, findOpeningChoices, findFinishPair,
 } = require('./choice_checks');
-const { supportedAt } = require('./detower');
+const { shape, supportedAt } = require('./detower');
 const { measure } = require('../footprint');
 const variants = ['clock', 'early-clock', 'covered-clock', 'keys', 'reserve', 'competing', 'refund', 'release', 'release-roofs', 'release-keys', 'pair-context'];
+const layouts = new Map([
+  ['short-shelf', { variants: ['clock', 'pair-context'], cut: [[0,12], [2,12], [4,12], [6,12], [8,12], [10,12]] }],
+  ['recessed-end', { variants: ['clock', 'early-clock'], cut: [[4,10], [6,10], [0,12], [2,12], [4,12], [6,12]] }],
+  ['stepped-side', { variants: ['keys'], cut: [[0,0], [2,0], [0,2], [0,10], [0,12], [2,12]] }],
+  ['cut-corner', { variants: ['covered-clock'], cut: [[6,0], [8,0], [10,0], [6,12]] }],
+]);
 
-function recipe(variant) {
+// Build on the selected footprint before numbering any of the recipe roles.
+// A cut takes away its unsupported upper tiles along with the floor tiles.
+function fitLayout(tiles, cut) {
+  const omitted = new Set(cut.map(tile => tile.join(',')));
+  const floor = tiles.filter(([x, y, z]) => z === 0 && !omitted.has(`${x},${y}`));
+  const kept = floor.slice();
+  for (const layer of [1, 2]) {
+    for (const tile of tiles) {
+      const [x, y, z] = tile;
+      if (z !== layer) continue;
+      const row = floor.filter(base => Math.abs(base[1] - y) < 2);
+      if (row.some(base => base[0] < x) && row.some(base => base[0] > x) && supportedAt(kept, tile, -1)) {
+        kept.push(tile);
+      }
+    }
+  }
+  return kept;
+}
+
+function recipe(variant, footprint) {
   const keyRelease = variant === 'release-keys';
   const keysFirst = variant === 'keys' || variant === 'competing' || keyRelease;
   const refund = variant === 'refund';
@@ -27,7 +52,7 @@ function recipe(variant) {
   const coveredClock = variant === 'covered-clock';
   const roofs = variant === 'release-roofs';
   const hasRelease = variant === 'release' || roofs || keyRelease;
-  const tiles = [];
+  let tiles = [];
   function row(z, y, xs) {
     for (const x of xs) tiles.push([x, y, z]);
   }
@@ -47,6 +72,7 @@ function recipe(variant) {
   if (keyRelease) tiles.push([5, 1, 1], [5, 3, 1], [2, 1, 2], [8, 1, 2]);
   else if (hasRelease) tiles.push([5, 9, 1], [5, 11, 1]);
   if (roofs) tiles.push([2, 9, 2], [8, 11, 2]);
+  if (footprint) tiles = fitLayout(tiles, footprint.cut);
 
   function at(x, y, z) {
     const tile = tiles.findIndex(([tx, ty, tz]) => tx === x && ty === y && tz === z);
@@ -286,14 +312,22 @@ function addRefundFork(design, { prefix, intended, decoy }, minimum) {
   return null;
 }
 
-function build({ variant = 'clock', seed = 1, tries = 200, idea = 'existing' } = {}) {
+function build({ variant = 'clock', seed = 1, tries = 200, idea = 'existing', layout = 'rectangle' } = {}) {
   if (!variants.includes(variant)) throw new Error(`Expected variant ${variants.join(', ')}`);
   if (!Number.isSafeInteger(seed) || seed < 1 || !Number.isSafeInteger(tries) || tries < 1
       || !Number.isSafeInteger(seed + tries)) throw new Error('Expected a positive seed and try count');
 
-  const { tiles, spec, earlyKey, fork, release, context, clockRoof } = recipe(variant);
+  const footprint = layouts.get(layout);
+  if (layout !== 'rectangle' && !footprint?.variants.includes(variant)) {
+    return { fail: 'layout does not support this variant' };
+  }
+  const { tiles, spec, earlyKey, fork, release, context, clockRoof } = recipe(variant, footprint);
   const { tilePx } = measure(tiles, { minimum: 60 });
   if (tilePx < 60 || !tiles.every((tile, i) => supportedAt(tiles, tile, i))) return { fail: 'layout' };
+  if (footprint) {
+    const { straight, edge, stray } = shape(tiles);
+    if (tiles.length % 2 || straight || edge || stray) return { fail: 'layout' };
+  }
   const finish = targetFor(idea);
   const reserve = variant === 'reserve' || !!fork;
   const keyRelease = variant === 'release-keys';
@@ -389,7 +423,8 @@ function build({ variant = 'clock', seed = 1, tries = 200, idea = 'existing' } =
     if (competing && new Set(openingChoices.map(choice => choice.goal)).size < 2) continue;
     if (earlyClock && !openingChoices.some(choice => choice.tile === design.clock.i && choice.relaxed === 'lose')) continue;
     return {
-      variant, seed: deal, idea, minimum: timing.k, proof, secondWrongTurn: earlyKey, finishPair, openingChoices,
+      variant, seed: deal, idea, ...(footprint ? { layout } : {}),
+      minimum: timing.k, proof, secondWrongTurn: earlyKey, finishPair, openingChoices,
       ...(refundFork ? { refundFork } : {}),
       ...(finishRelease ? { finishRelease } : {}),
       ...(finishContext ? { finishContext } : {}),
@@ -401,9 +436,9 @@ function build({ variant = 'clock', seed = 1, tries = 200, idea = 'existing' } =
 }
 
 if (require.main === module) {
-  const [variant, seed, output, tries, idea] = process.argv.slice(2);
-  if (!output) throw new Error(`Usage: node earned_tray.js <${variants.join('|')}> <seed> <output.json> [tries] [new|existing]`);
-  const result = build({ variant, seed: Number(seed), tries: tries === undefined ? undefined : Number(tries), idea });
+  const [variant, seed, output, tries, idea, layout] = process.argv.slice(2);
+  if (!output) throw new Error(`Usage: node earned_tray.js <${variants.join('|')}> <seed> <output.json> [tries] [new|existing] [rectangle|${[...layouts.keys()].join('|')}]`);
+  const result = build({ variant, seed: Number(seed), tries: tries === undefined ? undefined : Number(tries), idea, layout });
   if (result.design) {
     fs.writeFileSync(output, JSON.stringify(result, null, 2) + '\n');
     console.log(output);

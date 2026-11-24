@@ -87,6 +87,31 @@ test('an explicitly new idea must finish at two pressure parks in both samples',
   assert.equal(buildBoard(brief, { tries: 1 }).design, undefined);
 });
 
+test('builds familiar traps on four distinct selectable floor layouts', () => {
+  const choices = [
+    ['pair-context', 'short-shelf', 1, ['######', '######', '######', '######', '######', '######', '......']],
+    ['early-clock', 'recessed-end', 37, ['######', '######', '######', '######', '######', '##..##', '....##']],
+    ['keys', 'stepped-side', 15, ['..####', '.#####', '######', '######', '######', '.#####', '..####']],
+    ['covered-clock', 'cut-corner', 7, ['###...', '######', '######', '######', '######', '######', '###.##']],
+  ];
+  for (const [variant, layout, seed, rows] of choices) {
+    const result = buildBoard({ mode: 'earnedTray', variant, layout, seed }, { tries: 1 });
+    const { design } = result;
+    assert.ok(design, result.fail);
+    assert.equal(result.layout, layout);
+    const floor = new Set(design.tiles.filter(tile => tile[2] === 0).map(([x,y]) => `${x},${y}`));
+    const actual = Array.from({ length: 7 }, (_, y) =>
+      Array.from({ length: 6 }, (_, x) => floor.has(`${2*x},${2*y}`) ? '#' : '.').join(''));
+    assert.deepEqual(actual, rows);
+    assert.ok(E.replay(design, design.solution).ok);
+    assert.equal(winningFullTrayFailure(design), null);
+    assert.ok(result.finishPressure >= 3 && result.finishPressure <= 5);
+    assert.ok(result.independentFinishPressure >= 3 && result.independentFinishPressure <= 5);
+  }
+  assert.equal(buildBoard({ mode: 'earnedTray', variant: 'keys', layout: 'recessed-end' }, { tries: 1 }).fail,
+    'layout does not support this variant');
+});
+
 test('builds separate tempting key and clock goals like the live opening traces', () => {
   const result = build({ variant: 'competing', seed: 642, tries: 1 });
   assert.ok(result.design, result.fail);
