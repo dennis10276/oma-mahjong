@@ -342,7 +342,7 @@ function decide(row, { model, qualified }) {
     : prediction === 'too-hard' ? 'Count is above the calibrated range' : 'Too few delayed, goal-directed wrong plans' };
 }
 
-module.exports = { auditPlan, measure, split, fit, score, decide, calibrate };
+module.exports = { auditPlan, measure, familyOf, split, fit, score, decide, calibrate };
 
 if (require.main === module) {
   try {

@@ -44,11 +44,24 @@ clock check. `{strict:true}` retains the older single-tile rules for comparison.
 The independent review and current limits are in `analysis/builder/codex-review.md`.
 
 The earned-tray recipe deals new boards around two ice fronts. Use
-`node source/tools/builder/bank/earned_tray.js <clock|keys> <seed> <output.json> [tries]`.
+`node source/tools/builder/bank/earned_tray.js <clock|keys|reserve|competing> <seed> <output.json> [tries]`.
 It requires a complete win and a competing local thaw that fills the tray without
 a way out, even with the clock relaxed. The `keys` variant also proves that taking
-the first exposed key can strand the tray. Mixed-chain builds can request the
-local thaw check with `targets.requireStrandedThaw`.
+the first exposed key can strand the tray. The `reserve` variant checks a
+visible pair that can be played after the clock but makes the board unsolvable.
+The `competing` variant requires a visible key and a separate clock-directed
+opening that can both be played and make the board unwinnable.
+All four screen for a winning opening sweep and verify finish pressure on two
+samples. The main builder exposes these recipes through
+`build({ mode: 'earnedTray', variant: 'reserve', seed: 454 }, { tries: 1 })`.
+Mixed-chain builds can request the local thaw check with
+`targets.requireStrandedThaw`.
+
+`node source/tools/builder/bank/choice_benchmark.js <corpus.json> [results.json]`
+reports proof incidence by reference class and layout-family split. The corpus
+has an `index` array of records with `id`, an exact `board`, and an optional
+`class` of `easy`, `good` or `too-hard`. Missing proofs remain inconclusive about
+the wider puzzle difficulty.
 
 Task 10 uses `task10_study.js prepare <dir>`, then `measure <dir> all <workers>`.
 The preparation freezes 24 same-puzzle bases, their variants, and the complete

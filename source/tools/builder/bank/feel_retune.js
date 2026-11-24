@@ -17,6 +17,7 @@ const { tuningTarget } = require('../chained_finish_profiles.js');
 
 function tuneFeel(design, opts = {}) {
   const Tl = require('./tail.js'), SEP = require('./separate.js'), { expert } = require('./feel.js');
+  const E = require('../engine.js');
   const feel = (d, o) => { const r = expert(d, { playouts: Math.max(5, Math.round(o.playouts / 25)), seed: o.seed, wrong: o.playouts >= 400 }); r.pp = +(r.parkAt[1] + r.parkAt[2]).toFixed(1);
     // Optional Task 18 feedback target: low measured pressure alone allowed
     // tails full of fatal natural choices. Require an easier natural finish too.
@@ -34,13 +35,19 @@ function tuneFeel(design, opts = {}) {
   const before = feel(design, { playouts: 400, seed: 9 });
   let cur = structuredClone(design), curF = fl(cur), curM = miss(curF), best = null, proposals = 0, accepted = 0; const fails = {};
   const fail = k => { fails[k] = (fails[k] || 0) + 1; };
-  while (Date.now() - t0 < wall) {
+  while (Date.now() - t0 < wall && proposals < (opts.maxProposals ?? Infinity)) {
     proposals++;
     const u = movable[rnd(movable.length)], v = movable[rnd(movable.length)];
     if (u === v || cur.faces[u] === cur.faces[v]) continue;
     const d = structuredClone(cur); [d.faces[u], d.faces[v]] = [d.faces[v], d.faces[u]];
     const ct = SEP.closeTwins(d, geo); if (ct.visible > c0.visible || ct.share > Math.max(0.05, c0.share) || ct.four > c0.four) { fail('twins'); continue; }
-    if (!Tl.tailReplays(P, d.faces)) { const r = Tl.cappedTail(d, 3, { peek: false, nodes: 10000, ms: 100 }); if (r.result !== 'win') { fail('unsolved'); continue; } d.solution = r.solution; }
+    if (opts.keepRoute) {
+      if (!E.replay(d, d.solution).ok) { fail('unsolved'); continue; }
+    } else if (!Tl.tailReplays(P, d.faces)) {
+      const r = Tl.cappedTail(d, 3, { peek: false, nodes: 10000, ms: 100 });
+      if (r.result !== 'win') { fail('unsolved'); continue; }
+      d.solution = r.solution;
+    }
     const gm = Tl.gambleFacts(d); if (gm.gamble > g0.gamble || gm.blindOnly > g0.blindOnly) { fail('gamble'); continue; }
     const f = fl(d), m = miss(f);
     if (m < curM || (m === curM && rnd(3) === 0) || (m < curM + 0.05 && rnd(12) === 0)) { cur = d; curF = f; curM = m; accepted++; } else { fail('noGain'); continue; }

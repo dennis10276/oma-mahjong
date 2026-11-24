@@ -8,12 +8,14 @@ const { fullTrayFailure } = require('../builder');
 const { targetFor, meets } = require('../chained_finish_profiles');
 const { closeTwins } = require('./separate');
 const { expert } = require('./feel');
+const { tuneFeel } = require('./feel_retune');
 const { findThawTrap } = require('./thaw_trap');
+const { findOpeningSweep, findOpeningChoices, findFinishPair } = require('./choice_checks');
 const { supportedAt } = require('./detower');
 const { measure } = require('../footprint');
 
 function recipe(variant) {
-  const keysFirst = variant === 'keys';
+  const keysFirst = variant === 'keys' || variant === 'competing';
   const tiles = [];
   function row(z, y, xs) {
     for (const x of xs) tiles.push([x, y, z]);
@@ -25,9 +27,9 @@ function recipe(variant) {
   row(1, 7, [1, 3, 5, 7, 9]);
   row(1, 9, [1, 3, 7, 9]);
   row(1, 11, [1, 3, 7, 9]);
-  row(2, 1, keysFirst ? [8] : [2, 8]);
+  if (!keysFirst) row(2, 1, [2, 8]);
   row(2, 5, [2]);
-  row(2, 7, [8]);
+  row(2, 7, keysFirst ? [4, 8] : [8]);
   row(2, 9, [8]);
   if (keysFirst) row(2, 11, [2]);
 
@@ -43,10 +45,10 @@ function recipe(variant) {
   const melter = at(9, 7, 1);
   const rightIce = at(9, 5, 1);
   const leftIce = at(1, 7, 1);
-  const nearKey = at(10, 6, 0);
+  const nearKey = variant === 'competing' ? at(2, 11, 2) : at(10, 6, 0);
   const farKey = keysFirst ? at(0, 6, 0) : at(0, 4, 0);
   const flank = at(7, 7, 1);
-  const flankMate = keysFirst ? at(2, 11, 2) : at(2, 1, 2);
+  const flankMate = keysFirst ? at(4, 7, 2) : at(2, 1, 2);
   const lock = at(5, 7, 1);
   const leftMelt = at(3, 7, 1);
   const clock = keysFirst ? at(10, 10, 0) : at(0, 6, 0);
@@ -63,7 +65,8 @@ function recipe(variant) {
   };
   let route;
   if (keysFirst) {
-    // Each ice front reveals a key. Parking the first key before clearing the flank costs the last slot.
+    // The centre roof interrupts the side-first sweep. Pair it with the flank
+    // to open the middle without spending the two slots reserved for the thaw.
     const [cap, edge, corner] = [at(8, 9, 2), at(9, 9, 1), at(9, 11, 1)];
     route = [...opening, flank, flankMate, lock, leftMelt, leftIce, nearKey, farKey, cap, edge, corner, clock];
     pairs.leftIce.push(cap);
@@ -72,19 +75,29 @@ function recipe(variant) {
     route = [...opening, nearKey, farKey, flank, flankMate, lock, leftMelt, leftIce, clock];
     Object.assign(pairs, { clock: [melter, clock], lock: [lock] });
   }
-  return {
-    tiles,
-    earlyKey: keysFirst ? [...opening, nearKey] : null,
-    spec: {
-      clock,
-      route,
-      ice: { [leftIce]: 2, [rightIce]: 2 },
-      locks: keysFirst ? [clock] : [lock, clock],
-      keys: [nearKey, farKey],
-      down: .23,
-      pairs,
-    },
+  const spec = {
+    clock,
+    route,
+    ice: { [leftIce]: 2, [rightIce]: 2 },
+    locks: keysFirst ? [clock] : [lock, clock],
+    keys: [nearKey, farKey],
+    down: .23,
+    pairs,
   };
+  if (variant === 'reserve') {
+    const upperRoof = at(8, 1, 2), upperFace = at(9, 1, 1), upperRefund = at(10, 2, 0);
+    const lowerRoof = at(8, 9, 2), lowerFace = at(9, 9, 1), lowerRefund = at(10, 8, 0);
+    const openUpper = at(3, 3, 1), openLower = at(3, 9, 1);
+    // The clock leaves two pictures waiting. The visible pair is tempting,
+    // but each of its tiles is needed to lift a different roof's buried twin.
+    pairs.lock.push(upperRefund);
+    pairs.leftIce.push(lowerRefund);
+    Object.assign(pairs, { reserve: [openUpper, openLower, upperFace, lowerFace], upperRoof: [upperRoof], lowerRoof: [lowerRoof] });
+    spec.tail = [upperRoof, [openUpper, upperFace], upperRefund, lowerRoof, [openLower, lowerFace], lowerRefund];
+    spec.peek = true;
+    spec.downTiles = [upperFace, lowerFace];
+  }
+  return { tiles, spec, earlyKey: variant === 'keys' ? [...opening, nearKey] : null };
 }
 
 function strandsWithEarlyKey(design, path) {
@@ -98,8 +111,19 @@ function strandsWithEarlyKey(design, path) {
   return state.tray.length === 3 && E.winnable(game, state, { nodes: 100000, ms: 1000 }).result === 'lose';
 }
 
+const pressureParks = feel => +(feel.parkAt[1] + feel.parkAt[2]).toFixed(1);
+const finishFeel = (design, playouts, seed) => expert(design, { playouts, seed, wrong: false });
+// Require enough time for the error to look promising without the prolonged
+// dead finish seen on the shipped repeat-pressure exemplar.
+const finiteFinish = proof => proof?.runwayExact && proof.runway <= 18;
+const clockNeed = (design, upTo) => D.clockNeed(D.clockGames(design), E.start(E.game(design)), {
+  upTo, nodes: 90000, w: D.work(350000, 4000),
+});
+
 function build({ variant = 'clock', seed = 1, tries = 200 } = {}) {
-  if (!['clock', 'keys'].includes(variant)) throw new Error('Expected clock or keys');
+  if (!['clock', 'keys', 'reserve', 'competing'].includes(variant)) {
+    throw new Error('Expected clock, keys, reserve or competing');
+  }
   if (!Number.isSafeInteger(seed) || seed < 1 || !Number.isSafeInteger(tries) || tries < 1
       || !Number.isSafeInteger(seed + tries)) throw new Error('Expected a positive seed and try count');
 
@@ -107,34 +131,60 @@ function build({ variant = 'clock', seed = 1, tries = 200 } = {}) {
   const { tilePx } = measure(tiles, { minimum: 60 });
   if (tilePx < 60 || !tiles.every((tile, i) => supportedAt(tiles, tile, i))) return { fail: 'layout' };
   const finish = targetFor('existing');
+  const reserve = variant === 'reserve';
   for (let deal = seed; deal < seed + tries; deal++) {
-    const { design, fail } = H.fill({ ...spec, pressure: 1.2 + (deal % 4) * .2 }, tiles, deal);
+    const pressure = reserve ? 2 + (deal % 5) * .25 : 1.2 + (deal % 4) * .2;
+    let { design, fail } = H.fill({ ...spec, pressure }, tiles, deal);
     if (!design) return { fail };
     if (!closeTwins(design).meets) continue;
 
     design.clock.n = spec.route.length + 1;
-    const timing = D.clockNeed(D.clockGames(design), E.start(E.game(design)), {
-      upTo: spec.route.length, nodes: 90000, w: D.work(350000, 4000),
-    });
+    const timing = clockNeed(design, spec.route.length);
     if (!timing.exact || timing.k == null || timing.k < 10) continue;
     design.clock.n = timing.k + 1;
     if (!E.replay(design, design.solution).ok) continue;
 
-    const proof = findThawTrap(design);
-    if (!proof || fullTrayFailure(design)) continue;
+    let proof = findThawTrap(design);
+    if (!proof || findOpeningSweep(design) || fullTrayFailure(design)) continue;
     if (earlyKey && !strandsWithEarlyKey(design, earlyKey)) continue;
-    const feel = expert(design, { playouts: 16, seed: 9, wrong: false });
-    if (!meets(finish, feel)) continue;
-
-    const finishPressure = +(feel.parkAt[1] + feel.parkAt[2]).toFixed(1);
-    return { variant, seed: deal, minimum: timing.k, proof, secondWrongTurn: earlyKey, finishPressure, design };
+    let finishPair = reserve ? findFinishPair(design) : null;
+    if (reserve && !finiteFinish(finishPair)) continue;
+    let feel = finishFeel(design, 16, 9);
+    let independent = finishFeel(design, 64, 844);
+    if (reserve && (!meets(finish, feel) || !meets(finish, independent))) {
+      const tune = tuneFeel(design, {
+        seed: deal, ms: 4000, maxProposals: 1400, keepRoute: true, tolerance: 0,
+        freeze: [...spec.route, ...spec.tail.flat()],
+        target: { ...finish, parks: 3.2 },
+        validate(candidate) {
+          const timingAgain = clockNeed(candidate, timing.k);
+          const ok = timingAgain.exact && timingAgain.k === timing.k
+            && findThawTrap(candidate) && !findOpeningSweep(candidate) && !fullTrayFailure(candidate)
+            && finiteFinish(findFinishPair(candidate)) && meets(finish, finishFeel(candidate, 64, 844));
+          return { ok, why: 'reserveProof' };
+        },
+      });
+      if (!tune.met) continue;
+      design = tune.design;
+      proof = findThawTrap(design);
+      finishPair = findFinishPair(design);
+      feel = finishFeel(design, 16, 9);
+      independent = finishFeel(design, 64, 844);
+    }
+    if (!meets(finish, feel) || !meets(finish, independent)) continue;
+    const openingChoices = variant === 'competing' ? findOpeningChoices(design) : [];
+    if (variant === 'competing' && new Set(openingChoices.map(choice => choice.goal)).size < 2) continue;
+    return {
+      variant, seed: deal, minimum: timing.k, proof, secondWrongTurn: earlyKey, finishPair, openingChoices,
+      finishPressure: pressureParks(feel), independentFinishPressure: pressureParks(independent), design,
+    };
   }
   return { fail: 'no deal passed the checks', tries };
 }
 
 if (require.main === module) {
   const [variant, seed, output, tries] = process.argv.slice(2);
-  if (!output) throw new Error('Usage: node earned_tray.js <clock|keys> <seed> <output.json> [tries]');
+  if (!output) throw new Error('Usage: node earned_tray.js <clock|keys|reserve|competing> <seed> <output.json> [tries]');
   const result = build({ variant, seed: Number(seed), tries: tries === undefined ? undefined : Number(tries) });
   if (result.design) {
     fs.writeFileSync(output, JSON.stringify(result, null, 2) + '\n');
