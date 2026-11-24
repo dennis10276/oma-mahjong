@@ -306,6 +306,31 @@ function findOpeningChoices(design) {
   return choices;
 }
 
+function auditClockCover(design, cover) {
+  const game = E.game(design);
+  if (!game.clock || !game.nb.above[game.clock.i].includes(cover)) return null;
+  const clock = game.clock.i;
+  const start = E.start(game);
+  const visible = O.visibility(game, start);
+  if (!visible[cover].picture || !visible[clock].role || game.down[clock]) return null;
+  const lifted = replayPrefix(game, [cover]);
+  const rushed = lifted && replayPrefix(game, [clock], lifted);
+  if (!rushed?.clockTaken || rushed.tray.length !== lifted.tray.length + 1) return null;
+
+  const limits = { nodes: 22000, ms: Infinity };
+  const staysOpen = E.winnable(game, lifted, limits);
+  if (staysOpen.result !== 'win' || E.winnable(game, rushed, limits).result !== 'lose') return null;
+  const { depth: runway } = E.longest(game, rushed, 12, 30000);
+  if (runway < minimumRunway) return null;
+
+  let state = lifted;
+  for (const action of staysOpen.path) {
+    state = E.step(game, state, action);
+    if (state.clockTaken) return { cover, clock, runway, winningClockMove: state.moves };
+  }
+  return null;
+}
+
 function losingPair(game, state) {
   if (state.tray.length >= E.SLOTS - 1) return null;
   const waiting = new Set(state.tray.map(tile => game.faces[tile]));
@@ -350,5 +375,5 @@ function findFinishPair(design) {
 
 module.exports = {
   auditOpeningTrace, auditRefundFork, auditTrayRelease, forcesReleaseAfterClock,
-  auditFinishMatch, auditPairContext, findOpeningSweep, findOpeningChoices, findFinishPair,
+  auditFinishMatch, auditPairContext, auditClockCover, findOpeningSweep, findOpeningChoices, findFinishPair,
 };

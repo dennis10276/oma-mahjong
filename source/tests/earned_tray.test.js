@@ -52,6 +52,41 @@ test('builds an exposed clock that looks won early and still needs a full tray t
   assert.ok(result.independentFinishPressure >= 3 && result.independentFinishPressure <= 5);
 });
 
+test('building a covered clock keeps the useful cover safe and makes the premature clock lose', () => {
+  const result = buildBoard({ mode: 'earnedTray', variant: 'covered-clock', seed: 18 }, { tries: 1 });
+  const { design, proof, clockCover } = result;
+  assert.ok(design, result.fail);
+  assert.equal(design.clock.n, result.minimum);
+  assert.ok(result.minimum >= 10);
+  assert.equal(winningFullTrayFailure(design), null);
+  assert.ok(E.replay(design, design.solution).ok);
+
+  const game = E.game(design);
+  const start = E.start(game);
+  assert.equal(E.legal(game, start).includes(design.clock.i), false);
+  const cover = E.step(game, start, clockCover.cover);
+  assert.equal(E.winnable(game, cover).result, 'win');
+  const hurry = E.step(game, cover, design.clock.i);
+  assert.equal(hurry.clockTaken, true);
+  assert.equal(hurry.tray.length, 2);
+  assert.equal(E.winnable(game, hurry).result, 'lose');
+  assert.ok(clockCover.runway >= 5);
+  assert.ok(clockCover.winningClockMove > hurry.moves);
+  assert.ok(result.finishPressure >= 3 && result.finishPressure <= 5);
+  assert.ok(result.independentFinishPressure >= 3 && result.independentFinishPressure <= 5);
+  assert.ok(!proof.wrongThaw.includes(clockCover.cover));
+});
+
+test('an explicitly new idea must finish at two pressure parks in both samples', () => {
+  const brief = { mode: 'earnedTray', variant: 'pair-context', seed: 5 };
+  const result = buildBoard({ ...brief, idea: 'new' }, { tries: 1 });
+  assert.ok(result.design, result.fail);
+  assert.ok(result.finishContext);
+  assert.equal(result.finishPressure, 2);
+  assert.equal(result.independentFinishPressure, 2);
+  assert.equal(buildBoard(brief, { tries: 1 }).design, undefined);
+});
+
 test('builds separate tempting key and clock goals like the live opening traces', () => {
   const result = build({ variant: 'competing', seed: 642, tries: 1 });
   assert.ok(result.design, result.fail);

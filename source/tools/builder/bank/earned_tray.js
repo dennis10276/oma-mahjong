@@ -12,18 +12,19 @@ const { expert } = require('./feel');
 const { tuneFeel } = require('./feel_retune');
 const { findThawTrap } = require('./thaw_trap');
 const {
-  auditRefundFork, auditTrayRelease, forcesReleaseAfterClock, auditPairContext,
+  auditRefundFork, auditTrayRelease, forcesReleaseAfterClock, auditPairContext, auditClockCover,
   findOpeningSweep, findOpeningChoices, findFinishPair,
 } = require('./choice_checks');
 const { supportedAt } = require('./detower');
 const { measure } = require('../footprint');
-const variants = ['clock', 'early-clock', 'keys', 'reserve', 'competing', 'refund', 'release', 'release-roofs', 'release-keys', 'pair-context'];
+const variants = ['clock', 'early-clock', 'covered-clock', 'keys', 'reserve', 'competing', 'refund', 'release', 'release-roofs', 'release-keys', 'pair-context'];
 
 function recipe(variant) {
   const keyRelease = variant === 'release-keys';
   const keysFirst = variant === 'keys' || variant === 'competing' || keyRelease;
   const refund = variant === 'refund';
   const pairContext = variant === 'pair-context';
+  const coveredClock = variant === 'covered-clock';
   const roofs = variant === 'release-roofs';
   const hasRelease = variant === 'release' || roofs || keyRelease;
   const tiles = [];
@@ -32,11 +33,12 @@ function recipe(variant) {
   }
   for (let y = 0; y <= 12; y += 2) row(0, y, refund && y === 12 ? [2, 4, 6, 8, 10] : [0, 2, 4, 6, 8, 10]);
   row(1, 1, [1, 3, 7, 9]);
-  row(1, 3, [3, 7, 9]);
+  row(1, 3, coveredClock ? [3, 5, 9] : [3, 7, 9]);
   row(1, 5, [1, 3, 5, 7, 9]);
   row(1, 7, [1, 3, 5, 7, 9]);
   row(1, 9, [1, 3, 7, 9]);
-  row(1, 11, refund ? [3, 7, 9] : [1, 3, 7, 9]);
+  if (coveredClock) row(1, 12, [1, 3, 5, 9]);
+  else row(1, 11, refund ? [3, 7, 9] : [1, 3, 7, 9]);
   if (!keysFirst) row(2, 1, [2, 8]);
   row(2, 5, refund ? [2, 4, 6] : [2]);
   row(2, 7, keysFirst ? [4, 8] : [8]);
@@ -97,13 +99,19 @@ function recipe(variant) {
     down: .23,
     pairs,
   };
-  if (variant === 'early-clock') {
+  let clockRoof;
+  if (variant === 'early-clock' || coveredClock) {
     // The clock is visible on the far side while its picture is locked on the
     // left. Parking the clock early spends a slot needed for the right thaw.
-    spec.clock = at(9, 11, 1);
-    route.push(spec.clock);
+    if (coveredClock) {
+      clockRoof = at(9, 12, 1);
+      spec.clock = at(10, 12, 0);
+      pairs.leftIce.push(clockRoof);
+      route.push(clockRoof);
+    } else spec.clock = at(9, 11, 1);
     pairs.lock.push(melter);
     pairs.clock = [clock, spec.clock];
+    route.push(spec.clock);
   }
   let context;
   if (variant === 'reserve' || refund || pairContext) {
@@ -169,7 +177,7 @@ function recipe(variant) {
     release.offers = releaseOffers(tiles, spec, release.prefix, release.route, release.belowMate, release.roofs);
   }
   const fork = refund ? { prefix: opening.slice(0, -1), intended: rightIce, decoy: at(1, 9, 1) } : null;
-  return { tiles, spec, earlyKey: variant === 'keys' ? [...opening, nearKey] : null, fork, release, context };
+  return { tiles, spec, earlyKey: variant === 'keys' ? [...opening, nearKey] : null, fork, release, context, clockRoof };
 }
 
 // Select real pairs that a wrong park can open. Tile ids stand in for unfilled
@@ -278,22 +286,23 @@ function addRefundFork(design, { prefix, intended, decoy }, minimum) {
   return null;
 }
 
-function build({ variant = 'clock', seed = 1, tries = 200 } = {}) {
+function build({ variant = 'clock', seed = 1, tries = 200, idea = 'existing' } = {}) {
   if (!variants.includes(variant)) throw new Error(`Expected variant ${variants.join(', ')}`);
   if (!Number.isSafeInteger(seed) || seed < 1 || !Number.isSafeInteger(tries) || tries < 1
       || !Number.isSafeInteger(seed + tries)) throw new Error('Expected a positive seed and try count');
 
-  const { tiles, spec, earlyKey, fork, release, context } = recipe(variant);
+  const { tiles, spec, earlyKey, fork, release, context, clockRoof } = recipe(variant);
   const { tilePx } = measure(tiles, { minimum: 60 });
   if (tilePx < 60 || !tiles.every((tile, i) => supportedAt(tiles, tile, i))) return { fail: 'layout' };
-  const finish = targetFor('existing');
+  const finish = targetFor(idea);
   const reserve = variant === 'reserve' || !!fork;
   const keyRelease = variant === 'release-keys';
   const earlyClock = variant === 'early-clock';
+  const coveredClock = clockRoof !== undefined;
   // One spare move lets the player park a cover from the left shelf early.
-  const spare = keyRelease ? 0 : 1;
+  const spare = keyRelease || coveredClock ? 0 : 1;
   for (let deal = seed; deal < seed + tries; deal++) {
-    const pressure = reserve || earlyClock ? 2 + (deal % 5) * .25 : 1.2 + (deal % 4) * .2;
+    const pressure = reserve || earlyClock || coveredClock ? 2 + (deal % 5) * .25 : 1.2 + (deal % 4) * .2;
     const dealSpec = context ? arrangePairContext(spec, context, deal)
       : release ? arrangeRelease(spec, release, deal) : { ...spec, pressure };
     if (!dealSpec) continue;
@@ -312,7 +321,7 @@ function build({ variant = 'clock', seed = 1, tries = 200 } = {}) {
     if (!timing.exact || timing.k == null || timing.k < 10
         || ((release || context) && timing.k !== spec.route.length)) continue;
     design.clock.n = timing.k + spare;
-    if (earlyClock && !E.replay(design, design.solution).ok) {
+    if ((earlyClock || coveredClock) && !E.replay(design, design.solution).ok) {
       const game = E.game(design);
       const timed = E.winnable(game, E.start(game), { nodes: 90000, ms: Infinity });
       if (timed.result !== 'win') continue;
@@ -322,6 +331,8 @@ function build({ variant = 'clock', seed = 1, tries = 200 } = {}) {
 
     let proof = keyRelease ? null : findThawTrap(design);
     if ((!keyRelease && !proof) || findOpeningSweep(design) || winningFullTrayFailure(design)) continue;
+    let clockCover = coveredClock ? auditClockCover(design, clockRoof) : null;
+    if (coveredClock && (!clockCover || proof.wrongThaw.includes(clockRoof))) continue;
     if (earlyKey && !strandsWithEarlyKey(design, earlyKey)) continue;
     let finishPair = reserve ? findFinishPair(design) : null;
     if (reserve && !finiteFinish(finishPair)) continue;
@@ -335,23 +346,27 @@ function build({ variant = 'clock', seed = 1, tries = 200 } = {}) {
     }
     let feel = finishFeel(design, 16, 9);
     let independent = finishFeel(design, 64, 844);
-    if (reserve && (!meets(finish, feel) || !meets(finish, independent))) {
+    if ((reserve || coveredClock) && (!meets(finish, feel) || !meets(finish, independent))) {
       const tune = tuneFeel(design, {
         seed: deal, ms: 4000, maxProposals: 1400, keepRoute: true, tolerance: 0,
-        freeze: [...spec.route, ...spec.tail.flat()],
-        target: { ...finish, parks: 3.2 },
+        freeze: [...spec.route, ...(spec.tail ?? []).flat()],
+        target: { ...finish, parks: idea === 'new' ? finish.parks : 3.2 },
         validate(candidate) {
           const timingAgain = clockNeed(candidate, timing.k);
+          const thaw = findThawTrap(candidate);
           const ok = timingAgain.exact && timingAgain.k === timing.k
-            && findThawTrap(candidate) && !findOpeningSweep(candidate) && !winningFullTrayFailure(candidate)
-            && finiteFinish(findFinishPair(candidate)) && meets(finish, finishFeel(candidate, 64, 844));
-          return { ok, why: 'reserveProof' };
+            && thaw && !findOpeningSweep(candidate) && !winningFullTrayFailure(candidate)
+            && (reserve ? finiteFinish(findFinishPair(candidate))
+              : !thaw.wrongThaw.includes(clockRoof) && auditClockCover(candidate, clockRoof))
+            && meets(finish, finishFeel(candidate, 64, 844));
+          return { ok, why: reserve ? 'reserveProof' : 'clockCover' };
         },
       });
       if (!tune.met) continue;
       design = tune.design;
       proof = findThawTrap(design);
-      finishPair = findFinishPair(design);
+      if (reserve) finishPair = findFinishPair(design);
+      if (coveredClock) clockCover = auditClockCover(design, clockRoof);
       feel = finishFeel(design, 16, 9);
       independent = finishFeel(design, 64, 844);
     }
@@ -368,15 +383,17 @@ function build({ variant = 'clock', seed = 1, tries = 200 } = {}) {
       independent = finishFeel(design, 64, 844);
     }
     if (!meets(finish, feel) || !meets(finish, independent)) continue;
+    if (coveredClock && (!clockCover || !proof || proof.wrongThaw.includes(clockRoof))) continue;
     const competing = variant === 'competing' || keyRelease;
     const openingChoices = competing || earlyClock ? findOpeningChoices(design) : [];
     if (competing && new Set(openingChoices.map(choice => choice.goal)).size < 2) continue;
     if (earlyClock && !openingChoices.some(choice => choice.tile === design.clock.i && choice.relaxed === 'lose')) continue;
     return {
-      variant, seed: deal, minimum: timing.k, proof, secondWrongTurn: earlyKey, finishPair, openingChoices,
+      variant, seed: deal, idea, minimum: timing.k, proof, secondWrongTurn: earlyKey, finishPair, openingChoices,
       ...(refundFork ? { refundFork } : {}),
       ...(finishRelease ? { finishRelease } : {}),
       ...(finishContext ? { finishContext } : {}),
+      ...(clockCover ? { clockCover } : {}),
       finishPressure: pressureParks(feel), independentFinishPressure: pressureParks(independent), design,
     };
   }
@@ -384,9 +401,9 @@ function build({ variant = 'clock', seed = 1, tries = 200 } = {}) {
 }
 
 if (require.main === module) {
-  const [variant, seed, output, tries] = process.argv.slice(2);
-  if (!output) throw new Error(`Usage: node earned_tray.js <${variants.join('|')}> <seed> <output.json> [tries]`);
-  const result = build({ variant, seed: Number(seed), tries: tries === undefined ? undefined : Number(tries) });
+  const [variant, seed, output, tries, idea] = process.argv.slice(2);
+  if (!output) throw new Error(`Usage: node earned_tray.js <${variants.join('|')}> <seed> <output.json> [tries] [new|existing]`);
+  const result = build({ variant, seed: Number(seed), tries: tries === undefined ? undefined : Number(tries), idea });
   if (result.design) {
     fs.writeFileSync(output, JSON.stringify(result, null, 2) + '\n');
     console.log(output);
