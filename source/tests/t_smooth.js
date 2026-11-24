@@ -43,4 +43,28 @@ module.exports = [
     t.eq(await p.evaluate(() => document.querySelectorAll('#fxl .fxp').length), 0, 'and are cleaned up');
   }},
 
+  { name: 'smooth: level 328 paints the match before starting its particle effects', async run(t, { startLevel }) {
+    const p = await t.phone({ size: [392, 730], state: { name: 'Test', level: 328, theme: 'sunflower' } });
+    await startLevel(p, 328);
+    await p.evaluate(() => {
+      const [a, b] = __mj.solveNow(250000);
+      const score = $('#score');
+      const observer = new MutationObserver(() => {
+        observer.disconnect();
+        requestAnimationFrame(() => {
+          window.firstMatchFrame = { score: score.textContent, particles: document.querySelectorAll('#fxl .fxp').length };
+        });
+      });
+      observer.observe(score, { childList: true });
+      for (const i of [a, b]) {
+        __mj.onTap(i);
+        if (G.alive[i]) __mj.onTap(i);
+      }
+    });
+    await p.waitForFunction(() => window.firstMatchFrame, null, { timeout: 3000 });
+    t.eq(await p.evaluate(() => window.firstMatchFrame), { score: '10', particles: 0 }, 'the score is ready to paint before laying out the particles');
+    await p.waitForFunction(() => document.querySelectorAll('#fxl .fxp').length > 0, null, { timeout: 3000 });
+    t.ok(await p.evaluate(() => [...document.querySelectorAll('#fxl .fxp')].every(el => el.getAnimations().length === 1)), 'the match particles still animate');
+  }},
+
 ];

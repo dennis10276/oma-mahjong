@@ -552,8 +552,6 @@ function onMatch(c, face, gold) {
   if (G.combo > S.bestCombo) S.bestCombo = G.combo;
   G.st.mc = Math.max(G.st.mc, G.combo);
   const sunny = S.theme === 'sunflower', big = G.combo >= 3;
-  FX.burst(c.x, c.y - 10, sunny ? 12 : big ? 30 : 20, big);
-  if (sunny) { FX.emoji(c.x, c.y - 10, big ? ['🌻', '🌼', '🐝', '✨'] : ['🌻', '🌼', '✨'], big ? 8 : 5); if (big && G.combo % 2 === 1) bee(); }
   const superCombo = G.combo % sc.maxCombo === 0;
   if (superCombo) setTimeout(() => { Sound.supercombo(); flash(); praise(tx('superCombo')); FX.burst(innerWidth / 2, innerHeight / 2.4, 46, true); if (sunny) bee(); buzz([20, 40, 20, 40, 40]); }, 120);
   floatScore('+' + pts);
@@ -568,6 +566,17 @@ function onMatch(c, face, gold) {
   else if (left > 0 && mileOf() > G.mile) milestone(mileOf());
   else if (big && G.combo % 2 === 1) { const P = tx('praiseList'); praise(P[Math.min(P.length - 1, Math.floor(Math.random() * 3) + (G.combo - 3))]); }
   else if (left === 4) praise(tx('almostDone'));
+
+  // Let the tiles and score paint before adding particles, which the score's layout reads would have to process.
+  const game = G, showBee = big && G.combo % 2 === 1;
+  afterPaint(() => {
+    if (G !== game || curScreen !== 'game') return;
+    FX.burst(c.x, c.y - 10, sunny ? 12 : big ? 30 : 20, big);
+    if (sunny) {
+      FX.emoji(c.x, c.y - 10, big ? ['🌻', '🌼', '🐝', '✨'] : ['🌻', '🌼', '✨'], big ? 8 : 5);
+      if (showBee) bee();
+    }
+  });
 }
 /* a quarter, half and three quarters of the pile cleared: a little party on the progress bar */
 function mileOf() { const n = G.tiles.length, gone = n - aliveCount() - G.tray.length; return Math.min(3, Math.floor(gone / n * 4)); }
