@@ -16,13 +16,14 @@ const {
 } = require('./choice_checks');
 const { supportedAt } = require('./detower');
 const { measure } = require('../footprint');
-const variants = ['clock', 'keys', 'reserve', 'competing', 'refund', 'release', 'release-roofs'];
+const variants = ['clock', 'keys', 'reserve', 'competing', 'refund', 'release', 'release-roofs', 'release-keys'];
 
 function recipe(variant) {
-  const keysFirst = variant === 'keys' || variant === 'competing';
+  const keyRelease = variant === 'release-keys';
+  const keysFirst = variant === 'keys' || variant === 'competing' || keyRelease;
   const refund = variant === 'refund';
   const roofs = variant === 'release-roofs';
-  const hasRelease = variant === 'release' || roofs;
+  const hasRelease = variant === 'release' || roofs || keyRelease;
   const tiles = [];
   function row(z, y, xs) {
     for (const x of xs) tiles.push([x, y, z]);
@@ -39,7 +40,8 @@ function recipe(variant) {
   row(2, 7, keysFirst ? [4, 8] : [8]);
   row(2, 9, [8]);
   if (keysFirst) row(2, 11, [2]);
-  if (hasRelease) tiles.push([5, 9, 1], [5, 11, 1]);
+  if (keyRelease) tiles.push([5, 1, 1], [5, 3, 1], [2, 1, 2], [8, 1, 2]);
+  else if (hasRelease) tiles.push([5, 9, 1], [5, 11, 1]);
   if (roofs) tiles.push([2, 9, 2], [8, 11, 2]);
 
   function at(x, y, z) {
@@ -54,7 +56,7 @@ function recipe(variant) {
   const melter = at(9, 7, 1);
   const rightIce = at(9, 5, 1);
   const leftIce = at(1, 7, 1);
-  const nearKey = variant === 'competing' ? at(2, 11, 2) : at(10, 6, 0);
+  const nearKey = variant === 'competing' || keyRelease ? at(2, 11, 2) : at(10, 6, 0);
   const farKey = keysFirst ? at(0, 6, 0) : at(0, 4, 0);
   const flank = at(7, 7, 1);
   const flankMate = keysFirst ? at(4, 7, 2) : at(2, 1, 2);
@@ -107,17 +109,34 @@ function recipe(variant) {
     spec.downTiles = [upperFace, lowerFace];
   }
   let release;
-  if (hasRelease) {
+  if (keyRelease) {
+    const leftShelf = [at(2, 1, 2), at(1, 1, 1), at(3, 1, 1)];
+    const belowMate = [at(4, 2, 0), at(4, 0, 0), at(2, 0, 0), at(2, 2, 0)];
+    // The thawed tile matches the cap before the keys. The clock then
+    // refunds the flank and leaves the last corner waiting on its own.
+    pairs.roof = [roof, flankMate];
+    pairs.flank = [flank, clock];
+    pairs.rim.push(leftMelt);
+    delete pairs.clock;
+    const lateCap = pairs.leftIce[1];
+    route.splice(route.indexOf(lateCap), 1);
+    route.splice(route.indexOf(nearKey), 0, lateCap);
+    pairs.cap.push(leftShelf[2]);
+    spec.tail = leftShelf;
+    release = { prefix: route, route: leftShelf, belowMate, roofs };
+  } else if (hasRelease) {
     const handoff = at(8, 1, 2);
     const lowerShelf = [at(8, 9, 2), at(9, 9, 1), at(7, 9, 1)];
     const belowMate = [at(6, 8, 0), at(8, 8, 0), at(6, 10, 0), at(8, 10, 0)];
     pairs.lock.push(handoff);
     pairs.leftIce.push(lowerShelf[2]);
     spec.tail = [handoff, ...lowerShelf];
-    spec.peek = true;
     const prefix = [...route, handoff];
-    const offers = releaseOffers(tiles, spec, prefix, lowerShelf, belowMate, roofs);
-    release = { prefix, route: lowerShelf, belowMate, offers, roofs };
+    release = { prefix, route: lowerShelf, belowMate, roofs };
+  }
+  if (release) {
+    spec.peek = true;
+    release.offers = releaseOffers(tiles, spec, release.prefix, release.route, release.belowMate, release.roofs);
   }
   const fork = refund ? { prefix: opening.slice(0, -1), intended: rightIce, decoy: at(1, 9, 1) } : null;
   return { tiles, spec, earlyKey: variant === 'keys' ? [...opening, nearKey] : null, fork, release };
@@ -232,6 +251,9 @@ function build({ variant = 'clock', seed = 1, tries = 200 } = {}) {
   if (tilePx < 60 || !tiles.every((tile, i) => supportedAt(tiles, tile, i))) return { fail: 'layout' };
   const finish = targetFor('existing');
   const reserve = variant === 'reserve' || !!fork;
+  const keyRelease = variant === 'release-keys';
+  // One spare move lets the player park a cover from the left shelf early.
+  const spare = keyRelease ? 0 : 1;
   for (let deal = seed; deal < seed + tries; deal++) {
     const pressure = reserve ? 2 + (deal % 5) * .25 : 1.2 + (deal % 4) * .2;
     const dealSpec = release ? arrangeRelease(spec, release, deal) : { ...spec, pressure };
@@ -246,14 +268,14 @@ function build({ variant = 'clock', seed = 1, tries = 200 } = {}) {
       if (!design) continue;
     } else if (!closeTwins(design).meets) continue;
 
-    design.clock.n = spec.route.length + 1;
+    design.clock.n = spec.route.length + spare;
     const timing = clockNeed(design, spec.route.length);
     if (!timing.exact || timing.k == null || timing.k < 10 || (release && timing.k !== spec.route.length)) continue;
-    design.clock.n = timing.k + 1;
+    design.clock.n = timing.k + spare;
     if (!E.replay(design, design.solution).ok) continue;
 
-    let proof = findThawTrap(design);
-    if (!proof || findOpeningSweep(design) || fullTrayFailure(design)) continue;
+    let proof = keyRelease ? null : findThawTrap(design);
+    if ((!keyRelease && !proof) || findOpeningSweep(design) || fullTrayFailure(design)) continue;
     if (earlyKey && !strandsWithEarlyKey(design, earlyKey)) continue;
     let finishPair = reserve ? findFinishPair(design) : null;
     if (reserve && !finiteFinish(finishPair)) continue;
@@ -298,8 +320,9 @@ function build({ variant = 'clock', seed = 1, tries = 200 } = {}) {
       independent = finishFeel(design, 64, 844);
     }
     if (!meets(finish, feel) || !meets(finish, independent)) continue;
-    const openingChoices = variant === 'competing' ? findOpeningChoices(design) : [];
-    if (variant === 'competing' && new Set(openingChoices.map(choice => choice.goal)).size < 2) continue;
+    const competing = variant === 'competing' || keyRelease;
+    const openingChoices = competing ? findOpeningChoices(design) : [];
+    if (competing && new Set(openingChoices.map(choice => choice.goal)).size < 2) continue;
     return {
       variant, seed: deal, minimum: timing.k, proof, secondWrongTurn: earlyKey, finishPair, openingChoices,
       ...(refundFork ? { refundFork } : {}),

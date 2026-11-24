@@ -101,3 +101,24 @@ test('adds two alternative roofs with playable matches to the release finish', (
   assert.notDeepEqual(roofs[0].pair, roofs[1].pair);
   assert.ok(E.replay(design, design.solution).ok);
 });
+
+test('builds a key-directed opening with a trapped release on the opposite shelf', () => {
+  const { design, finishRelease, openingChoices, minimum, finishPressure, independentFinishPressure, fail } = buildBoard(
+    { mode: 'earnedTray', variant: 'release-keys', seed: 108 }, { tries: 1 },
+  );
+  assert.ok(design, fail);
+  assert.equal(minimum, 17);
+  assert.equal(design.clock.n, minimum);
+  assert.equal(finishRelease.at, minimum);
+  assert.deepEqual(new Set(openingChoices.map(choice => choice.goal)), new Set(['clock', 'key']));
+  assert.ok(openingChoices.every(choice => choice.runway >= 5));
+  const pairs = new Set(finishRelease.decoys.map(move => move.pair.slice().sort().join(',')));
+  assert.ok(pairs.size >= 2);
+  assert.ok(finishRelease.decoys.every(move => move.runway >= 5));
+  assert.ok([finishPressure, independentFinishPressure].every(parks => parks >= 3 && parks <= 5));
+  assert.equal(fullTrayFailure(design), null);
+  const { forcesReleaseAfterClock } = require('../tools/builder/bank/choice_checks');
+  assert.ok(forcesReleaseAfterClock(design, finishRelease));
+  assert.equal(forcesReleaseAfterClock({ ...design, clock: { ...design.clock, n: 18 } }, finishRelease), false);
+  assert.ok(E.replay(design, design.solution).ok);
+});

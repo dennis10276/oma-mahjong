@@ -61,7 +61,9 @@ old slot occupied. Both branches have a proved loss and a legal continuation.
 The clock proof requires the three release tiles to stay on the board until
 the clock is taken on every on-time winning route.
 `release-roofs` puts the two wrong parks on separate top-layer roofs. Both
-release variants can re-pair filler tiles and recheck the entire board.
+release layouts can re-pair filler tiles and recheck the entire board.
+`release-keys` starts with separate losing moves toward the key and the clock,
+then uses the release on the opposite shelf at the exact clock deadline.
 All variants screen for a winning opening sweep and verify finish pressure on two
 samples. The main builder exposes these recipes through
 `build({ mode: 'earnedTray', variant: 'reserve', seed: 454 }, { tries: 1 })`.
