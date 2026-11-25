@@ -95,6 +95,8 @@ module.exports = [
       f.plays.pPreview = { a: { k: 'open', name: 'X', lv: 999, t: Date.now() } };
       f.plays['msg-pOma'] = { a: { k: 'msg', name: 'Message', lv: 999, t: Date.now() } };
       f.plays['cfg-pOma'] = { a: { k: 'cfg', name: 'Settings', lv: 999, t: Date.now() } };
+      f.plays['gift-pOma'] = { a: { k: 'shop_gift', name: 'Gift', lv: 999, t: Date.now() } };
+      f.plays['test-gift-pOma'] = { a: { k: 'shop_gift', name: 'TestGift', lv: 999, t: Date.now() } };
       const db = new FakeDB(f);
       const ctx = await browser.newContext({ viewport: { width: 390, height: 844 } });
       await ctx.route(u => u.hostname.endsWith('firebasedatabase.app'), r => db.handle(r));
@@ -106,7 +108,8 @@ module.exports = [
         t.eq(await p.locator('#fcScore, #fcTitle').count(), 0, 'retired forecast scorecard is absent');
         t.eq(db.log.filter(e => e.p === 'forecasts').length, 0, 'dashboard does not request the retired scorecard feed');
         t.eq(await p.locator('#who option[value="pPreview"]').count(), 0, 'leaked X preview is hidden from the picker');
-        t.eq(await rows(), [['1', '🌷 Anna <3', '27'], ['1', '😊 Dennis', '27'], ['3', '🙂 Logspeler', '15'], ['4', '👵 OmaHanny', '12']], 'levels rank above points, ties share places, logs work without scores and daily/message/settings/test entries are excluded');
+        t.eq(await p.locator('#who option[value="gift-pOma"], #who option[value="test-gift-pOma"]').count(), 0, 'gift queues are excluded from the picker');
+        t.eq(await rows(), [['1', '🌷 Anna <3', '27'], ['1', '😊 Dennis', '27'], ['3', '🙂 Logspeler', '15'], ['4', '👵 OmaHanny', '12']], 'levels rank above points, ties share places, logs work without scores and daily/message/settings/gift/test entries are excluded');
         await p.locator('#ranking a').filter({ hasText: 'Anna <3' }).click();
         t.eq(await p.locator('#name').textContent(), 'Anna <3', 'click opens that player');
         t.eq(await p.locator('#who').inputValue(), 'pAnna', 'picker follows the clicked player');
@@ -261,6 +264,68 @@ module.exports = [
         await p.waitForFunction(() => !!PLAYS.pOma);
         t.eq(await p.evaluate(() => [!!document.querySelector('#fcScore'), typeof ForecastScore, typeof loadForecasts, !!document.querySelector('#predTitle')]),
           [false, 'undefined', 'undefined', true], 'no Voorspeltest card or code; the Voorspelling card stays');
+        t.eq(errs, [], 'no page errors');
+      } finally { await ctx.close(); site.close(); }
+    },
+  },
+  {
+    name: 'dashboard: skips gift queues and formats legacy events, Prep A events and textless postcards',
+    async run(t, { serve, FakeDB, browser, WWW }) {
+      const site = await serve(path.join(__dirname, '..', 'site'), { '/play/': WWW });
+      const f = fixture();
+      const now = Date.now(), min = 60e3;
+      Object.assign(f.plays.pOma, {
+        '-g01': { k: 'end', r: 'win', lv: 11, at: 2, n: 72, left: 0, dur: 140, st: 3, sc: 1500, t: now - 15 * min, v: '1.79' },
+        '-g02': { k: 'chest', pts: 400, t: now - 14 * min, v: '1.79' },
+        '-g03': { k: 'gift', stars: 2, t: now - 13 * min, v: '1.79' },
+        '-g04': { k: 'end', r: 'win', lv: 12, at: 1, n: 72, left: 0, dur: 160, st: 3, sc: 0, cn: 6, pt: 25, t: now - 12 * min, v: '1.80' },
+        '-g05': { k: 'chest', coins: 15, t: now - 11 * min, v: '1.80' },
+        '-g06': { k: 'gift', coins: 8, t: now - 10 * min, v: '1.80' },
+        '-g07': { k: 'grit_bloom', coins: 15, via: 'stuck', t: now - 9 * min, v: '1.80' },
+        '-g08': { k: 'shop_buy', cat: 'tiles', id: 'tiles_dutch', p: 480, t: now - 8 * min, v: '1.80' },
+        '-g09': { k: 'shop_buy', cat: 'helper', id: 'undo', p: 600, t: now - 7 * min, v: '1.80' },
+        '-g10': { k: 'shop_gift_out', to: 'pDen', cat: 'bg', id: 'surf_linen', p: 340, t: now - 6 * min, v: '1.80' },
+        '-g11': { k: 'shop_gift_in', from: 'pDen', cat: 'frame', id: 'frm_velvet', t: now - 5 * min, v: '1.80' },
+        '-g12': { k: 'undo_free', stock: 1, t: now - 4 * min, v: '1.80' },
+        '-g13': { k: 'undo_use', lv: 12, stock: 0, t: now - 3 * min, v: '1.80' },
+        '-g14': { k: 'peek_free', stock: 1, t: now - 2 * min, v: '1.80' },
+        '-g15': { k: 'peek_use', lv: 12, stock: 0, t: now - 1 * min, v: '1.80' },
+      });
+      f.plays['msg-pOma'] = {
+        '-m01': { k: 'msg', from: 'pDen', name: 'Dennis', m0: 'Veel plezier!', t: now - 14.5 * min },
+        '-m02': { k: 'msg', from: 'pDen', name: 'Dennis', pc: 'pc_sun', t: now - 1.5 * min },
+        '-m03': { k: 'msg', from: 'pDen', name: 'Dennis', pc: 'pc_coffee', m0: 'Even pauze!', t: now - 0.5 * min },
+      };
+      f.plays['gift-pOma'] = {
+        '-gf01': { k: 'shop_gift', from: 'pDen', name: 'GiftQueue', cat: 'tiles', item: 'tiles_dutch', lv: 999, t: now },
+      };
+      f.plays['test-gift-pOma'] = {
+        '-gf02': { k: 'shop_gift', from: 'test-pDen', name: 'TestGiftQueue', cat: 'bg', item: 'surf_linen', lv: 999, t: now },
+      };
+      const db = new FakeDB(f);
+      const ctx = await browser.newContext({ viewport: { width: 1200, height: 900 } });
+      await ctx.route(u => u.hostname.endsWith('firebasedatabase.app'), r => db.handle(r));
+      const p = await ctx.newPage(), errs = []; p.on('pageerror', e => errs.push(e.message));
+      try {
+        await p.goto(site.url + 'dash/#pOma');
+        await p.waitForFunction(() => document.querySelector('#feed').innerText.includes('Spieken gebruikt'));
+        const summaryValues = await p.evaluate(() => ({
+          picker: [...document.querySelectorAll('#who option')].map(o => o.value),
+          ranking: document.querySelector('#ranking').innerText,
+          alerts: document.querySelector('#alerts').innerText,
+          senders: [...document.querySelectorAll('#heartTop select option, #alerts select option')].map(o => o.value),
+        }));
+        t.ok(!summaryValues.picker.includes('gift-pOma') && !summaryValues.picker.includes('test-gift-pOma'), 'gift queues skipped in picker', summaryValues.picker);
+        t.ok(!summaryValues.ranking.includes('GiftQueue') && !summaryValues.ranking.includes('TestGiftQueue'), 'gift queues skipped in ranking');
+        t.ok(!summaryValues.alerts.includes('GiftQueue') && !summaryValues.alerts.includes('TestGiftQueue'), 'gift queues skipped in alerts');
+        t.ok(!summaryValues.senders.includes('gift-pOma') && !summaryValues.senders.includes('test-gift-pOma'), 'gift queues skipped in heart sender list');
+        const feed = await p.locator('#feed').innerText();
+        t.ok(!feed.includes('undefined'), 'no undefined units in feed', feed);
+        t.ok(feed.includes('1500 punten') && feed.includes('Schatkist geopend (+400 punten)') && feed.includes('Dagcadeau geopend: +2 ⭐') && feed.includes('Bericht van Dennis: “Veel plezier!”'), 'legacy reward and message events keep legacy units');
+        t.ok(feed.includes('6 🪙 · 25 pt') && feed.includes('Schatkist geopend (+15 🪙)') && feed.includes('Dagcadeau geopend: +8 🪙') && feed.includes('Bijna-bloem vol (+15 🪙)'), 'Prep A reward events render coin and point units');
+        t.ok(feed.includes('Gekocht in winkel: stenen: tiles_dutch (480 🪙)') && feed.includes('Gekocht in winkel: Steen terugleggen (600 🪙)') && feed.includes('Cadeau gestuurd naar Dennis: tafel: surf_linen (340 🪙)') && feed.includes('Cadeau ontvangen van Dennis: lijstje: frm_velvet'), 'shop and gift events render cleanly');
+        t.ok(feed.includes('Gratis steen terugleggen gepakt (voorraad 1)') && feed.includes('Steen teruggelegd in level 12 (nog 0 op voorraad)') && feed.includes('Gratis spieken gepakt (voorraad 1)') && feed.includes('Spieken gebruikt in level 12 (nog 0 op voorraad)'), 'helper events render cleanly');
+        t.ok(feed.includes('Hartjeskaart van Dennis (🌻 Zonnebloem)') && !feed.includes('(🌻 Zonnebloem): “”') && feed.includes('Hartjeskaart van Dennis (☕ Kopje koffie): “Even pauze!”'), 'textless and text postcards render cleanly');
         t.eq(errs, [], 'no page errors');
       } finally { await ctx.close(); site.close(); }
     },

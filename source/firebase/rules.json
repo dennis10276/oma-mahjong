@@ -24,13 +24,34 @@
           ".validate": "newData.isNumber() && newData.val() >= 0"
         },
         "frame": {
-          ".validate": "newData.isString() && newData.val().length <= 12"
+          ".validate": "newData.isString() && newData.val().length <= 16"
         },
         "wk": {
           ".validate": "newData.isString() && newData.val().length <= 10"
         },
         "wkPts": {
           ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 10000000"
+        },
+        "wkV": {
+          ".validate": "newData.isNumber() && newData.val() >= 1 && newData.val() <= 10"
+        },
+        "stars": {
+          ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 100000"
+        },
+        "perfect": {
+          ".validate": "newData.isBoolean()"
+        },
+        "title": {
+          ".validate": "newData.isString() && newData.val().length <= 16"
+        },
+        "daily": {
+          ".validate": "newData.isString() && newData.val().length <= 10"
+        },
+        "prevWk": {
+          ".validate": "newData.isString() && newData.val().length <= 10"
+        },
+        "prevWkPts": {
+          ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 100000"
         },
         "$other": {
           ".validate": false
