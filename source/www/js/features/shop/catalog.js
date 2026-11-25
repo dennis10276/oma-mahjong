@@ -68,7 +68,7 @@ const SHOP_RULES = Object.freeze({
     maxBuyPerWeek: 2,
     maxStock: 3,
     maxUsePerLevel: 1,
-    durationMs: 4500,
+    durationMs: 4000,
     giftable: false,
   }),
 });
@@ -120,7 +120,6 @@ const SHOP_CATALOG = Object.freeze({
     { id: 'sunflower', price: 480, legacy: true, icon: '🌻', nl: 'Zonnebloem', en: 'Sunflower', subNl: 'Geliefd zonnethema', subEn: 'Beloved sunny theme', swatchBg: '#FFF5BE' },
     { id: 'tiles_kitchen', price: 440, icon: '☕', nl: 'Gezellige Keuken', en: 'Cozy Kitchen', subNl: 'Koffie en gebak', subEn: 'Coffee and pastries', swatchBg: '#FFEEDA' },
     { id: 'tiles_dutch', price: 480, icon: '🌷', nl: 'Hollands', en: 'Dutch Icons', subNl: 'Tulp, fiets en molen', subEn: 'Tulip, bike & windmill', swatchBg: '#FFE7E0' },
-    { id: 'tiles_birds', price: 520, icon: '🐦', nl: 'Tuinvogels', en: 'Garden Birds', subNl: 'Vrolijke vogels', subEn: 'Cheerful birds', swatchBg: '#E1F4FF' },
   ]),
 
   finish: Object.freeze([
@@ -166,27 +165,22 @@ const SHOP_CATALOG = Object.freeze({
 
   music: Object.freeze([
     // Free starters (2): mus_piano + mus_sunflower (`audio.js` `startSunny()` preserved)
-    { id: 'mus_piano', group: 'cozy', price: 0, starter: true, icon: '🎹', nl: 'Zonnebloem Piano', en: 'Sunflower Piano', subNl: 'Warm en rustig', subEn: 'Warm and gentle', notes: [261.6, 329.6, 392.0, 523.3, 493.9, 392.0, 329.6, 293.7], wave: 'sine', tempo: 370, overtone: 2.0, decay: 0.48 },
-    { id: 'mus_sunflower', group: 'cozy', price: 0, starter: true, icon: '🌻', nl: 'Zomerwals', en: 'Summer Waltz', subNl: 'Vertrouwde vogelzang', subEn: 'Classic summer waltz', mood: 'sunny', notes: [392.0, 493.9, 587.3, 784.0, 659.3, 587.3, 493.9, 440.0], wave: 'sine', tempo: 360, overtone: 2.0, decay: 0.50 },
-    // Classical (4)
+    { id: 'mus_piano', group: 'cozy', price: 0, starter: true, icon: '🎹', nl: 'Zonnebloem Piano', en: 'Sunflower Piano', subNl: 'Warm en rustig', subEn: 'Warm and gentle', synth: 'piano', notes: [261.6, 329.6, 392.0, 523.3, 493.9, 392.0, 329.6, 293.7], wave: 'sine', tempo: 370, overtone: 2.0, decay: 0.48 },
+    { id: 'mus_sunflower', group: 'cozy', price: 0, starter: true, icon: '🌻', nl: 'Zomerwals', en: 'Summer Waltz', subNl: 'Vertrouwde vogelzang', subEn: 'Classic summer waltz', mood: 'sunny', synth: 'sunflower', notes: [392.0, 493.9, 587.3, 784.0, 659.3, 587.3, 493.9, 440.0], wave: 'sine', tempo: 360, overtone: 2.0, decay: 0.50 },
+    // Classical (3 ready)
     { id: 'mus_moonlight', group: 'classical', price: 420, icon: '🌕', nl: 'Maanlicht Sonate', en: 'Moonlight Sonata', subNl: 'Beethoven sfeer', subEn: 'Calm evening sonata', notes: [277.2, 329.6, 415.3, 277.2, 329.6, 415.3, 392.0, 329.6], wave: 'sine', tempo: 420, overtone: 2.0, decay: 0.56 },
     { id: 'mus_clair', group: 'classical', price: 460, icon: '🌙', nl: 'Clair de Lune', en: 'Clair de Lune', subNl: 'Debussy dromerig', subEn: 'Dreamy classical keys', notes: [349.2, 440.0, 523.3, 698.5, 659.3, 523.3, 440.0, 392.0], wave: 'sine', tempo: 430, overtone: 2.0, softAttack: 0.04, decay: 0.60 },
-    { id: 'mus_vivaldi', group: 'classical', price: 440, icon: '🎻', nl: 'Lente Strijkers', en: 'Spring Strings', subNl: 'Zonnig klassiek', subEn: 'Bright spring strings', notes: [329.6, 415.3, 415.3, 415.3, 370.0, 329.6, 493.9, 440.0], wave: 'triangle', tempo: 310, overtone: 1.5, softAttack: 0.045, decay: 0.45 },
     { id: 'mus_waltz', group: 'classical', price: 400, icon: '🩰', nl: 'Weense Wals', en: 'Vienna Waltz', subNl: 'Zachte strijkerswals', subEn: 'Graceful classic waltz', notes: [261.6, 392.0, 392.0, 329.6, 392.0, 392.0, 349.2, 440.0], wave: 'triangle', tempo: 350, overtone: 2.0, softAttack: 0.035, decay: 0.44 },
-    // Mahjong & Zen (4)
+    // Mahjong & Zen (4 ready: 3 melodic + Waterval)
     { id: 'mus_guzheng', group: 'zen', price: 380, icon: '🎋', nl: 'Bamboetuin', en: 'Bamboo Garden', subNl: 'Rustige Aziatische harp', subEn: 'Peaceful garden pluck', notes: [293.7, 329.6, 440.0, 587.3, 493.9, 440.0, 329.6, 293.7], wave: 'triangle', tempo: 340, overtone: 2.0, decay: 0.50 },
     { id: 'mus_lotus', group: 'zen', price: 400, icon: '🪷', nl: 'Lotusvijver', en: 'Lotus Pond', subNl: 'Drijvende zenklanken', subEn: 'Still water pentatonic', notes: [261.6, 293.7, 392.0, 440.0, 523.3, 440.0, 392.0, 293.7], wave: 'sine', tempo: 420, overtone: 2.0, decay: 0.58 },
     { id: 'mus_teahouse', group: 'zen', price: 360, icon: '🍵', nl: 'Theehuis Melodie', en: 'Teahouse Melody', subNl: 'Zachte snaren bij thee', subEn: 'Warm Asian tea mood', notes: [329.6, 392.0, 440.0, 523.3, 659.3, 523.3, 440.0, 392.0], wave: 'sine', tempo: 370, overtone: 1.5, decay: 0.48 },
-    { id: 'mus_sunset', group: 'zen', price: 420, icon: '🌅', nl: 'Avondzon', en: 'Golden Sunset', subNl: 'Kalme avondmelodie', subEn: 'Warm golden horizon', notes: [220.0, 261.6, 329.6, 392.0, 440.0, 392.0, 329.6, 261.6], wave: 'sine', tempo: 450, overtone: 2.0, softAttack: 0.045, decay: 0.62 },
-    // Cozy & Warm (9 buyable)
+    { id: 'mus_waterfall', group: 'zen', price: 380, icon: '🏞️', nl: 'Waterval', en: 'Waterfall', subNl: 'Stromend water op de achtergrond', subEn: 'Gentle flowing cascade', synth: 'waterfall', auditionId: 'aud_waterval' },
+    // Cozy & Warm (5 ready buyable: 4 melodic + Zachte regen)
     { id: 'mus_guitar', group: 'cozy', price: 340, icon: '🎸', nl: 'Akoestische Gitaar', en: 'Acoustic Guitar', subNl: 'Zonnig tokkelspel', subEn: 'Sunny fingerpicking', notes: [293.7, 370.0, 440.0, 587.3, 493.9, 440.0, 370.0, 329.6], wave: 'triangle', tempo: 320, overtone: 2.0, decay: 0.42 },
-    { id: 'mus_rain', group: 'cozy', price: 360, icon: '🌧️', nl: 'Regen & Thee', en: 'Rain & Tea', subNl: 'Zacht op de achtergrond', subEn: 'Soft cozy ambiance', notes: [220.0, 261.6, 329.6, 392.0, 349.2, 329.6, 261.6, 246.9], wave: 'sine', tempo: 440, softAttack: 0.04, decay: 0.55 },
-    { id: 'mus_garden', group: 'cozy', price: 360, icon: '🌷', nl: 'Ochtendtuin', en: 'Garden Morning', subNl: 'Luchtig en vrolijk', subEn: 'Breezy and bright', notes: [349.2, 440.0, 523.3, 698.5, 659.3, 523.3, 440.0, 392.0], wave: 'triangle', tempo: 330, overtone: 2.0, decay: 0.44 },
+    { id: 'mus_rain', group: 'cozy', price: 360, icon: '🌧️', nl: 'Zachte regen', en: 'Soft Rain', subNl: 'Regendruppels en zachte piano', subEn: 'Gentle rain and soft piano', synth: 'rain', auditionId: 'aud_zachte_regen' },
     { id: 'mus_box', group: 'cozy', price: 400, icon: '🎼', nl: 'Muziekdoos', en: 'Music Box', subNl: 'Nostalgisch helder', subEn: 'Nostalgic chime', notes: [523.3, 659.3, 784.0, 1046.5, 987.8, 784.0, 659.3, 587.3], wave: 'sine', tempo: 290, overtone: 3.0, decay: 0.36 },
-    { id: 'mus_jazz', group: 'cozy', price: 380, icon: '🎷', nl: 'Zondagse Jazz', en: 'Sunday Jazz', subNl: 'Lekkere koffieswing', subEn: 'Smooth coffee lounge', notes: [261.6, 311.1, 392.0, 466.2, 523.3, 466.2, 392.0, 311.1], wave: 'triangle', tempo: 380, softAttack: 0.035, decay: 0.46 },
     { id: 'mus_cafe', group: 'cozy', price: 400, icon: '🥐', nl: 'Frans Café', en: 'French Café', subNl: 'Gezellige wals', subEn: 'Cozy cafe waltz', notes: [329.6, 392.0, 493.9, 659.3, 587.3, 493.9, 392.0, 349.2], wave: 'triangle', tempo: 340, overtone: 1.5, decay: 0.42 },
-    { id: 'mus_fire', group: 'cozy', price: 380, icon: '🔥', nl: 'Haardvuur', en: 'Cozy Fireplace', subNl: 'Diep en ontspannen', subEn: 'Deep evening warmth', notes: [196.0, 246.9, 293.7, 392.0, 329.6, 293.7, 246.9, 220.0], wave: 'sine', tempo: 460, softAttack: 0.045, decay: 0.58 },
-    { id: 'mus_bossa', group: 'cozy', price: 420, icon: '🌴', nl: 'Zomerse Bossa', en: 'Summer Bossa', subNl: 'Zacht zonnig ritme', subEn: 'Warm sunny groove', notes: [293.7, 349.2, 440.0, 523.3, 587.3, 523.3, 440.0, 349.2], wave: 'triangle', tempo: 280, overtone: 1.5, decay: 0.38 },
     { id: 'mus_harp', group: 'cozy', price: 440, icon: '🎶', nl: 'Klassieke Harp', en: 'Classical Harp', subNl: 'Heldere snaren', subEn: 'Golden harp arpeggio', notes: [392.0, 493.9, 587.3, 784.0, 987.8, 784.0, 587.3, 493.9], wave: 'sine', tempo: 300, overtone: 2.0, decay: 0.52 },
   ]),
 
