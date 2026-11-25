@@ -5,6 +5,23 @@
   const CAT = typeof require === 'function' ? require('./catalog') : globalScope;
   const RULES = CAT.SHOP_RULES;
   const pendingGiftSpends = new WeakSet();
+  let giftSeq = 0;
+
+  function makeGiftId(nowMs = Date.now()) {
+    const ts = Math.max(0, Math.floor(Number(nowMs) || Date.now()));
+    giftSeq = (giftSeq + 1) % 46656;
+    const seq = giftSeq.toString(36).padStart(3, '0');
+    let rnd = '';
+    const cryptoObj = typeof globalThis !== 'undefined' ? globalThis.crypto : null;
+    if (cryptoObj && typeof cryptoObj.getRandomValues === 'function') {
+      const bytes = new Uint8Array(6);
+      cryptoObj.getRandomValues(bytes);
+      rnd = Array.from(bytes, b => (b % 36).toString(36)).join('');
+    } else {
+      rnd = Math.random().toString(36).slice(2, 10).padEnd(8, '0');
+    }
+    return `g_${String(ts).padStart(13, '0')}_${seq}_${rnd}`.slice(0, 32);
+  }
 
   const SLOT_BY_CAT = Object.freeze({
     tiles: 'theme',
@@ -130,6 +147,7 @@
       wk: { id: weekIdOf(now), pts: 0 },
       giftsSeen: {},
       pendingGifts: [],
+      pendingGiftOut: null,
       stats: {},
       trophies: {},
       att: {},
@@ -175,6 +193,7 @@
     S.stats = Object.assign({}, S.stats || {});
     S.giftsSeen = Object.assign({}, S.giftsSeen || {});
     S.pendingGifts = Array.isArray(S.pendingGifts) ? S.pendingGifts.slice() : [];
+    S.pendingGiftOut = normalizePendingGiftOut(parsed.pendingGiftOut);
     S.grit = S.grit && typeof S.grit === 'object'
       ? { petals: clampInt(S.grit.petals, 0, RULES.grit.petals - 1), lastDay: String(S.grit.lastDay || '') }
       : { petals: 0, lastDay: '' };
@@ -254,6 +273,7 @@
 
   /** Erase progress (`settings.js` `confirmReset`) without re-triggering migration. */
   function resetProgressState(S, now = new Date()) {
+    pendingGiftSpends.delete(S);
     const keepLang = S.lang;
     const keepPid = S.pid;
     const keepName = S.name;
@@ -266,6 +286,51 @@
     if (keepName !== undefined) S.name = keepName;
     if (keepAvatar !== undefined) S.avatar = keepAvatar;
     return S;
+  }
+
+  function normalizePendingGiftOut(raw) {
+    if (!raw || typeof raw !== 'object') return null;
+    const p = raw.payload;
+    const price = Math.floor(Number(raw.price) || 0);
+    if (
+      typeof raw.gid !== 'string' || !/^[A-Za-z0-9_-]{1,40}$/.test(raw.gid) ||
+      typeof raw.toPid !== 'string' || !raw.toPid ||
+      typeof raw.cat !== 'string' || !raw.cat ||
+      typeof raw.item !== 'string' || !raw.item ||
+      typeof raw.path !== 'string' || !raw.path ||
+      !Number.isSafeInteger(price) || price <= 0 ||
+      !p || typeof p !== 'object' || p.k !== 'shop_gift'
+    ) {
+      return null;
+    }
+    return {
+      gid: raw.gid,
+      toPid: raw.toPid,
+      cat: raw.cat,
+      item: raw.item,
+      price,
+      path: raw.path,
+      payload: {
+        k: 'shop_gift',
+        t: Math.max(0, Math.floor(Number(p.t) || 0)),
+        gid: raw.gid,
+        from: String(p.from || '').slice(0, 40),
+        name: String(p.name || '').slice(0, 20),
+        cat: raw.cat,
+        item: raw.item,
+      },
+    };
+  }
+
+  function getPendingGiftOut(S) {
+    if (!S || typeof S !== 'object') return null;
+    const norm = normalizePendingGiftOut(S.pendingGiftOut);
+    if (!norm && S.pendingGiftOut) S.pendingGiftOut = null;
+    return norm;
+  }
+
+  function hasPendingGiftSpend(S) {
+    return pendingGiftSpends.has(S) || Boolean(getPendingGiftOut(S));
   }
 
   function addCoins(S, amount, hooks = {}) {
@@ -282,7 +347,7 @@
   function spendCoins(S, amount, hooks = {}) {
     const n = Math.floor(Number(amount) || 0);
     const bal = Math.max(0, Math.floor(Number(S.coins) || 0));
-    if (!Number.isSafeInteger(n) || n <= 0 || bal < n || pendingGiftSpends.has(S)) return false;
+    if (!Number.isSafeInteger(n) || n <= 0 || bal < n || hasPendingGiftSpend(S)) return false;
     S.coins = bal - n;
     if (!S.stats) S.stats = {};
     S.stats.coinsSpent = (Number(S.stats.coinsSpent) || 0) + n;
@@ -334,7 +399,7 @@
   }
 
   function buyItem(S, cat, id, hooks = {}) {
-    if (pendingGiftSpends.has(S)) return { ok: false, reason: 'gift_pending' };
+    if (hasPendingGiftSpend(S)) return { ok: false, reason: 'gift_pending' };
     const item = CAT.findCatalogItem(cat, id);
     if (!item || !SLOT_BY_CAT[cat]) return { ok: false, reason: 'unknown_item' };
     if (ownsItem(S, cat, id)) return { ok: false, reason: 'already_owned' };
@@ -358,18 +423,37 @@
   }
 
   /** Validate & build Firebase gift payload WITHOUT deducting Coins yet (wait for network OK). */
-  function prepareGiftPayload(S, cat, id, toPid, nowMs = Date.now()) {
+  function prepareGiftPayload(S, cat, id, toPid, nowMs = Date.now(), giftId = '') {
     if (!canGiftShopItem(cat, id)) return { ok: false, reason: 'not_giftable' };
     const item = CAT.findCatalogItem(cat, id);
     if (!item || !SLOT_BY_CAT[cat] || item.price <= 0) return { ok: false, reason: 'not_giftable' };
-    if (!toPid) return { ok: false, reason: 'missing_recipient' };
-    const coins = Math.max(0, Math.floor(Number(S.coins) || 0));
+    const cleanTo = String(toPid || '').trim();
+    if (!cleanTo || /[/.$#[\]]/.test(cleanTo)) return { ok: false, reason: 'missing_recipient' };
+    const coins = Math.max(0, Math.floor(Number(S && S.coins) || 0));
     if (coins < item.price) return { ok: false, reason: 'not_enough_coins', need: item.price - coins };
+    const cleanNow = Math.max(0, Math.floor(Number(nowMs) || Date.now()));
+    const gid = (typeof giftId === 'string' && /^[A-Za-z0-9_-]{1,40}$/.test(giftId.trim()))
+      ? giftId.trim()
+      : makeGiftId(cleanNow);
+    const inboxPath = 'plays/' + CAT.giftKey(cleanTo);
+    const path = inboxPath + '/' + gid;
     return {
       ok: true,
-      path: 'plays/' + CAT.giftKey(toPid),
+      gid,
+      method: 'PUT',
+      inboxPath,
+      path,
+      toPid: cleanTo,
       price: item.price,
-      payload: { k: 'shop_gift', t: nowMs, from: String(S.pid || ''), name: String(S.name || '').slice(0, 20), cat, item: id },
+      payload: {
+        k: 'shop_gift',
+        t: cleanNow,
+        gid,
+        from: String((S && S.pid) || '').slice(0, 40),
+        name: String((S && S.name) || '').slice(0, 20),
+        cat,
+        item: id,
+      },
     };
   }
 
@@ -379,27 +463,165 @@
     return { ok: true, spent: price, coinsLeft: S.coins };
   }
 
-  /** Keep spending serialized until a gift's write is acknowledged. */
-  async function sendShopGift(S, cat, id, toPid, hooks = {}) {
-    if (pendingGiftSpends.has(S)) return { ok: false, reason: 'gift_pending' };
-    const gift = prepareGiftPayload(S, cat, id, toPid);
-    if (!gift.ok) return gift;
+  function isSamePendingGift(pending, cat, id, toPid) {
+    return Boolean(pending && pending.cat === cat && pending.item === id && pending.toPid === String(toPid || '').trim());
+  }
+
+  function matchesPendingGift(record, pending) {
+    if (!record || typeof record !== 'object' || !pending || !pending.payload) return false;
+    if (record.k !== 'shop_gift') return false;
+    if (record.gid !== undefined && record.gid !== pending.gid) return false;
+    const p = pending.payload;
+    return String(record.from || '') === String(p.from || '') &&
+      record.cat === p.cat &&
+      record.item === p.item &&
+      Number(record.t) === Number(p.t);
+  }
+
+  async function probeGiftRecord(path, hooks) {
+    if (!hooks || typeof hooks.read !== 'function') {
+      return { status: 'no_reader', record: null };
+    }
+    try {
+      const res = await hooks.read(path);
+      if (res && typeof res === 'object' && Object.prototype.hasOwnProperty.call(res, 'ok')) {
+        if (!res.ok) return { status: 'unknown', record: null };
+        return res.value ? { status: 'found', record: res.value } : { status: 'absent', record: null };
+      }
+      return res ? { status: 'found', record: res } : { status: 'absent', record: null };
+    } catch {
+      return { status: 'unknown', record: null };
+    }
+  }
+
+  function settleConfirmedGift(S, pending, hooks = {}, recovered = false) {
+    if (S) S.pendingGiftOut = null;
+    pendingGiftSpends.delete(S);
+    const bal = Math.max(0, Math.floor(Number(S && S.coins) || 0));
+    const charge = Math.min(bal, pending.price);
+    const res = charge > 0
+      ? finalizeGiftSpend(S, pending.cat, pending.item, pending.toPid, charge, hooks)
+      : (() => {
+        if (typeof hooks.save === 'function') hooks.save();
+        if (typeof hooks.log === 'function') hooks.log('shop_gift_out', { to: pending.toPid, cat: pending.cat, id: pending.item, p: 0 });
+        return { ok: true, spent: 0, coinsLeft: bal };
+      })();
+    return { ...res, gid: pending.gid, recovered };
+  }
+
+  function clearPendingGift(S, hooks = {}) {
+    if (S) S.pendingGiftOut = null;
+    pendingGiftSpends.delete(S);
+    if (typeof hooks.save === 'function') hooks.save();
+  }
+
+  async function executePendingGift(S, pending, hooks = {}, allowSend = true) {
     pendingGiftSpends.add(S);
     try {
-      const result = await hooks.send(gift.path, gift.payload);
-      if (!result?.ok) return { ok: false, reason: 'gift_failed' };
-    } catch {
-      return { ok: false, reason: 'gift_failed' };
+      if (!allowSend || hooks._checkBeforeSend) {
+        const pre = await probeGiftRecord(pending.path, hooks);
+        if (pre.status === 'found' && matchesPendingGift(pre.record, pending)) {
+          return settleConfirmedGift(S, pending, hooks, true);
+        }
+        if (pre.status === 'unknown') {
+          return { ok: false, reason: 'gift_unconfirmed', pending: true, gid: pending.gid };
+        }
+        if (!allowSend) {
+          if (pre.status === 'absent') {
+            clearPendingGift(S, hooks);
+            return { ok: false, reason: 'gift_failed', cleared: true, gid: pending.gid };
+          }
+          return { ok: false, reason: 'gift_unconfirmed', pending: true, gid: pending.gid };
+        }
+      }
+
+      if (typeof hooks.send !== 'function') {
+        return { ok: false, reason: 'gift_unconfirmed', pending: true, gid: pending.gid };
+      }
+
+      let result = null;
+      let threw = false;
+      try {
+        result = await hooks.send(pending.path, pending.payload, 'PUT');
+      } catch {
+        threw = true;
+      }
+
+      if (!threw && result && result.ok) {
+        return settleConfirmedGift(S, pending, hooks, false);
+      }
+
+      const post = await probeGiftRecord(pending.path, hooks);
+      if (post.status === 'found' && matchesPendingGift(post.record, pending)) {
+        return settleConfirmedGift(S, pending, hooks, true);
+      }
+      if (post.status === 'absent') {
+        clearPendingGift(S, hooks);
+        return { ok: false, reason: 'gift_failed', gid: pending.gid };
+      }
+      if (post.status === 'unknown') {
+        if (typeof hooks.save === 'function') hooks.save();
+        return { ok: false, reason: 'gift_unconfirmed', pending: true, gid: pending.gid };
+      }
+      if (threw || (result && result.ambiguous)) {
+        if (typeof hooks.save === 'function') hooks.save();
+        return { ok: false, reason: 'gift_unconfirmed', pending: true, gid: pending.gid };
+      }
+      clearPendingGift(S, hooks);
+      return { ok: false, reason: 'gift_failed', gid: pending.gid };
     } finally {
       pendingGiftSpends.delete(S);
     }
-    return finalizeGiftSpend(S, cat, id, toPid, gift.price, hooks);
+  }
+
+  /** Keep spending serialized and idempotent via stable `gid` until the gift write is confirmed or ruled absent. */
+  async function sendShopGift(S, cat, id, toPid, hooks = {}) {
+    if (pendingGiftSpends.has(S)) return { ok: false, reason: 'gift_pending' };
+    const existing = getPendingGiftOut(S);
+    if (existing) {
+      if (!isSamePendingGift(existing, cat, id, toPid)) {
+        return { ok: false, reason: 'gift_pending', gid: existing.gid };
+      }
+      return executePendingGift(S, existing, { ...hooks, _checkBeforeSend: true }, true);
+    }
+    const gift = prepareGiftPayload(S, cat, id, toPid);
+    if (!gift.ok) return gift;
+    const pending = {
+      gid: gift.gid,
+      toPid: gift.toPid,
+      cat,
+      item: id,
+      price: gift.price,
+      path: gift.path,
+      payload: gift.payload,
+    };
+    S.pendingGiftOut = pending;
+    if (typeof hooks.save === 'function') hooks.save();
+    return executePendingGift(S, pending, hooks, true);
+  }
+
+  /** Reconcile a persisted unconfirmed gift send after reload or reconnect without double-charging. */
+  async function resumePendingGift(S, hooks = {}) {
+    if (pendingGiftSpends.has(S)) return { ok: false, reason: 'gift_pending' };
+    const pending = getPendingGiftOut(S);
+    if (!pending) return { ok: true, idle: true };
+    return executePendingGift(S, pending, { ...hooks, _checkBeforeSend: true }, Boolean(hooks.resend));
+  }
+
+  function giftReceiptKey(msg, recordId = '') {
+    if (msg && typeof msg.gid === 'string' && msg.gid.trim()) {
+      return 'gid:' + msg.gid.trim().slice(0, 40);
+    }
+    if (typeof recordId === 'string' && recordId.trim()) {
+      return 'id:' + recordId.trim().slice(0, 40);
+    }
+    return `${(msg && msg.from) || ''}:${(msg && msg.t) || ''}:${(msg && msg.cat) || ''}:${(msg && msg.item) || ''}`;
   }
 
   /** Receive a wrapped gift on Home: deduplicated; awards 100% Coins if recipient already owns it. */
   function receiveShopGift(S, msg, hooks = {}) {
     if (!msg || msg.k !== 'shop_gift') return { ok: false, reason: 'invalid_gift' };
-    const key = `${msg.from || ''}:${msg.t || ''}:${msg.cat || ''}:${msg.item || ''}`;
+    const key = giftReceiptKey(msg, hooks.recordId || '');
     if (!S.giftsSeen) S.giftsSeen = {};
     if (S.giftsSeen[key]) return { ok: false, reason: 'duplicate_event' };
     const item = CAT.findCatalogItem(msg.cat, msg.item);
@@ -420,7 +642,15 @@
     if (typeof hooks.save === 'function') hooks.save();
     if (refundCoins > 0 && typeof hooks.renderCoins === 'function') hooks.renderCoins(S.coins);
     if (typeof hooks.log === 'function') hooks.log('shop_gift_in', { from: msg.from, cat: msg.cat, id: msg.item });
-    return { ok: true, alreadyOwned, refundCoins, item, fromName: msg.name || '' };
+    return {
+      ok: true,
+      key,
+      gid: (msg && typeof msg.gid === 'string' && msg.gid) || '',
+      alreadyOwned,
+      refundCoins,
+      item,
+      fromName: msg.name || '',
+    };
   }
 
   /** Award `+2 🪙` into `G.boardCoins` once when Auto-Finish fires on a fresh Lv 50+ board. */
@@ -588,7 +818,7 @@
     if (!r.enabled) buyReason = 'disabled';
     else if (boughtThisWeek >= r.maxBuyPerWeek) buyReason = 'week_limit';
     else if (stock >= r.maxStock) buyReason = 'stock_full';
-    else if (pendingGiftSpends.has(S)) buyReason = 'gift_pending';
+    else if (hasPendingGiftSpend(S)) buyReason = 'gift_pending';
     else if (coins < r.price) buyReason = 'not_enough_coins';
 
     return {
@@ -829,7 +1059,11 @@
     buyItem,
     prepareGiftPayload,
     finalizeGiftSpend,
+    canGiftShopItem,
+    hasPendingGiftSpend,
     sendShopGift,
+    resumePendingGift,
+    giftReceiptKey,
     receiveShopGift,
     applyAutoFinishCoin,
     stepFlowSpark,
