@@ -494,6 +494,25 @@
     }
   }
 
+  function callSave(hooks) {
+    if (!hooks || typeof hooks.save !== 'function') return false;
+    try {
+      const res = hooks.save();
+      return res === true || Boolean(res && typeof res === 'object' && res.ok === true);
+    } catch {
+      return false;
+    }
+  }
+
+  function isDefiniteSendRejection(threw, result) {
+    if (threw || !result || result.ok || result.ambiguous) return false;
+    if (result.status !== undefined && result.status !== null) {
+      const st = Number(result.status);
+      return Number.isFinite(st) && st >= 400 && st < 500;
+    }
+    return true;
+  }
+
   function settleConfirmedGift(S, pending, hooks = {}, recovered = false) {
     if (S) S.pendingGiftOut = null;
     pendingGiftSpends.delete(S);
@@ -502,7 +521,7 @@
     const res = charge > 0
       ? finalizeGiftSpend(S, pending.cat, pending.item, pending.toPid, charge, hooks)
       : (() => {
-        if (typeof hooks.save === 'function') hooks.save();
+        callSave(hooks);
         if (typeof hooks.log === 'function') hooks.log('shop_gift_out', { to: pending.toPid, cat: pending.cat, id: pending.item, p: 0 });
         return { ok: true, spent: 0, coinsLeft: bal };
       })();
@@ -512,7 +531,7 @@
   function clearPendingGift(S, hooks = {}) {
     if (S) S.pendingGiftOut = null;
     pendingGiftSpends.delete(S);
-    if (typeof hooks.save === 'function') hooks.save();
+    callSave(hooks);
   }
 
   async function executePendingGift(S, pending, hooks = {}, allowSend = true) {
@@ -527,16 +546,22 @@
           return { ok: false, reason: 'gift_unconfirmed', pending: true, gid: pending.gid };
         }
         if (!allowSend) {
-          if (pre.status === 'absent') {
-            clearPendingGift(S, hooks);
-            return { ok: false, reason: 'gift_failed', cleared: true, gid: pending.gid };
-          }
-          return { ok: false, reason: 'gift_unconfirmed', pending: true, gid: pending.gid };
+          return {
+            ok: false,
+            reason: 'gift_unconfirmed',
+            pending: true,
+            gid: pending.gid,
+            observedAbsent: pre.status === 'absent',
+          };
         }
       }
 
       if (typeof hooks.send !== 'function') {
         return { ok: false, reason: 'gift_unconfirmed', pending: true, gid: pending.gid };
+      }
+
+      if (hooks._checkBeforeSend && !callSave(hooks)) {
+        return { ok: false, reason: 'save_failed', pending: true, gid: pending.gid };
       }
 
       let result = null;
@@ -551,24 +576,23 @@
         return settleConfirmedGift(S, pending, hooks, false);
       }
 
+      const definiteReject = isDefiniteSendRejection(threw, result);
       const post = await probeGiftRecord(pending.path, hooks);
       if (post.status === 'found' && matchesPendingGift(post.record, pending)) {
         return settleConfirmedGift(S, pending, hooks, true);
       }
-      if (post.status === 'absent') {
+      if (definiteReject && (post.status === 'absent' || post.status === 'no_reader')) {
         clearPendingGift(S, hooks);
         return { ok: false, reason: 'gift_failed', gid: pending.gid };
       }
-      if (post.status === 'unknown') {
-        if (typeof hooks.save === 'function') hooks.save();
-        return { ok: false, reason: 'gift_unconfirmed', pending: true, gid: pending.gid };
-      }
-      if (threw || (result && result.ambiguous)) {
-        if (typeof hooks.save === 'function') hooks.save();
-        return { ok: false, reason: 'gift_unconfirmed', pending: true, gid: pending.gid };
-      }
-      clearPendingGift(S, hooks);
-      return { ok: false, reason: 'gift_failed', gid: pending.gid };
+      callSave(hooks);
+      return {
+        ok: false,
+        reason: 'gift_unconfirmed',
+        pending: true,
+        gid: pending.gid,
+        observedAbsent: post.status === 'absent',
+      };
     } finally {
       pendingGiftSpends.delete(S);
     }
@@ -596,7 +620,10 @@
       payload: gift.payload,
     };
     S.pendingGiftOut = pending;
-    if (typeof hooks.save === 'function') hooks.save();
+    if (!callSave(hooks)) {
+      S.pendingGiftOut = null;
+      return { ok: false, reason: 'save_failed' };
+    }
     return executePendingGift(S, pending, hooks, true);
   }
 
@@ -608,6 +635,10 @@
     return executePendingGift(S, pending, { ...hooks, _checkBeforeSend: true }, Boolean(hooks.resend));
   }
 
+  function legacyGiftReceiptKey(msg) {
+    return `${(msg && msg.from) || ''}:${(msg && msg.t) || ''}:${(msg && msg.cat) || ''}:${(msg && msg.item) || ''}`;
+  }
+
   function giftReceiptKey(msg, recordId = '') {
     if (msg && typeof msg.gid === 'string' && msg.gid.trim()) {
       return 'gid:' + msg.gid.trim().slice(0, 40);
@@ -615,15 +646,19 @@
     if (typeof recordId === 'string' && recordId.trim()) {
       return 'id:' + recordId.trim().slice(0, 40);
     }
-    return `${(msg && msg.from) || ''}:${(msg && msg.t) || ''}:${(msg && msg.cat) || ''}:${(msg && msg.item) || ''}`;
+    return legacyGiftReceiptKey(msg);
   }
 
   /** Receive a wrapped gift on Home: deduplicated; awards 100% Coins if recipient already owns it. */
   function receiveShopGift(S, msg, hooks = {}) {
     if (!msg || msg.k !== 'shop_gift') return { ok: false, reason: 'invalid_gift' };
+    const hasGid = Boolean(msg && typeof msg.gid === 'string' && msg.gid.trim());
     const key = giftReceiptKey(msg, hooks.recordId || '');
+    const legacyKey = hasGid ? '' : legacyGiftReceiptKey(msg);
     if (!S.giftsSeen) S.giftsSeen = {};
-    if (S.giftsSeen[key]) return { ok: false, reason: 'duplicate_event' };
+    if (S.giftsSeen[key] || (legacyKey && S.giftsSeen[legacyKey])) {
+      return { ok: false, reason: 'duplicate_event' };
+    }
     const item = CAT.findCatalogItem(msg.cat, msg.item);
     if (!item || !SLOT_BY_CAT[msg.cat]) return { ok: false, reason: 'unknown_item' };
     if (item.price <= 0) return { ok: false, reason: 'not_giftable' };
