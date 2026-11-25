@@ -485,32 +485,71 @@ module.exports = {
     t.eq(lateInitialArrival, { delivered: false, conflict: true }, 'Order B late initial PUT hits existing key and is rejected');
     t.eq(Object.keys(db.get('plays/test-gift-rcpt') || {}).length, 5, 'Order B writes only one record for gid');
 
-    // Definite 403 rejection on retry still releases the wallet with 0 charge
+    // Retry definite 403 refusal after an earlier timed-out PUT + empty GET keeps the prior gid across reload
+    // so when the delayed original PUT eventually arrives, it reconciles once with that same key.
     putMode = 'timeout_hold';
     const heldFor403 = await sender.evaluate(async ([id]) => ({
       res: await ShopEconomy.sendShopGift(__mj.S, 'tiles', id, 'test-rcpt', window.__giftHooks()),
       coins: __mj.S.coins,
     }), [giftItem.id]);
-    t.eq(heldFor403.res.reason, 'gift_unconfirmed', 'pre-403 timed-out write stays pending');
-    heldPut = null; // never reached server
+    t.eq(heldFor403.res.reason, 'gift_unconfirmed', 'pre-403-retry timed-out write stays pending');
+    t.eq(heldFor403.res.observedAbsent, true, 'initial post-timeout GET saw empty path');
+
     putMode = 'reject';
-    const rejectedRetry = await sender.evaluate(async ([id]) => ({
+    const rejectedRetry = await sender.evaluate(async ([id, altId]) => ({
       res: await ShopEconomy.sendShopGift(__mj.S, 'tiles', id, 'test-rcpt', window.__giftHooks()),
       pendingAfter: __mj.S.pendingGiftOut,
       locked: ShopEconomy.hasPendingGiftSpend(__mj.S),
+      blockedBuy: ShopEconomy.buyItem(__mj.S, 'tiles', altId),
+      blockedOtherGift: await ShopEconomy.sendShopGift(__mj.S, 'tiles', altId, 'test-rcpt', window.__giftHooks()),
       coinsAfter: __mj.S.coins,
-    }), [giftItem.id]);
-    t.eq(rejectedRetry.res.ok, false, 'definite 403 on retry fails');
-    t.eq(rejectedRetry.res.reason, 'gift_failed', 'definite 403 reports gift_failed');
-    t.eq(rejectedRetry.pendingAfter, null, 'definite 403 clears pendingGiftOut');
-    t.eq(rejectedRetry.locked, false, 'definite 403 unlocks wallet');
-    t.eq(rejectedRetry.coinsAfter, heldFor403.coins, 'definite 403 charges 0 coins');
+    }), [giftItem.id, altItem.id]);
+    t.eq(rejectedRetry.res.ok, false, '403 retry does not succeed');
+    t.eq(rejectedRetry.res.reason, 'gift_unconfirmed', '403 on retry keeps prior ambiguous attempt unconfirmed');
+    t.eq(rejectedRetry.res.pending, true, '403 on retry marks pending');
+    t.eq(rejectedRetry.res.observedAbsent, true, 'post-retry GET still saw empty path');
+    t.eq(rejectedRetry.res.gid, heldFor403.res.gid, '403 on retry keeps original gid');
+    t.eq(rejectedRetry.pendingAfter && rejectedRetry.pendingAfter.gid, heldFor403.res.gid, 'pendingGiftOut preserves original gid');
+    t.eq(rejectedRetry.locked, true, 'wallet remains locked after retry refusal');
+    t.eq(rejectedRetry.blockedBuy.reason, 'gift_pending', 'wallet lock blocks new item purchase');
+    t.eq(rejectedRetry.blockedOtherGift.reason, 'gift_pending', 'wallet lock blocks sending a gift with a new key');
+    t.eq(rejectedRetry.coinsAfter, heldFor403.coins, '403 retry charges 0 coins');
+
+    await sender.reload();
+    await sender.waitForFunction(() => window.__mjReady === true, null, { timeout: 8000 });
+    await installGiftHooks();
+    putMode = 'normal';
+    const preArrivalResume = await sender.evaluate(async () => ({
+      res: await ShopEconomy.resumePendingGift(__mj.S, window.__giftHooks()),
+      pending: __mj.S.pendingGiftOut,
+      locked: ShopEconomy.hasPendingGiftSpend(__mj.S),
+    }));
+    t.eq(preArrivalResume.res.reason, 'gift_unconfirmed', 'reload resume before delayed original arrives stays unconfirmed');
+    t.eq(preArrivalResume.res.observedAbsent, true, 'reload resume sees empty path before delayed original arrives');
+    t.eq(preArrivalResume.pending && preArrivalResume.pending.gid, heldFor403.res.gid, 'original gid survives retry 403 and reload');
+    t.eq(preArrivalResume.locked, true, 'wallet stays locked across reload');
+
+    // Now the original timed-out request arrives at the server after the retry's 403 rejection
+    const lateOriginalAfter403 = deliverHeldPutToDb();
+    t.eq(lateOriginalAfter403, { delivered: true, conflict: false }, 'delayed original PUT arrives at server');
+    const reconciledAfter403 = await sender.evaluate(async () => ({
+      res: await ShopEconomy.resumePendingGift(__mj.S, window.__giftHooks()),
+      pendingAfter: __mj.S.pendingGiftOut,
+      locked: ShopEconomy.hasPendingGiftSpend(__mj.S),
+      coinsAfter: __mj.S.coins,
+    }));
+    t.eq(reconciledAfter403.res.ok, true, 'resumePendingGift reconciles delayed original after retry 403 and reload');
+    t.eq(reconciledAfter403.res.recovered, true, 'reconciled gift marks recovered');
+    t.eq(reconciledAfter403.res.gid, heldFor403.res.gid, 'reconciles under the original gid');
+    t.eq(reconciledAfter403.pendingAfter, null, 'clears pendingGiftOut after reconciliation');
+    t.eq(reconciledAfter403.locked, false, 'unlocks wallet after reconciliation');
+    t.eq(reconciledAfter403.coinsAfter, heldFor403.coins - giftItem.price, 'charges exactly once for the delayed original PUT');
     await sender.ctx.close();
 
     // 5. Recipient deduplication, legacy receipt transition, and distinct gift of already-owned item
     const inbox = db.get('plays/test-gift-rcpt') || {};
     const inboxEntries = Object.entries(inbox).sort((a, b) => a[0].localeCompare(b[0]));
-    t.eq(inboxEntries.length, 5, 'recipient inbox contains the five distinct confirmed gifts');
+    t.eq(inboxEntries.length, 6, 'recipient inbox contains the six distinct confirmed gifts');
 
     const rcpt = await t.phone({ db, routes, state: { econV: 2, pid: 'test-rcpt', name: 'Rcpt', coins: 100 } });
     const firstDelivery = await rcpt.evaluate(([id1, msg1]) => {

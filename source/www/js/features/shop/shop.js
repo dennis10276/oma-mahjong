@@ -534,10 +534,10 @@
     callSave(hooks);
   }
 
-  async function executePendingGift(S, pending, hooks = {}, allowSend = true) {
+  async function executePendingGift(S, pending, hooks = {}, allowSend = true, isInitialAttempt = false) {
     pendingGiftSpends.add(S);
     try {
-      if (!allowSend || hooks._checkBeforeSend) {
+      if (!allowSend || !isInitialAttempt) {
         const pre = await probeGiftRecord(pending.path, hooks);
         if (pre.status === 'found' && matchesPendingGift(pre.record, pending)) {
           return settleConfirmedGift(S, pending, hooks, true);
@@ -560,7 +560,7 @@
         return { ok: false, reason: 'gift_unconfirmed', pending: true, gid: pending.gid };
       }
 
-      if (hooks._checkBeforeSend && !callSave(hooks)) {
+      if (!isInitialAttempt && !callSave(hooks)) {
         return { ok: false, reason: 'save_failed', pending: true, gid: pending.gid };
       }
 
@@ -581,7 +581,7 @@
       if (post.status === 'found' && matchesPendingGift(post.record, pending)) {
         return settleConfirmedGift(S, pending, hooks, true);
       }
-      if (definiteReject && (post.status === 'absent' || post.status === 'no_reader')) {
+      if (isInitialAttempt && definiteReject && (post.status === 'absent' || post.status === 'no_reader')) {
         clearPendingGift(S, hooks);
         return { ok: false, reason: 'gift_failed', gid: pending.gid };
       }
@@ -606,7 +606,7 @@
       if (!isSamePendingGift(existing, cat, id, toPid)) {
         return { ok: false, reason: 'gift_pending', gid: existing.gid };
       }
-      return executePendingGift(S, existing, { ...hooks, _checkBeforeSend: true }, true);
+      return executePendingGift(S, existing, hooks, true, false);
     }
     const gift = prepareGiftPayload(S, cat, id, toPid);
     if (!gift.ok) return gift;
@@ -624,7 +624,7 @@
       S.pendingGiftOut = null;
       return { ok: false, reason: 'save_failed' };
     }
-    return executePendingGift(S, pending, hooks, true);
+    return executePendingGift(S, pending, hooks, true, true);
   }
 
   /** Reconcile a persisted unconfirmed gift send after reload or reconnect without double-charging. */
@@ -632,7 +632,7 @@
     if (pendingGiftSpends.has(S)) return { ok: false, reason: 'gift_pending' };
     const pending = getPendingGiftOut(S);
     if (!pending) return { ok: true, idle: true };
-    return executePendingGift(S, pending, { ...hooks, _checkBeforeSend: true }, Boolean(hooks.resend));
+    return executePendingGift(S, pending, hooks, Boolean(hooks.resend), false);
   }
 
   function legacyGiftReceiptKey(msg) {
