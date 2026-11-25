@@ -1,15 +1,15 @@
 // uses: board, win
 /* All sounds are synthesized with WebAudio: no files, instant, works offline. */
 const Sound = (() => {
-  let ctx = null, master, sfx, music, ambient, verb, noiseBuf, pinkBuf = null, brownBuf = null;
+  let ctx = null, master, sfx, verb, noiseBuf, pinkBuf = null, brownBuf = null;
   let sfxOn = true, musicOn = true, musicTimer = null, beat = 0, mood = 'calm';
   let trackId = 'mus_piano', explicitTrack = false, previewId = null, activeLoopId = null;
-  let loopGen = 0, musicNodes = [], sfxPack = 'sfx_ivory';
+  let loopGen = 0, activeSession = null, sfxPack = 'sfx_ivory';
   // C-major pentatonic, warm "music box" register
   const PENTA = [261.63, 293.66, 329.63, 392.0, 440.0, 523.25, 587.33, 659.25, 783.99, 880.0, 1046.5, 1174.66, 1318.5, 1568.0];
 
-  // Self-contained Pass A approved offline music tracks (mirrors SHOP_CATALOG.music 1-to-1)
-  const MUSIC_TRACKS = {
+  // Self-contained Pass A approved offline music tracks (mirrors SHOP_CATALOG.music 1-to-1; null-prototype blocks inherited keys)
+  const MUSIC_TRACKS = Object.assign(Object.create(null), {
     mus_piano: { synth: 'piano' },
     mus_sunflower: { synth: 'sunflower' },
     mus_moonlight: { notes: [277.2, 329.6, 415.3, 277.2, 329.6, 415.3, 392.0, 329.6], wave: 'sine', tempo: 420, overtone: 2.0, decay: 0.56 },
@@ -24,7 +24,10 @@ const Sound = (() => {
     mus_box: { notes: [523.3, 659.3, 784.0, 1046.5, 987.8, 784.0, 659.3, 587.3], wave: 'sine', tempo: 290, overtone: 3.0, decay: 0.36 },
     mus_cafe: { notes: [329.6, 392.0, 493.9, 659.3, 587.3, 493.9, 392.0, 349.2], wave: 'triangle', tempo: 340, overtone: 1.5, decay: 0.42 },
     mus_harp: { notes: [392.0, 493.9, 587.3, 784.0, 987.8, 784.0, 587.3, 493.9], wave: 'sine', tempo: 300, overtone: 2.0, decay: 0.52 },
-  };
+  });
+
+  const isValidTrackId = id => typeof id === 'string' && Object.prototype.hasOwnProperty.call(MUSIC_TRACKS, id);
+  const normalizeTrackId = id => (isValidTrackId(id) ? id : 'mus_piano');
 
   function _init(skipAutoMusic = false) {
     if (ctx) { if (ctx.state === 'suspended') ctx.resume(); return; }
@@ -35,16 +38,13 @@ const Sound = (() => {
     const comp = ctx.createDynamicsCompressor();
     master.connect(comp); comp.connect(ctx.destination);
     sfx = ctx.createGain(); sfx.connect(master);
-    music = ctx.createGain(); music.gain.value = 0.55; music.connect(master);
-    // Dry ambient bus bypasses echo-reverb so continuous rain/waterfall noise stays phase-clean
-    ambient = ctx.createGain(); ambient.gain.value = 0.52; ambient.connect(master);
-    // simple echo-reverb for sparkle
+    // Dedicated SFX echo-reverb so stopping/switching music never cuts SFX tails
     const d1 = ctx.createDelay(1); d1.delayTime.value = 0.23;
     const fb = ctx.createGain(); fb.gain.value = 0.32;
     const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 3200;
     verb = ctx.createGain(); verb.gain.value = 0.28;
     verb.connect(d1); d1.connect(lp); lp.connect(fb); fb.connect(d1); lp.connect(master);
-    sfx.connect(verb); music.connect(verb);
+    sfx.connect(verb);
     noiseBuf = ctx.createBuffer(1, ctx.sampleRate * 0.6, ctx.sampleRate);
     const ch = noiseBuf.getChannelData(0);
     for (let i = 0; i < ch.length; i++) ch[i] = Math.random() * 2 - 1;
@@ -80,7 +80,13 @@ const Sound = (() => {
     }
   }
 
-  function tone(f, t, dur, vol, type = 'sine', dest = sfx, attack = 0.004) {
+  function trackVoice(v, voices) {
+    if (!voices) return;
+    voices.add(v);
+    v.onended = () => voices.delete(v);
+  }
+
+  function tone(f, t, dur, vol, type = 'sine', dest = sfx, attack = 0.004, voices = null) {
     if (!ctx) return;
     const o = ctx.createOscillator(), g = ctx.createGain();
     o.type = type; o.frequency.setValueAtTime(f, t);
@@ -88,14 +94,15 @@ const Sound = (() => {
     g.gain.exponentialRampToValueAtTime(Math.max(0.0002, vol), t + attack);
     g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
     o.connect(g); g.connect(dest);
+    trackVoice(o, voices);
     o.start(t); o.stop(t + dur + 0.05);
   }
-  function bell(f, t, vol = 0.18, dur = 1.1, dest = sfx) {
-    tone(f, t, dur, vol, 'sine', dest);
-    tone(f * 2, t, dur * 0.55, vol * 0.32, 'sine', dest);
-    tone(f * 3.01, t, dur * 0.28, vol * 0.13, 'sine', dest);
+  function bell(f, t, vol = 0.18, dur = 1.1, dest = sfx, voices = null) {
+    tone(f, t, dur, vol, 'sine', dest, 0.004, voices);
+    tone(f * 2, t, dur * 0.55, vol * 0.32, 'sine', dest, 0.004, voices);
+    tone(f * 3.01, t, dur * 0.28, vol * 0.13, 'sine', dest, 0.004, voices);
   }
-  function noise(t, dur, vol, f0, f1, q = 1.2, dest = sfx) {
+  function noise(t, dur, vol, f0, f1, q = 1.2, dest = sfx, voices = null) {
     if (!ctx) return;
     const s = ctx.createBufferSource(); s.buffer = noiseBuf;
     const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = q;
@@ -104,6 +111,7 @@ const Sound = (() => {
     g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.01);
     g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
     s.connect(bp); bp.connect(g); g.connect(dest);
+    trackVoice(s, voices);
     s.start(t); s.stop(t + dur + 0.02);
   }
   const now = () => ctx ? ctx.currentTime + 0.005 : 0;
@@ -114,7 +122,7 @@ const Sound = (() => {
     tone(f * 2, t, 0.18, vol * 0.2, 'triangle', dest);
   }
   // a little bird: two fast upward whistles
-  function chirp(t, vol = 0.05, dest = sfx) {
+  function chirp(t, vol = 0.05, dest = sfx, voices = null) {
     if (!ctx) return;
     for (let k = 0; k < 2; k++) {
       const o = ctx.createOscillator(), g = ctx.createGain(), s0 = t + k * 0.09;
@@ -122,7 +130,9 @@ const Sound = (() => {
       o.frequency.setValueAtTime(2300 + Math.random() * 300, s0);
       o.frequency.exponentialRampToValueAtTime(3600 + Math.random() * 500, s0 + 0.06);
       g.gain.setValueAtTime(0.0001, s0); g.gain.exponentialRampToValueAtTime(vol, s0 + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, s0 + 0.08);
-      o.connect(g); g.connect(dest); o.start(s0); o.stop(s0 + 0.1);
+      o.connect(g); g.connect(dest);
+      trackVoice(o, voices);
+      o.start(s0); o.stop(s0 + 0.1);
     }
   }
   function playCoins(t0, count) {
@@ -133,7 +143,7 @@ const Sound = (() => {
     }
   }
   const ok = () => ctx && sfxOn;
-  const resolvedTrackId = () => explicitTrack ? (MUSIC_TRACKS[trackId] ? trackId : 'mus_piano') : (mood === 'sunny' ? 'mus_sunflower' : 'mus_piano');
+  const resolvedTrackId = () => explicitTrack ? normalizeTrackId(trackId) : (mood === 'sunny' ? 'mus_sunflower' : 'mus_piano');
 
   return {
     init,
@@ -153,12 +163,12 @@ const Sound = (() => {
     },
     setMusicTrack(id) {
       explicitTrack = true;
-      trackId = MUSIC_TRACKS[id] ? id : 'mus_piano';
+      trackId = normalizeTrackId(id);
       if (ctx && musicOn && !previewId && activeLoopId !== trackId) startTrack(trackId);
       return trackId;
     },
     previewMusic(id) {
-      if (!MUSIC_TRACKS[id]) return false;
+      if (!isValidTrackId(id)) return false;
       _init(true);
       if (!ctx) return false;
       previewId = id;
@@ -174,18 +184,18 @@ const Sound = (() => {
       previewId = null;
       stopMusicLoop();
     },
-    hasMusicTrack(id) { return Boolean(MUSIC_TRACKS[id]); },
+    hasMusicTrack(id) { return isValidTrackId(id); },
     listMusicTracks() { return Object.keys(MUSIC_TRACKS); },
     pickShuffleTrack(ownedIds, currentId) {
       const valid = [];
       const seen = new Set();
       if (Array.isArray(ownedIds)) {
         for (const id of ownedIds) {
-          if (MUSIC_TRACKS[id] && !seen.has(id)) { seen.add(id); valid.push(id); }
+          if (isValidTrackId(id) && !seen.has(id)) { seen.add(id); valid.push(id); }
         }
       }
       if (!valid.length) return 'mus_piano';
-      const cur = currentId || resolvedTrackId();
+      const cur = isValidTrackId(currentId) ? currentId : resolvedTrackId();
       const pool = valid.length >= 2 ? valid.filter(id => id !== cur) : valid;
       return pool[Math.floor(Math.random() * pool.length)] || valid[0];
     },
@@ -206,7 +216,7 @@ const Sound = (() => {
         mood,
         explicitTrack,
         sfxPack,
-        activeNodeCount: musicNodes.length,
+        activeNodeCount: activeSession ? activeSession.nodes.length : 0,
         tracks: Object.keys(MUSIC_TRACKS),
       };
     },
@@ -335,6 +345,73 @@ const Sound = (() => {
     },
   };
 
+  function createSession(ambientMode) {
+    const out = ctx.createGain();
+    out.gain.value = 1;
+    out.connect(master);
+    const session = { out, fb: null, busses: [], nodes: [], voices: new Set(), dest: null, cleaned: false };
+    if (ambientMode) {
+      // Dry ambient bus bypasses echo-reverb so continuous rain/waterfall noise stays phase-clean
+      const amb = ctx.createGain();
+      amb.gain.value = 0.52;
+      amb.connect(out);
+      session.dest = amb;
+      session.busses.push(amb);
+    } else {
+      const dry = ctx.createGain();
+      dry.gain.value = 0.55;
+      dry.connect(out);
+      const mv = ctx.createGain();
+      mv.gain.value = 0.28;
+      const d1 = ctx.createDelay(1);
+      d1.delayTime.value = 0.23;
+      const fb = ctx.createGain();
+      fb.gain.value = 0.32;
+      const lp = ctx.createBiquadFilter();
+      lp.type = 'lowpass';
+      lp.frequency.value = 3200;
+      dry.connect(mv); mv.connect(d1); d1.connect(lp); lp.connect(fb); fb.connect(d1); lp.connect(out);
+      session.fb = fb;
+      session.dest = dry;
+      session.busses.push(dry, mv, d1, fb, lp);
+    }
+    return session;
+  }
+
+  function teardownSession(session) {
+    if (!session) return;
+    const cleanup = () => {
+      if (session.cleaned) return;
+      session.cleaned = true;
+      try { session.out.disconnect(); } catch (e) { }
+      if (session.fb) { try { session.fb.disconnect(); } catch (e) { } }
+      for (const n of session.busses) { try { n.disconnect(); } catch (e) { } }
+      for (const n of session.nodes) {
+        try { if (n.stop) n.stop(); } catch (e) { }
+        try { if (n.disconnect) n.disconnect(); } catch (e) { }
+      }
+      for (const v of session.voices) {
+        try { if (v.stop) v.stop(); } catch (e) { }
+        try { if (v.disconnect) v.disconnect(); } catch (e) { }
+      }
+      session.busses.length = 0;
+      session.nodes.length = 0;
+      session.voices.clear();
+    };
+    if (ctx && ctx.state === 'running') {
+      try {
+        const t0 = ctx.currentTime;
+        const cur = Math.max(0.0001, session.out.gain.value);
+        session.out.gain.cancelScheduledValues(t0);
+        session.out.gain.setValueAtTime(cur, t0);
+        session.out.gain.linearRampToValueAtTime(0.0001, t0 + 0.025);
+      } catch (e) { }
+      setTimeout(cleanup, 40);
+    } else {
+      cleanup();
+    }
+  }
+
   function startMusic() {
     if (!ctx || activeLoopId) return;
     startTrack(previewId || resolvedTrackId());
@@ -342,57 +419,63 @@ const Sound = (() => {
 
   function startTrack(id) {
     if (!ctx) return;
-    const validId = MUSIC_TRACKS[id] ? id : 'mus_piano';
+    const validId = normalizeTrackId(id);
     const tr = MUSIC_TRACKS[validId];
     stopMusicLoop();
     const gen = loopGen;
+    const ambientMode = tr.synth === 'rain' || tr.synth === 'waterfall';
+    const session = createSession(ambientMode);
+    activeSession = session;
     activeLoopId = validId;
     beat = 0;
-    if (tr.synth === 'sunflower') return startSunny(gen);
-    if (tr.synth === 'rain') return startZachteRegen(gen);
-    if (tr.synth === 'waterfall') return startWaterval(gen);
-    if (tr.synth === 'piano') return startPiano(gen);
-    return startCatalogTrack(tr, gen);
+    if (tr.synth === 'sunflower') return startSunny(gen, session);
+    if (tr.synth === 'rain') return startZachteRegen(gen, session);
+    if (tr.synth === 'waterfall') return startWaterval(gen, session);
+    if (tr.synth === 'piano') return startPiano(gen, session);
+    return startCatalogTrack(tr, gen, session);
   }
 
   // gentle generative music-box background (mus_piano)
-  function startPiano(gen) {
+  function startPiano(gen, session) {
     const chords = [[0, 2, 4, 7], [4, 5, 7, 9], [3, 5, 7, 10], [1, 3, 6, 8]];
     musicTimer = setInterval(() => {
-      if (gen !== loopGen || !ctx || ctx.state !== 'running') return;
+      if (gen !== loopGen || session !== activeSession || !ctx || ctx.state !== 'running') return;
       const t = ctx.currentTime + 0.05;
       const ch = chords[Math.floor(beat / 8) % chords.length];
       if (beat % 8 === 0) {
-        tone(PENTA[ch[0]] / 2, t, 3.6, 0.045, 'sine', music, 0.4);
-        tone(PENTA[ch[1]] / 2, t, 3.6, 0.03, 'sine', music, 0.5);
+        tone(PENTA[ch[0]] / 2, t, 3.6, 0.045, 'sine', session.dest, 0.4, session.voices);
+        tone(PENTA[ch[1]] / 2, t, 3.6, 0.03, 'sine', session.dest, 0.5, session.voices);
       }
       if (Math.random() < (beat % 2 === 0 ? 0.7 : 0.35)) {
         const n = ch[Math.floor(Math.random() * ch.length)] + (Math.random() < 0.5 ? 0 : 3);
-        bell(PENTA[Math.min(n + 2, PENTA.length - 1)], t, 0.035, 1.4, music);
+        bell(PENTA[Math.min(n + 2, PENTA.length - 1)], t, 0.035, 1.4, session.dest, session.voices);
       }
       beat++;
     }, 420);
   }
 
   // cheerful summer waltz (3/4) with a marimba tune and birds now and then (mus_sunflower)
-  function startSunny(gen) {
+  function startSunny(gen, session) {
     const bars = [[0, 2, 4], [3, 5, 7], [4, 6, 8], [0, 2, 4], [1, 3, 5], [3, 5, 7], [4, 6, 9], [0, 4, 7]];
     const tune = [7, 9, 10, 9, 7, 5, 7, 9, 12, 10, 9, 7, 5, 4, 5, 7, 9, 7, 5, 4, 2, 4, 5, 4];
     musicTimer = setInterval(() => {
-      if (gen !== loopGen || !ctx || ctx.state !== 'running') return;
+      if (gen !== loopGen || session !== activeSession || !ctx || ctx.state !== 'running') return;
       const t = ctx.currentTime + 0.05;
       const bar = bars[Math.floor(beat / 3) % bars.length], pos = beat % 3;
-      if (pos === 0) tone(PENTA[bar[0]] / 2, t, 0.9, 0.05, 'triangle', music, 0.01);
-      else { tone(PENTA[bar[1]], t, 0.25, 0.022, 'triangle', music); tone(PENTA[bar[2]], t, 0.25, 0.018, 'triangle', music); }
+      if (pos === 0) tone(PENTA[bar[0]] / 2, t, 0.9, 0.05, 'triangle', session.dest, 0.01, session.voices);
+      else {
+        tone(PENTA[bar[1]], t, 0.25, 0.022, 'triangle', session.dest, 0.004, session.voices);
+        tone(PENTA[bar[2]], t, 0.25, 0.018, 'triangle', session.dest, 0.004, session.voices);
+      }
       const n = tune[beat % tune.length];
-      if (Math.random() < 0.8) tone(PENTA[Math.min(n, 13)], t, 0.45, 0.045, 'sine', music);
-      if (beat % 24 === 17 && Math.random() < 0.7) chirp(t + 0.1, 0.018, music);
+      if (Math.random() < 0.8) tone(PENTA[Math.min(n, 13)], t, 0.45, 0.045, 'sine', session.dest, 0.004, session.voices);
+      if (beat % 24 === 17 && Math.random() < 0.7) chirp(t + 0.1, 0.018, session.dest, session.voices);
       beat++;
     }, 330);
   }
 
   // approved soft pattering rain on leaves + occasional warm felt-piano note (mus_rain)
-  function startZachteRegen(gen) {
+  function startZachteRegen(gen, session) {
     ensureAmbientBuffers();
     const src = ctx.createBufferSource(); src.buffer = pinkBuf; src.loop = true;
     const hp = ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 220;
@@ -400,35 +483,35 @@ const Sound = (() => {
     const g = ctx.createGain();
     g.gain.setValueAtTime(0.001, ctx.currentTime);
     g.gain.linearRampToValueAtTime(0.24, ctx.currentTime + 0.5);
-    src.connect(hp); hp.connect(lp); lp.connect(g); g.connect(ambient);
+    src.connect(hp); hp.connect(lp); lp.connect(g); g.connect(session.dest);
     src.start();
-    musicNodes.push(src, g);
+    session.nodes.push(src, g);
 
     let step = 0;
     const softNotes = [329.63, 392.0, 440.0, 523.25, 392.0, 329.63];
     musicTimer = setInterval(() => {
-      if (gen !== loopGen || !ctx || ctx.state !== 'running') return;
+      if (gen !== loopGen || session !== activeSession || !ctx || ctx.state !== 'running') return;
       const t = ctx.currentTime + 0.03;
       if (Math.random() < 0.78) {
         const f = 1100 + Math.random() * 850;
-        noise(t + Math.random() * 0.14, 0.035, 0.022, f, f * 0.75, 4.5, ambient);
+        noise(t + Math.random() * 0.14, 0.035, 0.022, f, f * 0.75, 4.5, session.dest, session.voices);
       }
       if (step % 7 === 1) {
         const nf = softNotes[Math.floor(step / 7) % softNotes.length];
-        tone(nf, t + 0.05, 1.8, 0.024, 'sine', ambient, 0.06);
+        tone(nf, t + 0.05, 1.8, 0.024, 'sine', session.dest, 0.06, session.voices);
       }
       step++;
     }, 240);
   }
 
   // approved 4-layer waterfall (170-1550 Hz) calibrated for phone speakers & tap headroom (mus_waterfall)
-  function startWaterval(gen) {
+  function startWaterval(gen, session) {
     ensureAmbientBuffers();
     const WATERVAL_GAIN = 0.84;
     const out = ctx.createGain();
     out.gain.setValueAtTime(0.001, ctx.currentTime);
     out.gain.linearRampToValueAtTime(WATERVAL_GAIN, ctx.currentTime + 0.55);
-    out.connect(ambient);
+    out.connect(session.dest);
 
     // Layer 1: Warm cascade body above phone-speaker roll-off (170-560 Hz)
     const bodySrc = ctx.createBufferSource(); bodySrc.buffer = brownBuf; bodySrc.loop = true;
@@ -470,11 +553,11 @@ const Sound = (() => {
     veilSrc.connect(veilBp); veilBp.connect(veilLp); veilLp.connect(veilGain); veilGain.connect(out);
     veilSrc.start(); lfoVeil.start();
 
-    musicNodes.push(bodySrc, foamSrc, veilSrc, lfoFreq, lfoAmp, lfoVeil, out);
+    session.nodes.push(bodySrc, foamSrc, veilSrc, lfoFreq, lfoAmp, lfoVeil, out);
 
     // Layer 4: Soft aerated splash puffs & subtle plunge-pool bubble glugs
     musicTimer = setInterval(() => {
-      if (gen !== loopGen || !ctx || ctx.state !== 'running') return;
+      if (gen !== loopGen || session !== activeSession || !ctx || ctx.state !== 'running') return;
       const t = ctx.currentTime + 0.02;
       if (Math.random() < 0.72) {
         const s0 = t + Math.random() * 0.09;
@@ -490,6 +573,7 @@ const Sound = (() => {
         g.gain.exponentialRampToValueAtTime(vol, s0 + 0.022);
         g.gain.exponentialRampToValueAtTime(0.0001, s0 + dur);
         s.connect(bp); bp.connect(g); g.connect(out);
+        trackVoice(s, session.voices);
         s.start(s0, Math.random() * 2.5); s.stop(s0 + dur + 0.03);
       }
       if (Math.random() < 0.42) {
@@ -505,21 +589,22 @@ const Sound = (() => {
         g.gain.exponentialRampToValueAtTime(bVol, b0 + 0.008);
         g.gain.exponentialRampToValueAtTime(0.0001, b0 + bDur);
         o.connect(g); g.connect(out);
+        trackVoice(o, session.voices);
         o.start(b0); o.stop(b0 + bDur + 0.02);
       }
     }, 185);
   }
 
-  function startCatalogTrack(tr, gen) {
+  function startCatalogTrack(tr, gen, session) {
     let step = 0;
     const tick = () => {
-      if (gen !== loopGen || !ctx || ctx.state !== 'running') return;
+      if (gen !== loopGen || session !== activeSession || !ctx || ctx.state !== 'running') return;
       const t = ctx.currentTime + 0.03;
       const idx = step % tr.notes.length;
       const f = tr.notes[idx];
-      if (idx % 4 === 0) tone(f * 0.5, t, (tr.tempo * 3.4) / 1000, 0.038, 'sine', music, 0.04);
-      tone(f, t, tr.decay + 0.25, 0.052, tr.wave, music, tr.softAttack || 0.014);
-      if (tr.overtone) tone(f * tr.overtone, t, tr.decay * 0.55, 0.016, 'sine', music, 0.01);
+      if (idx % 4 === 0) tone(f * 0.5, t, (tr.tempo * 3.4) / 1000, 0.038, 'sine', session.dest, 0.04, session.voices);
+      tone(f, t, tr.decay + 0.25, 0.052, tr.wave, session.dest, tr.softAttack || 0.014, session.voices);
+      if (tr.overtone) tone(f * tr.overtone, t, tr.decay * 0.55, 0.016, 'sine', session.dest, 0.01, session.voices);
       step++;
     };
     tick();
@@ -529,11 +614,9 @@ const Sound = (() => {
   function stopMusicLoop() {
     loopGen++;
     if (musicTimer) { clearInterval(musicTimer); musicTimer = null; }
-    while (musicNodes.length) {
-      const n = musicNodes.pop();
-      try { if (n.stop) n.stop(); } catch (e) { }
-      try { if (n.disconnect) n.disconnect(); } catch (e) { }
-    }
     activeLoopId = null;
+    const session = activeSession;
+    activeSession = null;
+    if (session) teardownSession(session);
   }
 })();
