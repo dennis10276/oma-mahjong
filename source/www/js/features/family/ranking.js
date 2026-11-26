@@ -56,7 +56,8 @@ function perfectBlockers() {
   for (let l = 1; l < S.level; l++) if (mainLevelStars(l) < 3) blockers.push(l);
   return blockers;
 }
-const perfectSticker = (cls = '') => `<span class="pf pf-w2${cls ? ' ' + cls : ''}">PERFECT</span>`;
+// The same badge is sized by its context. The badge's inner pill carries the shine.
+const perfectSticker = (cls = '') => `<span class="pf pf-w2${cls ? ' ' + cls : ''}"><span class="pf-in">PERFECT</span></span>`;
 function showPerfectPlaque(entry) {
   const blockers = perfectBlockers().length, nudge = blockers > 0 && blockers <= 5;
   openModal(`<div class="perfect-plaque"><div class="plaque-stars">⭐⭐⭐</div>${perfectSticker('pf-hero')}<h2>${esc(entry.name)}</h2>
@@ -93,7 +94,7 @@ function rankRowHTML(e, rank, mode) {
   const presence = presenceOf(e), title = titleOf(e);
   const sub = [title, presence ? `<span class="${presence.online ? 'presence-text' : 'presence-last'}">${presence.text}</span>` : '', isFam(e) ? heartSeenShort(e.id) : ''].filter(Boolean).join(' · ');
   const val = mode === 'week' ? `<span class="rp">${fmtN(e.points)}</span>` : `<span class="rp lvl"><small>level</small>${e.level}</span>`;
-  const badge = e.perfect ? `<button class="pf pf-w2" data-perfect="${esc(e.id)}" aria-label="PERFECT · ${esc(e.name)}">PERFECT</button>` : '';
+  const badge = e.perfect ? `<button class="pf-button" data-perfect="${esc(e.id)}" aria-label="PERFECT · ${esc(e.name)}">${perfectSticker()}</button>` : '';
   return `<div class="rrow tight${e.me ? ' me' : ''}${isFam(e) ? ' fam' : ''}"><span class="rk">${medal(rank)}</span>${avatarHTML(e, 'ra', presence?.online)}<span class="rn"><span class="nm1"><span class="nmt">${esc(e.name)}</span>${e.me ? `<i>${tx('youTag')}</i>` : ''}${badge}</span><small>${sub || '&nbsp;'}</small></span>${val}<span class="hb">${isFam(e) ? heartBtn(e) : ''}</span></div>`;
 }
 const rankPageHTML = mode => {
