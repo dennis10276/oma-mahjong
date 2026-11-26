@@ -136,7 +136,7 @@ function begin(o, restart = false) {
   saveCur();
   setTimeout(() => praise(restart ? tx('againPraise') : o.mode === 'daily' ? tx('dailyPraise') : o.title), 150);
   const ready = () => {
-    if (!S.seenTray) setTimeout(() => showIntro(), 700);
+    if (!S.seenTray) showIntro();
     else { setTimeout(checkStuck, 500); setTimeout(jokerLeftover, 700); }
   };
   // Finish every new-tile introduction before starting play or any optional replay.
