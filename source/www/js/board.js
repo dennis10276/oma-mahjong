@@ -522,7 +522,7 @@ function tapTile(i) {
     renderTray();
     const m = $('#tray').children[G.tray.indexOf(i)].firstElementChild;
     if (m) m.classList.add('land');
-    if (G.tray.length === SLOTS - 1) Sound.warn(); else Sound.land();
+    if (G.tray.length === SLOTS - 1) Sound.warn(); else Sound.land(G.tray.indexOf(i));
   });
 }
 /* Turning a face-down tile over (or back). The new side shows right away, with a short squeeze
