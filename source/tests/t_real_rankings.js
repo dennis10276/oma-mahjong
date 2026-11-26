@@ -4,7 +4,7 @@ module.exports = [{
   name: 'real rankings: overtaking stays inside the win screen and next level needs no rank popup',
   async run(t, { FakeDB, startLevel, solve, sleep }) {
     const p = await t.phone({ state: { name: 'Oma', pid: 'oma', level: 12, toolsSeen: true, sunSeen: true }, db: new FakeDB({ scores: {
-      gerda: { name: 'Gerda', points: 1000, level: 12, wk: '2026-10-05', wkPts: 100 }
+      gerda: { name: 'Gerda', points: 1000, level: 12, stars: 33, wk: '2026-10-05', wkPts: 100 }
     } }) });
     await startLevel(p, 12); await solve(p, 3800);
     t.ok(await p.locator('.win-rank-up').count() === 1, 'rank-up displayed within win');
