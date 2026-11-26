@@ -103,7 +103,7 @@ setInterval(() => {
   if (curScreen === 'home') checkSentHearts();
   if (curScreen === 'ranking' && modalFree()) renderRanking();
 }, 30000);
-document.body.classList.toggle('nonum', !S.nums);
+document.body.classList.add('nonum');   // the classic tiles never show corner numbers (Dennis 2026-11-26)
 show('home');
 window.__mjReady = true;   // the boot script and the load-error banner look at this
 // dashboard: app opened, and how long it stays on screen

@@ -108,10 +108,9 @@ const TEXT = {
   // ---------- settings ----------
   set_sfx: ['🔊 Geluidjes', '🔊 Sounds'],
   set_music: ['🎵 Muziek', '🎵 Music'],
-  set_musicShuffle: ['🔀 Muziek door elkaar', '🔀 Shuffle music'],
+  set_musicShuffle: ['🎶 Muziek door elkaar', '🎶 Mix the music'],   // not 🔀 or "Shuffle": those were the old Schudden helper
   set_vibrate: ['📳 Trillen', '📳 Vibration'],
   set_highlight: ['✨ Vastzittende stenen donker', '✨ Darken tiles that are stuck'],
-  set_nums: ['🔢 Cijfers in de hoek', '🔢 Numbers in the corner'],
   set_lang: ['🌐 Taal', '🌐 Language'],
   howToPlay: ['Hoe speel je?', 'How to play'],
   wipe: ['🗑️ Voortgang wissen', '🗑️ Erase progress'],

@@ -23,8 +23,9 @@ module.exports = [
     t.ok(b.pictures, 'every classic face is a shared picture');
     t.ok(b.nodes <= b.n * 4 + b.layers, 'a few elements per tile', b);
     t.ok(b.placed, 'tiles are put in place when they are made');
-    // the corner numbers are part of the picture; "numbers off" uses the picture without them
-    const pics = await p.evaluate(() => { const f = $('#board .fi'), a = getComputedStyle(f).backgroundImage; document.body.classList.add('nonum'); const z = getComputedStyle(f).backgroundImage; document.body.classList.remove('nonum'); return [a.length, z.length, a === z, f.dataset.f]; });
+    // the corner numbers are part of the picture; the game always shows the picture without them (body.nonum,
+    // Dennis 2026-11-26), so z below is the picture with them
+    const pics = await p.evaluate(() => { const f = $('#board .fi'), a = getComputedStyle(f).backgroundImage; document.body.classList.remove('nonum'); const z = getComputedStyle(f).backgroundImage; document.body.classList.add('nonum'); return [a.length, z.length, a === z, f.dataset.f]; });
     t.ok(+pics[3] >= 31 || !pics[2], 'numbers off: another picture for faces with a number', pics);
     // a glowing tile leaves its group (above the whole pile) and goes back afterwards
     const g = await p.evaluate(() => {

@@ -3,7 +3,7 @@
 'use strict';
 
 function openSettings() {
-  const rows = ['sfx', 'music', 'musicShuffle', 'vibrate', 'highlight', 'nums'];
+  const rows = ['sfx', 'music', 'musicShuffle', 'vibrate', 'highlight'];   // no corner-numbers row: the classic tiles never show them (Dennis 2026-11-26)
   const cur = langOf(S);
   openModal(`<h2>${tx('settings')}</h2>
     <div class="set-row">${fx('set_lang')}<span class="lang-pick">${Object.entries(LANGS).map(([c, n]) => `<button class="lp${c === cur ? ' on' : ''}" data-lang="${c}">${n}</button>`).join('')}</span></div>
@@ -20,7 +20,6 @@ function openSettings() {
     if (k === 'musicShuffle') Sound.refreshShuffle();
     if (k === 'vibrate' && S.vibrate) buzz(40);
     if (k === 'highlight') $('#board').classList.toggle('hl', S.highlight);
-    if (k === 'nums') document.body.classList.toggle('nonum', !S.nums);
   });
   $('#mHow').onclick = () => showIntro();
   $('#mReset').onclick = confirmReset;
