@@ -146,6 +146,9 @@ const Tiles = (() => {
     // the big prize theme, unlocked after level 20
     sunflower: { prize: true, faces: [...'🌻🐝🐞🦋🍓🍉🍋🍇🥕🍄🐸🐢🐤🐌🌈🏡🚲🍦👒🐷⛵🐠🍩🌷🍀🦔🐘🦊🐳🍭🧺🐧🍯🧀🚜🦜'] },
     happy: { faces: ['🌸', '🌺', '🌻', '🌹', '🌷', '🌼', '💐', '🍀', '🌿', '🌵', '🌴', '🌳', '🍁', '🍂', '🌾', '🐚', '🌙', '⭐', '🌞', '🌈', '❄️', '🔥', '💧', '⚡', '🎈', '🎀', '🎁', '💎', '👑', '🔔', '🎵', '🏠', '⚓', '🚲', '⛵', '🧶'] },
+    // Pass A approved Shop tile sets; prize: true keeps them out of legacy looks/screen.js until TASK-9/TASK-14 wire Shop
+    tiles_kitchen: { shop: true, prize: true, faces: ['☕', '🫖', '🍵', '🍷', '🧃', '🥐', '🥖', '🥨', '🥯', '🥞', '🧇', '🧀', '🍳', '🥓', '🥪', '🍲', '🥗', '🍝', '🥧', '🍰', '🎂', '🧁', '🍪', '🍩', '🍫', '🍮', '🍯', '🍓', '🍎', '🍋', '🍒', '🫐', '🍊', '🌶️', '🍴', '🥣'] },
+    tiles_dutch: { shop: true, prize: true, faces: ['🌷', '🌻', '🌼', '🌹', '🌺', '🚲', '⛵', '🚤', '🚂', '🚜', '🏡', '🏰', '⛪', '⛺', '👑', '🧡', '🦁', '🐄', '🐑', '🐖', '🐓', '🦆', '🦢', '🧀', '🧇', '🥞', '🍟', '🥕', '🍓', '🍎', '☕', '🫖', '🍺', '☂️', '🧣', '🧶'] },
   };
 
   // special tiles have numbers from 100 (see js/specials.js)

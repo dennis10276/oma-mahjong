@@ -1,3 +1,4 @@
+// uses: lang, core/*
 /* Oma's Mahjong — self-update: newer game files are fetched from the website (see the boot script in index.html). */
 'use strict';
 

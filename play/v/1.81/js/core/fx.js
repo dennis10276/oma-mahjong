@@ -1,3 +1,4 @@
+// uses: core/util
 /* Oma's Mahjong — particles: confetti, sparkles and flying emoji over the game.
    Sparkles and emoji (every pair, while playing) are little elements whose whole flight is handed
    to the phone's graphics chip at once (Web Animations): no drawing work per frame for the game.

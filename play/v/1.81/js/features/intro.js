@@ -1,3 +1,4 @@
+// uses: layouts, lang, core/*, board, specials
 /* Oma's Mahjong — the intro film (from 1.73): the first time a player meets a new kind of tile, a tiny level is
    played for them in a pop-up over the level that is about to start, by the game's own code: the board and its
    tiles, the tray, the taps (board.js onTap), the flight into the tray, the pair, the ice that cracks and melts, the
@@ -248,7 +249,7 @@ function stopIntroFilm(after = null) {
     clearGameMsg(); $('#toast').classList.remove('on');                 // (no text of the film comes after it)
     if (G) {
       G.introducing = run.introducing; if (run.ticking) G.tStart = performance.now();
-      if (G.lucky && Date.now() > G.lucky.until) { glow(G.lucky.i, 'lucky', false); G.lucky = null; }   // its end (rewards.js maybeLucky) fell in the film
+      if (G.lucky && Date.now() > G.lucky.until) { glow(G.lucky.i, 'lucky', false); G.lucky = null; }   // its end (rewards/lucky.js maybeLucky) fell in the film
       if (curScreen === 'game') layoutBoard();                         // (in case the screen turned meanwhile)
     }
     if (after) after();
