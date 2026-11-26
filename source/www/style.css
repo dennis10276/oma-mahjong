@@ -1021,3 +1021,10 @@ span.fx { font-size: inherit; }
 .gift-row .gn { flex: 1; min-width: 0; text-align: left; font-size: 20px; font-weight: 900; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .gift-row .gbtn { flex: none; padding: 8px 18px; border-radius: 16px; background: var(--green); color: #fff; font-size: 20px; font-weight: 900; box-shadow: 0 4px 0 var(--green-d); }
 .gift-row .gbtn:disabled { opacity: .5; }
+/* the PERFECT sticker shines (Dennis 2026-11-26): a soft light sweeps across it every few seconds */
+.pf-w2 { position: relative; overflow: hidden; isolation: isolate; }
+.pf-w2::after { content: ''; position: absolute; z-index: 1; top: -60%; bottom: -60%; left: -70%; width: 45%; pointer-events: none;
+  background: linear-gradient(100deg, rgba(255,255,255,0), rgba(255,255,255,.9) 50%, rgba(255,255,255,0)); transform: skewX(-18deg);
+  animation: pfShine 3.4s ease-in-out infinite; }
+@keyframes pfShine { 0%, 58% { left: -70%; } 88%, 100% { left: 130%; } }
+@media (prefers-reduced-motion: reduce) { .pf-w2::after { animation: none; left: -70%; } }
