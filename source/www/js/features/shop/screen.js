@@ -36,7 +36,7 @@ function shopPage(tab) {
   if (tab === 'familie') return shopSec('shopSecFrame', 'theme-list', L('frame').filter(it => !it.starter).map(frameCard).join(''))
     + shopSec('shopSecTitle', 'row-list', L('title').map(titleRow).join(''));
   if (tab === 'muziek') return shopSec('shopSecMusic', 'row-list', L('music', ['mus_sunflower', 'mus_piano']).map(it => musicRow('music', it)).join(''))
-    + shopSec('shopSecSfx', 'row-list', L('sfx', ['sfx_ivory', 'sfx_mahjong_clack']).map(it => musicRow('sfx', it)).join(''));
+    + (SHOP_SFX_READY ? shopSec('shopSecSfx', 'row-list', L('sfx', ['sfx_ivory', 'sfx_mahjong_clack']).map(it => musicRow('sfx', it)).join('')) : '');
   return helpCard('undo') + helpCard('peek');
 }
 
@@ -86,8 +86,12 @@ function togglePreview(id) {
   document.querySelectorAll('#shopView .pbtn').forEach(b => b.textContent = b.dataset.play === id ? '■' : '▶');
 }
 // after the online fetch (main.js): a gift left unconfirmed by a lost connection is finished, so it stops blocking purchases
+// sound packs are sold once audio.js plays them (its Pass B); until then nobody can buy a pack that changes nothing
+const SHOP_SFX_READY = false;
+// on boot: finish or resend a gift a lost connection left unconfirmed (the receiver drops a second copy by its gid),
+// so it never keeps blocking buying
 async function resumeShopGift() {
-  try { await ShopEconomy.resumePendingGift(S, giftHooks()); } catch (e) { }
+  try { await ShopEconomy.resumePendingGift(S, { ...giftHooks(), resend: true }); } catch (e) { }
   if (curScreen === 'shop') refreshShop();
 }
 const lookHooks = () => ({ apply: applyLook, save, log: logEvt, pushScore });
