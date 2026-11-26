@@ -7,6 +7,7 @@ let curScreen = 'home';
 function show(id) {
   if (id === 'themes') id = 'shop';   // the old themes screen lives in the shop now
   if (curScreen === 'game' && id !== 'game') pauseClock();
+  if (curScreen === 'shop' && id !== 'shop') stopShopPreview();
   curScreen = id;
   document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id === id));
   if (id === 'home') renderHome();

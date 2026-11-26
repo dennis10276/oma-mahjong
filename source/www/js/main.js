@@ -78,7 +78,7 @@ applyLang();
 applyTheme();
 applyBg();
 ensureId();
-fetchOnline().then(ok => { if (ok && curScreen === 'home') renderHome(); checkHearts(); checkSentHearts(); if (ok) checkPassed(); });
+fetchOnline().then(ok => { if (ok && curScreen === 'home') renderHome(); checkHearts(); checkSentHearts(); if (ok) { checkPassed(); resumeShopGift(); } });
 // back to the app after a while (phones keep it in memory): the same as opening it again
 let hiddenAt = 0;
 document.addEventListener('visibilitychange', () => {

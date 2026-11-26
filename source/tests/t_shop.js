@@ -126,4 +126,101 @@ module.exports = [
       }
     },
   },
+  {
+    name: 'shop: every music and sound title and line fits on one line',
+    async run(t, { click, sleep }) {
+      const p = await t.phone({ size: [392, 785], state: { name: 'Dennis', pid: 'test-shop9', level: 12, sunSeen: true, econV: 2, coins: 50 } });
+      await click(p, '#btnShop'); await sleep(300);
+      await p.evaluate(() => document.querySelectorAll('#shop .shop-tabs button')[1].click()); await sleep(500);
+      const cut = await p.evaluate(async () => {
+        await document.fonts.ready;
+        const c = document.createElement('canvas').getContext('2d'), out = [];
+        const els = [...document.querySelectorAll('#shop .row-item .tx b, #shop .row-item .tx small')];
+        for (const el of els) {
+          const cs = getComputedStyle(el); c.font = cs.fontStyle + ' ' + cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily;
+          const w = c.measureText(el.textContent).width;
+          if (w > el.clientWidth) out.push(el.textContent + ' ' + Math.round(w) + '>' + el.clientWidth);
+        }
+        return { cut: out, n: els.length };
+      });
+      t.ok(cut.n >= 60, 'all rows measured', cut.n);
+      t.eq(cut.cut, [], 'no title or line is wider than its box');
+    },
+  },
+  {
+    name: 'shop: music rows preview with the play button, one at a time, and equip on a tap on the row',
+    async run(t, { click, sleep }) {
+      const p = await t.phone({ size: [392, 785], state: { name: 'Dennis', pid: 'test-shop10', level: 12, sunSeen: true, econV: 2, coins: 50, owned: { music: ['mus_piano', 'mus_sunflower', 'mus_rain'] } } });
+      await p.evaluate(() => { window.__pv = []; Sound.previewMusic = id => (__pv.push(id), true); Sound.stopPreview = () => __pv.push('stop'); });
+      await click(p, '#btnShop'); await sleep(300);
+      await p.evaluate(() => document.querySelectorAll('#shop .shop-tabs button')[1].click()); await sleep(500);
+      const txt = id => p.evaluate(i => document.querySelector('#shop .pbtn[data-play="' + i + '"]').textContent, id);
+      await click(p, '#shop .pbtn[data-play="mus_rain"]');
+      t.eq([await txt('mus_rain'), await p.evaluate(() => __pv)], ['■', ['mus_rain']], 'preview starts, shows ■');
+      await click(p, '#shop .pbtn[data-play="mus_rain"]');
+      t.eq([await txt('mus_rain'), await p.evaluate(() => __pv)], ['▶', ['mus_rain', 'stop']], 'second tap stops it');
+      await click(p, '#shop .pbtn[data-play="mus_rain"]');
+      await p.evaluate(() => document.querySelectorAll('#shop .shop-tabs button')[2].click()); await sleep(500);
+      t.eq(await p.evaluate(() => __pv.slice(-1)[0]), 'stop', 'leaving the tab stops the preview');
+      await p.evaluate(() => document.querySelectorAll('#shop .shop-tabs button')[1].click()); await sleep(500);
+      await click(p, '#shop .row-item[data-id="mus_rain"] .tx');
+      t.eq(await p.evaluate(() => [__mj.S.musicTrack, document.querySelector('#shop .row-item[data-id="mus_rain"]').classList.contains('on')]), ['mus_rain', true], 'tap on an owned row equips it');
+      await click(p, '#shop .pbtn[data-play="mus_piano"]');
+      await p.evaluate(() => __mj.show('home'));
+      t.eq(await p.evaluate(() => __pv.slice(-1)[0]), 'stop', 'leaving the shop stops the preview');
+      t.eq(p.errors, [], 'no page error');
+    },
+  },
+  {
+    name: 'shop: claim free Spieken fills one dot and the button turns to Koop',
+    async run(t, { click, sleep }) {
+      const p = await t.phone({ size: [392, 785], state: { name: 'Dennis', pid: 'test-shop11', level: 12, sunSeen: true, econV: 2, coins: 680, peekStock: 0, undoStock: 3 } });
+      await click(p, '#btnShop'); await sleep(300);
+      await p.evaluate(() => document.querySelectorAll('#shop .shop-tabs button')[3].click()); await sleep(500);
+      const card = () => p.evaluate(() => { const c = document.querySelector('#shop .help-card[data-help="peek"]'); return { dots: c.querySelectorAll('.stock i.f').length, btn: c.querySelector('.big-btn').textContent, cls: c.querySelector('.big-btn').className, stock: c.querySelector('.stock span').textContent }; });
+      let c = await card();
+      t.eq([c.dots, /Gratis pakken/.test(c.btn), /play/.test(c.cls), c.stock], [0, true, true, '0 van 3 op voorraad'], 'free to claim, empty stock');
+      await click(p, '#shop .help-card[data-help="peek"] .big-btn'); await sleep(150);
+      c = await card();
+      t.eq([c.dots, /Koop · 450 🪙/.test(c.btn), /daily/.test(c.cls), /Deze week nog 2 te koop/.test(c.btn), await p.evaluate(() => __mj.S.peekStock)], [1, true, true, true, 1], 'one dot, orange Koop button');
+      const full = await p.evaluate(() => { const b = document.querySelector('#shop .help-card[data-help="undo"] .big-btn'); return [b.className.includes('off'), b.disabled, /Voorraad vol/.test(b.textContent)]; });
+      t.eq(full, [true, true, true], 'a full stock shows the grey Voorraad vol');
+      t.eq(p.errors, [], 'no page error');
+    },
+  },
+  {
+    name: 'shop: buying a helper token asks first; after 2 bought the button says Al 2 gekocht deze week',
+    async run(t, { click, sleep }) {
+      const p = await t.phone({ size: [392, 785], state: { name: 'Dennis', pid: 'test-shop12', level: 12, sunSeen: true, econV: 2, coins: 1000, peekStock: 0 } });
+      await click(p, '#btnShop'); await sleep(300);
+      await p.evaluate(() => { document.querySelectorAll('#shop .shop-tabs button')[3].click(); }); await sleep(500);
+      await click(p, '#shop .help-card[data-help="peek"] .big-btn'); await sleep(100);   // free
+      await click(p, '#shop .help-card[data-help="peek"] .big-btn'); await sleep(150);   // Koop opens the popup
+      t.eq(await p.evaluate(() => [document.querySelector('#modalBox h2').textContent, __mj.S.coins, __mj.S.peekStock]), ['Spieken kopen?', 1000, 1], 'a first tap spends nothing');
+      await p.evaluate(() => { const b = document.querySelector('#buyOk'); b.click(); b.click(); }); await sleep(200);
+      t.eq(await p.evaluate(() => [__mj.S.coins, __mj.S.peekStock]), [550, 2], 'bought once');
+      await click(p, '#shop .help-card[data-help="peek"] .big-btn'); await sleep(150);
+      await click(p, '#buyOk'); await sleep(200);
+      t.eq(await p.evaluate(() => [__mj.S.coins, __mj.S.peekStock]), [100, 3], 'second bought');
+      const b = await p.evaluate(() => { const x = document.querySelector('#shop .help-card[data-help="peek"] .big-btn'); return [x.textContent, x.disabled]; });
+      t.ok(/Al 2 gekocht deze week/.test(b[0]) && /Maandag weer te koop en 1 gratis/.test(b[0]) && b[1], 'week limit shows Al 2 gekocht deze week', b);
+      t.eq(p.errors, [], 'no page error');
+    },
+  },
+  {
+    name: 'shop: too few coins greys the helper button with Nog N nodig and a gift left unconfirmed is finished on boot',
+    async run(t, { FakeDB, click, sleep }) {
+      const rec = { k: 'shop_gift', t: 1700000000000, gid: 'g_test_1', from: 'test-shop13', name: 'Dennis', cat: 'tiles', item: 'tiles_dutch' };
+      const db = new FakeDB({ scores: {}, plays: { pkees1: { g_test_1: rec } } });
+      const pending = { gid: 'g_test_1', toPid: 'pkees1', cat: 'tiles', item: 'tiles_dutch', price: 480, path: 'plays/pkees1/g_test_1', payload: rec };
+      const p = await t.phone({ db, size: [392, 785], state: { name: 'Dennis', pid: 'test-shop13', level: 12, sunSeen: true, econV: 2, coins: 600, peekStock: 1, pendingGiftOut: pending } });
+      await sleep(800);
+      t.eq(await p.evaluate(() => [__mj.S.pendingGiftOut, __mj.S.coins]), [null, 120], 'the pending gift was settled, charged once');
+      await click(p, '#btnShop'); await sleep(300);
+      await p.evaluate(() => document.querySelectorAll('#shop .shop-tabs button')[3].click()); await sleep(500);
+      await click(p, '#shop .help-card[data-help="peek"] .big-btn'); await sleep(150);   // the free one
+      const b = await p.evaluate(() => { const x = document.querySelector('#shop .help-card[data-help="peek"] .big-btn'); return [x.textContent, x.disabled]; });
+      t.ok(/Koop · 450/.test(b[0]) && /Nog 330 🪙 nodig/.test(b[0]) && b[1], 'grey Koop with Nog 330 nodig', b);
+    },
+  },
 ];

@@ -2,7 +2,7 @@
 'use strict';
 
 const SHOP_TABS = ['bord', 'muziek', 'familie', 'hulpen'];
-let shopTab = 'bord', shopBusy = false, shopBound = false, shopTapsBound = false;
+let shopTab = 'bord', shopPlaying = '', shopBusy = false, shopBound = false, shopTapsBound = false;
 const shopLabel = tab => tx('shop' + tab[0].toUpperCase() + tab.slice(1));
 
 // ---------- cards: the markup of the approved stills (design-set/redo/capture.js) ----------
@@ -23,6 +23,7 @@ const trayCard = it => card('tray', it, trayBox(it));
 const frameCard = it => card('frame', it, frameBox(it));
 const bgCard = it => `<button class="bgc${shopOn('bg', it)}${shopOwns('bg', it.id) ? '' : ' pay'}" data-cat="bg" data-id="${it.id}" style="background:${it.css}">${shopName(it)}${buyBits('bg', it)}</button>`;
 const titleRow = it => `<button class="row-item${shopOn('title', it)}" data-cat="title" data-id="${it.id}"><span class="ico">${it.icon}</span><span class="tx"><b>${shopName(it)}</b><small>${shopSub(it)}</small></span>${buyBits('title', it)}</button>`;
+const musicRow = (cat, it) => `<button class="row-item${shopOn(cat, it)}" data-cat="${cat}" data-id="${it.id}"><span class="pbtn" data-play="${it.id}">${shopPlaying === it.id ? '■' : '▶'}</span><span class="tx"><b>${shopName(it)}</b><small>${shopSub(it)}</small></span>${buyBits(cat, it)}</button>`;
 const shopSec = (key, cls, html) => `<h3 class="sec">${tx(key)}</h3><div class="${cls}">${html}</div>`;
 
 // The one place that builds a tab page (Tasks 3-4 fill the others).
@@ -34,11 +35,61 @@ function shopPage(tab) {
     + shopSec('shopSecTray', 'theme-list', L('tray').map(trayCard).join(''));
   if (tab === 'familie') return shopSec('shopSecFrame', 'theme-list', L('frame').filter(it => !it.starter).map(frameCard).join(''))
     + shopSec('shopSecTitle', 'row-list', L('title').map(titleRow).join(''));
-  return `<h3 class="sec">${shopLabel(tab)}</h3>`;
+  if (tab === 'muziek') return shopSec('shopSecMusic', 'row-list', L('music', ['mus_sunflower', 'mus_piano']).map(it => musicRow('music', it)).join(''))
+    + shopSec('shopSecSfx', 'row-list', L('sfx', ['sfx_ivory', 'sfx_mahjong_clack']).map(it => musicRow('sfx', it)).join(''));
+  return helpCard('undo') + helpCard('peek');
+}
+
+// ---------- Hulpen: one card per helper, one button that says what a tap does ----------
+const HELPERS = {
+  undo: { icon: '↩️', status: () => ShopEconomy.undoStatus(S), claim: h => ShopEconomy.claimFreeUndo(S, h), buy: h => ShopEconomy.buyUndoToken(S, h) },
+  peek: { icon: '👁️', status: () => ShopEconomy.peekStatus(S), claim: h => ShopEconomy.claimFreePeek(S, h), buy: h => ShopEconomy.buyPeekToken(S, h) },
+};
+function helpButton(id, st) {
+  const mk = (cls, b, sm, act = '') => `<button class="big-btn ${cls}"${act ? ` data-act="${act}"` : ' disabled'}><span class="bb-text"><b>${b}</b>${sm ? `<small>${sm}</small>` : ''}</span></button>`;
+  if (st.canClaimFree) return mk('play', tx('shopHelpFree'), tx('shopHelpFreeSub'), 'claim');
+  if (st.canBuy) return mk('daily', tx('shopHelpBuy', st.price), tx('shopHelpLeft', st.buyRemaining), 'buy');
+  if (st.buyReason === 'stock_full') return mk('off', tx('shopHelpFull'), tx('shopHelpFullSub'));
+  if (st.buyReason === 'week_limit') return mk('off', tx('shopHelpLimit', st.boughtThisWeek), tx('shopHelpLimitSub'));
+  if (st.buyReason === 'not_enough_coins') return mk('off', tx('shopHelpBuy', st.price), tx('shopNeed', st.needCoins));
+  return mk('off', tx('shopHelpWait'), '');
+}
+function helpCard(id) {
+  const st = HELPERS[id].status();
+  return `<div class="card help-card" data-help="${id}"><span class="hico">${HELPERS[id].icon}</span><h3>${tx('shopHelp_' + id)}</h3><p>${tx('shopHelpAbout_' + id)}</p><span class="once">${tx('shopHelpOnce')}</span>
+    <div class="stock">${[0, 1, 2].map(i => `<i class="${i < st.stock ? 'f' : ''}"></i>`).join('')}<span>${tx('shopHelpStock', st.stock, st.maxStock)}</span></div>${helpButton(id, st)}</div>`;
+}
+const helperHooks = () => ({ save, log: logEvt, ensureWeek, pushScore });
+function helpAct(id, act) {
+  const h = HELPERS[id];
+  if (act === 'claim') { if (h.claim(helperHooks()).ok) { Sound.select(); refreshShop(); } return; }
+  const st = h.status();
+  confirmBuy({
+    title: tx('shopBuyQ', tx('shopHelp_' + id)), previewHTML: `<div class="bigico">${h.icon}</div>`, price: st.price,
+    onBuy: () => { const r = h.buy(helperHooks()); if (r.ok) { Sound.select(); refreshShop(); } return r.ok; },
+  });
 }
 
 // ---------- equipping and buying ----------
-const applyLook = cat => ({ tiles: applyTheme, bg: applyBg, finish: applyFinish, tray: applyTray })[cat]?.();
+const applyLook = cat => ({ tiles: applyTheme, bg: applyBg, finish: applyFinish, tray: applyTray, music: () => { stopShopPreview(); Sound.applyAudio({ musicTrack: S.musicTrack }); }, sfx: () => Sound.applyAudio() })[cat]?.();
+// the ▶ of a music row: one preview at a time, a second tap on it stops it; leaving the tab or the shop stops it too
+function stopShopPreview() {
+  if (!shopPlaying) return;
+  shopPlaying = '';
+  Sound.stopPreview();
+  document.querySelectorAll('#shopView .pbtn').forEach(b => b.textContent = '▶');
+}
+function togglePreview(id) {
+  if (shopPlaying === id) { stopShopPreview(); return; }
+  if (!Sound.previewMusic(id)) return;
+  shopPlaying = id;
+  document.querySelectorAll('#shopView .pbtn').forEach(b => b.textContent = b.dataset.play === id ? '■' : '▶');
+}
+// after the online fetch (main.js): a gift left unconfirmed by a lost connection is finished, so it stops blocking purchases
+async function resumeShopGift() {
+  try { await ShopEconomy.resumePendingGift(S, giftHooks()); } catch (e) { }
+  if (curScreen === 'shop') refreshShop();
+}
 const lookHooks = () => ({ apply: applyLook, save, log: logEvt, pushScore });
 function refreshShop() {   // draw the tab again and the coin chip, the scroll stays
   const page = () => $(`#shopView > .scroll[data-tab="${shopTab}"]`), y = page() ? page().scrollTop : 0;
@@ -120,8 +171,13 @@ function bindShopTaps() {
   if (shopTapsBound) return;
   shopTapsBound = true;
   $('#shopView').addEventListener('click', e => {
+    if (shopBusy) return;
+    const act = e.target.closest('[data-act]');
+    if (act) { helpAct(act.closest('[data-help]').dataset.help, act.dataset.act); return; }
+    const play = e.target.closest('[data-play]');
+    if (play) { togglePreview(play.dataset.play); return; }
     const card = e.target.closest('[data-cat]');
-    if (!card || shopBusy) return;
+    if (!card) return;
     const { cat, id } = card.dataset;
     if (e.target.closest('.gift')) giftPicker(cat, id);
     else if (shopOwns(cat, id)) equipLook(cat, id);
@@ -131,6 +187,7 @@ function bindShopTaps() {
 
 function renderShop(tab = shopTab) {
   shopTab = tab;
+  if (tab !== 'muziek') stopShopPreview();
   $('#shopCoins').textContent = '🪙 ' + S.coins;
   const tabs = $('#shopTabs'), view = $('#shopView');
   tabs.innerHTML = SHOP_TABS.map(id => `<button data-tab="${id}" class="${id === tab ? 'on' : ''}">${shopLabel(id)}</button>`).join('');
