@@ -29,6 +29,7 @@ Files in the first group are read by Node tools or the dashboard by path, so the
 - `win.js` the win screen and the rewards after it
 - `tips/tips.js` the "Wist je dat?" tips on the home screen
 - `looks/looks.js` backgrounds, themes, applying them
+- `shop/screen.js` the Winkel screen: header, four swipeable tabs, `shopPage(tab)` builds one tab page
 - `looks/screen.js` Zonnebloem goal on home, the themes screen, the sunflower unlock pop-up
 - `trophies/trophies.js` the trophies and when they are earned
 - `trophies/screen.js` the prize cabinet: statistics and the trophy grid

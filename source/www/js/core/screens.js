@@ -5,13 +5,14 @@
 // ---------- screens ----------
 let curScreen = 'home';
 function show(id) {
+  if (id === 'themes') id = 'shop';   // the old themes screen lives in the shop now
   if (curScreen === 'game' && id !== 'game') pauseClock();
   curScreen = id;
   document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id === id));
   if (id === 'home') renderHome();
   if (id === 'levels') renderLevels();
   if (id === 'daily') renderDaily();
-  if (id === 'themes') renderThemes();
+  if (id === 'shop') renderShop();
   if (id === 'trophies') renderTrophies();
   if (id === 'ranking') renderRanking();
   fitTexts(document.getElementById(id));

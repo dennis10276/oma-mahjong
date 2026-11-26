@@ -54,7 +54,7 @@
       </button>
       <div class="row2">
         <button class="mid-btn" id="btnLevels"><span>🗺️</span><b data-t="levels">Levels</b></button>
-        <button class="mid-btn" id="btnThemes"><span>🎨</span><b data-t="themes">Thema's</b></button>
+        <button class="mid-btn" id="btnShop"><span>🛍️</span><b data-t="shop">Winkel</b></button>
         <button class="mid-btn" id="btnTrophies"><span>🏅</span><b data-t="prizes">Prijzen</b><i class="mid-badge" id="trophyCount">0</i></button>
         <button class="mid-btn" id="btnRanking"><span>🏆</span><b data-t="ranking">Ranglijst</b><i class="mid-badge" id="rankBadge">#1</i></button>
       </div>
@@ -135,6 +135,13 @@
     <div class="scroll"><div id="statsBox"></div><div class="trophy-grid" id="trophyGrid"></div></div>
   </section>
 
+  <!-- SHOP -->
+  <section id="shop" class="screen">
+    <div class="header"><button class="icon-btn back">←</button><h2 data-t="shop">Winkel</h2><div class="chip" id="shopCoins">🪙 0</div></div>
+    <div class="shop-tabs" id="shopTabs"></div>
+    <div class="shop-view" id="shopView"></div>
+  </section>
+
   <!-- THEMES -->
   <section id="themes" class="screen">
     <div class="header"><button class="icon-btn back">←</button><h2 data-t="themes">Thema's</h2><div class="chip" id="thStars">⭐ 0</div></div>
@@ -158,7 +165,7 @@
    and keeps them on the phone. On start we use that downloaded version when it is newer
    than the one built into the app; if it does not start properly, we fall back at once. */
 (function () {
-  var BUILT = '1.79', KEY = 'omamj.code', FILES = ['tiles.js', 'js/core/audio.js', 'layouts.js', 'hard.js', 'levels-hard.js', 'levels-early.js', 'js/rules.js', 'js/lang.js', 'js/core/util.js', 'js/features/shop/catalog.js', 'js/features/shop/shop.js', 'js/core/save.js', 'js/features/rewards/streak.js', 'js/features/grandma/grandma.js', 'js/features/redo/redo.js', 'js/features/trophies/trophies.js', 'js/features/looks/looks.js', 'js/core/fx.js', 'js/core/update.js', 'js/core/screens.js', 'js/features/looks/screen.js', 'js/features/trophies/screen.js', 'js/features/settings/settings.js', 'js/board.js', 'js/specials.js', 'js/features/tips/tips.js', 'js/features/intro.js', 'js/features/rewards/tasks.js', 'js/features/rewards/chest.js', 'js/features/rewards/lucky.js', 'js/features/rewards/gift.js', 'js/features/rewards/grit.js', 'js/core/telemetry.js', 'js/features/family/week.js', 'js/features/family/ranking.js', 'js/features/family/presence.js', 'js/features/family/passed.js', 'js/features/family/profile.js', 'js/features/family/hearts.js', 'js/features/win.js', 'js/main.js'];
+  var BUILT = '1.79', KEY = 'omamj.code', FILES = ['tiles.js', 'js/core/audio.js', 'layouts.js', 'hard.js', 'levels-hard.js', 'levels-early.js', 'js/rules.js', 'js/lang.js', 'js/core/util.js', 'js/features/shop/catalog.js', 'js/features/shop/shop.js', 'js/core/save.js', 'js/features/rewards/streak.js', 'js/features/grandma/grandma.js', 'js/features/redo/redo.js', 'js/features/trophies/trophies.js', 'js/features/looks/looks.js', 'js/core/fx.js', 'js/core/update.js', 'js/core/screens.js', 'js/features/looks/screen.js', 'js/features/shop/screen.js', 'js/features/trophies/screen.js', 'js/features/settings/settings.js', 'js/board.js', 'js/specials.js', 'js/features/tips/tips.js', 'js/features/intro.js', 'js/features/rewards/tasks.js', 'js/features/rewards/chest.js', 'js/features/rewards/lucky.js', 'js/features/rewards/gift.js', 'js/features/rewards/grit.js', 'js/core/telemetry.js', 'js/features/family/week.js', 'js/features/family/ranking.js', 'js/features/family/presence.js', 'js/features/family/passed.js', 'js/features/family/profile.js', 'js/features/family/hearts.js', 'js/features/win.js', 'js/main.js'];
   function newer(a, b) { a = String(a).split('.'); b = String(b).split('.'); for (var i = 0; i < Math.max(a.length, b.length); i++) { var x = +a[i] || 0, y = +b[i] || 0; if (x !== y) return x > y; } return false; }
   function builtIn() { FILES.forEach(function (f) { var s = document.createElement('script'); s.src = f; s.async = false; document.body.appendChild(s); }); }
   var c = null;

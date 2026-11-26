@@ -8,7 +8,7 @@ module.exports = [
     name: 'screens: every screen and pop-up opens without errors',
     async run(t, { FakeDB, startLevel, modal, click, sleep }) {
       const p = await t.phone({ state: PLAYER, db: new FakeDB({ scores: FAM }) });
-      for (const s of ['levels', 'daily', 'themes', 'trophies', 'ranking', 'home']) {
+      for (const s of ['levels', 'daily', 'shop', 'trophies', 'ranking', 'home']) {
         await p.evaluate(s => __mj.show(s), s); await sleep(200);
         t.ok(await p.evaluate(s => document.querySelector('#' + s).classList.contains('active'), s), `${s} shown`);
       }

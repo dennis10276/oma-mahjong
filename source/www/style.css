@@ -905,3 +905,14 @@ span.fx { font-size: inherit; }
   #home .home-buttons, #home #nextUnlock { margin-top: var(--hg); }
   #home #nextUnlock { margin-bottom: auto; }
 }
+
+/* ---------- Winkel (shop) screen: tabs that swipe ---------- */
+.shop-tabs { position: relative; isolation: isolate; display: flex; gap: 4px; margin: 0 16px 10px; padding: 5px; border-radius: 18px; background: rgba(0,0,0,.2); }
+.shop-tabs::before { content: ''; position: absolute; z-index: -1; inset: 5px auto 5px 5px; width: calc((100% - 22px) / 4); border-radius: 13px;
+  background: var(--cream); box-shadow: 0 3px 0 var(--cream2); transform: translateX(calc(var(--slide, 0) * (100% + 4px))); }
+.shop-tabs button { flex: 1; min-width: 0; border-radius: 13px; background: none; color: #fff; padding: 10px 2px; font-size: 17px; font-weight: 900; }
+.shop-tabs button.on { color: var(--ink); }
+.shop-view { position: relative; flex: 1; overflow: hidden; touch-action: pan-y; }
+.shop-view > .scroll { position: absolute; inset: 0; transform: translateX(var(--x, 0)); }
+.shop-view .scroll::-webkit-scrollbar { display: none; }
+.shop-settling > .scroll, .shop-tabs.shop-settling::before { transition: transform 260ms cubic-bezier(.2,.7,.2,1); }
