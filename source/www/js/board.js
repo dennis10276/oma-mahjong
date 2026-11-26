@@ -15,7 +15,7 @@ function saveCur() {
   syncClock();
   try {
     replayCapture();
-    localStorage.setItem(CUR, JSON.stringify({ v: CUR_V, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold], score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle, rescued: G.rescued, ez: G.ez, tr: G.o.track || '', ob: obState(), mv: G.mv, ck: G.clock, st: G.st, at: G.attempt, rp: G.rp, hv: boardVer(G.o) }));
+    localStorage.setItem(CUR, JSON.stringify({ v: CUR_V, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold], score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle, pu: G.peekUsed, uu: G.undoUsed, pk: G.tiles.map((t, i) => t.parked ? i : -1).filter(i => i >= 0), rescued: G.rescued, ez: G.ez, tr: G.o.track || '', ob: obState(), mv: G.mv, ck: G.clock, st: G.st, at: G.attempt, rp: G.rp, hv: boardVer(G.o) }));
   } catch (e) { }
 }
 function syncClock() { if (G && G.tStart) { const n = performance.now(); G.elapsed += (n - G.tStart) / 1000; G.tStart = n; } }
@@ -52,20 +52,24 @@ function begin(o, restart = false) {
     toast(tx('levelsOnHold', RULES.levels.blockedFrom), 4500);
     return;
   }
+  stopPeek();
   const previousReplay = G && G.rp;
   if (previousReplay) { replayCapture(); replayDrain(G); }
   $('#modal').classList.add('hidden'); modalOnClose = null;
   $('#comboTag').classList.remove('on'); clearGameMsg(); FX.clear(); if ($('#autoBanner')) autoBanner(false);
   show('game');
-  $('.toolbar').classList.toggle('gone', toolsGoneFor(o));   // (before measuring: without tools the pile gets their space)
   // shape the pile after the free space on this screen
   const wrap = $('#boardWrap');
   disarmTool();
   $('#game').classList.remove('compact');   // the shape is measured on the ordinary screen (fitGeo may narrow the bars for the board before)
   // Levels made for this screen (1-50, 52, grandma's track) must stay the same now that hint and shuffle sit beside the tray:
   // their row under the pile was always 48 px high, so the shape is measured as if it were still there.
+  // The same goes for the top bar: home and restart grew from 44 to 56 px (the helper cards sit under them), so the pile area is lower
+  // than before. The shape is measured with the old buttons (class oldbar), so every level and puzzle keeps its shape; the tiles are
+  // then fitted into the real, lower area.
   const toolRow = toolsGoneFor(o) ? 0 : OLD_TOOLBAR_H;
-  const aspect = Math.max(0.4, Math.min(2.4, Math.round((wrap.clientHeight - toolRow) / Math.max(1, wrap.clientWidth) * 10) / 10)) || 1.5;
+  $('#game').classList.add('oldbar'); const wrapH = wrap.clientHeight; $('#game').classList.remove('oldbar');
+  const aspect = Math.max(0.4, Math.min(2.4, Math.round((wrapH - toolRow) / Math.max(1, wrap.clientWidth) * 10) / 10)) || 1.5;
   const cur = restart ? null : loadCur();
   // A same-page resume may follow a drained tail. Adopt its cursor only when the saved
   // position matches, without writing over saves replaced by an update/reset.
@@ -86,7 +90,7 @@ function begin(o, restart = false) {
   const spec = o.spec;
   const tiles = spec.tiles.map(t => ({ x: t.x, y: t.y, z: t.z, face: 0, el: null }));
   const n = tiles.length;
-  G = { o, ...o, ptsScale: spec.ptsScale || 1, tiles, nb: Layouts.neighbors(tiles), gold: new Set(), lucky: null, alive: new Uint8Array(n).fill(1), down: new Uint8Array(n), peek: -1, tray: [], arriving: new Set(), flights: 0, score: 0, combo: 0, lastMatch: 0, usedHint: false, usedShuffle: false, rescued: false, ez, elapsed: 0, tStart: 0, mile: 0, done: false, busy: false, mv: 0, clock: null };
+  G = { o, ...o, ptsScale: spec.ptsScale || 1, tiles, nb: Layouts.neighbors(tiles), gold: new Set(), lucky: null, alive: new Uint8Array(n).fill(1), down: new Uint8Array(n), peek: -1, tray: [], arriving: new Set(), flights: 0, score: 0, combo: 0, lastMatch: 0, usedHint: false, usedShuffle: false, peekUsed: 0, undoUsed: 0, rescued: false, ez, elapsed: 0, tStart: 0, mile: 0, done: false, busy: false, mv: 0, clock: null };
   const resumed = !!(cur && sameTrack && cur.key === o.key && cur.n === n && cur.aspect === o.aspect);
   if (resumed) {
     cur.faces.forEach((f, i) => tiles[i].face = f);
@@ -94,7 +98,8 @@ function begin(o, restart = false) {
     (cur.down || []).forEach((a, i) => G.down[i] = a);
     G.peek = cur.peek ?? -1;
     G.gold = new Set(cur.gold || []);
-    Object.assign(G, { tray: cur.tray || [], score: cur.score, elapsed: cur.elapsed, usedHint: !!cur.usedHint, usedShuffle: !!cur.usedShuffle, rescued: !!cur.rescued });
+    Object.assign(G, { tray: cur.tray || [], score: cur.score, elapsed: cur.elapsed, usedHint: !!cur.usedHint, usedShuffle: !!cur.usedShuffle, peekUsed: cur.pu | 0, undoUsed: cur.uu | 0, rescued: !!cur.rescued });
+    for (const i of cur.pk || []) if (tiles[i]) { tiles[i].parked = true; PrepBoard.detachTileNeighbors(G.nb, i); }   // (a tile put back beside the pile)
     setObstacles(cur.ob);
     G.mv = cur.mv || 0; G.clock = cur.ck || null;
     G.mile = mileOf();
@@ -236,7 +241,7 @@ function renderBoard(enter) {
     if (enter) { ly.classList.add('enter'); ly.style.animationDelay = Math.min(700, n * 130) + 'ms'; }
   });
   if (enter) { const g = G; setTimeout(() => { if (G === g) board.querySelectorAll('.lyr.enter').forEach(ly => { ly.classList.remove('enter'); ly.style.animationDelay = ''; }); }, 1400); }
-  clockBadge();
+  clockBadge(); refreshParked();
   afterPaint(replayView);
 }
 /* A glowing tile (the lucky moment, the helper's pair) must show above the whole pile. It leaves
@@ -297,7 +302,7 @@ function layoutBoard() {
   if (!G) return;
   const geo = fitGeo();
   if (!geo) return;
-  applyGeo(geo, true);
+  applyGeo(geo, true); refreshParked();
   sizeTray();
   clockBadge();
   replayView();
@@ -324,20 +329,22 @@ const toolsEarned = L => toolsEarnLevel(L) && !toolsMissing(L).length;
 const toolsGoneFor = o => toolsEarnLevel(toolLevel(o)) && !toolsEarned(toolLevel(o));
 const toolsGone = () => !!G && toolsGoneFor(G);
 const toolsOpen = () => !!G && toolLevel(G) >= RULES.tools.fromLevel && !toolsGone();
+// the two helper buttons: the count is the stock (S.peekStock / S.undoStock), a try uses each once (G.peekUsed / G.undoUsed)
+const HELPER_BTN = { peek: ['#btnPeek', 'peekStock', 'peekUsed'], undo: ['#btnUndo', 'undoStock', 'undoUsed'] };
 function updateTools() {
-  const open = toolsOpen();
-  for (const [id, used] of [['#btnHint', G.usedHint], ['#btnShuffle', G.usedShuffle]]) {
-    $(id).classList.toggle('used', open && used);
-    $(id).classList.toggle('locked', !open);
-    $(id + ' .badge').textContent = !open ? '🔒' : used ? '0' : '1';
+  for (const [k, [id, stock, used]] of Object.entries(HELPER_BTN)) {
+    const on = SHOP_RULES[k].enabled;
+    $(id).classList.toggle('gone', !on);
+    $(id).classList.toggle('used', !!(G && G[used]));
+    $(id + ' .cnt').textContent = S[stock] | 0;
   }
+  $('.toolbar').classList.toggle('gone', !SHOP_RULES.peek.enabled && !SHOP_RULES.undo.enabled);
 }
-function toolsLockedMsg() { toast(tx('toolsLocked', RULES.tools.fromLevel)); Sound.blocked(); }
 function renderTray() {
   const slots = $('#tray').children;
   for (let k = 0; k < SLOTS; k++) {
     const t = G.tray[k];
-    slots[k].innerHTML = t === undefined ? '' : `<div class="tmini${G.arriving.has(t) ? ' arriving' : ''}">${Tiles.boardFace(S.theme, faceOf(t))}</div>`;
+    slots[k].innerHTML = t === undefined ? '' : `<div class="tmini${G.arriving.has(t) ? ' arriving' : undoWait ? ' pulse' : ''}">${Tiles.boardFace(S.theme, faceOf(t))}</div>`;
   }
   const tr = $('#tray');
   tr.classList.toggle('warn', G.tray.length === SLOTS - 2);   // 2 waiting: careful
@@ -524,7 +531,7 @@ function tapTile(i) {
    turn, which felt laggy on slower phones. */
 function turn(i, faceDown) {
   const el = G.tiles[i].el;
-  el.classList.toggle('back', faceDown);
+  el.classList.toggle('back', faceDown && !el.classList.contains('peeked'));   // (Spieken shows it until the countdown ends)
   try { el.animate([{ transform: 'scaleX(.12)' }, { transform: 'scaleX(1)' }], { duration: faceDown ? 140 : 180, easing: 'cubic-bezier(.2,.9,.3,1)' }); } catch (e) { }
 }
 // work that can wait until the screen has shown the change (saving, task counting)
@@ -666,82 +673,106 @@ function gameOver() {
   }, 450);
 }
 
-// ---------- 💡 hint and 🔀 shuffle (once per level each) ----------
-// Hint and shuffle are earned and used at once, and they sit just below home and restart: the first tap only wakes the
-// button (it glows, the top bar says "tap again"), a second tap within 3 s uses it. A slip from home or restart costs nothing
-// (the owner 2026-11-15). When it cannot be used (used, locked, too early, busy) the first tap says why, as before.
-let armedTool = null, armTimer = 0;
-function disarmTool() { clearTimeout(armTimer); if (armedTool) $(armedTool).classList.remove('armed'); armedTool = null; }
-function armTool(id, use, againKey) {
-  const used = id === '#btnHint' ? G && G.usedHint : G && G.usedShuffle;
-  if (!G || G.done || G.busy || G.autoFin || !toolsOpen() || used) { disarmTool(); return use(); }
-  if (armedTool === id) { disarmTool(); return use(); }
-  disarmTool(); Sound.init();
-  armedTool = id; $(id).classList.add('armed');
-  toast(tx(againKey), 3000);
-  armTimer = setTimeout(disarmTool, 3000);
+// ---------- 👁️ Spieken and ↩️ Steen terugleggen (tokens from the shop, once per try each) ----------
+// A tap asks first (asking spends nothing). Spieken: for SHOP_RULES.peek.durationMs every face-down tile shows its picture
+// (G.down never changes) and the button counts 4...1. Steen terugleggen: the tray tiles pulse and a tap on one puts it back on the
+// board; a tap anywhere else cancels. The token is spent only when the tile really goes back. Either one forfeits Perfect (G.rescued).
+let undoWait = false, peekTimer = 0, peekTick = 0, peekTiles = [];
+function disarmTool() {   // (every tile tap and begin call it)
+  if (!undoWait) return;
+  undoWait = false; $('#btnUndo').classList.remove('armed');
+  if (G) renderTray();
 }
-function toolUsable(used, usedMsg) {
-  if (!G || G.done || G.busy || G.autoFin) return false;
+function helperRefused(kind, reason) {
+  Sound.blocked();
+  toast(tx(reason === 'level_limit' ? 'helperUsed_' + kind : reason === 'nothing_hidden' ? 'helperNoHidden' : reason === 'tray_empty' ? 'helperTrayEmpty' : 'helperBusy'));
+}
+function helperTap(kind) {
+  if (!G || G.film) return;
   Sound.init();
-  if (!toolsOpen()) { toolsLockedMsg(); return false; }
-  if (used) { toast(usedMsg); Sound.blocked(); return false; }
-  return true;
+  if (kind === 'undo' && undoWait) { disarmTool(); return; }
+  disarmTool();
+  const chk = kind === 'peek' ? ShopEconomy.canUsePeekInLevel(S, G) : ShopEconomy.canUseUndoInLevel(S, G);
+  if (chk.ok) return askHelper(kind);
+  if (chk.reason === 'no_stock') { saveCur(); logLvl('pause'); shopTab = 'hulpen'; show('shop'); return; }   // none left: the shop, on Hulpen
+  helperRefused(kind, chk.reason);
 }
-function hint() {
-  if (!toolUsable(G && G.usedHint, tx('hintUsed'))) return;
-  const path = solveNow(30000);
-  if (!path || !path.length) { toast(tx('noWay')); Sound.blocked(); return; }
-  G.usedHint = true; updateTools(); saveCur();
-  logLvl('hint');
-  // show the next one or two safe taps. With 3 waiting and a face-down tile next (a peek pair), show only that
-  // tile: tapping its face-up twin first would be a 4th tile in the tray.
-  const show2 = [path[0]];
-  const peekNext = G.tray.length >= SLOTS - 1 && G.down[path[0]] && !trayHas(faceOf(path[0]));
-  if (!peekNext && path[1] !== undefined && faceOf(path[1]) === faceOf(path[0])) show2.push(path[1]);
-  replayMark('hint', show2);
-  show2.forEach(i => G.tiles[i].el.classList.add('hint'));
-  Sound.hint(); buzz(15);
+function askHelper(kind) {
+  openModal(`<div class="bigico">${kind === 'peek' ? '👁️' : '↩️'}</div><h2>${tx('helperQ_' + kind)}</h2><p>${tx('helperLine_' + kind)}</p>
+    <p class="note">${tx('helperNote1')}<br>${tx('helperNote2')}</p>
+    <button class="big-btn play" id="hYes"><span class="bb-text"><b>${tx('helperGo_' + kind)}</b></span></button>
+    <button class="btn2" id="hNo">${tx('notNow')}</button>`);
+  $('#hNo').onclick = closeModal;
+  $('#hYes').onclick = () => { closeModal(); if (kind === 'peek') startPeek(); else startUndo(); };
 }
-function shuffle() {
-  if (!toolUsable(G && G.usedShuffle, tx('shuffleUsed'))) return;
-  G.usedShuffle = true; updateTools();
-  logLvl('shuf', { tray: G.tray.length });
-  G.busy = true;
-  if (G.peek >= 0) { if (G.alive[G.peek]) turn(G.peek, true); G.peek = -1; }
-  const trayFaces = G.tray.map(faceOf);
-  const count = {};
-  G.tiles.forEach((t, i) => { if (G.alive[i]) count[t.face] = (count[t.face] || 0) + 1; });
-  trayFaces.forEach(f => count[f]--);
-  const pf = [];
-  for (const f in count) for (let k = 0; k < count[f] / 2; k++) pf.push(+f);
-  // a generous re-deal: the tray pictures come free quickly. Several are tried and the one the
-  // computer player clears most often is kept, so shuffling never makes it harder.
-  let faces = null, bestW = -1;
-  for (let k = 0; k < 8 && bestW < 0.99; k++) {
-    const r = Layouts.rng((Math.random() * 1e9) | 0);
-    const f = Layouts.deal(G.tiles, G.nb, pf, r, { alive: G.alive, openFaces: trayFaces, cap: Math.max(2, trayFaces.length), open: 0.2 });
-    const w = Layouts.botWinRate(G.tiles, G.nb, f, 16, k + 1, { alive: G.alive, tray: trayFaces });
-    if (w > bestW) { bestW = w; faces = f; }
+function startPeek() {
+  const r = ShopEconomy.consumePeekInLevel(S, G, helperHooks());
+  if (!r.ok) return helperRefused('peek', r.reason);
+  updateTools(); replayMark('peek'); clearHint();
+  peekTiles = [];
+  G.tiles.forEach((t, i) => { if (G.alive[i] && G.down[i]) { peekTiles.push(i); t.el.classList.remove('back'); t.el.classList.add('peeked'); } });
+  const b = $('#btnPeek'), end = performance.now() + r.durationMs, left = () => Math.max(1, Math.ceil((end - performance.now()) / 1000));
+  b.classList.add('count', 'armed'); b.firstElementChild.textContent = left();
+  peekTick = setInterval(() => { b.firstElementChild.textContent = left(); }, 200);
+  peekTimer = setTimeout(stopPeek, r.durationMs);
+  Sound.flip(); buzz(10); saveCur();
+}
+function stopPeek() {   // (the countdown ends, or a new try / the end of the level comes first)
+  clearTimeout(peekTimer); clearInterval(peekTick); peekTimer = peekTick = 0;
+  const b = $('#btnPeek'); b.classList.remove('count', 'armed'); b.firstElementChild.textContent = '👁️';
+  for (const i of peekTiles) {
+    const el = G && G.tiles[i] && G.tiles[i].el; if (!el) continue;
+    el.classList.remove('peeked');
+    if (G.alive[i] && G.down[i] && G.peek !== i) el.classList.add('back');
   }
-  keepKeysPaired(faces);
-  clearHint();
-  Sound.shuffle(); buzz([10, 30, 10]);
-  let k = 0;
+  peekTiles = [];
+}
+function startUndo() {
+  const chk = ShopEconomy.canUseUndoInLevel(S, G);
+  if (!chk.ok) return helperRefused('undo', chk.reason);
+  undoWait = true; $('#btnUndo').classList.add('armed'); renderTray();
+  toast(tx('helperPick'), 3000);
+}
+$('#tray').addEventListener('click', e => {
+  if (!undoWait || !G) return;
+  const slot = e.target.closest('.slot'), i = slot ? G.tray[[...$('#tray').children].indexOf(slot)] : undefined;
+  if (i !== undefined && !G.arriving.has(i)) returnTile(i);
+});
+document.addEventListener('pointerdown', e => { if (undoWait && !e.target.closest('#tray, #btnUndo')) disarmTool(); }, true);
+function returnTile(i) {
+  const wrap = $('#boardWrap'), w = wrap.clientWidth, h = wrap.clientHeight;
+  const chk = ShopEconomy.canUseUndoInLevel(S, G);
+  if (!chk.ok) { disarmTool(); return helperRefused('undo', chk.reason); }
+  if (!PrepBoard.findReturnPlacement(G, i, w, h)) { Sound.blocked(); toast(tx('helperNoSpot')); return; }   // nothing is spent: pick another tile
+  ShopEconomy.consumeUndoInLevel(S, G, helperHooks());
+  const r = PrepBoard.applyTileReturn(G, i, w, h);
+  if (!r.ok) logErr(new Error('undo ' + r.reason), 'undo');
+  disarmTool(); clearHint(); showReturned(i); renderTray(); updateTools();
+  replayMark('undo', [i]); Sound.flip(); buzz(15);
+  afterLogic();
+}
+// a returned tile shows on the board again, in its old place or (parked: true) in a free spot beside the pile, above everything
+function showReturned(i) {
+  const t = G.tiles[i], el = t.el, r = t.r, board = $('#board');
+  if (!el || !r) return;
+  el.classList.remove('hidden', 'back');
+  Object.assign(el.style, { left: r.l + 'px', top: r.t + 'px', width: r.w.toFixed(1) + 'px', height: r.h.toFixed(1) + 'px', zIndex: r.zi % 10000 });
+  if (t.parked) { if (el.parentNode !== board) { el._lyr = el.parentNode; board.appendChild(el); } }
+  else if (el._lyr && el._lyr.isConnected) { el._lyr.appendChild(el); el._lyr = null; }
+  try { el.animate([{ transform: 'scale(.6)' }, { transform: 'scale(1)' }], { duration: 220, easing: 'cubic-bezier(.2,.9,.3,1)' }); } catch (e) { }
+}
+// after drawing the pile again (resize, language): the parked tiles go back to a free spot
+function refreshParked() {
+  if (!G || !G.tiles.some(t => t.parked)) return;
+  const wrap = $('#boardWrap');
   G.tiles.forEach((t, i) => {
-    if (!G.alive[i]) return;
-    t.face = faces[i];
-    const el = t.el, delay = (k++ % 12) * 15;
-    el.style.animationDelay = delay + 'ms';
-    replay(el, 'flip');
-    setTimeout(() => setFace(i), 200 + delay);
-    setTimeout(() => { el.classList.remove('flip'); el.style.animationDelay = ''; }, 700);
+    if (!t.parked || !G.alive[i]) return;
+    const p = PrepBoard.findReturnPlacement(G, i, wrap.clientWidth, wrap.clientHeight);
+    if (p) { t.r = { l: p.l, t: p.t, w: p.w, h: p.h, zi: p.zi }; showReturned(i); }
   });
-  replayMark('shuffle'); replayCapture();
-  setTimeout(() => { G.busy = false; updateBlocked(); saveCur(); checkStuck(); }, 520);
 }
 
-/* The solver with the current ice and locks (hint, tests). A single joker left over (its partner was
+/* The solver with the current ice and locks (tests). A single joker left over (its partner was
    used as a wildcard) can't be paired: for the solver it is a tile that clears itself (face -1),
    which is what it does as the last tile (the joker finale) and never worse earlier on. */
 function solveNow(limit = 30000) {

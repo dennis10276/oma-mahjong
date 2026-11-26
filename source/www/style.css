@@ -81,7 +81,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 
 .mid-btn { flex: 1; background: var(--cream); border-radius: 22px; padding: 14px 10px; font-size: 22px; font-weight: 900; display: flex; flex-direction: column; align-items: center; gap: 2px; box-shadow: 0 6px 0 var(--cream2), 0 9px 14px rgba(0,0,0,.25); }
 .mid-btn > span { font-size: 34px; }
-.mid-btn b, .tool b { font-weight: inherit; }   /* translated labels (data-t) */
+.mid-btn b { font-weight: inherit; }   /* translated labels (data-t) */
 .mid-btn:active { transform: translateY(5px); box-shadow: 0 1px 0 var(--cream2); }
 .mid-badge { position: absolute; top: -8px; right: -6px; background: var(--pink); color: #fff; font-style: normal; font-size: 14px; padding: 2px 8px; border-radius: 999px; box-shadow: 0 2px 0 var(--pink-d); }
 .link-btn { display: block; margin: 16px auto 0; font-size: 20px; color: var(--muted); padding: 8px 16px; }
@@ -338,28 +338,38 @@ body.nonum .cn { display: none; }
 .tmini.arriving { visibility: hidden; }
 .tmini.ghost { position: fixed; inset: auto; z-index: 89; pointer-events: none; }
 
-/* hint and shuffle sit left and right of the tray, in the tray's row (the owner 2026-11-15): they take no height from the pile */
+/* the helpers (Spieken, Steen terugleggen) sit left and right of the tray, in the tray's row: they take no height from the pile.
+   Cream cards like home and restart (58 x 56 px, the name under the icon, the gold stock number on the corner). The card's 5 px
+   edge ends exactly on the tray's bottom line and its centre is under home / restart; a press sinks 4 px like theirs. */
 .traybar { position: relative; }
-/* hint and shuffle: gold coins, earned with 3 stars on every level so far (the owner 2026-11-15). Against slips from home and restart
-   just above them: they line up with the bottom of the tray (more room under home/restart), their top and bottom 8 px do not react to taps
-   (the hit area is the ::before below that strip), a first tap only wakes the coin (board.js armTool), and they are round, not square. */
-.toolbar { position: absolute; inset: 0 10px 4px; display: flex; justify-content: space-between; align-items: flex-end; pointer-events: none; }
-#game.compact .toolbar { bottom: 0; }
-.tool { pointer-events: none; position: relative; width: 44px; height: 44px; display: grid; place-items: center; padding: 0; border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #fff4b8 0 12%, #ffd84d 34%, #f2b01e 70%, #c98a00 100%);
-  box-shadow: inset 0 0 0 2px rgba(255,248,210,.85), inset 0 -3px 5px rgba(150,90,0,.45), 0 3px 0 #a86f00, 0 6px 10px rgba(0,0,0,.3); transition: transform .12s; }
-.tool::before { content: ''; position: absolute; inset: 8px -6px; pointer-events: auto; }   /* no taps on the top and bottom 8 px: slips from home/restart above and from the pile below */
-.tool > span { font-size: 22px; line-height: 1; filter: drop-shadow(0 1px 0 rgba(255,255,255,.6)); }
-.tool > b, .tool .badge { display: none; }
-.tool:active { transform: translateY(3px); box-shadow: inset 0 0 0 2px rgba(255,248,210,.85), inset 0 -3px 5px rgba(150,90,0,.45), 0 0 0 #a86f00, 0 2px 4px rgba(0,0,0,.3); }
-/* woken by a first tap: a warm glow that breathes until the second tap (or 3 s) */
-.tool.armed { transform: scale(1.12); animation: toolArmed 1s ease-in-out infinite; }
-@keyframes toolArmed { 0%, 100% { box-shadow: inset 0 0 0 2px rgba(255,248,210,.95), 0 3px 0 #a86f00, 0 0 0 3px #fff3c4, 0 0 14px 6px rgba(255,200,40,.75); } 50% { box-shadow: inset 0 0 0 2px rgba(255,248,210,.95), 0 3px 0 #a86f00, 0 0 0 5px #fff3c4, 0 0 22px 10px rgba(255,200,40,.9); } }
-/* used in this level: a plain grey coin */
-.tool.locked { visibility: hidden; }   /* not earned: not shown (as before) */
-.tool.used { background: radial-gradient(circle at 35% 30%, #f2f0ea, #c9c4b8 70%, #a9a396); box-shadow: inset 0 0 0 2px rgba(255,255,255,.6), 0 2px 0 #8c867a, 0 4px 6px rgba(0,0,0,.2); }
+.toolbar { position: absolute; inset: 0 9px 1px; display: flex; justify-content: space-between; align-items: flex-end; pointer-events: none; }
+#game .toolbar { bottom: 5px; }   /* the traybar has 4 px padding: the card edge (5 px) ends on the tray's bottom line */
+#game.compact .toolbar { bottom: 1px; }   /* compact mode has no padding (it used to pin the row to 0) */
+.tool { pointer-events: auto; position: relative; width: 58px; height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; padding: 0;
+  border-radius: 17px; background: var(--cream); color: var(--ink); box-shadow: 0 5px 0 var(--cream2), 0 7px 10px rgba(0,0,0,.25); transition: transform .12s; }
+.tool.gone { display: none; }
+.tool > span { font-size: 25px; line-height: 1; }
+.tool > b { display: block; font-size: 12px; font-weight: 900; line-height: 1; }
+.tool .cnt { display: grid; place-items: center; position: absolute; top: -3px; right: -8px; min-width: 22px; height: 22px; padding: 0 5px; border-radius: 999px; font-size: 14px; font-weight: 900; font-style: normal; color: var(--ink);
+  background: radial-gradient(circle at 35% 30%, #fff4b8 0 12%, #ffd84d 34%, #f2b01e 70%, #c98a00 100%); box-shadow: 0 2px 0 #a86f00; }
+.tool:active, .tool.pressed { transform: translateY(4px); box-shadow: 0 1px 0 var(--cream2), 0 2px 4px rgba(0,0,0,.25); }
 .tool.used > span { opacity: .35; filter: grayscale(1); }
-@media (prefers-reduced-motion: reduce) { .tool.armed { animation: none; box-shadow: inset 0 0 0 2px rgba(255,248,210,.95), 0 3px 0 #a86f00, 0 0 0 4px #fff3c4, 0 0 18px 8px rgba(255,200,40,.85); } }
+.tool.count > span { font-size: 26px; font-weight: 900; color: #6a4300; }   /* Spieken's countdown 4...1 in place of the icon */
+.tool.count .cnt { display: none; }
+/* waiting for the tile tap (Terug) or counting down (Spieken): the game's armed look. It grows 6 % only, so the card and its ring stay
+   clear of home above it; the top bar sits above this row so the soft glow goes behind home */
+.tool.armed { transform: scale(1.06); animation: helperArmed 1s ease-in-out infinite; }
+@keyframes helperArmed {
+  0%, 100% { box-shadow: 0 5px 0 var(--cream2), 0 0 0 3px #fff3c4, 0 0 14px 6px rgba(255,200,40,.75); }
+  50% { box-shadow: 0 5px 0 var(--cream2), 0 0 0 3px #ffe27a, 0 0 18px 8px rgba(255,200,40,.9); } }
+@media (prefers-reduced-motion: reduce) { .tool.armed { animation: none; box-shadow: 0 5px 0 var(--cream2), 0 0 0 3px #fff3c4, 0 0 18px 8px rgba(255,200,40,.85); } }
+#game .topbar { position: relative; z-index: 3; }
+#game .topbar .icon-btn { width: 56px; height: 56px; font-size: 28px; border-radius: 17px; }
+#game.oldbar .topbar .icon-btn { width: 44px; height: 44px; font-size: 22px; border-radius: 14px; }   /* board.js begin(): measures the pile's shape as before the bigger buttons */
+#board .tile.peeked { outline: 4px solid #ffc531; outline-offset: -2px; border-radius: 10px; }   /* Spieken: a face-down tile shown for 4 s */
+#tray .tmini.pulse { animation: trayPulse .8s ease-in-out infinite; }   /* Steen terugleggen: tap one of these */
+@keyframes trayPulse { 0%, 100% { transform: scale(1); filter: none; } 50% { transform: scale(1.12); filter: drop-shadow(0 0 6px #ffc531) brightness(1.1); } }
+@media (prefers-reduced-motion: reduce) { #tray .tmini.pulse { animation: none; outline: 3px solid #ffc531; } }
 
 /* ========== 8 pop-ups ========== */
 #modal { position: fixed; inset: 0; background: rgba(10,20,15,.6); display: grid; place-items: center; z-index: 65; padding: 20px; }

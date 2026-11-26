@@ -22,7 +22,7 @@ module.exports = [
     async run(t, { startLevel, sleep }) {
       const p = await t.phone({ state: { ...DENNIS, level: 6 }, tune: { RULES: { score: { pair: 100 }, tools: { fromLevel: 5 }, sunflower: { level: 5 } } } });
       await startLevel(p, 6);
-      t.ok(await p.evaluate(() => !document.querySelector('#btnHint').classList.contains('locked')), 'hint open from level 5');
+      t.ok(await p.evaluate(() => !document.querySelector('#btnPeek').classList.contains('gone')), 'the helpers show');
       const pair = await p.evaluate(freePair);
       if (t.ok(pair, 'a free pair')) {
         await p.evaluate(([a, b]) => { __mj.onTap(a); __mj.onTap(b); }, pair); await sleep(600);
@@ -48,8 +48,8 @@ module.exports = [
       await startLevel(p, 54);
       t.eq(await bar(p), { shown: true, open: true }, 'level 54: same block, still there (51 having 2 stars counts from 55)');
       await startLevel(p, 55);
-      t.eq(await bar(p), { shown: false, open: false }, 'level 55: checked again, gone (level 51 has 2 stars)');
-      // hint and shuffle sit beside the tray (the owner 2026-11-15): with or without them the pile has the same room
+      t.eq(await bar(p), { shown: true, open: false }, 'level 55: checked again, not earned (level 51 has 2 stars); the board helpers stay, they come from the shop');
+      // the helper buttons sit beside the tray (the owner 2026-11-15): with or without earned tools the pile has the same room
       t.eq(await room(p), withTools, 'the buttons take no room from the pile');
       t.eq(await p.evaluate(() => toolsMissing(55)), [51], 'knows which level is missing');
       await p.evaluate(() => { __mj.S.stars[51] = 3; });
@@ -77,7 +77,7 @@ module.exports = [
 
       const g = await t.phone({ state: { name: 'OmaHanny', pid: 'test-oma', level: 60 } });
       await startLevel(g, 60);
-      t.eq(await bar(g), { shown: false, open: false }, 'grandma: the same rule as everyone, gone at level 60 without the stars');
+      t.eq(await bar(g), { shown: true, open: false }, 'grandma: the same rule as everyone, not earned at level 60 without the stars');
     },
   },
   {

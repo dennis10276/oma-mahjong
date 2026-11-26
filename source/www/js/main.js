@@ -30,8 +30,8 @@ $('#boardWrap').addEventListener('pointerdown', e => {
   if (i >= 0) { e.preventDefault(); onTap(i, false, point); }
   else if (G && !G.done) replayMark('miss', point);
 });
-$('#btnHint').onclick = () => armTool('#btnHint', hint, 'hintAgain');
-$('#btnShuffle').onclick = () => armTool('#btnShuffle', shuffle, 'shuffleAgain');
+$('#btnPeek').onclick = () => helperTap('peek');
+$('#btnUndo').onclick = () => helperTap('undo');
 $('#btnRestart').onclick = () => {
   if (!G || G.done || G.busy) return;
   openModal(`<h2>${tx('restartTitle')}</h2>

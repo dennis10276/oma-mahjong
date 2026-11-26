@@ -37,7 +37,7 @@ module.exports = [
       await p.reload(); await p.waitForFunction(() => window.__mjReady); await sleep(300);
       t.eq(await homeTexts(p), ['Play', 'Levels', 'Shop', 'Leaderboard'], 'still English after reopening');
       await startLevel(p, 6);
-      t.eq(await p.evaluate(() => [document.querySelector('#gameTitle').textContent, document.querySelector('#btnHint b').textContent, document.querySelector('#btnShuffle b').textContent]), ['Level 6', 'Hint', 'Shuffle'], 'game screen in English');
+      t.eq(await p.evaluate(() => [document.querySelector('#gameTitle').textContent, document.querySelector('#btnPeek b').textContent, document.querySelector('#btnUndo b').textContent]), ['Level 6', 'Peek', 'Undo'], 'game screen in English');
       // and back to Dutch
       await p.evaluate(() => { __mj.show('home'); setLang('nl'); }); await sleep(250);
       t.eq(await homeTexts(p), ['Spelen', 'Levels', 'Winkel', 'Ranglijst'], 'back to Dutch');

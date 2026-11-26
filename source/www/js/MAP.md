@@ -9,7 +9,7 @@ Files in the first group are read by Node tools or the dashboard by path, so the
 - `../layouts.js`, `../hard.js`, `../levels-hard.js`, `../levels-early.js` engine, hard levels, level data (Node tools read them)
 - `rules.js` every tunable number (the dashboard loads it)
 - `lang.js` every text, Dutch and English
-- `board.js` playing a level: pile, tray, tapping, matching, hint, shuffle
+- `board.js` playing a level: pile, tray, tapping, matching, the helpers Spieken and Steen terugleggen
 - `specials.js` gold pair, joker, ice, lock and key
 - `main.js` buttons, touch, start-up; always the last file
 

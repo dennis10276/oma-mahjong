@@ -185,7 +185,7 @@ module.exports = [
     },
   },
   {
-    name: 'replay: offline resume preserves identity/counters and reconstructs the final board after reconnect, hint and shuffle',
+    name: 'replay: offline resume preserves identity/counters and reconstructs the final board after reconnect and Steen terugleggen',
     async run(t, { startLevel, click, solve, sleep }) {
       const pid = 'test-replay-resume', p = await t.phone({ state: { level: 16, name: 'Dennis', pid } });
       // Drop database requests while still serving the app itself across reload.
@@ -208,8 +208,12 @@ module.exports = [
       t.eq(chunkValues(chunks(p, pid, before.aid)).length, 0, 'recording stayed local while disconnected');
       offline = false;
       await p.evaluate(() => flushReplay());
-      await click(p, '#btnHint'); await click(p, '#btnHint'); await click(p, '#btnShuffle'); await click(p, '#btnShuffle');
-      await p.waitForFunction(() => G.usedShuffle && !G.busy, null, { timeout: 10000 });
+      // Steen terugleggen: one free tile into the tray, then back onto the board
+      await p.evaluate(() => { S.undoStock = 1; const i = G.tiles.findIndex((t, i) => G.alive[i] && !G.down[i] && canTake(i) && !G.tray.some(x => G.tiles[x].face === t.face)); onTap(i); });
+      await sleep(900);
+      await click(p, '#btnUndo'); await click(p, '#hYes'); await sleep(150);
+      await p.evaluate(() => document.querySelector('#tray .slot .tmini').click());
+      await p.waitForFunction(() => G.undoUsed === 1 && !G.busy, null, { timeout: 10000 });
       t.ok(await solve(p, 3000), 'winning route found');
       await p.waitForFunction(() => G.done && G.logged, null, { timeout: 10000 });
       await p.evaluate(async () => { await flushReplay(); await flushLog(); });
@@ -218,7 +222,7 @@ module.exports = [
       t.ok(r.complete, 'all chunks present with a recorded ending', r.issues);
       t.eq(r.result, 'win', 'win replayed');
       t.eq(r.state, await p.evaluate(() => replayState()), 'deltas reconstruct every tile, tray, peek and obstacle');
-      t.ok(r.kinds.resume >= 1 && r.kinds.hint === 1 && r.kinds.shuffle === 1, 'resume and help recorded', r.kinds);
+      t.ok(r.kinds.resume >= 1 && r.kinds.undo === 1, 'resume and help recorded', r.kinds);
       t.eq(r.state.tr, [], 'empty tray survives storage');
       const ends = p.db.plays(pid).filter(e => e.k === 'end');
       t.eq(ends[0].aid, before.aid, 'summary linked to exact attempt without truncating the ID');

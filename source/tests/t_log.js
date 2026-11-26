@@ -3,24 +3,22 @@
 
 module.exports = [
   {
-    name: 'log: start, stuck, retry, hint, shuffle, win and pause reach the database',
+    name: 'log: start, stuck, retry, win and pause reach the database',
     async run(t, { startLevel, fillTray, click, solve, sleep }) {
       const p = await t.phone({ state: { level: 16, name: 'Dennis', pid: 'test-log' } });
       await startLevel(p, 16);
       await fillTray(p);
       await click(p, '#sRetry'); await sleep(1200);
-      await click(p, '#btnHint'); await click(p, '#btnHint');   // first tap wakes it, second uses it await sleep(300);
-      await click(p, '#btnShuffle'); await click(p, '#btnShuffle'); await sleep(1200);
       await solve(p, 3500);
       await click(p, '#wMenu'); await sleep(800);
       for (let i = 0; i < 4; i++) { const id = await p.evaluate(() => [...document.querySelectorAll('#modalBox button')].map(b => b.id).find(id => id && id !== 'trSee')); if (!id || await p.evaluate(() => document.querySelector('#modal').classList.contains('hidden'))) break; await click(p, '#' + id); await sleep(600); }
       await startLevel(p, 17); await click(p, '#btnHome'); await sleep(1500);
       const ev = p.db.plays('test-log');
       const ks = ev.map(e => e.k + (e.r ? ':' + e.r : '')).join(' ');
-      t.ok(/open .*start .*end:stuck .*start .*hint .*shuf .*end:win .*start .*pause/.test(ks), 'events in order', ks);
+      t.ok(/open .*start .*end:stuck .*start .*end:win .*start .*pause/.test(ks), 'events in order', ks);
       const stuck = ev.find(e => e.r === 'stuck'), win = ev.find(e => e.r === 'win');
       t.ok(stuck && stuck.lv === 16 && stuck.at === 1 && stuck.tm === 4 && stuck.left > 0 && stuck.tp >= 4, 'stuck details', stuck);
-      t.ok(win && win.at === 2 && win.h === true && win.sh === true && win.st === 1 && win.dur >= 0 && win.tp > 10, 'win details', win);
+      t.ok(win && win.at === 2 && win.st === 3 && win.dur >= 0 && win.tp > 10, 'win details', win);
       t.ok(ev.every(e => e.v && e.dev && e.ses), 'version, device and session on every event');
       t.eq(await p.evaluate(() => JSON.parse(localStorage.getItem('omamj.logq') || '[]').length), 0, 'queue sent');
     },
