@@ -91,8 +91,7 @@ module.exports = [
   {
     name: 'helper buttons stay inside the tray line and under home, also while pressed',
     async run(t, { startLevel, sleep }) {
-      for (const size of [[392, 785], [360, 740], [412, 915], [338, 654]]) {
-        const tight = size[0] === 338;   // the smallest phone: the tray row is only 117 px high, the cards touch home's 5 px edge (the stills measure 392 x 785)
+      for (const size of [[392, 785], [360, 740], [412, 915], [375, 667], [338, 654]]) {
         const p = await t.phone({ size, state: STATE });
         await startLevel(p, LEVEL); await sleep(1800);
         const geo = () => p.evaluate(() => { const R = s => document.querySelector(s).getBoundingClientRect(), tray = R('#tray'), home = R('#btnHome'), rest = R('#btnRestart'), pk = R('#btnPeek'), un = R('#btnUndo'), cx = r => r.left + r.width / 2;
@@ -100,18 +99,18 @@ module.exports = [
         const g = await geo();
         t.ok(Math.abs(g.pkEdge - g.lip) <= 0.5 && Math.abs(g.unEdge - g.lip) <= 0.5, `${size}: the card edge ends on the tray line`, g);
         t.ok(g.dHome <= 1.5 && g.dRest <= 1.5, `${size}: centred under home and restart`, g);
-        t.eq([g.homeW, Math.round(g.pkW), Math.round(g.pkH)], [56, 58, 56], `${size}: sizes`);
-        t.ok(tight ? g.gap + 5 >= 0 : g.gap >= 4, `${size}: room under home (tight phone: no overlap with home's face)`, g);
+        t.ok(g.homeW === 56 && Math.round(g.pkW) === 58 && g.pkH <= 56.5 && g.pkH >= 36, `${size}: sizes (width 58, height 56 or less on a short tray row)`, g);
+        t.ok(g.gap >= 1, `${size}: at rest at least 1 px below home's edge`, g);
         // pressed: sinks 4 px, bottom stays within the tray line, away from home
         await p.evaluate(() => { document.querySelector('#btnPeek').classList.add('pressed'); document.querySelector('#btnUndo').classList.add('pressed'); }); await sleep(250);
         const d = await geo();
         t.ok(d.pkEdge - 5 + 1 <= d.lip + 0.5 && d.unEdge - 5 + 1 <= d.lip + 0.5, `${size}: pressed stays above the tray line`, d);
-        t.ok(d.gap > g.gap + 3, `${size}: pressed moves away from home`, [g.gap, d.gap]);
+        t.ok(d.gap > g.gap + 3 && d.gap >= 1, `${size}: pressed moves away from home`, [g.gap, d.gap]);
         await p.evaluate(() => { for (const s of ['#btnPeek', '#btnUndo']) document.querySelector(s).classList.remove('pressed'); });
         // armed (countdown look): the solid card and its ring stay clear of home
         await p.evaluate(() => document.querySelector('#btnPeek').classList.add('armed', 'count')); await sleep(250);
         for (let k = 0; k < 6; k++) { const a = await p.evaluate(() => { const home = document.querySelector('#btnHome').getBoundingClientRect(), pk = document.querySelector('#btnPeek').getBoundingClientRect(); return { ring: (pk.top - 3) - (home.bottom + 5), z: getComputedStyle(document.querySelector('#game .topbar')).zIndex }; });
-          t.ok((tight || a.ring >= 1) && a.z === '3', `${size}: armed card and ring stay >= 1 px below home`, a); await sleep(170); }
+          t.ok(a.ring >= 1 && a.z === '3', `${size}: armed card and ring stay >= 1 px below home`, a); await sleep(170); }
         t.eq(p.errors, [], 'no page error');
       }
     },

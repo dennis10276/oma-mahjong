@@ -129,7 +129,7 @@ function begin(o, restart = false) {
   $('#gameTitle').textContent = o.title;
   try {
     show('game');
-    renderBoard(!restart);
+    renderBoard(!restart); fitToolbar();
     renderTray(); updateTools();
     updateScore(false); updateProgress();
   } catch (e) { logErr(e, 'begin'); }
@@ -302,7 +302,7 @@ function layoutBoard() {
   if (!G) return;
   const geo = fitGeo();
   if (!geo) return;
-  applyGeo(geo, true); refreshParked();
+  applyGeo(geo, true); refreshParked(); fitToolbar();
   sizeTray();
   clockBadge();
   replayView();
@@ -673,6 +673,17 @@ function gameOver() {
   }, 450);
 }
 
+// The helper cards never touch home above them (home's bottom edge + 1 px), also armed (3 px ring and 6 % growth): on a short tray row the
+// card gets lower than 56 px (the width stays 58); when even that leaves under 44 px the armed growth is dropped and ring and glow stay.
+function fitToolbar() {
+  const tb = $('.toolbar'), home = $('#btnHome'); if (!tb || !home || tb.classList.contains('gone')) return;
+  const room = tb.getBoundingClientRect().bottom - (home.getBoundingClientRect().bottom + 5);   // from home's edge down to the card's bottom
+  if (!(room > 0)) return;
+  let h = Math.floor((room - 4) / 1.03), grow = true;
+  if (h < 44) { h = Math.floor(room - 4); grow = false; }
+  tb.style.setProperty('--toolh', Math.max(36, Math.min(56, h)) + 'px');
+  tb.classList.toggle('nogrow', !grow);
+}
 // ---------- 👁️ Spieken and ↩️ Steen terugleggen (tokens from the shop, once per try each) ----------
 // A tap asks first (asking spends nothing). Spieken: for SHOP_RULES.peek.durationMs every face-down tile shows its picture
 // (G.down never changes) and the button counts 4...1. Steen terugleggen: the tray tiles pulse and a tap on one puts it back on the

@@ -345,7 +345,7 @@ body.nonum .cn { display: none; }
 .toolbar { position: absolute; inset: 0 9px 1px; display: flex; justify-content: space-between; align-items: flex-end; pointer-events: none; }
 #game .toolbar { bottom: 5px; }   /* the traybar has 4 px padding: the card edge (5 px) ends on the tray's bottom line */
 #game.compact .toolbar { bottom: 1px; }   /* compact mode has no padding (it used to pin the row to 0) */
-.tool { pointer-events: auto; position: relative; width: 58px; height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; padding: 0;
+.tool { pointer-events: auto; position: relative; width: 58px; height: var(--toolh, 56px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; padding: 0;
   border-radius: 17px; background: var(--cream); color: var(--ink); box-shadow: 0 5px 0 var(--cream2), 0 7px 10px rgba(0,0,0,.25); transition: transform .12s; }
 .tool.gone { display: none; }
 .tool > span { font-size: 25px; line-height: 1; }
@@ -358,6 +358,7 @@ body.nonum .cn { display: none; }
 .tool.count .cnt { display: none; }
 /* waiting for the tile tap (Terug) or counting down (Spieken): the game's armed look. It grows 6 % only, so the card and its ring stay
    clear of home above it; the top bar sits above this row so the soft glow goes behind home */
+.toolbar.nogrow .tool.armed { transform: none; }   /* (tight phones: ring and glow only, board.js fitToolbar) */
 .tool.armed { transform: scale(1.06); animation: helperArmed 1s ease-in-out infinite; }
 @keyframes helperArmed {
   0%, 100% { box-shadow: 0 5px 0 var(--cream2), 0 0 0 3px #fff3c4, 0 0 14px 6px rgba(255,200,40,.75); }
