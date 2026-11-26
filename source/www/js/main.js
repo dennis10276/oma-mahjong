@@ -78,7 +78,8 @@ applyLang();
 applyTheme();
 applyBg();
 ensureId();
-fetchOnline().then(ok => { if (ok && curScreen === 'home') renderHome(); checkHearts(); checkSentHearts(); if (ok) { checkPassed(); resumeShopGift(); } });
+// (window.__mjBoot: tests wait for it, so a stuck gift is settled before they look at the wallet)
+window.__mjBoot = fetchOnline().then(async ok => { if (ok && curScreen === 'home') renderHome(); checkHearts(); checkSentHearts(); if (ok) { checkPassed(); await resumeShopGift(); } });
 // back to the app after a while (phones keep it in memory): the same as opening it again
 let hiddenAt = 0;
 document.addEventListener('visibilitychange', () => {

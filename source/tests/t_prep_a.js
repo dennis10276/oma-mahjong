@@ -386,8 +386,12 @@ module.exports = {
     }), [giftItem.id]);
     t.eq(preReload.res.reason, 'gift_unconfirmed', 'pre-reload missed ack is unconfirmed');
 
+    // the boot resume (shop/screen.js resumeShopGift) settles gifts once online: keep the reads failing through the
+    // reload so this checks the lock of a gift that is still unconfirmed
+    failNextGets = 99;
     await sender.reload();
     await sender.waitForFunction(() => window.__mjReady === true, null, { timeout: 8000 });
+    await sender.evaluate(() => window.__mjBoot);   // the boot gift resume has finished
     await installGiftHooks();
 
     const afterReloadPending = await sender.evaluate(([altId]) => ({
@@ -436,6 +440,7 @@ module.exports = {
 
     await sender.reload();
     await sender.waitForFunction(() => window.__mjReady === true, null, { timeout: 8000 });
+    await sender.evaluate(() => window.__mjBoot);   // the boot gift resume has finished
     await installGiftHooks();
     putMode = 'normal';
     const resumeEmpty = await sender.evaluate(async () => ({
@@ -517,6 +522,7 @@ module.exports = {
 
     await sender.reload();
     await sender.waitForFunction(() => window.__mjReady === true, null, { timeout: 8000 });
+    await sender.evaluate(() => window.__mjBoot);   // the boot gift resume has finished
     await installGiftHooks();
     putMode = 'normal';
     const preArrivalResume = await sender.evaluate(async () => ({
