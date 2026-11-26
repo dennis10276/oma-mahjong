@@ -435,7 +435,7 @@ body.sunny .how-tray .hm { background: linear-gradient(#fffef4, #f9e39a); }
 .win-stats div { background: #fff; border-radius: 16px; padding: 8px 14px; font-size: 16px; color: var(--muted); min-width: 96px; }
 .win-stats b { display: block; font-size: 26px; color: var(--ink); }
 .perfect { height: 0; overflow: visible; font-size: 30px; font-weight: 900; color: #ff8a00; text-shadow: 0 3px 0 #ffd23f; opacity: 0; transform: scale(.3) rotate(-10deg); transition: all .45s cubic-bezier(.3,1.8,.5,1); }
-.perfect.on { height: 40px; opacity: 1; transform: scale(1) rotate(-4deg); }
+.perfect.on { height: 46px; opacity: 1; transform: scale(1) rotate(-4deg); }
 .chase { font-size: 17px !important; margin: 6px 0 4px !important; color: #5c4520; }
 .sun-big { font-size: 96px; line-height: 1; animation: sunPop 1.2s cubic-bezier(.3,1.6,.5,1), spin 9s linear 1.2s infinite; }
 @keyframes sunPop { 0% { transform: scale(.1) rotate(-180deg); } 100% { transform: scale(1) rotate(0); } }
@@ -556,7 +556,7 @@ body.sunny .how-tray .hm { background: linear-gradient(#fffef4, #f9e39a); }
 .win-stats .ws-streak.bonus { background: #fff3c4; box-shadow: 0 0 0 3px #ffb300; animation: bump .6s ease 1.6s 2; }
 .compact .win-stats { flex-wrap: wrap; }
 .compact .win-stats div { padding: 4px 10px; }
-.compact .perfect.on { height: 30px; }
+.compact .perfect.on { height: 38px; }
 .compact .chase { font-size: 15px !important; margin: 4px 0 !important; }
 .compact .fam-box { margin: 6px 0; padding: 4px 8px; }
 .compact .fam-title { font-size: 15px; margin-bottom: 0; }
@@ -892,11 +892,25 @@ span.fx { font-size: inherit; }
 .week-tile .foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .week-tile .foot .go { flex: none; padding: 5px 12px; border-radius: 14px; background: linear-gradient(#45d28a, var(--green)); color: #fff; font-size: 17px; font-weight: 900; box-shadow: 0 4px 0 var(--green-d); text-shadow: 0 1px 0 rgba(0,0,0,.18); }
 .week-tile .medrew.plain { flex: none; display: grid; place-items: center; }
-/* the PERFECT sticker (E, the win screen's word as a badge) */
-.pf { display: inline-block; flex: none; font-weight: 900; line-height: 1; letter-spacing: .02em; white-space: nowrap; transform: rotate(-5deg); }
-.pf-w2 { color: #ff7a00; background: #fffdf4; border: 2px solid #ff9a1f; border-radius: 999px; text-shadow: 0 1.5px 0 #ffd23f; box-shadow: 0 2px 0 #e07000, 0 2px 4px rgba(0,0,0,.18); }
-.week-tile .medrew.plain .pf { font-size: 17px; }
-.week-tile .medrew.plain .pf-w2 { padding: 6px 9px 5px; }
+/* the PERFECT badge (Dennis 2026-11-26): one raised gold badge that shines, the same everywhere (perfectSticker()).
+   Every size is in em: a place only sets font-size. .pf tilts and twinkles, .pf-in is the pill and holds the light sweep. */
+.pf { position: relative; display: inline-block; flex: none; vertical-align: middle; line-height: 1; font-size: 17px; transform: rotate(-5deg); }
+.pf-in { position: relative; display: block; overflow: hidden; isolation: isolate; padding: .3em .56em .24em; border-radius: 999px;
+  font-weight: 900; letter-spacing: .03em; white-space: nowrap; color: #f06a00; border: max(1px, .08em) solid #ff9a1f;
+  background: linear-gradient(165deg, #fffdf4 16%, #fff3c4 58%, #ffd75e); text-shadow: 0 .03em 0 #fffdf4, 0 .07em 0 #ffd23f;
+  box-shadow: inset 0 0 0 .05em #fffdf4, inset 0 -.13em 0 #ffd23f, 0 .08em 0 #e07000, 0 .16em 0 #c98a12, 0 .26em .42em rgba(124,68,0,.26); }
+.pf-in::after { content: ''; position: absolute; z-index: 1; top: -60%; bottom: -60%; left: -60%; width: 32%; pointer-events: none; transform: skewX(-22deg);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.3) 23%, #fff 49%, rgba(255,255,255,.45) 60%, transparent); animation: pfShine 3s ease-in-out infinite; }
+.pf::before, .pf::after { content: '✦'; position: absolute; z-index: 2; pointer-events: none; line-height: 1; color: #fff; opacity: 0;
+  text-shadow: 0 0 .2em #ffd23f, 0 0 .45em #ffb000; animation: pfTwinkle 3s ease-in-out infinite; }
+.pf::before { top: -.45em; right: -.22em; font-size: .74em; }
+.pf::after { bottom: -.3em; left: -.05em; font-size: .46em; animation-delay: -.75s; }
+@keyframes pfShine { 0%, 24% { left: -60%; } 60%, 100% { left: 140%; } }
+@keyframes pfTwinkle { 0%, 50% { opacity: 0; transform: scale(.2) rotate(0); } 62% { opacity: 1; transform: scale(1) rotate(45deg); } 78%, 100% { opacity: 0; transform: scale(.2) rotate(90deg); } }
+@media (prefers-reduced-motion: reduce) { .pf-in::after, .pf::before, .pf::after { animation: none; } .pf-in::after { left: -60%; } }
+.pf-hero { font-size: clamp(30px, 10vw, 39px); }   /* the plaque */
+.perfect .pf { font-size: 26px; transform: rotate(-1deg); }   /* the win screen: its own -4deg pop + this = the same tilt */
+.compact .perfect .pf { font-size: 21px; }
 /* the block: 412 px, rows scroll inside (390 px) and snap to whole rows */
 .rank-block { box-sizing: border-box; height: 412px; padding: 8px 6px; border: 3px solid #ff7aa8; border-radius: 24px; background: linear-gradient(135deg, #ffe9f1, #ffd6e6); box-shadow: 0 5px 0 #e85d8f; overflow: hidden; }
 .rank-block .rl-scroll { height: 390px; overflow-y: auto; display: grid; gap: 6px; align-content: start; overscroll-behavior: contain; scroll-snap-type: y mandatory; scroll-padding: 0; }
@@ -911,7 +925,6 @@ span.fx { font-size: inherit; }
 #ranking .rrow.tight .nm1 .nmt { overflow: hidden; text-overflow: ellipsis; }
 #ranking .rrow.tight .nm1 i { font-style: normal; font-size: 12px; color: #a25b77; flex: none; }
 #ranking .rrow.tight .pf { font-size: 9.5px; margin-left: 2px; }
-#ranking .rrow.tight .pf-w2 { padding: 2px 4px 1px; border-width: 1.5px; }
 #ranking .rrow.tight .rn small { display: block; margin-top: 3px; font-size: 13px; color: #9c6680; overflow: hidden; text-overflow: ellipsis; }
 #ranking .rrow.tight .rn small .hs.seen { color: #318c47; font-size: inherit; margin: 0; display: inline; }
 #ranking .rrow.tight .rp { display: block; text-align: right; font-size: 19px; line-height: 1.1; white-space: nowrap; font-variant-numeric: tabular-nums; }
@@ -1021,10 +1034,3 @@ span.fx { font-size: inherit; }
 .gift-row .gn { flex: 1; min-width: 0; text-align: left; font-size: 20px; font-weight: 900; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .gift-row .gbtn { flex: none; padding: 8px 18px; border-radius: 16px; background: var(--green); color: #fff; font-size: 20px; font-weight: 900; box-shadow: 0 4px 0 var(--green-d); }
 .gift-row .gbtn:disabled { opacity: .5; }
-/* the PERFECT sticker shines (Dennis 2026-11-26): a soft light sweeps across it every few seconds */
-.pf-w2 { position: relative; overflow: hidden; isolation: isolate; }
-.pf-w2::after { content: ''; position: absolute; z-index: 1; top: -60%; bottom: -60%; left: -70%; width: 45%; pointer-events: none;
-  background: linear-gradient(100deg, rgba(255,255,255,0), rgba(255,255,255,.9) 50%, rgba(255,255,255,0)); transform: skewX(-18deg);
-  animation: pfShine 3.4s ease-in-out infinite; }
-@keyframes pfShine { 0%, 58% { left: -70%; } 88%, 100% { left: 130%; } }
-@media (prefers-reduced-motion: reduce) { .pf-w2::after { animation: none; left: -70%; } }

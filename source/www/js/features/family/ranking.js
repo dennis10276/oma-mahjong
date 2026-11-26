@@ -56,7 +56,8 @@ function perfectBlockers() {
   for (let l = 1; l <= Math.max(1, S.level - 1); l++) if ((S.stars['L' + l] || 0) < 3) blockers.push(l);   // stars are saved as S.stars.L<n>
   return blockers;
 }
-const perfectSticker = () => '<span class="pf pf-w2">PERFECT</span>';
+// the one PERFECT badge (style.css .pf): cls sets the size of a place, e.g. 'pf-hero' on the plaque
+const perfectSticker = (cls = '') => `<span class="pf${cls ? ' ' + cls : ''}"><span class="pf-in">PERFECT</span></span>`;
 const titleOf = e => { const it = e.title && SHOP_CATALOG.title.find(x => x.id === e.title); return it ? `${it.icon} ${isEn() ? it.en : it.nl}` : ''; };
 const cupName = c => ['bronze', 'silver', 'gold', 'diamond'].includes(c.id) ? tx('cup_' + c.id) : tx('cup_extra');
 function weekTileHTML(list) {
