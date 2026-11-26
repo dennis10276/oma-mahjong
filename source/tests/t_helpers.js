@@ -99,7 +99,7 @@ module.exports = [
         const g = await geo();
         t.ok(Math.abs(g.pkEdge - g.lip) <= 0.5 && Math.abs(g.unEdge - g.lip) <= 0.5, `${size}: the card edge ends on the tray line`, g);
         t.ok(g.dHome <= 1.5 && g.dRest <= 1.5, `${size}: centred under home and restart`, g);
-        t.ok(g.homeW === 56 && Math.round(g.pkW) === 58 && g.pkH <= 56.5 && g.pkH >= 36, `${size}: sizes (width 58, height 56 or less on a short tray row)`, g);
+        t.ok(g.homeW === 52 && Math.round(g.pkW) === 58 && g.pkH <= 56.5 && g.pkH >= 36, `${size}: sizes (width 58, height 56 or less on a short tray row)`, g);
         t.ok(g.gap >= 1, `${size}: at rest at least 1 px below home's edge`, g);
         // pressed: sinks 4 px, bottom stays within the tray line, away from home
         await p.evaluate(() => { document.querySelector('#btnPeek').classList.add('pressed'); document.querySelector('#btnUndo').classList.add('pressed'); }); await sleep(250);

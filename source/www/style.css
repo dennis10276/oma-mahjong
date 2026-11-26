@@ -342,7 +342,7 @@ body.nonum .cn { display: none; }
    Cream cards like home and restart (58 x 56 px, the name under the icon, the gold stock number on the corner). The card's 5 px
    edge ends exactly on the tray's bottom line and its centre is under home / restart; a press sinks 4 px like theirs. */
 .traybar { position: relative; }
-.toolbar { position: absolute; inset: 0 9px 1px; display: flex; justify-content: space-between; align-items: flex-end; pointer-events: none; }
+.toolbar { position: absolute; inset: 0 7px 1px; display: flex; justify-content: space-between; align-items: flex-end; pointer-events: none; }
 #game .toolbar { bottom: 5px; }   /* the traybar has 4 px padding: the card edge (5 px) ends on the tray's bottom line */
 #game.compact .toolbar { bottom: 1px; }   /* compact mode has no padding (it used to pin the row to 0) */
 .tool { pointer-events: auto; position: relative; width: 58px; height: var(--toolh, 56px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; padding: 0;
@@ -365,7 +365,7 @@ body.nonum .cn { display: none; }
   50% { box-shadow: 0 5px 0 var(--cream2), 0 0 0 3px #ffe27a, 0 0 18px 8px rgba(255,200,40,.9); } }
 @media (prefers-reduced-motion: reduce) { .tool.armed { animation: none; box-shadow: 0 5px 0 var(--cream2), 0 0 0 3px #fff3c4, 0 0 18px 8px rgba(255,200,40,.85); } }
 #game .topbar { position: relative; z-index: 3; }
-#game .topbar .icon-btn { width: 56px; height: 56px; font-size: 28px; border-radius: 17px; }
+#game .topbar .icon-btn { width: 52px; height: 52px; font-size: 26px; border-radius: 16px; }
 #game.oldbar .topbar .icon-btn { width: 44px; height: 44px; font-size: 22px; border-radius: 14px; }   /* board.js begin(): measures the pile's shape as before the bigger buttons */
 #board .tile.peeked { outline: 4px solid #ffc531; outline-offset: -2px; border-radius: 10px; }   /* Spieken: a face-down tile shown for 4 s */
 #tray .tmini.pulse { animation: trayPulse .8s ease-in-out infinite; }   /* Steen terugleggen: tap one of these */

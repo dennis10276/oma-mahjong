@@ -35,7 +35,7 @@ module.exports = [
       const m = await p.evaluate(() => ({ tw: G.tw, n: G.tiles.length, compact: document.querySelector('#game').classList.contains('compact'), slot: document.querySelector('#tray .slot').clientWidth, btn: document.querySelector('#game .icon-btn').clientWidth }));
       const manifest = require('../analysis/refit-251-299.json');
       t.ok(m.tw >= (lv % 10 === 0 ? 52 : 58), 'reviewed tile size on level ' + lv, m.tw);
-      t.eq([m.slot >= 48, m.btn], [true, 44], 'tray slots and buttons keep their size on level ' + lv);
+      t.eq([m.slot >= 48, m.btn], [true, 52], 'tray slots and buttons keep their size on level ' + lv);   // home and restart 52 px (Dennis 2026-11-26; 56 px cost the 58 px tiles)
       if (lv % 10 === 0) t.eq(m.n, require('../analysis/refit-251-299.json').tenthTileCounts[lv], 'approved tenth-level board size ' + lv);
       else {
         t.ok(m.n % 2 === 0 && m.n >= 72 && m.n <= 88, 'reviewed ordinary board size ' + lv, m.n);
