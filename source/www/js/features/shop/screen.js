@@ -90,7 +90,31 @@ function buyPopup(cat, id) {
     },
   });
 }
-function giftPicker(cat, id) { toast(tx('shopGiftSoon')); }   // Task 3 replaces this with the real picker
+// ---------- gifts: pick a family member, ShopEconomy.sendShopGift does the sending and keeps the retry contract ----------
+const giftHooks = () => ({
+  send: dbSend, log: logEvt,
+  save: () => { try { localStorage.setItem(STORE, JSON.stringify(S)); return true; } catch (e) { return false; } },
+  read: async path => { try { const r = await fetch(dbUrl(path), { cache: 'no-store' }); return r.ok ? { ok: true, value: await r.json() } : { ok: false }; } catch (e) { return { ok: false }; } },
+});
+function giftPicker(cat, id) {
+  const it = findCatalogItem(cat, id);
+  if (!it || !ShopEconomy.canGiftShopItem(cat, id)) return;
+  const fam = ranking(undefined, 'all').filter(isFam);
+  const rows = fam.map(e => `<div class="gift-row">${avatarHTML(e, 'ra')}<span class="gn">${esc(e.name)}</span><button class="gbtn" data-pid="${esc(e.id)}">${tx('shopGive')}</button></div>`).join('');
+  openModal(`<h2>${tx('shopGiftTo', shopName(it))}</h2>${fam.length ? `<div class="gift-list">${rows}</div><p>${it.price} 🪙</p>` : `<p>${tx('shopNoFamily')}</p>`}
+    <button class="btn2" id="giftNo">${tx('shopCancel')}</button>`);
+  $('#giftNo').onclick = closeModal;
+  $('#modalBox').querySelectorAll('.gbtn').forEach(b => b.onclick = async () => {
+    if (shopBusy) return;
+    shopBusy = true;
+    $('#modalBox').querySelectorAll('.gbtn').forEach(x => x.disabled = true);   // one gift at a time
+    const e = fam.find(x => x.id === b.dataset.pid);
+    let r = { ok: false, reason: 'error' };
+    try { r = await ShopEconomy.sendShopGift(S, cat, id, e.id, giftHooks()); } finally { shopBusy = false; }
+    if (r.ok) { closeModal(); Sound.select(); refreshShop(); toast(tx('shopGiftSent', e.name)); }
+    else { $('#modalBox').querySelectorAll('.gbtn').forEach(x => x.disabled = false); toast(tx('shopGiftFail', r.reason)); }
+  });
+}
 
 function bindShopTaps() {
   if (shopTapsBound) return;

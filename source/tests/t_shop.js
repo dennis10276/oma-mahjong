@@ -82,6 +82,29 @@ module.exports = [
     },
   },
   {
+    name: 'shop: gift sends once and takes the coins only after the database says OK',
+    async run(t, { FakeDB, click, sleep }) {
+      const db = new FakeDB({ scores: { pkees1: { name: 'Kees', avatar: '🐱', frame: 'none', level: 20, points: 500 } } });
+      const p = await t.phone({ db, size: [392, 785], state: { name: 'Dennis', pid: 'test-shop7', level: 12, sunSeen: true, econV: 2, coins: 680 } });
+      await click(p, '#btnShop'); await sleep(300);
+      await click(p, '#shop .th[data-id="tiles_dutch"] .gift'); await sleep(150);
+      t.eq(await p.evaluate(() => [document.querySelector('#modalBox h2').textContent, document.querySelectorAll('#modalBox .gbtn').length]), ['Cadeau: Hollands', 1], 'picker shows the family');
+      await p.evaluate(() => { const b = document.querySelector('#modalBox .gbtn'); b.click(); b.click(); }); await sleep(400);
+      t.eq(db.log.filter(r => r.m === 'PUT' && /gift-/.test(r.p)).length, 1, 'one gift write');
+      t.eq(await p.evaluate(() => [__mj.S.coins, document.querySelector('#shopCoins').textContent, document.querySelector('#modal').classList.contains('hidden'), document.querySelector('#toast').textContent]), [200, '🪙 200', true, '🎁 Cadeau verstuurd naar Kees'], 'coins gone after OK, toast');
+      t.eq(p.errors, [], 'no page error');
+    },
+  },
+  {
+    name: 'shop: gift picker without family offers only Annuleren',
+    async run(t, { click, sleep }) {
+      const p = await t.phone({ size: [392, 785], state: { name: 'Dennis', pid: 'test-shop8', level: 12, sunSeen: true, econV: 2, coins: 680 } });
+      await click(p, '#btnShop'); await sleep(300);
+      await click(p, '#shop .th[data-id="tiles_dutch"] .gift'); await sleep(150);
+      t.eq(await p.evaluate(() => [document.querySelectorAll('#modalBox .gbtn').length, document.querySelector('#modalBox').textContent.includes('Nog geen familie in de ranglijst'), document.querySelectorAll('#modalBox button').length]), [0, true, 1], 'message and one button');
+    },
+  },
+  {
     name: 'shop: old saves keep their looks',
     async run(t, lib) {
       const S = require('./saves_common');

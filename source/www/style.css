@@ -958,3 +958,12 @@ span.fx { font-size: inherit; }
   box-shadow: 0 5px 0 var(--cream2), 0 0 0 2px var(--cream2) inset; }
 .btn-row { display: flex; gap: 10px; }
 .btn-row .btn2 { flex: 1; }
+
+/* gift picker */
+.gift-list { margin: 8px 0 0; max-height: 46vh; overflow-y: auto; }
+.gift-row { display: flex; align-items: center; gap: 10px; padding: 6px 4px; }
+.gift-row + .gift-row { border-top: 2px dashed rgba(0,0,0,.12); }
+.gift-row .ra { width: 44px; height: 44px; font-size: 28px; flex: none; }
+.gift-row .gn { flex: 1; min-width: 0; text-align: left; font-size: 20px; font-weight: 900; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.gift-row .gbtn { flex: none; padding: 8px 18px; border-radius: 16px; background: var(--green); color: #fff; font-size: 20px; font-weight: 900; box-shadow: 0 4px 0 var(--green-d); }
+.gift-row .gbtn:disabled { opacity: .5; }
