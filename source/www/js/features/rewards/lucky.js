@@ -5,17 +5,11 @@
 // ---------- the lucky moment: a glittering tile worth extra points if taken quickly ----------
 const LUCKY_MS = 15000;
 function maybeLucky() {
+  if (!G) return;
   const L = help().lucky;
-  if (!G || G.done || G.lucky || (G.luckyN || 0) >= L.perLevel) return;
-  if ((G.mode === 'level' ? G.level : S.level) < L.fromLevel) return;
-  const n = G.tiles.length, left = aliveCount();
-  if (left > n * 0.8 || left < 6 || Math.random() > L.chance) return;
-  const tf = new Set(G.tray.map(faceOf));
-  const freeUp = [];
-  for (let i = 0; i < n; i++) if (G.alive[i] && !G.down[i] && canTake(i) && faceOf(i) < 100) freeUp.push(i);
-  const cand = freeUp.filter(i => tf.has(faceOf(i)) || freeUp.some(j => j !== i && faceOf(j) === faceOf(i)));
-  if (!cand.length) return;
-  const i = cand[Math.floor(Math.random() * cand.length)];
+  // the tested picker rolls the chance first, runs the quiet solver only when Lucky would fire (30 ms limit), and skips flights, traps and a full tray
+  const i = PrepBoard.pickSafeLuckyTile(G, { perLevel: L.perLevel, fromLevel: L.fromLevel, chance: L.chance, playerLevel: S.level, takeableFn: canTake });
+  if (i == null) return;
   G.lucky = { i, until: Date.now() + LUCKY_MS }; G.luckyN = (G.luckyN || 0) + 1;
   replayMark('lucky', [i, LUCKY_MS]);
   glow(i, 'lucky', true);

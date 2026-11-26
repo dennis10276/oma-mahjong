@@ -15,7 +15,7 @@ function saveCur() {
   syncClock();
   try {
     replayCapture();
-    localStorage.setItem(CUR, JSON.stringify({ v: CUR_V, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold], score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle, pu: G.peekUsed, uu: G.undoUsed, pk: G.tiles.map((t, i) => t.parked ? i : -1).filter(i => i >= 0), rescued: G.rescued, ez: G.ez, tr: G.o.track || '', ob: obState(), mv: G.mv, ck: G.clock, st: G.st, at: G.attempt, rp: G.rp, hv: boardVer(G.o) }));
+    localStorage.setItem(CUR, JSON.stringify({ v: CUR_V, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold], score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle, pu: G.peekUsed, uu: G.undoUsed, pk: G.tiles.map((t, i) => t.parked ? i : -1).filter(i => i >= 0), rescued: G.rescued, ez: G.ez, tr: G.o.track || '', ob: obState(), mv: G.mv, ck: G.clock, ln: G.luckyN || 0, cc: G.clockClearedAt, st: G.st, at: G.attempt, rp: G.rp, hv: boardVer(G.o) }));
   } catch (e) { }
 }
 function syncClock() { if (G && G.tStart) { const n = performance.now(); G.elapsed += (n - G.tStart) / 1000; G.tStart = n; } }
@@ -101,7 +101,7 @@ function begin(o, restart = false) {
     Object.assign(G, { tray: cur.tray || [], score: cur.score, elapsed: cur.elapsed, usedHint: !!cur.usedHint, usedShuffle: !!cur.usedShuffle, peekUsed: cur.pu | 0, undoUsed: cur.uu | 0, rescued: !!cur.rescued });
     for (const i of cur.pk || []) if (tiles[i]) { tiles[i].parked = true; PrepBoard.detachTileNeighbors(G.nb, i); }   // (a tile put back beside the pile)
     setObstacles(cur.ob);
-    G.mv = cur.mv || 0; G.clock = cur.ck || null;
+    G.mv = cur.mv || 0; G.clock = cur.ck || null; G.luckyN = cur.ln | 0; if (cur.cc != null) G.clockClearedAt = cur.cc;
     G.mile = mileOf();
   } else {
     if (!o.faces) {
@@ -174,7 +174,7 @@ function afterLogic() {
 function afterLand() {
   if (G.film) return;
   if (G.done) { if (G.flights === 0 && !G.winShown) { G.winShown = true; setTimeout(win, 450); } return; }
-  if (G.flights === 0) { checkStuck(); obRelief(); jokerLeftover(); maybeLucky(); maybeAutoFinish(); }
+  if (G.flights === 0) { checkStuck(); obRelief(); jokerLeftover(); maybeAutoFinish(); maybeLucky(); }
 }
 
 // ---------- drawing ----------
@@ -808,6 +808,7 @@ const clockLeft = () => G && G.clock ? Math.max(0, G.clock.n - G.mv) : 0;
 function clockMove(i) {
   if (!G.clock) return;
   if (i === G.clock.i) {
+    G.clockClearedAt = G.mv;
     const c = centerOf(G.tiles[i].el);
     FX.emoji(c.x, c.y, ['⏰', '✨', '🎉'], 10); Sound.star(2); buzz([20, 40, 20]);
     praise(tx('clockSaved'));
