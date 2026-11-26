@@ -53,7 +53,7 @@ let rankMode = 'week';
 // the levels before the one I am on that do not have 3 stars yet (the level 1 itself counts at the very start)
 function perfectBlockers() {
   const blockers = [];
-  for (let l = 1; l <= Math.max(1, S.level - 1); l++) if ((S.stars[l] || 0) < 3) blockers.push(l);
+  for (let l = 1; l <= Math.max(1, S.level - 1); l++) if ((S.stars['L' + l] || 0) < 3) blockers.push(l);   // stars are saved as S.stars.L<n>
   return blockers;
 }
 const perfectSticker = () => '<span class="pf pf-w2">PERFECT</span>';

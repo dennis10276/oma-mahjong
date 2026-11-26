@@ -253,7 +253,7 @@ module.exports = [
   {
     name: 'family ranking: the tiles, my Perfect state, shop titles and a bought frame',
     async run(t, { FakeDB }) {
-      const stars = Object.fromEntries(Array.from({ length: 11 }, (_, i) => [i + 1, i === 4 ? 2 : 3]));
+      const stars = Object.fromEntries(Array.from({ length: 11 }, (_, i) => ['L' + (i + 1), i === 4 ? 2 : 3]));   // the game's own key format
       const scores = { pA: { ...score('Anna', 40, 100, NOW - HOUR), title: 'ttl_cheese', perfect: true, frame: 'frm_tulip' }, pB: score('Bas', 20, 50, NOW - HOUR) };
       const p = await t.phone({ db: new FakeDB({ scores }), size: [392, 785], state: { ...me, level: 12, stars, title: 'ttl_coffee', owned: { frame: ['none', 'frm_sky'] }, frame: 'frm_sky' } });
       await p.locator('#btnRanking').click();
@@ -265,7 +265,7 @@ module.exports = [
       t.ok(!(await mine.locator('.pf').count()) && /Koffiepauze/.test(await mine.innerText()), 'not Perfect yet, shows my nickname');
       t.eq(await mine.locator('.ra').evaluate(el => el.className.includes('fr-frm_sky') && getComputedStyle(el).borderTopWidth !== '0px'), true, 'my bought frame is drawn');
       t.eq(await p.locator('#rankList .rrow').filter({ hasText: 'Anna' }).locator('.pf').count(), 1, 'a Perfect family member gets the sticker');
-      await p.evaluate(() => { S.stars[5] = 3; renderRanking(); });
+      await p.evaluate(() => { S.stars.L5 = 3; renderRanking(); });
       t.ok(/Jij bent/.test(await p.locator('#rankList .week-tile').innerText()) && await p.locator('#rankList .rrow.me .pf').count() === 1, 'all levels 3 stars: PERFECT tile and sticker');
       await p.locator('#rkPlay').click();
       t.eq(await p.evaluate(() => curScreen), 'levels', 'Speel opens the levels');
