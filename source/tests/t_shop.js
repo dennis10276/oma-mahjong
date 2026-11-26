@@ -141,7 +141,7 @@ module.exports = [
           const w = c.measureText(el.textContent).width;
           if (w > el.clientWidth) out.push(el.textContent + ' ' + Math.round(w) + '>' + el.clientWidth);
         }
-        return { cut: out, n: els.length, want: 2 * (SHOP_CATALOG.music.length + (SHOP_SFX_READY ? SHOP_CATALOG.sfx.length : 0)) };
+        return { cut: out, n: els.length, want: 2 * (SHOP_CATALOG.music.length + SHOP_CATALOG.title.length + (SHOP_SFX_READY ? SHOP_CATALOG.sfx.length : 0)) };
       });
       t.ok(cut.n === cut.want, 'all rows measured', cut.n + ' of ' + cut.want);
       t.eq(cut.cut, [], 'no title or line is wider than its box');
