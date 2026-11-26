@@ -163,6 +163,18 @@
     };
   }
 
+  function stampChapterTwoMilestones(S, today) {
+    const completed = Math.floor(Number(S.level) || 1) - 1;
+    let changed = false;
+    for (const milestone of [100, 150, 200, 250, 300, 350]) {
+      const id = 'l' + milestone;
+      if (completed < milestone || S.trophies[id]) continue;
+      S.trophies[id] = today;
+      changed = true;
+    }
+    return changed;
+  }
+
   /**
    * Load and migrate `omamj.v1` JSON cleanly (`save.js`).
    * IMPORTANT: Inspects `parsed.econV` BEFORE merging `econDefaults()` so existing v1.77 saves
@@ -204,7 +216,7 @@
       S.undoStock = clampInt(S.undoStock, 0, RULES.undo.maxStock);
       S.peekStock = clampInt(S.peekStock, 0, RULES.peek.maxStock);
       if (!S.wk || typeof S.wk !== 'object') S.wk = { id: weekIdOf(now), pts: 0 };
-      return { S, migrated: false, freshInstall: false };
+      return { S, migrated: stampChapterTwoMilestones(S, today), freshInstall: false };
     }
 
     // 1. Read-only legacy snapshot before cleanup
@@ -258,11 +270,7 @@
     S.peekStock = parsed.peekStock !== undefined ? clampInt(parsed.peekStock, 0, RULES.peek.maxStock) : 1;
 
     // 5. Silently pre-stamp already-passed Chapter 2 level trophies (100..350)
-    const completed = oldLevel - 1;
-    for (const milestone of [100, 150, 200, 250, 300, 350]) {
-      const tid = 'l' + milestone;
-      if (completed >= milestone && !S.trophies[tid]) S.trophies[tid] = today;
-    }
+    stampChapterTwoMilestones(S, today);
 
     S.coinWeek = null;
     S.grit = { petals: 0, lastDay: '' };
@@ -299,9 +307,17 @@
       typeof raw.item !== 'string' || !raw.item ||
       typeof raw.path !== 'string' || !raw.path ||
       !Number.isSafeInteger(price) || price <= 0 ||
-      !p || typeof p !== 'object' || p.k !== 'shop_gift'
+      !p || typeof p !== 'object' || (p.k !== 'shop_gift' && raw.cat !== 'postcard')
     ) {
       return null;
+    }
+    if (raw.cat === 'postcard') {
+      if (p.k !== 'msg' || p.pc !== raw.item || !CAT.findCatalogItem('postcard', p.pc)?.price ||
+          !validPostcardPid(p.from) || !validPostcardPid(raw.toPid) || !/^\d{4}-\d{2}-\d{2}$/.test(p.day) ||
+          raw.path !== postcardPath(raw.toPid, p.from, p.day)) return null;
+      return { gid: raw.gid, toPid: raw.toPid, cat: raw.cat, item: raw.item, price, path: raw.path,
+        payload: { k: 'msg', t: Number(p.t), gid: raw.gid, from: p.from, name: String(p.name || '').slice(0, 24),
+          pc: p.pc, day: p.day, ...postcardNoteParts(p) } };
     }
     return {
       gid: raw.gid,
@@ -469,9 +485,13 @@
 
   function matchesPendingGift(record, pending) {
     if (!record || typeof record !== 'object' || !pending || !pending.payload) return false;
+    const p = pending.payload;
+    if (pending.cat === 'postcard') {
+      return record.k === 'msg' && record.gid === pending.gid && record.from === p.from &&
+        record.pc === p.pc && record.day === p.day && Number(record.t) === p.t;
+    }
     if (record.k !== 'shop_gift') return false;
     if (record.gid !== undefined && record.gid !== pending.gid) return false;
-    const p = pending.payload;
     return String(record.from || '') === String(p.from || '') &&
       record.cat === p.cat &&
       record.item === p.item &&
@@ -518,6 +538,13 @@
     pendingGiftSpends.delete(S);
     const bal = Math.max(0, Math.floor(Number(S && S.coins) || 0));
     const charge = Math.min(bal, pending.price);
+    if (pending.cat === 'postcard') {
+      rememberPostcard(S, pending.toPid, pending.payload.day);
+      if (charge) spendCoins(S, charge, hooks);
+      else callSave(hooks);
+      if (typeof hooks.log === 'function') hooks.log('shop_postcard_out', { to: pending.toPid, id: pending.item, p: charge });
+      return { ok: true, spent: charge, coinsLeft: S.coins, gid: pending.gid, recovered };
+    }
     const res = charge > 0
       ? finalizeGiftSpend(S, pending.cat, pending.item, pending.toPid, charge, hooks)
       : (() => {
@@ -534,14 +561,23 @@
     callSave(hooks);
   }
 
+  function reconcileGiftRecord(S, pending, probe, hooks) {
+    if (probe.status !== 'found') return null;
+    if (matchesPendingGift(probe.record, pending)) return settleConfirmedGift(S, pending, hooks, true);
+    if (pending.cat !== 'postcard') return null;
+    // Another draft already occupies this sender, recipient and day. Its wallet owns the charge.
+    rememberPostcard(S, pending.toPid, pending.payload.day);
+    clearPendingGift(S, hooks);
+    return { ok: false, reason: 'postcard_already_sent' };
+  }
+
   async function executePendingGift(S, pending, hooks = {}, allowSend = true, isInitialAttempt = false) {
     pendingGiftSpends.add(S);
     try {
       if (!allowSend || !isInitialAttempt) {
         const pre = await probeGiftRecord(pending.path, hooks);
-        if (pre.status === 'found' && matchesPendingGift(pre.record, pending)) {
-          return settleConfirmedGift(S, pending, hooks, true);
-        }
+        const settled = reconcileGiftRecord(S, pending, pre, hooks);
+        if (settled) return settled;
         if (pre.status === 'unknown') {
           return { ok: false, reason: 'gift_unconfirmed', pending: true, gid: pending.gid };
         }
@@ -578,10 +614,9 @@
 
       const definiteReject = isDefiniteSendRejection(threw, result);
       const post = await probeGiftRecord(pending.path, hooks);
-      if (post.status === 'found' && matchesPendingGift(post.record, pending)) {
-        return settleConfirmedGift(S, pending, hooks, true);
-      }
-      if (isInitialAttempt && definiteReject && (post.status === 'absent' || post.status === 'no_reader')) {
+      const settled = reconcileGiftRecord(S, pending, post, hooks);
+      if (settled) return settled;
+      if ((isInitialAttempt || pending.cat === 'postcard') && definiteReject && (post.status === 'absent' || post.status === 'no_reader')) {
         clearPendingGift(S, hooks);
         return { ok: false, reason: 'gift_failed', gid: pending.gid };
       }
@@ -599,7 +634,7 @@
   }
 
   /** Keep spending serialized and idempotent via stable `gid` until the gift write is confirmed or ruled absent. */
-  async function sendShopGift(S, cat, id, toPid, hooks = {}) {
+  async function submitGiftSpend(S, cat, id, toPid, prepare, hooks) {
     if (pendingGiftSpends.has(S)) return { ok: false, reason: 'gift_pending' };
     const existing = getPendingGiftOut(S);
     if (existing) {
@@ -608,7 +643,7 @@
       }
       return executePendingGift(S, existing, hooks, true, false);
     }
-    const gift = prepareGiftPayload(S, cat, id, toPid);
+    const gift = prepare();
     if (!gift.ok) return gift;
     const pending = {
       gid: gift.gid,
@@ -625,6 +660,38 @@
       return { ok: false, reason: 'save_failed' };
     }
     return executePendingGift(S, pending, hooks, true, true);
+  }
+
+  function sendShopGift(S, cat, id, toPid, hooks = {}) {
+    return submitGiftSpend(S, cat, id, toPid, () => prepareGiftPayload(S, cat, id, toPid), hooks);
+  }
+
+  const validPostcardPid = pid => typeof pid === 'string' && /^[A-Za-z0-9_-]{1,40}$/.test(pid);
+  const postcardPath = (to, from, day) => `plays/${to.startsWith('test-') ? 'test-msg-' + to.slice(5) : 'msg-' + to}/pc-${from}-${day}`;
+  function postcardNoteParts(note) {
+    return Object.fromEntries(['m0', 'm1', 'm2'].filter(key => typeof note[key] === 'string')
+      .map(key => [key, note[key].slice(0, 40)]));
+  }
+
+  function rememberPostcard(S, to, day) {
+    if (!S.postcardsSent || typeof S.postcardsSent !== 'object') S.postcardsSent = {};
+    S.postcardsSent[to] = day;
+  }
+
+  function sendPostcard(S, id, toPid, note, hooks = {}) {
+    return submitGiftSpend(S, 'postcard', id, toPid, () => {
+      const item = CAT.findCatalogItem('postcard', id);
+      if (!item?.price) return { ok: false, reason: 'unknown_item' };
+      if (!validPostcardPid(toPid) || !validPostcardPid(S.pid) || toPid === S.pid || !S.name) {
+        return { ok: false, reason: 'missing_recipient' };
+      }
+      const now = new Date(), t = now.getTime(), day = localDateKey(now);
+      if (S.postcardsSent?.[toPid] === day) return { ok: false, reason: 'postcard_already_sent' };
+      if (S.coins < item.price) return { ok: false, reason: 'not_enough_coins', need: item.price - S.coins };
+      const gid = makeGiftId(t);
+      return { ok: true, gid, toPid, price: item.price, path: postcardPath(toPid, S.pid, day),
+        payload: { k: 'msg', t, gid, from: S.pid, name: S.name.slice(0, 24), pc: id, day, ...postcardNoteParts(note) } };
+    }, hooks);
   }
 
   /** Reconcile a persisted unconfirmed gift send after reload or reconnect without double-charging. */
@@ -1097,6 +1164,7 @@
     canGiftShopItem,
     hasPendingGiftSpend,
     sendShopGift,
+    sendPostcard,
     resumePendingGift,
     giftReceiptKey,
     receiveShopGift,

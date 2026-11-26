@@ -21,6 +21,7 @@ function maybeDailyGift() {
     S.giftDay = day;
     giveBonus(stars); bumpStat('gifts');
     ShopEconomy.addCoins(S, coins);
+    renderHomeCoins();
     save();
     logEvt('gift', { stars });
     Sound.trophy(); FX.confetti(); buzz([20, 40, 20, 40, 60]);

@@ -4,14 +4,15 @@
 
 // ---------- screens ----------
 let curScreen = 'home';
-function show(id) {
+let onlyMissingStars = false;
+function show(id, { missingStars = false } = {}) {
   if (id === 'themes') id = 'shop';   // the old themes screen lives in the shop now
   if (curScreen === 'game' && id !== 'game') pauseClock();
   if (curScreen === 'shop' && id !== 'shop') stopShopPreview();
   curScreen = id;
   document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id === id));
   if (id === 'home') renderHome();
-  if (id === 'levels') renderLevels();
+  if (id === 'levels') { onlyMissingStars = missingStars; renderLevels(); }
   if (id === 'daily') renderDaily();
   if (id === 'shop') { renderShop(); if (navigator.onLine && ShopEconomy.hasPendingGiftSpend(S)) resumeShopGift(); }   // a gift left unsent is finished now, not only on boot
   if (id === 'trophies') renderTrophies();
@@ -24,14 +25,18 @@ function renderHome() {
   setTimeout(maybeDailyGift, 900);
   $('#greet').innerHTML = fx('greet', new Date().getHours());
   homeTip();
-  const ts = totalStars();
-  $('#homeStars').textContent = '⭐ ' + ts;
+  renderHomeCoins();
   const cur = loadCur();
   $('#playLabel').innerHTML = levelBlocked(S.level) ? fx('levelOnHold', S.level) : cur && cur.key === 'L' + S.level ? fx('continueLevel', S.level) : fx('levelN', S.level);
-  const doneToday = !!S.daily[todayKey()];
-  $('#dailyLabel').innerHTML = fx(doneToday ? 'dailyDone' : 'dailyWaiting');
+  const today = todayKey(), doneToday = !!S.daily[today];
+  const solved = onlineEntries('all').filter(e => e.daily === today).slice(0, 3);
+  $('#dailyLabel').innerHTML = solved.length
+    ? `${solved.map(e => `<span class="daily-face" aria-label="${esc(e.name)}">${esc(e.avatar)}</span>`).join('')}<span>${tx('dailyFamilyDone')}</span>`
+    : fx(doneToday ? 'dailyDone' : 'dailyWaiting');
+  const reward = $('#dailyHomeReward');
+  reward.hidden = doneToday;
+  reward.textContent = tx('dailyHomeReward', SHOP_RULES.week.dailyPt, SHOP_RULES.coins.dailyBase);
   $('#btnDaily').classList.toggle('pulse', !doneToday);
-  $('#streakBadge').textContent = '🔥 ' + streak();
   const lt = document.querySelectorAll('.logo-tiles .lt');
   const faces = S.theme === 'classic' ? [31, 34, 32] : S.theme === 'sunflower' ? [1, 0, 2] : [0, 4, 8];
   lt.forEach((el, i) => el.innerHTML = Tiles.faceHTML(S.theme === 'classic' ? 'classic' : S.theme, faces[i]).replace('class="emo"', 'class="emo" style="font-size:46px;display:grid;place-items:center;height:100%"'));
@@ -39,30 +44,59 @@ function renderHome() {
   $('#trophyCount').textContent = `${trophyCount()}/${TROPHIES.length}`;
   $('#rankBadge').textContent = '#' + myRank(undefined, 'week');
   renderTaskChip();
-  if (S.lastWeek) setTimeout(() => { if (curScreen === 'home') checkLastWeek(); }, 400);
+  if (S.lastWeek) checkLastWeek();
   else if (S.pendingHearts.length) setTimeout(() => { if (curScreen === 'home' && modalFree() && S.pendingHearts.length) { const h = S.pendingHearts; S.pendingHearts = []; save(); showHearts(h, () => renderHome()); } }, 400);
   grantSunPrize();
   if (sunUnlocked() && !S.sunSeen) setTimeout(() => { if (curScreen === 'home' && modalFree()) showSunflowerUnlock(() => renderHome()); }, 500);
   fitTexts($('#home'));
 }
+function renderHomeCoins() { $('#homeCoins').textContent = '🪙 ' + S.coins; }
 function starsStr(n) { return '★'.repeat(n) + `<span class="off">${'★'.repeat(3 - n)}</span>`; }
 function renderLevels() {
   $('#lvStars').textContent = '⭐ ' + totalStars();
+  const blockers = new Set(perfectBlockers());
+  const filter = $('#levelsFilter'), jump = $('#lvReplay');
+  const all = $('#lvAll'), missing = $('#lvMissing');
+  all.classList.toggle('on', !onlyMissingStars);
+  missing.classList.toggle('on', onlyMissingStars);
+  all.setAttribute('aria-pressed', !onlyMissingStars);
+  missing.setAttribute('aria-pressed', onlyMissingStars);
+  missing.textContent = tx('levelsMissing', blockers.size);
+  filter.style.setProperty('--slide', onlyMissingStars ? '1' : '0');
+  const select = next => {
+    if (onlyMissingStars === next) return;
+    onlyMissingStars = next;
+    renderLevels();
+  };
+  all.onclick = () => select(false);
+  missing.onclick = () => select(true);
+  const replay = onlyMissingStars && [...blockers].find(level => !levelBlocked(level));
+  jump.innerHTML = replay
+    ? `<button class="big-btn play" id="lvPlayMissing"><span class="bb-text"><b>${tx('levelsPlay', replay)}</b></span></button>`
+    : onlyMissingStars && !blockers.size ? `<div class="card levels-ready">${tx('levelsReady')}</div>` : '';
+  if (replay) $('#lvPlayMissing').onclick = () => startLevel(replay);
+  const area = $('#levels .scroll');
+  area.scrollTop = 0;
   const N = Math.max(24, Math.ceil((S.level + 8) / 12) * 12);
   const grid = $('#levelGrid'); grid.innerHTML = '';
   for (let i = 1; i <= N; i++) {
+    if (onlyMissingStars && !blockers.has(i)) continue;
     const b = document.createElement('button');
-    const st = S.stars[i] || 0;
+    const st = mainLevelStars(i);
     const locked = i > S.level || levelBlocked(i);
     b.className = 'lv' + (i === S.level ? ' current' : '') + (locked ? ' locked' : '');
     b.innerHTML = locked ? `🔒<small style="color:rgba(255,255,255,.6)">${i}</small>` : `${i}<small>${i === S.level && !st ? '▶' : starsStr(st)}</small>`;
     b.disabled = locked;
     if (i === RULES.sunflower.level) { b.classList.add('prize'); b.insertAdjacentHTML('beforeend', '<span class="prize-ico">🌻</span>'); }
+    if (blockers.has(i) && !locked) {
+      b.classList.add('lv-replay');
+      b.insertAdjacentHTML('beforeend', '<span class="replay-mark" aria-hidden="true">↻</span>');
+    }
     if (!locked) b.onclick = () => startLevel(i);
     grid.appendChild(b);
   }
   const cur = grid.querySelector('.current');
-  if (cur) setTimeout(() => cur.scrollIntoView({ block: 'center' }), 30);
+  if (cur) setTimeout(() => { if (cur.isConnected && curScreen === 'levels') cur.scrollIntoView({ block: 'center' }); }, 30);
 }
 
 // daily calendar
@@ -108,7 +142,7 @@ function setLang(code) {
   applyLang();
   // redraw what is on screen in the new language (the classic winds get other letters too)
   if (curScreen === 'game' && G) { renderBoard(false); renderTray(); $('#gameTitle').textContent = G.mode === 'level' ? tx('levelN', G.level) : $('#gameTitle').textContent; }
-  else document.querySelectorAll('.screen.active').forEach(sc => show(sc.id));
+  else document.querySelectorAll('.screen.active').forEach(sc => show(sc.id, { missingStars: onlyMissingStars }));
 }
 
 // ---------- modal ----------
@@ -124,6 +158,7 @@ function openModal(html, closable = true, onClose = null, cls = '') {
 function closeModal() {
   $('#modal').classList.add('hidden');
   const f = modalOnClose; modalOnClose = null; if (f) f();
+  if (curScreen === 'home' && S.lastWeek) queueMicrotask(checkLastWeek);
 }
 // Keep the actual nodes and their handlers, so a heart picker can return to a completed level.
 function keepModal() {

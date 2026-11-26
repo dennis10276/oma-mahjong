@@ -33,18 +33,18 @@ module.exports = [
       await p.evaluate(() => __mj.maybeLucky && praise('Halverwege! 💪')); await sleep(1500);
       t.ok(/Halverwege/.test(await p.evaluate(() => document.querySelector('#gameMsg').innerText)), 'praise there too, after the first message was readable');
       t.eq(await p.evaluate(() => document.querySelectorAll('#praise').length), 0, 'the old praise text over the board is gone');
-      // points come out of the score counter, not out of the pile
-      await p.evaluate(() => floatScore('+20'));
-      const f = await p.evaluate(() => document.querySelector('.float.sc').getBoundingClientRect().toJSON());
+      // The board coin purse highlights awards in the top bar.
+      await p.evaluate(() => { G.boardCoins = 1; updatePurse(true); });
+      const f = await p.evaluate(() => document.querySelector('#score').getBoundingClientRect().toJSON());
       const b = await p.evaluate(() => document.querySelector('#boardWrap').getBoundingClientRect().toJSON());
-      t.ok(f.bottom <= b.top + 2, 'points float above the pile', { f, b });
+      t.ok(f.bottom <= b.top + 2, 'the purse stays above the pile', { f, b });
       // outside a level the normal toast is used
       await p.evaluate(() => __mj.show('home')); await p.evaluate(() => toast('hallo')); await sleep(100);
       t.ok(await p.evaluate(() => document.querySelector('#toast').classList.contains('on')), 'toast on the home screen');
     },
   },
   {
-    name: 'rewards: levels in a row give a bonus star, a failed try breaks the streak',
+    name: 'rewards: fresh levels in a row earn Momentum, a failed try breaks the streak',
     async run(t, { startLevel, solve, fillTray, modal, click, sleep }) {
       const p = await t.phone({ state: { ...DENNIS, level: 5, winStreak: 2 } });
       await startLevel(p, 5);
@@ -53,8 +53,8 @@ module.exports = [
       const miles = [];
       for (const m of path) { await p.evaluate(m => { const G = __mj.G; if (!G.alive[m]) return; __mj.onTap(m); if (G.alive[m]) __mj.onTap(m); }, m); await sleep(260); miles.push(await p.evaluate(() => __mj.G.mile)); }
       await sleep(3500);
-      t.eq(await p.evaluate(() => [__mj.S.winStreak, __mj.S.stats.streakStars]), [3, 1], 'third in a row: +1 star');
-      t.ok(/3 op rij \+⭐/.test((await modal(p)).text), 'shown on the win screen');
+      t.eq(await p.evaluate(() => [__mj.S.winStreak, __mj.S.momentumLevel]), [3, 6], 'third in a row arms the next board');
+      t.ok(/3 op rij.*gouden paar/.test((await modal(p)).text), 'shown on the win screen');
       t.ok([1, 2, 3].every(m => miles.includes(m)), 'progress milestones at a quarter, half and three quarters', [...new Set(miles)]);
       await startLevel(p, 6); await fillTray(p);
       t.eq(await p.evaluate(() => __mj.S.winStreak), 0, 'a failed try resets the streak');

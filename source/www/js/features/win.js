@@ -11,40 +11,50 @@ let winFamilyRefresh = null;
 addEventListener('resize', () => { if (winFamilyRefresh) winFamilyRefresh(); });
 
 function win() {
+  if (G.winSettled) return;
+  G.winSettled = true;
   syncClock(); G.tStart = 0;
   if (G.autoFin) autoBanner(false);
   clearCur();
   const stars = starsFor(G);
   G.score += stars * RULES.score.perStar;
   endLevel('win', { st: stars });
-  const ptsBefore = myPoints(), lvlBefore = S.level;
   const rankBefore = myRank(undefined, 'all');
   const wkBefore = myWeekPts();
-  let wkAfter = wkBefore;            // the weekly challenge counts a fresh win by the step curve (WeekEconomy.awardWin)
+  const today = todayKey(), daily = G.mode === 'daily';
+  const prevStars = daily ? S.daily[G.date] : mainLevelStars(G.level);
+  const fresh = !G.film && !prevStars && (daily ? G.date === today : G.level === S.level);
   // daily tasks + statistics
   if (G.mode === 'level') taskProgress('levels'); else taskProgress('daily');
   if (stars === 3) taskProgress('stars3');
   if (!G.usedHint && !G.usedShuffle && !G.rescued && (toolsOpen() || toolsGone())) taskProgress('nohelp');
   delete S.fails[G.key];   // won: the next level starts without easier retries
-  // levels won in a row (a failed try breaks the streak): a bonus star now and then
-  const streakBonus = winStreakStep();
-  taskProgress('points', G.score);
+  const streakResult = PrepBoard.stepWinStreak(S, { mode: G.mode, fresh, won: true });
+  if (streakResult.changed) {
+    S.bestWinStreak = Math.max(S.bestWinStreak || 0, S.winStreak);
+    if (streakResult.momentumArmed) S.momentumLevel = G.level + 1;
+    else delete S.momentumLevel;
+  }
   bumpStat('wins'); bumpStat('playSec', Math.round(G.elapsed));
+  const winHour = new Date().getHours();
+  if (winHour < 9) bumpStat('earlyWins');
+  if (winHour >= 22) bumpStat('nightWins');
   if (G.mode === 'level') S.lvlPts[G.level] = Math.max(S.lvlPts[G.level] || 0, G.score);
   else S.dayPts[G.date] = Math.max(S.dayPts[G.date] || 0, G.score);
-  const ptsAfter = myPoints();
+  let earnedCoins = 0;
+  let weekReward = { ptAdded: 0, weekPts: wkBefore, unlockedCups: [] };
   if (!G.film) {
-    const today = todayKey();
-    const prevStars = G.mode === 'level' ? S.stars[G.level] : S.daily[G.date];
-    const fresh = G.mode === 'level' ? G.level === S.level && !prevStars : G.date === today && !prevStars;
-    ShopEconomy.rewardWin(S, {
+    const receipt = ShopEconomy.rewardWin(S, {
       mode: G.mode, level: G.level, date: G.date, today, fresh, stars, prevStars, boardCoins: G.boardCoins,
     });
-    WeekEconomy.awardWin(S, { mode: G.mode, fresh, date: G.date });   // week points and cup coins, saved with this win
-    wkAfter = S.wk.pts;
+    weekReward = WeekEconomy.awardWin(S, { mode: G.mode, fresh, date: G.date });
+    earnedCoins = receipt.total + weekReward.cupCoins;
   }
+  const wkAfter = weekReward.weekPts;
   if (G.mode === 'level') {
-    S.stars[G.level] = Math.max(S.stars[G.level] || 0, stars);
+    const legacyKey = 'L' + G.level;
+    const starKey = G.level in S.stars || !(legacyKey in S.stars) ? G.level : legacyKey;
+    S.stars[starKey] = Math.max(prevStars, stars);
     if (G.level === S.level) { S.level++; notePassedBaseline(false); }
   } else {
     S.daily[G.date] = Math.max(S.daily[G.date] || 0, stars);
@@ -79,17 +89,21 @@ function win() {
   const titles = tx('winTitles');
   const title = G.mode === 'daily' ? tx('dailyWon') : titles[Math.floor(Math.random() * titles.length)];
   const extra = G.mode === 'daily' ? `<p>🔥 ${tx('daysInRow', streak())}!</p>` : stars < 3 ? `<p class="note">${tx(G.rescued && !G.usedHint && !G.usedShuffle ? 'noRescueStars' : 'noHelpStars')}</p>` : '';
-  const nextLbl = G.mode === 'daily' ? tx('toCalendar') : tx('nextLevel', G.level + 1);
+  const nextLevel = daily ? S.level : G.level + 1;
+  const nextLbl = tx('nextLevel', nextLevel);
+  const cups = weekReward.unlockedCups.map(cup =>
+    `<div class="win-cup-reached">${tx('cupReached', cup.ico, cup.id === 'pr' ? tx('weekPersonalBest') : cupName(cup), cup.coins)}</div>`).join('');
+  const momentum = streakResult.momentumArmed ? `<div class="win-momentum">${tx('momentumReady', streakResult.winStreak, nextLevel)}</div>` : '';
   setTimeout(() => {
     openModal(`<h2>${title}</h2>
       <div class="stars"><span class="st">★</span><span class="st">★</span><span class="st">★</span></div>
-      <div class="win-stats"><div>${tx('scoreWord')}<b id="wScore">0</b></div><div>${tx('timeWord')}<b>${mins}:${pad(secs)}</b></div>${G.mode === 'level' && S.winStreak >= 2 ? `<div class="ws-streak${streakBonus ? ' bonus' : ''}">🔥<b>${tx('inARow', S.winStreak)}${streakBonus ? ' +⭐' : ''}</b></div>` : ''}</div>
+      <div class="win-stats"><div class="win-payout"><b>+${earnedCoins} 🪙 · +${weekReward.ptAdded} pt</b></div><div>${tx('timeWord')}<b>${mins}:${pad(secs)}</b></div></div>
       <div class="perfect" id="wPerfect">${stars === 3 ? tx('perfect') : ''}</div>
-      ${extra}<div id="wStanding">${standingsText()}</div><div id="wFamily">${famNow}</div>
+      ${cups}${momentum}${extra}<div id="wStanding">${standingsText()}</div><div id="wFamily">${famNow}</div>
       <button class="link-btn" id="wRanking">${tx('fullRanking')}</button>
       <div class="goal" id="wGoal"></div>
       <button class="big-btn play pulse" id="wNext"><span class="bb-text"><b>${nextLbl}</b></span></button>
-      <button class="link-btn" id="wMenu">${tx('menu')}</button>`, false, null, 'compact');
+      <div class="win-links">${daily ? `<button class="link-btn" id="wCalendar">📅 ${tx('dailyCalendar')}</button>` : ''}<button class="link-btn" id="wMenu">${tx('menu')}</button></div>`, false, null, 'compact');
     renderGoal($('#wGoal'));
     const familyNode = $('#wFamily');
     const bindHearts = () => familyNode.querySelectorAll('.heart-btn').forEach(btn => btn.onclick = () => {
@@ -113,19 +127,17 @@ function win() {
     }, 450 + i * 420);
     const perfectEl = $('#wPerfect');
     if (stars === 3) setTimeout(() => { perfectEl.classList.add('on'); Sound.perfect(); }, 450 + 3 * 420 + 150);
-    const el = $('#wScore'), target = G.score, t0 = performance.now();
-    (function tick() { const p = Math.min(1, (performance.now() - t0) / 1100); el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(tick); })();
     const go = (dest) => {
       winFamilyRefresh = null;
       closeModal();
       const finish = () => {
         if (updateReady) {   // a new version is waiting: switch now, then carry on where we were going
-          S.afterUpdate = dest === 'next' ? (G.mode === 'daily' ? { show: 'daily' } : { level: G.level + 1 }) : { show: 'home' };
+          S.afterUpdate = dest === 'next' ? { level: nextLevel } : { show: dest === 'calendar' ? 'daily' : dest === 'ranking' ? 'ranking' : 'home' };
           save(); updateReady = false; toast(tx('newVersion'), 1500);
           return setTimeout(() => location.reload(), 900);
         }
-        if (dest === 'next') { if (G.mode === 'daily') show('daily'); else startLevel(G.level + 1); }
-        else show(dest === 'ranking' ? 'ranking' : 'home');
+        if (dest === 'next') startLevel(nextLevel);
+        else show(dest === 'calendar' ? 'daily' : dest === 'ranking' ? 'ranking' : 'home');
       };
       heartsP.then(fresh => {
         const all = [...S.pendingHearts, ...(fresh || [])];
@@ -137,6 +149,7 @@ function win() {
     $('#wRanking').onclick = () => go('ranking');
     $('#wNext').onclick = () => go('next');
     $('#wMenu').onclick = () => go('menu');
+    if (daily) $('#wCalendar').onclick = () => go('calendar');
   }, 700);
 }
 

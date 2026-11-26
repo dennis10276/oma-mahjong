@@ -24,20 +24,47 @@ function weekLeftText() {
 const myPoints = () => sum(S.lvlPts) + sum(S.dayPts) + S.bonusPts;
 const myWeekPts = () => ensureWeek().pts;
 
-// result of last week, shown once on the home screen
+// A rollover is judged only against a fresh successful score read. Keep it available
+// while another Home dialog is open, so dismissing that dialog can show the result.
+let lastWeekRead = null;
 function checkLastWeek() {
-  if (!S.lastWeek || !modalFree()) return;
-  const lw = S.lastWeek; S.lastWeek = null;
-  // Scores are overwritten each week; without a complete historical table, only
-  // the player's recorded points are known. Never infer a winner from missing scores.
-  bumpStat('weeks');
+  const last = S.lastWeek;
+  if (!last || curScreen !== 'home' || !modalFree()) return;
+  if (lastWeekRead?.id !== last.id) {
+    const read = lastWeekRead = { id: last.id, ready: false, rows: null };
+    const online = S.name && navigator.onLine ? fetchOnline() : Promise.resolve(false);
+    online.then(async ok => {
+      if (lastWeekRead !== read || S.lastWeek?.id !== read.id) return;
+      read.rows = ok ? onlineEntries('all') : null;
+      if (ok) await pushScore();
+      read.ready = true;
+      checkLastWeek();
+    });
+    return;
+  }
+  if (!lastWeekRead.ready) return;
+  const result = WeekEconomy.evaluateLastWeekPodium(S, navigator.onLine ? lastWeekRead.rows : null);
+  lastWeekRead = null;
   save();
+  if (!result) return;
+  const tier = [...SHOP_RULES.cups.tiers].reverse().find(c => result.myPts >= c.pt);
+  const family = result.activeCount > 1;
+  const roster = family ? result.podium.map(e => ({ ...e, id: e.pid, points: e.pts })) : [];
+  const rows = family ? famHTML('week', roster, tx('famLastWeek'), false, true) : '';
+  const award = result.wonWeek ? newTrophies() : [];
   Sound.unlock();
-  openModal(`<div class="sun-big">📅</div><h2>${tx('lastWeekSummary')}</h2>
-    <p>${tx('lastWeekPoints', fmtN(lw.pts))}</p>
-    <p class="note">${tx('newWeekNote')}</p>
-    <button class="big-btn play" id="lwOk"><span class="bb-text"><b>${tx('newWeek')}</b></span></button>`, false);
-  $('#lwOk').onclick = () => { closeModal(); renderHome(); };
+  openModal(`<div class="podium-icon">${result.wonWeek ? '👑' : '📅'}</div>
+    <h2>${tx(result.wonWeek ? 'lastWeekWinner' : 'lastWeekSummary')}</h2>
+    <p>${family ? tx('lastWeekRank', result.myRank) : tx('lastWeekPoints', fmtN(result.myPts))}
+    ${tier ? '<br>' + tx('lastWeekCup', tier.ico, cupName(tier)) : ''}</p>
+    <div class="week-podium">${rows}</div>
+    <button class="big-btn play" id="lwOk"><span class="bb-text"><b>${tx('newWeek')} ▶</b></span></button>`, false);
+  document.querySelectorAll('.week-podium .fr-sub').forEach(label => label.remove());
+  $('#lwOk').onclick = () => {
+    closeModal();
+    if (award.length) showTrophies(award, renderHome);
+    else renderHome();
+  };
 }
 
 /* Prep A calculates points and Cup rewards with the win's other save changes. */

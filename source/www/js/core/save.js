@@ -15,6 +15,14 @@ const save = () => { try { localStorage.setItem(STORE, JSON.stringify(S)); retur
 if (progress.migrated) save();
 
 const totalStars = () => sum(S.stars) + sum(S.daily) + S.bonusStars;
+function mainLevelStars(level) {
+  return Math.min(3, Math.floor(Math.max(0, Number(S.stars[level]) || 0, Number(S.stars['L' + level]) || 0)));
+}
+function mainStars() {
+  let total = 0;
+  for (let level = 1; level < S.level; level++) total += mainLevelStars(level);
+  return total;
+}
 
 function bumpStat(k, n = 1) { if (G && G.film) return;   // (the intro film counts nothing: js/intro.js)
   S.stats[k] = (S.stats[k] || 0) + n; }

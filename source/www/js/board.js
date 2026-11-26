@@ -15,7 +15,15 @@ function saveCur() {
   syncClock();
   try {
     replayCapture();
-    localStorage.setItem(CUR, JSON.stringify({ v: CUR_V, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face), alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold], score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle, pu: G.peekUsed, uu: G.undoUsed, pk: G.tiles.map((t, i) => t.parked ? i : -1).filter(i => i >= 0), rescued: G.rescued, ez: G.ez, tr: G.o.track || '', ob: obState(), mv: G.mv, ck: G.clock, ln: G.luckyN || 0, cc: G.clockClearedAt, st: G.st, at: G.attempt, rp: G.rp, hv: boardVer(G.o) }));
+    localStorage.setItem(CUR, JSON.stringify({
+      v: CUR_V, aspect: G.o.aspect, key: G.key, n: G.tiles.length, faces: G.tiles.map(t => t.face),
+      alive: Array.from(G.alive), tray: G.tray, down: Array.from(G.down), peek: G.peek, gold: [...G.gold],
+      boardCoins: G.boardCoins, flow: G.flow, flowPaid: G.flowPaid, autoFinPaid: G.autoFinPaid, goldPairsPaid: G.goldPairsPaid,
+      score: G.score, elapsed: G.elapsed, usedHint: G.usedHint, usedShuffle: G.usedShuffle, pu: G.peekUsed, uu: G.undoUsed,
+      pk: G.tiles.map((t, i) => t.parked ? i : -1).filter(i => i >= 0), rescued: G.rescued, ez: G.ez,
+      tr: G.o.track || '', ob: obState(), mv: G.mv, ck: G.clock, ln: G.luckyN || 0, cc: G.clockClearedAt,
+      st: G.st, at: G.attempt, rp: G.rp, hv: boardVer(G.o),
+    }));
   } catch (e) { }
 }
 function syncClock() { if (G && G.tStart) { const n = performance.now(); G.elapsed += (n - G.tStart) / 1000; G.tStart = n; } }
@@ -56,7 +64,9 @@ function begin(o, restart = false) {
   const previousReplay = G && G.rp;
   if (previousReplay) { replayCapture(); replayDrain(G); }
   $('#modal').classList.add('hidden'); modalOnClose = null;
-  $('#comboTag').classList.remove('on'); clearGameMsg(); FX.clear(); if ($('#autoBanner')) autoBanner(false);
+  clearTimeout(flowTimer); flowTimer = 0;
+  document.querySelectorAll('.tile.flying, .tmini.ghost, .auto-coin').forEach(el => el.remove());
+  clearGameMsg(); FX.clear(); if ($('#autoBanner')) autoBanner(false);
   show('game');
   // shape the pile after the free space on this screen
   const wrap = $('#boardWrap');
@@ -90,7 +100,8 @@ function begin(o, restart = false) {
   const spec = o.spec;
   const tiles = spec.tiles.map(t => ({ x: t.x, y: t.y, z: t.z, face: 0, el: null }));
   const n = tiles.length;
-  G = { o, ...o, ptsScale: spec.ptsScale || 1, tiles, nb: Layouts.neighbors(tiles), gold: new Set(), lucky: null, alive: new Uint8Array(n).fill(1), down: new Uint8Array(n), peek: -1, tray: [], arriving: new Set(), flights: 0, score: 0, combo: 0, lastMatch: 0, usedHint: false, usedShuffle: false, peekUsed: 0, undoUsed: 0, rescued: false, ez, elapsed: 0, tStart: 0, mile: 0, done: false, busy: false, mv: 0, clock: null };
+  G = { o, ...o, ptsScale: spec.ptsScale || 1, tiles, nb: Layouts.neighbors(tiles), gold: new Set(), lucky: null, alive: new Uint8Array(n).fill(1), down: new Uint8Array(n), peek: -1, tray: [], arriving: new Set(), flights: 0, score: 0, combo: 0, lastMatch: 0, usedHint: false, usedShuffle: false, peekUsed: 0, undoUsed: 0, rescued: false, ez, elapsed: 0, tStart: 0, mile: 0, done: false, busy: false, mv: 0, clock: null,
+    boardCoins: 0, flow: 0, flowPaid: false, autoFinPaid: false, goldPairsPaid: 0 };
   const resumed = !!(cur && sameTrack && cur.key === o.key && cur.n === n && cur.aspect === o.aspect);
   if (resumed) {
     cur.faces.forEach((f, i) => tiles[i].face = f);
@@ -98,7 +109,12 @@ function begin(o, restart = false) {
     (cur.down || []).forEach((a, i) => G.down[i] = a);
     G.peek = cur.peek ?? -1;
     G.gold = new Set(cur.gold || []);
-    Object.assign(G, { tray: cur.tray || [], score: cur.score, elapsed: cur.elapsed, usedHint: !!cur.usedHint, usedShuffle: !!cur.usedShuffle, peekUsed: cur.pu | 0, undoUsed: cur.uu | 0, rescued: !!cur.rescued });
+    Object.assign(G, { tray: cur.tray || [], score: Number(cur.score) || 0, elapsed: cur.elapsed, usedHint: !!cur.usedHint, usedShuffle: !!cur.usedShuffle, peekUsed: cur.pu | 0, undoUsed: cur.uu | 0, rescued: !!cur.rescued });
+    G.boardCoins = freshBoardRewards() ? Math.max(0, cur.boardCoins | 0) : 0;
+    G.flow = Math.min(4, Math.max(0, cur.flow | 0));
+    G.flowPaid = !!cur.flowPaid;
+    G.autoFinPaid = !!cur.autoFinPaid;
+    G.goldPairsPaid = cur.goldPairsPaid ?? clearedGoldPairs();
     for (const i of cur.pk || []) if (tiles[i]) { tiles[i].parked = true; PrepBoard.detachTileNeighbors(G.nb, i); }   // (a tile put back beside the pile)
     setObstacles(cur.ob);
     G.mv = cur.mv || 0; G.clock = cur.ck || null; G.luckyN = cur.ln | 0; if (cur.cc != null) G.clockClearedAt = cur.cc;
@@ -115,6 +131,12 @@ function begin(o, restart = false) {
     (o.down || []).forEach(i => G.down[i] = 1);
     addObstacles(o, spec); setObstacles(o.obst);
     G.clock = o.clock ? { ...o.clock } : null;
+    if (o.mode === 'level' && S.momentumLevel === o.level && freshBoardRewards()) {
+      const rng = Layouts.rng(spec.seed + 7351);
+      const open = G.alive.map((_, i) => Number(free(i)));
+      const pair = PrepBoard.pickMomentumGoldPair({ ...G, alive: open }, rng) || PrepBoard.pickMomentumGoldPair(G, rng);
+      if (pair) pair.forEach(i => G.gold.add(i));
+    }
     clearCur();
   }
   // the clock and the play log come first, so they are right even if drawing the board goes wrong
@@ -131,13 +153,17 @@ function begin(o, restart = false) {
     show('game');
     renderBoard(!restart); fitToolbar();
     renderTray(); updateTools();
-    updateScore(false); updateProgress();
+    updatePurse(); renderFlow(); updateProgress();
   } catch (e) { logErr(e, 'begin'); }
   saveCur();
   setTimeout(() => praise(restart ? tx('againPraise') : o.mode === 'daily' ? tx('dailyPraise') : o.title), 150);
   const ready = () => {
     if (!S.seenTray) showIntro();
-    else { setTimeout(checkStuck, 500); setTimeout(jokerLeftover, 700); }
+    else {
+      const g = G;
+      setTimeout(() => { if (G === g) { checkStuck(); if (resumed) maybeAutoFinish(); } }, 500);
+      setTimeout(() => { if (G === g) jokerLeftover(); }, 700);
+    }
   };
   // Finish every new-tile introduction before starting play or any optional replay.
   const introductions = () => {
@@ -149,12 +175,33 @@ function begin(o, restart = false) {
   G.introducing = true; syncClock(); G.tStart = 0;
   introductions();
 }
-const restart = () => { if (G) { if (!G.done && !G.logged) { noteFail(); endLevel('restart'); } begin(G.o, true); } };
+function restart() {
+  if (!G) return;
+  const grit = !G.done && !G.logged && noteFail('restart');
+  if (grit) endLevel('restart');
+  begin(G.o, true);
+  if (grit?.added) toast(grit.bloomed ? tx('gritBloom', grit.coins) : tx('gritRestartToast', grit.petals));
+}
 // failed tries per level (cleared when it is won); a failed try also ends a win streak
-function noteFail() { if (!G) return; S.fails[G.key] = (S.fails[G.key] || 0) + 1; S.winStreak = 0; save(); }
+function noteFail(reason) {
+  S.fails[G.key] = (S.fails[G.key] || 0) + 1;
+  const streak = PrepBoard.stepWinStreak(S, { mode: G.mode, fresh: freshBoardRewards(), won: false });
+  if (streak.changed) delete S.momentumLevel;
+  const grit = PrepBoard.recordGritAttempt(S, {
+    cleared: clearedTiles(), total: G.tiles.length, reason, today: todayKey(),
+  }, { log: logEvt });
+  save();
+  G.boardCoins = 0;
+  updatePurse();
+  return grit;
+}
 
 // ---------- small helpers ----------
 const aliveCount = () => G.alive.reduce((a, b) => a + b, 0);
+const clearedTiles = () => G.tiles.length - aliveCount() - G.tray.length;
+const freshBoardRewards = () => !!G && !G.film && (G.mode === 'level'
+  ? G.level === S.level && !mainLevelStars(G.level)
+  : G.mode === 'daily' && G.date === todayKey() && !S.daily[G.date]);
 const free = i => Layouts.isFree(i, G.alive, G.nb);
 const faceOf = i => G.tiles[i].face;
 const trayHas = face => G.tray.some(t => faceOf(t) === face);
@@ -164,16 +211,33 @@ const clearHint = () => G.tiles.forEach(t => t.el.classList.remove('hint'));
 function takeOff(i) { G.alive[i] = 0; G.down[i] = 0; if (G.peek === i) G.peek = -1; G.tiles[i].el.classList.add('hidden'); G.mv++; clockMove(i); }
 /* After a tile left the board, it flies for ms; then fn runs and the level carries on.
    Taps never wait for this: the game state has changed already, the animation just catches up. */
-function afterFlight(ms, fn) { G.flights++; afterLogic(); setTimeout(() => { G.flights--; fn(); afterLand(); }, ms); }
+function afterFlight(ms, fn) {
+  const g = G;
+  G.flights++; afterLogic();
+  setTimeout(() => { if (G === g) { G.flights--; fn(); afterLand(); } }, ms);
+}
 function afterLogic() {
   updateBlocked(); updateObstacles(); updateProgress(); checkClock();
   if (G.film) return;
+  if (G.logged) return;
+  const gold = clearedGoldPairs();
+  if (gold > G.goldPairsPaid) {
+    if (freshBoardRewards()) G.boardCoins += (gold - G.goldPairsPaid) * SHOP_RULES.coins.goldPair;
+    G.goldPairsPaid = gold;
+  }
   if (aliveCount() === 0 && G.tray.length === 0) { G.done = true; clearCur(); return; }
   saveCur();
 }
 function afterLand() {
   if (G.film) return;
-  if (G.done) { if (G.flights === 0 && !G.winShown) { G.winShown = true; setTimeout(win, 450); } return; }
+  if (G.done) {
+    if (G.flights === 0 && !G.winShown) {
+      const g = G;
+      G.winShown = true;
+      setTimeout(() => { if (G === g && !g.logged) win(); }, 450);
+    }
+    return;
+  }
   if (G.flights === 0) { checkStuck(); obRelief(); jokerLeftover(); maybeAutoFinish(); maybeLucky(); }
 }
 
@@ -311,9 +375,30 @@ function layoutBoard() {
 // (measured when the board is laid out, not on every tap: measuring makes the phone lay out the page)
 function sizeTray() { const slot = $('#tray .slot'); if (slot && slot.clientWidth) $('#tray').style.setProperty('--sfs', (slot.clientWidth * 0.62).toFixed(1) + 'px'); }
 function updateBlocked() { G.tiles.forEach((t, i) => { if (G.alive[i]) t.el.classList.toggle('blocked', !free(i)); }); }
-function updateProgress() { const n = G.tiles.length; $('#progressBar').style.transform = `translateX(${((n - aliveCount() - G.tray.length) / n * 100 - 100).toFixed(2)}%)`; }
-function updateScore(bump = true) { const el = $('#score'); el.textContent = G.score; if (bump) replay(el, 'bump'); }
-function addScore(pts) { G.score += pts; updateScore(); floatScore('+' + pts); }
+function updateProgress() { $('#progressBar').style.transform = `translateX(${(clearedTiles() / G.tiles.length * 100 - 100).toFixed(2)}%)`; }
+function updatePurse(bump = false, incoming = 0) {
+  const el = $('#score');
+  const coins = (G.boardCoins || 0) - incoming;
+  el.hidden = !coins && !incoming;
+  el.textContent = '🪙 ' + coins;
+  if (bump && coins) replay(el, 'bump');
+}
+// Older specials still call these for their legacy score records.
+function updateScore() { if (!G.film) updatePurse(); }
+function addScore(pts) { G.score += pts; }
+function clearedGoldPairs() {
+  const cleared = [...G.gold].filter(i => !G.alive[i] && !G.tray.includes(i)).length;
+  return Math.floor(cleared / 2);
+}
+function renderFlow(n = G.flow, reward = 0) {
+  const meter = $('#flowMeter');
+  if (!meter) return;
+  meter.querySelector('.pips').setAttribute('aria-label', tx('flowProgress', n));
+  meter.querySelectorAll('.pip').forEach((pip, i) => pip.classList.toggle('on', i < n));
+  const chip = $('#flowReward');
+  chip.hidden = !reward;
+  if (reward) chip.textContent = '+' + reward + ' 🪙';
+}
 // Hint and Schudden unlock at a level (daily puzzles: once you have reached that level). From
 // HELP.toolsGoneFrom on (not in grandma mode) they have to be earned: the levels go in blocks of
 // RULES.tools.earn.every (50-54, 55-59, ...), and in a block you have them when every level before
@@ -423,7 +508,7 @@ function showBlockers(i) {
 }
 
 // ---------- tapping ----------
-let blockedTaps = 0, comboTimer;
+let blockedTaps = 0, flowTimer;
 function onTap(i, auto = false, point = null) {
   if (!auto) disarmTool();
   if (!G || G.done || G.introducing) return;
@@ -491,9 +576,10 @@ function tapTile(i) {
     const pfrom = G.tiles[pk].el.getBoundingClientRect();
     takeOff(pk);
     const gold = G.gold.has(i) || G.gold.has(pk);
+    const flow = matchFlow();
     const mid = { left: (from.left + pfrom.left) / 2, top: (from.top + pfrom.top) / 2 - from.height * 0.3, width: from.width, height: from.height };
     const f1 = flyFrom(from, mid), f2 = flyFrom(pfrom, mid);
-    afterFlight(FLY_MS, () => { popAway([f1, f2]); onMatch({ x: mid.left + mid.width / 2, y: mid.top + mid.height / 2 }, face, gold); });
+    afterFlight(FLY_MS, () => { popAway([f1, f2]); onMatch({ x: mid.left + mid.width / 2, y: mid.top + mid.height / 2 }, face, gold, flow); });
     return;
   }
   if (mi >= 0) {
@@ -502,14 +588,20 @@ function tapTile(i) {
     const ghost = G.arriving.has(partner) ? null : ghostOf(slotEl);
     G.tray.splice(mi, 1); G.arriving.delete(partner);
     const gold = G.gold.has(i) || G.gold.has(partner);
+    const flow = matchFlow();
     renderTray();
     const fly = flyFrom(from, to);
-    afterFlight(FLY_MS, () => { popAway([fly, ghost]); onMatch(centerOf(slotEl), face, gold); });
+    afterFlight(FLY_MS, () => { popAway([fly, ghost]); onMatch(centerOf(slotEl), face, gold, flow); });
     return;
   }
   // no partner yet: into the next free slot
   const slotIdx = G.tray.length;
   G.tray.push(i);
+  if (!G.film && G.tray.length >= 3) {
+    ShopEconomy.stepFlowSpark(G, G.tray.length, false);
+    clearTimeout(flowTimer); flowTimer = 0;
+    renderFlow();
+  }
   G.st.tm = Math.max(G.st.tm, G.tray.length);
   G.arriving.add(i);
   if (G.tray.length >= SLOTS) G.busy = true;   // 4th tile without a match: level over, no more taps
@@ -546,34 +638,49 @@ function showDownTip(after = null) {
 }
 
 // ---------- a pair is made ----------
-function onMatch(c, face, gold) {
+function matchFlow() {
+  if (G.film) return;
+  if (G.logged) return { flow: 0, charged: false, coinsAdded: 0 };
+  const result = ShopEconomy.stepFlowSpark(G, G.tray.length, freshBoardRewards());
+  if (result.charged) {
+    bumpStat('flows');
+    S.bestCombo = Math.max(S.bestCombo || 0, 5);
+    taskProgress('flow');
+  }
+  return result;
+}
+function onMatch(c, face, gold, flow) {
   if (G.film) { FX.burst(c.x, c.y - 10, 20, false); Sound.match(1); return; }   // the intro film: the pair pops, nothing is counted
+  // Keep the historical score for saved records and the dashboard.
   const now = performance.now(), comboMs = help().comboMs, sc = RULES.score;
   G.combo = now - G.lastMatch < comboMs ? G.combo + 1 : 1;
   G.lastMatch = now;
   const mult = specialMatch(face, gold, c);
   const pts = Math.round(sc.pair * Math.min(G.combo, sc.maxCombo) * mult * (G.ptsScale || 1));   // (grandma's smaller piles: same points)
   G.score += pts;
+  if (!flow) { flow = matchFlow(); saveCur(); }  // the joker can also make a match
   S.matches++;
-  taskProgress('pairs'); taskProgress('combo', G.combo, true);
-  if (G.combo > S.bestCombo) S.bestCombo = G.combo;
-  G.st.mc = Math.max(G.st.mc, G.combo);
-  const sunny = S.theme === 'sunflower', big = G.combo >= 3;
+  taskProgress('pairs');
+  const charge = flow.charged ? 5 : flow.flow;
+  G.st.mc = Math.max(G.st.mc, charge);
+  const sunny = S.theme === 'sunflower', big = charge >= 3;
   FX.burst(c.x, c.y - 10, sunny ? 12 : big ? 30 : 20, big);
-  if (sunny) { FX.emoji(c.x, c.y - 10, big ? ['🌻', '🌼', '🐝', '✨'] : ['🌻', '🌼', '✨'], big ? 8 : 5); if (big && G.combo % 2 === 1) bee(); }
-  const superCombo = G.combo % sc.maxCombo === 0;
-  if (superCombo) setTimeout(() => { Sound.supercombo(); flash(); praise(tx('superCombo')); FX.burst(innerWidth / 2, innerHeight / 2.4, 46, true); if (sunny) bee(); buzz([20, 40, 20, 40, 40]); }, 120);
-  floatScore('+' + pts);
-  Sound.match(G.combo); buzz(big ? [15, 40, 25] : 18);
-  updateScore();
-  const tag = $('#comboTag');
-  if (G.combo >= 2) { tag.textContent = tx('combo', Math.min(G.combo, sc.maxCombo)); tag.classList.add('on'); }
-  clearTimeout(comboTimer); comboTimer = setTimeout(() => tag.classList.remove('on'), comboMs);
+  if (sunny) { FX.emoji(c.x, c.y - 10, big ? ['🌻', '🌼', '🐝', '✨'] : ['🌻', '🌼', '✨'], big ? 8 : 5); if (big && charge % 2 === 1) bee(); }
+  if (flow.charged) {
+    Sound.supercombo(); flash();
+    FX.burst(c.x, c.y - 10, 46, true);
+    if (flow.coinsAdded) { Sound.coin(); FX.emoji(c.x, c.y - 10, ['✨', '🪙'], 6); }
+    renderFlow(5, flow.coinsAdded);
+    clearTimeout(flowTimer);
+    flowTimer = setTimeout(() => { flowTimer = 0; renderFlow(); }, 900);
+  } else if (!flowTimer) renderFlow();
+  Sound.match(charge || 1); buzz(big ? [15, 40, 25] : 18);
+  updatePurse(gold || !!flow.coinsAdded, G.autoCoinFlights || 0);
   const left = aliveCount();
-  if (superCombo || gold || face === JOKER) { /* already celebrated */ }
+  if (flow.charged || gold || face === JOKER) { /* already celebrated */ }
   else if (left === 0 && G.tray.length === 0) { praise(tx('lastPair')); FX.burst(c.x, c.y, 40, true); }
   else if (left > 0 && mileOf() > G.mile) milestone(mileOf());
-  else if (big && G.combo % 2 === 1) { const P = tx('praiseList'); praise(P[Math.min(P.length - 1, Math.floor(Math.random() * 3) + (G.combo - 3))]); }
+  else if (big && charge % 2 === 1) { const P = tx('praiseList'); praise(P[Math.min(P.length - 1, Math.floor(Math.random() * 3) + (charge - 3))]); }
   else if (left === 4) praise(tx('almostDone'));
 }
 /* a quarter, half and three quarters of the pile cleared: a little party on the progress bar */
@@ -621,7 +728,7 @@ function finishSafe(p, budget = RULES.autoFinish.budget) {
 }
 function autoFinishOK() {
   const A = RULES.autoFinish;
-  if (!A || !G || G.done || G.autoFin || G.busy || G.flights || G.overShown || toolLevel(G) < A.fromLevel) return false;
+  if (!A || !G || G.film || curScreen !== 'game' || G.done || G.autoFin || G.busy || G.flights || G.overShown || toolLevel(G) < A.fromLevel) return false;
   if (aliveCount() > A.maxTiles || !aliveCount()) return false;
   if (clockOn()) return false;                                   // the alarm clock: she plays it herself
   // ice, locks and jokers have their own rules: only when none of them are left
@@ -634,19 +741,58 @@ function autoBanner(on) {
   if (on) el.innerHTML = `<span class="ab-ico">🪄</span><b>${tx('autoFinish')}</b><span>${tx('autoFinish2')}</span>`;
   el.classList.toggle('on', on);
 }
+function flyAutoCoins(from, count) {
+  const g = G;
+  const purse = $('#score').getBoundingClientRect();
+  const x = purse.left + purse.width / 2 - 18, y = purse.top + purse.height / 2 - 18;
+  Sound.autoFinish(count);
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    g.autoCoinFlights = 0;
+    updatePurse(true);
+    return;
+  }
+  for (let index = 0; index < count; index++) {
+    const coin = document.createElement('span');
+    coin.className = 'auto-coin';
+    coin.textContent = '🪙';
+    coin.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(coin);
+    const startX = Math.min(innerWidth - 38, from.right + 8 + index * 30);
+    const startY = Math.min(from.top - 44 + index * 26, 320);
+    const finish = () => {
+      coin.remove();
+      if (G === g && g.autoCoinFlights) updatePurse(true, --g.autoCoinFlights);
+    };
+    const animation = coin.animate([
+      { transform: `translate(${startX}px, ${startY}px) scale(.9) rotate(-15deg)` },
+      { transform: `translate(${startX - 15 + index * 28}px, ${startY * .54}px) scale(1) rotate(20deg)`, offset: .5 },
+      { transform: `translate(${x}px, ${y}px) scale(.2) rotate(70deg)`, opacity: .3 },
+    ], { duration: 380 + index * 75, easing: 'ease-out', fill: 'both' });
+    animation.onfinish = animation.oncancel = finish;
+  }
+}
 function maybeAutoFinish() {
   if (!autoFinishOK()) return;
+  const g = G;
   G.autoFin = true; clearHint();
+  let coins = ShopEconomy.applyAutoFinishCoin(G, toolLevel(G), freshBoardRewards());
+  if (coins) {
+    G.autoCoinFlights = coins;
+    updatePurse(false, coins);
+    saveCur();
+  }
   replayMark('auto');
-  autoBanner(true);      // big over the pile (nobody needs to see it any more); combo texts stay in the top bar
+  autoBanner(true);
   logLvl('auto');
   const step = () => {
-    if (!G || G.done || !G.autoFin) return;
+    if (G !== g || G.done || curScreen !== 'game') return;
     // a tile whose twin waits in the tray first, then any free tile (every order is safe now)
     const fr = []; for (let i = 0; i < G.tiles.length; i++) if (G.alive[i] && free(i)) fr.push(i);
     const i = fr.find(i => trayHas(faceOf(i))) ?? fr.find(i => fr.some(j => j !== i && faceOf(j) === faceOf(i))) ?? fr[0];
     if (i === undefined) return;
+    const from = coins && G.tiles[i].el.getBoundingClientRect();
     onTap(i, true); if (G.alive[i]) onTap(i, true);              // a face-down tile: turn it, then take it
+    if (coins) { flyAutoCoins(from, coins); coins = 0; }
     setTimeout(step, RULES.autoFinish.stepMs);
   };
   setTimeout(step, 700);
@@ -659,13 +805,33 @@ function checkStuck() {
   syncClock();
   gameOver();
 }
-function failTry() { bumpStat('losses'); noteFail(); endLevel('stuck'); }
+function failTry(extra) {
+  bumpStat('losses');
+  const grit = noteFail('stuck');
+  endLevel('stuck', extra);
+  return grit;
+}
+function retryFlower(grit) {
+  if (!grit || grit.reason === 'below_threshold') return '';
+  const total = SHOP_RULES.grit.petals;
+  const count = grit.bloomed ? total : grit.petals;
+  const petals = Array.from({ length: total }, (_, i) =>
+    `<i class="${i < count ? 'on' : ''}" style="transform:rotate(${360 * i / total}deg)"></i>`).join('');
+  return `<div class="grit-flower">
+    <span class="grit-petals" aria-hidden="true">${petals}<span></span></span>
+    <div><strong>${grit.bloomed ? tx('gritFull') : tx('gritTitle', count)}</strong>
+    <small>${grit.bloomed ? tx('gritEarned', grit.coins) : tx('gritNext', total - count)}</small></div>
+  </div>`;
+}
 function gameOver() {
-  failTry();
+  const g = G;
+  const grit = failTry(), flower = retryFlower(grit);
   setTimeout(() => {
+    if (G !== g) return;
     Sound.stuck(); buzz([40, 80, 40]);
-    openModal(`<h2>${tx('fullTitle')}</h2>
-      <p>${tx('fullText')}</p>
+    openModal(`<h2>${tx(flower ? 'retryTitle' : 'fullTitle')}</h2>
+      <p>${flower ? tx('retryAlmost', Math.round(grit.pct * 100)) : tx('fullText')}</p>
+      ${flower}
       <button class="big-btn play" id="sRetry"><span class="bb-text"><b>${tx('tryAgain')}</b></span></button>
       <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false);
     $('#sRetry').onclick = () => { closeModal(); restart(); };
@@ -819,7 +985,8 @@ function clockMove(i) {
 function checkClock() {
   if (!G || G.done || G.overShown || !clockOn() || clockLeft() > 0) return;
   const g = G; G.busy = true; G.overShown = true;
-  if (!G.film) { syncClock(); bumpStat('losses'); noteFail(); endLevel('stuck', { ck: 1 }); }   // (the intro film: nothing is counted, saved or logged)
+  let grit;
+  if (!G.film) { syncClock(); grit = failTry({ ck: 1 }); }   // (the intro film: nothing is counted, saved or logged)
   setTimeout(() => {
     if (G !== g) return;
     Sound.stuck(); buzz([40, 80, 40]);
@@ -828,6 +995,7 @@ function checkClock() {
     // (in the intro film the same message shows on its board, without the buttons: the film's pop-up stays)
     if (G.film) { $('#board').insertAdjacentHTML('beforeend', `<div class="film-over clock-help">${over}</div>`); return; }
     openModal(`${over}
+      ${retryFlower(grit)}
       <button class="big-btn play" id="sRetry"><span class="bb-text"><b>${tx('tryAgain')}</b></span></button>
       <button class="link-btn" id="sMenu">${tx('menu')}</button>`, false, null, 'clock-help');
     $('#sRetry').onclick = () => { closeModal(); restart(); };

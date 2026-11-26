@@ -25,6 +25,8 @@ const bgCard = it => `<button class="bgc${shopOn('bg', it)}${shopOwns('bg', it.i
 const titleRow = it => `<button class="row-item${shopOn('title', it)}" data-cat="title" data-id="${it.id}"><span class="ico">${it.icon}</span><span class="tx"><b>${shopName(it)}</b><small>${shopSub(it)}</small></span>${buyBits('title', it)}</button>`;
 const musicRow = (cat, it) => `<button class="row-item${shopOn(cat, it)}" data-cat="${cat}" data-id="${it.id}"><span class="pbtn" data-play="${it.id}">${shopPlaying === it.id ? '■' : '▶'}</span><span class="tx"><b>${shopName(it)}</b><small>${shopSub(it)}</small></span>${buyBits(cat, it)}</button>`;
 const shopSec = (key, cls, html) => `<h3 class="sec">${tx(key)}</h3><div class="${cls}">${html}</div>`;
+const postcardRow = it => `<button class="row-item" data-postcard-shop="${it.id}"><span class="ico">${it.icon}</span><span class="tx">
+  <b>${shopName(it)}</b><small>${shopSub(it)}</small></span><span class="price">${it.price} 🪙</span></button>`;
 
 // The one place that builds a tab page (Tasks 3-4 fill the others).
 function shopPage(tab) {
@@ -34,7 +36,8 @@ function shopPage(tab) {
     + shopSec('shopSecFinish', 'theme-list', L('finish').map(finCard).join(''))
     + shopSec('shopSecTray', 'theme-list', L('tray').map(trayCard).join(''));
   if (tab === 'familie') return shopSec('shopSecFrame', 'theme-list', L('frame').map(frameCard).join(''))
-    + shopSec('shopSecTitle', 'row-list', L('title').map(titleRow).join(''));
+    + shopSec('shopSecTitle', 'row-list', L('title').map(titleRow).join(''))
+    + shopSec('shopSecPostcard', 'row-list', paidPostcards().map(postcardRow).join(''));
   if (tab === 'muziek') return shopSec('shopSecMusic', 'row-list', L('music', ['mus_sunflower', 'mus_piano']).map(it => musicRow('music', it)).join(''))
     + (SHOP_SFX_READY ? shopSec('shopSecSfx', 'row-list', L('sfx', ['sfx_ivory', 'sfx_mahjong_clack']).map(it => musicRow('sfx', it)).join('')) : '');
   return helpCard('undo') + helpCard('peek');
@@ -96,7 +99,7 @@ const SHOP_SFX_READY = true;
 // so it never keeps blocking buying
 async function resumeShopGift() {
   const was = ShopEconomy.hasPendingGiftSpend(S);
-  try { await ShopEconomy.resumePendingGift(S, { ...giftHooks(), resend: true }); } catch (e) { }
+  try { await ShopEconomy.resumePendingGift(S, { ...giftHooks(), resend: true, renderCoins: renderHomeCoins }); } catch (e) { }
   if (curScreen === 'shop' && was !== ShopEconomy.hasPendingGiftSpend(S)) refreshShop();   // (a refresh during a swipe would drop the drag)
 }
 const lookHooks = () => ({ apply: applyLook, save, log: logEvt, pushScore });
@@ -176,6 +179,23 @@ function giftPicker(cat, id) {
   });
 }
 
+function postcardPicker(id) {
+  if (!S.name) return askName(() => postcardPicker(id));
+  const card = findCatalogItem('postcard', id);
+  if (!card?.price) return;
+  const family = ranking(undefined, 'all').filter(isFam);
+  const rows = family.map(e => `<div class="gift-row">${avatarHTML(e, 'ra')}<span class="gn">${esc(e.name)}</span>
+    <button class="gbtn" data-pid="${esc(e.id)}"${postcardSentToday(e.id) ? ' disabled' : ''}>
+      ${postcardSentToday(e.id) ? tx('heartCardAlready') : tx('shopGive')}</button></div>`).join('');
+  openModal(`<h2>${tx('shopPostcardTo')}</h2>${family.length ? `<div class="gift-list">${rows}</div><p>${card.price} 🪙</p>` : `<p>${tx('shopNoFamily')}</p>`}
+    <button class="btn2" id="pcPickerBack">${tx('backPlain')}</button>`);
+  $('#pcPickerBack').onclick = closeModal;
+  $('#modalBox').querySelectorAll('.gbtn:not([disabled])').forEach(button => button.onclick = () => {
+    const recipient = family.find(e => e.id === button.dataset.pid);
+    confirmPostcard(recipient.id, recipient.name, id, '', keepModal());
+  });
+}
+
 function bindShopTaps() {
   if (shopTapsBound) return;
   shopTapsBound = true;
@@ -185,6 +205,8 @@ function bindShopTaps() {
     if (act) { helpAct(act.closest('[data-help]').dataset.help, act.dataset.act); return; }
     const play = e.target.closest('[data-play]');
     if (play) { togglePreview(play.dataset.play); return; }
+    const postcard = e.target.closest('[data-postcard-shop]');
+    if (postcard) { postcardPicker(postcard.dataset.postcardShop); return; }
     const card = e.target.closest('[data-cat]');
     if (!card) return;
     const { cat, id } = card.dataset;

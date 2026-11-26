@@ -43,7 +43,8 @@ $('#btnRestart').onclick = () => {
 };
 $('#btnHome').onclick = () => { saveCur(); if (G && !G.done) logLvl('pause'); show('home'); };
 $('#btnPlay').onclick = () => startLevel(S.level);
-$('#btnDaily').onclick = () => { selDate = todayKey(); const n = new Date(); calY = n.getFullYear(); calM = n.getMonth(); show('daily'); };
+$('#btnDaily').onclick = () => startDaily(todayKey());
+$('#btnCalendar').onclick = () => { selDate = todayKey(); const n = new Date(); calY = n.getFullYear(); calM = n.getMonth(); show('daily'); };
 $('#btnLevels').onclick = () => show('levels');
 $('#btnShop').onclick = () => show('shop');
 $('#btnTrophies').onclick = () => show('trophies');
