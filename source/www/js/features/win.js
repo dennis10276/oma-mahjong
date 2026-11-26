@@ -19,10 +19,8 @@ function win() {
   endLevel('win', { st: stars });
   const ptsBefore = myPoints(), lvlBefore = S.level;
   const rankBefore = myRank(undefined, 'all');
-  ensureWeek();
-  const wkBefore = S.wk.pts;
-  S.wk.pts += G.score;               // every finished level counts for the weekly challenge
-  const wkAfter = S.wk.pts;
+  const wkBefore = myWeekPts();
+  let wkAfter = wkBefore;            // the weekly challenge counts a fresh win by the step curve (WeekEconomy.awardWin)
   // daily tasks + statistics
   if (G.mode === 'level') taskProgress('levels'); else taskProgress('daily');
   if (stars === 3) taskProgress('stars3');
@@ -42,6 +40,8 @@ function win() {
     ShopEconomy.rewardWin(S, {
       mode: G.mode, level: G.level, date: G.date, today, fresh, stars, prevStars, boardCoins: G.boardCoins,
     });
+    WeekEconomy.awardWin(S, { mode: G.mode, fresh, date: G.date });   // week points and cup coins, saved with this win
+    wkAfter = S.wk.pts;
   }
   if (G.mode === 'level') {
     S.stars[G.level] = Math.max(S.stars[G.level] || 0, stars);

@@ -12,7 +12,7 @@ function myEntry(v, mode = 'all') {
 function onlineEntries(mode = 'all', weekId) {
   let list = [];
   try { list = (JSON.parse(localStorage.getItem(LB_CACHE) || '[]') || []).filter(e => e.id !== S.pid && !hiddenFromRanking(e.id, e.name)); } catch (e) { }
-  if (mode === 'week') { const id = weekId || weekInfo().id; list = list.map(e => ({ ...e, points: e.wk === id ? (e.wkPts || 0) : 0 })); }
+  if (mode === 'week') { const id = weekId || weekInfo().id; list = list.map(e => ({ ...e, points: e.wk === id && e.wkV === 2 ? (e.wkPts || 0) : 0 })); }
   return list;
 }
 /* week = points this week; all-time ("All-time") = highest level, points only break a tie */

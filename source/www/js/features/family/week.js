@@ -8,13 +8,12 @@ function weekInfo(d = new Date()) {
   const next = new Date(mon.getFullYear(), mon.getMonth(), mon.getDate() + 7);
   return { id: dkey(mon), frac: Math.min(1, Math.max(0, (d - mon) / (next - mon))), msLeft: next - d };
 }
+/* The one week of the game is the v2 week in S.wk (see WeekEconomy below): the tile, my row and the upload read it.
+   A new Monday starts a new week; last week's total waits in S.lastWeek for the podium and is not shown as this week. */
 function ensureWeek() {
-  const w = weekInfo();
-  if (!S.wk || S.wk.id !== w.id) {
-    if (S.wk && S.wk.pts > 0) S.lastWeek = { id: S.wk.id, pts: S.wk.pts };
-    S.wk = { id: w.id, pts: 0 };
-    save();
-  }
+  const before = S.wk;
+  WeekEconomy.ensureWeek(S);
+  if (S.wk !== before) save();
   return S.wk;
 }
 function weekLeftText() {

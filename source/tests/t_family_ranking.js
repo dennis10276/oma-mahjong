@@ -3,7 +3,7 @@
 const MINUTE = 60000, HOUR = 60 * MINUTE, DAY = 24 * HOUR;
 const NOW = new Date('2026-10-07T15:00:00').getTime();
 const score = (name, level, wkPts, t, online = 0) =>
-  ({ name, avatar: '🌷', level, points: 12340, wk: '2026-10-05', wkPts, t, online });
+  ({ name, avatar: '🌷', level, points: 12340, wk: '2026-10-05', wkV: 2, wkPts, t, online });
 const me = { name: 'Oma', pid: 'pOma', level: 12 };
 const person = (p, scope, name) => p.locator(scope).filter({ hasText: name });
 const statuses = row => row.locator('.presence-text, .presence-last').allTextContents();

@@ -19,4 +19,4 @@ const totalStars = () => sum(S.stars) + sum(S.daily) + S.bonusStars;
 function bumpStat(k, n = 1) { if (G && G.film) return;   // (the intro film counts nothing: js/intro.js)
   S.stats[k] = (S.stats[k] || 0) + n; }
 // extra stars and points outside a level (tasks, chest, gift, streak); points also count for the week
-function giveBonus(stars = 0, pts = 0) { S.bonusStars += stars; S.bonusPts += pts; if (pts) ensureWeek().pts += pts; }
+function giveBonus(stars = 0, pts = 0) { S.bonusStars += stars; S.bonusPts += pts; }
