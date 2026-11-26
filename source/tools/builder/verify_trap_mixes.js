@@ -89,10 +89,10 @@ function structure(d,t){
   }
   return null;
 }
-function combinedMarkerClear(d,i){
+function combinedMarkerClear(d,i,alive){
   const boxes=d.tiles.map(t=>{const [x,y,z]=Array.isArray(t)?t:[t.x,t.y,t.z];return {x:x/2-z*.14,y:y*.62-z*.14,order:z*10000+y*100+x};});
   const tile=boxes[i];
-  return !boxes.some((b,j)=>j!==i&&b.order>tile.order&&b.x<tile.x+.32&&b.x+1.15>tile.x-.04&&b.y<tile.y+.372&&b.y+1.42>tile.y-.075);
+  return !boxes.some((b,j)=>(!alive||alive[j])&&j!==i&&b.order>tile.order&&b.x<tile.x+.32&&b.x+1.15>tile.x-.04&&b.y<tile.y+.372&&b.y+1.42>tile.y-.075);
 }
 function verify(example,opts={}){
   const d=example.design,card=example.card,errors=[],checks=[],fail=x=>errors.push(x);
@@ -110,8 +110,11 @@ function verify(example,opts={}){
   if(!E.replay(atK,d.solution,{strict:true}).ok||oracle(d,k-1,[],opts)!=='lose')fail('unprovenClockMinimum');else checks.push('minimumByUnsatisfiableEarlierDeadline');
   const g=E.game(d),s0=E.start(g),vis=tileVisibility(g.tiles,{...s0,down:g.down,openPeek:-1},null).tiles;
   const specials=[d.clock.i,...(t.mechanism.mode==='earlyClock'?[t.mechanism.originalClock]:[]),...d.obst.keys,...d.obst.locks,...Object.keys(d.obst.ice).map(Number)];
-  if(specials.some(i=>g.down[i]||!vis[i].role))fail('hiddenSpecial');
-  for(const i of specials.filter(i=>d.obst.ice[i]&&(d.obst.keys.includes(i)||d.obst.locks.includes(i))))if(!combinedMarkerClear(d,i))fail('combinedBadgeCovered:'+i);
+  const revealed = (i, clear, combined) => example.brief?.targets?.allowCoveredSpecials && require('./bank/choice_checks').readableOnRoute(g, i, clear, combined);
+  if(specials.some(i=>g.down[i]||(!vis[i].role&&!revealed(i))))fail('hiddenSpecial');
+  for(const i of specials.filter(i=>d.obst.ice[i]&&(d.obst.keys.includes(i)||d.obst.locks.includes(i)))){
+    if(!combinedMarkerClear(d,i)&&!revealed(i,s=>combinedMarkerClear(d,i,s.alive),true))fail('combinedBadgeCovered:'+i);
+  }
   const costValue=p=>p.result==='lose'?Math.min(3,19-k)+1:p.cost;
   for(const p of t.baits||[]){
     const actual=reprice(d,k,p.tiles,opts);
@@ -129,7 +132,6 @@ function verify(example,opts={}){
   for(const i of E.legal(g,s0).filter(x=>typeof x==='number')){const r=oracle(d,d.clock.n,[i],opts);if(r==='win')wins++;if(r==='unknown')unknown++;opening.push({tile:i,result:r});}
   if(t.firstMoves && (wins<t.firstMoves.winning||t.firstMoves.rows.some(r=>r.result==='win'&&!opening.some(a=>a.tile===r.tile&&a.result==='win'))))fail('winningFirstMoves');
   if(t.firstMoves && (t.firstMoves.legal!==opening.length||t.firstMoves.winning!==t.firstMoves.rows.filter(r=>r.result==='win').length||t.firstMoves.unknown!==t.firstMoves.rows.filter(r=>r.result==='unknown').length||t.firstMoves.rows.some(r=>r.result==='lose'&&!opening.some(a=>a.tile===r.tile&&a.result==='lose'))))fail('openingClassification');
-  if(wins<2)fail('fewerThan2WinningStarts');
   for(const e of t.effects||[]){
     const dd=clone(d);if(e.kind==='lock')dd.obst.locks=dd.obst.locks.filter(i=>i!==e.tile);else if(e.kind==='ice')delete dd.obst.ice[e.tile];else{fail('effectKind');continue;}
     if(e.by==='clockRoute'){

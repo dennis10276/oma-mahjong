@@ -1,17 +1,15 @@
 'use strict';
 // Independent v2 acceptance: engine oracles, declarative recipe, and the new
 // pressure target. The old greedy-loss/one-waiting-route targets are diagnostics.
-const V=require('./verify_trap_mixes.js'),C=require('./verify_chained_mixes.js'),F=require('./bank/feel.js'),O=require('./chained_obviousness.js'),{SHAPES}=require('./chained_shapes.js');
+const V=require('./verify_trap_mixes.js'),C=require('./verify_chained_mixes.js'),O=require('./chained_obviousness.js'),{SHAPES}=require('./chained_shapes.js');
+const profiles = require('./chained_finish_profiles.js');
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 function verify(r,opts={}){
   const v=V.verify(r,{...opts,tailBand:[0,1]}),errors=v.errors.slice(),d=r.design,t=r.card.trap,f=SHAPES[t.type];
-  if (r.brief.targets?.requireFullTray) {
-    const failure = require('./builder.js').fullTrayFailure(d);
-    if (failure) errors.push(failure);
-  }
-  if (r.brief.targets?.requireStrandedThaw && !require('./bank/thaw_trap.js').findThawTrap(d)) {
-    errors.push('strandedThawUnproven');
-  }
+  const openingFailure = require('./bank/choice_checks').openingFailure(d, r.brief.targets);
+  if (openingFailure) errors.push(openingFailure);
+  const layoutFailure = require('./footprint').layoutFailure(d, r.brief);
+  if (layoutFailure) errors.push(layoutFailure);
   if(!f)errors.push('unknownShape');else{errors.push(...C.chainStructure(r,f).map(x=>'chain:'+x));if(t.signature!==f.signature||t.links!==f.links||f.links<3)errors.push('signature');}
   if(f?.newIdea){
     const offers=require('./chained_new_ideas.js').candidates(f.newIdea,d),q=t.newLink;
@@ -27,9 +25,12 @@ function verify(r,opts={}){
   if(!f?.sixIdea&&!t.baits.some((p,i)=>t.baits.some((q,j)=>i!==j&&p.tiles.every(x=>!q.tiles.includes(x)))))errors.push('twoDisjointLosingDecisions');
   const mech=new Set([...V.mechanism(d),...r.roles.bait.tiles,r.roles.bait.mix.originalClock,...d.solution.slice(0,r.card.clock.fewestMoves)]);
   if(d.down.length/d.tiles.length<.23||d.down.length/d.tiles.length>.28||d.down.some(i=>mech.has(i)))errors.push('faceDown');
-  const feel=F.expert(d,{playouts:16,seed:9}),pp=+(feel.parkAt[1]+feel.parkAt[2]).toFixed(1);
+  const { feel, finishVerification } = profiles.measure(d, t, r.brief.targets?.finishAfterTrap);
+  const pp=+(feel.parkAt[1]+feel.parkAt[2]).toFixed(1);
   const tail=r.card.finishProfile?require('./bank/tail.js').measure(d,{seed:977,playouts:800}):r.card.tail;
-  if(!require('./chained_finish_profiles.js').check(r,feel,tail))errors.push('pressureTarget');
+  if(!profiles.check(r,feel,tail))errors.push('pressureTarget');
+  if (finishVerification && (!same(finishVerification, r.card.finishVerification)
+      || !profiles.check(r, finishVerification.independent, tail))) errors.push('finishVerification');
   if(r.card.finishProfile&&(!same(tail,r.card.tail)))errors.push('tailCard');
   if(r.brief.readabilityProfile){
     const clear=require('./chained_special_readability.js').measure(d);

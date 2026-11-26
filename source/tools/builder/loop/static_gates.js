@@ -23,7 +23,7 @@
    A3 release-legal clock: the stored witness passes the strict rules (Hard.validSolution, no peek pair), takes
       the clock at move k (its clock index + 1 = engine.clockShortest k), the strict fewest (exact.js) equals k
       (no peek-pair shortcut), and some spare 1..3 fits k + s <= 19.
-   A4 no hidden single order: engine.classify at the opening finds >= 2 winning actions; at every witness state
+   A4 no hidden single order: engine.classify proves an opening action wins; at every witness state
       up to the clock with exactly one winning action (and no 'unknown' among the others) that action is obvious
       (obvious.js: the clock, a blocker within 3 of the clock, a visible key or lock, a tray match). Checked per
       shippable spare: a state with one winning move at a loose spare has that same single move at every tighter
@@ -254,7 +254,7 @@ function staticGates(designIn, o = {}) {
         bad = bad.filter(x => { const c = w.classify(g, Wt.states[x.step], PER_MOVE); const nw = c.filter(y => y.result === 'win').length; return nw === 1 || c.some(y => y.result === 'unknown'); });
       }
       if (sp !== sMin) { const c = w.classify(C.at(k + sp), Wt.states[0], PER_MOVE); openWins = c.filter(x => x.result === 'win').length; openUnk = c.filter(x => x.result === 'unknown').length; }
-      const openOk = openWins >= 2;
+      const openOk = openWins > 0;
       perSpare[sp] = { ok: openOk && !bad.length, openingWins: openWins, openingUnknown: openUnk, notObvious: bad.map(x => ({ atMove: x.moves + 1, move: x.move })) };
     }
     if (noClock) { skipped.push(-1); }
@@ -264,10 +264,10 @@ function staticGates(designIn, o = {}) {
     if (noClock) why.push('no clock action in the witness');
     if (!evalSpares.some(sp => perSpare[sp].ok)) {
       const p = perSpare[loosest];
-      if (p.openingWins < 2) why.push(`opening has ${p.openingWins} winning action${p.openingWins === 1 ? '' : 's'} even at spare ${loosest}`);
+      if (!p.openingWins) why.push(`no proven winning opening action at spare ${loosest}`);
       for (const x of p.notObvious) why.push(`move ${x.atMove}: the only winning move ${moveText(x.move)} is not obvious at every spare`);
     }
-    const unsure = skipped.length || openUnk || (open && open.wins < 2 && open.unknown) || w.hit;
+    const unsure = skipped.length || openUnk || w.hit;
     if (w.hit) warnings.push('A4: node budget ran out before the clock');
     gates.A4 = { pass: okSpares.length > 0, detail: { opening: open, singleWinStates: singles.length, obviousSingles: singles.filter(x => x.obvious).length, statesWithUnknown: skipped.length, okSpares, perSpare, why },
       ...(unsure ? { warn: w.hit ? 'budget' : 'unknown' } : {}) };

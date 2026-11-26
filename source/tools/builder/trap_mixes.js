@@ -261,10 +261,12 @@ function prove(name, d, roles, ctx, opts = {}) {
   if(keyRoof&&(keyRoof.keyShown<(roles.bait.keyRoofShownMin??0)||keyRoof.roofShown<(roles.bait.keyRoofTopMin??0)))return {ok:false,why:'keyRoofReadability'};
   const g = E.game(d), s0 = E.start(g), vis = tileVisibility(g.tiles,{...s0,down:g.down,openPeek:-1},null).tiles;
   const special = uniq([d.clock.i,...(f.mode==='earlyClock'?[roles.bait.mix.originalClock]:[]),...d.obst.keys,...d.obst.locks,...Object.keys(d.obst.ice).map(Number)]);
-  if (special.some(i=>g.down[i] || !vis[i].role)) return {ok:false,why:'hiddenSpecial'};
+  const revealed = (i, clear, combined) => ctx.allowCoveredSpecials && require('./bank/choice_checks').readableOnRoute(g, i, clear, combined);
+  if (special.some(i=>g.down[i] || (!vis[i].role && !revealed(i)))) return {ok:false,why:'hiddenSpecial'};
   const combined=special.filter(i=>d.obst.ice[i]&&(d.obst.keys.includes(i)||d.obst.locks.includes(i))),boxes=visibilityGeometry(g.tiles).boxes;
   for(const i of combined){const b=boxes[i],rect=[b.left-.04,b.top-.075,b.left+.32,b.top+.372];
-    if(boxes.some((c,j)=>j!==i&&c.order>b.order&&c.left<rect[2]&&c.right>rect[0]&&c.top<rect[3]&&c.bottom>rect[1]))return {ok:false,why:'combinedBadgeCovered:'+i};
+    const clear = ({ alive }) => !boxes.some((c,j)=>alive[j]&&j!==i&&c.order>b.order&&c.left<rect[2]&&c.right>rect[0]&&c.top<rect[3]&&c.bottom>rect[1]);
+    if(!clear(s0)&&!revealed(i,clear,true))return {ok:false,why:'combinedBadgeCovered:'+i};
   }
   const candidates = uniq([...(roles.bait.wrong || []), ...(roles.bait.keyEarly != null ? [roles.bait.keyEarly] : []),
     ...(roles.bait.keyNear != null ? [roles.bait.keyNear] : []), ...(roles.bait.keyB != null ? [roles.bait.keyB] : []),
@@ -308,7 +310,6 @@ function prove(name, d, roles, ctx, opts = {}) {
     if(f.sixIdea&&!newLinks.some(q=>subtle.preferredBaits.some(p=>JSON.stringify(p)===JSON.stringify(q.take))))return {ok:false,why:'idea18:notGreedy'};
     if(!f.sixIdea&&(baits.length<2 || !baits.some(p=>p.tiles.every(i=>!baits[0].tiles.includes(i)))))return {ok:false,why:'twoMeaningfulBaits'};
   }
-  if(first && first.winning<2) return {ok:false,why:'fewerThan2WinningStarts'};
   const effects=[];
   if(!opts.skipEffects) for(const [kind,tile] of [...d.obst.locks.map(i=>['lock',i]),...Object.keys(d.obst.ice).map(i=>['ice',+i])]) {
     const dd=clone(d); if(kind==='lock') dd.obst.locks=dd.obst.locks.filter(i=>i!==tile); else delete dd.obst.ice[tile];
@@ -435,24 +436,22 @@ function build(name, brief = {}, opts = {}) {
     // Baits have not been priced yet. Dial 2's preferred-bait check belongs in
     // prove(), where the actual priced baits are supplied.
     if(f.chained){const ob=require('./chained_obviousness.js').measure(d,{dial:Math.min(1,used.obviousnessDial??0)});if(!ob.ok){const why=ob.rightFreePairs?'obvious:freeRoutePair':'obvious:greedyPrefix';fails[why]=(fails[why]||0)+1;continue;}}
-    let p=prove(name,d,r,{k,spare,obviousnessDial:used.obviousnessDial},opts.proof || {});
+    const proofContext = { k, spare, obviousnessDial: used.obviousnessDial, allowCoveredSpecials: used.targets.allowCoveredSpecials };
+    let p=prove(name,d,r,proofContext,opts.proof || {});
     if(name==='waitNested'&&used.targets.nestedBranch)for(let prune=0;prune<6&&!p.ok;prune++){
       const m=/^idle:lock:(\d+)$/.exec(p.why||'');if(!m||!r.bait.parallelLocks?.includes(+m[1]))break;
       const tile=+m[1];r.locks.delete(tile);d.obst.locks=d.obst.locks.filter(i=>i!==tile);r.bait.parallelLocks=r.bait.parallelLocks.filter(i=>i!==tile);
       const rt=retime(d,spare);if(!rt.ok)break;Object.assign(d,rt.design);k=rt.k;
-      p=prove(name,d,r,{k,spare,obviousnessDial:used.obviousnessDial},opts.proof || {});
+      p=prove(name,d,r,{...proofContext,k},opts.proof || {});
     }
     if(!p.ok){fails[p.why]=(fails[p.why]||0)+1;continue;}
     const card={layout,shape,tiles:c.n,trapType:f.trapType,clock:{fewestMoves:k,spare,n:d.clock.n,tile:d.clock.i},trap:p.card,attempt};
     if (layout >= 1000) card.layoutGeometry = d.tiles;
     const fitted=require('./compact_footprint.js').compact({design:d,roles:r,brief:used,card,fails,ms:Date.now()-t0},opts.footprint);
-    let failure = fitted.design
-      ? (used.targets.requireFullTray ? B.fullTrayFailure(fitted.design) : null)
+    const failure = fitted.design
+      ? require('./footprint').layoutFailure(fitted.design, used)
+        || require('./bank/choice_checks').openingFailure(fitted.design, used.targets)
       : fitted.fail;
-    if (!failure && used.targets.requireStrandedThaw
-        && !require('./bank/thaw_trap.js').findThawTrap(fitted.design)) {
-      failure = 'strandedThawUnproven';
-    }
     if (!failure) return fitted;
     fails[failure] = (fails[failure] || 0) + 1;
     }finally{opts.onAttempt?.({attempt,fails:{...fails}});}

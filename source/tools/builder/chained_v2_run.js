@@ -5,7 +5,9 @@ const OUT=path.resolve(__dirname,'../../analysis/builder/bank/chained-v2');
 const NAMES=['waitThawWay','waitNested','waitThawKey','lookalikeThaw','lookalikeCover','lookalikeWay','roofThawKey','waitLookalikeRoof','waitLookalikeWay','lookalikeCoverThaw'];
 if(!isMainThread&&require.main===module){
   try{
-    const M=require('./trap_mixes.js'),j=workerData;
+    const j=workerData;
+    if (j.layoutEntry) require('./builder.js').LAYOUTS[j.layout] = j.layoutEntry;
+    const M=require('./trap_mixes.js');
     const r=j.mode==='finish'?require('./chained_v2_finish.js').finish(JSON.parse(fs.readFileSync(j.file)),j):M.build(j.name,{layout:j.layout,seed:j.seed,obviousnessDial:j.dial??0,frame:{spare:j.spare??1,...(j.depth!=null?{depth:j.depth}:{})},targets:j.targets||{}},{tries:j.tries??100,wallMs:j.ms-500});
     if(r.design){r.roles.locks=[...r.roles.locks];r.roles.holderSpecials=[...r.roles.holderSpecials];}
     parentPort.postMessage(r);
@@ -19,6 +21,7 @@ function job(j){return new Promise(resolve=>{
 async function run(){
   const a=process.argv.slice(2),arg=(n,d)=>{let i=a.indexOf('--'+n);return i<0?d:a[i+1];};
   const mode=arg('mode','build'),workers=+arg('workers',8),until=Date.now()+ +arg('minutes',20)*60000,seed=+arg('seed',11),ms=+arg('ms',10000),names=arg('names',NAMES.join(',')).split(','),targets=JSON.parse(arg('targets','{}'));
+  const idea = arg('idea', undefined);
   const out=path.resolve(arg('output',OUT));
   for(const d of ['raw','examples','runs'])fs.mkdirSync(path.join(out,d),{recursive:true});
   const B=require('./builder.js'),old=new Set([0,14,18,31,36]);
@@ -26,10 +29,27 @@ async function run(){
   const layoutFilter=requestedLayouts && [...new Set(requestedLayouts)];
   const allowShared=+arg('allow-shared-hosts',0);
   const originalHosts={};if(allowShared){const dir=path.resolve(OUT,'../chained-v1/examples');for(const f of fs.readdirSync(dir).filter(f=>f.endsWith('.json'))){const r=JSON.parse(fs.readFileSync(path.join(dir,f)));(originalHosts[r.brief.story]??=new Set()).add(r.card.layout);}}
-  const finished=fs.readdirSync(path.join(out,'examples')).filter(f=>f.endsWith('.json')).map(f=>JSON.parse(fs.readFileSync(path.join(out,'examples',f))));
+  const read = file => JSON.parse(fs.readFileSync(file, 'utf8'));
+  const bankFile = arg('layout-bank', null);
+  const bank = bankFile ? read(bankFile) : {};
+  for (const [key, entry] of Object.entries(bank)) {
+    if (!Number.isSafeInteger(+key) || String(+key) !== key || +key < 3000 || !entry?.tiles?.length || typeof entry.shape !== 'string') {
+      throw new Error(`Custom layout ${key} needs an integer ID of at least 3000, a shape and tiles`);
+    }
+  }
+  const sameTargets = record => {
+    const custom = bank[record.card?.layout];
+    const geometry = record.footprintOriginal?.tiles ?? record.design?.tiles;
+    return (!custom || JSON.stringify(custom.tiles) === JSON.stringify(geometry))
+      && Object.entries(targets).every(([key, value]) =>
+        JSON.stringify(record.brief?.targets?.[key]) === JSON.stringify(value));
+  };
+  const reuseFinished = record => sameTargets(record) && (!idea || record.card.finishProfile === idea + '-idea');
+  const reusable = (file, accepts) => fs.existsSync(file) && accepts(read(file));
+  const finished=fs.readdirSync(path.join(out,'examples')).filter(f=>f.endsWith('.json')).map(f=>read(path.join(out,'examples',f))).filter(reuseFinished);
   const have=(name,layout)=>finished.some(r=>r.brief.story===name&&r.card.layout===layout);
-  const layouts=layoutFilter ?? B.LAYOUTS.map((_,layout)=>layout);
-  const jobs=mode==='finish'?fs.readdirSync(path.join(out,'raw')).filter(f=>f.endsWith('.json')&&names.some(n=>f.startsWith(n+'-'))&&!fs.existsSync(path.join(out,'examples',f))).map(f=>({mode,file:path.join(out,'raw',f),ms,seed,idea:arg('idea',undefined),repairMs:+arg('repair-ms',30000)})):names.flatMap(name=>layouts.map(layout=>({name,layout,seed,spare:+arg('spare',1),ms,mode,targets,depth:arg('depth',null)==null?null:+arg('depth'),tries:+arg('tries',150)})).filter(j=>(allowShared?!originalHosts[name]?.has(j.layout):!old.has(j.layout))&&!have(name,j.layout)&&!fs.existsSync(path.join(out,'raw',`${name}-L${j.layout}-s${seed}-p${j.spare}.json`))));
+  const layouts = layoutFilter ?? (bankFile ? Object.keys(bank).map(Number) : B.LAYOUTS.map((_,layout)=>layout));
+  const jobs=mode==='finish'?fs.readdirSync(path.join(out,'raw')).filter(f=>f.endsWith('.json')&&names.some(n=>f.startsWith(n+'-'))&&!reusable(path.join(out,'examples',f),reuseFinished)).map(f=>({mode,file:path.join(out,'raw',f),ms,seed,targets,idea,repairMs:+arg('repair-ms',30000),tuneMs:+arg('tune-ms',45000)})):names.flatMap(name=>layouts.map(layout=>({name,layout,layoutEntry:bank[layout],seed,spare:+arg('spare',1),ms,mode,targets,depth:arg('depth',null)==null?null:+arg('depth'),tries:+arg('tries',150)})).filter(j=>(allowShared?!originalHosts[name]?.has(j.layout):!old.has(j.layout))&&!have(name,j.layout)&&!reusable(path.join(out,'raw',`${name}-L${j.layout}-s${seed}-p${j.spare}.json`),sameTargets)));
   // Rotate the shape order across workers, so the wall limit covers every shape.
   if(mode!=='finish')jobs.sort((a,b)=>a.layout-b.layout||names.indexOf(a.name)-names.indexOf(b.name));
   else jobs.sort((a,b)=>{
@@ -40,14 +60,15 @@ async function run(){
   let cursor=0;const log=path.join(out,'runs',`${mode}-${seed}-${Date.now()}.jsonl`);
   await Promise.all(Array.from({length:workers},async()=>{while(cursor<jobs.length&&Date.now()<until){const j={...jobs[cursor++],dial:+arg('dial',0)};
     if(j.mode==='finish'){
-      const raw=JSON.parse(fs.readFileSync(j.file)),name=raw.brief.story,rows=fs.readdirSync(path.join(out,'examples')).filter(f=>f.endsWith('.json')&&f.startsWith(name+'-')).map(f=>JSON.parse(fs.readFileSync(path.join(out,'examples',f))));
+      const raw=read(j.file),name=raw.brief.story,rows=fs.readdirSync(path.join(out,'examples')).filter(f=>f.endsWith('.json')&&f.startsWith(name+'-')).map(f=>read(path.join(out,'examples',f))).filter(reuseFinished);
       const eligible=name==='lookalikeCoverThaw'?rows.filter(r=>require('./chained_readability.js').keyRoof(r.design).keyShown>=.65):rows;
       const quota=name==='lookalikeCoverThaw'?2:NAMES.includes(name)?6:1;
       if(new Set(eligible.map(r=>r.card.layout)).size>=quota||eligible.some(r=>r.card.layout===raw.card.layout))continue;
       if(name==='lookalikeCoverThaw'&&require('./chained_readability.js').keyRoof(raw.design).keyShown<.65)continue;
     }
     const r=await job({...j,ms:Math.min(j.ms,until-Date.now())});
-    const row={...j,file:j.file&&path.basename(j.file),ok:!!r.design,fail:r.fail,detail:r.detail,fails:r.fails,wall:r.wall};
+    const { layoutEntry, ...savedJob } = j;
+    const row={...savedJob,file:j.file&&path.basename(j.file),ok:!!r.design,fail:r.fail,detail:r.detail,fails:r.fails,wall:r.wall};
     if(r.design){const f=j.file?path.basename(j.file):`${j.name}-L${j.layout}-s${seed}-p${j.spare}.json`;fs.writeFileSync(path.join(out,mode==='finish'?'examples':'raw',f),JSON.stringify(r,null,2)+'\n');row.output=f;}
     else if(mode==='finish'){
       fs.writeFileSync(path.join(out,'runs','failed-'+path.basename(j.file)),JSON.stringify(r,null,2));

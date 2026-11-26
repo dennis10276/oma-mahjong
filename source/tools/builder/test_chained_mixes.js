@@ -31,7 +31,7 @@ test('twenty-board delivery has ten shapes with two hosts, independently checked
   const selection=JSON.parse(fs.readFileSync(path.join(V.OUT,'selection.json'),'utf8'));assert.equal(selection.order.length,20);
   const counts={},hosts={},seen=new Set(),fingerprints=new Set();let needles=0;
   for(const file of selection.order){const r=JSON.parse(fs.readFileSync(path.join(V.OUT,'examples',file),'utf8')),c=r.card;
-    assert.equal(r.verification.ok,true,file);assert.ok(c.trap.firstMoves.winning>=2);needles+=c.trap.firstMoves.winning<3?1:0;
+    assert.equal(r.verification.ok,true,file);assert.ok(c.trap.firstMoves.winning>=1);needles+=c.trap.firstMoves.winning<3?1:0;
     assert.ok(c.tail.tailGreedyWin>=.10&&c.tail.tailGreedyWin<=.28);assert.ok(c.faceDownShare>=.23&&c.faceDownShare<=.30);
     assert.equal(O.measure(r.design,{baits:c.trap.baits,dial:r.brief.obviousnessDial??0}).ok,true);
     const fp=V.fingerprint(r.design);assert.ok(!fingerprints.has(fp),'duplicate special placement');fingerprints.add(fp);

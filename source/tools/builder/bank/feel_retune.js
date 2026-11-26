@@ -18,14 +18,18 @@ const { tuningTarget } = require('../chained_finish_profiles.js');
 function tuneFeel(design, opts = {}) {
   const Tl = require('./tail.js'), SEP = require('./separate.js'), { expert } = require('./feel.js');
   const E = require('../engine.js');
-  const feel = (d, o) => { const r = expert(d, { playouts: Math.max(5, Math.round(o.playouts / 25)), seed: o.seed, wrong: o.playouts >= 400 }); r.pp = +(r.parkAt[1] + r.parkAt[2]).toFixed(1);
+  const afterTiles = opts.afterTiles ?? [];
+  const feel = (d, o) => { const r = expert(d, { playouts: Math.max(5, Math.round(o.playouts / 25)), seed: o.seed, wrong: o.playouts >= 400, afterTiles }); r.pp = +(r.parkAt[1] + r.parkAt[2]).toFixed(1);
     // Optional Task 18 feedback target: low measured pressure alone allowed
     // tails full of fatal natural choices. Require an easier natural finish too.
     if(opts.target.greedyMin!=null)r.tailGreedyWin=Tl.measure(d,{seed:977,playouts:o.playouts>=400?800:80}).tailGreedyWin;
     return r; };
   const t0 = Date.now(), wall = opts.ms ?? 60000, target = opts.target, P = Tl.prepare(design), geo = SEP.geometry(design), c0 = SEP.closeTwins(design, geo), g0 = Tl.gambleFacts(design);
   let seed = (opts.seed ?? 1) >>> 0; const rnd = n => { seed |= 0; seed = (seed + 0x6D2B79F5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return Math.floor(((t ^ (t >>> 14)) >>> 0) / 4294967296 * n); };
-  const frozen = new Set((opts.freeze || []).map(i => design.faces[i])), movable = P.tail.filter(i => !frozen.has(design.faces[i]));
+  const resolution = Math.max(P.ci, ...afterTiles.map(tile => design.solution.indexOf(tile)));
+  const frozen = new Set((opts.freeze || []).map(i => design.faces[i]));
+  if (afterTiles.length) for (const tile of design.solution.slice(0, resolution + 1)) frozen.add(design.faces[tile]);
+  const movable = design.solution.slice(resolution + 1).filter(i => !frozen.has(design.faces[i]));
   const fl = d => feel(d, { playouts: opts.playouts ?? 100, seed: 5 });
   // how far from the target (0 = met); three waiting is capped so the tray is full of choices, not one slip from losing all the time
   // target.parks = 'pressure parks': how many times per game an expert has to put a tile in the tray while one or two already wait
@@ -41,7 +45,7 @@ function tuneFeel(design, opts = {}) {
     if (u === v || cur.faces[u] === cur.faces[v]) continue;
     const d = structuredClone(cur); [d.faces[u], d.faces[v]] = [d.faces[v], d.faces[u]];
     const ct = SEP.closeTwins(d, geo); if (ct.visible > c0.visible || ct.share > Math.max(0.05, c0.share) || ct.four > c0.four) { fail('twins'); continue; }
-    if (opts.keepRoute) {
+    if (opts.keepRoute || afterTiles.length) {
       if (!E.replay(d, d.solution).ok) { fail('unsolved'); continue; }
     } else if (!Tl.tailReplays(P, d.faces)) {
       const r = Tl.cappedTail(d, 3, { peek: false, nodes: 10000, ms: 100 });

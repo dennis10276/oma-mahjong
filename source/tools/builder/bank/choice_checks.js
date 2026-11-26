@@ -279,6 +279,86 @@ function findOpeningSweep(design) {
   return follow(start, [], singles(game, start), []);
 }
 
+function auditClockForks(design, { nodes = 60000 } = {}) {
+  const game = E.game(design);
+  const steps = [];
+  if (!game.clock || !game.solution || !E.replay(design, game.solution, { strict: true }).ok) {
+    return { steps, fail: 'clockForkInvalidRoute' };
+  }
+  let state = E.start(game);
+  for (const take of game.solution) {
+    const legal = E.legal(game, state);
+    const free = legal.filter(Number.isInteger);
+    const visible = O.visibility(game, state);
+    const cues = O.obviousMoves(game, state);
+    const winning = [take]; // The full stored route was replayed above.
+    const unknown = [];
+    const decoys = [];
+    for (const move of legal) {
+      if (move === take) continue;
+      const next = E.step(game, state, move);
+      if (!next) continue;
+      const { result } = E.winnable(game, next, { nodes, ms: Infinity });
+      if (result === 'win') winning.push(move);
+      if (result === 'unknown') unknown.push(move);
+      if (result !== 'lose' || !Number.isInteger(move) || !visible[move].picture) continue;
+      if (!next.clockTaken && next.moves >= game.clock.n) continue;
+      const reasons = [...(cues.get(move) ?? [])];
+      const twin = free.find(i => i !== move && visible[i].picture && game.faces[i] === game.faces[move]);
+      const reveals = singles(game, next).filter(i => !free.includes(i) && visible[i].picture);
+      if (twin !== undefined) reasons.push('visiblePair');
+      if (reveals.length) reasons.push('opensTile');
+      if (!reasons.length) continue;
+      const { depth: runway } = E.longest(game, next, 5, 10000);
+      if (runway) decoys.push({ move, reasons, reveals, twin, runway });
+    }
+    steps.push({ at: state.moves + 1, take, visible: visible[take].picture, winning, unknown, decoys });
+    state = E.step(game, state, take);
+    if (state.clockTaken) break;
+  }
+  let fail = null;
+  if (steps.some(step => step.unknown.length)) fail = 'clockForkUnproven';
+  else if (steps.some(step => step.winning.length > 1)) fail = 'clockForkMultipleWins';
+  else if (steps.some(step => !step.visible || !step.decoys.length)) fail = 'clockForkMissingVisibleDecoy';
+  return { steps, fail };
+}
+
+function openingFailure(design, targets = {}) {
+  const builder = require('../builder');
+  if (targets.requireFullTray) {
+    const failure = builder.fullTrayFailure(design);
+    if (failure) return failure;
+  }
+  if (targets.requireWinningFullTray) {
+    const failure = builder.winningFullTrayFailure(design);
+    if (failure) return failure;
+  }
+  if (targets.rejectOpeningSweep && findOpeningSweep(design)) return 'winningOpeningSweep';
+  if (targets.requireStrandedThaw && !require('./thaw_trap').findThawTrap(design)) return 'strandedThawUnproven';
+  if (targets.clockForks) return auditClockForks(design).fail;
+  return null;
+}
+
+// Once thawed or unlocked, the tile can no longer show that badge.
+function readableOnRoute(game, tile, clear = () => true, combined = false) {
+  if (game.down[tile]) return false;
+  const marker = game.lockT[tile] | game.isKey[tile];
+  const hasIce = game.iceH[tile] > 0;
+  const always = game.clock?.i === tile || (!hasIce && !marker);
+  let state = E.start(game);
+  for (const take of game.solution) {
+    const iceActive = frozen(game, state, tile);
+    const markerActive = (marker & 1 && game.keys.some(i => state.alive[i]))
+      || (marker & 2 && game.keys2.some(i => state.alive[i]));
+    const active = combined ? iceActive && markerActive : always || iceActive || markerActive;
+    if (active && O.visibility(game, state)[tile].role && clear(state)) return true;
+    if (take === tile) return false;
+    state = replayPrefix(game, [take], state);
+    if (!state) return false;
+  }
+  return false;
+}
+
 function findOpeningChoices(design) {
   const game = E.game(design);
   if (!game.clock) return [];
@@ -375,5 +455,5 @@ function findFinishPair(design) {
 
 module.exports = {
   auditOpeningTrace, auditRefundFork, auditTrayRelease, forcesReleaseAfterClock,
-  auditFinishMatch, auditPairContext, auditClockCover, findOpeningSweep, findOpeningChoices, findFinishPair,
+  auditFinishMatch, auditPairContext, auditClockCover, auditClockForks, findOpeningSweep, openingFailure, readableOnRoute, findOpeningChoices, findFinishPair,
 };

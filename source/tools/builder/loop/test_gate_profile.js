@@ -35,4 +35,6 @@ test('unresolved extra opening actions do not erase proven alternatives, but unr
   assert.deepEqual(GP.unresolvedStatic(r,p,{spare:3}),['A4']);
   r.gates.A4.warn='unknown'; r.gates.A4.detail.perSpare[3].openingWins=1;
   assert.deepEqual(GP.unresolvedStatic(r,p,{spare:3}),['A4']);
+  r.gates.A4.detail.perSpare[3].openingUnknown=0;
+  assert.deepEqual(GP.unresolvedStatic(r,p,{spare:3}),[]);
 });

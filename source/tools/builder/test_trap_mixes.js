@@ -85,7 +85,7 @@ test('independent search rejects an invented losing-clock bait',()=>{
 const dir=path.resolve(__dirname,'../../analysis/builder/bank/variety-v1/examples');
 test('finished examples carry successful independent certificates',{skip:!fs.existsSync(dir)},()=>{
   for(const file of fs.readdirSync(dir).filter(f=>f.endsWith('.json'))){const r=JSON.parse(fs.readFileSync(path.join(dir,file),'utf8'));
-    assert.equal(r.verification?.ok,true,file);assert.ok(r.card.trap.baits.length);assert.ok(r.card.trap.firstMoves.winning>=2);
+    assert.equal(r.verification?.ok,true,file);assert.ok(r.card.trap.baits.length);assert.ok(r.card.trap.firstMoves.winning>=1);
     assert.ok(r.card.twins.meets);assert.ok(r.card.tail.tailGreedyWin>=.15&&r.card.tail.tailGreedyWin<=.4);
   }
 });

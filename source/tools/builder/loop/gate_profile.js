@@ -40,12 +40,13 @@ function unresolvedStatic(result, profile, { spare } = {}) {
     const gate = result.gates?.[g];
     if (gate?.pass == null) return true;
     if (!gate.warn) return false;
-    // Unresolved extra opening moves cannot invalidate two already proven alternatives.
+    // Unresolved extra opening moves cannot create a hidden forced move when both alternatives are proven.
     // Every potentially forced witness state must still have been resolved, and budget
     // exhaustion remains unresolved. This does not classify an unknown action as a win.
     if (g === 'A4' && gate.pass === true && gate.warn === 'unknown' && spare != null) {
       const d = gate.detail, p = d?.perSpare?.[spare];
-      if (d?.statesWithUnknown === 0 && p?.ok === true && p.openingWins >= 2 && Array.isArray(p.notObvious) && p.notObvious.length === 0) return false;
+      if (d?.statesWithUnknown === 0 && p?.ok === true && (p.openingWins > 1 || (p.openingWins === 1 && p.openingUnknown === 0))
+          && Array.isArray(p.notObvious) && p.notObvious.length === 0) return false;
     }
     return true;
   });

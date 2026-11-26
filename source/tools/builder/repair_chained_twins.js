@@ -30,8 +30,9 @@ function repair(d,roles,name,spare,opts={}){
       const proposal={...cd.d,clock:{...cd.d.clock,n:cs.k+spare},solution:E.flatten(cs.path)};
       if(proposal.clock.n>19)continue;
       const rt=M.retime(proposal,spare,{nodes:120000,totalNodes:200000,ms:800});if(!rt.ok)continue;
-      const p=M.prove(name,rt.design,roles,{k:rt.k,spare},{skipOpening:true,skipEffects:true,skipControl:true});if(!p.ok)continue;
-      const full=M.prove(name,rt.design,roles,{k:rt.k,spare},{skipOpening:true});if(!full.ok)continue;
+      const context = { k: rt.k, spare, allowCoveredSpecials: opts.allowCoveredSpecials, obviousnessDial: opts.obviousnessDial };
+      const p=M.prove(name,rt.design,roles,context,{skipOpening:true,skipEffects:true,skipControl:true});if(!p.ok)continue;
+      const full=M.prove(name,rt.design,roles,context,{skipOpening:true});if(!full.ok)continue;
       cur=rt.design;notes.push({swap:[cd.u,cd.v],before:before.visible,after:cd.after.visible,k:rt.k});kept=true;break;
     }
     if(!kept){notes.push({pass,why:'noProvenRepair',candidates:candidates.length});break;}

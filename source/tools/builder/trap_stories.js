@@ -57,11 +57,12 @@ function digCost(c, i) {
 // the ice-neighbours that can go before tile i (not under it, not on it)
 const thawNbs = (c, i) => c.inb[i].filter(j => !c.above[i].has(j) && !c.above[j].has(i));
 // a key tile: cover in [lo,hi], not in `used`, nothing of `used` on it, role overlay in sight, free once its cover is gone
-function keyCands(c, ck, used, [lo, hi], pre) {
+function keyCands(c, ck, used, [lo, hi], pre, allowCovered = false) {
   const v = vis0Of(c), out = [];
   for (let i = 0; i < c.n; i++) {
     if (used.has(i) || c.above[i].has(ck) || c.above[ck].has(i)) continue;
-    const a = c.above[i].size; if (a < lo || a > hi || !c.roleShown0[i] || !v[i].role) continue;
+    const a = c.above[i].size;
+    if (a < lo || a > hi || (!(c.roleShown0[i] && v[i].role) && !(allowCovered && a))) continue;
     if ([...c.above[i]].some(j => used.has(j))) continue;
     if (pre) { const p = digCost(c, i) - 1; if (p < pre[0] || p > pre[1]) continue; }   // dig tiles before the key (cover + side)
     else if (!freeWithout(c, i, c.above[i])) continue;
@@ -629,9 +630,10 @@ function keysFirst(c, roles, P, keyB, rng) {
 function placeChain(c, brief, rng) {
   const d = CHAIN[brief.chain]; if (!d) return { fail: 'unknownChainShape' };
   const tg = brief.targets || {}, v = vis0Of(c), pre = tg.digBefore || [4, 7], kc = tg.keyCover || [1, 3], nWrongMax = tg.wrongMelts ?? 1;
+  const canReveal = i => tg.allowCoveredSpecials && c.above[i].size > 0;
   const usesLock = [d.ck, d.cover, d.nb].some(x => x === 'lock' || x === 'lockIce');
   const depth = brief.frame?.depth != null ? [brief.frame.depth, brief.frame.depth] : d.cover ? [1, 2] : [0, 2];
-  const clocks = shuffle(rng, [...Array(c.n).keys()].filter(i => c.above[i].size >= depth[0] && c.above[i].size <= depth[1] && c.roleShown0[i]));
+  const clocks = shuffle(rng, [...Array(c.n).keys()].filter(i => c.above[i].size >= depth[0] && c.above[i].size <= depth[1] && (c.roleShown0[i] || canReveal(i))));
   let tried = 0;
   for (const ck of clocks) {
     if (++tried > 90) return { fail: 'noChain' };
@@ -655,7 +657,7 @@ function placeChain(c, brief, rng) {
       wrong = shuffle(rng, free).slice(0, Math.min(nWrongMax, free.length));
       const rest = nbs.filter(j => !wrong.includes(j)).sort((a, b) => cost1(c, a) - cost1(c, b) || a - b);
       if (d.nb) {
-        const sp = rest.filter(j => c.roleShown0[j] && v[j].role && c.above[j].size <= 2 && (!(d.nb === 'ice' || d.nb === 'lockIce') || thawNbs(c, j).filter(x => x !== F && !used.has(x)).length >= 2));
+        const sp = rest.filter(j => ((c.roleShown0[j] && v[j].role) || canReveal(j)) && c.above[j].size <= 2 && (!(d.nb === 'ice' || d.nb === 'lockIce') || thawNbs(c, j).filter(x => x !== F && !used.has(x)).length >= 2));
         if (!sp.length && no('ch:noSpecial')) continue;
         special = shuffle(rng, sp.slice(0, 3))[0];
       }
@@ -676,7 +678,7 @@ function placeChain(c, brief, rng) {
       const modeA = d.keyA || 'far', modeB = d.keyB || 'free', picked = new Set(thawArea);
       let A = null, B2 = null, guards = {};
       const frozenKey = (avoid) => {   // a key tile that is frozen itself (ice 2): 0-1 covers, 2-5 thaw-neighbours that are not in use, far from the clock
-        const cs = [...Array(c.n).keys()].filter(i => !picked.has(i) && !avoid.has(i) && c.roleShown0[i] && v[i].role && c.above[i].size <= 1 && ![...c.above[i]].some(j => picked.has(j))
+        const cs = [...Array(c.n).keys()].filter(i => !picked.has(i) && !avoid.has(i) && ((c.roleShown0[i] && v[i].role) || canReveal(i)) && c.above[i].size <= 1 && ![...c.above[i]].some(j => picked.has(j))
           && c.dist(i, F ?? ck) >= 3 && thawNbs(c, i).length >= 2 && thawNbs(c, i).length <= 5 && thawNbs(c, i).every(j => !picked.has(j))
           && thawNbs(c, i).filter(j => c.above[j].size >= 1).length >= 2 && !thawNbs(c, i).some(j => c.free0[j] && !c.above[j].size));   // its thaw-neighbours lie under tiles: the way to the key is forced, no free pair melts it for nothing
         return cs.length ? shuffle(rng, cs.sort((a, b) => c.dist(b, F ?? ck) - c.dist(a, F ?? ck)).slice(0, 5))[0] : null;
@@ -684,7 +686,7 @@ function placeChain(c, brief, rng) {
       if (modeA === 'frozen') {
         A = frozenKey(new Set()); if (A == null) { no('ch:noFrozenKey'); continue; } roles.ice[A] = 2; guards.A = A;
       } else if (modeA === 'far') {
-        const fars = keyCands(c, ck, picked, kc, [pre[0] - 1, pre[1] + 1]).sort((a, b) => c.dist(b, ck) - c.dist(a, ck)).slice(0, 8);
+        const fars = keyCands(c, ck, picked, kc, [pre[0] - 1, pre[1] + 1], tg.allowCoveredSpecials).sort((a, b) => c.dist(b, ck) - c.dist(a, ck)).slice(0, 8);
         if (!fars.length) { no('ch:noFarKey'); continue; } A = shuffle(rng, fars.slice(0, 4))[0];
       } else {
         const gl = keyGuard(c, v, rng, modeA, picked, new Set()); if (!gl.length) { no('ch:noKeyGuard'); continue; }
@@ -939,8 +941,7 @@ const STORIES = {
 STORIES.chain = { title: 'Chain trap', sentence: 'A chain of obstacles in front of the clock (locks, ice, covers): each needs another one to go first.', spec: { keys: 'far', trap: 6 }, place: placeChain, prove: proveChain, profile: 'traps-v1' };
 for (const [k, v] of Object.entries(STORIES)) B.STORIES[k] = v;
 
-// spare 1 by default; when the brief names no spare and no board is honest at spare 1 (A4 needs two winning openings at the shipped
-// spare, and a lethal bait leaves few), the build is retried at spare 2 (the spec's dial 1-2). frame.spare fixes it.
+// Default to one spare move and try two if no board passes. An explicit frame.spare fixes it.
 function build(name, brief = {}, opts = {}) {
   if (!STORIES[name]) return { fail: 'unknownTrapStory', detail: name };
   if (name === 'chain') {   // the chain shape signature (brief.chain, or brief.shape when it is one); brief.shape would otherwise name the layout shape

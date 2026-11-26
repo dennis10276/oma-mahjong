@@ -31,6 +31,26 @@ function meets(target, feel, tail) {
     && !feel.lostGames && (target.greedyMin == null || tail.tailGreedyWin >= target.greedyMin);
 }
 
+function resolutionTiles(trap) {
+  const tiles = new Set((trap?.effects ?? []).filter(effect =>
+    effect.by === 'tailFork' || effect.by === 'tailGreedy').map(effect => effect.tile));
+  const mechanism = trap?.mechanism;
+  if (['tailIce', 'tailLock'].includes(mechanism?.mode) && Number.isInteger(mechanism.added)) {
+    tiles.add(mechanism.added);
+  }
+  return [...tiles].sort((a,b) => a-b);
+}
+
+function measure(design, trap, afterTrap) {
+  const { expert } = require('./bank/feel');
+  const afterTiles = afterTrap ? resolutionTiles(trap) : [];
+  const feel = expert(design, { playouts: 16, seed: 9, afterTiles });
+  if (!afterTrap) return { feel };
+  const independent = expert(design, { playouts: 64, seed: 844, wrong: false, afterTiles });
+  const afterMove = Math.max(...[design.clock.i, ...afterTiles].map(i => design.solution.indexOf(i) + 1));
+  return { feel, finishVerification: { afterTiles, afterMove, independent } };
+}
+
 function check(r, feel, tail) {
   const name = r.card.finishProfile || 'standard';
   const target = PROFILES[name];
@@ -39,4 +59,4 @@ function check(r, feel, tail) {
   return meets(target, feel, tail);
 }
 
-module.exports = { PROFILES, targetFor, tuningTarget, meets, check };
+module.exports = { PROFILES, targetFor, tuningTarget, meets, check, resolutionTiles, measure };

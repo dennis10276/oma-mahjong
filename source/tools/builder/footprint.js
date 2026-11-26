@@ -17,7 +17,25 @@ function measure(input,opts={}) {
   return { ok: tilePx >= minimum && rows <= PROFILE.maxRows, profile: minimum===PROFILE.target?PROFILE.name:'phone-near-60-v1', tilePx, rows, compact, target: PROFILE.target, minimum, limit: tilePx < twW ? 'height' : 'width' };
 }
 function measureForBuild(design, brief) {
-  return measure(design, { minimum: brief?.targets?.ordinaryTileFloor ? 58 : PROFILE.target });
+  const targets = brief?.targets;
+  const minimum = targets?.bigTileFloor && (design.tiles ?? design).length === 96 ? 53.5
+    : targets?.ordinaryTileFloor ? 58 : PROFILE.target;
+  return measure(design, { minimum });
 }
 
-module.exports = { PROFILE, measure, measureForBuild };
+function layoutFailure(design, brief) {
+  if (!brief?.targets?.requireSupportedLayout) return null;
+  const tiles = design.tiles;
+  if (!require('./bank/narrow_methods').valid(tiles)) return 'unsupportedLayout';
+  const positions = new Set(tiles.map(tile => tile.join(',')));
+  const floor = tiles.filter(tile => tile[2] === 0);
+  for (const [x,y,z] of tiles) {
+    if (z === 0) continue;
+    if (positions.has(`${x},${y},${z-1}`)) return 'straightTower';
+    const row = floor.filter(tile => Math.abs(tile[1] - y) < 2);
+    if (!row.some(tile => tile[0] < x) || !row.some(tile => tile[0] > x)) return 'edgeTower';
+  }
+  return null;
+}
+
+module.exports = { PROFILE, measure, measureForBuild, layoutFailure };

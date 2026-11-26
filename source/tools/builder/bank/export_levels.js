@@ -123,9 +123,11 @@ function verify(oldText, newText, designs, nums, minPx, cut) {
     r.solutionWins = Hard.validSolution(g, dec.solution);
     if (!r.solutionWins) err(`level ${lv}: stored solution does not win (ice/locks/tray/clock replay)`);
     r.tilePx = +tilePx(g.tiles).toFixed(2);
-    r.minTilePx = Footprint.PROFILE.target;
-    r.footprint = Footprint.measure(g.tiles);
-    if (!r.footprint.ok) { const m = `level ${lv}: tile size ${r.tilePx}px / ${r.footprint.rows} rows fails ${Footprint.PROFILE.name} (60 px, no ninth row)`; if (minPx && r.footprint.tilePx >= minPx) out.warnings.push(m + ' (experimental dry run only, --minpx ' + minPx + ')'); else err(m); }
+    const tens = lv % 10 === 0;
+    if (lv >= 350 && (tens ? r.tiles !== 96 : r.tiles < 72 || r.tiles > 88)) err(`level ${lv}: tile count fails its slot size`);
+    r.footprint = Footprint.measureForBuild(g.tiles, { targets: { ordinaryTileFloor: lv >= 350, bigTileFloor: lv >= 350 && tens } });
+    r.minTilePx = r.footprint.minimum;
+    if (!r.footprint.ok) { const m = `level ${lv}: tile size ${r.tilePx}px / ${r.footprint.rows} rows fails ${r.footprint.profile} (${r.minTilePx} px, no ninth row)`; if (minPx && r.footprint.tilePx >= minPx) out.warnings.push(m + ' (experimental dry run only, --minpx ' + minPx + ')'); else err(m); }
     r.locks = dec.obst ? dec.obst.locks.length : 0; r.keys = dec.obst ? dec.obst.keys.length : 0;
     r.ice = dec.obst ? Object.keys(dec.obst.ice).length : 0; r.down = dec.down.length; r.clock = dec.clock;
     out.levels.push(r);

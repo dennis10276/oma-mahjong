@@ -9,6 +9,24 @@ function tiny({ faces = [0, 0, 1, 1, 2, 2, 3, 3], n = 3, down = [] } = {}) {
   return { tiles: faces.map((_, i) => [i * 4, 0, 0]), faces: faces.slice(), down, obst: {}, clock: { i: 0, n }, solution: faces.map((_, i) => i) };
 }
 
+test('A4 allows one proven winning start with a visible reason', t => {
+  const rows = fs.readFileSync(path.join(__dirname, '../../../analysis/builder/data/qualified-200-225.jsonl'), 'utf8').trim().split('\n').map(JSON.parse);
+  const original = D.work;
+  t.mock.method(D, 'work', (...args) => {
+    const w = original(...args), classify = w.classify;
+    w.classify = (game, state, ...rest) => {
+      const actions = classify(game, state, ...rest);
+      if (state.moves) return actions;
+      const first = actions.find(a => a.result === 'win' && O.isObvious(game, state, a.move).obvious);
+      return actions.map(a => ({ ...a, result: a === first ? 'win' : 'lose' }));
+    };
+    return w;
+  });
+  const { gates: { A4 } } = SG.staticGates(rows[1].design, { previous: [], perms: 1 });
+  assert.equal(A4.detail.opening.wins, 1);
+  assert.equal(A4.pass, true);
+});
+
 test('A4 records a witness state with no proved wins and unresolved actions as incomplete', t => {
   const rows = fs.readFileSync(path.join(__dirname, '../../../analysis/builder/data/qualified-200-225.jsonl'), 'utf8').trim().split('\n').map(JSON.parse);
   const original = D.work; let masked = 0;
@@ -112,9 +130,10 @@ test('staticGates on a tiny board: no crash, A1 rejects < 72 tiles, a tiny budge
 
 test('smoke (real boards): a builder build is judged the same twice; qualified 202 has a peek-pair shortcut', () => {
   const B = require('../builder.js'), brief = require('../briefs-v1.json').find(b => b.id === 'keysFarSide-hourglass-14');
-  const r = B.build({ ...brief, seed: 1 });
+  const layout = 46; // Use the fitted hourglass so the fixture reaches the decision gates.
+  const r = B.build({ ...brief, layout, seed: 2 });
   assert.ok(!r.fail);
-  const o = { story: brief.story, shape: B.LAYOUTS[brief.layout].shape, previous: [] };
+  const o = { story: brief.story, shape: B.LAYOUTS[layout].shape, previous: [] };
   const a = SG.staticGates(r.design, o), b = SG.staticGates(r.design, o);
   const verdicts = x => JSON.stringify([x.pass, x.k, x.shipSpares, x.nodes, x.card, Object.values(x.gates).map(g => g.pass)]);
   assert.equal(verdicts(a), verdicts(b), 'node budgets: the same verdicts and node counts');
