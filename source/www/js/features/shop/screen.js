@@ -73,23 +73,25 @@ function helpAct(id, act) {
 }
 
 // ---------- equipping and buying ----------
-const applyLook = cat => ({ tiles: applyTheme, bg: applyBg, finish: applyFinish, tray: applyTray, music: () => { stopShopPreview(); Sound.applyAudio({ musicTrack: S.musicTrack }); }, sfx: () => Sound.applyAudio() })[cat]?.();
+const applyLook = cat => ({ tiles: applyTheme, bg: applyBg, finish: applyFinish, tray: applyTray, music: () => { stopShopPreview(); Sound.applyAudio({ musicTrack: S.musicTrack }); }, sfx: () => { stopShopPreview(); Sound.applyAudio({ sfxPack: S.sfxPack }); } })[cat]?.();
 // the ▶ of a music row: one preview at a time, a second tap on it stops it; leaving the tab or the shop stops it too
 function stopShopPreview() {
   if (!shopPlaying) return;
+  const was = shopPlaying;
   shopPlaying = '';
-  Sound.stopPreview();
+  if (was.startsWith('sfx_')) Sound.stopSfxPreview(); else Sound.stopPreview();
   document.querySelectorAll('#shopView .pbtn').forEach(b => b.textContent = '▶');
 }
 function togglePreview(id) {
   if (shopPlaying === id) { stopShopPreview(); return; }
-  if (!Sound.previewMusic(id)) return;
+  if (shopPlaying && shopPlaying.startsWith('sfx_') !== id.startsWith('sfx_')) stopShopPreview();   // one preview at a time: music or sound pack
+  const ended = () => { if (shopPlaying === id) { shopPlaying = ''; document.querySelectorAll('#shopView .pbtn').forEach(b => b.textContent = '▶'); } };
+  if (!(id.startsWith('sfx_') ? Sound.previewSfx(id, ended) : Sound.previewMusic(id))) return;
   shopPlaying = id;
   document.querySelectorAll('#shopView .pbtn').forEach(b => b.textContent = b.dataset.play === id ? '■' : '▶');
 }
-// after the online fetch (main.js): a gift left unconfirmed by a lost connection is finished, so it stops blocking purchases
-// sound packs are sold once audio.js plays them (its Pass B); until then nobody can buy a pack that changes nothing
-const SHOP_SFX_READY = false;
+// the Steengeluid rows are shown: audio.js plays every pack
+const SHOP_SFX_READY = true;
 // on boot: finish or resend a gift a lost connection left unconfirmed (the receiver drops a second copy by its gid),
 // so it never keeps blocking buying
 async function resumeShopGift() {

@@ -253,6 +253,41 @@ module.exports = [
     },
   },
   {
+    name: 'shop: sound packs play: equip changes the pack at once and after a reload, every pack renders, sound off is silent',
+    async run(t, { click, sleep }) {
+      const owned = { music: ['mus_piano', 'mus_sunflower'], sfx: ['sfx_ivory', 'sfx_jade', 'sfx_drops'] };
+      const p = await t.phone({ size: [392, 785], state: { name: 'Dennis', pid: 'test-shop12', level: 12, sunSeen: true, econV: 2, coins: 50, owned } });
+      t.eq(await p.evaluate(() => Sound.applyAudio().sfxPack), 'sfx_ivory', 'starter pack by default');
+      await click(p, '#btnShop'); await sleep(300);
+      await p.evaluate(() => document.querySelectorAll('#shop .shop-tabs button')[1].click()); await sleep(500);
+      await click(p, '#shop .row-item[data-id="sfx_jade"] .tx'); await sleep(200);
+      t.eq(await p.evaluate(() => [__mj.S.sfxPack, Sound.getMusicState().sfxPack]), ['sfx_jade', 'sfx_jade'], 'equip sets S.sfxPack and the playing pack');
+      // preview: one at a time (the test harness boots with sound off)
+      await p.evaluate(() => Sound.setSfx(true));
+      await p.evaluate(() => { window.__st = 0; const oc = AudioContext.prototype.createOscillator; AudioContext.prototype.createOscillator = function () { __st++; return oc.call(this); }; });
+      await click(p, '#shop .pbtn[data-play="sfx_drops"]');
+      t.eq(await p.evaluate(() => [document.querySelector('#shop .pbtn[data-play="sfx_drops"]').textContent, __st > 0]), ['■', true], 'preview shows ■ and makes sound');
+      await click(p, '#shop .pbtn[data-play="sfx_jade"]');
+      t.eq(await p.evaluate(() => [...document.querySelectorAll('#shop .pbtn')].filter(b => b.textContent === '■').map(b => b.dataset.play)), ['sfx_jade'], 'one preview at a time');
+      await click(p, '#shop .pbtn[data-play="sfx_jade"]');
+      t.eq(await p.evaluate(() => document.querySelector('#shop .pbtn[data-play="sfx_jade"]').textContent), '▶', 'second tap stops it');
+      await click(p, '#shop .pbtn[data-play="sfx_jade"]');
+      await p.evaluate(() => document.querySelectorAll('#shop .shop-tabs button')[2].click()); await sleep(400);
+      t.eq(await p.evaluate(() => [...document.querySelectorAll('#shop .pbtn')].filter(b => b.textContent === '■').length), 0, 'leaving the tab stops the preview');
+      // every pack renders tap, land and match without an error
+      const bad = await p.evaluate(() => { const bad = []; for (const it of SHOP_CATALOG.sfx) { try { Sound.applyAudio({ sfxPack: it.id }); if (Sound.getMusicState().sfxPack !== it.id) bad.push(it.id + ' not applied'); Sound.select(); for (let s = 0; s < 4; s++) Sound.land(s); for (let c = 1; c <= 8; c++) Sound.match(c); if (!Sound.previewSfx(it.id)) bad.push(it.id + ' no preview'); Sound.stopSfxPreview(); } catch (e) { bad.push(it.id + ' ' + e.message); } } return bad; });
+      t.eq(bad, [], 'all packs play');
+      // sound off: no node starts
+      const n = await p.evaluate(() => { Sound.setSfx(false); __st = 0; let b = 0; const bs = AudioContext.prototype.createBufferSource; AudioContext.prototype.createBufferSource = function () { b++; return bs.call(this); }; Sound.applyAudio({ sfxPack: 'sfx_drops' }); Sound.select(); Sound.land(1); Sound.match(3); const pv = Sound.previewSfx('sfx_jade'); Sound.setSfx(true); return [__st, b, pv]; });
+      t.eq(n, [0, 0, false], 'sound off starts no node and no preview');
+      // reload: the equipped pack is back
+      await p.evaluate(() => { Sound.applyAudio({ sfxPack: 'sfx_ivory' }); });
+      await p.reload(); await sleep(800);
+      t.eq(await p.evaluate(() => [__mj.S.sfxPack, Sound.getMusicState().sfxPack]), ['sfx_jade', 'sfx_jade'], 'after a reload the equipped pack plays');
+      t.eq(p.errors, [], 'no page error');
+    },
+  },
+  {
     name: 'shop: claim free Spieken fills one dot and the button turns to Koop',
     async run(t, { click, sleep }) {
       const p = await t.phone({ size: [392, 785], state: { name: 'Dennis', pid: 'test-shop11', level: 12, sunSeen: true, econV: 2, coins: 680, peekStock: 0, undoStock: 3 } });

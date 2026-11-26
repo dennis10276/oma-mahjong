@@ -4,7 +4,7 @@ const Sound = (() => {
   let ctx = null, master, sfx, verb, noiseBuf, pinkBuf = null, brownBuf = null;
   let sfxOn = true, musicOn = true, musicTimer = null, beat = 0, mood = 'calm';
   let trackId = 'mus_piano', explicitTrack = false, previewId = null, activeLoopId = null;
-  let loopGen = 0, activeSession = null, sfxPack = 'sfx_ivory';
+  let loopGen = 0, activeSession = null, sfxPack = 'sfx_ivory', sfxPrev = null;
   // C-major pentatonic, warm "music box" register
   const PENTA = [261.63, 293.66, 329.63, 392.0, 440.0, 523.25, 587.33, 659.25, 783.99, 880.0, 1046.5, 1174.66, 1318.5, 1568.0];
 
@@ -142,6 +142,72 @@ const Sound = (() => {
       tone(2637 + i * 220, ti, 0.08, 0.055, 'triangle', sfx, 0.002);
     }
   }
+  // ---- tile sound packs (SHOP_CATALOG.sfx): only tap, land and match change; sfx_ivory is the original sound ----
+  const packOf = id => {
+    const list = typeof SHOP_CATALOG !== 'undefined' && SHOP_CATALOG.sfx;
+    return list && typeof id === 'string' ? list.find(p => p.id === id) || null : null;
+  };
+  const isStarterPack = id => id === 'sfx_ivory' || !packOf(id);
+  // one tile hit of a pack at tray slot 0..3 (the pitch steps up 6% per slot); vol scales the whole hit
+  function packHit(p, t, slot, vol, dest) {
+    const f = p.freq * (1 + slot * 0.06), soft = p.softAttack ? 0.025 : 0.004;
+    if (p.clickFreq || p.synth === 'mallet') {
+      const c = p.clickFreq || p.freq * 3.4;
+      noise(t, 0.045, 0.28 * vol, c, c * 0.65, 3.2, dest);
+    }
+    if (p.sweep) {
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = 'sine'; o.frequency.setValueAtTime(f * 0.75, t);
+      o.frequency.exponentialRampToValueAtTime(f * p.sweep, t + 0.08);
+      g.gain.setValueAtTime(0.001, t); g.gain.exponentialRampToValueAtTime(0.14 * vol, t + 0.01);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.11);
+      o.connect(g); g.connect(dest); o.start(t); o.stop(t + 0.13);
+    } else {
+      tone(f, t, 0.13, 0.14 * vol, p.type, dest, soft);
+      if (p.overtone) tone(f * p.overtone, t, 0.08, 0.05 * vol, 'sine', dest, 0.004);
+    }
+  }
+  // the match chord of a pack: its ratios, climbing two semitones per combo step
+  function packMatch(p, t, combo, dest) {
+    const up = Math.pow(2, Math.min(Math.max(combo, 1) - 1, 6) * 2 / 12);
+    (p.matchRatios || [1, 1.25, 1.5]).forEach((r, i) => {
+      const tm = t + i * 0.075, f = p.freq * r * up;
+      tone(f, tm, 0.42, 0.15, p.type, dest, 0.005);
+      tone(f * 2, tm, 0.22, 0.045, 'sine', dest, 0.005);
+    });
+  }
+  // sfx_ivory: today's sounds, unchanged
+  const ivoryTap = (t, dest) => { noise(t, 0.06, 0.5, 2400, 1400, 3, dest); tone(880, t, 0.09, 0.08, 'triangle', dest); };
+  const ivoryLand = (t, s, dest) => {
+    const scale = 1 + s * 0.06;
+    tone(520 * scale, t, 0.07, 0.07, 'sine', dest);
+    noise(t, 0.03, 0.25, 1200 * scale, 800 * scale, 4, dest);
+  };
+  function ivoryMatch(t, combo, dest) {
+    if (mood === 'sunny') {
+      const b = Math.min(combo - 1, 6);
+      noise(t, 0.04, 0.4, 2800, 2000, 3, dest);
+      [0, 2, 4].forEach((k, i) => marimba(PENTA[b + k + 2], t + 0.02 + i * 0.06, 0.16, dest));
+      if (combo >= 2) marimba(PENTA[Math.min(b + 7, 13)], t + 0.2, 0.13, dest);
+      chirp(t + 0.12, 0.05, dest);
+      if (combo >= 3) chirp(t + 0.3, 0.05, dest);
+      return;
+    }
+    const base = Math.min(combo - 1, 7);
+    noise(t, 0.05, 0.45, 2600, 1800, 3, dest);
+    bell(PENTA[base + 2], t + 0.02, 0.17, 1.1, dest);
+    bell(PENTA[base + 4], t + 0.09, 0.15, 1.1, dest);
+    if (combo >= 2) bell(PENTA[base + 6], t + 0.16, 0.13, 1.1, dest);
+    if (combo >= 3) for (let i = 0; i < 4; i++) tone(PENTA[9 + (i % 5)], t + 0.22 + i * 0.045, 0.25, 0.05, 'sine', dest);
+  }
+  const slotOf = slot => Math.max(0, Math.min(3, Math.floor(Number(slot) || 0)));
+  function stopSfxPreview() {
+    if (!sfxPrev) return;
+    const pv = sfxPrev; sfxPrev = null;
+    clearTimeout(pv.timer);
+    try { pv.bus.gain.setValueAtTime(0.0001, ctx.currentTime); } catch (e) { }
+    setTimeout(() => { try { pv.bus.disconnect(); } catch (e) { } }, 60);
+  }
   const ok = () => ctx && sfxOn;
   const resolvedTrackId = () => explicitTrack ? normalizeTrackId(trackId) : (mood === 'sunny' ? 'mus_sunflower' : 'mus_piano');
 
@@ -175,6 +241,22 @@ const Sound = (() => {
       startTrack(id);
       return true;
     },
+    // the ▶ of a Steengeluid row: a short tap, land and match phrase; onEnd runs when it ends by itself
+    previewSfx(id, onEnd) {
+      const p = packOf(id);
+      if (!p || !sfxOn) return false;
+      _init(true);
+      if (!ctx) return false;
+      stopSfxPreview();
+      const bus = ctx.createGain(); bus.connect(sfx);
+      const t = now(), ivory = isStarterPack(id);
+      if (ivory) { ivoryTap(t, bus); ivoryLand(t + 0.4, 0, bus); ivoryLand(t + 0.6, 1, bus); ivoryMatch(t + 1.0, 2, bus); }
+      else { packHit(p, t, 0, 1, bus); packHit(p, t + 0.4, 0, 0.7, bus); packHit(p, t + 0.6, 1, 0.7, bus); packMatch(p, t + 1.0, 2, bus); }
+      const timer = setTimeout(() => { if (sfxPrev && sfxPrev.bus === bus) { stopSfxPreview(); if (onEnd) onEnd(); } }, 2300);
+      sfxPrev = { bus, timer };
+      return true;
+    },
+    stopSfxPreview,
     stopPreview(resumeEquipped = true) {
       previewId = null;
       stopMusicLoop();
@@ -201,8 +283,9 @@ const Sound = (() => {
     },
     applyAudio(opts = {}) {
       if (opts && typeof opts.musicTrack === 'string') this.setMusicTrack(opts.musicTrack);
-      // Pass B wires buyable sound packs once approved; keep starter sfx_ivory in Pass A
-      sfxPack = 'sfx_ivory';
+      // the equipped tile sound pack (a missing or unknown id falls back to the starter)
+      const want = opts && typeof opts.sfxPack === 'string' ? opts.sfxPack : (typeof S !== 'undefined' && S ? S.sfxPack : '');
+      sfxPack = packOf(want) ? want : 'sfx_ivory';
       return { musicTrack: resolvedTrackId(), sfxPack };
     },
     getMusicState() {
@@ -226,8 +309,7 @@ const Sound = (() => {
     // wooden "clack" when picking up a tile
     select() {
       if (!ok()) return; const t = now();
-      noise(t, 0.06, 0.5, 2400, 1400, 3);
-      tone(880, t, 0.09, 0.08, 'triangle');
+      if (isStarterPack(sfxPack)) ivoryTap(t, sfx); else packHit(packOf(sfxPack), t, 0, 1, sfx);
     },
     flip() { if (!ok()) return; const t = now(); noise(t, 0.08, 0.35, 900, 2600, 2); tone(660, t + 0.04, 0.1, 0.05, 'triangle'); },
     blocked() {
@@ -237,30 +319,14 @@ const Sound = (() => {
     // the reward: a bright bell chord that climbs with every combo step
     match(combo = 1) {
       if (!ok()) return; const t = now();
-      if (mood === 'sunny') {
-        const b = Math.min(combo - 1, 6);
-        noise(t, 0.04, 0.4, 2800, 2000, 3);
-        [0, 2, 4].forEach((k, i) => marimba(PENTA[b + k + 2], t + 0.02 + i * 0.06, 0.16));
-        if (combo >= 2) marimba(PENTA[Math.min(b + 7, 13)], t + 0.2, 0.13);
-        chirp(t + 0.12, 0.05);
-        if (combo >= 3) chirp(t + 0.3, 0.05);
-        return;
-      }
-      const base = Math.min(combo - 1, 7);
-      noise(t, 0.05, 0.45, 2600, 1800, 3);
-      bell(PENTA[base + 2], t + 0.02, 0.17);
-      bell(PENTA[base + 4], t + 0.09, 0.15);
-      if (combo >= 2) bell(PENTA[base + 6], t + 0.16, 0.13);
-      if (combo >= 3) for (let i = 0; i < 4; i++) tone(PENTA[9 + (i % 5)], t + 0.22 + i * 0.045, 0.25, 0.05, 'sine');
+      if (isStarterPack(sfxPack)) ivoryMatch(t, combo, sfx); else packMatch(packOf(sfxPack), t, combo, sfx);
     },
     // a tile settling into its tray slot (slot 0..3 steps pitch gently upward)
     land(slot = 0) {
       if (!ok()) return;
       const t = now();
-      const s = Math.max(0, Math.min(3, Math.floor(Number(slot) || 0)));
-      const scale = 1 + s * 0.06;
-      tone(520 * scale, t, 0.07, 0.07, 'sine');
-      noise(t, 0.03, 0.25, 1200 * scale, 800 * scale, 4);
+      const s = slotOf(slot);
+      if (isStarterPack(sfxPack)) ivoryLand(t, s, sfx); else packHit(packOf(sfxPack), t, s, 0.7, sfx);
     },
     // tray has only one slot left: two gentle warning notes
     warn() { if (!ok()) return; const t = now(); tone(587, t, 0.18, 0.07, 'triangle'); tone(740, t + 0.14, 0.22, 0.07, 'triangle'); },
