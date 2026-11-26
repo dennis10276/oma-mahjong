@@ -64,6 +64,7 @@ function showSunflowerUnlock(then) {
     <p>${tx('sunWinText')}</p>
     <button class="big-btn gold" id="sunUse"><span class="bb-text"><b>${tx('sunUse')}</b></span></button>
     <button class="link-btn" id="sunLater">${tx('sunLater')}</button>`, false);
-  $('#sunUse').onclick = () => { S.theme = 'sunflower'; S.bg = 'sunfield'; save(); applyBg(); applyTheme(); closeModal(); FX.emoji(innerWidth / 2, innerHeight / 2, ['🌻', '🌼', '🐝', '✨'], 16); then(); };
+  $('#sunUse').onclick = () => { for (const [cat, id] of [['tiles', 'sunflower'], ['bg', 'sunfield']]) if (!ShopEconomy.ownsItem(S, cat, id)) S.owned[cat].push(id);   // the prize is hers now
+    S.theme = 'sunflower'; S.bg = 'sunfield'; save(); applyBg(); applyTheme(); closeModal(); FX.emoji(innerWidth / 2, innerHeight / 2, ['🌻', '🌼', '🐝', '✨'], 16); then(); };
   $('#sunLater').onclick = () => { closeModal(); then(); };
 }
