@@ -93,7 +93,7 @@ function buyPopup(cat, id) {
 // ---------- gifts: pick a family member, ShopEconomy.sendShopGift does the sending and keeps the retry contract ----------
 const giftHooks = () => ({
   send: dbSend, log: logEvt,
-  save: () => { try { localStorage.setItem(STORE, JSON.stringify(S)); return true; } catch (e) { return false; } },
+  save,
   read: async path => { try { const r = await fetch(dbUrl(path), { cache: 'no-store' }); return r.ok ? { ok: true, value: await r.json() } : { ok: false }; } catch (e) { return { ok: false }; } },
 });
 function giftPicker(cat, id) {

@@ -11,7 +11,7 @@ let savedProgress;
 try { savedProgress = localStorage.getItem(STORE); } catch { }
 const progress = ShopEconomy.loadAndMigrateSave(savedProgress);
 let S = progress.S;
-const save = () => { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) { } };
+const save = () => { try { localStorage.setItem(STORE, JSON.stringify(S)); return true; } catch (e) { return false; } };   // true when stored (the shop waits for it before a gift counts as paid)
 if (progress.migrated) save();
 
 const totalStars = () => sum(S.stars) + sum(S.daily) + S.bonusStars;
