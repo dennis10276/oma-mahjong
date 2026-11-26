@@ -13,7 +13,7 @@ function show(id) {
   if (id === 'home') renderHome();
   if (id === 'levels') renderLevels();
   if (id === 'daily') renderDaily();
-  if (id === 'shop') renderShop();
+  if (id === 'shop') { renderShop(); if (navigator.onLine && ShopEconomy.hasPendingGiftSpend(S)) resumeShopGift(); }   // a gift left unsent is finished now, not only on boot
   if (id === 'trophies') renderTrophies();
   if (id === 'ranking') renderRanking();
   fitTexts(document.getElementById(id));
@@ -41,6 +41,7 @@ function renderHome() {
   renderTaskChip();
   if (S.lastWeek) setTimeout(() => { if (curScreen === 'home') checkLastWeek(); }, 400);
   else if (S.pendingHearts.length) setTimeout(() => { if (curScreen === 'home' && modalFree() && S.pendingHearts.length) { const h = S.pendingHearts; S.pendingHearts = []; save(); showHearts(h, () => renderHome()); } }, 400);
+  grantSunPrize();
   if (sunUnlocked() && !S.sunSeen) setTimeout(() => { if (curScreen === 'home' && modalFree()) showSunflowerUnlock(() => renderHome()); }, 500);
   fitTexts($('#home'));
 }

@@ -1,16 +1,15 @@
-// uses: core/*, rules, lang, board (toolsEarnLevel, toolsEarned), looks (sunUnlocked, bgLocked, numBgs)
+// uses: core/*, rules, lang, looks (sunUnlocked)
 /* Oma's Mahjong — tips/tips: the "Wist je dat?" tips on the home screen. */
 'use strict';
 /* "Wist je dat?" (the owner 2026-11-23): gold and the joker are not explained, and there are no tips in a level and none about the joker:
    only the home screen shows a tip (always one that fits the player, a new one each time) */
-// the home screen's pool: [the picture on the little tile, lang key, who sees it]; tools open at level L (board.js toolsEarned)
-const toolsAt = L => L >= RULES.tools.fromLevel && !(toolsEarnLevel(L) && !toolsEarned(L));
+// the home screen's pool: [the picture on the little tile, lang key, who sees it]; the helpers (Spieken, Steen terugleggen) are told about from level RULES.tools.fromLevel
+const helpersAt = L => L >= RULES.tools.fromLevel;
 const met = k => () => !!S.seenSp[k];
 const HOME_TIPS = [
-  ['💡', 'hint', () => toolsAt(S.level)], ['💡', 'hintCost', () => toolsAt(S.level)], ['🔀', 'shuffle', () => toolsAt(S.level)],
-  ['⭐', 'toolsBack', () => toolsEarnLevel(S.level) && !toolsAt(S.level)],
+  ['👁️', 'peek', () => helpersAt(S.level)], ['↩️', 'undo', () => helpersAt(S.level)], ['🎁', 'helpFree', () => helpersAt(S.level)],
   ['📅', 'daily', () => true], ['🔥', 'streak', () => Object.keys(S.daily).length > 0],
-  ['🌻', 'sunflower', () => !sunUnlocked()], ['⭐', 'stars', () => numBgs.some(b => bgLocked(b))],
+  ['🌻', 'sunflower', () => !sunUnlocked()], ['🛍️', 'shop', () => true],
   ['❄️', 'ice', met('ice')], ['🔑', 'lock', met('lock')], ['🀄', 'trayPair', met('trayPair')], ['⏰', 'clock', () => S.seenSp.clock || S.seenSp.clockMoves]];
 // one tip: a cream card, the small tile on the left shows what the tip is about
 function tipEl(ico, k, extra) {

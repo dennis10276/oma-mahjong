@@ -55,8 +55,31 @@ module.exports = [
       t.ok(await solve(p, 3800), 'level 20 won');
       t.eq(await locked(), [false, true], 'after: 10 stars open the background, the prize is won');
       const titles = await clickThrough(p, modal, click, sleep);
-      t.ok(titles.includes('De hoofdprijs is van jou!') && titles.includes('Nieuwe achtergrond! 🎉'), 'both shown after the level', titles);
+      t.ok(titles.includes('De hoofdprijs is van jou!') && !titles.includes('Nieuwe achtergrond! 🎉'), 'the prize is shown after the level, and no star-based background pop-up (backgrounds are bought now)', titles);
       t.eq(await p.evaluate(() => [__mj.S.theme, __mj.S.bg]), ['sunflower', 'sunfield'], '"Gebruik het nu" switches to the prize theme');
+    },
+  },
+  {
+    name: 'unlocks: the Zonnebloem prize is hers the moment it unlocks, also when she taps Later, and for an old save past the level',
+    async run(t, { startLevel, solve, modal, click, sleep }) {
+      const p = await t.phone({ state: { ...DENNIS, level: 20, toolsSeen: true } });
+      const owns = () => p.evaluate(() => [ShopEconomy.ownsItem(S, 'tiles', 'sunflower'), ShopEconomy.ownsItem(S, 'bg', 'sunfield')]);
+      t.eq(await owns(), [false, false], 'before level 20: not owned');
+      await startLevel(p, 20);
+      t.ok(await solve(p, 3800), 'level 20 won');
+      let later = false;
+      for (let k = 0; k < 12 && !later; k++) {
+        const m = await modal(p);
+        if (!m) { await sleep(500); continue; }
+        if (m.buttons.includes('sunLater')) { t.eq(await owns(), [true, true], 'owned as the prize pop-up opens'); await click(p, '#sunLater'); later = true; break; }
+        await click(p, '#' + m.buttons.find(b => !['trSee', 'wMenu'].includes(b))); await sleep(700);
+      }
+      t.ok(later, 'the prize pop-up was shown');
+      t.eq(await owns(), [true, true], 'Later still owns both');
+      t.eq(await p.evaluate(() => [__mj.S.theme, ShopEconomy.resolveEquippedItem(S, 'bg')]), ['classic', 'jade'], 'Later does not switch the look');
+      // an old save already past the level that never owned them: the home screen grants them
+      await p.evaluate(() => { S.owned.tiles = S.owned.tiles.filter(x => x !== 'sunflower'); S.owned.bg = S.owned.bg.filter(x => x !== 'sunfield'); S.sunSeen = true; renderHome(); });
+      t.eq(await owns(), [true, true], 'an old save past level 20 owns them after the home screen draws');
     },
   },
   {

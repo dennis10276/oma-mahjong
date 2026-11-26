@@ -17,7 +17,6 @@ function win() {
   const stars = starsFor(G);
   G.score += stars * RULES.score.perStar;
   endLevel('win', { st: stars });
-  const before = totalStars();
   const ptsBefore = myPoints(), lvlBefore = S.level;
   const rankBefore = myRank(undefined, 'all');
   ensureWeek();
@@ -52,9 +51,8 @@ function win() {
     const s = streak(); if (s > S.bestStreak) S.bestStreak = s;
   }
   const wasSun = S.sunSeen;
+  grantSunPrize();
   save();
-  const after = totalStars();
-  const unlocked = numBgs.filter(b => b.need > before && b.need <= after);
   const rewards = [];
   ensureId();
   // the weekly challenge moves most, so its climb comes first; otherwise the all-time list
@@ -74,10 +72,8 @@ function win() {
   };
   if (sunUnlocked() && !wasSun) rewards.push({ type: 'sun' });
   if (S.level >= RULES.tools.fromLevel && !S.toolsSeen) rewards.push({ type: 'tools' });
-  if (toolsEarnLevel(S.level)) { const st = { b: toolBlock(S.level), on: toolsEarned(S.level) }; if (!S.toolsSt || S.toolsSt.b !== st.b || S.toolsSt.on !== st.on) rewards.push({ type: 'toolsEarn', st }); }
   const tr = newTrophies();
   if (tr.length) rewards.push({ type: 'trophies', list: tr });
-  if (unlocked.length) rewards.push({ type: 'bgs', list: unlocked });
   const mins = Math.floor(G.elapsed / 60), secs = Math.round(G.elapsed % 60);
   Sound.win(); FX.confetti(); buzz([30, 60, 30, 60, 60]);
   const titles = tx('winTitles');
@@ -152,34 +148,17 @@ function runRewards(queue, then) {
   else if (r.type === 'rank') { if (!S.name) askName(() => showClimb(r.from, r.to, next, r.mode)); else showClimb(r.from, r.to, next, r.mode); }
   else if (r.type === 'sun') showSunflowerUnlock(next);
   else if (r.type === 'tools') showToolsUnlock(next);
-  else if (r.type === 'toolsEarn') showToolsEarn(r.st, next);
   else if (r.type === 'trophies') showTrophies(r.list, next);
-  else showUnlock(r.list.slice(), next);
 }
 function showToolsUnlock(then) {
   S.toolsSeen = true; save();
   Sound.unlock(); FX.confetti(); buzz([20, 40, 20, 40, 40]);
   openModal(`<h2>${tx('toolsNew')}</h2>
-    <div class="tools-new"><span>💡</span><span>🔀</span></div>
+    <div class="tools-new"><span>👁️</span><span>↩️</span></div>
     <p>${tx('toolsText')}</p>
     <p class="note">${tx('toolsNote')}</p>
     <button class="big-btn play" id="tlOk"><span class="bb-text"><b>${tx('top')}</b></span></button>`, false);
   $('#tlOk').onclick = () => { closeModal(); then(); };
-}
-// from level 50: Hint and Schudden only with 3 stars on every level so far, checked every 5 levels.
-// Told at each new block of 5 levels, and when they come back in between (old levels played again).
-function showToolsEarn(st, then) {
-  const first = !S.toolsSt;
-  S.toolsSt = st; save();
-  const miss = toolsMissing(S.level), show = miss.slice(0, 6), more = miss.length - show.length;
-  const list = show.join(', ') + (more > 0 ? tx('toolsMore', more) : '');
-  if (st.on) { Sound.unlock(); FX.confetti(); buzz([20, 40, 20, 40, 40]); } else Sound.hint();
-  openModal(`<h2>${tx(st.on ? 'toolsEarnTitle' : 'toolsOffTitle')}</h2>
-    <div class="tools-new${st.on ? '' : ' off'}"><span>💡</span><span>🔀</span></div>
-    <p>${st.on ? tx('toolsEarnText', st.b, st.b + RULES.tools.earn.every - 1) : tx('toolsOffText', list)}</p>
-    ${first || !st.on ? `<p class="note">${tx('toolsRule', help().toolsGoneFrom, RULES.tools.earn.every)}</p>` : ''}
-    <button class="big-btn play" id="tgOk"><span class="bb-text"><b>${tx(st.on ? 'top' : 'toolsOffOk')}</b></span></button>`, false);
-  $('#tgOk').onclick = () => { closeModal(); then(); };
 }
 function showTrophies(list, then) {
   Sound.trophy(); FX.confetti(); buzz([20, 40, 20, 40, 60]);
@@ -191,14 +170,3 @@ function showTrophies(list, then) {
   $('#trSee').onclick = () => { closeModal(); show('trophies'); };
 }
 
-// new backgrounds: only a message, picking one is done in Thema's (only the Zonnebloem prize gets a 'use now' button)
-function showUnlock(list, then) {
-  const bg = list.shift();
-  Sound.unlock(); FX.confetti();
-  const next = () => { closeModal(); if (list.length) showUnlock(list, then); else then(); };
-  openModal(`<h2>${tx('newBg')}</h2><p>${tx('newBgText', bg.name)}</p>
-    <div class="unlock-pv" style="background:${bg.css}"></div>
-    <p style="font-size:18px">${tx('newBgWhere')}</p>
-    <button class="big-btn play" id="uOk"><span class="bb-text"><b>${tx('fun')}</b></span></button>`, false);
-  $('#uOk').onclick = next;
-}

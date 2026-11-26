@@ -20,6 +20,13 @@ BGS.forEach(b => Object.defineProperty(b, 'name', { get: () => tx('bg_' + b.id) 
 const numBgs = BGS.filter(b => typeof b.need === 'number');
 
 const sunUnlocked = () => S.level > RULES.sunflower.level;
+// the prize is hers the moment it unlocks, whatever she taps (or an old save already past the level)
+function grantSunPrize() {
+  if (!sunUnlocked()) return;
+  let add = false;
+  for (const [cat, id] of [['tiles', 'sunflower'], ['bg', 'sunfield']]) if (!ShopEconomy.ownsItem(S, cat, id)) { S.owned[cat].push(id); add = true; }
+  if (add) save();
+}
 const bgLocked = b => b.sun ? !sunUnlocked() : totalStars() < b.need;
 // what a player has equipped comes from what she owns (ShopEconomy), not from stars
 function applyBg() {

@@ -32,7 +32,7 @@ module.exports = [
     },
   },
   {
-    name: 'rules: from level 50 Hint and Schudden only with 3 stars on every level so far, checked every 5 levels, with a popup (the same for grandma)',
+    name: 'rules: from level 50 the pile keeps its room by the old Hint/Schudden rule (3 stars on every level so far, checked every 5 levels), with no popup (the same for grandma)',
     async run(t, { startLevel, solve, click, modal, sleep }) {
       const bar = p => p.evaluate(() => ({ shown: getComputedStyle(document.querySelector('.toolbar')).display !== 'none', open: toolsOpen() }));
       const stars = (to, s = 3, extra = {}) => ({ ...Object.fromEntries(Array.from({ length: to }, (_, i) => [i + 1, s])), ...extra });
@@ -56,24 +56,21 @@ module.exports = [
       await startLevel(p, 56);
       t.eq(await bar(p), { shown: true, open: true }, 'level 51 played again for 3 stars: back');
 
-      // the popup: level 12 has 2 stars, winning level 49 leads to level 50 -> told they are not there, and why
+      // no popup about Hint or Schudden any more: winning level 49 (level 12 has 2 stars) and then level 50 shows none of them
       const q = await t.phone({ state: { name: 'Dennis', pid: 'test-dennis', level: 49, stars: stars(48, 3, { 12: 2 }) } });
-      const winAndFind = async (lv, id) => {
+      const winAndRead = async lv => {
         await startLevel(q, lv);
         t.ok(await solve(q), `level ${lv} won`);
-        let html = null;
+        const texts = [];
         await click(q, '#wNext');
-        for (let k = 0; k < 12 && !html; k++) { await sleep(500); const m = await modal(q); if (m && m.buttons.includes(id)) { html = await q.evaluate(() => document.querySelector('#modalBox').innerText); await click(q, '#' + id); } else if (m && m.buttons.length) await click(q, '#' + m.buttons[0]); }
-        return html;
+        for (let k = 0; k < 8; k++) { await sleep(500); const m = await modal(q); if (m && m.buttons.length) { texts.push(await q.evaluate(() => document.querySelector('#modalBox').innerText)); await click(q, '#' + m.buttons[0]); } }
+        return texts.join(' | ');
       };
-      let txt = await winAndFind(49, 'tgOk');
-      t.ok(txt && /Even zonder Hint en Schudden/.test(txt) && /level 12\b/.test(txt) && /alle levels|al je levels/i.test(txt) && /Elke 5 levels/.test(txt), 'popup: not earned, which level, and the rule', txt);
-      t.eq(await q.evaluate(() => __mj.S.toolsSt), { b: 50, on: false }, 'remembered');
-      // level 12 again for 3 stars (set here), then a win in the same block: told they are back
-      await q.evaluate(() => { __mj.S.stars[12] = 3; __mj.S.level = Math.max(__mj.S.level, 51); });
-      txt = await winAndFind(50, 'tgOk');
-      t.ok(txt && /Verdiend/.test(txt) && /level 50 t\/m 54/.test(txt), 'popup: earned again', txt);
-      t.eq(await q.evaluate(() => __mj.S.toolsSt.on), true, 'remembered as on');
+      for (const lv of [49, 50]) {
+        const txt = await winAndRead(lv);
+        t.ok(!/Hint|Schudden|Shuffle|Verdiend|Even zonder/.test(txt), `level ${lv}: no popup about Hint or Schudden`, txt);
+      }
+      t.eq(await q.evaluate(() => __mj.S.toolsSt || null), null, 'the old Hint/Schudden state is not written any more');
 
       const g = await t.phone({ state: { name: 'OmaHanny', pid: 'test-oma', level: 60 } });
       await startLevel(g, 60);

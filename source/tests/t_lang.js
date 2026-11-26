@@ -21,6 +21,18 @@ module.exports = [
     },
   },
   {
+    name: 'lang: no text names the old Hint and Schudden helpers, and a refused buy has a text for every reason',
+    async run(t) {
+      const p = await t.phone({});
+      const all = await p.evaluate(() => Object.entries(TEXT).flatMap(([k, v]) => v.flatMap(x => typeof x === 'function' ? [x(1, 2, 3), x('not_enough_coins'), x('week_limit')] : Array.isArray(x) ? x : [x]).map(s => [k, String(s)])));
+      t.eq(all.filter(([, s]) => /Hint|Schudden|Shuffle|💡|🔀/.test(s)).map(([k]) => k), [], 'Spieken and Steen terugleggen are the helpers now');
+      const reasons = ['not_enough_coins', 'week_limit', 'stock_full', 'gift_pending', 'already_owned', 'already_claimed', 'whatever'];
+      const msgs = await p.evaluate(rs => [0, 1].map(i => rs.map(r => TEXT.shopBuyFail[i](r))), reasons);
+      for (const l of msgs) t.eq(new Set(l).size, reasons.length, 'a different text for each reason');
+      t.eq(msgs[0][3], 'Je cadeau wordt nog verstuurd', 'gift_pending says the gift is still being sent');
+    },
+  },
+  {
     name: 'lang: switching to English in the settings changes the whole game, and back',
     async run(t, { startLevel, click, sleep }) {
       const p = await t.phone({ state: { level: 6, theme: 'classic' } });
