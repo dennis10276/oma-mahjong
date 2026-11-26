@@ -97,7 +97,7 @@ function win() {
     openModal(`<h2>${title}</h2>
       <div class="stars"><span class="st">★</span><span class="st">★</span><span class="st">★</span></div>
       <div class="win-stats"><div class="win-payout"><b>+${earnedCoins} 🪙 · +${weekReward.ptAdded} pt</b></div><div>${tx('timeWord')}<b>${mins}:${pad(secs)}</b></div></div>
-      <div class="perfect" id="wPerfect">${stars === 3 ? perfectSticker() : ''}</div>
+      <div class="perfect" id="wPerfect">${stars === 3 ? tx('perfect') : ''}</div>
       ${cups}${momentum}${extra}<div id="wStanding">${standingsText()}</div><div id="wFamily">${famNow}</div>
       <button class="link-btn" id="wRanking">${tx('fullRanking')}</button>
       <div class="goal" id="wGoal"></div>
