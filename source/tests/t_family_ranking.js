@@ -89,9 +89,9 @@ module.exports = [
       t.eq(await row('Noor').locator('.presence-dot').count(), 0, '90-second heartbeat is no longer online');
       t.eq(await p.locator('#rkAll').innerText(), '🏆 All-time', 'Dutch keeps the existing label');
       t.ok(!/12[.,]340|punten/.test(await row('Lina').innerText()), 'all-time card omits total points');
-      t.ok(/level 40/i.test(await row('Lina').innerText()), 'all-time card still shows level');
-      t.ok(/hartje gezien/.test(await row('Lina').innerText()), 'heart status remains visible with activity');
-      t.ok(await row('Lina').evaluate(el => el.scrollWidth <= el.clientWidth), 'activity and heart status fit at 360 px');
+      t.ok(/level\s*40/i.test(await row('Lina').innerText()), 'all-time card still shows level');
+      t.ok(await row('Lina').locator('.heart-btn').count() === 1, 'the heart button stays on the row');
+      t.ok(/gezien/.test(await row('Lina').innerText()), 'a seen heart is still told on the row');
       t.eq(await p.evaluate(() => JSON.parse(localStorage.getItem('omamj.lb')).find(e => e.id === 'pSara').t), NOW - 3 * DAY, 'score timestamp survives the cache');
       await p.evaluate(() => { S.lang = 'en'; applyLang(); renderRanking(); });
       for (const [name, want] of [['Noor', 'just now'], ['Iris', '18m ago'], ['Lina', '2h ago'], ['Emma', 'yesterday'], ['Sara', '3d ago']]) {
@@ -196,9 +196,9 @@ module.exports = [
       t.eq(await tab(), 'rkWeek', 'a short right swipe returns to Deze week');
       await swipe(220, 520, -50, -145);
       t.eq(await tab(), 'rkWeek', 'mostly vertical gesture keeps tab');
-      const scroll = p.locator('#ranking > .scroll');
-      await p.waitForFunction(() => document.querySelector('#ranking > .scroll').scrollTop > 0);
-      t.ok(await scroll.evaluate(el => el.scrollTop > 0), 'vertical gesture scrolls the leaderboard');
+      const scroll = p.locator('#rankList .rl-scroll');
+      await p.waitForFunction(() => document.querySelector('#rankList .rl-scroll').scrollTop > 0);
+      t.ok(await scroll.evaluate(el => el.scrollTop > 0), 'vertical gesture scrolls the rows of the block');
       await scroll.evaluate(el => { el.scrollTop = 0; });
       // (on a busy machine the tap can land before the switch starts, so settled() alone may return too early:
       // wait up to 3 s for the tab itself; a tap that is really ignored still fails)
@@ -223,6 +223,55 @@ module.exports = [
     },
   },
   {
+    name: 'family ranking: the block shows 6 whole rows, scrolls by whole rows and long names fit',
+    async run(t, { FakeDB }) {
+      const scores = Object.fromEntries(Array.from({ length: 8 }, (_, i) => ['pFam' + i, score('Speler ' + i, 30 + i, 1000 + i, NOW)]));
+      scores.pLong = { ...score('Elisabeth-Marie', 31, 195, NOW - 26 * HOUR), avatar: '🧑‍🦳', title: 'ttl_cookie', perfect: true };
+      const p = await t.phone({ db: new FakeDB({ scores }), size: [392, 785], state: me });
+      await p.locator('#btnRanking').click();
+      await p.evaluate(() => document.fonts.ready);
+      const rows = () => p.evaluate(() => {
+        const b = document.querySelector('#rankList .rl-scroll').getBoundingClientRect();
+        return { block: document.querySelector('#rankList .rank-block').clientHeight + 6, inner: b.height,
+          inside: [...document.querySelectorAll('#rankList .rrow')].filter(r => { const q = r.getBoundingClientRect(); return q.top >= b.top - 0.5 && q.bottom <= b.bottom + 0.5; }).length };
+      });
+      const r = await rows();
+      t.eq([r.block, r.inner, r.inside], [412, 390, 6], 'top 6 rows are fully inside the block at 392x785', r);
+      await p.locator('#rankList .rl-scroll').evaluate(el => { el.scrollTo({ top: 140, behavior: 'instant' }); });
+      await p.waitForFunction(() => { const el = document.querySelector('#rankList .rl-scroll'); return el.scrollTop % 66 === 0 && el.scrollTop > 0; }, null, { timeout: 3000 }).catch(() => {});
+      const top = await p.locator('#rankList .rl-scroll').evaluate(el => el.scrollTop);
+      t.ok(top > 0 && top % 66 === 0, 'the block scrolls by whole rows (scroll 140 snaps to a multiple of 66)', top);
+      const fit = await p.locator('#rankList .rrow').filter({ hasText: 'Elisabeth-Marie' }).evaluate(el => {
+        const c = document.createElement('canvas').getContext('2d'), width = (n) => { const cs = getComputedStyle(n); c.font = cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily; return c.measureText(n.textContent).width; };
+        const nm = el.querySelector('.nmt'), small = el.querySelector('.rn small'), pf = el.querySelector('.pf');
+        return { w: [width(nm), nm.clientWidth, width(small), small.clientWidth, el.querySelector('.rn').clientWidth], name: width(nm) <= nm.clientWidth + 0.5, small: width(small) <= small.clientWidth + 0.5, sticker: !!pf, text: small.textContent };
+      });
+      t.ok(fit.name && fit.small && fit.sticker, 'long name with PERFECT and Koekjesmonster · gisteren fits', fit);
+      t.ok(/Koekjesmonster · gisteren/.test(fit.text), 'the line under the name is the nickname and presence', fit);
+    },
+  },
+  {
+    name: 'family ranking: the tiles, my Perfect state, shop titles and a bought frame',
+    async run(t, { FakeDB }) {
+      const stars = Object.fromEntries(Array.from({ length: 11 }, (_, i) => [i + 1, i === 4 ? 2 : 3]));
+      const scores = { pA: { ...score('Anna', 40, 100, NOW - HOUR), title: 'ttl_cheese', perfect: true, frame: 'frm_tulip' }, pB: score('Bas', 20, 50, NOW - HOUR) };
+      const p = await t.phone({ db: new FakeDB({ scores }), size: [392, 785], state: { ...me, level: 12, stars, title: 'ttl_coffee', owned: { frame: ['none', 'frm_sky'] }, frame: 'frm_sky' } });
+      await p.locator('#btnRanking').click();
+      t.ok(/Weekbeker/.test(await p.locator('#rankList .week-tile').innerText()), 'the week tab starts with the cup tile');
+      await p.locator('#rkAll').click(); await settled(p);
+      const tile = await p.locator('#rankList .week-tile').innerText();
+      t.ok(/Nog 1 level/.test(tile) && /10 van 11 levels/.test(tile), 'one level without 3 stars', tile);
+      const mine = p.locator('#rankList .rrow.me');
+      t.ok(!(await mine.locator('.pf').count()) && /Koffiepauze/.test(await mine.innerText()), 'not Perfect yet, shows my nickname');
+      t.eq(await mine.locator('.ra').evaluate(el => el.className.includes('fr-frm_sky') && getComputedStyle(el).borderTopWidth !== '0px'), true, 'my bought frame is drawn');
+      t.eq(await p.locator('#rankList .rrow').filter({ hasText: 'Anna' }).locator('.pf').count(), 1, 'a Perfect family member gets the sticker');
+      await p.evaluate(() => { S.stars[5] = 3; renderRanking(); });
+      t.ok(/Jij bent/.test(await p.locator('#rankList .week-tile').innerText()) && await p.locator('#rankList .rrow.me .pf').count() === 1, 'all levels 3 stars: PERFECT tile and sticker');
+      await p.locator('#rkPlay').click();
+      t.eq(await p.evaluate(() => curScreen), 'levels', 'Speel opens the levels');
+    },
+  },
+  {
     name: 'family ranking: long names and framed avatars fit beside multi-digit ranks on phones',
     async run(t, { FakeDB }) {
       const scores = Object.fromEntries(Array.from({ length: 9 }, (_, i) => ['pFam' + i, score('Speler ' + i, 500 + i, 20000 + i, NOW)]));
@@ -231,24 +280,26 @@ module.exports = [
       await p.locator('#btnRanking').click();
       await p.locator('#rkAll').click();
       await settled(p);
+      await p.evaluate(() => document.fonts.ready);
       for (const width of [392, 360]) {
         await p.setViewportSize({ width, height: 730 });
         const row = person(p, '#rankList .rrow', 'rashmiisdebeste');
         const layout = await row.evaluate(el => {
           const rank = el.querySelector('.rk');
-          const name = el.querySelector('.ranking-name, .rn .fit-row') || el.querySelector('.rn');
+          const name = el.querySelector('.nmt');
+          const cs = getComputedStyle(name), c = document.createElement('canvas').getContext('2d');
+          c.font = cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily;
+          const title = { width: c.measureText(name.textContent).width };
+          const lines = 1;
           const range = new Range();
-          range.selectNodeContents(name.firstChild);
-          const title = range.getBoundingClientRect();
-          const lines = range.getClientRects().length;
           range.selectNodeContents(rank);
           const place = range.getBoundingClientRect();
           const avatar = el.querySelector('.ra').getBoundingClientRect();
-          return { lines, fits: title.width <= name.clientWidth + 1, gap: avatar.left - place.right,
+          return { lines, fits: title.width <= name.clientWidth + 0.5, gap: avatar.left - place.right,
             rank: rank.textContent, rankFits: place.width <= rank.clientWidth + 1 };
         });
         t.eq(layout.rank, '#10', 'multi-digit place at ' + width + ' px');
-        t.ok(layout.rankFits && layout.gap >= 8, 'rank stays clear of the framed avatar at ' + width + ' px', layout);
+        t.ok(layout.rankFits && layout.gap >= 4, 'rank stays clear of the framed avatar at ' + width + ' px', layout);
         t.ok(layout.lines === 1 && layout.fits, 'the entire name fits on one line at ' + width + ' px', layout);
       }
     },

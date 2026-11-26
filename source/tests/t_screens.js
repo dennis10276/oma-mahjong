@@ -14,7 +14,10 @@ module.exports = [
       }
       await p.evaluate(() => __mj.show('ranking')); await sleep(300);
       const fam = await p.evaluate(() => document.querySelector('#rankList').innerText);
-      t.ok(fam.includes('Dennis') && fam.includes('level 18'), 'family box shows names and levels', fam);
+      t.ok(fam.includes('Dennis') && fam.includes('Rashmi'), 'the week page shows the family names', fam);
+      await p.evaluate(() => document.querySelector('#rkAll').click()); await sleep(900);
+      const all = await p.evaluate(() => document.querySelector('#rankList').innerText);
+      t.ok(/level\s*18/.test(all), 'the all-time page shows levels', all);
       await click(p, '#rkAll'); await p.waitForSelector('#rkAll.on');
       await p.evaluate(() => __mj.show('home'));
       for (const b of ['#btnSettings', '#btnTasks', '#rankName']) {

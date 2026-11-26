@@ -505,6 +505,11 @@ body.sunny .how-tray .hm { background: linear-gradient(#fffef4, #f9e39a); }
 .ra.fr-heart { box-shadow: 0 0 0 3px #ff6f91, 0 0 8px 2px rgba(255,110,150,.5); background: #ffe3ea; }
 .ra.fr-rainbow { background: #fff; box-shadow: 0 0 0 1.5px #ff5252, 0 0 0 3px #ffb300, 0 0 0 4.5px #4caf50, 0 0 0 6px #2196f3; }
 .ra.fr-crown { background: #fff6cc; box-shadow: 0 0 0 3px #e0a800, 0 0 12px 3px rgba(255,200,0,.7); position: relative; }
+/* the shop's photo frames (SHOP_CATALOG.frame borderCss / ringShadow) */
+.ra.fr-frm_sky { background: #fff; border: 3.5px solid #3C9AD4; box-shadow: 0 0 0 4px #C2E7FF; }
+.ra.fr-frm_tulip { background: #fff; border: 3.5px solid #E25B84; box-shadow: 0 0 0 4px #FFD1E1; }
+.ra.fr-frm_delft { background: #fff; border: 3.5px solid #2763B5; box-shadow: 0 0 0 4px #CBE1FF; }
+.ra.fr-frm_velvet { background: #fff; border: 3.5px solid #7D2846; box-shadow: 0 0 0 3px #F6D273, 0 0 0 5px #7D2846; }
 .ra.fr-crown::before { content: '👑'; position: absolute; top: -.62em; font-size: .55em; }
 /* the family box (leaderboard, win screen, climb) */
 .fam-box { background: linear-gradient(135deg, #ffe9f1, #ffd6e6); border: 3px solid #ff7aa8; border-radius: 18px; padding: 8px 10px 6px; margin: 8px 0 12px; box-shadow: 0 4px 0 #e85d8f; color: var(--ink); text-align: left; }
@@ -845,10 +850,6 @@ span.fx { font-size: inherit; }
 #ranking #rankName { margin: 0; padding: 0; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; flex: none; }
 #ranking #rankName .ra { width: 32px; height: 32px; font-size: 24px; }
 #ranking > .scroll { padding: 12px 20px 28px; touch-action: pan-y pinch-zoom; }
-.ranking-intro { margin: 0 0 23px; color: white; text-shadow: 0 1px 2px #0003; }
-.ranking-intro p { font-size: 12px; text-transform: uppercase; letter-spacing: 1.7px; margin: 0 0 5px; opacity: .85; }
-.ranking-intro h3 { margin: 0 0 8px; font-size: 26px; line-height: 1.15; }
-#ranking #rkMine { font-size: 15px; }
 #ranking .rk-tabs { position: relative; isolation: isolate; background: rgba(0,0,0,.2); padding: 5px; gap: 4px; border-radius: 18px; margin-bottom: 12px; }
 #ranking .rk-tabs[data-mode="all"] { --rank-slide: 1; }
 #ranking .rk-tabs::before {
@@ -858,40 +859,68 @@ span.fx { font-size: inherit; }
 }
 #ranking .rk-tabs button, #ranking .rk-tabs button.on { border-radius: 13px; background: none; box-shadow: none; color: #fff; padding: 11px 4px; font-size: 15px; min-width: 0; max-width: none; }
 #ranking .rk-tabs[data-spot="week"] #rkWeek, #ranking .rk-tabs[data-spot="all"] #rkAll { color: #963d62; }
-#ranking .wk-info { min-height: 2.7em; font-size: 13px; margin-bottom: 18px; }
-.rank-viewport { position: relative; overflow: hidden; padding-bottom: 5px; }
+.rank-viewport { position: relative; overflow: hidden; }
 .rank-viewport.rank-moving .rank-list { pointer-events: none; }
 .rank-viewport #rankList { transform: translateX(var(--rank-x, 0px)); }
 .rank-next { position: absolute; inset: 0 0 auto; transform: translateX(calc(var(--rank-x, 0px) + var(--rank-side, 0px))); }
 .rank-next[hidden] { display: none; }
 .rank-settling .rank-list, .rk-tabs.rank-settling::before { transition: transform 260ms cubic-bezier(.2,.7,.2,1); }
-#ranking .rank-list { gap: 6px; padding: 8px; border: 3px solid #ff7aa8; border-radius: 24px; background: linear-gradient(135deg, #ffe9f1, #ffd6e6); box-shadow: 0 5px 0 #e85d8f; }
-#ranking .rrow { grid-template-columns: max-content 36px minmax(0, 1fr) auto; gap: 8px; height: auto; min-height: 76px; padding: 10px 8px; border-radius: 16px; border: 0; background: #fff5f8; box-shadow: 0 2px 0 #edb9cc; }
-#ranking .rrow.me { background: #fff; box-shadow: inset 0 0 0 2px #e85d8f, 0 2px 0 #e85d8f; }
-#ranking .rrow .rk { min-width: 29px; color: #ad4870; font-size: 18px; white-space: nowrap; }
-#ranking .rrow .ra { width: 34px; height: 36px; font-size: 24px; clip-path: inset(-15px -6px -6px); }
-#ranking .rrow .rn { font-size: 15px; line-height: 1.2; white-space: normal; overflow: visible; overflow-wrap: anywhere; }
-#ranking .ranking-name { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-#ranking .rrow .rn i { font-size: 11px; color: #a25b77; }
-#ranking .rrow .rn .fam-tag { display: none; }
-#ranking .rrow .rn small { font-size: 12px; margin-top: 5px; color: #9c6680; }
-#ranking .rrow .rp { display: flex; align-items: center; justify-content: flex-end; gap: 6px; font-size: 17px; white-space: nowrap; }
-#ranking .heart-btn { display: inline-grid; place-items: center; margin: 0; padding: 0; min-width: 34px; height: 36px; background: #ffe3a0; box-shadow: 0 2px 0 #dfb85c; font-size: 19px; }
-#ranking .heart-btn.sent { font-size: 13px; background: #e9f7df; box-shadow: none; }
-#ranking .hs { display: block; font-size: 11px; color: #ad4870; margin-top: 3px; }
-#ranking .hs.seen { color: #318c47; }
-#ranking .rank-note { font-size: 12px; margin-top: 20px; }
+/* the page = tile + pink block; the block (not the page) is the pink box, so the tile slides with its page (redo rule 8) */
+#ranking > .scroll { padding: 4px 12px 28px; }
+#ranking > .scroll::-webkit-scrollbar { display: none; }
+#ranking .rank-list { display: block; }
+.rank-viewport { padding-bottom: 12px; }
+#ranking .rk-tabs { margin-bottom: 12px; }
+.week-tile { position: relative; height: 184px; box-sizing: border-box; margin: 0 0 14px; padding: 12px 14px; border-radius: 22px; color: #5a3a00;
+  background: linear-gradient(160deg, #fff1a8, #ffd75e 45%, var(--gold)); box-shadow: 0 6px 0 var(--gold-d), 0 9px 16px rgba(0,0,0,.25); }
+.week-tile .wt-top { display: flex; justify-content: space-between; align-items: center; font-size: 15px; font-weight: 900; }
+.week-tile .wt-end { background: rgba(255,255,255,.55); border-radius: 999px; padding: 3px 10px; font-size: 14px; }
+.week-tile .wgoal { display: flex; align-items: center; gap: 12px; margin: 6px 0 0; }
+.week-tile .wgoal .next { font-size: 50px; line-height: 1; filter: drop-shadow(0 3px 3px rgba(0,0,0,.25)); }
+.week-tile .wgoal .gt { flex: 1; min-width: 0; }
+.week-tile .wgoal .gt b { display: block; font-size: 27px; font-weight: 900; line-height: 1; white-space: nowrap; }
+.week-tile .wgoal .gt small { display: block; font-size: 18px; font-weight: 900; margin-top: 2px; white-space: nowrap; }
+.week-tile .wgoal .rew { flex: none; padding: 8px 12px; border-radius: 16px; background: #fff; color: #5a3a00; font-size: 24px; font-weight: 900; box-shadow: 0 4px 0 var(--gold-d); }
+.week-tile .track { position: relative; height: 14px; margin: 22px 6px 8px; border-radius: 9px; background: rgba(90,58,0,.18); }
+.week-tile .track > i { display: block; height: 100%; border-radius: 9px; background: #fff; box-shadow: 0 0 0 2px rgba(255,255,255,.4); }
+.week-tile .track .cupmark { position: absolute; bottom: 9px; transform: translateX(-50%); font-size: 20px; line-height: 1; }
+.week-tile .track .cupmark.not { filter: grayscale(1); opacity: .45; }
+.week-tile .now { font-size: 15px; font-weight: 800; opacity: .85; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.week-tile .dots { display: flex; gap: 5px; margin: 12px 0 8px; }
+.week-tile .dots i { flex: 1; height: 12px; border-radius: 6px; background: #fff; }
+.week-tile .dots i.not { background: rgba(90,58,0,.18); }
+.week-tile .foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.week-tile .foot .go { flex: none; padding: 5px 12px; border-radius: 14px; background: linear-gradient(#45d28a, var(--green)); color: #fff; font-size: 17px; font-weight: 900; box-shadow: 0 4px 0 var(--green-d); text-shadow: 0 1px 0 rgba(0,0,0,.18); }
+.week-tile .medrew.plain { flex: none; display: grid; place-items: center; }
+/* the PERFECT sticker (E, the win screen's word as a badge) */
+.pf { display: inline-block; flex: none; font-weight: 900; line-height: 1; letter-spacing: .02em; white-space: nowrap; transform: rotate(-5deg); }
+.pf-w2 { color: #ff7a00; background: #fffdf4; border: 2px solid #ff9a1f; border-radius: 999px; text-shadow: 0 1.5px 0 #ffd23f; box-shadow: 0 2px 0 #e07000, 0 2px 4px rgba(0,0,0,.18); }
+.week-tile .medrew.plain .pf { font-size: 17px; }
+.week-tile .medrew.plain .pf-w2 { padding: 6px 9px 5px; }
+/* the block: 412 px, rows scroll inside (390 px) and snap to whole rows */
+.rank-block { box-sizing: border-box; height: 412px; padding: 8px 6px; border: 3px solid #ff7aa8; border-radius: 24px; background: linear-gradient(135deg, #ffe9f1, #ffd6e6); box-shadow: 0 5px 0 #e85d8f; overflow: hidden; }
+.rank-block .rl-scroll { height: 390px; overflow-y: auto; display: grid; gap: 6px; align-content: start; overscroll-behavior: contain; scroll-snap-type: y mandatory; scroll-padding: 0; }
+.rank-block .rl-scroll::-webkit-scrollbar { display: none; }
+.rank-block .rl-scroll .rrow { scroll-snap-align: start; }
+#ranking .rrow.tight { display: grid; min-height: 0; height: 60px; padding: 6px 6px; grid-template-columns: minmax(22px, max-content) 34px minmax(0, 1fr) auto 34px; grid-template-rows: auto; align-items: center; gap: 0 5px; position: relative; border: 0; border-radius: 16px; background: #fff5f8; box-shadow: 0 2px 0 #edb9cc; }
+#ranking .rrow.tight.me { background: #fff; box-shadow: inset 0 0 0 2px #e85d8f, 0 2px 0 #e85d8f; }
+#ranking .rrow.tight .rk { min-width: 0; font-size: 19px; text-align: center; color: #ad4870; white-space: nowrap; }
+#ranking .rrow.tight .ra { width: 34px; height: 34px; font-size: 24px; clip-path: none; justify-self: center; }
+#ranking .rrow.tight .rn { min-width: 0; font-size: 16px; line-height: 1.15; overflow: hidden; white-space: nowrap; }
+#ranking .rrow.tight .nm1 { display: flex; align-items: center; gap: 4px; min-width: 0; }
+#ranking .rrow.tight .nm1 .nmt { overflow: hidden; text-overflow: ellipsis; }
+#ranking .rrow.tight .nm1 i { font-style: normal; font-size: 12px; color: #a25b77; flex: none; }
+#ranking .rrow.tight .pf { font-size: 9.5px; margin-left: 2px; }
+#ranking .rrow.tight .pf-w2 { padding: 2px 4px 1px; border-width: 1.5px; }
+#ranking .rrow.tight .rn small { display: block; margin-top: 3px; font-size: 13px; color: #9c6680; overflow: hidden; text-overflow: ellipsis; }
+#ranking .rrow.tight .rn small .hs.seen { color: #318c47; font-size: inherit; margin: 0; display: inline; }
+#ranking .rrow.tight .rp { display: block; text-align: right; font-size: 19px; line-height: 1.1; white-space: nowrap; font-variant-numeric: tabular-nums; }
+#ranking .rrow.tight .rp.lvl { line-height: 1; }
+#ranking .rrow.tight .rp.lvl small { display: block; margin: 0 0 1px; font-size: 11px; color: #9c6680; }
+#ranking .rrow.tight .hb { width: 34px; display: grid; place-items: center; }
+#ranking .rrow.tight .heart-btn { position: static; display: inline-grid; place-items: center; margin: 0; padding: 0; min-width: 34px; height: 34px; background: #ffe3a0; box-shadow: 0 2px 0 #dfb85c; font-size: 19px; }
+#ranking .rrow.tight .heart-btn.sent { font-size: 13px; background: #e9f7df; box-shadow: none; }
 @media (min-width: 600px) { #ranking .header, #ranking > .scroll { width: min(100%, 560px); align-self: center; } }
-
-@media (max-width: 480px) {
-  #ranking .rrow { position: relative; grid-template-columns: max-content 32px minmax(0, 1fr); grid-template-rows: auto auto; gap: 3px 8px; padding: 10px 46px 10px 8px; }
-  #ranking .rrow .rk { grid-column: 1; grid-row: 1 / 3; }
-  #ranking .rrow .ra { grid-column: 2; grid-row: 1 / 3; width: 28px; height: 28px; font-size: 21px; }
-  #ranking .rrow .rn { grid-column: 3; grid-row: 1; }
-  #ranking .rrow .rn small { margin-top: 3px; }
-  #ranking .rrow .rp { grid-column: 3; grid-row: 2; justify-content: flex-start; font-size: 15px; }
-  #ranking .rrow .rp .heart-btn { position: absolute; right: 8px; top: calc(50% - 18px); }
-}
 
 /* intro film (js/intro.js): a pop-up with a small board and tray of the game's own (core.js filmRoot) over the level */
 .modal-box.intro-help { padding: 14px 12px 14px; animation: introIn .6s ease-out; }   /* it opens calmly: no bounce (the owner 2026-11-22) */

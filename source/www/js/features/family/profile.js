@@ -14,7 +14,9 @@ const FRAMES = [
   { id: 'rainbow', ok: () => !!S.trophies.c5, how: () => tx('how_combo') },
   { id: 'crown', ok: () => S.weekWins >= 1, how: () => tx('how_week') },
 ];
-FRAMES.forEach(f => Object.defineProperty(f, 'name', { get: () => tx('fr_' + f.id) }));
+// the shop's photo frames (frm_*): yours once you bought them; the look is `.ra.fr-<id>` in style.css
+for (const it of SHOP_CATALOG.frame) if (!it.starter) FRAMES.push({ id: it.id, shop: it, ok: () => ShopEconomy.ownsItem(S, 'frame', it.id), how: () => tx('how_shopFrame') });
+FRAMES.forEach(f => Object.defineProperty(f, 'name', { get: () => f.shop ? (isEn() ? f.shop.en : f.shop.nl) : tx('fr_' + f.id) }));
 const frameOk = id => (FRAMES.find(f => f.id === id) || FRAMES[0]).ok();
 const avatarHTML = (e, cls = 'ra', online = false) => `<span class="${cls} fr-${e.frame && e.frame !== 'none' ? e.frame : 'none'}">${e.avatar}${online ? '<span class="presence-dot" aria-hidden="true"></span>' : ''}</span>`;
 

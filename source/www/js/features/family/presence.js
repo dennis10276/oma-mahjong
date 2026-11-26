@@ -37,7 +37,7 @@ async function fetchOnline() {
     if (!res.ok) return false;
     const data = await res.json() || {};
     const list = Object.entries(data).filter(([id, v]) => v && typeof v.points === 'number' && !id.startsWith('test-') && !String(v.name || '').startsWith('test-') && !hiddenFromRanking(id, v.name))
-      .map(([id, v]) => ({ id, name: String(v.name || '?').slice(0, 24), avatar: String(v.avatar || '🙂').slice(0, 8), frame: String(v.frame || 'none').slice(0, 12), points: v.points, level: v.level || 1, wk: v.wk || '', wkPts: v.wkPts || 0, online: Number(v.online) || 0, t: Number(v.t) || 0 }));
+      .map(([id, v]) => ({ id, name: String(v.name || '?').slice(0, 24), avatar: String(v.avatar || '🙂').slice(0, 8), frame: String(v.frame || 'none').slice(0, 12), points: v.points, level: v.level || 1, wk: v.wk || '', wkPts: v.wkPts || 0, online: Number(v.online) || 0, t: Number(v.t) || 0, ...(v.title ? { title: String(v.title).slice(0, 16) } : {}), ...(v.perfect === true ? { perfect: true } : {}) }));
     localStorage.setItem(LB_CACHE, JSON.stringify(list));
     S.lbOnlineAt = Date.now(); save();
     return true;

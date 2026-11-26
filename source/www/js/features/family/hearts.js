@@ -73,6 +73,11 @@ function showHeartSent(name, context = null, withMessage = false) {
   setTimeout(heartRain, 700);
   $('#hsOk').onclick = () => { closeModal(); if (curScreen === 'ranking') renderRanking(); };
 }
+// short "seen" tag for the ranking row's line under the name (the heart button itself shows 'sent')
+function heartSeenShort(pid) {
+  const o = S.heartsOut[pid];
+  return o && recent(o.t) && o.seen ? `<span class="hs seen">${tx('heartSeenShort')}</span>` : '';
+}
 // small status next to a family member: did they see my heart?
 function heartState(pid) {
   const o = S.heartsOut[pid];
