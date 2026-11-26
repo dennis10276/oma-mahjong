@@ -155,12 +155,8 @@ const SHOP_CATALOG = Object.freeze({
   ]),
 
   fx: Object.freeze([
+    // Keep the existing save entitlement for the free win.
     { id: 'fx_sun', style: 'rain', price: 0, starter: true, icon: '🌻', nl: 'Zonnebloemregen', en: 'Sunflower Rain', subNl: 'Zonnige regen', subEn: 'Gentle sunny rain', particles: ['🌻', '✨', '💛'] },
-    { id: 'fx_autumn', style: 'swirl', price: 280, icon: '🍂', nl: 'Herfstbladeren', en: 'Autumn Breeze', subNl: 'Dwarrelende bladeren', subEn: 'Swirling autumn breeze', particles: ['🍂', '🍁', '🌰'] },
-    { id: 'fx_stars', style: 'rise', price: 320, icon: '🌟', nl: 'Sterrenregen', en: 'Star Cascade', subNl: 'Fonkelende sterren', subEn: 'Twinkling rising stars', particles: ['⭐', '🌟', '✨'] },
-    { id: 'fx_fireworks', style: 'burst', price: 340, icon: '🎆', nl: 'Vuurwerk', en: 'Fireworks', subNl: 'Drie knallende vonken', subEn: 'Triple firework bursts', particles: ['🎆', '🎇', '✨'] },
-    { id: 'fx_butterflies', style: 'flutter', price: 360, icon: '🦋', nl: 'Vlinderdans', en: 'Butterfly Flutter', subNl: 'Fladderende vlinders', subEn: 'Fluttering butterflies', particles: ['🦋', '🌸', '✨'] },
-    { id: 'fx_confetti', style: 'confetti', price: 400, icon: '🎊', nl: 'Koninklijke Confetti', en: 'Royal Confetti', subNl: 'Feestelijke explosie', subEn: 'Festive gold burst', particles: ['🎊', '🎉', '👑', '✨'] },
   ]),
 
   music: Object.freeze([
