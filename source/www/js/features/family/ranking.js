@@ -7,7 +7,7 @@ const LB_CACHE = 'omamj.lb';
 // v = my weekly points (week) or my level (all-time); undefined = my current value
 function myEntry(v, mode = 'all') {
   const all = mode !== 'week';
-  return { id: S.pid, name: S.name || tx('you'), avatar: S.avatar || '😊', frame: S.frame || 'none', points: all ? myPoints() : (v ?? myWeekPts()), level: all ? (v ?? S.level) : S.level, me: true, title: S.title || '', perfect: !perfectBlockers().length && S.level > 1 };
+  return { id: S.pid, name: S.name || tx('you'), avatar: S.avatar || '😊', frame: S.frame || 'none', points: all ? myPoints() : (v ?? myWeekPts()), level: all ? (v ?? S.level) : S.level, stars: all ? mainStars() : 0, me: true, title: S.title || '', perfect: !perfectBlockers().length && S.level > 1 };
 }
 function onlineEntries(mode = 'all', weekId) {
   let list = [];
@@ -15,12 +15,12 @@ function onlineEntries(mode = 'all', weekId) {
   if (mode === 'week') { const id = weekId || weekInfo().id; list = list.map(e => ({ ...e, points: e.wk === id && e.wkV === 2 ? (e.wkPts || 0) : 0 })); }
   return list;
 }
-/* week = points this week; all-time ("All-time") = highest level, points only break a tie */
+/* Week ranks by points. All-time ranks by level, with main-level stars breaking ties. */
 function ranking(v, mode = 'all') {
   const list = [...onlineEntries(mode), myEntry(v, mode)];
   // on a tie you are placed above the other player
   if (mode === 'week') list.sort((a, b) => b.points - a.points || (b.me ? 1 : 0) - (a.me ? 1 : 0));
-  else list.sort((a, b) => b.level - a.level || b.points - a.points || (b.me ? 1 : 0) - (a.me ? 1 : 0));
+  else list.sort((a, b) => b.level - a.level || (b.stars || 0) - (a.stars || 0) || (b.me ? 1 : 0) - (a.me ? 1 : 0));
   return list;
 }
 const myRank = (v, mode = 'all') => ranking(v, mode).findIndex(e => e.me) + 1;

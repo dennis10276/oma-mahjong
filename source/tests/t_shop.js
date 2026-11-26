@@ -208,7 +208,7 @@ module.exports = [
     },
   },
   {
-    name: 'shop: every music and sound title and line fits on one line',
+    name: 'shop: every music, sound and family title and detail fits on one line',
     async run(t, { click, sleep }) {
       const p = await t.phone({ size: [392, 785], state: { name: 'Dennis', pid: 'test-shop9', level: 12, sunSeen: true, econV: 2, coins: 50 } });
       await click(p, '#btnShop'); await sleep(300);
@@ -222,7 +222,7 @@ module.exports = [
           const w = c.measureText(el.textContent).width;
           if (w > el.clientWidth) out.push(el.textContent + ' ' + Math.round(w) + '>' + el.clientWidth);
         }
-        return { cut: out, n: els.length, want: 2 * (SHOP_CATALOG.music.length + SHOP_CATALOG.title.length + (SHOP_SFX_READY ? SHOP_CATALOG.sfx.length : 0)) };
+        return { cut: out, n: els.length, want: 2 * (SHOP_CATALOG.music.length + SHOP_CATALOG.title.length + paidPostcards().length + (SHOP_SFX_READY ? SHOP_CATALOG.sfx.length : 0)) };
       });
       t.ok(cut.n === cut.want, 'all rows measured', cut.n + ' of ' + cut.want);
       t.eq(cut.cut, [], 'no title or line is wider than its box');

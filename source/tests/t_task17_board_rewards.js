@@ -5,13 +5,15 @@ const player = { name: 'Sanne', pid: 'test-board-rewards', econV: 2, coins: 80 }
 module.exports = [
   {
     name: 'Flow purse credits once when clean matches span a level resume',
-    async run(t, { startLevel, TODAY }) {
+    async run(t, { startLevel, TODAY, tune }) {
       const p = await t.phone({ state: { ...player, level: 24, tasks: { date: TODAY, list: [
         { id: 'flow', goal: 2, prog: 0, done: false },
         { id: 'pairs', goal: 40, prog: 0, done: false },
         { id: 'daily', goal: 1, prog: 0, done: false },
       ] } } });
       await startLevel(p, 24);
+      const quiet = { HELP: { normal: { lucky: { chance: 0 } } } };
+      await tune(p, quiet);
       const pairs = await p.evaluate(() => {
         const alive = G.alive.slice();
         function find(remaining) {
@@ -44,6 +46,7 @@ module.exports = [
         { purse: 1, charges: 1, wallet: 80 }, 'the first charge puts one coin in the purse');
       await p.reload();
       await startLevel(p, 24, false);
+      await tune(p, quiet);
       await play(pairs.slice(5));
       t.eq(await p.evaluate(() => ({ purse: G.boardCoins, charges: S.stats.flows, task: S.tasks.list[0].prog })),
         { purse: 1, charges: 2, task: 2 }, 'a second charge advances the task without paying a second board coin');
