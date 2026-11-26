@@ -152,6 +152,12 @@ h3.sec { color: #fff; font-size: 22px; margin: 6px 4px 10px; text-shadow: 0 2px 
 #home #dailyLabel { display: flex; align-items: center; gap: 5px; font-weight: 800; }
 .daily-face { display: inline-grid; place-items: center; width: 24px; height: 24px; background: var(--cream); border-radius: 50%; }
 #home .daily-calendar { display: grid; gap: 3px; align-content: center; min-width: 70px; padding: 6px; font-size: 16px; }
+@media (max-width: 391px), (orientation: landscape) and (max-height: 550px) {
+  #home .daily-top { flex-wrap: wrap; gap: 3px 5px; }
+  #home #dailyLabel { font-size: 15px; white-space: normal; }
+  #home #dailyLabel .daily-face { flex: 0 0 24px; }
+  #home #dailyLabel .daily-face:nth-of-type(3) { display: none; }
+}
 
 /* daily puzzle calendar */
 .streak-card { display: flex; align-items: center; gap: 14px; }
