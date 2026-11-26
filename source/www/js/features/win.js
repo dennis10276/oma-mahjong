@@ -15,7 +15,6 @@ function win() {
   G.winSettled = true;
   syncClock(); G.tStart = 0;
   if (G.autoFin) autoBanner(false);
-  clearCur();
   const stars = starsFor(G);
   G.score += stars * RULES.score.perStar;
   endLevel('win', { st: stars });
@@ -62,7 +61,7 @@ function win() {
   }
   const wasSun = S.sunSeen;
   grantSunPrize();
-  save();
+  if (save()) clearCur();
   const rewards = [];
   ensureId();
   // the weekly challenge moves most, so its climb comes first; otherwise the all-time list
@@ -74,7 +73,7 @@ function win() {
   // the family is always on the win screen, so you see where everyone stands
   const famNow = famHTML('week', ranking(wkAfter, 'week'), tx('famWeek'), true, true);
   pushScore();
-  const heartsP = Promise.race([fetchHearts(), new Promise(r => setTimeout(() => r([]), 2500))]);
+  const heartsP = Promise.race([fetchHearts({ queue: true }), new Promise(r => setTimeout(r, 2500))]);
   const standingsText = () => {
     const list = ranking(wkAfter, 'week'), rank = list.findIndex(e => e.me) + 1;
     const nextUp = list[rank - 2];
@@ -107,7 +106,6 @@ function win() {
     renderGoal($('#wGoal'));
     const familyNode = $('#wFamily');
     const bindHearts = () => familyNode.querySelectorAll('.heart-btn').forEach(btn => btn.onclick = () => {
-      if (sentToday(btn.dataset.pid)) { toast(tx('heartAlreadyShort')); return; }
       const height = parseFloat(getComputedStyle($('#modalBox')).height), resume = keepModal();
       sendHeart(btn.dataset.pid, btn.dataset.name, btn, { height, restore: () => { resume(); winFamilyRefresh(); } });
     });
@@ -139,8 +137,8 @@ function win() {
         if (dest === 'next') startLevel(nextLevel);
         else show(dest === 'calendar' ? 'daily' : dest === 'ranking' ? 'ranking' : 'home');
       };
-      heartsP.then(fresh => {
-        const all = [...S.pendingHearts, ...(fresh || [])];
+      heartsP.then(() => {
+        const all = S.pendingHearts;
         if (all.length) { S.pendingHearts = []; save(); rewards.unshift({ type: 'hearts', list: all }); }
         runRewards(rewards, finish);
       });

@@ -110,7 +110,7 @@ function begin(o, restart = false) {
     G.peek = cur.peek ?? -1;
     G.gold = new Set(cur.gold || []);
     Object.assign(G, { tray: cur.tray || [], score: Number(cur.score) || 0, elapsed: cur.elapsed, usedHint: !!cur.usedHint, usedShuffle: !!cur.usedShuffle, peekUsed: cur.pu | 0, undoUsed: cur.uu | 0, rescued: !!cur.rescued });
-    G.boardCoins = freshBoardRewards() ? Math.max(0, cur.boardCoins | 0) : 0;
+    G.boardCoins = boardCoinEligible() ? Math.max(0, cur.boardCoins | 0) : 0;
     G.flow = Math.min(4, Math.max(0, cur.flow | 0));
     G.flowPaid = !!cur.flowPaid;
     G.autoFinPaid = !!cur.autoFinPaid;
@@ -156,6 +156,11 @@ function begin(o, restart = false) {
     updatePurse(); renderFlow(); updateProgress();
   } catch (e) { logErr(e, 'begin'); }
   saveCur();
+  if (resumed && aliveCount() === 0 && G.tray.length === 0) {
+    G.done = true;
+    afterLand();
+    return;
+  }
   setTimeout(() => praise(restart ? tx('againPraise') : o.mode === 'daily' ? tx('dailyPraise') : o.title), 150);
   const ready = () => {
     if (!S.seenTray) showIntro();
@@ -202,6 +207,8 @@ const clearedTiles = () => G.tiles.length - aliveCount() - G.tray.length;
 const freshBoardRewards = () => !!G && !G.film && (G.mode === 'level'
   ? G.level === S.level && !mainLevelStars(G.level)
   : G.mode === 'daily' && G.date === todayKey() && !S.daily[G.date]);
+const boardCoinEligible = () => freshBoardRewards() && (G.mode === 'daily'
+  || S.coinWeek?.id !== ShopEconomy.weekIdOf(new Date()) || S.coinWeek.wins < SHOP_RULES.coins.fullMainWinsPerWeek);
 const free = i => Layouts.isFree(i, G.alive, G.nb);
 const faceOf = i => G.tiles[i].face;
 const trayHas = face => G.tray.some(t => faceOf(t) === face);
@@ -222,11 +229,11 @@ function afterLogic() {
   if (G.logged) return;
   const gold = clearedGoldPairs();
   if (gold > G.goldPairsPaid) {
-    if (freshBoardRewards()) G.boardCoins += (gold - G.goldPairsPaid) * SHOP_RULES.coins.goldPair;
+    if (boardCoinEligible()) G.boardCoins += (gold - G.goldPairsPaid) * SHOP_RULES.coins.goldPair;
     G.goldPairsPaid = gold;
   }
-  if (aliveCount() === 0 && G.tray.length === 0) { G.done = true; clearCur(); return; }
   saveCur();
+  if (aliveCount() === 0 && G.tray.length === 0) G.done = true;
 }
 function afterLand() {
   if (G.film) return;
@@ -533,6 +540,7 @@ function tapTile(i) {
     return;
   }
   if (frozen(i) || lockedT(i)) { G.st.bt++; obBlocked(i); return; }
+  if (G.lucky && G.lucky.i !== i) clearLucky();
   blockedTaps = 0;
   let reveal = false;
   if (G.down[i] && G.peek !== i) {
@@ -641,7 +649,7 @@ function showDownTip(after = null) {
 function matchFlow() {
   if (G.film) return;
   if (G.logged) return { flow: 0, charged: false, coinsAdded: 0 };
-  const result = ShopEconomy.stepFlowSpark(G, G.tray.length, freshBoardRewards());
+  const result = ShopEconomy.stepFlowSpark(G, G.tray.length, boardCoinEligible());
   if (result.charged) {
     bumpStat('flows');
     S.bestCombo = Math.max(S.bestCombo || 0, 5);
@@ -775,7 +783,7 @@ function maybeAutoFinish() {
   if (!autoFinishOK()) return;
   const g = G;
   G.autoFin = true; clearHint();
-  let coins = ShopEconomy.applyAutoFinishCoin(G, toolLevel(G), freshBoardRewards());
+  let coins = ShopEconomy.applyAutoFinishCoin(G, toolLevel(G), boardCoinEligible());
   if (coins) {
     G.autoCoinFlights = coins;
     updatePurse(false, coins);
@@ -922,6 +930,7 @@ function returnTile(i) {
   if (!chk.ok) { disarmTool(); return helperRefused('undo', chk.reason); }
   const tray0 = G.tray.slice(), r = PrepBoard.applyTileReturn(G, i, w, h);   // the tile goes back first; the token is spent only when it really did
   if (!r.ok) { Sound.blocked(); if (r.reason === 'no_placement') toast(tx('helperNoSpot')); else logErr(new Error('undo ' + r.reason), 'undo'); return; }   // nothing is spent: pick another tile
+  clearLucky();
   const back = G.tray; G.tray = tray0;   // (consume checks the tray as it was)
   const c = ShopEconomy.consumeUndoInLevel(S, G, helperHooks());
   G.tray = back;

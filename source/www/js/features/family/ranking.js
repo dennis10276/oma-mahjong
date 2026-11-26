@@ -57,12 +57,12 @@ function perfectBlockers() {
   return blockers;
 }
 // The same badge is sized by its context. The badge's inner pill carries the shine.
-const perfectSticker = (cls = '') => `<span class="pf pf-w2${cls ? ' ' + cls : ''}"><span class="pf-in">PERFECT</span></span>`;
+const perfectSticker = (cls = '') => `<span class="pf${cls ? ' ' + cls : ''}"><span class="pf-in">PERFECT</span></span>`;
 function showPerfectPlaque(entry) {
   const blockers = perfectBlockers().length, nudge = blockers > 0 && blockers <= 5;
   openModal(`<div class="perfect-plaque"><div class="plaque-stars">⭐⭐⭐</div>${perfectSticker('pf-hero')}<h2>${esc(entry.name)}</h2>
     <p>${tx('perfectPlaqueText', entry.level - 1)}</p>
-    ${nudge ? `<p class="plaque-nudge"><span>${tx('perfectPlaqueNudge', blockers)}</span>${perfectSticker()}</p>
+    ${nudge ? `<p class="plaque-nudge"><span>${tx('perfectPlaqueNudge', blockers)}</span>${perfectSticker('pf-nudge')}</p>
       <button class="big-btn play" id="pfReplay"><span class="bb-text"><b>${fx('perfectPlaquePlay', blockers)}</b></span></button>` : ''}
     <button class="link-btn" id="pfClose">${tx('close')}</button></div>`);
   $('#pfClose').onclick = closeModal;

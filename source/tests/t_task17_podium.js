@@ -26,10 +26,17 @@ module.exports = [
   {
     name: 'Monday podium never awards a crown for solo or offline scores',
     async run(t, { FakeDB }) {
-      const cases = [{ scores: {} }, { scores, offline: true }];
+      const staleWeek = '2026-09-21';
+      const cases = [
+        { scores: {} },
+        { scores, offline: true },
+        { scores: { pRiet: { ...scores.pRiet, prevWk: staleWeek } }, oldWeek: staleWeek },
+      ];
       for (const fixture of cases) {
         const p = await t.phone({
-          db: new FakeDB({ scores: fixture.scores }), state: player,
+          db: new FakeDB({ scores: fixture.scores }), state: {
+            ...player, wk: { ...player.wk, id: fixture.oldWeek || oldWeek },
+          },
           lb: Object.entries(scores).map(([id, score]) => ({ id, ...score })),
           ...(fixture.offline ? {
             routes: [['**/scores.json', route => route.fulfill({ status: 503, headers: { 'Access-Control-Allow-Origin': '*' }, body: '{}' })]],

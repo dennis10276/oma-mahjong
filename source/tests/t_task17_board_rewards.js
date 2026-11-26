@@ -135,4 +135,43 @@ module.exports = [
       t.eq(await p.evaluate(() => S.coins), 86, 'the already-won replay never banks the purse');
     },
   },
+  {
+    name: 'the final tap stays resumable until its purse is saved with the win',
+    async run(t, { startLevel, TODAY }) {
+      const p = await t.phone({ state: { ...player, level: 5, tasks: { date: TODAY, list: [] } } });
+      await startLevel(p, 5);
+      const saved = await p.evaluate(() => {
+        const pair = solveNow(80000).slice(-2);
+        G.alive.fill(0);
+        G.down.fill(0);
+        G.gold.clear();
+        G.boardCoins = 1;
+        for (const i of pair) G.alive[i] = 1;
+        renderBoard(false);
+        pair.forEach(i => onTap(i));
+        return loadCur();
+      });
+      t.ok(saved && saved.boardCoins === 1 && saved.alive.every(value => value === 0), 'the saved cleared board carries its purse');
+      await p.reload();
+      await startLevel(p, 5, false);
+      await p.waitForSelector('#wNext', { timeout: 4500 });
+      t.eq(await p.evaluate(() => [S.level, S.coins, loadCur()]), [6, 85, null], 'resume settles the last fresh win just once');
+    },
+  },
+  {
+    name: 'Lucky highlight is removed when the player changes the proved tray state',
+    async run(t, { startLevel }) {
+      const p = await t.phone({ state: { ...player, level: 25 } });
+      await startLevel(p, 25);
+      const invalidated = await p.evaluate(() => {
+        const choices = G.tiles.map((_, i) => i).filter(i => canTake(i) && !G.down[i] && faceOf(i) < 100);
+        const [hint, move] = choices;
+        G.lucky = { i: hint, until: Date.now() + 15000 };
+        glow(hint, 'lucky', true);
+        onTap(move);
+        return !G.lucky && !G.tiles[hint].el.classList.contains('lucky');
+      });
+      t.ok(invalidated, 'a recommendation from before the move no longer glows');
+    },
+  },
 ];

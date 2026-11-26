@@ -68,7 +68,10 @@ function jokerPlay(j, x) {
 function jokerBonus(c) {
   const pts = RULES.score.jokerFinale;
   addScore(pts);
-  praise(tx('jokerFinale', pts)); Sound.supercombo(); flash(); buzz([20, 40, 20, 40, 40]);
+  const coins = boardCoinEligible() ? SHOP_RULES.coins.jokerFinale : 0;
+  G.boardCoins += coins;
+  updatePurse(Boolean(coins));
+  praise(tx('jokerFinale', coins)); Sound.supercombo(); flash(); buzz([20, 40, 20, 40, 40]);
   FX.burst(c.x, c.y, 46, true); FX.emoji(c.x, c.y, ['🃏', '✨', '🌟'], 14);
   bumpStat('jokerFinale');
   afterFlight(350, () => { });

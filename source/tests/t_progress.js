@@ -39,7 +39,7 @@ module.exports = [
       const p = await t.phone({ state: { ...DENNIS, level: 10, wk: { id: '2026-09-28', v: 2, pts: 99999 } } });
       await sleep(900);
       const m = await modal(p);
-      t.ok(m && /Jouw vorige week/.test(m.title), 'last week\'s result', m);
+      t.eq(m?.title, 'Vorige week', 'a solo player sees the personal week result');
       t.eq(await p.evaluate(() => [[__mj.S.wk.id, __mj.S.wk.v, __mj.S.wk.pts], __mj.S.weekWins, __mj.S.stats.weeks]), [['2026-10-05', 2, 0], 0, 1], 'new week at 0, no unverified winner');
       await click(p, '#lwOk'); await p.reload(); await p.waitForFunction(() => window.__mjReady); await sleep(900);
       t.eq(await modal(p), null, 'not shown again');

@@ -99,6 +99,9 @@
     if (chance <= 0) return null;
     const roll = opts.roll !== undefined ? opts.roll : Math.random();
     if (roll > chance) return null;
+    // An open peek or a live joker can pair by different rules than the quiet lookahead.
+    if (G.peek >= 0 || G.tray?.some(i => G.tiles[i].face === 101)
+      || G.tiles.some((tile, i) => G.alive[i] && tile.face === 101)) return null;
 
     const n = G.tiles.length;
     let left = 0;

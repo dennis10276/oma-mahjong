@@ -16,12 +16,12 @@ module.exports = [
       db.set('scores/pDoubt/level', 92);
       await p.reload(); await p.waitForFunction(() => window.__mjReady); await sleep(2500);
       const m = await modal(p);
-      t.ok(m && /ingehaald/i.test(m.text) && /Mrs\. Doubtfire/.test(m.text) && /level 92/.test(m.text) && !/Mama/.test(m.text), 'told who passed and where she is now', m && m.text);
+      t.ok(m && /Mrs\. Doubtfire haalde je in/.test(m.text) && /level 92/.test(m.text) && !/Mama/.test(m.text), 'told who passed and where she is now', m && m.text);
       t.ok(m && /3e in de familie/.test(m.text), 'and where you stand', m && m.text);
       await p.evaluate(() => document.querySelector('#psOk').click()); await sleep(300);
       t.ok(Object.values(p.db.get('plays/test-dennis') || {}).some(e => e.k === 'passed'), 'logged for the dashboard');
       await p.reload(); await p.waitForFunction(() => window.__mjReady); await sleep(2000);
-      const m2 = await modal(p); t.ok(!m2 || !/ingehaald/i.test(m2.text), 'only once', m2 && m2.text);
+      const m2 = await modal(p); t.ok(!m2 || !/haalde je in/i.test(m2.text), 'only once', m2 && m2.text);
       t.eq(p.errors, [], 'no errors');
     },
   },

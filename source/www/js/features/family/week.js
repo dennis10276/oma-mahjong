@@ -32,7 +32,10 @@ function checkLastWeek() {
   if (!last || curScreen !== 'home' || !modalFree()) return;
   if (lastWeekRead?.id !== last.id) {
     const read = lastWeekRead = { id: last.id, ready: false, rows: null };
-    const online = S.name && navigator.onLine ? fetchOnline() : Promise.resolve(false);
+    const previous = new Date();
+    previous.setDate(previous.getDate() - 7);
+    // Older winners may already have rotated that week out of both score slots.
+    const online = last.id === weekInfo(previous).id && S.name && navigator.onLine ? fetchOnline() : Promise.resolve(false);
     online.then(async ok => {
       if (lastWeekRead !== read || S.lastWeek?.id !== read.id) return;
       read.rows = ok ? onlineEntries('all') : null;

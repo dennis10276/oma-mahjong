@@ -167,7 +167,7 @@ function markHeartsSeen(list) {
 }
 // new hearts since last time (one request at a time, so a heart is never shown twice)
 let heartsBusy = false;
-async function fetchHearts() {
+async function fetchHearts({ queue = false } = {}) {
   if (!DB_URL || !S.pid || heartsBusy) return [];
   heartsBusy = true;
   try {
@@ -183,14 +183,14 @@ async function fetchHearts() {
     fresh.forEach(h => { S.heartsSeen[h.from] = h.t; });
     attachMsgs(fresh, entries.filter(([key, m]) => !isStandalonePostcard(key, m)).map(([, m]) => m));
     for (const [key, m] of cards) {
-      if (!visibleSender(m.from) || S.postcardsSeen?.[key] || !recent(m.t)) continue;
+      if (!visibleSender(m.from) || S.postcardsSeen?.[key]) continue;
       S.postcardsSeen ??= {};
       S.postcardsSeen[key] = m.t;
       fresh.push({ from: m.from, name: String(m.name || tx('someone')).slice(0, 24), t: m.t, pc: m.pc,
         msg: msgText(m).slice(0, MSG.max), postcardReceipt: true });
     }
     if (fresh.length) {
-      for (const [key, t] of Object.entries(S.postcardsSeen || {})) if (!recent(t)) delete S.postcardsSeen[key];
+      if (queue) S.pendingHearts = S.pendingHearts.concat(fresh);
       bumpStat('hearts', fresh.length); save();
     }
     return fresh;

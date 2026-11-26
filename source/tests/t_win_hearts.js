@@ -88,7 +88,9 @@ module.exports = [
       t.eq(records.map(m => [m.m0, m.m1, m.m2].filter(Boolean).join('')), [msg], 'custom message saved intact');
       t.eq(db.log.filter(l => l.m === 'PUT' && l.p === '/hearts/pDen/pOma').length, 1, 'heart written once');
       await p.locator('#wFamily .heart-btn.sent').click();
-      t.eq(await p.locator('#wNext').count(), 1, 'daily limit leaves the win screen in place');
+      t.eq(await p.locator('#hmNone').count(), 0, 'the free daily limit still applies');
+      t.eq(await p.locator('[data-postcard]').count(), 5, 'paid cards remain available after a free heart');
+      await p.locator('#hmBack').click();
       await p.locator('#wMenu').click();
       for (let i = 0; i < 16; i++) {
         if (await p.evaluate(() => document.querySelector('#home').classList.contains('active') && document.querySelector('#modal').classList.contains('hidden'))) break;

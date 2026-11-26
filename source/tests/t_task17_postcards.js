@@ -86,4 +86,27 @@ module.exports = [
       t.eq((await r.evaluate(() => fetchHearts())).filter(h => h.pc).length, 0, 'reload does not replay paid receipt');
     },
   },
+  {
+    name: 'postcards: an unread paid card stays pending across a win and reload even after a week',
+    async run(t, { FakeDB, startLevel, TODAY }) {
+      const db = new FakeDB({ scores: {} });
+      const p = await t.phone({ db, state: receiver });
+      await p.evaluate(() => window.__mjBoot);
+      await startLevel(p, receiver.level);
+      const old = new Date(TODAY + 'T12:00:00');
+      old.setDate(old.getDate() - 9);
+      const day = dkey(old);
+      function dkey(d) {
+        return [d.getFullYear(), String(d.getMonth() + 1).padStart(2, '0'), String(d.getDate()).padStart(2, '0')].join('-');
+      }
+      db.set(`plays/msg-pCardReceiver/pc-pCardSender-${day}`, {
+        k: 'msg', from: 'pCardSender', name: 'Sanne', t: old.getTime(), pc: 'pc_sun', day,
+      });
+      await p.evaluate(() => win());
+      await p.waitForSelector('#wNext');
+      t.ok(await p.evaluate(() => S.pendingHearts.some(h => h.pc === 'pc_sun')), 'the result card saved the unshown paid delivery');
+      await p.reload();
+      await p.waitForSelector('#modalBox .postcard-paper', { timeout: 4000 });
+    },
+  },
 ];
