@@ -898,7 +898,7 @@ span.fx { font-size: inherit; }
 .pf-in { position: relative; display: block; overflow: hidden; isolation: isolate; padding: .3em .56em .24em; border-radius: 999px;
   font-weight: 900; letter-spacing: .03em; white-space: nowrap; color: #f06a00; border: max(1px, .08em) solid #ff9a1f;
   background: linear-gradient(165deg, #fffdf4 16%, #fff3c4 58%, #ffd75e); text-shadow: 0 .03em 0 #fffdf4, 0 .07em 0 #ffd23f;
-  box-shadow: inset 0 0 0 .05em #fffdf4, inset 0 -.13em 0 #ffd23f, 0 .08em 0 #e07000, 0 .16em 0 #c98a12, 0 .26em .42em rgba(124,68,0,.26); }
+  box-shadow: inset 0 0 0 max(1px, .05em) #fffdf4, inset 0 min(-2px, -.13em) 0 #ffd23f, 0 max(1.5px, .08em) 0 #e07000, 0 max(3px, .16em) 0 #c98a12, 0 .26em .42em rgba(124,68,0,.26); }   /* min px: small badges keep the raised look */
 .pf-in::after { content: ''; position: absolute; z-index: 1; top: -60%; bottom: -60%; left: -60%; width: 32%; pointer-events: none; transform: skewX(-22deg);
   background: linear-gradient(90deg, transparent, rgba(255,255,255,.3) 23%, #fff 49%, rgba(255,255,255,.45) 60%, transparent); animation: pfShine 3s ease-in-out infinite; }
 .pf::before, .pf::after { content: '✦'; position: absolute; z-index: 2; pointer-events: none; line-height: 1; color: #fff; opacity: 0;
@@ -909,6 +909,7 @@ span.fx { font-size: inherit; }
 @keyframes pfTwinkle { 0%, 50% { opacity: 0; transform: scale(.2) rotate(0); } 62% { opacity: 1; transform: scale(1) rotate(45deg); } 78%, 100% { opacity: 0; transform: scale(.2) rotate(90deg); } }
 @media (prefers-reduced-motion: reduce) { .pf-in::after, .pf::before, .pf::after { animation: none; } .pf-in::after { left: -60%; } }
 .pf-hero { font-size: clamp(30px, 10vw, 39px); }   /* the plaque */
+.pf-nudge { font-size: 25px; }   /* the plaque's "Nog 3 levels voor jouw" line: big enough to read as the same badge */
 /* the block: 412 px, rows scroll inside (390 px) and snap to whole rows */
 .rank-block { box-sizing: border-box; height: 412px; padding: 8px 6px; border: 3px solid #ff7aa8; border-radius: 24px; background: linear-gradient(135deg, #ffe9f1, #ffd6e6); box-shadow: 0 5px 0 #e85d8f; overflow: hidden; }
 .rank-block .rl-scroll { height: 390px; overflow-y: auto; display: grid; gap: 6px; align-content: start; overscroll-behavior: contain; scroll-snap-type: y mandatory; scroll-padding: 0; }
