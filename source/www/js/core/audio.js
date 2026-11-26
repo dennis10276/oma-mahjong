@@ -2,7 +2,7 @@
 /* All sounds are synthesized with WebAudio: no files, instant, works offline. */
 const Sound = (() => {
   let ctx = null, master, sfx, verb, noiseBuf, pinkBuf = null, brownBuf = null;
-  let sfxOn = true, musicOn = true, musicTimer = null, beat = 0, mood = 'calm';
+  let sfxOn = true, musicOn = true, musicTimer = null, shuffleTimer = null, beat = 0, mood = 'calm';
   let trackId = 'mus_piano', explicitTrack = false, previewId = null, activeLoopId = null;
   let loopGen = 0, activeSession = null, sfxPack = 'sfx_ivory', sfxPrev = null;
   // C-major pentatonic, warm "music box" register
@@ -211,7 +211,7 @@ const Sound = (() => {
   const ok = () => ctx && sfxOn;
   const resolvedTrackId = () => explicitTrack ? normalizeTrackId(trackId) : (mood === 'sunny' ? 'mus_sunflower' : 'mus_piano');
 
-  return {
+  const api = {
     init,
     setSfx(v) { sfxOn = Boolean(v); },
     setMusic(v) {
@@ -280,6 +280,19 @@ const Sound = (() => {
       const cur = isValidTrackId(currentId) ? currentId : resolvedTrackId();
       const pool = valid.length >= 2 ? valid.filter(id => id !== cur) : valid;
       return pool[Math.floor(Math.random() * pool.length)] || valid[0];
+    },
+    // the next shuffled track: another owned one (never the same twice in a row); returns its id
+    shuffleNext() {
+      const owned = (typeof S !== 'undefined' && S && S.owned && S.owned.music) || [];
+      const id = this.pickShuffleTrack(owned, activeLoopId || resolvedTrackId());
+      if (ctx && musicOn && !previewId) startTrack(id);
+      return id;
+    },
+    // after the shuffle switch changed: start or stop the rotation, back to the equipped track when it went off
+    refreshShuffle() {
+      if (!ctx || !musicOn || previewId) return;
+      if (!shuffleOn() && activeLoopId !== resolvedTrackId()) startTrack(resolvedTrackId());
+      else armShuffle();
     },
     applyAudio(opts = {}) {
       if (opts && typeof opts.musicTrack === 'string') this.setMusicTrack(opts.musicTrack);
@@ -410,6 +423,7 @@ const Sound = (() => {
       if (c > 0) playCoins(t + 0.14, c);
     },
   };
+  return api;
 
   function createSession(ambientMode) {
     const out = ctx.createGain();
@@ -488,6 +502,7 @@ const Sound = (() => {
     const validId = normalizeTrackId(id);
     const tr = MUSIC_TRACKS[validId];
     stopMusicLoop();
+    armShuffle();
     const gen = loopGen;
     const ambientMode = tr.synth === 'rain' || tr.synth === 'waterfall';
     const session = createSession(ambientMode);
@@ -677,7 +692,16 @@ const Sound = (() => {
     musicTimer = setInterval(tick, tr.tempo);
   }
 
+  // music shuffle (Instellingen): every few minutes another owned track takes over; the equipped one stays saved
+  const SHUFFLE_MS = 150000;
+  const shuffleOn = () => typeof S !== 'undefined' && !!S && !!S.musicShuffle;
+  function armShuffle() {
+    if (shuffleTimer) { clearTimeout(shuffleTimer); shuffleTimer = null; }
+    if (!shuffleOn() || previewId || !musicOn) return;
+    shuffleTimer = setTimeout(() => { shuffleTimer = null; api.shuffleNext(); }, SHUFFLE_MS);
+  }
   function stopMusicLoop() {
+    if (shuffleTimer) { clearTimeout(shuffleTimer); shuffleTimer = null; }
     loopGen++;
     if (musicTimer) { clearInterval(musicTimer); musicTimer = null; }
     activeLoopId = null;

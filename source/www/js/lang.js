@@ -108,6 +108,7 @@ const TEXT = {
   // ---------- settings ----------
   set_sfx: ['🔊 Geluidjes', '🔊 Sounds'],
   set_music: ['🎵 Muziek', '🎵 Music'],
+  set_musicShuffle: ['🔀 Muziek door elkaar', '🔀 Shuffle music'],
   set_vibrate: ['📳 Trillen', '📳 Vibration'],
   set_highlight: ['✨ Vastzittende stenen donker', '✨ Darken tiles that are stuck'],
   set_nums: ['🔢 Cijfers in de hoek', '🔢 Numbers in the corner'],
