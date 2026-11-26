@@ -11,7 +11,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Mahjong">
-<link rel="stylesheet" href="v/1.79/style.css" id="css">
+<link rel="stylesheet" href="v/1.80/style.css" id="css">
 <script>
   // if anything fails to load, say so instead of showing a dead screen
   window.addEventListener('error', function (e) {
@@ -30,7 +30,7 @@
   <!-- HOME -->
   <section id="home" class="screen active">
     <div class="home-top">
-      <div class="chip big-chip" id="homeStars">⭐ 0</div>
+      <div class="chip big-chip" id="homeCoins">🪙 0</div>
       <button class="chip task-chip" id="btnTasks">📋 <span id="taskDots">○○○</span></button>
       <button class="icon-btn" id="btnSettings" aria-label="Instellingen" data-t-label="settings">⚙️</button>
     </div>
@@ -47,14 +47,18 @@
         <span class="bb-icon">▶</span>
         <span class="bb-text"><b data-t="play">Spelen</b><small id="playLabel">Level 1</small></span>
       </button>
-      <button class="big-btn daily" id="btnDaily">
-        <span class="bb-icon">📅</span>
-        <span class="bb-text"><b data-t="daily">Dagpuzzel</b><small id="dailyLabel">Puzzel van vandaag</small></span>
-        <span class="streak" id="streakBadge">🔥 0</span>
-      </button>
+      <div class="daily-shortcuts">
+        <button class="big-btn daily" id="btnDaily">
+          <span class="bb-text">
+            <span class="daily-top"><b data-t="daily">Dagpuzzel</b><span id="dailyHomeReward"></span></span>
+            <small id="dailyLabel">Puzzel van vandaag</small>
+          </span>
+        </button>
+        <button class="mid-btn daily-calendar" id="btnCalendar"><span aria-hidden="true">📅</span><b data-t="dailyCalendar">Kalender</b></button>
+      </div>
       <div class="row2">
         <button class="mid-btn" id="btnLevels"><span>🗺️</span><b data-t="levels">Levels</b></button>
-        <button class="mid-btn" id="btnThemes"><span>🎨</span><b data-t="themes">Thema's</b></button>
+        <button class="mid-btn" id="btnShop"><span>🛍️</span><b data-t="shop">Winkel</b></button>
         <button class="mid-btn" id="btnTrophies"><span>🏅</span><b data-t="prizes">Prijzen</b><i class="mid-badge" id="trophyCount">0</i></button>
         <button class="mid-btn" id="btnRanking"><span>🏆</span><b data-t="ranking">Ranglijst</b><i class="mid-badge" id="rankBadge">#1</i></button>
       </div>
@@ -63,24 +67,28 @@
   </section>
 
   <!-- GAME -->
-  <section id="game" class="screen">
+  <section id="game" class="screen board-reward">
     <div class="topbar">
       <button class="icon-btn" id="btnHome" aria-label="Menu" data-t-label="menu">🏠</button>
       <div class="title-wrap">
         <div id="gameTitle">Level 1</div>
-        <div id="comboTag"></div>
         <div class="progress"><div id="progressBar"></div></div>
+        <div id="flowMeter" class="flow-meter">
+          <span class="flow-name" data-t="flowName">⚡ Flow</span>
+          <span class="pips" role="img"><i class="pip"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i></span>
+          <b id="flowReward" hidden>+1 🪙</b>
+        </div>
         <div id="gameMsg" aria-live="polite"></div>
       </div>
-      <div class="chip score" id="score">0</div>
+      <div class="chip score" id="score" hidden>🪙 0</div>
       <button class="icon-btn" id="btnRestart" aria-label="Level opnieuw beginnen" data-t-label="restartLevel">↻</button>
     </div>
     <div class="traybar">
       <div id="tray"><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div></div>
-      <!-- hint and shuffle beside the tray, not in a row under the pile: the pile gets that row (the owner 2026-11-15) -->
+      <!-- the helpers beside the tray: Spieken (peek) and Steen terugleggen (undo), cream cards under home and restart -->
       <div class="toolbar">
-        <button class="tool" id="btnHint"><span>💡</span><b data-t="hint">Hint</b><i class="badge">1</i></button>
-        <button class="tool" id="btnShuffle"><span>🔀</span><b data-t="shuffle">Schudden</b><i class="badge">1</i></button>
+        <button class="tool" id="btnPeek"><span>👁️</span><b data-t="peekBtn">Spieken</b><i class="cnt">0</i></button>
+        <button class="tool" id="btnUndo"><span>↩️</span><b data-t="undoBtn">Terug</b><i class="cnt">0</i></button>
       </div>
     </div>
     <div id="boardWrap"><div id="board"></div></div>
@@ -89,7 +97,11 @@
   <!-- LEVELS -->
   <section id="levels" class="screen">
     <div class="header"><button class="icon-btn back">←</button><h2 data-t="levels">Levels</h2><div class="chip" id="lvStars">⭐ 0</div></div>
-    <div class="scroll"><div class="level-grid" id="levelGrid"></div></div>
+    <div class="shop-tabs" id="levelsFilter" role="group">
+      <button id="lvAll" type="button" data-t="levelsAll">Alle</button>
+      <button id="lvMissing" type="button">Geen 3★</button>
+    </div>
+    <div class="scroll"><div id="lvReplay"></div><div class="level-grid" id="levelGrid"></div></div>
   </section>
 
   <!-- DAILY -->
@@ -118,14 +130,11 @@
   <section id="ranking" class="screen">
     <div class="header"><button class="icon-btn back">←</button><h2 data-t="ranking">Ranglijst</h2><button class="name-chip" id="rankName" aria-label="Mijn profiel">😊</button></div>
     <div class="scroll">
-      <div class="ranking-intro"><p data-t="rankTogether">Samen puzzelen</p><h3 data-t="rankFamilyTurn">De familie aan zet</h3><span id="rkMine"></span></div>
       <div class="rk-tabs"><button id="rkWeek" class="on" data-t="thisWeek">📅 Deze week</button><button id="rkAll" data-t="allTime">🏆 All-time</button></div>
-      <p class="wk-info" id="wkInfo"></p>
       <div class="rank-viewport" id="rankViewport">
         <div class="rank-list" id="rankList"></div>
         <div class="rank-list rank-next" id="rankNext" aria-hidden="true" inert hidden></div>
       </div>
-      <p class="rank-note" id="rankNote"></p>
     </div>
   </section>
 
@@ -133,6 +142,13 @@
   <section id="trophies" class="screen">
     <div class="header"><button class="icon-btn back">←</button><h2 data-t="trophyCabinet">Prijzenkast</h2><div class="chip" id="trCount">🏅 0</div></div>
     <div class="scroll"><div id="statsBox"></div><div class="trophy-grid" id="trophyGrid"></div></div>
+  </section>
+
+  <!-- SHOP -->
+  <section id="shop" class="screen">
+    <div class="header"><button class="icon-btn back">←</button><h2 data-t="shop">Winkel</h2><div class="chip" id="shopCoins">🪙 0</div></div>
+    <div class="shop-tabs" id="shopTabs"></div>
+    <div class="shop-view" id="shopView"></div>
   </section>
 
   <!-- THEMES -->
@@ -158,7 +174,7 @@
    and keeps them on the phone. On start we use that downloaded version when it is newer
    than the one built into the app; if it does not start properly, we fall back at once. */
 (function () {
-  var BUILT = '1.79', KEY = 'omamj.code', FILES = ['v/1.79/tiles.js', 'v/1.79/js/core/audio.js', 'v/1.79/layouts.js', 'v/1.79/hard.js', 'v/1.79/levels-hard.js', 'v/1.79/levels-early.js', 'v/1.79/js/rules.js', 'v/1.79/js/lang.js', 'v/1.79/js/core/util.js', 'v/1.79/js/core/save.js', 'v/1.79/js/features/rewards/streak.js', 'v/1.79/js/features/grandma/grandma.js', 'v/1.79/js/features/redo/redo.js', 'v/1.79/js/features/trophies/trophies.js', 'v/1.79/js/features/looks/looks.js', 'v/1.79/js/core/fx.js', 'v/1.79/js/core/update.js', 'v/1.79/js/core/screens.js', 'v/1.79/js/features/looks/screen.js', 'v/1.79/js/features/trophies/screen.js', 'v/1.79/js/features/settings/settings.js', 'v/1.79/js/board.js', 'v/1.79/js/specials.js', 'v/1.79/js/features/tips/tips.js', 'v/1.79/js/features/intro.js', 'v/1.79/js/features/rewards/tasks.js', 'v/1.79/js/features/rewards/chest.js', 'v/1.79/js/features/rewards/lucky.js', 'v/1.79/js/features/rewards/gift.js', 'v/1.79/js/core/telemetry.js', 'v/1.79/js/features/family/week.js', 'v/1.79/js/features/family/ranking.js', 'v/1.79/js/features/family/presence.js', 'v/1.79/js/features/family/passed.js', 'v/1.79/js/features/family/profile.js', 'v/1.79/js/features/family/hearts.js', 'v/1.79/js/features/win.js', 'v/1.79/js/main.js'];
+  var BUILT = '1.80', KEY = 'omamj.code', FILES = ['v/1.80/tiles.js', 'v/1.80/js/core/audio.js', 'v/1.80/layouts.js', 'v/1.80/hard.js', 'v/1.80/levels-hard.js', 'v/1.80/levels-early.js', 'v/1.80/js/rules.js', 'v/1.80/js/lang.js', 'v/1.80/js/core/util.js', 'v/1.80/js/features/shop/catalog.js', 'v/1.80/js/features/shop/shop.js', 'v/1.80/js/core/save.js', 'v/1.80/js/features/rewards/streak.js', 'v/1.80/js/features/grandma/grandma.js', 'v/1.80/js/features/redo/redo.js', 'v/1.80/js/features/trophies/trophies.js', 'v/1.80/js/features/looks/looks.js', 'v/1.80/js/core/fx.js', 'v/1.80/js/core/update.js', 'v/1.80/js/core/screens.js', 'v/1.80/js/features/looks/screen.js', 'v/1.80/js/features/shop/screen.js', 'v/1.80/js/features/trophies/screen.js', 'v/1.80/js/features/settings/settings.js', 'v/1.80/js/board.js', 'v/1.80/js/specials.js', 'v/1.80/js/features/tips/tips.js', 'v/1.80/js/features/intro.js', 'v/1.80/js/features/rewards/tasks.js', 'v/1.80/js/features/rewards/chest.js', 'v/1.80/js/features/rewards/lucky.js', 'v/1.80/js/features/rewards/gift.js', 'v/1.80/js/features/rewards/grit.js', 'v/1.80/js/core/telemetry.js', 'v/1.80/js/features/family/week.js', 'v/1.80/js/features/family/ranking.js', 'v/1.80/js/features/family/presence.js', 'v/1.80/js/features/family/passed.js', 'v/1.80/js/features/family/profile.js', 'v/1.80/js/features/family/hearts.js', 'v/1.80/js/features/win.js', 'v/1.80/js/main.js'];
   function newer(a, b) { a = String(a).split('.'); b = String(b).split('.'); for (var i = 0; i < Math.max(a.length, b.length); i++) { var x = +a[i] || 0, y = +b[i] || 0; if (x !== y) return x > y; } return false; }
   function builtIn() { FILES.forEach(function (f) { var s = document.createElement('script'); s.src = f; s.async = false; document.body.appendChild(s); }); }
   var c = null;

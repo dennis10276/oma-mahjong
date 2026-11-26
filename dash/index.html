@@ -357,8 +357,9 @@ const PREVIEW_PIDS = new Set([
   'pmws16nrgacauq9',
 ]);
 const isPreviewNoise = (id, name) => PREVIEW_PIDS.has(id) || (!SCORES[id] && /^(x|test.*|omatest)$/i.test(String(name || '').trim()));
+const isGiftId = id => typeof isGiftKey === 'function' ? isGiftKey(id) : (id.startsWith('gift-') || id.startsWith('test-gift-'));
 function players() {
-  const ids = new Set([...Object.keys(PLAYS), ...Object.keys(SCORES)].filter(id => !isMsgKey(id) && !isCfgKey(id) && (!id.startsWith('test-') || id === want)));
+  const ids = new Set([...Object.keys(PLAYS), ...Object.keys(SCORES)].filter(id => !isMsgKey(id) && !isCfgKey(id) && !isGiftId(id) && (!id.startsWith('test-') || id === want)));
   return [...ids].map(id => ({ id, name: nameOf(id), last: (events(id).pop() || {}).t || (SCORES[id] || {}).t || 0 }))
     .filter(p => (p.name !== p.id && !isPreviewNoise(p.id, p.name)) || p.id === want)   // visitors who never chose a name and leaked test previews are left out
     .sort((a, b) => b.last - a.last);
@@ -426,7 +427,7 @@ function stuckStreak(pid) {
 function analyse(ev) {
   const levels = new Map(), days = new Map();
   const day = t => { const k = dkey(new Date(t)); if (!days.has(k)) days.set(k, { k, sec: 0, wins: 0, losses: 0, rescues: 0 }); return days.get(k); };
-  const L = e => { const k = lvlKey(e); if (!levels.has(k)) levels.set(k, { k, name: lvlName(e), lv: e.lv, daily: e.m === 'd', ends: [], hints: 0, shuf: 0, rescues: 0, first: e.t, last: e.t, won: null, sec: 0, stars: 0, closest: null }); const l = levels.get(k); l.last = Math.max(l.last, e.t); return l; };   // last: the latest moment she played it (also after continuing later)
+  const L = e => { const k = lvlKey(e); if (!levels.has(k)) levels.set(k, { k, name: lvlName(e), lv: e.lv, daily: e.m === 'd', ends: [], hints: 0, shuf: 0, peeks: 0, undos: 0, rescues: 0, first: e.t, last: e.t, won: null, sec: 0, stars: 0, closest: null }); const l = levels.get(k); l.last = Math.max(l.last, e.t); return l; };   // last: the latest moment she played it (also after continuing later)
   for (const e of ev) {
     if (e.k === 'end') {
       const l = L(e); l.ends.push(e); l.sec += e.dur || 0;
@@ -437,6 +438,8 @@ function analyse(ev) {
     else if (e.k === 'rescue') { L(e).rescues++; day(e.t).rescues++; }
     else if (e.k === 'hint') L(e).hints++;
     else if (e.k === 'shuf') L(e).shuf++;
+    else if (e.k === 'peek_use' && (e.lv || e.m === 'd')) L(e).peeks++;
+    else if (e.k === 'undo_use' && (e.lv || e.m === 'd')) L(e).undos++;
     else if (e.k === 'start') L(e);
     else if (e.k === 'pause' && levels.has(lvlKey(e))) L(e);
   }
@@ -512,7 +515,7 @@ function render() {
   if (!document.activeElement || !document.activeElement.closest('#heartTop')) renderHeartTop();
   renderCfg();
   renderPred(levels, curLv);
-  $('#liveTxt').textContent = active ? (last && ['start', 'hint', 'shuf'].includes(last.k) ? `speelt nu ${lvlName(last).toLowerCase()}` : 'speelt nu') : liveOK ? 'live verbonden' : 'verbinden…';
+  $('#liveTxt').textContent = active ? (last && ['start', 'hint', 'shuf', 'undo_use', 'peek_use'].includes(last.k) && (last.lv || last.m === 'd') ? `speelt nu ${lvlName(last).toLowerCase()}` : 'speelt nu') : liveOK ? 'live verbonden' : 'verbinden…';
   $('#notice').innerHTML = !ev.length ? `<div class="warnbox">Nog geen speelgegevens van ${esc(nameOf(sel))}. Ze verschijnen vanzelf zodra de telefoon de nieuwe versie heeft en er gespeeld wordt.</div>` : '';
 
   // KPIs
@@ -534,7 +537,11 @@ function render() {
     k('Pogingen per level', avgTries ? avgTries.toFixed(1).replace('.', ',') : '–', 'gemiddeld tot het lukt' + (nEasy ? ` · ${nEasy}× 🌱 makkelijker` : '')) +
     k('Kans per poging', ends.length ? Math.round(winEnds.length / ends.length * 100) + '%' : '–', `${winEnds.length} van ${ends.length} pogingen`) +
     k('Vastgelopen', ends.length ? Math.round(stuckEnds.length / ends.length * 100) + '%' : '–', `${stuckEnds.length}× van ${ends.length} pogingen` + (stuckEnds.length ? ` · gem. ${Math.round(stuckEnds.reduce((a, e) => a + (e.n ? (e.n - e.left) / e.n : 0), 0) / stuckEnds.length * 100)}% af` : '')) +
-    k('Hulp gebruikt', winEnds.length ? Math.round(helped / winEnds.length * 100) + '%' : '–', `${ev.filter(e => e.k === 'hint').length}× hint · ${ev.filter(e => e.k === 'shuf').length}× schudden`) +
+    (() => {
+      const nHint = ev.filter(e => e.k === 'hint').length, nShuf = ev.filter(e => e.k === 'shuf').length;
+      const nPeek = ev.filter(e => e.k === 'peek_use').length, nUndo = ev.filter(e => e.k === 'undo_use').length;
+      return k('Hulp gebruikt', winEnds.length ? Math.round(helped / winEnds.length * 100) + '%' : '–', `${nHint}× hint · ${nShuf}× schudden${nPeek ? ` · ${nPeek}× spieken` : ''}${nUndo ? ` · ${nUndo}× terugleggen` : ''}`);
+    })() +
     k('Tijd per level', timed.length ? mmss(timed.reduce((a, e) => a + (e.dur || 0), 0) / timed.length) : '–', 'gemiddeld bij gehaald') +
     (() => {
       const nN = ev.filter(e => e.k === 'vnews').length, nS = ev.filter(e => e.k === 'vstory').length, asks = ev.filter(e => e.k === 'vask');
@@ -575,7 +582,7 @@ function render() {
     }).join('');
     return legacy || recorded ? `<div class="attempt-results">${legacy}${recorded}</div>` : '';
   };
-  $('#tbl').innerHTML = rows.length ? `<table><thead><tr><th>Level</th><th>Verloop</th><th class="num">Pogingen</th><th class="num">Tijd totaal</th><th class="num">Tijd gehaald</th><th class="num">Dichtstbij</th><th>Hulp</th><th>Sterren</th><th>Wanneer</th></tr></thead><tbody>${rows.map(l => `<tr><td>${esc(l.name)}</td><td class="res">${res(l) || '–'}</td><td class="num">${l.ends.length}</td><td class="num">${mmss(l.sec)}</td><td class="num">${l.won ? (l.winDur == null ? '?' : mmss(l.winDur)) : '–'}</td><td class="num">${l.closest != null ? `${l.closest} over` : '–'}</td><td>${l.hints ? '💡'.repeat(Math.min(3, l.hints)) : ''}${l.shuf ? '🔀'.repeat(Math.min(3, l.shuf)) : ''}${l.rescues ? '↩'.repeat(Math.min(3, l.rescues)) : ''}${!l.hints && !l.shuf && !l.rescues ? '–' : ''}</td><td>${l.stars ? '⭐'.repeat(l.stars) : '–'}</td><td>${new Date(l.won || l.last).toLocaleString('nl-NL', { weekday: 'short', day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' })}</td></tr>`).join('')}</tbody></table>` : '<div class="empty">Nog geen levels gespeeld</div>';
+  $('#tbl').innerHTML = rows.length ? `<table><thead><tr><th>Level</th><th>Verloop</th><th class="num">Pogingen</th><th class="num">Tijd totaal</th><th class="num">Tijd gehaald</th><th class="num">Dichtstbij</th><th>Hulp</th><th>Sterren</th><th>Wanneer</th></tr></thead><tbody>${rows.map(l => `<tr><td>${esc(l.name)}</td><td class="res">${res(l) || '–'}</td><td class="num">${l.ends.length}</td><td class="num">${mmss(l.sec)}</td><td class="num">${l.won ? (l.winDur == null ? '?' : mmss(l.winDur)) : '–'}</td><td class="num">${l.closest != null ? `${l.closest} over` : '–'}</td><td>${l.hints ? '💡'.repeat(Math.min(3, l.hints)) : ''}${l.shuf ? '🔀'.repeat(Math.min(3, l.shuf)) : ''}${l.peeks ? '👁️'.repeat(Math.min(3, l.peeks)) : ''}${(l.rescues + l.undos) ? '↩'.repeat(Math.min(3, l.rescues + l.undos)) : ''}${!l.hints && !l.shuf && !l.peeks && !l.rescues && !l.undos ? '–' : ''}</td><td>${l.stars ? '⭐'.repeat(l.stars) : '–'}</td><td>${new Date(l.won || l.last).toLocaleString('nl-NL', { weekday: 'short', day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' })}</td></tr>`).join('')}</tbody></table>` : '<div class="empty">Nog geen levels gespeeld</div>';
 
   $('#tbl').onclick = event => {
     const button = event.target.closest('button[data-aid]');
@@ -586,13 +593,40 @@ function render() {
 
   // live feed
   const openMessages = new Set([...$('#feed').querySelectorAll('details[data-message][open]')].map(d => d.dataset.message));
+  const POSTCARDS = {
+    pc_free: 'Gewoon hartje',
+    pc_coffee: '☕ Kopje koffie',
+    pc_cheer: "💪 Zet 'm op!",
+    pc_sun: '🌻 Zonnebloem',
+    pc_bouquet: '💐 Bloemetje',
+    pc_proud: '💖 Trots op jou',
+  };
+  const SHOP_CATS = {
+    tiles: 'stenen', bg: 'tafel', finish: 'materiaal', tray: 'bakje', fx: 'winst',
+    music: 'muziek', sfx: 'geluid', frame: 'lijstje', title: 'titel', helper: 'hulp',
+  };
+  const shopItemLabel = (cat, id) => {
+    if (cat === 'helper' && id === 'undo') return 'Steen terugleggen';
+    if (cat === 'helper' && id === 'peek') return 'Spieken';
+    const c = SHOP_CATS[cat] || cat || '';
+    return c && id ? `${c}: ${id}` : (id || c || 'item');
+  };
+  const winRewardSuffix = e => {
+    if (typeof e.cn === 'number' || typeof e.pt === 'number') {
+      const parts = [];
+      if (typeof e.cn === 'number') parts.push(`${e.cn} 🪙`);
+      if (typeof e.pt === 'number') parts.push(`${e.pt} pt`);
+      return parts.length ? ` · ${parts.join(' · ')}` : '';
+    }
+    return typeof e.sc === 'number' ? ` · ${e.sc} punten` : '';
+  };
   const txt = e => {
     switch (e.k) {
       case 'open': return ['📱', `App geopend (versie ${esc(e.v)})`];
       case 'show': return ['👀', 'Terug in de app'];
       case 'hide': return ['💤', `App weggelegd${e.fg ? ` na ${mmss(e.fg)}` : ''}${e.lv && e.scr === 'game' ? ` (midden in ${lvlName(e).toLowerCase()})` : ''}`];
       case 'start': return ['▶️', `${lvlName(e)} ${e.res ? 'verder gespeeld' : e.at > 1 ? `opnieuw (poging ${e.at})` : 'begonnen'}${e.ez >= 2 && !e.res ? ' · 🌱 makkelijker gemaakt' : ''}${e.pr != null && e.at === 1 && !e.res ? ` · testspeler haalt hem ${Math.round(e.pr * 100)}% in één keer` : ''}${e.ck && e.at === 1 && !e.res ? ` · ⏰ ${e.ck} zetten` : ''}${e.tl === 1 && e.at === 1 && !e.res ? ' · 💡🔀 verdiend' : ''}`];
-      case 'end': return e.r === 'win' ? ['✅', `<b>${lvlName(e)} gehaald</b> ${'⭐'.repeat(e.st || 0)} in ${noTime(e) ? '? (tijd onbekend)' : mmss(e.dur || 0)}${e.at > 1 ? ` · poging ${e.at}` : ''} · ${e.sc} punten${e.rb ? ' · met ↩ terugleggen' : ''}`]
+      case 'end': return e.r === 'win' ? ['✅', `<b>${lvlName(e)} gehaald</b> ${'⭐'.repeat(e.st || 0)} in ${noTime(e) ? '? (tijd onbekend)' : mmss(e.dur || 0)}${e.at > 1 ? ` · poging ${e.at}` : ''}${winRewardSuffix(e)}${e.rb ? ' · met ↩ terugleggen' : ''}`]
         : e.r === 'stuck' && e.ck ? ['⏰', `${lvlName(e)}: de wekker ging af na ${mmss(e.dur || 0)} (${e.left} stenen over)`]
         : e.r === 'stuck' ? ['❌', `${lvlName(e)}: vastgelopen na ${mmss(e.dur || 0)} (${e.left} stenen over${e.rb ? ', al teruggelegd' : ''})`]
         : ['↻', `${lvlName(e)}: opnieuw begonnen na ${mmss(e.dur || 0)}`];
@@ -601,7 +635,7 @@ function render() {
       case 'pause': return ['⏸', `${lvlName(e)}: naar het menu na ${mmss(e.s || 0)}`];
       case 'heart_in': return ['💛', `Hartje gezien van ${esc(e.from)}${e.where === 'level' ? ' (tijdens een level)' : ''}`];
       case 'heart_out': return ['💌', `Hartje gestuurd naar ${esc(e.to)}`];
-      case 'chest': return ['🎁', `Schatkist geopend (+${e.pts} punten)`];
+      case 'chest': return ['🎁', typeof e.coins === 'number' ? `Schatkist geopend (+${e.coins} 🪙)` : typeof e.pts === 'number' ? `Schatkist geopend (+${e.pts} punten)` : 'Schatkist geopend'];
       case 'clock': return ['⏰', `${lvlName(e)}: wekkersteen op tijd weg (nog ${e.ml} zetten over)`];
       case 'help_msg': {
         const topics = { ice: ['🧊', 'IJs'], lock: ['🔑', 'Slot en sleutel'], trayPair: ['🀄', 'Paar bij 3 stenen'], clock: ['⏰', 'Wekker'] };
@@ -620,9 +654,25 @@ function render() {
       case 'vstory': return ['🏘️', `Buurtverhaal gelezen: ${esc(e.id)}, deel ${e.p}`];
       case 'vask': return ['🧠', `Geheugenvraag over het buurtverhaal: ${e.ok ? '<b>goed</b> (+⭐)' : 'niet goed'}`];
       case 'shufno': return ['🔀', `Wilde meteen schudden in ${lvlName(e).toLowerCase()}: bewaard voor later`];
-      case 'gift': return ['🎁', `Dagcadeau geopend: +${e.stars} ⭐`];
+      case 'gift': return ['🎁', typeof e.coins === 'number' ? `Dagcadeau geopend: +${e.coins} 🪙` : typeof e.stars === 'number' ? `Dagcadeau geopend: +${e.stars} ⭐` : 'Dagcadeau geopend'];
       case 'rescue': return ['↩', `Stenen teruggelegd in ${lvlName(e).toLowerCase()} (na ${mmss(e.s || 0)}, ${e.left} stenen op het bord)`];
-      case 'msg': return ['💌', `Bericht van ${esc(e.name)}: “${esc([e.m0, e.m1, e.m2].filter(Boolean).join(''))}”`];
+      case 'msg': {
+        const body = [e.m0, e.m1, e.m2].filter(Boolean).join('');
+        const pc = e.pc ? (POSTCARDS[e.pc] || e.pc) : '';
+        if (pc && body) return ['💌', `Hartjeskaart van ${esc(e.name)} (${esc(pc)}): “${esc(body)}”`];
+        if (pc) return ['💌', `Hartjeskaart van ${esc(e.name)} (${esc(pc)})`];
+        if (body) return ['💌', `Bericht van ${esc(e.name)}: “${esc(body)}”`];
+        return ['💌', `Bericht van ${esc(e.name)}`];
+      }
+      case 'shop_buy': return ['🛍️', `Gekocht in winkel: ${esc(shopItemLabel(e.cat, e.id))}${typeof e.p === 'number' ? ` (${e.p} 🪙)` : ''}`];
+      case 'shop_equip': return ['🎨', `Ingesteld uit winkel: ${esc(shopItemLabel(e.cat, e.id))}`];
+      case 'shop_gift_out': return ['🎁', `Cadeau gestuurd naar ${esc(nameOf(e.to || ''))}: ${esc(shopItemLabel(e.cat, e.id))}${typeof e.p === 'number' ? ` (${e.p} 🪙)` : ''}`];
+      case 'shop_gift_in': return ['🎁', `Cadeau ontvangen van ${esc(nameOf(e.from || ''))}: ${esc(shopItemLabel(e.cat, e.id))}`];
+      case 'undo_free': return ['↩️', `Gratis steen terugleggen gepakt${typeof e.stock === 'number' ? ` (voorraad ${e.stock})` : ''}`];
+      case 'undo_use': return ['↩️', `Steen teruggelegd${e.lv || e.m === 'd' ? ` in ${lvlName(e).toLowerCase()}` : ''}${typeof e.stock === 'number' ? ` (nog ${e.stock} op voorraad)` : ''}`];
+      case 'peek_free': return ['👁️', `Gratis spieken gepakt${typeof e.stock === 'number' ? ` (voorraad ${e.stock})` : ''}`];
+      case 'peek_use': return ['👁️', `Spieken gebruikt${e.lv || e.m === 'd' ? ` in ${lvlName(e).toLowerCase()}` : ''}${typeof e.stock === 'number' ? ` (nog ${e.stock} op voorraad)` : ''}`];
+      case 'grit_bloom': return ['🌼', `Bijna-bloem vol${typeof e.coins === 'number' ? ` (+${e.coins} 🪙)` : ''}`];
       case 'err': return ['⚠️', `Foutje in de app: ${esc(e.msg)}${e.w ? ` <small>(${esc(e.w)})</small>` : ''}`];
       default: return ['•', esc(e.k)];
     }

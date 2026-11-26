@@ -3,7 +3,7 @@
 'use strict';
 
 function openSettings() {
-  const rows = ['sfx', 'music', 'vibrate', 'highlight', 'nums'];
+  const rows = ['sfx', 'music', 'musicShuffle', 'vibrate', 'highlight'];   // no corner-numbers row: the classic tiles never show them (Dennis 2026-11-26)
   const cur = langOf(S);
   openModal(`<h2>${tx('settings')}</h2>
     <div class="set-row">${fx('set_lang')}<span class="lang-pick">${Object.entries(LANGS).map(([c, n]) => `<button class="lp${c === cur ? ' on' : ''}" data-lang="${c}">${n}</button>`).join('')}</span></div>
@@ -17,9 +17,9 @@ function openSettings() {
     const k = t.dataset.k; S[k] = !S[k]; t.classList.toggle('on', S[k]); save();
     if (k === 'sfx') Sound.setSfx(S.sfx);
     if (k === 'music') Sound.setMusic(S.music);
+    if (k === 'musicShuffle') Sound.refreshShuffle();
     if (k === 'vibrate' && S.vibrate) buzz(40);
     if (k === 'highlight') $('#board').classList.toggle('hl', S.highlight);
-    if (k === 'nums') document.body.classList.toggle('nonum', !S.nums);
   });
   $('#mHow').onclick = () => showIntro();
   $('#mReset').onclick = confirmReset;
@@ -35,7 +35,7 @@ function confirmReset() {
     <button class="reset-btn" id="rsYes">${tx('wipeYes')}</button>`);
   $('#rsNo').onclick = closeModal;
   $('#rsYes').onclick = () => {
-    const keep = { sfx: S.sfx, music: S.music, vibrate: S.vibrate, highlight: S.highlight, nums: S.nums, seenIntro: true, seenTray: true, seenDown: !!S.seenDown, seenSp: S.seenSp, pid: S.pid, name: S.name, avatar: S.avatar, heartsSeen: S.heartsSeen, lang: S.lang };
+    const keep = { sfx: S.sfx, music: S.music, musicShuffle: !!S.musicShuffle, vibrate: S.vibrate, highlight: S.highlight, nums: S.nums, seenIntro: true, seenTray: true, seenDown: !!S.seenDown, seenSp: S.seenSp, pid: S.pid, name: S.name, avatar: S.avatar, heartsSeen: S.heartsSeen, lang: S.lang };
     const theme = Tiles.THEMES[S.theme] && !Tiles.THEMES[S.theme].prize ? S.theme : 'classic';
     Object.keys(S).forEach(k => delete S[k]);
     Object.assign(S, defaults(), keep, { theme });

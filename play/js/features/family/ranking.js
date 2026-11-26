@@ -7,20 +7,20 @@ const LB_CACHE = 'omamj.lb';
 // v = my weekly points (week) or my level (all-time); undefined = my current value
 function myEntry(v, mode = 'all') {
   const all = mode !== 'week';
-  return { id: S.pid, name: S.name || tx('you'), avatar: S.avatar || '😊', frame: S.frame || 'none', points: all ? myPoints() : (v ?? myWeekPts()), level: all ? (v ?? S.level) : S.level, me: true };
+  return { id: S.pid, name: S.name || tx('you'), avatar: S.avatar || '😊', frame: S.frame || 'none', points: all ? myPoints() : (v ?? myWeekPts()), level: all ? (v ?? S.level) : S.level, stars: all ? mainStars() : 0, me: true, title: S.title || '', perfect: !perfectBlockers().length && S.level > 1 };
 }
 function onlineEntries(mode = 'all', weekId) {
   let list = [];
   try { list = (JSON.parse(localStorage.getItem(LB_CACHE) || '[]') || []).filter(e => e.id !== S.pid && !hiddenFromRanking(e.id, e.name)); } catch (e) { }
-  if (mode === 'week') { const id = weekId || weekInfo().id; list = list.map(e => ({ ...e, points: e.wk === id ? (e.wkPts || 0) : 0 })); }
+  if (mode === 'week') { const id = weekId || weekInfo().id; list = list.map(e => ({ ...e, points: e.wk === id && e.wkV === 2 ? (e.wkPts || 0) : 0 })); }
   return list;
 }
-/* week = points this week; all-time ("All-time") = highest level, points only break a tie */
+/* Week ranks by points. All-time ranks by level, with main-level stars breaking ties. */
 function ranking(v, mode = 'all') {
   const list = [...onlineEntries(mode), myEntry(v, mode)];
   // on a tie you are placed above the other player
   if (mode === 'week') list.sort((a, b) => b.points - a.points || (b.me ? 1 : 0) - (a.me ? 1 : 0));
-  else list.sort((a, b) => b.level - a.level || b.points - a.points || (b.me ? 1 : 0) - (a.me ? 1 : 0));
+  else list.sort((a, b) => b.level - a.level || (b.stars || 0) - (a.stars || 0) || (b.me ? 1 : 0) - (a.me ? 1 : 0));
   return list;
 }
 const myRank = (v, mode = 'all') => ranking(v, mode).findIndex(e => e.me) + 1;
@@ -42,17 +42,75 @@ function famHTML(mode, list, title = tx('family'), withHearts = false, activity 
   }).join('')}</div>`;
 }
 
-function rowHTML(e, rank, mode, rankingCard = false) {
-  const presence = presenceOf(e), withHeart = rankingCard && isFam(e);
-  const sub = mode === 'week' ? tx('levelWord', e.level) : rankingCard ? '' : tx('points', fmtN(e.points));
-  const subtitle = sub + presenceSubHTML(presence, !!sub);
+function rowHTML(e, rank, mode) {
+  const presence = presenceOf(e);
+  const sub = mode === 'week' ? tx('levelWord', e.level) : tx('points', fmtN(e.points));
   const name = esc(e.name) + (e.me ? ` <i>${tx('youTag')}</i>` : ' <i class="fam-tag">👪</i>');
-  const nameLine = rankingCard ? `<span class="ranking-name fit-row">${name}</span>` : name;
-  return `<span class="rk">${medal(rank)}</span>${avatarHTML(e, 'ra', presence?.online)}<span class="rn">${nameLine}${subtitle ? `<small>${subtitle}</small>` : ''}${withHeart ? heartState(e.id) : ''}</span><span class="rp">${rowVal(e, mode)}${withHeart ? heartBtn(e) : ''}</span>`;
+  return `<span class="rk">${medal(rank)}</span>${avatarHTML(e, 'ra', presence?.online)}<span class="rn">${name}<small>${sub + presenceSubHTML(presence, !!sub)}</small></span><span class="rp">${rowVal(e, mode)}</span>`;
 }
 let rankMode = 'week';
-const rankRowsHTML = (list, mode) => list.map((e, i) =>
-  `<div class="rrow${e.me ? ' me' : ''}${isFam(e) ? ' fam' : ''}">${rowHTML(e, i + 1, mode, true)}</div>`).join('');
+/* ---------- the ranking page: a tile (week cup or the all-time Perfect goal) and the pink block of rows ---------- */
+// The completed levels that can still improve toward PERFECT.
+function perfectBlockers() {
+  const blockers = [];
+  for (let l = 1; l < S.level; l++) if (mainLevelStars(l) < 3) blockers.push(l);
+  return blockers;
+}
+// The same badge is sized by its context. The badge's inner pill carries the shine.
+const perfectSticker = (cls = '') => `<span class="pf${cls ? ' ' + cls : ''}"><span class="pf-in">PERFECT</span></span>`;
+function showPerfectPlaque(entry) {
+  const blockers = perfectBlockers().length, nudge = blockers > 0 && blockers <= 5;
+  openModal(`<div class="perfect-plaque"><div class="plaque-stars">⭐⭐⭐</div>${perfectSticker('pf-hero')}<h2>${esc(entry.name)}</h2>
+    <p>${tx('perfectPlaqueText', entry.level - 1)}</p>
+    ${nudge ? `<p class="plaque-nudge"><span>${tx('perfectPlaqueNudge', blockers)}</span>${perfectSticker('pf-nudge')}</p>
+      <button class="big-btn play" id="pfReplay"><span class="bb-text"><b>${fx('perfectPlaquePlay', blockers)}</b></span></button>` : ''}
+    <button class="link-btn" id="pfClose">${tx('close')}</button></div>`);
+  $('#pfClose').onclick = closeModal;
+  if (nudge) $('#pfReplay').onclick = () => { closeModal(); show('levels', { missingStars: true }); };
+}
+const titleOf = e => { const it = e.title && SHOP_CATALOG.title.find(x => x.id === e.title); return it ? `${it.icon} ${isEn() ? it.en : it.nl}` : ''; };
+const cupName = c => ['bronze', 'silver', 'gold', 'diamond'].includes(c.id) ? tx('cup_' + c.id) : tx('cup_extra');
+function weekTileHTML(list) {
+  const g = WeekEconomy.getCupGoalState(S), tiers = SHOP_RULES.cups.tiers, max = tiers[tiers.length - 1].pt;
+  const place = list.findIndex(e => e.me) + 1;
+  const now = `${g.currentTier ? `${g.currentTier.ico} ${tx('cupHave', cupName(g.currentTier))}` : tx('cupNone')} · ${tx('points', fmtN(g.pts))} · ${tx('rankYouAre', place)}`;
+  return `<div class="week-tile"><div class="wt-top"><span>${tx('cupWeek')}</span><span class="wt-end">${tx('cupEnds')}</span></div>
+    <div class="wgoal"><span class="next">${g.nextTier.ico}</span><div class="gt"><b>${tx('cupToGo', g.ptsToNext)}</b><small>${tx('cupUntil', cupName(g.nextTier))}</small></div><span class="rew">+${g.nextCoins} 🪙</span></div>
+    <div class="track"><i style="width:${Math.min(100, g.pts / max * 100)}%"></i>${tiers.map(t => `<span class="cupmark${g.pts >= t.pt ? '' : ' not'}" style="left:${t.pt / max * 100}%">${t.ico}</span>`).join('')}</div>
+    <div class="now">${now}</div></div>`;
+}
+function allTileHTML(list) {
+  const blockers = S.level > 1 ? perfectBlockers().length : 1, total = Math.max(1, S.level - 1), done = total - blockers;
+  const place = list.findIndex(e => e.me) + 1;
+  const dots = Array.from({ length: 10 }, (_, i) => `<i class="${i < Math.round(done / total * 10) ? '' : 'not'}"></i>`).join('');
+  const goal = blockers ? `<b>${tx('tileToGo', blockers)}</b><small>${tx('tileWith3')}</small>` : `<b>${tx('tileYouAre')}</b><small>${tx('tileAll3')}</small>`;
+  return `<div class="week-tile"><div class="wt-top"><span>${tx('tileTitle')}</span><span class="wt-end">${tx('rankYouAre', place)}</span></div>
+    <div class="wgoal"><div class="gt">${goal}</div><span class="medrew plain">${perfectSticker()}</span></div>
+    <div class="dots">${dots}</div>
+    <div class="foot"><span class="now">${tx('tileDone', done, total)}</span><button class="go" id="rkPlay">${tx('tilePlay')}</button></div></div>`;
+}
+// a ranking row: place · photo · name (jij) PERFECT / shop title · presence · points or level · heart
+function rankRowHTML(e, rank, mode) {
+  const presence = presenceOf(e), title = titleOf(e);
+  const sub = [title, presence ? `<span class="${presence.online ? 'presence-text' : 'presence-last'}">${presence.text}</span>` : '', isFam(e) ? heartSeenShort(e.id) : ''].filter(Boolean).join(' · ');
+  const val = mode === 'week' ? `<span class="rp">${fmtN(e.points)}</span>` : `<span class="rp lvl"><small>level</small>${e.level}</span>`;
+  const badge = e.perfect ? `<button class="pf-button" data-perfect="${esc(e.id)}" aria-label="PERFECT · ${esc(e.name)}">${perfectSticker()}</button>` : '';
+  return `<div class="rrow tight${e.me ? ' me' : ''}${isFam(e) ? ' fam' : ''}"><span class="rk">${medal(rank)}</span>${avatarHTML(e, 'ra', presence?.online)}<span class="rn"><span class="nm1"><span class="nmt">${esc(e.name)}</span>${e.me ? `<i>${tx('youTag')}</i>` : ''}${badge}</span><small>${sub || '&nbsp;'}</small></span>${val}<span class="hb">${isFam(e) ? heartBtn(e) : ''}</span></div>`;
+}
+const rankPageHTML = mode => {
+  const list = ranking(undefined, mode);
+  return `${mode === 'week' ? weekTileHTML(list) : allTileHTML(list)}<div class="rank-block"><div class="rl-scroll">${list.map((e, i) => rankRowHTML(e, i + 1, mode)).join('')}</div></div>`;
+};
+// the buttons inside a page (hearts, Speel)
+function bindRankPage(root) {
+  root.querySelectorAll('.heart-btn').forEach(b => b.onclick = ev => { ev.stopPropagation(); sendHeart(b.dataset.pid, b.dataset.name, b); });
+  root.querySelectorAll('[data-perfect]').forEach(b => b.onclick = () => {
+    const player = ranking(undefined, rankMode).find(entry => entry.id === b.dataset.perfect);
+    if (player?.perfect) showPerfectPlaque(player);
+  });
+  const play = root.querySelector('#rkPlay');
+  if (play) play.onclick = () => show('levels', { missingStars: perfectBlockers().length > 0 });
+}
 
 function bindRankingNavigation() {
   const viewport = $('#rankViewport'), current = $('#rankList'), next = $('#rankNext'), tabs = $('#ranking .rk-tabs');
@@ -70,12 +128,11 @@ function bindRankingNavigation() {
   function prepare() {
     const origin = position(rankMode);
     motion = { mode: origin === 0 ? 'all' : 'week', stride: viewport.clientWidth + 8, settling: false };
-    next.innerHTML = rankRowsHTML(ranking(undefined, motion.mode), motion.mode);
+    next.innerHTML = rankPageHTML(motion.mode);
     viewport.style.setProperty('--rank-side', (origin === 0 ? motion.stride : -motion.stride) + 'px');
     next.hidden = false;
     viewport.classList.add('rank-moving');
     paint(origin);
-    fitTexts(next);
   }
   function finish(mode) {
     clearTimeout(motion.timer);
@@ -154,25 +211,19 @@ function bindRankingNavigation() {
 function renderRanking() {
   if ($('#rankViewport').classList.contains('rank-moving')) return;
   ensureId(); ensureWeek();
-  const list = ranking(undefined, rankMode);
-  const me = list.findIndex(e => e.me);
-  $('#rkMine').textContent = tx('rankYourPlace', me + 1, list.length);
   const tabs = $('#ranking .rk-tabs');
   tabs.dataset.mode = tabs.dataset.spot = rankMode;
   for (const [id, mode] of [['#rkWeek', 'week'], ['#rkAll', 'all']]) {
     $(id).classList.toggle('on', rankMode === mode);
     $(id).setAttribute('aria-pressed', rankMode === mode);
   }
-  $('#wkInfo').innerHTML = rankMode === 'week'
-    ? tx('weekEnds', weekLeftText())
-    : tx('allInfo');
 
-  const rankList = $('#rankList');
-  rankList.innerHTML = rankRowsHTML(list, rankMode);
-  fitTexts(rankList);
-  rankList.querySelectorAll('.heart-btn').forEach(b => b.onclick = ev => { ev.stopPropagation(); if (!b.classList.contains('sent')) sendHeart(b.dataset.pid, b.dataset.name, b); else toast(tx('heartAlreadyShort')); });
+  const rankList = $('#rankList'), keep = rankList.querySelector('.rl-scroll')?.scrollTop || 0;
+  rankList.innerHTML = rankPageHTML(rankMode);
+  bindRankPage(rankList);
+  const rows = rankList.querySelector('.rl-scroll');
+  if (rows) rows.scrollTop = keep;
   const online = !!DB_URL;
-  $('#rankNote').innerHTML = tx(S.lbOnlineAt && Date.now() - S.lbOnlineAt < 60000 ? 'rankNoteOnline' : 'rankNoteCached');
   $('#rankName').innerHTML = avatarHTML(myEntry(0), 'ra small');
   $('#rankName').setAttribute('aria-label', tx('rankProfile'));
   $('#rankName').title = S.name || tx('pickName');

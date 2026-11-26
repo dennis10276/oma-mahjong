@@ -30,8 +30,8 @@ $('#boardWrap').addEventListener('pointerdown', e => {
   if (i >= 0) { e.preventDefault(); onTap(i, false, point); }
   else if (G && !G.done) replayMark('miss', point);
 });
-$('#btnHint').onclick = () => armTool('#btnHint', hint, 'hintAgain');
-$('#btnShuffle').onclick = () => armTool('#btnShuffle', shuffle, 'shuffleAgain');
+$('#btnPeek').onclick = () => helperTap('peek');
+$('#btnUndo').onclick = () => helperTap('undo');
 $('#btnRestart').onclick = () => {
   if (!G || G.done || G.busy) return;
   openModal(`<h2>${tx('restartTitle')}</h2>
@@ -43,9 +43,10 @@ $('#btnRestart').onclick = () => {
 };
 $('#btnHome').onclick = () => { saveCur(); if (G && !G.done) logLvl('pause'); show('home'); };
 $('#btnPlay').onclick = () => startLevel(S.level);
-$('#btnDaily').onclick = () => { selDate = todayKey(); const n = new Date(); calY = n.getFullYear(); calM = n.getMonth(); show('daily'); };
+$('#btnDaily').onclick = () => startDaily(todayKey());
+$('#btnCalendar').onclick = () => { selDate = todayKey(); const n = new Date(); calY = n.getFullYear(); calM = n.getMonth(); show('daily'); };
 $('#btnLevels').onclick = () => show('levels');
-$('#btnThemes').onclick = () => show('themes');
+$('#btnShop').onclick = () => show('shop');
 $('#btnTrophies').onclick = () => show('trophies');
 $('#btnRanking').onclick = () => { if (!S.name) askName(() => show('ranking')); else show('ranking'); };
 $('#rankName').onclick = () => askName(() => renderRanking());
@@ -73,12 +74,13 @@ window.handleBack = () => {
   return false;
 };
 
-Sound.setSfx(S.sfx); Sound.setMusic(S.music);
+Sound.setSfx(S.sfx); Sound.setMusic(S.music); Sound.applyAudio();   // the equipped tile sounds
 applyLang();
 applyTheme();
 applyBg();
 ensureId();
-fetchOnline().then(ok => { if (ok && curScreen === 'home') renderHome(); checkHearts(); checkSentHearts(); if (ok) checkPassed(); });
+// (window.__mjBoot: tests wait for it, so a stuck gift is settled before they look at the wallet)
+window.__mjBoot = fetchOnline().then(async ok => { if (ok && curScreen === 'home') renderHome(); checkHearts(); checkSentHearts(); if (ok) { checkPassed(); await resumeShopGift(); } });
 // back to the app after a while (phones keep it in memory): the same as opening it again
 let hiddenAt = 0;
 document.addEventListener('visibilitychange', () => {
@@ -102,7 +104,7 @@ setInterval(() => {
   if (curScreen === 'home') checkSentHearts();
   if (curScreen === 'ranking' && modalFree()) renderRanking();
 }, 30000);
-document.body.classList.toggle('nonum', !S.nums);
+document.body.classList.add('nonum');   // the classic tiles never show corner numbers (Dennis 2026-11-26)
 show('home');
 window.__mjReady = true;   // the boot script and the load-error banner look at this
 // dashboard: app opened, and how long it stays on screen

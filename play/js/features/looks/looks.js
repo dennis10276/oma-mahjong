@@ -20,16 +20,34 @@ BGS.forEach(b => Object.defineProperty(b, 'name', { get: () => tx('bg_' + b.id) 
 const numBgs = BGS.filter(b => typeof b.need === 'number');
 
 const sunUnlocked = () => S.level > RULES.sunflower.level;
+// the prize is hers the moment it unlocks, whatever she taps (or an old save already past the level)
+function grantSunPrize() {
+  if (!sunUnlocked()) return;
+  let add = false;
+  for (const [cat, id] of [['tiles', 'sunflower'], ['bg', 'sunfield']]) if (!ShopEconomy.ownsItem(S, cat, id)) { S.owned[cat].push(id); add = true; }
+  if (add) save();
+}
 const bgLocked = b => b.sun ? !sunUnlocked() : totalStars() < b.need;
+// what a player has equipped comes from what she owns (ShopEconomy), not from stars
 function applyBg() {
-  let b = BGS.find(b => b.id === S.bg) || BGS[0];
-  if (bgLocked(b)) b = BGS[0];
-  $('#bg').style.background = b.css;
-  $('#bg').className = b.id === 'sunfield' ? 'sunfield' : '';
+  const id = ShopEconomy.resolveEquippedItem(S, 'bg');
+  $('#bg').style.background = (findCatalogItem('bg', id) || BGS[0]).css;
+  $('#bg').className = id === 'sunfield' ? 'sunfield' : '';
 }
 function applyTheme() {
-  if (S.theme === 'sunflower' && !sunUnlocked()) S.theme = 'classic';
+  S.theme = ShopEconomy.resolveEquippedItem(S, 'tiles');
   const sunny = S.theme === 'sunflower';
   document.body.classList.toggle('sunny', sunny);
   Sound.setMood(sunny ? 'sunny' : 'calm');
+  applyFinish(); applyTray();
+}
+// tile colour and tray: CSS variables on body that the board's .tile and #tray rules read; the starter items set none, so the board keeps today's colours
+function setLookVars(vars) { for (const [k, v] of Object.entries(vars)) v ? document.body.style.setProperty(k, v) : document.body.style.removeProperty(k); }
+function applyFinish() {
+  const it = findCatalogItem('finish', ShopEconomy.resolveEquippedItem(S, 'finish')), own = it && !it.starter;
+  setLookVars({ '--tile-face': own && it.tileBg, '--tile-lip': own && it.tileLip, '--tile-rim': own && it.tileBorder });
+}
+function applyTray() {
+  const it = findCatalogItem('tray', ShopEconomy.resolveEquippedItem(S, 'tray')), own = it && !it.starter;
+  setLookVars({ '--tray-bg': own && it.trayBg, '--tray-well': own && it.trayWell, '--tray-lip': own && it.trayLip });
 }

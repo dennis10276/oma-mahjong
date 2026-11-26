@@ -9,7 +9,7 @@ Files in the first group are read by Node tools or the dashboard by path, so the
 - `../layouts.js`, `../hard.js`, `../levels-hard.js`, `../levels-early.js` engine, hard levels, level data (Node tools read them)
 - `rules.js` every tunable number (the dashboard loads it)
 - `lang.js` every text, Dutch and English
-- `board.js` playing a level: pile, tray, tapping, matching, hint, shuffle
+- `board.js` playing a level: pile, tray, tapping, matching, the helpers Spieken and Steen terugleggen
 - `specials.js` gold pair, joker, ice, lock and key
 - `main.js` buttons, touch, start-up; always the last file
 
@@ -23,10 +23,13 @@ Files in the first group are read by Node tools or the dashboard by path, so the
 - `telemetry.js` play log for the dashboard
 
 ## features/ (one folder per part; a part's screen is in its `screen.js`)
+- `shop/catalog.js` coin prices, legacy unlock IDs and economy rules
+- `shop/shop.js` wallet, one-time save migration, shop actions, and helper guardrails (both scripts load before `core/save.js`)
 - `intro.js` the intro films that explain a mechanic
 - `win.js` the win screen and the rewards after it
 - `tips/tips.js` the "Wist je dat?" tips on the home screen
 - `looks/looks.js` backgrounds, themes, applying them
+- `shop/screen.js` the Winkel screen: header, four swipeable tabs, `shopPage(tab)` builds one tab page
 - `looks/screen.js` Zonnebloem goal on home, the themes screen, the sunflower unlock pop-up
 - `trophies/trophies.js` the trophies and when they are earned
 - `trophies/screen.js` the prize cabinet: statistics and the trophy grid
@@ -35,6 +38,7 @@ Files in the first group are read by Node tools or the dashboard by path, so the
 - `rewards/chest.js` the chest that the three tasks open
 - `rewards/lucky.js` the lucky moment in a level
 - `rewards/gift.js` the daily gift
+- `rewards/grit.js` Grit, Lucky lookahead, Momentum and board-helper logic
 - `rewards/streak.js` days in a row (`streak()`) and levels won in a row (`winStreakStep()`)
 - `grandma/grandma.js` Super-omamodus: `careMode`, `part`, `help`, settings from the dashboard
 - `redo/redo.js` "redo from level n", set on the dashboard

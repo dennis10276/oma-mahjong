@@ -12,12 +12,9 @@ function renderGoal(el) {
     return;
   }
   el.classList.remove('sun');
-  const ts = totalStars();
-  const next = numBgs.find(b => b.need > ts);
-  if (!next) { el.innerHTML = tx('goalAllBgs'); return; }
-  const prev = [...numBgs].reverse().find(b => b.need <= ts);
-  const pct = Math.round((ts - prev.need) / (next.need - prev.need) * 100);
-  el.innerHTML = `${fx('goalBg', next.need - ts, next.name)}<div class="bar"><i style="width:${pct}%"></i></div>`;
+  ensureWeek();
+  const g = WeekEconomy.getCupGoalState(S);   // the weekly cup goal, the same week as the Weekbeker tile
+  el.innerHTML = `${fx('goalCup', g.ptsToNext, g.nextTier.ico, cupName(g.nextTier), g.nextCoins)}<div class="bar"><i style="width:${Math.max(0, Math.min(100, g.pct))}%"></i></div>`;
 }
 
 function renderThemes() {
@@ -58,12 +55,13 @@ function renderThemes() {
   }
 }
 function showSunflowerUnlock(then) {
-  S.sunSeen = true; save();
+  S.sunSeen = true; grantSunPrize(); save();
   Sound.sunflower(); FX.sunRain(); buzz([30, 60, 30, 60, 30, 60, 80]);
   openModal(`<div class="sun-big">🌻</div><h2>${tx('sunWin')}</h2>
     <p>${tx('sunWinText')}</p>
     <button class="big-btn gold" id="sunUse"><span class="bb-text"><b>${tx('sunUse')}</b></span></button>
     <button class="link-btn" id="sunLater">${tx('sunLater')}</button>`, false);
-  $('#sunUse').onclick = () => { S.theme = 'sunflower'; S.bg = 'sunfield'; save(); applyBg(); applyTheme(); closeModal(); FX.emoji(innerWidth / 2, innerHeight / 2, ['🌻', '🌼', '🐝', '✨'], 16); then(); };
+  $('#sunUse').onclick = () => {
+    S.theme = 'sunflower'; S.bg = 'sunfield'; save(); applyBg(); applyTheme(); closeModal(); FX.emoji(innerWidth / 2, innerHeight / 2, ['🌻', '🌼', '🐝', '✨'], 16); then(); };
   $('#sunLater').onclick = () => { closeModal(); then(); };
 }

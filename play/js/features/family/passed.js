@@ -17,7 +17,7 @@ function checkPassed() {
   const by = l.slice(0, me).filter(e => S.famBelow.includes(e.id));
   notePassedBaseline(true);
   if (!by.length) return;
-  S.passedNews = { t: Date.now(), rank: me + 1, mine: S.level, by: by.map(e => ({ id: e.id, name: e.name, avatar: e.avatar, frame: e.frame, level: e.level, online: e.online, t: e.t })) };
+  S.passedNews = { t: Date.now(), rank: me + 1, mine: S.level, by: by.map(e => ({ id: e.id, name: e.name, avatar: e.avatar, frame: e.frame, title: e.title, level: e.level, online: e.online, t: e.t })) };
   save();
   logEvt('passed', { by: by.map(e => e.name).join(', ').slice(0, 40), lv: S.level, rk: me + 1 });
   showPassed();
@@ -28,16 +28,31 @@ function showPassed() {
   if (!n) return;
   if (curScreen !== 'home' || !modalFree()) { clearTimeout(showPassed.t); showPassed.t = setTimeout(showPassed, 1500); return; }
   S.passedNews = null; save();
-  Sound.blocked(); buzz([30, 60, 30]);
+  Sound.pass();
   const latest = new Map(onlineEntries('all').map(e => [e.id, e]));
+  const single = n.by.length === 1;
   const rows = n.by.map(e => {
-    const presence = presenceOf(latest.get(e.id) || e);
-    return `<div class="fam-row passed-row">${avatarHTML(e, 'ra', presence?.online)}<span class="fr-name">${esc(e.name)}<small class="fr-sub">${tx('passedNow', e.level)}${presenceSubHTML(presence)}</small></span><span class="fr-val">${tx('levelWord', e.level)}</span></div>`;
+    const player = latest.get(e.id) || e, presence = presenceOf(player), title = titleOf(player);
+    return `<div class="fam-row passed-row">${avatarHTML(e, 'ra', presence?.online)}<span class="fr-name">${esc(e.name)}
+      <small class="fr-sub">${esc(title)}${presenceSubHTML(presence, !!title)}<br>${tx('levelWord', player.level)}</small></span>
+      ${single ? '' : heartBtn(e)}</div>`;
   }).join('');
-  openModal(`<div class="nt-ico">🏃</div><h2>${tx(n.by.length > 1 ? 'passedTitleMany' : 'passedTitle')}</h2>
-    <p>${tx('passedText', n.by.length > 1 ? n.by.map(e => esc(e.name)).join(' & ') : esc(n.by[0].name), n.by.length)}</p>
+  openModal(`<div class="nt-ico">🏃</div><h2>${single ? tx('passedByOne', esc(n.by[0].name)) : tx('passedTitleMany')}</h2>
     <div class="fam-box">${rows}</div>
-    <p class="note">${tx('passedYou', n.mine, n.rank)}</p>
-    <button class="big-btn play" id="psOk"><span class="bb-text"><b>${tx('passedGo')}</b></span></button>`, false);
-  $('#psOk').onclick = () => { closeModal(); renderHome(); };
+    <p class="note">${tx('passedPlace', n.rank)}</p>
+    <div class="btn-row"><button class="big-btn play" id="psOk"><span class="bb-text"><b>${fx('passedPlay', S.level)}</b></span></button>
+    ${single ? `<button class="big-btn gold" id="psCheer"><span class="bb-text"><b>${fx('passedCheer')}</b></span></button>` : ''}</div>
+    <button class="link-btn" id="psMenu">${tx('menu')}</button>`, true, null, 'passed-dialog');
+  const cheer = async (e, button) => {
+    if (button.disabled || sentToday(e.id)) { toast(tx('heartAlreadyShort')); return; }
+    button.disabled = true;
+    if (!(await doSendHeart(e.id, e.name, button, '', false))) {
+      button.disabled = false;
+      toast(tx('heartFail'));
+    }
+  };
+  if (single) $('#psCheer').onclick = ev => cheer(n.by[0], ev.currentTarget);
+  $('#modalBox').querySelectorAll('.heart-btn').forEach(btn => btn.onclick = () => cheer(n.by.find(e => e.id === btn.dataset.pid), btn));
+  $('#psOk').onclick = () => { closeModal(); startLevel(S.level); };
+  $('#psMenu').onclick = closeModal;
 }

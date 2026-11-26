@@ -68,6 +68,7 @@ function recordHelpMessage(topic, why) {
 function endLevel(r, extra = {}) {
   if (!G || G.logged) return;
   G.logged = true; syncClock();
+  stopPeek();
   replayCapture(); replayMark('end', { r, ...extra }); replayDrain(G);
   if (G.rp) G.rp.closed = true;
   // Losses keep their board on screen for the retry/review dialog, but are no

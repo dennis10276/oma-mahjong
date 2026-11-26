@@ -9,6 +9,7 @@ function openChest() {
   T.chest = true;
   const pts = chestPts(), stars = RULES.chest.stars;
   giveBonus(stars, pts);
+  ShopEconomy.addCoins(S, SHOP_RULES.chest.coins);
   bumpStat('chests'); save(); pushScore();
   logEvt('chest', { pts });
   Sound.trophy(); FX.confetti(); buzz([30, 60, 30, 60, 80]);
