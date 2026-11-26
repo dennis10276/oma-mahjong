@@ -276,6 +276,8 @@ module.exports = [
     async run(t, { FakeDB }) {
       const scores = Object.fromEntries(Array.from({ length: 9 }, (_, i) => ['pFam' + i, score('Speler ' + i, 500 + i, 20000 + i, NOW)]));
       scores.pLong = { ...score('rashmiisdebeste', 455, 18000, NOW, NOW - MINUTE), avatar: '🌻', frame: 'crown' };
+      // the widest frame rings (Dennis 2026-11-27: on his phone the sun and rainbow rings ran into the place and the name)
+      scores.pFam1.frame = 'sun'; scores.pFam2.frame = 'rainbow'; scores.pFam3.frame = 'frm_velvet'; scores.pFam4.frame = 'gold';
       const p = await t.phone({ db: new FakeDB({ scores }), size: [392, 730], state: me });
       await p.locator('#btnRanking').click();
       await p.locator('#rkAll').click();
@@ -301,6 +303,16 @@ module.exports = [
         t.eq(layout.rank, '#10', 'multi-digit place at ' + width + ' px');
         t.ok(layout.rankFits && layout.gap >= 4, 'rank stays clear of the framed avatar at ' + width + ' px', layout);
         t.ok(layout.lines === 1 && layout.fits, 'the entire name fits on one line at ' + width + ' px', layout);
+        // the frame ring (a box-shadow outside the avatar) stays clear of the place and the name in every row
+        const clash = await p.evaluate(() => [...document.querySelectorAll('#rankList .rrow')].map(el => {
+          const a = el.querySelector('.ra'), box = a.getBoundingClientRect();
+          const ring = Math.max(0, ...getComputedStyle(a).boxShadow.split(/,(?![^(]*\))/).filter(s => !/inset/.test(s))
+            .map(s => { const n = s.replace(/rgba?\([^)]*\)|#[0-9a-f]+/gi, '').trim().split(/\s+/).map(parseFloat); return (n[3] || 0) + (n[2] || 0) / 4; }));
+          const r = new Range(); r.selectNodeContents(el.querySelector('.rk')); const place = r.getBoundingClientRect();
+          const name = el.querySelector('.rn').getBoundingClientRect();
+          return { who: el.querySelector('.nmt').textContent, frame: a.className, left: Math.round(box.left - ring - place.right), right: Math.round(name.left - box.right - ring) };
+        }).filter(x => x.left < 1 || x.right < 1));
+        t.eq(clash, [], 'framed avatars keep clear of the place and the name at ' + width + ' px');
       }
     },
   },

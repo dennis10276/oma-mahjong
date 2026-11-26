@@ -51,6 +51,16 @@ module.exports = [
       t.eq(await on(), 'Muziek', 'a finger swipe left goes to Muziek');
       await finger(r.x - 120, r.y, r.x + 120, r.y);
       t.eq(await on(), 'Bord', 'a finger swipe right goes back to Bord');
+      // as easy as the ranking (Dennis 2026-11-27): a short flick of about 30 px switches, a tiny wobble does not
+      await finger(r.x + 15, r.y, r.x - 15, r.y + 3, 5);
+      t.eq(await on(), 'Muziek', 'a short 30 px flick left goes to Muziek');
+      await finger(r.x - 15, r.y, r.x + 15, r.y + 3, 5);
+      t.eq(await on(), 'Bord', 'a short 30 px flick right goes back to Bord');
+      await finger(r.x + 8, r.y, r.x - 12, r.y, 4);
+      t.eq(await on(), 'Bord', 'a 20 px wobble stays on Bord');
+      const card = await p.evaluate(() => { const b = [...document.querySelectorAll('#shop .scroll[data-tab="bord"] .th')].find(x => x.querySelector('.price')).getBoundingClientRect(); return { x: b.left + b.width / 2, y: b.top + b.height / 2 }; });
+      await finger(card.x + 15, card.y, card.x - 15, card.y, 5);
+      t.eq([await on(), await p.evaluate(() => document.querySelector('#modal').classList.contains('hidden'))], ['Muziek', true], 'a flick that starts on a card switches the tab and opens no buy popup');
       t.eq(p.errors, [], 'no page error');
     },
   },
