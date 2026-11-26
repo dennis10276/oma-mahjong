@@ -435,7 +435,7 @@ body.sunny .how-tray .hm { background: linear-gradient(#fffef4, #f9e39a); }
 .win-stats div { background: #fff; border-radius: 16px; padding: 8px 14px; font-size: 16px; color: var(--muted); min-width: 96px; }
 .win-stats b { display: block; font-size: 26px; color: var(--ink); }
 .perfect { height: 0; overflow: visible; font-size: 30px; font-weight: 900; color: #ff8a00; text-shadow: 0 3px 0 #ffd23f; opacity: 0; transform: scale(.3) rotate(-10deg); transition: all .45s cubic-bezier(.3,1.8,.5,1); }
-.perfect.on { height: 46px; opacity: 1; transform: scale(1) rotate(-4deg); }
+.perfect.on { height: 40px; opacity: 1; transform: scale(1) rotate(-4deg); }
 .chase { font-size: 17px !important; margin: 6px 0 4px !important; color: #5c4520; }
 .sun-big { font-size: 96px; line-height: 1; animation: sunPop 1.2s cubic-bezier(.3,1.6,.5,1), spin 9s linear 1.2s infinite; }
 @keyframes sunPop { 0% { transform: scale(.1) rotate(-180deg); } 100% { transform: scale(1) rotate(0); } }
@@ -556,7 +556,7 @@ body.sunny .how-tray .hm { background: linear-gradient(#fffef4, #f9e39a); }
 .win-stats .ws-streak.bonus { background: #fff3c4; box-shadow: 0 0 0 3px #ffb300; animation: bump .6s ease 1.6s 2; }
 .compact .win-stats { flex-wrap: wrap; }
 .compact .win-stats div { padding: 4px 10px; }
-.compact .perfect.on { height: 38px; }
+.compact .perfect.on { height: 30px; }
 .compact .chase { font-size: 15px !important; margin: 4px 0 !important; }
 .compact .fam-box { margin: 6px 0; padding: 4px 8px; }
 .compact .fam-title { font-size: 15px; margin-bottom: 0; }
@@ -892,7 +892,7 @@ span.fx { font-size: inherit; }
 .week-tile .foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .week-tile .foot .go { flex: none; padding: 5px 12px; border-radius: 14px; background: linear-gradient(#45d28a, var(--green)); color: #fff; font-size: 17px; font-weight: 900; box-shadow: 0 4px 0 var(--green-d); text-shadow: 0 1px 0 rgba(0,0,0,.18); }
 .week-tile .medrew.plain { flex: none; display: grid; place-items: center; }
-/* the PERFECT badge (Dennis 2026-11-26): one raised gold badge that shines, the same everywhere (perfectSticker()).
+/* the PERFECT badge (Dennis 2026-11-26): one raised gold badge that shines, the same everywhere except the win screen, which keeps its PERFECT! word (Dennis 2026-11-26).
    Every size is in em: a place only sets font-size. .pf tilts and twinkles, .pf-in is the pill and holds the light sweep. */
 .pf { position: relative; display: inline-block; flex: none; vertical-align: middle; line-height: 1; font-size: 17px; transform: rotate(-5deg); }
 .pf-in { position: relative; display: block; overflow: hidden; isolation: isolate; padding: .3em .56em .24em; border-radius: 999px;
@@ -909,8 +909,6 @@ span.fx { font-size: inherit; }
 @keyframes pfTwinkle { 0%, 50% { opacity: 0; transform: scale(.2) rotate(0); } 62% { opacity: 1; transform: scale(1) rotate(45deg); } 78%, 100% { opacity: 0; transform: scale(.2) rotate(90deg); } }
 @media (prefers-reduced-motion: reduce) { .pf-in::after, .pf::before, .pf::after { animation: none; } .pf-in::after { left: -60%; } }
 .pf-hero { font-size: clamp(30px, 10vw, 39px); }   /* the plaque */
-.perfect .pf { font-size: 26px; transform: rotate(-1deg); }   /* the win screen: its own -4deg pop + this = the same tilt */
-.compact .perfect .pf { font-size: 21px; }
 /* the block: 412 px, rows scroll inside (390 px) and snap to whole rows */
 .rank-block { box-sizing: border-box; height: 412px; padding: 8px 6px; border: 3px solid #ff7aa8; border-radius: 24px; background: linear-gradient(135deg, #ffe9f1, #ffd6e6); box-shadow: 0 5px 0 #e85d8f; overflow: hidden; }
 .rank-block .rl-scroll { height: 390px; overflow-y: auto; display: grid; gap: 6px; align-content: start; overscroll-behavior: contain; scroll-snap-type: y mandatory; scroll-padding: 0; }
