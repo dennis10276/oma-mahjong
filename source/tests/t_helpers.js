@@ -78,6 +78,23 @@ module.exports = [
     },
   },
   {
+    name: 'Steen terugleggen: if the tile cannot go back the token is not spent; the tile goes first, then the token',
+    async run(t, { startLevel, click, sleep }) {
+      const p = await t.phone({ size: [392, 785], state: { ...STATE, pid: 'test-helpers3' } });
+      await startLevel(p, LEVEL); await sleep(1800);
+      await trayOne(p, sleep);
+      await p.evaluate(() => { const real = PrepBoard.applyTileReturn; window.__real = real; PrepBoard.applyTileReturn = () => ({ ok: false, reason: 'no_placement' }); });
+      await click(p, '#btnUndo'); await click(p, '#hYes'); await sleep(150);
+      await p.evaluate(() => document.querySelector('#tray .slot .tmini').click()); await sleep(1400);
+      t.eq(await p.evaluate(() => [__mj.S.undoStock, __mj.G.undoUsed | 0, __mj.G.tray.length, !!__mj.G.rescued]), [2, 0, 1, false], 'applyTileReturn refused: token, tray and Perfect untouched');
+      t.ok(await p.evaluate(() => /geen plek/.test(document.querySelector('#gameMsg').innerText)), 'the no-spot toast');
+      await p.evaluate(() => { PrepBoard.applyTileReturn = window.__real; });
+      await p.evaluate(() => document.querySelector('#tray .slot .tmini').click()); await sleep(300);
+      t.eq(await p.evaluate(() => [__mj.S.undoStock, __mj.G.undoUsed | 0, __mj.G.tray.length, !!__mj.G.rescued]), [1, 1, 0, true], 'then it works: one token spent, tray empty');
+      t.eq(p.errors, [], 'no page error');
+    },
+  },
+  {
     name: 'empty tray: Steen terugleggen spends nothing',
     async run(t, { startLevel, click, sleep }) {
       const p = await t.phone({ size: [392, 785], state: STATE });

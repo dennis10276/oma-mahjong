@@ -33,7 +33,7 @@ function shopPage(tab) {
     + shopSec('shopSecBg', 'bg-list', L('bg', ['surf_linen', 'surf_terrace', 'surf_dusk', 'sunfield', 'jade']).map(bgCard).join(''))
     + shopSec('shopSecFinish', 'theme-list', L('finish').map(finCard).join(''))
     + shopSec('shopSecTray', 'theme-list', L('tray').map(trayCard).join(''));
-  if (tab === 'familie') return shopSec('shopSecFrame', 'theme-list', L('frame').filter(it => !it.starter).map(frameCard).join(''))
+  if (tab === 'familie') return shopSec('shopSecFrame', 'theme-list', L('frame').map(frameCard).join(''))
     + shopSec('shopSecTitle', 'row-list', L('title').map(titleRow).join(''));
   if (tab === 'muziek') return shopSec('shopSecMusic', 'row-list', L('music', ['mus_sunflower', 'mus_piano']).map(it => musicRow('music', it)).join(''))
     + (SHOP_SFX_READY ? shopSec('shopSecSfx', 'row-list', L('sfx', ['sfx_ivory', 'sfx_mahjong_clack']).map(it => musicRow('sfx', it)).join('')) : '');
@@ -52,7 +52,7 @@ function helpButton(id, st) {
   if (st.buyReason === 'stock_full') return mk('off', tx('shopHelpFull'), tx('shopHelpFullSub'));
   if (st.buyReason === 'week_limit') return mk('off', tx('shopHelpLimit', st.boughtThisWeek), tx('shopHelpLimitSub'));
   if (st.buyReason === 'not_enough_coins') return mk('off', tx('shopHelpBuy', st.price), tx('shopNeed', st.needCoins));
-  return mk('off', tx('shopHelpWait'), '');
+  return mk('off', tx('shopHelpWait'), st.buyReason === 'gift_pending' ? tx('shopHelpWaitSub') : '');
 }
 function helpCard(id) {
   const st = HELPERS[id].status();
@@ -60,13 +60,15 @@ function helpCard(id) {
     <div class="stock">${[0, 1, 2].map(i => `<i class="${i < st.stock ? 'f' : ''}"></i>`).join('')}<span>${tx('shopHelpStock', st.stock, st.maxStock)}</span></div>${helpButton(id, st)}</div>`;
 }
 const helperHooks = () => ({ save, log: logEvt, ensureWeek, pushScore });
+// a refused buy or claim always says why
+const shopRefused = r => { Sound.blocked(); toast(tx('shopBuyFail', r.reason)); };
 function helpAct(id, act) {
   const h = HELPERS[id];
-  if (act === 'claim') { if (h.claim(helperHooks()).ok) { Sound.select(); refreshShop(); } return; }
+  if (act === 'claim') { const r = h.claim(helperHooks()); if (r.ok) { Sound.select(); refreshShop(); } else shopRefused(r); return; }
   const st = h.status();
   confirmBuy({
     title: tx('shopBuyQ', tx('shopHelp_' + id)), previewHTML: `<div class="bigico">${h.icon}</div>`, price: st.price,
-    onBuy: () => { const r = h.buy(helperHooks()); if (r.ok) { Sound.select(); refreshShop(); } return r.ok; },
+    onBuy: () => { const r = h.buy(helperHooks()); if (r.ok) { Sound.select(); refreshShop(); } else shopRefused(r); return r.ok; },
   });
 }
 
@@ -91,8 +93,9 @@ const SHOP_SFX_READY = false;
 // on boot: finish or resend a gift a lost connection left unconfirmed (the receiver drops a second copy by its gid),
 // so it never keeps blocking buying
 async function resumeShopGift() {
+  const was = ShopEconomy.hasPendingGiftSpend(S);
   try { await ShopEconomy.resumePendingGift(S, { ...giftHooks(), resend: true }); } catch (e) { }
-  if (curScreen === 'shop') refreshShop();
+  if (curScreen === 'shop' && was !== ShopEconomy.hasPendingGiftSpend(S)) refreshShop();   // (a refresh during a swipe would drop the drag)
 }
 const lookHooks = () => ({ apply: applyLook, save, log: logEvt, pushScore });
 function refreshShop() {   // draw the tab again and the coin chip, the scroll stays
@@ -119,7 +122,7 @@ function confirmBuy({ title, previewHTML, price, onBuy, onGift }) {
     if (shopBusy || b.disabled) return;
     shopBusy = b.disabled = true;   // a second tap while this runs does nothing
     let ok = false;
-    try { ok = await onBuy(); } finally { shopBusy = false; }
+    try { ok = await onBuy(); } catch (err) { logErr(err, 'shopBuy'); toast(tx('shopBuyFail', 'error')); } finally { shopBusy = false; }
     if (ok) closeModal(); else b.disabled = !can;
   };
 }
@@ -140,7 +143,7 @@ function buyPopup(cat, id) {
     onGift: ShopEconomy.canGiftShopItem(cat, id) ? () => giftPicker(cat, id) : null,
     onBuy: () => {
       const r = ShopEconomy.buyItem(S, cat, id, lookHooks());
-      if (r.ok) { Sound.select(); refreshShop(); }
+      if (r.ok) { Sound.select(); refreshShop(); } else shopRefused(r);
       return r.ok;
     },
   });

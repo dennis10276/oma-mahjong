@@ -31,6 +31,87 @@ module.exports = [
     },
   },
   {
+    name: 'shop: a real finger swipe (touch events) moves Bord to Muziek and back, and a vertical drag does not switch tabs',
+    async run(t, { click, sleep }) {
+      const p = await t.phone({ size: [392, 785], state: { name: 'Dennis', pid: 'test-shop2t', level: 12 } });
+      await click(p, '#btnShop'); await sleep(300);
+      const on = () => p.evaluate(() => document.querySelector('#shop .shop-tabs button.on').textContent);
+      const cdp = await p.ctx.newCDPSession(p);
+      const finger = async (x0, y0, x1, y1, steps = 10) => {
+        const pt = (x, y) => [{ x, y, id: 1 }];
+        await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: pt(x0, y0) });
+        for (let i = 1; i <= steps; i++) { await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: pt(x0 + (x1 - x0) * i / steps, y0 + (y1 - y0) * i / steps) }); await sleep(16); }
+        await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+        await sleep(500);
+      };
+      const r = await p.evaluate(() => { const b = document.querySelector('#shop .shop-view').getBoundingClientRect(); return { x: b.left + b.width / 2, y: b.top + 150 }; });
+      await finger(r.x, r.y, r.x, r.y + 120);
+      t.eq(await on(), 'Bord', 'a downward drag stays on Bord');
+      await finger(r.x + 120, r.y, r.x - 120, r.y);
+      t.eq(await on(), 'Muziek', 'a finger swipe left goes to Muziek');
+      await finger(r.x - 120, r.y, r.x + 120, r.y);
+      t.eq(await on(), 'Bord', 'a finger swipe right goes back to Bord');
+      t.eq(p.errors, [], 'no page error');
+    },
+  },
+  {
+    name: 'shop: a refused buy or claim always says why (toast), and the popup button works again',
+    async run(t, { click, sleep }) {
+      const p = await t.phone({ size: [392, 785], state: { name: 'Dennis', pid: 'test-shop14', level: 12, sunSeen: true, econV: 2, coins: 600, peekStock: 1 } });
+      await click(p, '#btnShop'); await sleep(300);
+      const toastText = () => p.evaluate(() => document.querySelector('#toast').textContent);
+      // the wallet is emptied between opening the popup and tapping Kopen
+      await p.evaluate(() => buyPopup('tiles', 'tiles_dutch')); await sleep(150);
+      await p.evaluate(() => { __mj.S.coins = 0; });
+      await click(p, '#buyOk'); await sleep(150);
+      t.eq([await toastText(), await p.evaluate(() => [document.querySelector('#buyOk').disabled, !document.querySelector('#modal').classList.contains('hidden'), ShopEconomy.ownsItem(__mj.S, 'tiles', 'tiles_dutch')])], ['Te weinig munten', [false, true, false]], 'not_enough_coins: toast, popup stays, nothing bought');
+      // a gift still being sent
+      await p.evaluate(() => { closeModal(); __mj.S.coins = 900; __mj.S.pendingGiftOut = { gid: 'g_x', toPid: 'nobody', cat: 'tiles', item: 'tiles_kitchen', price: 480, path: 'plays/nobody/g_x', payload: { k: 'shop_gift', gid: 'g_x' } }; buyPopup('tiles', 'tiles_dutch'); }); await sleep(150);
+      await click(p, '#buyOk'); await sleep(150);
+      t.eq([await toastText(), await p.evaluate(() => __mj.S.coins)], ['Je cadeau wordt nog verstuurd', 900], 'gift_pending: toast, nothing spent');
+      await p.evaluate(() => { closeModal(); helpAct('peek', 'claim'); document.querySelectorAll('#shop .shop-tabs button')[3].click(); }); await sleep(500);   // (the free one first, so the buy button shows)
+      t.eq(await p.evaluate(() => { const b = document.querySelector('#shop .help-card[data-help="peek"] .big-btn'); return [b.disabled, /Je cadeau wordt nog verstuurd/.test(b.textContent)]; }), [true, true], 'the helper card says why it waits');
+      // week limit and a full stock, through the real buy call
+      await p.evaluate(() => { __mj.S.pendingGiftOut = null; __mj.S.coins = 900; helpAct('peek', 'claim'); }); await sleep(50);
+      t.eq(await toastText(), 'Je gratis hulp van deze week heb je al', 'a second free claim: already_claimed toast');
+      await p.evaluate(() => { __mj.S.peekStock = 3; helpAct('peek', 'buy'); }); await sleep(150);
+      await click(p, '#buyOk'); await sleep(150);
+      t.eq(await toastText(), 'Je voorraad is vol, gebruik er eerst één', 'a buy with a full stock: stock_full toast');
+      await p.evaluate(() => { closeModal(); __mj.S.peekStock = 0; __mj.S.wk.boughtPeek = 2; helpAct('peek', 'buy'); }); await sleep(150);
+      await click(p, '#buyOk'); await sleep(150);
+      t.eq(await toastText(), 'Deze week kun je er geen meer kopen', 'a buy over the week limit: week_limit toast');
+      t.eq(p.errors, [], 'no page error');
+    },
+  },
+  {
+    name: 'shop: opening the shop online finishes a gift left unsent; if the buy action throws the Kopen button works again',
+    async run(t, { FakeDB, click, sleep }) {
+      const rec = { k: 'shop_gift', t: 1700000000000, gid: 'g_test_2', from: 'test-shop15', name: 'Dennis', cat: 'tiles', item: 'tiles_dutch' };
+      const db = new FakeDB({ scores: {}, plays: { pkees1: {} } });
+      const pending = { gid: 'g_test_2', toPid: 'pkees1', cat: 'tiles', item: 'tiles_dutch', price: 480, path: 'plays/pkees1/g_test_2', payload: rec };
+      const p = await t.phone({ db, size: [392, 785], state: { name: 'Dennis', pid: 'test-shop15', level: 12, sunSeen: true, econV: 2, coins: 600 } });
+      await p.evaluate(pend => { __mj.S.pendingGiftOut = pend; }, pending);   // left over from a boot without a connection
+      await click(p, '#btnShop'); await sleep(900);
+      t.eq(await p.evaluate(() => [__mj.S.pendingGiftOut, __mj.S.coins]), [null, 120], 'the shop finished the gift, charged once');
+      t.ok(!!db.get('plays/pkees1/g_test_2'), 'and it reached the receiver');
+      await p.evaluate(() => { ShopEconomy.buyItem = () => { throw new Error('boom'); }; __mj.S.coins = 900; buyPopup('tiles', 'tiles_kitchen'); }); await sleep(150);
+      await p.evaluate(() => document.querySelector('#buyOk').click()); await sleep(200);
+      t.eq(await p.evaluate(() => [document.querySelector('#buyOk').disabled, !document.querySelector('#modal').classList.contains('hidden'), document.querySelector('#toast').textContent.length > 0]), [false, true, true], 'after a throw: button enabled again, popup open, a toast');
+    },
+  },
+  {
+    name: 'shop: the Familie tab has the Geen frame card, so a bought frame can be taken off',
+    async run(t, { click, sleep }) {
+      const p = await t.phone({ size: [392, 785], state: { name: 'Dennis', pid: 'test-shop16', level: 12, sunSeen: true, econV: 2, coins: 50, owned: { frame: ['none', 'frm_sky'] } } });
+      await p.evaluate(() => ShopEconomy.equipItem(__mj.S, 'frame', 'frm_sky', {}));
+      await click(p, '#btnShop'); await sleep(300);
+      await p.evaluate(() => document.querySelectorAll('#shop .shop-tabs button')[2].click()); await sleep(500);
+      t.eq(await p.evaluate(() => [...document.querySelectorAll('#shop .th[data-cat="frame"]')].map(b => b.dataset.id + (b.classList.contains('on') ? '*' : ''))), ['none', 'frm_sky*', 'frm_tulip', 'frm_delft', 'frm_velvet'], 'Geen first, the bought frame is in use');
+      await click(p, '#shop .th[data-cat="frame"][data-id="none"]'); await sleep(200);
+      t.eq(await p.evaluate(() => [ShopEconomy.resolveEquippedItem(__mj.S, 'frame'), document.querySelector('#shop .th[data-cat="frame"][data-id="none"]').classList.contains('on'), ShopEconomy.ownsItem(__mj.S, 'frame', 'frm_sky')]), ['none', true, true], 'taken off, still owned');
+    },
+  },
+  {
     name: 'shop: buying Hollands with 680 coins leaves 200 and equips it',
     async run(t, { click, sleep }) {
       const p = await t.phone({ size: [392, 785], state: { name: 'Dennis', pid: 'test-shop3', level: 12, sunSeen: true, econV: 2, coins: 680 } });

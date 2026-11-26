@@ -965,7 +965,7 @@ span.fx { font-size: inherit; }
 .shop-tabs button { flex: 1; min-width: 0; border-radius: 13px; background: none; color: #fff; padding: 10px 2px; font-size: 17px; font-weight: 900; }
 .shop-tabs button.on { color: var(--ink); }
 .shop-view { position: relative; flex: 1; overflow: hidden; touch-action: pan-y; }
-.shop-view > .scroll { position: absolute; inset: 0; transform: translateX(var(--x, 0)); }
+.shop-view > .scroll { position: absolute; inset: 0; transform: translateX(var(--x, 0)); touch-action: pan-y; }
 .shop-view .scroll::-webkit-scrollbar { display: none; }
 .shop-settling > .scroll, .shop-tabs.shop-settling::before { transition: transform 260ms cubic-bezier(.2,.7,.2,1); }
 

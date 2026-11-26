@@ -754,10 +754,12 @@ function returnTile(i) {
   const wrap = $('#boardWrap'), w = wrap.clientWidth, h = wrap.clientHeight;
   const chk = ShopEconomy.canUseUndoInLevel(S, G);
   if (!chk.ok) { disarmTool(); return helperRefused('undo', chk.reason); }
-  if (!PrepBoard.findReturnPlacement(G, i, w, h)) { Sound.blocked(); toast(tx('helperNoSpot')); return; }   // nothing is spent: pick another tile
-  ShopEconomy.consumeUndoInLevel(S, G, helperHooks());
-  const r = PrepBoard.applyTileReturn(G, i, w, h);
-  if (!r.ok) logErr(new Error('undo ' + r.reason), 'undo');
+  const tray0 = G.tray.slice(), r = PrepBoard.applyTileReturn(G, i, w, h);   // the tile goes back first; the token is spent only when it really did
+  if (!r.ok) { Sound.blocked(); if (r.reason === 'no_placement') toast(tx('helperNoSpot')); else logErr(new Error('undo ' + r.reason), 'undo'); return; }   // nothing is spent: pick another tile
+  const back = G.tray; G.tray = tray0;   // (consume checks the tray as it was)
+  const c = ShopEconomy.consumeUndoInLevel(S, G, helperHooks());
+  G.tray = back;
+  if (!c.ok) logErr(new Error('undo ' + c.reason), 'undo');
   disarmTool(); clearHint(); showReturned(i); renderTray(); updateTools();
   replayMark('undo', [i]); Sound.flip(); buzz(15);
   afterLogic();
