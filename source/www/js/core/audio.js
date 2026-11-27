@@ -423,7 +423,6 @@ const Sound = (() => {
       if (c > 0) playCoins(t + 0.14, c);
     },
   };
-  return api;
 
   function createSession(ambientMode) {
     const out = ctx.createGain();
@@ -709,4 +708,7 @@ const Sound = (() => {
     activeSession = null;
     if (session) teardownSession(session);
   }
+  // return last: the consts above (SHUFFLE_MS, shuffleOn) must be set before any track starts (1.80-1.82 returned
+  // halfway, so every startTrack threw and no music played)
+  return api;
 })();
