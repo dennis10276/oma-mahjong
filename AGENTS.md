@@ -172,7 +172,7 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 
 ## Drawing the board and the lessons (from 1.58)
 
-- The gold coin (Dennis, 2026-11-27, release 1.83): 🪙 looked silver on Rashmi's iPhone (each phone draws emoji its own
+- The gold coin (Dennis, 2026-11-27, release 1.84): 🪙 looked silver on Rashmi's iPhone (each phone draws emoji its own
   way). `core/util.js` wraps every 🪙 on screen in `<span class="coin">` showing one gold SVG (`COIN_URL`); the text stays 🪙.
   Keep writing plain 🪙 in code and texts. Test: `tests/t_coin.js`.
 
@@ -274,5 +274,10 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
   (levels, stars, points, tries; then the normal old-save migration for coins and themes), takes over the pid and
   clears the code (`restore: ''`). Weekly points come along only from the 1.80+ week system (`wkV` 2).
   Code: `www/js/features/restore/restore.js`; tests: `tests/t_restore.js`.
+- A name is required after level 1 (Dennis, 2026-11-27, release 1.84): without a name nothing reaches the dashboard
+  (the play log waits on the phone, max 500 events). `needsName()` (`features/family/profile.js`: no name and
+  level >= 2) makes startLevel/startDaily and every exit of the level 1 win screen open the name screen first; it
+  cannot be closed. For a player without a name it has no frames and a link "Ik speel al op een andere telefoon" to
+  the restore code. Test players have a name by default (`tests/lib.js`); `tests/t_onboarding.js`.
 - DennisTEST (`pmuxw2uqkzcnbgx`) is a test account: it follows grandma's settings and is hidden
   from the rankings.
