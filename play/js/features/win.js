@@ -140,7 +140,8 @@ function win() {
       heartsP.then(() => {
         const all = S.pendingHearts;
         if (all.length) { S.pendingHearts = []; save(); rewards.unshift({ type: 'hearts', list: all }); }
-        runRewards(rewards, finish);
+        // after level 1 every way out of the win screen first asks for a name (Dennis 2026-11-27)
+        if (needsName()) askName(() => runRewards(rewards, finish)); else runRewards(rewards, finish);
       });
     };
     if (climbMode) familyNode.querySelector('.me')?.classList.add('win-rank-rise');

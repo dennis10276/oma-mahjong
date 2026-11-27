@@ -39,12 +39,14 @@ const levelTrack = () => part('levels') ? 'care' : '';
 // own levels follow her screen
 const sameShape = tr => tr ? null : RULES.levels.aspect;
 function startLevel(level) {
+  if (needsName()) return askName(() => startLevel(level));   // no level 2 without a name (Dennis 2026-11-27)
   const tr = levelTrack(), hard = Hard.applies(level, tr), early = !hard && Hard.appliesEarly(level, tr);
   begin({ mode: 'level', level, key: 'L' + level, track: tr, title: tx('levelN', level), fixedAspect: early ? sameShape(tr) : null,
     // (ready-made levels, the same for everyone on any screen: 51 and 53-69 in levels-early.js, from 70 the designed ones)
     makeSpec: a => hard ? Hard.spec(level) : early ? Hard.earlySpec(level) : Layouts.forLevel(level, a, 1, tr), makeEasy: a => Layouts.forLevel(level, a, 1, tr) });
 }
 function startDaily(k) {
+  if (needsName()) return askName(() => startDaily(k));
   const d = parseKey(k);
   const tr = levelTrack();
   begin({ mode: 'daily', date: k, key: 'D' + k, track: tr, title: tx('dailyTitle', d.getDate(), monthName(d.getMonth()).slice(0, 3)), fixedAspect: sameShape(tr), makeSpec: a => Layouts.forDate(dnum(k), a, 1, tr) });
