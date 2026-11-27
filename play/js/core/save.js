@@ -3,7 +3,7 @@
 'use strict';
 
 const STORE = 'omamj.v1', CUR = 'omamj.cur';
-const APP_VERSION = '1.82';
+const APP_VERSION = '1.83';
 // (the one-time wipe of 2026-10-07 is gone from the code; its key omamj.reset stays in old saves and is ignored)
 
 const defaults = ShopEconomy.econDefaults;
