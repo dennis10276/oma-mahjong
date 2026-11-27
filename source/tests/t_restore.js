@@ -40,7 +40,10 @@ module.exports = [
       const m = await modal(p);
       t.ok(m && m.title.includes('Rashmi') && m.buttons.includes('rcYes'), 'the player is found and shown', m);
       t.ok(m && m.text.includes('level 4') && m.text.includes('⭐ 8 '), 'level 4 with 7 level stars + 1 gift star', m && m.text);
+      // (the game reloads after the takeover: wait for that page, then read it; reading during the reload can hang)
+      const loaded = p.waitForEvent('load', { timeout: 8000 });
       await click(p, '#rcYes');
+      await loaded;
       await p.waitForFunction(() => window.__mjReady === true && __mj.S.pid === 'test-restore', null, { timeout: 8000 });
       const s = await p.evaluate(() => ({ pid: __mj.S.pid, name: __mj.S.name, level: __mj.S.level, stars: __mj.S.stars, pts: myPoints(), att: __mj.S.att, coins: __mj.S.coins, econ: __mj.S.econV }));
       t.eq([s.pid, s.name, s.level], [PID, 'Rashmi', 4], 'same player, same level');
