@@ -1,4 +1,4 @@
-// uses: core/*, rules, lang, family/presence, family/hearts
+// uses: core/*, rules, lang, family/presence, family/hearts, restore/restore
 /* Oma's Mahjong — family/profile: avatar frames, avatars, asking for the name. */
 'use strict';
 
@@ -20,6 +20,9 @@ FRAMES.forEach(f => Object.defineProperty(f, 'name', { get: () => f.shop ? (isEn
 const frameOk = id => (FRAMES.find(f => f.id === id) || FRAMES[0]).ok();
 const avatarHTML = (e, cls = 'ra', online = false) => `<span class="${cls} fr-${e.frame && e.frame !== 'none' ? e.frame : 'none'}">${e.avatar}${online ? '<span class="presence-dot" aria-hidden="true"></span>' : ''}</span>`;
 
+// a player who won level 1 must choose a name before anything else: then the dashboard sees them
+// (the play log waits on the phone until there is a name, core/telemetry.js)
+const needsName = () => !S.name && S.level >= 2;
 const AVATARS = ['👵', '👴', '😊', '🌻', '🐱', '🐶', '🌷', '⭐', '🦋', '🍀', '🎩', '🚀'];
 function askName(then) {
   const cur = S.name || '';
@@ -29,9 +32,12 @@ function askName(then) {
     <input id="nmIn" class="name-in" maxlength="20" value="${cur.replace(/"/g, '')}" placeholder="${tx('namePh')}" autocomplete="off">
     <div class="quick-names fit-row">${tx('quickNames').map(n => `<button class="qn">${n}</button>`).join('')}</div>
     <div class="avatars">${AVATARS.map(a => `<button class="av${av === a ? ' on' : ''}">${a}</button>`).join('')}</div>
-    <h3 class="fr-title">${fx('frameTitle')}</h3>
-    <div class="frames">${FRAMES.map(f => `<button class="frm${fr === f.id ? ' on' : ''}${f.ok() ? '' : ' locked'}" data-f="${f.id}"><span class="ra fr-${f.id}">${av}</span><small>${f.ok() ? f.name : '🔒 ' + f.how()}</small></button>`).join('')}</div>
-    <button class="big-btn play" id="nmOk"><span class="bb-text"><b>${tx('save')}</b></span></button>`, false);
+    ${cur ? `<h3 class="fr-title">${fx('frameTitle')}</h3>
+    <div class="frames">${FRAMES.map(f => `<button class="frm${fr === f.id ? ' on' : ''}${f.ok() ? '' : ' locked'}" data-f="${f.id}"><span class="ra fr-${f.id}">${av}</span><small>${f.ok() ? f.name : '🔒 ' + f.how()}</small></button>`).join('')}</div>` : ''}
+    <button class="big-btn play" id="nmOk"><span class="bb-text"><b>${tx('save')}</b></span></button>
+    ${cur ? '' : `<button class="link-btn" id="nmRestore">${tx('nameRestore')}</button>`}`, false);
+  // a new player who already plays on another phone takes over that player instead (features/restore)
+  if (!cur) $('#nmRestore').onclick = () => askRestore(() => askName(then));
   document.querySelectorAll('.qn').forEach(b => b.onclick = () => { $('#nmIn').value = b.textContent; });
   document.querySelectorAll('.av').forEach(b => b.onclick = () => { av = b.textContent; document.querySelectorAll('.av').forEach(x => x.classList.toggle('on', x === b)); document.querySelectorAll('.frm .ra').forEach(x => x.textContent = av); });
   document.querySelectorAll('.frm').forEach(b => b.onclick = () => {

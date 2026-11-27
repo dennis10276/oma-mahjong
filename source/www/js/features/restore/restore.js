@@ -62,13 +62,14 @@ async function findRestoreCode(code) {
   return found.find(Boolean) || null;
 }
 
-function askRestore() {
+/* back: what to show when the player closes these screens (the name screen asks again) */
+function askRestore(back = null) {
   openModal(`<h2>${tx('rcTitle')}</h2>
     <p>${tx('rcText')}</p>
     <input id="rcIn" class="name-in" maxlength="8" placeholder="ABC123" autocomplete="off" autocapitalize="characters" spellcheck="false" style="text-transform:uppercase;letter-spacing:4px;text-align:center">
     <p id="rcMsg" class="rc-msg" style="min-height:1.4em;color:#a33"></p>
     <button class="big-btn play" id="rcGo"><span class="bb-text"><b>${tx('rcGo')}</b></span></button>
-    <button class="link-btn" id="rcBack">${tx('close')}</button>`);
+    <button class="link-btn" id="rcBack">${tx('close')}</button>`, true, back);
   $('#rcBack').onclick = closeModal;
   $('#rcGo').onclick = async () => {
     const code = restoreClean($('#rcIn').value), msg = $('#rcMsg'), btn = $('#rcGo');
@@ -80,22 +81,22 @@ function askRestore() {
       const events = Object.values(await dbGet(`plays/${hit.pid}`) || {});
       const keep = { sfx: S.sfx, music: S.music, musicShuffle: !!S.musicShuffle, vibrate: S.vibrate, highlight: S.highlight, nums: S.nums, lang: S.lang, seenSp: S.seenSp, seenTray: S.seenTray, seenDown: S.seenDown };
       const next = buildRestoredSave(hit.pid, hit.score, events, playerCfg(hit.ev), keep);
-      confirmRestore(next, code);
+      confirmRestore(next, code, back);
     } catch (e) { btn.disabled = false; msg.style.color = '#a33'; msg.textContent = tx('rcFail'); }
   };
 }
 
-function confirmRestore(next, code) {
+function confirmRestore(next, code, back = null) {
   const mine = S.level > 1;
   openModal(`<h2>${tx('rcFound', esc(next.name))}</h2>
     <p style="font-size:40px;margin:6px 0">${esc(next.avatar)}</p>
     <p>${tx('rcWhat', next.level, totalStarsOf(next))}</p>
     ${mine ? `<p style="color:#a33">${tx('rcReplace', S.level)}</p>` : ''}
     <button class="big-btn play" id="rcYes"><span class="bb-text"><b>${tx('rcYes')}</b></span></button>
-    <button class="link-btn" id="rcNo">${tx('close')}</button>`);
+    <button class="link-btn" id="rcNo">${tx('close')}</button>`, true, back);
   $('#rcNo').onclick = closeModal;
   $('#rcYes').onclick = async () => {
-    $('#rcYes').disabled = true;
+    $('#rcYes').disabled = true; modalOnClose = null;   // (the page reloads: no way back to the name screen)
     Object.keys(S).forEach(k => delete S[k]);
     Object.assign(S, next);
     clearCur(); G = null;

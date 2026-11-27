@@ -24,7 +24,7 @@ function openSettings() {
   });
   $('#mHow').onclick = () => showIntro();
   $('#mReset').onclick = confirmReset;
-  $('#mRestore').onclick = askRestore;
+  $('#mRestore').onclick = () => askRestore();
   $('#mClose').onclick = closeModal;
 }
 

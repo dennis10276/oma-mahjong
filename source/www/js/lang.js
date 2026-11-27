@@ -391,6 +391,7 @@ const TEXT = {
   save: ['Opslaan', 'Save'],
   frameHow: [h => `Dit lijstje krijg je met: ${h}`, h => `You get this frame with: ${h}`],
   nameFirst: ['Vul eerst een naam in', 'Fill in a name first'],
+  nameRestore: ['Ik speel al op een andere telefoon', 'I already play on another phone'],
   fr_none: ['Geen', 'None'], fr_bronze: ['Brons', 'Bronze'], fr_silver: ['Zilver', 'Silver'], fr_gold: ['Goud', 'Gold'], fr_sun: ['Zonnebloem', 'Sunflower'],
   fr_heart: ['Hartjes', 'Hearts'], fr_rainbow: ['Regenboog', 'Rainbow'], fr_crown: ['Kroon', 'Crown'],
   how_prizes: [n => `${n} prijzen`, n => `${n} trophies`], how_level: [n => `level ${n}`, n => `level ${n}`],
