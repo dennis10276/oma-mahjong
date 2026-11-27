@@ -42,6 +42,7 @@ Files in the first group are read by Node tools or the dashboard by path, so the
 - `rewards/streak.js` days in a row (`streak()`) and levels won in a row (`winStreakStep()`)
 - `grandma/grandma.js` Super-omamodus: `careMode`, `part`, `help`, settings from the dashboard
 - `redo/redo.js` "redo from level n", set on the dashboard
+- `restore/restore.js` take over an existing player on a new phone with a code from the dashboard
 
 ## features/family/
 - `week.js` the week, my points, result of last week

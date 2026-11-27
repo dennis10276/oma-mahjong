@@ -9,6 +9,7 @@ function openSettings() {
     <div class="set-row">${fx('set_lang')}<span class="lang-pick">${Object.entries(LANGS).map(([c, n]) => `<button class="lp${c === cur ? ' on' : ''}" data-lang="${c}">${n}</button>`).join('')}</span></div>
     ${rows.map(k => `<div class="set-row">${fx('set_' + k)}<button class="tog ${S[k] ? 'on' : ''}" data-k="${k}"></button></div>`).join('')}
     <button class="big-btn gold" id="mHow"><span class="bb-text"><b>${tx('howToPlay')}</b></span></button>
+    <button class="link-btn" id="mRestore">${tx('restoreBtn')}</button>
     <button class="link-btn" id="mClose">${tx('close')}</button>
     <button class="reset-btn" id="mReset">${tx('wipe')}</button>
     <div class="version">${tx('version', APP_VERSION)}</div>`);
@@ -23,6 +24,7 @@ function openSettings() {
   });
   $('#mHow').onclick = () => showIntro();
   $('#mReset').onclick = confirmReset;
+  $('#mRestore').onclick = askRestore;
   $('#mClose').onclick = closeModal;
 }
 

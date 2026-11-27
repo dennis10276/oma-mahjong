@@ -147,6 +147,19 @@ const TEXT = {
   wipeNo: ['Nee, bewaren', 'No, keep it'],
   wipeYes: ['Ja, alles wissen', 'Yes, erase everything'],
   wiped: ['Je voortgang is gewist. Veel plezier vanaf level 1!', 'Your progress has been erased. Have fun from level 1!'],
+  // taking over your old progress on a new phone, with a code from the family dashboard (js/features/restore)
+  restoreBtn: ['📱 Nieuwe telefoon? Voortgang terugzetten', '📱 New phone? Get your progress back'],
+  rcTitle: ['Voortgang terugzetten', 'Get your progress back'],
+  rcText: ['Vraag Dennis om een herstelcode en vul die hier in. Je krijgt je levels, sterren en punten terug.', 'Ask Dennis for a restore code and type it here. You get your levels, stars and points back.'],
+  rcGo: ['Terugzetten', 'Restore'],
+  rcShort: ['De code heeft 6 tekens.', 'The code has 6 characters.'],
+  rcBusy: ['Even zoeken…', 'Looking…'],
+  rcNone: ['Deze code klopt niet of is verlopen. Vraag een nieuwe.', 'This code is wrong or has expired. Ask for a new one.'],
+  rcFail: ['Dat lukte niet. Controleer de internetverbinding en probeer het opnieuw.', 'That did not work. Check the internet connection and try again.'],
+  rcFound: [n => `Welkom terug, ${n}!`, n => `Welcome back, ${n}!`],
+  rcWhat: [(lv, st) => `Je gaat verder bij <b>level ${lv}</b> met ⭐ ${st} sterren.`, (lv, st) => `You continue at <b>level ${lv}</b> with ⭐ ${st} stars.`],
+  rcReplace: [lv => `Wat je op deze telefoon speelde (tot level ${lv}) wordt vervangen.`, lv => `What you played on this phone (up to level ${lv}) is replaced.`],
+  rcYes: ['Ja, terugzetten', 'Yes, restore'],
 
   // ---------- how to play (checked against the rules in board.js) ----------
   introTitle: ['Zo speel je 🀄', 'How to play 🀄'],
