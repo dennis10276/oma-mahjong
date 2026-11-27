@@ -353,7 +353,7 @@ module.exports = [
   {
     name: 'replay: unnamed players and storage errors cannot interrupt gameplay',
     async run(t, { startLevel, sleep }) {
-      const unnamed = await t.phone({ state: { level: 3 } }); await startLevel(unnamed, 3);
+      const unnamed = await t.phone({ state: { level: 1, name: undefined } }); await startLevel(unnamed, 1);   // (past level 1 a name is required: t_onboarding.js)
       t.eq(await unnamed.evaluate(() => !!G.rp), false, 'no detailed replay collected for unnamed visitors');
       t.eq(unnamed.db.log.filter(e => e.p.startsWith('/replays')).length, 0, 'no anonymous uploads');
       const p = await t.phone({ state: { level: 3, name: 'Dennis', pid: 'test-replay-quota' } });
