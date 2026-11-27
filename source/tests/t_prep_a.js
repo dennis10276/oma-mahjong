@@ -135,6 +135,7 @@ module.exports = {
       const state = __mj.S;
       state.coinWeek = { id: ShopEconomy.weekIdOf(), wins: SHOP_RULES.coins.fullMainWinsPerWeek };
       ensureTasks().list.forEach(task => { task.done = true; });
+      if (!state.name) state.name = 'Tester';   // (past level 1 a name is required first: t_onboarding.js)
       save();
       return { coins: state.coins, level: state.level, week: state.coinWeek };
     });

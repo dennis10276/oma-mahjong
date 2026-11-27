@@ -88,6 +88,7 @@ async function teardown() { if (browser) await browser.close(); if (server) serv
    lb: cached leaderboard entries, size: [w, h], ios: iPhone user agent, url: other start page,
    realDb: talk to the real database (online tests only, test- players only),
    tune: { RULES: {...}, HELP: {...} } changes the game's rules (js/rules.js) for this page,
+   (a player has a name by default: from 1.83 a player past level 1 without one is asked before every level)
    news: the news file grandma's phone gets ({ updated, items }; default: up to date and empty) */
 async function phone(opts = {}) {
   const [w, h] = opts.size || [390, 820];
@@ -105,7 +106,7 @@ async function phone(opts = {}) {
     // write the saved progress from an empty page of the same site first: if the game itself
     // were open, it could save its own state over ours while reloading
     await page.goto(url.startsWith('file:') ? 'file://' + BLANK : new URL('__blank__', url).href);
-    const st = Object.assign({ seenIntro: true, seenTray: true, seenDown: true, toolsSeen: true, sfx: false, music: false, vibrate: false, level: 5, since: TODAY, iosTip: true, giftDay: opts.clock === false ? realToday() : TODAY, seenSp: { gold: 1, gift: 1, joker: 1, joker2: 1, ice: 1, lock: 1, clock: 1, clockMoves: 1, trayPair: 1 } }, opts.state || {});
+    const st = Object.assign({ name: 'Tester', seenIntro: true, seenTray: true, seenDown: true, toolsSeen: true, sfx: false, music: false, vibrate: false, level: 5, since: TODAY, iosTip: true, giftDay: opts.clock === false ? realToday() : TODAY, seenSp: { gold: 1, gift: 1, joker: 1, joker2: 1, ice: 1, lock: 1, clock: 1, clockMoves: 1, trayPair: 1 } }, opts.state || {});
     await page.evaluate(([st, lb, today]) => {
       localStorage.clear(); localStorage.setItem('omamj.reset', today);
       localStorage.setItem('omamj.v1', JSON.stringify(st));

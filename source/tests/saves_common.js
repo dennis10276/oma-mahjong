@@ -30,6 +30,8 @@ const home = p => p.evaluate(() => ({ home: document.querySelector('#playLabel')
 const board = p => p.evaluate(() => { const G = __mj.G; return G && { key: G.key, alive: Array.from(G.alive), tray: G.tray.slice(), faces: G.tiles.map(t => t.face), down: Array.from(G.down), peek: G.peek, rescued: !!G.rescued }; });
 // continue the saved level (or daily) from the home screen, as Play does
 async function resume(p, lib, key) {
+  // (an old save without a name past level 1 is asked for one first, t_onboarding.js: the player types it)
+  await p.evaluate(() => { if (needsName()) { __mj.S.name = 'Tester'; save(); } });
   if (key[0] === 'L') { await lib.startLevel(p, +key.slice(1), false); return; }
   await p.evaluate(k => __mj.startDaily(k.slice(1)), key);
   await p.waitForFunction(k => !document.querySelector('#buildMsg') && __mj.G && __mj.G.key === k, key, { timeout: 30000 });
