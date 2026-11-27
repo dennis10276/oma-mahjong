@@ -172,6 +172,10 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 
 ## Drawing the board and the lessons (from 1.58)
 
+- The gold coin (Dennis, 2026-11-27, release 1.83): 🪙 looked silver on Rashmi's iPhone (each phone draws emoji its own
+  way). `core/util.js` wraps every 🪙 on screen in `<span class="coin">` showing one gold SVG (`COIN_URL`); the text stays 🪙.
+  Keep writing plain 🪙 in code and texts. Test: `tests/t_coin.js`.
+
 - Release 1.67 (2026-11-09): direct taps keep the tile under the finger even when blocked; only empty-space taps snap to the nearest free tile within 6–10 CSS pixels. Android portrait opt-outs are application-level manifest properties and require the 1.67 APK (code 83). The selected pink family leaderboard ships too. Physical iPad/Android-tablet testing remains outstanding. Verification: `source/analysis/tablet-tapping-2026-11-09.md`.
 
 - Board tiles live in one group per layer (`#board > .lyr > .tile`); `G.tiles[i].el` is the tile. A

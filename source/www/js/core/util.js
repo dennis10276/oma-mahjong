@@ -11,6 +11,42 @@ let filmRoot = null;
 const FILM_PARTS = /^#(board|boardWrap|tray|clockBadge|progressBar|gameMsg|toast)\b/;
 const $ = s => (filmRoot && FILM_PARTS.test(s) ? filmRoot : document).querySelector(s);
 
+// ---------- the gold coin ----------
+// 🪙 is drawn by the phone's own emoji font: gold on Android, silver on an iPhone (Rashmi, 2026-11-27). Every 🪙 that
+// reaches the screen is put in a <span class="coin">: the text stays 🪙 (tests, screen readers, the dashboard logs),
+// but what shows is this one gold coin, the same on every phone. Code keeps writing plain 🪙; nothing else changes.
+// The picture lives in the code (no file): a self-updated app gets it without a new APK.
+const COIN_URL = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><radialGradient id="g" cx=".38" cy=".32" r=".75"><stop offset="0" stop-color="#fff3a8"/><stop offset=".45" stop-color="#ffcf2e"/><stop offset="1" stop-color="#e8a10c"/></radialGradient></defs><circle cx="32" cy="32" r="30" fill="#b9780a"/><circle cx="32" cy="31" r="28" fill="url(#g)"/><circle cx="32" cy="31" r="21" fill="none" stroke="#d89512" stroke-width="2.5"/><path d="M32 17.5l4.1 8.6 9.4 1.2-6.9 6.5 1.8 9.3L32 38.6l-8.4 4.5 1.8-9.3-6.9-6.5 9.4-1.2z" fill="#ffd84a" stroke="#c4840a" stroke-width="2" stroke-linejoin="round"/><path d="M14 22a20 20 0 0 1 12-10" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".6"/></svg>');
+(() => {
+  const st = document.createElement('style');
+  // the emoji itself is pushed out of the box and clipped: only the picture shows
+  st.textContent = `.coin{display:inline-block;width:1.05em;height:1.05em;vertical-align:-.17em;line-height:1;background:url("${COIN_URL}") center/contain no-repeat;overflow:hidden;text-indent:2em;white-space:nowrap;color:transparent}`;
+  document.head.appendChild(st);
+  const SKIP = /^(SCRIPT|STYLE|TEXTAREA|TITLE|OPTION)$/, HTML = 'http://www.w3.org/1999/xhtml';
+  function wrap(node) {
+    const p = node.parentNode;
+    if (!p || p.nodeType !== 1 || p.namespaceURI !== HTML || SKIP.test(p.nodeName) || p.classList.contains('coin')) return;
+    const parts = node.data.split('🪙'), frag = document.createDocumentFragment();
+    if (parts.length < 2) return;
+    parts.forEach((s, i) => {
+      if (i) { const c = document.createElement('span'); c.className = 'coin'; c.textContent = '🪙'; frag.appendChild(c); }
+      if (s) frag.appendChild(document.createTextNode(s));
+    });
+    p.replaceChild(frag, node);
+  }
+  function coinify(root) {
+    if (root.nodeType === 3) { if (root.data.includes('🪙')) wrap(root); return; }
+    if (root.nodeType !== 1 || !root.textContent.includes('🪙')) return;
+    const walk = document.createTreeWalker(root, NodeFilter.SHOW_TEXT), found = [];
+    while (walk.nextNode()) if (walk.currentNode.data.includes('🪙')) found.push(walk.currentNode);
+    found.forEach(wrap);
+  }
+  coinify(document.body);
+  new MutationObserver(list => {
+    for (const m of list) { if (m.type === 'characterData') coinify(m.target); else m.addedNodes.forEach(coinify); }
+  }).observe(document.body, { childList: true, subtree: true, characterData: true });
+})();
+
 // ---------- dates ----------
 const pad = n => String(n).padStart(2, '0');
 const dkey = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
