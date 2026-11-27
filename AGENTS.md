@@ -263,5 +263,12 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
 
 - Resetting a player to a level: a settings event `{ k: 'cfg', t, redo: <level>, redoId }` in
   `plays/cfg-<pid>` (see `applyRedo` in `www/js/core/save.js`). Only when Dennis asks.
+- New phone or lost save (Dennis, 2026-11-27; Rashmi lost hers when iOS cleared Safari's storage after 7 days
+  without the app on her home screen): the dashboard's "📱 Nieuwe telefoon" button writes
+  `{ k: 'cfg', t, restore: '<6-letter code>' }` in `plays/cfg-<pid>` (valid 24 h). In the app, Instellingen →
+  "Nieuwe telefoon? Voortgang terugzetten" takes the code, rebuilds the save from `scores/<pid>` and `plays/<pid>`
+  (levels, stars, points, tries; then the normal old-save migration for coins and themes), takes over the pid and
+  clears the code (`restore: ''`). Weekly points come along only from the 1.80+ week system (`wkV` 2).
+  Code: `www/js/features/restore/restore.js`; tests: `tests/t_restore.js`.
 - DennisTEST (`pmuxw2uqkzcnbgx`) is a test account: it follows grandma's settings and is hidden
   from the rankings.

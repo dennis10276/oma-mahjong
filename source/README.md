@@ -220,6 +220,13 @@ Each switch is a small event in `plays/cfg-<pid>` (the newest counts; `playerCfg
 `helpFor` in `rules.js`); the app reads it at start, on return and every 30 s. Combos last 10 s for
 everyone.
 
+## A new phone: restore code (from 1.82)
+
+On the dashboard's ⚙️ card, "📱 Nieuwe telefoon → Maak code" makes a 6-letter code (valid 24 hours). The player
+types it in the app under Instellingen → "Nieuwe telefoon? Voortgang terugzetten" and gets their level, stars and
+points back on that phone (`www/js/features/restore/restore.js`). On iPhone the game should be on the home screen:
+Safari clears a web page's saved data after 7 days without a visit, a home-screen app keeps it.
+
 ## Tests
 
     cd tests && npm install          # once: Playwright (uses Chromium; set CHROME=... if needed)

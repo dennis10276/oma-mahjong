@@ -104,6 +104,18 @@ async function dbGet(path) {
    plays/msg-<to> (the database rules take pieces of at most 40 characters there, so a longer
    message is split over m0, m1, m2) and is matched to the heart by sender and time. */
 const MSG = { max: 140, piece: 38 };
+/* A restore code (js/features/restore): the dashboard writes { k: 'cfg', t, restore: CODE } into the
+   player's settings; a new phone that types it takes over that player for 24 hours, then it expires. */
+const RESTORE = { hours: 24, len: 6, chars: 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789' };
+const restoreClean = code => String(code || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+
+// the code that is valid now in a player's settings events ('' when none or expired)
+function restoreCodeIn(events, now = Date.now()) {
+  const last = (events || []).filter(e => e && e.k === 'cfg' && 'restore' in e).sort((a, b) => a.t - b.t).pop();
+  if (!last || !last.restore || now - last.t > RESTORE.hours * 36e5) return '';
+  return restoreClean(last.restore);
+}
+
 const msgKey = pid => pid.startsWith('test-') ? 'test-msg-' + pid.slice(5) : 'msg-' + pid;
 const isMsgKey = id => id.startsWith('msg-') || id.startsWith('test-msg-');
 function msgParts(txt) {
