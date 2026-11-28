@@ -274,6 +274,11 @@ Dennis (the owner) uses more than one AI agent on this project. Read this before
   (levels, stars, points, tries; then the normal old-save migration for coins and themes), takes over the pid and
   clears the code (`restore: ''`). Weekly points come along only from the 1.80+ week system (`wkV` 2).
   Code: `www/js/features/restore/restore.js`; tests: `tests/t_restore.js`.
+- Helper used up (Dennis, 2026-11-28, release 1.85): Gerda read "once per attempt" after her last Spieken and did not
+  know about the free one every week. A tap on 👁️/↩️ with stock 0 (also right after using the last one in this try)
+  opens a popup (`helperOut` in `board.js`): used up, 1 free every week; "Gratis ophalen" claims this week's free one
+  right there (usable now, or in the next try if this try already used one); otherwise "every Monday" and a button to
+  the shop on Hulpen. Test: `tests/t_helpers.js`.
 - A name is required after level 1 (Dennis, 2026-11-27, release 1.84): without a name nothing reaches the dashboard
   (the play log waits on the phone, max 500 events). `needsName()` (`features/family/profile.js`: no name and
   level >= 2) makes startLevel/startDaily and every exit of the level 1 win screen open the name screen first; it
