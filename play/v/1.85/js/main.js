@@ -74,7 +74,7 @@ window.handleBack = () => {
   return false;
 };
 
-Sound.setSfx(S.sfx); Sound.setMusic(S.music); Sound.applyAudio();   // the equipped tile sounds
+Sound.setSfx(S.sfx); Sound.setMusic(S.music); Sound.applyAudio({ musicTrack: S.musicTrack });   // the equipped music and tile sounds
 applyLang();
 applyTheme();
 applyBg();

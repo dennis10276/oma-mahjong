@@ -237,7 +237,7 @@ function paintShop(progress) {
   });
 }
 
-// Same mechanics as the ranking's swipe: drag follows the finger, 260 ms settle, 25% of the width to commit.
+// Same mechanics as the ranking's swipe: drag follows the finger, 260 ms settle, 24 px of travel to commit (Dennis 2026-11-27: "the same easy swipe").
 function bindShopSwipe() {
   if (shopBound) return;
   shopBound = true;
@@ -283,7 +283,7 @@ function bindShopSwipe() {
     const d = drag; drag = null;
     if (!d.horizontal) return;
     const moved = progress - index();
-    settle(index() + (e.type === 'pointerup' && Math.abs(moved) >= .25 ? Math.sign(moved) : 0));
+    settle(index() + (e.type === 'pointerup' && Math.abs(moved) * view.clientWidth >= 24 ? Math.sign(moved) : 0));   // 24 px, like the ranking
   };
   view.addEventListener('pointerup', end);
   view.addEventListener('pointercancel', end);

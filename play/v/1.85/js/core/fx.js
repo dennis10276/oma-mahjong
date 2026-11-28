@@ -67,6 +67,8 @@ const FX = (() => {
     if (sprites[ch]) return sprites[ch];
     const S2 = 64, c2 = document.createElement('canvas'); c2.width = c2.height = S2;
     const x2 = c2.getContext('2d');
+    // the same gold coin as everywhere else (COIN_URL, core/util.js), not the phone's own emoji
+    if (ch === '🪙') { const im = new Image(); im.onload = () => x2.drawImage(im, 4, 4, S2 - 8, S2 - 8); im.src = COIN_URL; return (sprites[ch] = c2); }
     x2.font = (S2 * 0.8) + "px 'Noto Color Emoji','Apple Color Emoji','Segoe UI Emoji',sans-serif";
     x2.textAlign = 'center'; x2.textBaseline = 'middle'; x2.fillText(ch, S2 / 2, S2 / 2 + 3);
     return (sprites[ch] = c2);
