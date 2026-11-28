@@ -881,8 +881,26 @@ function helperTap(kind) {
   disarmTool();
   const chk = kind === 'peek' ? ShopEconomy.canUsePeekInLevel(S, G) : ShopEconomy.canUseUndoInLevel(S, G);
   if (chk.ok) return askHelper(kind);
-  if (chk.reason === 'no_stock') { saveCur(); logLvl('pause'); shopTab = 'hulpen'; show('shop'); return; }   // none left: the shop, on Hulpen
+  // none left (also right after using the last one in this try): say so, and point to the free one every week
+  if (chk.reason === 'no_stock' || (chk.reason === 'level_limit' && !(S[HELPER_BTN[kind][1]] > 0))) return helperOut(kind, chk.reason === 'level_limit');
   helperRefused(kind, chk.reason);
+}
+function helperOut(kind, usedNow) {
+  Sound.blocked();
+  const st = kind === 'peek' ? ShopEconomy.peekStatus(S) : ShopEconomy.undoStatus(S);
+  const lines = (usedNow ? `<p>${tx('helperOutUsed')}</p>` : '') + `<p>${tx(st.canClaimFree ? 'helperOutFree' : 'helperOutMonday')}</p>` + (!st.canClaimFree && st.canBuy ? `<p class="note">${tx('helperOutBuy')}</p>` : '');
+  const btn = st.canClaimFree ? `<button class="big-btn play" id="hTake"><span class="bb-text"><b>${tx('helperOutTake')}</b></span></button>`
+    : `<button class="big-btn daily" id="hShop"><span class="bb-text"><b>${tx('helperOutShop')}</b></span></button>`;
+  openModal(`<div class="bigico">${kind === 'peek' ? '👁️' : '↩️'}</div><h2>${tx('helperOut_' + kind)}</h2>${lines}${btn}<button class="btn2" id="hNo">${tx('notNow')}</button>`);
+  $('#hNo').onclick = closeModal;
+  if (!st.canClaimFree) { $('#hShop').onclick = () => { closeModal(); saveCur(); logLvl('pause'); shopTab = 'hulpen'; show('shop'); }; return; }
+  $('#hTake').onclick = () => {
+    const r = (kind === 'peek' ? ShopEconomy.claimFreePeek : ShopEconomy.claimFreeUndo)(S, helperHooks());
+    closeModal();
+    if (!r.ok) return shopRefused(r);
+    Sound.select(); updateTools();
+    if (usedNow) toast(tx('helperOutGot')); else askHelper(kind);   // this try already used one: it waits for the next try
+  };
 }
 function askHelper(kind) {
   openModal(`<div class="bigico">${kind === 'peek' ? '👁️' : '↩️'}</div><h2>${tx('helperQ_' + kind)}</h2><p>${tx('helperLine_' + kind)}</p>

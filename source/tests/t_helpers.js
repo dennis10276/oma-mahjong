@@ -47,10 +47,38 @@ module.exports = [
       await click(p, '#hYes'); await sleep(300);
       t.eq(await p.evaluate(() => [__mj.S.peekStock, document.querySelectorAll('#board .tile.peeked').length > 0]), [0, true], 'the second try peeks');
       await sleep(4400);
-      // stock 0: a tap opens the shop on Hulpen
+      // stock 0 and this week's free one already taken: a popup says Monday, its button opens the shop on Hulpen
+      await p.evaluate(() => { ensureWeek(); __mj.S.wk.freePeek = true; });
       await p.evaluate(() => __mj.restart()); await sleep(1800);
       await click(p, '#btnPeek'); await sleep(300);
-      t.eq(await p.evaluate(() => [document.querySelector('#shop').classList.contains('active'), document.querySelector('#shop .shop-tabs button.on').textContent]), [true, 'Hulpen'], 'no stock: the shop opens on Hulpen');
+      t.ok(await p.evaluate(() => /maandag/.test(document.querySelector('#modalBox').innerText) && !!document.querySelector('#hShop')), 'no stock, free one taken: the popup says every Monday 1 free');
+      await click(p, '#hShop'); await sleep(300);
+      t.eq(await p.evaluate(() => [document.querySelector('#shop').classList.contains('active'), document.querySelector('#shop .shop-tabs button.on').textContent]), [true, 'Hulpen'], 'its button opens the shop on Hulpen');
+      t.eq(p.errors, [], 'no page error');
+    },
+  },
+  {
+    name: 'helper used up with the weekly free one still waiting: the popup says so and takes it right there',
+    async run(t, { startLevel, click, sleep }) {
+      // Gerda (2026-11-28): after her last Spieken a second tap only said "once per attempt"
+      const p = await t.phone({ size: [392, 785], state: { ...STATE, peekStock: 1 } });
+      await startLevel(p, LEVEL); await sleep(1800);
+      t.ok(await p.evaluate(() => ShopEconomy.peekStatus(__mj.S).canClaimFree), 'this week\'s free one is not taken yet');
+      await click(p, '#btnPeek'); await click(p, '#hYes'); await sleep(4400);
+      await click(p, '#btnPeek'); await sleep(200);
+      const m = await p.evaluate(() => ({ h: document.querySelector('#modalBox h2').textContent, txt: document.querySelector('#modalBox').innerText, take: !!document.querySelector('#hTake') }));
+      t.ok(/op/.test(m.h) && /laatste/.test(m.txt) && /1 gratis/.test(m.txt) && m.take, 'says it is used up, that this try used the last one, and that 1 free waits', m);
+      await click(p, '#hTake'); await sleep(300);
+      t.eq(await p.evaluate(() => [__mj.S.peekStock, __mj.G.peekUsed, ShopEconomy.peekStatus(__mj.S).canClaimFree, document.querySelector('#modal').classList.contains('hidden')]), [1, 1, false, true], 'the free one is taken, this try still used its one');
+      t.ok(await p.evaluate(() => /volgende poging/.test(document.querySelector('#gameMsg').innerText)), 'the toast says: use it in the next try');
+      // a new try with no stock and the free one waiting: take it, then the normal ask popup
+      await p.evaluate(() => { __mj.S.peekStock = 0; __mj.S.wk.freePeek = false; });
+      await p.evaluate(() => __mj.restart()); await sleep(1800);
+      await click(p, '#btnPeek'); await sleep(200);
+      t.ok(await p.evaluate(() => !!document.querySelector('#hTake') && !/laatste/.test(document.querySelector('#modalBox').innerText)), 'new try, no stock: offers the free one (no "last one" line)');
+      await click(p, '#hTake'); await sleep(300);
+      t.ok(await p.evaluate(() => /Spieken\?/.test(document.querySelector('#modalBox h2').textContent)), 'after taking it, the normal Spieken? question');
+      t.eq(await p.evaluate(() => __mj.S.peekStock), 1, 'stock 1, nothing spent yet');
       t.eq(p.errors, [], 'no page error');
     },
   },
